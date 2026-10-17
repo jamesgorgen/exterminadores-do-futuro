@@ -1,0 +1,1364 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<script>if (/\/exterminadores$/.test(location.pathname)) location.replace(location.pathname + '/' + location.search + location.hash);</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Os exterminadores do futuro</title>
+<meta name="description" content="Flávio diz uma coisa e propõe outra. Compare o que ele promete no programa de governo com os projetos que ele e seus aliados apresentam no Congresso.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#151a2e; --night-2:#222944; --red:#d42a2f; --red-ink:#ffffff;
+  --paper:#edeff2; --sheet:#ffffff; --ink:#151a2e; --ink-2:#4a5068; --ink-3:#6f758a;
+  --line:#d6d9e0; --mark:#ffe24a; --mark-ink:#151a2e; --warn:#7a4f00; --warn-soft:#fff3d4;
+  --heat-0:#e4e7ec; --heat-1:#f6cfd0; --heat-2:#ec9a9d; --heat-3:#df5f63; --heat-4:#b51f24;
+  --display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --text:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --night:#0f1324; --night-2:#1c2240; --red:#e8454a; --red-ink:#ffffff;
+    --paper:#171b2c; --sheet:#1f2438; --ink:#eef0f6; --ink-2:#b7bccd; --ink-3:#959bb0;
+    --line:#2f3550; --warn:#f0c46a; --warn-soft:#3a3120;
+    --heat-0:#262c44; --heat-1:#4a2733; --heat-2:#7b2f3a; --heat-3:#b83a43; --heat-4:#e8454a;
+  }
+}
+:root[data-theme="dark"]{
+  --night:#0f1324; --night-2:#1c2240; --red:#e8454a; --red-ink:#ffffff;
+  --paper:#171b2c; --sheet:#1f2438; --ink:#eef0f6; --ink-2:#b7bccd; --ink-3:#959bb0;
+  --line:#2f3550; --warn:#f0c46a; --warn-soft:#3a3120;
+  --heat-0:#262c44; --heat-1:#4a2733; --heat-2:#7b2f3a; --heat-3:#b83a43; --heat-4:#e8454a;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font:16px/1.55 var(--text);-webkit-font-smoothing:antialiased}
+a{color:var(--red)}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--mark);outline-offset:2px}
+.wrap{max-width:1280px;margin:0 auto;padding:0 20px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- abertura ---------- */
+.hero{background:var(--night);color:#fff}
+.hero .wrap{padding-top:20px;padding-bottom:38px}
+.hero-top{display:flex;justify-content:flex-end}
+.tabs{display:flex;gap:2px;background:var(--night-2);border-radius:6px;padding:3px}
+.tabs button{border:0;background:transparent;color:#c9cde0;padding:7px 14px;border-radius:4px;cursor:pointer;font-weight:600;font-size:14px}
+.tabs button[aria-selected="true"]{background:#fff;color:#151a2e}
+.hero h1{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(38px,8vw,110px);line-height:.9;letter-spacing:0;margin:22px 0 0;max-width:none;hyphens:none}
+.hero .lede{font-size:clamp(18px,2vw,23px);line-height:1.45;max-width:46ch;margin:26px 0 0;color:#dfe2ee}
+.hero .slogan{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(34px,6.2vw,84px);line-height:.92;margin:18px 0 0;color:var(--mark)}
+.hero .lede-2{font-size:15px;color:#aeb4cb;margin:12px 0 0;max-width:62ch}
+.roster{background:var(--red);color:var(--red-ink)}
+.roster .wrap{display:flex;gap:8px 22px;align-items:baseline;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}
+.roster p{margin:0;font-size:14.5px}
+.roster ul{list-style:none;margin:0;padding:0;display:flex;gap:4px 18px;flex-wrap:wrap}
+.roster li{font-family:var(--display);font-weight:700;font-size:24px;line-height:1;text-transform:uppercase;letter-spacing:.01em}
+.roster li small{font-family:var(--text);font-weight:600;font-size:12.5px;text-transform:none;margin-left:4px}
+
+/* ---------- barra de busca ---------- */
+.searchbar{background:var(--sheet);border-bottom:1px solid var(--line)}
+.searchbar form{display:grid;grid-template-columns:minmax(0,2.2fr) minmax(0,1.1fr) minmax(0,1.6fr) auto;gap:18px 26px;align-items:start;padding-top:18px;padding-bottom:18px}
+@media (max-width:1080px){.searchbar form{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+@media (max-width:620px){.searchbar form{grid-template-columns:minmax(0,1fr)}}
+fieldset{border:0;margin:0;padding:0;min-width:0}
+legend{font-size:13.5px;font-weight:700;color:var(--ink-2);margin-bottom:7px;padding:0}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1.5px solid var(--line);background:transparent;border-radius:4px;padding:5px 10px;cursor:pointer;font-size:14px;font-weight:600;color:var(--ink-2)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--sheet)}
+.casa-tipo .chips + .chips{margin-top:6px}
+.datas{display:flex;gap:6px;flex-wrap:wrap}
+.datas input,.datas select{border:1.5px solid var(--line);background:var(--sheet);border-radius:4px;padding:6px 8px;min-width:0;flex:1 1 128px}
+.antecessoras{display:flex;gap:7px;align-items:flex-start;font-size:13px;color:var(--ink-3);margin-top:9px;cursor:pointer;max-width:60ch}
+.antecessoras input{margin-top:3px;accent-color:var(--red)}
+.go{display:flex;flex-direction:column;gap:6px;min-width:190px;padding-top:24px}
+@media (max-width:1080px){.go{padding-top:0}}
+.btn-go{background:var(--red);color:var(--red-ink);border:0;border-radius:4px;padding:12px 20px;font-weight:700;font-size:16px;cursor:pointer;white-space:nowrap}
+.btn-go[data-busy="true"]{background:var(--ink);color:var(--sheet)}
+.meter{height:4px;background:var(--heat-0);border-radius:2px;overflow:hidden;visibility:hidden}
+.meter div{height:100%;width:0;background:var(--red);transition:width .25s}
+.status{font-size:13px;color:var(--ink-3);min-height:1.3em}
+
+/* ---------- corpo ---------- */
+main .wrap{display:grid;grid-template-columns:300px minmax(0,1fr);gap:34px;padding-top:30px;padding-bottom:64px;align-items:start}
+@media (max-width:920px){main .wrap{grid-template-columns:minmax(0,1fr)}}
+.side{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow:auto;padding-right:6px}
+@media (max-width:920px){.side{position:static;max-height:none}}
+.side h2{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:32px;line-height:1;margin:0 0 10px}
+.toggle{display:flex;gap:8px;align-items:flex-start;font-size:14px;margin:6px 0;cursor:pointer;color:var(--ink-2)}
+.toggle input{margin-top:4px;accent-color:var(--red)}
+.side .clear{border:0;background:none;color:var(--red);font-weight:600;padding:0;cursor:pointer;font-size:14px;margin:6px 0 14px}
+.grupo{border-top:2px solid var(--ink);padding:10px 0 6px}
+.grupo summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.grupo summary::-webkit-details-marker{display:none}
+.grupo summary b{font-size:15px;line-height:1.3}
+.grupo summary small{display:block;font-weight:400;color:var(--ink-3);font-size:12.5px}
+.grupo summary .n{font-family:var(--display);font-weight:700;font-size:22px;color:var(--red)}
+.grupo .itens{padding:6px 0 4px}
+.opt{display:flex;justify-content:space-between;gap:10px;font-size:14px;padding:3px 0;cursor:pointer;color:var(--ink-2)}
+.opt input{accent-color:var(--red);margin-right:7px}
+.opt .n{font-variant-numeric:tabular-nums;color:var(--ink-3)}
+.opt.vazio{opacity:.45}
+
+/* mapa dos temas antes da busca */
+.mapa h2{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(32px,3.8vw,48px);line-height:.95;margin:0 0 8px}
+.mapa > p{color:var(--ink-2);max-width:62ch;margin:0 0 22px}
+.mapa-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:2px;background:var(--line);border:2px solid var(--line)}
+.area{background:var(--sheet);padding:18px 18px 20px}
+.area h3{font-size:19px;line-height:1.25;margin:0}
+.area .cad{font-size:13px;color:var(--ink-3);margin:2px 0 10px}
+.area ul{margin:0;padding:0;list-style:none;font-size:14px;color:var(--ink-2)}
+.area li{padding:4px 0;border-top:1px solid var(--line)}
+.area li:first-child{border-top:0}
+
+/* promessa contra prática */
+.promessas-sec h2{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(32px,3.8vw,48px);line-height:.95;margin:0 0 8px}
+.promessas-sec > p{color:var(--ink-2);max-width:66ch;margin:0 0 20px}
+.area-bloco{margin-bottom:26px}
+.area-bloco > h3{font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin:0 0 8px;border-top:2px solid var(--ink);padding-top:8px}
+.prom-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:10px}
+.prom{background:var(--sheet);border:1px solid var(--line);display:flex;flex-direction:column}
+.prom .diz{padding:14px 16px 12px;flex:1}
+.prom .rot{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:20px;line-height:1;letter-spacing:.02em;margin:0}
+.prom blockquote{margin:8px 0 6px;font-size:17px;line-height:1.4;font-weight:600}
+.prom blockquote::before{content:"\201C"}
+.prom blockquote::after{content:"\201D"}
+.prom .pag{font-size:12.5px;color:var(--ink-3);margin:0}
+.prom .faz{background:var(--night);color:#fff;padding:12px 16px 14px}
+.prom .faz .rot{color:var(--mark)}
+.prom .faz p{margin:6px 0 10px;font-size:14.5px;line-height:1.4;color:#dfe2ee}
+.prom .faz p strong{font-family:var(--display);font-weight:900;font-size:30px;line-height:1;color:#fff;margin-right:4px}
+.prom .faz button{background:var(--red);color:var(--red-ink);border:0;border-radius:4px;padding:8px 12px;font-weight:700;font-size:14px;cursor:pointer}
+.prom .faz button:disabled{opacity:.4;cursor:default}
+.prom.sel{outline:3px solid var(--red);outline-offset:-1px}
+.contraste{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);margin:0 0 18px;border:1px solid var(--line)}
+@media (max-width:700px){.contraste{grid-template-columns:minmax(0,1fr)}}
+.contraste > div{padding:14px 18px}
+.contraste .c-diz{background:var(--sheet)}
+.contraste .c-faz{background:var(--night);color:#fff}
+.contraste .rot{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:22px;line-height:1;margin:0}
+.contraste .c-faz .rot{color:var(--mark)}
+.contraste blockquote{margin:8px 0 4px;font-size:18px;line-height:1.4;font-weight:600}
+.contraste .pag{font-size:12.5px;color:var(--ink-3);margin:0}
+.contraste .c-faz p{margin:8px 0 0;font-size:15px;color:#dfe2ee}
+.contraste .c-faz strong{font-family:var(--display);font-weight:900;font-size:34px;line-height:1;color:#fff}
+.flavio{background:var(--mark);color:var(--mark-ink);font-size:12.5px;font-weight:700;border-radius:3px;padding:1px 7px}
+.ficha.do-flavio::before{background:var(--mark)}
+details.detalhe{margin-top:14px;border:2px solid var(--ink);background:var(--sheet)}
+details.detalhe > summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:14px;padding:14px 16px}
+details.detalhe > summary::-webkit-details-marker{display:none}
+details.detalhe > summary:hover{background:var(--paper)}
+details.detalhe .sum-texto{flex:1;min-width:0}
+details.detalhe .sum-titulo{display:block;font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(22px,2.6vw,30px);line-height:1}
+details.detalhe .sum-sub{display:block;font-size:14px;color:var(--ink-2);margin-top:4px}
+details.detalhe .sum-acao{flex:none;display:inline-flex;align-items:center;gap:8px;background:var(--red);color:var(--red-ink);border-radius:999px;padding:7px 14px 7px 16px;font-weight:700;font-size:14px}
+details.detalhe .sum-acao svg{width:18px;height:18px;transition:transform .2s}
+details.detalhe[open] .sum-acao{background:var(--ink);color:var(--sheet)}
+details.detalhe[open] .sum-acao svg{transform:rotate(180deg)}
+details.detalhe .sum-acao .fechar{display:none}
+details.detalhe[open] .sum-acao .abrir{display:none}
+details.detalhe[open] .sum-acao .fechar{display:inline}
+details.detalhe > .corpo{padding:4px 16px 16px;border-top:1px solid var(--line)}
+@media (max-width:560px){details.detalhe .sum-acao .abrir,details.detalhe .sum-acao .fechar{display:none!important}details.detalhe .sum-acao{padding:8px}}
+
+/* triagem por IA */
+.triagem{background:var(--sheet);border:1px solid var(--line);border-left:4px solid var(--red);padding:14px 16px;margin:0 0 18px}
+.triagem h3{margin:0 0 4px;font-size:17px}
+.triagem > p{margin:0 0 10px;font-size:14.5px;color:var(--ink-2);max-width:78ch}
+.tri-contas{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14.5px;margin:0 0 12px}
+.tri-contas b{font-family:var(--display);font-weight:900;font-size:24px;line-height:1;margin-right:4px}
+.tri-acoes{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center}
+.tri-acoes .btn-go{padding:9px 16px;font-size:15px}
+.tri-acoes .btn-go:disabled{opacity:.45;cursor:default}
+.tri-filtro{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13.5px;color:var(--ink-2)}
+.tri-status{font-size:13.5px;color:var(--ink-3);margin-top:8px;min-height:1.2em}
+.tri-status.erro{color:var(--warn)}
+.tri{font-size:12px;font-weight:700;border-radius:3px;padding:1px 7px;border:1.5px solid currentColor}
+.tri-prejudica{color:var(--red);border-color:var(--red);background:color-mix(in srgb, var(--red) 10%, transparent)}
+.tri-contradiz{background:var(--ink);color:var(--sheet);border-color:var(--ink)}
+.tri-incerto{color:var(--warn)}
+.tri-neutro{color:var(--ink-3);font-weight:600}
+.tri-omite{color:var(--ink);border-color:var(--ink);border-style:dashed}
+.tri-declara{color:var(--ink-2)}
+.tri-sem{color:var(--ink-3);font-weight:600}
+.tri-linha{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:baseline;font-size:14.5px;margin:0 0 6px}
+.tri-linha > span:first-child{font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);min-width:150px}
+.tri-tabela{border-collapse:separate;border-spacing:3px;font-size:14px;margin:4px 0 10px;width:100%;max-width:720px}
+.tri-tabela th{font-weight:600;color:var(--ink-2);text-align:left;padding:4px 8px 4px 0}
+.tri-tabela thead th{text-align:center;font-size:12.5px;line-height:1.25}
+.tri-tabela td{text-align:center;padding:7px 4px;font-variant-numeric:tabular-nums;font-weight:600;background:var(--paper);cursor:pointer;min-width:64px}
+.tri-tabela td.zero,.tri-tabela td.zero.forte{color:var(--ink-3);font-weight:400;cursor:default;background:var(--paper)}
+.tri-tabela td.forte{background:color-mix(in srgb, var(--red) 16%, var(--sheet));color:var(--red)}
+.tri-tabela td.sel,.tri-tabela th.sel{outline:3px solid var(--ink);outline-offset:-3px}
+.tri-tabela th[data-fd],.tri-tabela th[data-fc]{cursor:pointer}
+.tri-tabela th[data-fd]:hover,.tri-tabela th[data-fc]:hover{text-decoration:underline}
+.tri-tabela tr.sub th,.tri-tabela tr.sub td{border-top:2px solid var(--line)}
+.tri-tabela tr.sub th{font-weight:700;color:var(--ink)}
+.tri-tabela th.sub-area{padding-left:14px}
+.tri-tabela .tot{background:transparent;color:var(--ink-2);border-left:2px solid var(--line)}
+.tri-tabela tfoot td{background:transparent;color:var(--ink-2)}
+.tri-nota .link-tri{border:0;background:none;padding:0;color:var(--red);font:inherit;text-decoration:underline;cursor:pointer}
+.tri-nota{font-size:13px;color:var(--ink-3);margin:0 0 10px}
+.tri-sem{color:var(--ink-3);font-weight:600}
+.tri-motivo{font-size:13.5px;color:var(--ink-2);margin:8px 0 0}
+.tri-motivo b{color:var(--ink)}
+
+/* resumo e matriz */
+.frase{font-size:clamp(19px,2.1vw,25px);line-height:1.35;margin:0 0 22px;max-width:52ch}
+.frase strong{font-family:var(--display);font-weight:900;font-size:1.6em;line-height:1;color:var(--red)}
+.faltou{display:flex;gap:14px 20px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--sheet);border:1px solid var(--line);border-left:4px solid var(--ink-3);padding:12px 16px;margin-bottom:18px;font-size:14.5px;color:var(--ink-2)}
+.faltou b{color:var(--ink);display:block;margin-bottom:2px}
+.faltou p{margin:0;max-width:70ch}
+.faltou ul{margin:4px 0 0;padding-left:18px}
+.metodo{font-size:13.5px;color:var(--ink-3);margin:-12px 0 20px;max-width:80ch}
+.matrix-box{background:var(--sheet);border:1px solid var(--line);padding:16px 16px 12px}
+.matrix-box h3{font-size:16px;margin:0 0 2px}
+.matrix-box > p{font-size:13.5px;color:var(--ink-3);margin:0 0 12px}
+.matrix-wrap{overflow-x:auto}
+table.matrix{border-collapse:separate;border-spacing:3px;width:100%;font-size:13.5px}
+table.matrix th{font-weight:600;color:var(--ink-2);text-align:left;padding:4px 10px 4px 0}
+table.matrix tbody th{min-width:190px}
+table.matrix thead th{text-align:center;font-family:var(--display);font-weight:700;font-size:17px;text-transform:uppercase;color:var(--ink);padding:0 4px 4px;white-space:nowrap}
+table.matrix td{text-align:center;padding:8px 4px;cursor:pointer;min-width:58px;font-variant-numeric:tabular-nums;font-weight:600}
+table.matrix td.zero{color:var(--ink-3);cursor:default;font-weight:400}
+table.matrix td.sel{outline:3px solid var(--ink);outline-offset:-3px}
+table.matrix .col-total{border-left:2px solid var(--line)}
+table.matrix td[data-total]{outline:1px solid var(--line)}
+table.matrix tfoot th,table.matrix tfoot td{color:var(--ink-3);cursor:default;font-weight:600}
+
+/* lista */
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:26px 0 12px}
+.toolbar input{flex:1;min-width:200px;border:1.5px solid var(--line);background:var(--sheet);border-radius:4px;padding:9px 12px}
+.btn-sec{border:1.5px solid var(--ink);background:transparent;border-radius:4px;padding:8px 14px;font-weight:600;cursor:pointer}
+.btn-sec:disabled{opacity:.35;cursor:default}
+.ativos{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.ativo{display:inline-flex;align-items:center;gap:6px;background:var(--ink);color:var(--sheet);border-radius:4px;padding:3px 4px 3px 9px;font-size:13px;font-weight:600}
+.ativo button{border:0;background:rgba(128,128,128,.25);color:inherit;border-radius:3px;cursor:pointer;width:20px;height:20px;line-height:18px;padding:0}
+.lista{border-top:2px solid var(--ink)}
+.ficha{background:var(--sheet);border-bottom:1px solid var(--line);padding:16px 18px 16px 22px;position:relative}
+.ficha::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--red)}
+.ficha .topo{display:flex;gap:6px 12px;align-items:baseline;flex-wrap:wrap}
+.ficha .num{font-family:var(--display);font-weight:900;font-size:27px;line-height:1;text-transform:uppercase}
+.ficha .casa{font-size:13px;color:var(--ink-3);font-weight:600}
+.ficha .data{margin-left:auto;font-size:13.5px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.partido{background:var(--red);color:var(--red-ink);font-size:12.5px;font-weight:700;border-radius:3px;padding:1px 7px}
+.alerta{background:var(--warn-soft);color:var(--warn);font-size:12px;font-weight:600;border-radius:3px;padding:1px 7px}
+.ficha p.ementa{margin:9px 0 10px;max-width:78ch}
+mark{background:var(--mark);color:var(--mark-ink);padding:0 2px}
+.temas{display:flex;flex-wrap:wrap;gap:6px}
+.tema{font-size:13px;font-weight:600;color:var(--ink);background:var(--paper);border-radius:3px;padding:2px 8px}
+.rodape-ficha{font-size:13.5px;color:var(--ink-3);margin-top:9px;display:flex;gap:6px 18px;flex-wrap:wrap}
+.rodape-ficha a{font-weight:600}
+.pager{display:flex;gap:12px;justify-content:center;align-items:center;margin-top:20px;font-size:14px;color:var(--ink-2)}
+.vazio-box{background:var(--sheet);border:1px solid var(--line);padding:32px;text-align:center;color:var(--ink-2)}
+
+/* marcação e avaliação */
+.marca{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--ink-2);cursor:pointer;margin-left:auto;order:9}
+.marca input{accent-color:var(--red);width:16px;height:16px}
+.ficha .data{margin-left:0}
+.ficha.marcada{background:color-mix(in srgb, var(--sheet) 88%, var(--mark))}
+.barra-avaliar{position:sticky;bottom:0;z-index:5;background:var(--ink);color:var(--sheet);display:flex;gap:10px 16px;align-items:center;flex-wrap:wrap;padding:12px 16px;margin-top:16px;border-radius:6px 6px 0 0;box-shadow:0 -4px 16px rgba(0,0,0,.18)}
+.barra-avaliar[hidden]{display:none}
+.barra-avaliar p{margin:0;font-size:14.5px;flex:1;min-width:200px}
+.barra-avaliar p small{display:block;opacity:.75;font-size:12.5px}
+.barra-avaliar .btn-go{padding:10px 16px;font-size:15px}
+.barra-avaliar .btn-go:disabled{opacity:.45;cursor:default}
+.barra-avaliar .btn-sec{border-color:currentColor;color:inherit}
+.aval{margin-top:12px;border-top:1px dashed var(--line);padding-top:12px}
+.aval .selo{display:inline-block;font-weight:700;font-size:13px;border-radius:3px;padding:2px 9px;margin-right:8px}
+.selo.ameaca{background:var(--red);color:var(--red-ink)}
+.selo.favoravel{background:#2f6b3a;color:#fff}
+.selo.misto{background:var(--mark);color:var(--mark-ink)}
+.selo.neutro{background:var(--paper);color:var(--ink-2)}
+.aval .meta-aval{font-size:12.5px;color:var(--ink-3)}
+.aval p{margin:8px 0 0;max-width:78ch}
+.aval ul{margin:6px 0 0;padding-left:20px;max-width:78ch}
+.aval blockquote{margin:8px 0 0;padding:4px 0 4px 12px;border-left:3px solid var(--line);color:var(--ink-2);font-style:italic;max-width:74ch}
+.aval .atencao{color:var(--warn)}
+.aval .rotulo{font-weight:700;color:var(--ink)}
+.aval-andamento{margin-top:10px;font-size:14px;color:var(--ink-2)}
+.aval-erro{margin-top:10px;font-size:14px;color:var(--warn)}
+
+/* temas e termos */
+.tax{padding-top:30px;padding-bottom:64px}
+.tax > p{max-width:70ch;color:var(--ink-2);margin:0 0 18px}
+.tax input{width:100%;max-width:520px;border:1.5px solid var(--line);background:var(--sheet);border-radius:4px;padding:10px 12px;margin-bottom:24px}
+.tax-area{margin-bottom:30px}
+.tax-area h3{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:32px;line-height:1;margin:0}
+.tax-area > p{color:var(--ink-3);margin:4px 0 12px;font-size:14px}
+.tax-tema{background:var(--sheet);border-left:4px solid var(--red);padding:12px 16px;margin-bottom:6px}
+.tax-tema h4{margin:0;font-size:16px}
+.tax-tema .sec{font-size:13px;color:var(--ink-3);font-weight:400;margin-left:8px}
+.tax-tema .termos{font-size:14px;color:var(--ink-2);margin:6px 0 0}
+.tax-tema .exc{font-size:13px;color:var(--ink-3);margin:6px 0 0}
+
+/* administração (?admin no endereço) */
+.admin{background:var(--warn-soft);color:var(--ink);border-bottom:1px solid var(--line)}
+.admin .wrap{display:flex;gap:10px 18px;align-items:center;flex-wrap:wrap;padding-top:12px;padding-bottom:12px;font-size:14px}
+.admin p{margin:0;flex:1;min-width:260px;max-width:90ch}
+.admin .btn-go{padding:9px 16px;font-size:15px}
+.admin .btn-go:disabled{opacity:.45;cursor:default}
+.admin-status{flex-basis:100%;font-size:13.5px;color:var(--ink-2)}
+.admin-status:empty{display:none}
+
+footer{background:var(--night);color:#b5bacd;font-size:13.5px}
+footer .wrap{padding-top:22px;padding-bottom:30px}
+footer p{max-width:90ch;margin:0 0 6px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-top">
+      <nav class="tabs" role="tablist" aria-label="Seções">
+        <button role="tab" aria-selected="true" data-tab="busca">Projetos</button>
+        <button role="tab" aria-selected="false" data-tab="taxonomia">Temas e termos</button>
+      </nav>
+    </div>
+    <h1>Os exterminadores<br>do futuro</h1>
+    <p class="slogan">Flávio diz uma coisa<br>e propõe outra</p>
+    <p class="lede">O programa de governo de Flávio Bolsonaro é uma peça de ficção. A plataforma de verdade está nos projetos que ele e seus aliados apresentam no Congresso, e é isso que você vê aqui, tema a tema, com os dados oficiais da Câmara e do Senado.</p>
+    <p class="lede-2">Projetos defendidos pelos parlamentares conservadores e reacionários no Brasil organizados por temas que ameaçam nossos direitos e do Brasil.</p>
+  </div>
+</header>
+<div class="roster">
+  <div class="wrap">
+    <p>O partido de Flávio e os que declararam apoio a ele no segundo turno</p>
+    <ul id="roster"></ul>
+  </div>
+</div>
+<section class="admin" id="admin" aria-label="Administração" hidden></section>
+
+<div id="aba-busca">
+  <section class="searchbar" aria-label="Busca">
+    <form class="wrap" id="form" onsubmit="return false">
+      <fieldset>
+        <legend>Partidos</legend>
+        <div class="chips" id="partidos"></div>
+        <label class="antecessoras"><input type="checkbox" id="antecessoras"> Somar siglas anteriores dos mesmos partidos (PR no PL, DEM e PSL no União Brasil, PTN no Podemos, PPB no PP)</label>
+      </fieldset>
+      <fieldset class="casa-tipo">
+        <legend>Casa e tipo de projeto</legend>
+        <div class="chips" id="casas">
+          <button type="button" class="chip" aria-pressed="true" data-v="camara">Câmara</button>
+          <button type="button" class="chip" aria-pressed="true" data-v="senado">Senado</button>
+        </div>
+        <div class="chips" id="tipos"></div>
+      </fieldset>
+      <fieldset>
+        <legend>Apresentados entre</legend>
+        <div class="datas">
+          <label class="sr" for="inicio">Data inicial</label><input type="date" id="inicio">
+          <label class="sr" for="fim">Data final</label><input type="date" id="fim">
+          <label class="sr" for="preset">Período pronto</label>
+          <select id="preset">
+            <option value="12m">Últimos 12 meses</option>
+            <option value="leg">Legislatura atual</option>
+            <option value="ano">Este ano</option>
+            <option value="ano-1">Ano passado</option>
+            <option value="livre">Datas escolhidas</option>
+          </select>
+        </div>
+      </fieldset>
+      <div class="go">
+        <button type="button" class="btn-go" id="buscar">Buscar projetos</button>
+        <div class="meter" id="meter"><div></div></div>
+        <div class="status" id="status" role="status" aria-live="polite"></div>
+      </div>
+    </form>
+  </section>
+
+  <main>
+    <div class="wrap">
+      <aside class="side" aria-label="Filtrar por tema">
+        <h2>Temas</h2>
+        <label class="toggle"><input type="checkbox" id="so-tema" checked> Mostrar só projetos ligados a algum tema</label>
+        <label class="toggle"><input type="checkbox" id="sem-homenagem" checked> Esconder homenagens e datas comemorativas</label>
+        <label class="toggle"><input type="checkbox" id="so-flavio"> Mostrar só projetos de autoria do próprio Flávio Bolsonaro</label>
+        <label class="toggle"><input type="checkbox" id="so-marcados"> Mostrar só projetos marcados ou avaliados</label>
+        <button type="button" class="clear" id="limpar-temas">Limpar temas escolhidos</button>
+        <div id="filtro-temas"></div>
+      </aside>
+      <section id="resultado"></section>
+    </div>
+  </main>
+</div>
+
+<section id="aba-taxonomia" class="wrap tax" hidden>
+  <p>As áreas, os temas e os termos desta taxonomia foram construídos a partir dos Cadernos do Futuro do Brasil e ampliados com sinônimos e expressões usadas nas ementas. Cada projeto é classificado pela sua ementa. Quando a ementa contém um dos termos abaixo, o projeto entra no tema. Acentos e maiúsculas não contam, e plurais e variações curtas também são reconhecidos.</p>
+  <label class="sr" for="tax-busca">Procurar tema ou termo</label>
+  <input type="search" id="tax-busca" placeholder="Procurar tema ou termo, por exemplo escola sem partido">
+  <div id="taxonomia"></div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>As promessas são trechos literais das Diretrizes do Plano de Governo de Flávio Bolsonaro 2027-2030, com a página do documento. Os projetos vêm das fontes oficiais, a API de Dados Abertos da Câmara dos Deputados e a API de Dados Abertos Legislativos do Senado Federal.</p>
+    <p>A classificação por tema lê a ementa de cada projeto e serve como triagem. Na Câmara, o partido vem do filtro de autoria da própria API. No Senado, vem da sigla registrada na autoria no dia da apresentação.</p>
+  </div>
+</footer>
+
+<script src="config.js?v=20261016d"></script>
+<script>
+// Endereço padrão do serviço intermediário, usado se o config.js não for encontrado ou vier vazio.
+if (!window.MONITOR_PROXY) window.MONITOR_PROXY = 'https://exterminadores-proxy.gorgen-james.workers.dev';
+</script>
+<script src="taxonomia.js?v=20261016d"></script>
+<script src="promessas.js?v=20261016d"></script>
+<script src="motor.js?v=20261016d"></script>
+<script>
+(function(){
+'use strict';
+const TAX = window.TAXONOMIA;
+const TC = Motor.compilarTaxonomia(TAX);
+const TEMA = Object.fromEntries(TAX.temas.map(t => [t.id, t]));
+const CADERNO = Object.fromEntries(TAX.cadernos.map(c => [c.id, c]));
+const NOME_PARTIDO = Object.fromEntries(Motor.PARTIDOS.map(p => [p.id, p.nome]));
+const POR_PAGINA = 30;
+const PROM = (window.PROMESSAS && window.PROMESSAS.porCaderno) || {};
+// Projetos com Flávio Bolsonaro entre os autores (no Senado, a autoria já vem com o nome).
+const ehFlavio = it => (it.autores || []).some(a => Motor.normalizar(a).includes('flavio bolsonaro'));
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt = n => n.toLocaleString('pt-BR');
+
+const estado = { abertos: { promessas: false, matriz: false }, promessaSel: null, promessaPendente: null, marcados: new Set(), avaliando: new Set(), erroAval: {}, itens: [], avisos: [], temas: new Set(), partidoSel: null, cadernoSel: null, texto: '', pagina: 1, buscando: false, consulta: null, opc: null };
+
+// Versões do critério de triagem e de avaliação. Precisam ser iguais às do worker.js
+// (VERSAO_TRIAGEM e VERSAO_AVALIACAO), senão o arquivo triagens.json é ignorado.
+const VERSAO_TRIAGEM = 't7';
+const VERSAO_AVALIACAO = 'v1';
+// Modo de administração, aberto com ?admin no endereço da página.
+const ADMIN = /[?&]admin\b/.test(location.search) || /admin/.test(location.hash);
+
+// Triagens e avaliações vêm de três lugares. O arquivo triagens.json publicado junto com a página,
+// o banco do Worker (consultado depois de cada busca) e o navegador de quem triou ou avaliou.
+// TRI e AVAL reúnem tudo. TRI_LOCAL e AVAL_LOCAL são só o que este navegador gerou.
+const CHAVE_TRI = 'exterminadores-triagem' + VERSAO_TRIAGEM.replace(/^t/, '');
+let AVAL_LOCAL = {};
+try { AVAL_LOCAL = JSON.parse(localStorage.getItem('exterminadores-avaliacoes') || '{}'); } catch (e) { AVAL_LOCAL = {}; }
+const AVAL = Object.assign({}, AVAL_LOCAL);
+function gravarAval(){ try { localStorage.setItem('exterminadores-avaliacoes', JSON.stringify(AVAL_LOCAL)); } catch (e) {} }
+function guardarAval(chave, r){ AVAL[chave] = r; AVAL_LOCAL[chave] = r; gravarAval(); }
+
+let TRI_LOCAL = {};
+try { TRI_LOCAL = JSON.parse(localStorage.getItem(CHAVE_TRI) || '{}'); } catch (e) { TRI_LOCAL = {}; }
+const TRI = Object.assign({}, TRI_LOCAL);
+let triLocalCheio = false;
+function gravarTri(){ try { localStorage.setItem(CHAVE_TRI, JSON.stringify(TRI_LOCAL)); triLocalCheio = false; } catch (e) { triLocalCheio = true; } }
+function guardarTri(res){ Object.assign(TRI, res); Object.assign(TRI_LOCAL, res); gravarTri(); }
+// Junta resultados vindos de fora sem sobrescrever o que já se tem.
+function somarTri(res){ let n = 0; for (const k in res) if (!TRI[k] && res[k] && res[k].d) { TRI[k] = res[k]; n++; } return n; }
+function somarAval(res){ let n = 0; for (const k in res) if (!AVAL[k] && res[k] && res[k].avaliacao) { AVAL[k] = res[k]; n++; } return n; }
+
+// Arquivo fixo com as triagens já feitas, publicado na mesma pasta da página.
+const arquivo = { triagens: 0, avaliacoes: 0, gerado: '', situacao: 'carregando' };
+const arquivoPronto = fetch('triagens.json', { cache: 'no-cache' })
+  .then(r => r.ok ? r.json() : null)
+  .then(j => {
+    if (!j) { arquivo.situacao = 'ausente'; return; }
+    if (j.versao !== VERSAO_TRIAGEM) { arquivo.situacao = 'outra versao'; return; }
+    arquivo.triagens = Object.keys(j.triagens || {}).length;
+    arquivo.gerado = j.gerado || '';
+    somarTri(j.triagens || {});
+    if (j.versaoAvaliacao === VERSAO_AVALIACAO) { arquivo.avaliacoes = Object.keys(j.avaliacoes || {}).length; somarAval(j.avaliacoes || {}); }
+    arquivo.situacao = 'ok';
+    if (estado.opc) desenhar();
+  })
+  .catch(() => { arquivo.situacao = 'ausente'; })
+  .finally(() => desenharAdmin());
+
+// Depois de cada busca, pergunta ao Worker o que já foi triado por qualquer pessoa, sem chamar a IA.
+let avaliacoesConsultadas = false;
+async function consultarGuardadas(){
+  await arquivoPronto;
+  const proxy = (window.MONITOR_PROXY || '').replace(/\/+$/, '');
+  if (!proxy) return;
+  const faltam = candidatosTriagem().filter(it => !TRI[it.chave]).map(it => it.chave);
+  const pedirAval = !avaliacoesConsultadas;
+  if (!faltam.length && !pedirAval) return;
+  const partes = [];
+  for (let i = 0; i < faltam.length; i += 500) partes.push(faltam.slice(i, i + 500));
+  if (!partes.length) partes.push([]);
+  let novos = 0;
+  await Motor.emParalelo(partes.map((parte, i) => async () => {
+    try {
+      const r = await fetch(proxy + '/consultar', { method: 'POST', headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ chaves: parte, avaliacoes: pedirAval && i === 0 }) });
+      if (!r.ok) return;
+      const j = await r.json();
+      novos += somarTri(j.resultados || {}) + somarAval(j.avaliacoes || {});
+      if (pedirAval && i === 0) avaliacoesConsultadas = true;
+    } catch (e) { /* o Worker antigo não tem esta rota; segue sem ela */ }
+  }), 2);
+  if (novos && estado.opc) desenhar();
+}
+const triagem = { rodando: false, parar: false, feitos: 0, total: 0, erro: '', fd: 'todos', fc: 'todos' };
+// Grupos de efeito. "p-<área>" seleciona os que prejudicam aquela área; "prejudica" seleciona todos que prejudicam.
+const grupoEfeito = t => t.d === 'prejudica' ? (TEMA[t.t] ? 'p-' + TEMA[t.t].caderno : 'incerto') : t.d === 'incerto' ? 'incerto' : 'sem';
+const passaTriagem = it => {
+  if (triagem.fd === 'todos' && triagem.fc === 'todos') return true;
+  const t = TRI[it.chave]; if (!t) return false;
+  if (triagem.fd === 'prejudica' && !grupoEfeito(t).startsWith('p-')) return false;
+  if (triagem.fd !== 'todos' && triagem.fd !== 'prejudica' && grupoEfeito(t) !== triagem.fd) return false;
+  if (triagem.fc !== 'todos' && t.c !== triagem.fc) return false;
+  return true;
+};
+const qualTriagem = dele => {
+  const fd = triagem.fd;
+  const d = fd === 'prejudica' ? ' com efeito negativo' : fd.startsWith('p-') ? ' com efeito negativo em ' + CADERNO[fd.slice(2)].subtitulo.toLowerCase()
+    : { incerto: ' com efeito a conferir', sem: ' sem efeito negativo aparente' }[fd] || '';
+  const quem = dele ? ' dele' : ' de Flávio';
+  const c = { contradiz: ' que contradizem o programa' + quem, omite: ' omitidos no programa' + quem, declara: ' declarados no programa' + quem }[triagem.fc] || '';
+  return d + (d && c ? ',' : '') + c;
+};
+
+function lerPref(){ try { return JSON.parse(localStorage.getItem('exterminadores-pref') || '{}'); } catch(e){ return {}; } }
+function gravarPref(p){ try { localStorage.setItem('exterminadores-pref', JSON.stringify(p)); } catch(e){} }
+
+// ---------------------------------------------------------------- abertura e controles
+$('#roster').innerHTML = Motor.PARTIDOS.filter(p => p.id !== 'PRB')
+  .map(p => `<li>${esc(p.nome)}</li>`).join('');
+
+function montarChips(el, valores, ativos){
+  el.innerHTML = valores.map(([v, rot]) => `<button type="button" class="chip" aria-pressed="${ativos.includes(v)}" data-v="${esc(v)}">${esc(rot)}</button>`).join('');
+}
+function ligarChips(el){
+  el.addEventListener('click', e => {
+    const b = e.target.closest('.chip'); if (!b) return;
+    b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+  });
+}
+const lerChips = el => [...el.querySelectorAll('.chip[aria-pressed="true"]')].map(b => b.dataset.v);
+
+const pref = lerPref();
+const idsValidos = Motor.PARTIDOS.map(p => p.id);
+const prefPartidos = (pref.partidos || []).filter(id => idsValidos.includes(id));
+montarChips($('#partidos'), Motor.PARTIDOS.map(p => [p.id, p.nome]), prefPartidos.length ? prefPartidos : idsValidos);
+montarChips($('#tipos'), Motor.TIPOS.map(t => [t, t]), pref.tipos || ['PL', 'PLP', 'PEC']);
+[$('#partidos'), $('#tipos'), $('#casas')].forEach(ligarChips);
+if (pref.antecessoras) $('#antecessoras').checked = true;
+
+const hoje = new Date();
+const isoD = d => d.toISOString().slice(0,10);
+function preset(p){
+  if (p === 'livre') return;
+  let i, f = new Date(hoje);
+  if (p === '12m') { i = new Date(hoje); i.setFullYear(i.getFullYear() - 1); }
+  if (p === 'leg') i = new Date('2023-02-01T00:00:00Z');
+  if (p === 'ano') i = new Date(Date.UTC(hoje.getFullYear(), 0, 1));
+  if (p === 'ano-1') { i = new Date(Date.UTC(hoje.getFullYear() - 1, 0, 1)); f = new Date(Date.UTC(hoje.getFullYear() - 1, 11, 31)); }
+  $('#inicio').value = isoD(i); $('#fim').value = isoD(f);
+}
+$('#preset').addEventListener('change', e => preset(e.target.value));
+['#inicio', '#fim'].forEach(s => $(s).addEventListener('change', () => { $('#preset').value = 'livre'; }));
+preset('12m');
+
+// ---------------------------------------------------------------- acesso às APIs
+const memo = new Map();
+const emAndamento = new Map();
+function buscarJson(url){
+  if (memo.has(url)) return memo.get(url);
+  const p = baixar(url);
+  memo.set(url, p);
+  p.catch(() => memo.delete(url));
+  return p;
+}
+async function baixar(url){
+  const proxy = (window.MONITOR_PROXY || '').replace(/\/+$/, '');
+  const alvo = proxy ? proxy + '/?url=' + encodeURIComponent(url) : url;
+  let espera = 800;
+  for (let tentativa = 0; tentativa < 2; tentativa++){
+    if (estado.consulta && estado.consulta.signal.aborted) throw new Error('cancelado');
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 35000);
+    const marca = {}; emAndamento.set(marca, Date.now());
+    const parar = () => ctrl.abort();
+    estado.consulta && estado.consulta.signal.addEventListener('abort', parar);
+    try {
+      const r = await fetch(alvo, { signal: ctrl.signal, headers: { 'Accept': 'application/json' } });
+      if (r.ok) {
+        const tipo = r.headers.get('content-type') || '';
+        if (!tipo.includes('json')) throw Object.assign(new Error('resposta_nao_json'), { definitivo: true, servico: true });
+        return await r.json();
+      }
+      if (r.status === 403) throw Object.assign(new Error('origem_recusada'), { definitivo: true, servico: true });
+      if (r.status === 400 || r.status === 404) throw Object.assign(new Error('http ' + r.status), { definitivo: true });
+    } catch (e) {
+      if (e.definitivo) throw e;
+      if (estado.consulta && estado.consulta.signal.aborted) throw new Error('cancelado');
+    } finally {
+      clearTimeout(timer);
+      emAndamento.delete(marca);
+      estado.consulta && estado.consulta.signal.removeEventListener('abort', parar);
+    }
+    await new Promise(r => setTimeout(r, espera)); espera *= 2;
+  }
+  throw new Error('falha ' + url);
+}
+
+// ---------------------------------------------------------------- busca
+$('#buscar').addEventListener('click', () => {
+  if (estado.buscando) { estado.consulta.abort(); return; }
+  const opc = {
+    partidos: lerChips($('#partidos')), casas: lerChips($('#casas')), tipos: lerChips($('#tipos')),
+    antecessoras: $('#antecessoras').checked, inicio: $('#inicio').value, fim: $('#fim').value, paralelo: 4
+  };
+  if (!opc.partidos.length || !opc.casas.length || !opc.tipos.length) { $('#status').textContent = 'Escolha ao menos um partido, uma Casa e um tipo de projeto.'; return; }
+  if (!opc.inicio || !opc.fim || opc.inicio > opc.fim) { $('#status').textContent = 'A data inicial precisa vir antes da final.'; return; }
+  gravarPref({ partidos: opc.partidos, tipos: opc.tipos, antecessoras: opc.antecessoras });
+  executarBusca(opc, false);
+});
+
+// Roda a busca. Com "completar", repete a mesma busca mantendo os filtros de tema;
+// as consultas que já deram certo vêm da memória e só as que falharam são refeitas.
+async function executarBusca(opc, completar){
+  estado.buscando = true; estado.consulta = new AbortController();
+  const btn = $('#buscar'); btn.textContent = 'Parar busca'; btn.dataset.busy = 'true';
+  const meter = $('#meter'); meter.style.visibility = 'visible'; meter.firstElementChild.style.width = '0%';
+  $('#status').textContent = 'Consultando a Câmara e o Senado';
+  const t0 = Date.now();
+  const encerrar = () => { estado.buscando = false; btn.textContent = 'Buscar projetos'; btn.dataset.busy = 'false'; setTimeout(() => { meter.style.visibility = 'hidden'; }, 600); };
+  // Testa o caminho até as APIs antes de disparar centenas de consultas.
+  try {
+    await baixar('https://dadosabertos.camara.leg.br/api/v2/referencias/proposicoes/siglaTipo');
+  } catch (e) {
+    encerrar();
+    const proxy = window.MONITOR_PROXY || '';
+    $('#status').textContent = !proxy
+      ? 'Não foi possível acessar as APIs do Congresso diretamente. Configure o endereço do serviço intermediário no arquivo config.js.'
+      : e.message === 'resposta_nao_json'
+        ? 'O endereço em config.js responde com uma página, e não com dados. Confira se ali está o Worker que contém o código do worker.js.'
+        : e.message === 'origem_recusada'
+          ? 'O serviço intermediário recusou esta página. No Cloudflare, confira se ORIGENS_PERMITIDAS contém o endereço desta página (' + location.origin + ') e publique de novo.'
+          : 'As APIs do Congresso não estão respondendo agora. Tente de novo em alguns minutos.';
+    return;
+  }
+  try {
+    let feitoAtual = 0, totalAtual = 0;
+    const atualizar = () => {
+      const lentas = [...emAndamento.values()].filter(t => Date.now() - t > 8000).length;
+      const seg = Math.round((Date.now() - t0) / 1000);
+      $('#status').textContent = `${feitoAtual} de ${totalAtual} consultas concluídas em ${seg} s.` +
+        (lentas ? ` Aguardando ${lentas} ${lentas === 1 ? 'resposta lenta' : 'respostas lentas'} das APIs. A busca continua sozinha.` : '');
+    };
+    const relogio = setInterval(atualizar, 1000);
+    let r;
+    try {
+      r = await Motor.buscar(opc, TC, buscarJson, (feito, total) => {
+        feitoAtual = feito; totalAtual = total;
+        meter.firstElementChild.style.width = (total ? Math.round(100 * feito / total) : 0) + '%';
+        atualizar();
+      });
+    } finally { clearInterval(relogio); }
+    estado.itens = r.itens; estado.avisos = r.avisos; estado.opc = opc;
+    if (!completar) { estado.temas.clear(); estado.partidoSel = null; estado.cadernoSel = null; estado.texto = ''; estado.promessaSel = null; }
+    if (estado.promessaPendente) { aplicarPromessa(estado.promessaPendente); estado.promessaPendente = null; }
+    estado.pagina = 1;
+    $('#status').textContent = `${fmt(r.itens.length)} projetos recebidos em ${Math.round((Date.now() - t0) / 1000)} s`;
+    desenhar();
+    consultarGuardadas();
+  } catch (e) {
+    $('#status').textContent = estado.consulta.signal.aborted ? 'Busca interrompida.' : 'A busca não terminou porque as APIs não responderam. Tente de novo ou diminua o período.';
+  } finally { encerrar(); }
+}
+
+// ---------------------------------------------------------------- filtros locais
+['#so-tema', '#sem-homenagem', '#so-marcados', '#so-flavio'].forEach(s => $(s).addEventListener('change', () => { estado.pagina = 1; desenhar(); }));
+$('#limpar-temas').addEventListener('click', () => { estado.temas.clear(); estado.cadernoSel = null; estado.promessaSel = null; estado.pagina = 1; desenhar(); });
+$('#filtro-temas').addEventListener('change', e => {
+  const c = e.target.closest('input[data-tema]'); if (!c) return;
+  c.checked ? estado.temas.add(c.dataset.tema) : estado.temas.delete(c.dataset.tema);
+  estado.cadernoSel = null; estado.promessaSel = null; estado.pagina = 1; desenhar();
+});
+
+function baseFiltrada(semTriagem){
+  const txt = Motor.normalizar(estado.texto.trim());
+  return estado.itens.filter(it => {
+    if ($('#sem-homenagem').checked && it.homenagem) return false;
+    if ($('#so-marcados').checked && !estado.marcados.has(it.chave) && !AVAL[it.chave]) return false;
+    if ($('#so-flavio').checked && !ehFlavio(it)) return false;
+    if (!semTriagem && !passaTriagem(it)) return false;
+    if (estado.temas.size) { if (!it.temas.some(t => estado.temas.has(t.id))) return false; }
+    else if ($('#so-tema').checked && !it.temas.length) return false;
+    if (txt && !Motor.normalizar(it.chave + ' ' + it.ementa + ' ' + (it.autores || []).join(' ')).includes(txt)) return false;
+    return true;
+  });
+}
+const temasDoItem = it => estado.temas.size ? it.temas.filter(t => estado.temas.has(t.id)) : it.temas;
+function filtrados(base){
+  return base.filter(it => {
+    if (estado.partidoSel && !it.partidos.some(p => colunaDe(p) === estado.partidoSel)) return false;
+    if (estado.cadernoSel && !temasDoItem(it).some(t => TEMA[t.id].caderno === estado.cadernoSel)) return false;
+    return true;
+  });
+}
+
+// ---------------------------------------------------------------- desenho
+function desenharFiltroTemas(){
+  const temDados = estado.itens.length > 0;
+  const base = baseParaPromessas();
+  const n = {};
+  base.forEach(it => it.temas.forEach(t => n[t.id] = (n[t.id] || 0) + 1));
+  const abertos = new Set([...document.querySelectorAll('#filtro-temas details[open]')].map(d => d.dataset.c));
+  $('#filtro-temas').innerHTML = TAX.cadernos.map(c => {
+    const temas = TAX.temas.filter(t => t.caderno === c.id);
+    const soma = base.filter(it => it.temas.some(t => TEMA[t.id].caderno === c.id)).length;
+    const aberto = abertos.has(c.id) || temas.some(t => estado.temas.has(t.id));
+    return `<details class="grupo" data-c="${c.id}" ${aberto ? 'open' : ''}>
+      <summary><span><b>${esc(c.subtitulo)}</b></span>${temDados ? `<span class="n">${fmt(soma)}</span>` : ''}</summary>
+      <div class="itens">${temas.map(t => `<label class="opt ${temDados && !n[t.id] ? 'vazio' : ''}"><span><input type="checkbox" data-tema="${t.id}" ${estado.temas.has(t.id) ? 'checked' : ''}>${esc(t.tema)}</span>${temDados ? `<span class="n">${fmt(n[t.id] || 0)}</span>` : ''}</label>`).join('')}</div>
+    </details>`;
+  }).join('');
+}
+
+// ---------------------------------------------------------------- Flávio promete, mas olha
+const chavePromessa = (c, i) => c + ':' + i;
+const promessaDe = k => { if (!k) return null; const [c, i] = k.split(':'); return PROM[c] && PROM[c][+i] ? Object.assign({ caderno: c }, PROM[c][+i]) : null; };
+
+// Base para contar o que cada promessa esconde, com os filtros gerais e sem os temas escolhidos.
+function baseParaPromessas(){
+  return estado.itens.filter(it => {
+    if ($('#sem-homenagem').checked && it.homenagem) return false;
+    if ($('#so-flavio').checked && !ehFlavio(it)) return false;
+    if (!passaTriagem(it)) return false;
+    return true;
+  });
+}
+function contarPromessa(pr, base){ const ids = new Set(pr.temas); return base.filter(it => it.temas.some(t => ids.has(t.id))).length; }
+
+function aplicarPromessa(k){
+  const pr = promessaDe(k); if (!pr) return;
+  estado.temas = new Set(pr.temas.filter(id => TEMA[id]));
+  estado.promessaSel = k; estado.cadernoSel = null; estado.partidoSel = null; estado.pagina = 1;
+}
+
+function quemPropoe(){ return $('#so-flavio').checked ? 'do próprio Flávio' : 'de Flávio e aliados'; }
+
+function cartoesPromessas(){
+  const temDados = !!estado.opc;
+  const base = temDados ? baseParaPromessas() : [];
+  return TAX.cadernos.filter(c => PROM[c.id]).map(c => `<section class="area-bloco">
+    <h3>${esc(c.subtitulo)}</h3>
+    <div class="prom-grid">${PROM[c.id].map((pr, i) => {
+      const k = chavePromessa(c.id, i);
+      const n = temDados ? contarPromessa(pr, base) : 0;
+      const faz = temDados
+        ? `<p><strong>${fmt(n)}</strong> ${n === 1 ? 'projeto' : 'projetos'} ${quemPropoe()}${qualTriagem(true)} mostram ${esc(pr.olhe)}.</p>
+           <button type="button" data-prom="${k}" ${n ? '' : 'disabled'}>${n ? 'Ver os projetos' : 'Nada no período'}</button>`
+        : `<p>Veja nos projetos do Congresso ${esc(pr.olhe)}.</p>
+           <button type="button" data-prom="${k}">Buscar os projetos</button>`;
+      return `<article class="prom ${estado.promessaSel === k ? 'sel' : ''}">
+        <div class="diz"><p class="rot">Flávio promete</p><blockquote>${esc(pr.trecho)}</blockquote><p class="pag">Programa de governo, p. ${pr.pagina}</p></div>
+        <div class="faz"><p class="rot">Mas olha</p>${faz}</div>
+      </article>`;
+    }).join('')}</div>
+  </section>`).join('');
+}
+
+function ligarPromessas(){
+  document.querySelectorAll('button[data-prom]').forEach(b => b.addEventListener('click', () => {
+    const k = b.dataset.prom;
+    if (!estado.opc) { estado.promessaPendente = k; $('#buscar').click(); return; }
+    aplicarPromessa(k); desenhar();
+    const alvo = $('#contraste') || $('#lista'); if (alvo) alvo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }));
+}
+
+function desenharMapa(){
+  $('#resultado').innerHTML = `<div class="promessas-sec">
+    <h2>Flávio promete. Olha o que eles propõem.</h2>
+    <p>Cada cartão traz um trecho literal do programa de governo de Flávio Bolsonaro, com a página. Embaixo, o que o PL e os partidos aliados vêm apresentando no Congresso sobre o mesmo assunto. Escolha o período na barra acima e clique em Buscar projetos, ou clique direto num cartão.</p>
+    ${cartoesPromessas()}
+  </div>`;
+  ligarPromessas();
+}
+
+// Faixa que põe lado a lado a promessa escolhida e os projetos encontrados.
+function contraste(lista){
+  const pr = promessaDe(estado.promessaSel); if (!pr) return '';
+  return `<div class="contraste" id="contraste">
+    <div class="c-diz"><p class="rot">Flávio promete</p><blockquote>“${esc(pr.trecho)}”</blockquote><p class="pag">Programa de governo, p. ${pr.pagina}</p></div>
+    <div class="c-faz"><p class="rot">Mas olha o que ${$('#so-flavio').checked ? 'ele propõe' : 'eles propõem'}</p><p><strong>${fmt(lista.length)}</strong> ${lista.length === 1 ? 'projeto' : 'projetos'} ${quemPropoe()}${qualTriagem(true)}, apresentados ${periodoTexto()}, mostram ${esc(pr.olhe)}. Leia as ementas, marque os que contradizem a promessa e peça a avaliação do texto integral.</p></div>
+  </div>`;
+}
+
+// Cabeçalho clicável das seções que abrem e fecham.
+function resumoSecao(titulo, sub){
+  return `<summary><span class="sum-texto"><span class="sum-titulo">${esc(titulo)}</span><span class="sum-sub">${esc(sub)}</span></span>
+    <span class="sum-acao" aria-hidden="true"><span class="abrir">Abrir</span><span class="fechar">Fechar</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></summary>`;
+}
+// Guarda quais seções a pessoa abriu, para continuarem abertas quando a página se redesenha.
+document.addEventListener('toggle', e => {
+  const d = e.target; if (!d.matches || !d.matches('details[data-secao]')) return;
+  estado.abertos[d.dataset.secao] = d.open;
+}, true);
+
+function periodoTexto(){
+  const d = s => s.split('-').reverse().join('/');
+  return estado.opc ? `entre ${d(estado.opc.inicio)} e ${d(estado.opc.fim)}` : '';
+}
+
+function desenhar(){
+  desenharFiltroTemas();
+  if (!estado.opc) { desenharMapa(); return; }
+  const base = baseFiltrada();
+  const lista = filtrados(base);
+  const partidos = estado.opc.partidos;
+  const nTemas = new Set(lista.flatMap(it => temasDoItem(it).map(t => t.id))).size;
+  const nPartidos = new Set(lista.flatMap(it => it.partidos.map(p => p === 'PRB' ? 'REPUBLICANOS' : p))).size;
+  const nFlavio = lista.filter(ehFlavio).length;
+  const avisos = blocoFaltou();
+  const metodo = notaMetodo();
+  const faltaFlavio = $('#so-flavio').checked && (!estado.opc.casas.includes('senado') || !estado.opc.partidos.includes('PL'));
+  const avisoFlavio = faltaFlavio ? '<p class="metodo">Flávio Bolsonaro é senador pelo PL desde o fim de 2021, depois de passar por PSL e Republicanos. Para ver os projetos dele, inclua o Senado e o PL na busca.</p>' : '';
+  if (!estado.itens.length){
+    $('#resultado').innerHTML = avisos + `<div class="vazio-box"><p>Nenhum projeto desses partidos e tipos foi apresentado ${periodoTexto()}. Amplie o período ou inclua outros tipos de projeto.</p></div>`;
+    return;
+  }
+  $('#resultado').innerHTML = `
+    ${avisos}
+    <p class="frase"><strong>${fmt(lista.length)}</strong> projetos de ${nPartidos} ${nPartidos === 1 ? 'partido' : 'partidos'} em ${nTemas} ${nTemas === 1 ? 'tema' : 'temas'}${esc(qualTriagem())}, apresentados ${periodoTexto()}.${nFlavio && !$('#so-flavio').checked ? ` Destes, ${fmt(nFlavio)} ${nFlavio === 1 ? 'tem' : 'têm'} o próprio Flávio Bolsonaro como autor.` : ''}</p>
+    ${metodo}${avisoFlavio}
+    <section class="triagem" id="triagem" aria-label="Triagem por IA">${painelTriagem()}</section>
+    <details class="detalhe promessas-sec" data-secao="promessas" ${estado.abertos.promessas ? 'open' : ''}>
+      ${resumoSecao('Flávio promete, mas olha o que eles propõem', 'Trechos do programa de Flávio ao lado dos projetos do campo dele sobre o mesmo assunto')}
+      <div class="corpo">${cartoesPromessas()}</div>
+    </details>
+    <details class="detalhe" data-secao="matriz" ${estado.abertos.matriz ? 'open' : ''}>
+      ${resumoSecao('Projetos por partido e área', 'Quantos projetos cada partido apresentou em cada área')}
+      <div class="corpo"><div class="matrix-box">
+        <p>Quanto mais escura a célula, mais projetos. Clique numa célula para ver só aqueles projetos.</p>
+        <div class="matrix-wrap">${matriz(base, partidos)}</div>
+      </div></div>
+    </details>
+    <div class="toolbar">
+      <label class="sr" for="texto">Procurar nos projetos encontrados</label>
+      <input type="search" id="texto" placeholder="Procurar nos projetos encontrados (número, palavra ou autor)" value="${esc(estado.texto)}">
+      <button type="button" class="btn-sec" id="csv">Baixar planilha</button>
+    </div>
+    ${contraste(lista)}
+    <div class="ativos">${chipsAtivos()}</div>
+    <div class="lista" id="lista"></div>
+    <div class="pager" id="pager"></div>`;
+  $('#texto').addEventListener('input', e => {
+    estado.texto = e.target.value; estado.pagina = 1;
+    const l = filtrados(baseFiltrada());
+    $('.frase strong').textContent = fmt(l.length);
+    desenharLista(l);
+  });
+  $('#csv').addEventListener('click', () => baixarCSV(filtrados(baseFiltrada())));
+  ligarPromessas();
+  const completar = $('#completar');
+  if (completar) completar.addEventListener('click', () => { if (!estado.buscando) executarBusca(estado.opc, true); });
+  $('.matrix').addEventListener('click', e => {
+    const td = e.target.closest('td[data-p]'); if (!td) return;
+    const p = td.dataset.p || null;
+    const igual = estado.partidoSel === p && estado.cadernoSel === td.dataset.c;
+    estado.partidoSel = igual ? null : p; estado.cadernoSel = igual ? null : td.dataset.c; estado.pagina = 1; desenhar();
+  });
+  $('.ativos').addEventListener('click', e => {
+    const b = e.target.closest('button[data-rm]'); if (!b) return;
+    const k = b.dataset.rm;
+    if (k === 'partido') estado.partidoSel = null; else if (k === 'caderno') estado.cadernoSel = null; else { estado.temas.delete(k); estado.promessaSel = null; }
+    estado.pagina = 1; desenhar();
+  });
+  desenharLista(lista);
+}
+
+const NOME_SIGLA = { 'UNIÃO': 'União Brasil', 'PODE': 'Podemos', 'REPUBLICANOS': 'Republicanos', 'NOVO': 'Novo' };
+const nomeSigla = s => NOME_SIGLA[s] || s;
+function listaHumana(xs){ return xs.length < 2 ? xs.join('') : xs.slice(0, -1).join(', ') + ' e ' + xs[xs.length - 1]; }
+
+// Junta as consultas que falharam numa única observação, sem jargão técnico.
+function blocoFaltou(){
+  const falhas = estado.avisos.filter(a => a.tipo === 'falha');
+  if (!falhas.length) return '';
+  const linhas = [];
+  const porAno = {};
+  falhas.filter(f => f.casa === 'Câmara' && f.sigla).forEach(f => { (porAno[f.ano] = porAno[f.ano] || new Set()).add(nomeSigla(f.sigla)); });
+  Object.keys(porAno).sort().forEach(ano => linhas.push(`Câmara, projetos de ${ano}, de ${listaHumana([...porAno[ano]])}`));
+  const paginas = falhas.filter(f => f.casa === 'Câmara' && f.paginas).reduce((n, f) => n + f.paginas, 0);
+  if (paginas) linhas.push(`Câmara, ${paginas} ${paginas === 1 ? 'página' : 'páginas'} de resultados`);
+  const sen = falhas.filter(f => f.casa === 'Senado').sort((a, b) => a.ini.localeCompare(b.ini));
+  if (sen.length) linhas.push(`Senado, ${sen.length} ${sen.length === 1 ? 'quinzena' : 'quinzenas'} entre ${dataBR(sen[0].ini)} e ${dataBR(sen[sen.length - 1].fim)}`);
+  return `<div class="faltou" role="note">
+    <div><b>Parte dos dados ainda não chegou</b>
+    <p>As APIs da Câmara e do Senado demoraram a responder a algumas consultas, por isso os números abaixo podem estar incompletos.</p>
+    <ul>${linhas.map(l => `<li>${esc(l)}</li>`).join('')}</ul></div>
+    <button type="button" class="btn-sec" id="completar">Buscar de novo o que faltou</button>
+  </div>`;
+}
+
+function notaMetodo(){
+  const m = estado.avisos.filter(a => a.tipo === 'metodo');
+  if (!m.length) return '';
+  return `<p class="metodo">${m.map(a => `Na Câmara, os projetos do ${esc(nomeSigla(a.sigla))} foram reunidos pela lista dos ${a.deputados} deputados atuais do partido, porque a API não permite filtrar por essa sigla.`).join(' ')}</p>`;
+}
+
+function chipsAtivos(){
+  const out = [];
+  if (estado.partidoSel) out.push(`<span class="ativo">${esc(NOME_PARTIDO[estado.partidoSel])}<button data-rm="partido" aria-label="Tirar filtro de partido">×</button></span>`);
+  if (estado.cadernoSel) out.push(`<span class="ativo">${esc(CADERNO[estado.cadernoSel].subtitulo)}<button data-rm="caderno" aria-label="Tirar filtro de área">×</button></span>`);
+  estado.temas.forEach(id => out.push(`<span class="ativo">${esc(TEMA[id].tema)}<button data-rm="${esc(id)}" aria-label="Tirar tema">×</button></span>`));
+  return out.join('');
+}
+
+function corCalor(n, max){
+  const r = n / max;
+  return r > .75 ? 'var(--heat-4)' : r > .5 ? 'var(--heat-3)' : r > .25 ? 'var(--heat-2)' : 'var(--heat-1)';
+}
+// PRB é a sigla antiga do Republicanos, então os dois somam na mesma coluna.
+const colunaDe = p => p === 'PRB' ? 'REPUBLICANOS' : p;
+function matriz(base, partidosBusca){
+  const partidos = [...new Set(partidosBusca.map(colunaDe))];
+  const cont = {}, totC = {}, totP = {}; let max = 0, maxC = 0, totalGeral = 0;
+  for (const it of base){
+    const cads = new Set(temasDoItem(it).map(t => TEMA[t.id].caderno));
+    const ps = new Set(it.partidos.map(colunaDe));
+    for (const p of ps){
+      totP[p] = (totP[p] || 0) + 1;
+      for (const c of cads){ const k = p + '|' + c; cont[k] = (cont[k] || 0) + 1; max = Math.max(max, cont[k]); }
+    }
+    // O total da área conta cada projeto uma vez, mesmo com coautores de partidos diferentes.
+    for (const c of cads){ totC[c] = (totC[c] || 0) + 1; maxC = Math.max(maxC, totC[c]); }
+    totalGeral++;
+  }
+  const celula = (n, mx, p, c, rotulo) => {
+    if (!n) return '<td class="zero" style="background:var(--heat-0)">0</td>';
+    const sel = (estado.partidoSel || '') === p && estado.cadernoSel === c ? 'sel' : '';
+    const forte = n / mx > .5;
+    return `<td class="${sel}" data-p="${p}" data-c="${c}" tabindex="0" style="background:${corCalor(n, mx)};color:${forte ? '#fff' : '#151a2e'}" title="${esc(rotulo)}: ${n} projetos">${fmt(n)}</td>`;
+  };
+  const head = '<tr><th><span class="sr">Área</span></th>' + partidos.map(p => `<th scope="col">${esc(NOME_PARTIDO[p])}</th>`).join('') + '<th scope="col" class="col-total">Total</th></tr>';
+  const linhas = TAX.cadernos.map(c => '<tr><th scope="row">' + esc(c.subtitulo) + '</th>' +
+    partidos.map(p => celula(cont[p + '|' + c.id] || 0, max, p, c.id, `${NOME_PARTIDO[p]}, ${c.subtitulo}`)).join('') +
+    celula(totC[c.id] || 0, maxC, '', c.id, `Todos os partidos, ${c.subtitulo}`).replace('<td ', '<td data-total="1" ') + '</tr>').join('');
+  const rodape = '<tr><th scope="row">Total do partido</th>' + partidos.map(p => `<td>${fmt(totP[p] || 0)}</td>`).join('') + `<td>${fmt(totalGeral)}</td></tr>`;
+  return `<table class="matrix"><thead>${head}</thead><tbody>${linhas}</tbody><tfoot>${rodape}</tfoot></table>`;
+}
+
+function marcar(ementa, trechos){
+  if (!trechos.length) return esc(ementa);
+  const ord = trechos.slice().sort((a, b) => a[0] - b[0]);
+  const fund = [];
+  for (const t of ord){ const u = fund[fund.length - 1]; if (u && t[0] <= u[1]) u[1] = Math.max(u[1], t[1]); else fund.push(t.slice()); }
+  let out = '', pos = 0;
+  for (const [i, f] of fund){ out += esc(ementa.slice(pos, i)) + '<mark>' + esc(ementa.slice(i, f)) + '</mark>'; pos = f; }
+  return out + esc(ementa.slice(pos));
+}
+const dataBR = s => s ? s.slice(0,10).split('-').reverse().join('/') : '';
+
+function desenharLista(lista){
+  const paginas = Math.max(1, Math.ceil(lista.length / POR_PAGINA));
+  estado.pagina = Math.min(estado.pagina, paginas);
+  const ini = (estado.pagina - 1) * POR_PAGINA;
+  const pag = lista.slice(ini, ini + POR_PAGINA);
+  $('#lista').innerHTML = pag.length ? pag.map(it => {
+    const ts = temasDoItem(it);
+    const trechos = ts.flatMap(t => it.temas.find(x => x.id === t.id).trechos);
+    const via = it.viaDeputados.length ? `<span class="alerta" title="A API da Câmara recusou o filtro por sigla, então vale o partido atual do deputado">${esc(it.viaDeputados.join(', '))} pelo partido atual do autor</span>` : '';
+    const autores = it.autores ? esc(it.autores.join('; ')) : (it.idCamara ? `<span data-autores="${it.idCamara}">Carregando autores</span>` : '');
+    const situacao = it.situacao ? it.situacao.charAt(0) + it.situacao.slice(1).toLowerCase() : '';
+    const marcado = estado.marcados.has(it.chave);
+    const flavio = ehFlavio(it);
+    return `<article class="ficha ${marcado ? 'marcada' : ''} ${flavio ? 'do-flavio' : ''}" data-chave="${esc(it.chave)}">
+      <div class="topo"><span class="num">${esc(it.chave)}</span><span class="casa">${it.casa.join(' e ')}</span>${flavio ? '<span class="flavio">Autoria de Flávio Bolsonaro</span>' : ''}${seloTriagem(it)}${it.siglasEncontradas.map(s => `<span class="partido">${esc(s)}</span>`).join('')}${via}<span class="data">${dataBR(it.data)}</span>
+        <label class="marca"><input type="checkbox" data-marcar="${esc(it.chave)}" ${marcado ? 'checked' : ''}> ${AVAL[it.chave] ? 'Avaliado' : 'Marcar para avaliar'}</label></div>
+      <p class="ementa">${marcar(it.ementa, trechos)}</p>
+      <div class="temas">${ts.map(t => `<span class="tema" title="Termos encontrados: ${esc(t.termos.join(', '))}">${esc(TEMA[t.id].tema)}</span>`).join('')}</div>
+      ${TRI[it.chave] && TRI[it.chave].m ? `<p class="tri-motivo"><b>Triagem.</b> ${esc(TRI[it.chave].m)}</p>` : ''}
+      <div class="rodape-ficha">${autores ? `<span>${autores}</span>` : ''}${situacao ? `<span>${esc(situacao)}</span>` : ''}${it.link ? `<a href="${esc(it.link)}" target="_blank" rel="noopener">Ver ficha oficial</a>` : ''}</div>
+      ${painelAvaliacao(it)}
+    </article>`;
+  }).join('') : '<div class="vazio-box"><p>Nenhum projeto atende a esses filtros. Tire algum tema ou clique de novo na célula escolhida.</p></div>';
+  $('#pager').innerHTML = paginas > 1 ? `<button type="button" class="btn-sec" data-pg="-1" ${estado.pagina === 1 ? 'disabled' : ''}>Anteriores</button><span>Página ${estado.pagina} de ${paginas}</span><button type="button" class="btn-sec" data-pg="1" ${estado.pagina === paginas ? 'disabled' : ''}>Próximos</button>` : '';
+  $('#pager').onclick = e => { const b = e.target.closest('button[data-pg]'); if (!b) return; estado.pagina += +b.dataset.pg; desenharLista(filtrados(baseFiltrada())); $('#lista').scrollIntoView(); };
+  carregarAutores(pag);
+  desenharBarra();
+}
+
+// ---------------------------------------------------------------- triagem por IA
+const NOME_TRI = { contradiz: 'Contradiz o programa', omite: 'Omitido no programa', declara: 'Declarado no programa' };
+const NOME_DIR = { incerto: 'Efeito a conferir', sem: 'Sem efeito negativo aparente' };
+const minusc = x => x.charAt(0).toLowerCase() + x.slice(1);
+const nomeEfeito = t => {
+  const g = grupoEfeito(t);
+  if (g.startsWith('p-')) return 'Efeito negativo em ' + minusc(TEMA[t.t].tema);
+  if (g === 'incerto' && TEMA[t.t]) return 'A conferir em ' + minusc(TEMA[t.t].tema);
+  return NOME_DIR[g] || '';
+};
+function seloTriagem(it){
+  const t = TRI[it.chave]; if (!t) return '';
+  const nome = nomeEfeito(t);
+  const d = nome ? `<span class="tri tri-${grupoEfeito(t).startsWith('p-') ? 'prejudica' : grupoEfeito(t)}" title="Efeito do projeto, segundo a triagem por IA da ementa">${esc(nome)}</span>` : '';
+  const c = NOME_TRI[t.c] ? `<span class="tri tri-${t.c}" title="O que o programa de Flávio diz sobre o assunto, segundo a triagem por IA da ementa">${NOME_TRI[t.c]}</span>` : '';
+  return d + c;
+}
+// Só entram na triagem os projetos ligados a algum tema e que não são homenagens.
+const candidatosTriagem = () => estado.itens.filter(it => it.temas.length && !it.homenagem);
+// O que o botão tria são os projetos da lista atual, com os filtros escolhidos (partido, área, temas,
+// autoria de Flávio, texto procurado), menos o filtro da própria triagem.
+const candidatosDaLista = () => estado.opc ? filtrados(baseFiltrada(true)).filter(it => it.temas.length && !it.homenagem) : [];
+
+// Tabela cruzada da triagem. Cada projeto aparece numa única célula, e os números consideram
+// os mesmos filtros da lista (partidos, temas, Flávio autor), exceto a própria triagem.
+function painelTriagem(){
+  const pendentesBusca = candidatosDaLista().filter(it => !TRI[it.chave]).length;
+  const base = estado.opc ? filtrados(baseFiltrada(true)) : [];
+  const LINHAS = [...TAX.cadernos.map(c => 'p-' + c.id), 'prejudica', 'incerto'];
+  const ROT = { prejudica: 'Efeito negativo, total', incerto: 'Efeito a conferir' };
+  TAX.cadernos.forEach(c => ROT['p-' + c.id] = c.subtitulo);
+  const C = ['contradiz', 'omite', 'declara'];
+  const ROT_C = { contradiz: 'Contradiz<br>o programa', omite: 'Omitido<br>no programa', declara: 'Declarado<br>no programa' };
+  const cont = {}, totL = {}, totC = {}; let triados = 0, semTriagem = 0, semEfeito = 0;
+  const soma = (l, c) => { cont[l + '|' + c] = (cont[l + '|' + c] || 0) + 1; totL[l] = (totL[l] || 0) + 1; };
+  base.forEach(it => {
+    const t = TRI[it.chave];
+    const g = t && grupoEfeito(t);
+    if (t && g === 'sem') { semEfeito++; return; }
+    if (!t || !ROT[g] || !C.includes(t.c)) { semTriagem++; return; }
+    soma(g, t.c);
+    if (g.startsWith('p-')) soma('prejudica', t.c);
+    totC[t.c] = (totC[t.c] || 0) + 1; triados++;
+  });
+  const sel = (d, c) => triagem.fd === d && triagem.fc === c;
+  const cel = (d, c, n, extra) => n
+    ? `<td class="${extra || ''} ${sel(d, c) ? 'sel' : ''}" data-fd="${d}" data-fc="${c}" tabindex="0" title="Mostrar estes ${n} projetos">${fmt(n)}</td>`
+    : `<td class="zero ${extra || ''}">0</td>`;
+  const linha = l => `<tr class="${l === 'prejudica' ? 'sub' : ''}"><th scope="row" class="${l.startsWith('p-') ? 'sub-area' : ''} ${sel(l, 'todos') ? 'sel' : ''}" data-fd="${l}" data-fc="todos">${ROT[l]}</th>${C.map(c => cel(l, c, cont[l + '|' + c] || 0, l.startsWith('p-') || l === 'prejudica' ? 'forte' : '')).join('')}${cel(l, 'todos', totL[l] || 0, 'tot')}</tr>`;
+  const tabela = triados ? `<table class="tri-tabela">
+      <thead><tr><th>Efeito negativo por área</th>${C.map(c => `<th scope="col" data-fd="todos" data-fc="${c}" class="${sel('todos', c) ? 'sel' : ''}">${ROT_C[c]} de Flávio</th>`).join('')}<th scope="col">Total</th></tr></thead>
+      <tbody>${LINHAS.map(linha).join('')}</tbody>
+      <tfoot><tr><th scope="row">Total</th>${C.map(c => cel('todos', c, totC[c] || 0, 'tot')).join('')}${cel('todos', 'todos', triados, 'tot')}</tr></tfoot>
+    </table>
+    <p class="tri-nota">A tabela e o botão de triagem consideram a lista atual, com os filtros escolhidos. Cada projeto conta uma única vez, pela área do tema mais atingido. Clique num número, numa linha ou numa coluna para filtrar a lista.${semEfeito ? ` <button type="button" class="link-tri" data-fd="sem" data-fc="todos">${fmt(semEfeito)} ${semEfeito === 1 ? 'projeto sem efeito negativo aparente ficou' : 'projetos sem efeito negativo aparente ficaram'} fora da tabela</button>.` : ''}${semTriagem ? ` ${fmt(semTriagem)} ${semTriagem === 1 ? 'projeto da lista ainda não foi triado' : 'projetos da lista ainda não foram triados'}.` : ''}</p>` : '';
+  return `<h3>Triagem por IA</h3>
+    <p>A IA lê a ementa, aponta o efeito negativo e compara com o programa de Flávio, para mostrar o que ele contradiz e o que esconde do eleitor. Confira antes de divulgar.</p>
+    ${tabela}
+    <div class="tri-acoes">
+      ${triagem.rodando
+        ? `<button type="button" class="btn-sec" id="tri-parar">Parar a triagem</button>`
+        : `<button type="button" class="btn-go" id="tri-rodar" ${pendentesBusca ? '' : 'disabled'}>${pendentesBusca ? `Triar ${pendentesBusca === 1 ? 'o projeto que falta' : `os ${fmt(pendentesBusca)} projetos que faltam`} na lista` : 'Todos os projetos da lista já foram triados'}</button>`}
+      ${triagem.fd !== 'todos' || triagem.fc !== 'todos' ? '<button type="button" class="btn-sec" data-fd="todos" data-fc="todos">Mostrar todos os projetos</button>' : ''}
+    </div>
+    <div class="tri-status ${triagem.erro ? 'erro' : ''}" role="status" aria-live="polite">${triagem.rodando
+      ? `Triando ${fmt(triagem.feitos)} de ${fmt(triagem.total)} projetos. Pode continuar navegando.`
+      : esc(triagem.erro)}</div>`;
+}
+function atualizarPainelTriagem(){ const el = $('#triagem'); if (el) el.innerHTML = painelTriagem(); }
+
+const LOTE_TRIAGEM = 25;
+async function rodarTriagem(){
+  if (triagem.rodando) return;
+  const proxy = (window.MONITOR_PROXY || '').replace(/\/+$/, '');
+  // Antes de gastar com a IA, busca no Worker o que outras pessoas já triaram.
+  Object.assign(triagem, { rodando: true, parar: false, feitos: 0, total: 0, erro: '' });
+  atualizarPainelTriagem();
+  await consultarGuardadas();
+  triagem.rodando = false;
+  const fila = candidatosDaLista().filter(it => !TRI[it.chave]);
+  if (!fila.length) { desenhar(); return; }
+  const lotes = [];
+  for (let i = 0; i < fila.length; i += LOTE_TRIAGEM) lotes.push(fila.slice(i, i + LOTE_TRIAGEM));
+  Object.assign(triagem, { rodando: true, parar: false, feitos: 0, total: fila.length, erro: '' });
+  atualizarPainelTriagem();
+  let erroGeral = '', ultimoMotivo = '';
+  await Motor.emParalelo(lotes.map(lote => async () => {
+    if (triagem.parar || erroGeral) return;
+    try {
+      const r = await fetch(proxy + '/triar', { method: 'POST', headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ itens: lote.map(it => ({ chave: it.chave, ementa: it.ementa, temas: it.temas.map(t => t.id) })) }) });
+      const j = await r.json().catch(() => ({}));
+      if (r.ok && j.resultados) guardarTri(j.resultados);
+      else if (j.error === 'sem_chave' || j.error === 'chave_recusada' || j.error === 'limite' || r.status === 404 || r.status === 405) erroGeral = mensagemErroTri(j.error, r.status);
+      else ultimoMotivo = [j.error || ('http ' + r.status), j.detalhe || ''].join(' ').trim();
+    } catch (e) { ultimoMotivo = 'o serviço intermediário não respondeu'; }
+    triagem.feitos += lote.length;
+    atualizarPainelTriagem();
+  }), 3);
+  // Uma segunda tentativa automática para os lotes que falharam.
+  const resto = fila.filter(it => !TRI[it.chave]);
+  if (resto.length && !triagem.parar && !erroGeral) {
+    const lotes2 = [];
+    for (let i = 0; i < resto.length; i += LOTE_TRIAGEM) lotes2.push(resto.slice(i, i + LOTE_TRIAGEM));
+    triagem.total += resto.length;
+    await Motor.emParalelo(lotes2.map(lote => async () => {
+      if (triagem.parar) return;
+      try {
+        const r = await fetch(proxy + '/triar', { method: 'POST', headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ itens: lote.map(it => ({ chave: it.chave, ementa: it.ementa, temas: it.temas.map(t => t.id) })) }) });
+        const j = await r.json().catch(() => ({}));
+        if (r.ok && j.resultados) guardarTri(j.resultados);
+        else ultimoMotivo = [j.error || ('http ' + r.status), j.detalhe || ''].join(' ').trim();
+      } catch (e) { ultimoMotivo = 'o serviço intermediário não respondeu'; }
+      triagem.feitos += lote.length;
+      atualizarPainelTriagem();
+    }), 2);
+  }
+  const faltam = fila.filter(it => !TRI[it.chave]).length;
+  triagem.rodando = false;
+  triagem.erro = erroGeral || (faltam && !triagem.parar ? `${fmt(faltam)} projetos não puderam ser triados agora. Clique de novo para tentar.${ultimoMotivo ? ` Resposta do serviço: ${ultimoMotivo.slice(0, 220)}` : ''}` : '');
+  // Ao terminar a primeira triagem, a página passa a mostrar só os projetos com efeito negativo.
+  if (triagem.fd === 'todos' && triagem.fc === 'todos' && !erroGeral && candidatosTriagem().some(it => TRI[it.chave] && grupoEfeito(TRI[it.chave]).startsWith('p-'))) triagem.fd = 'prejudica';
+  estado.pagina = 1;
+  desenhar();
+}
+document.addEventListener('keydown', e => {
+  if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('#triagem td[data-fd]')) { e.preventDefault(); e.target.click(); }
+});
+function mensagemErroTri(codigo, status){
+  if (codigo === 'sem_chave') return 'A triagem ainda não está ativada. Falta cadastrar a chave ANTHROPIC_API_KEY no Worker do Cloudflare.';
+  if (codigo === 'chave_recusada') return 'A chave da API da Anthropic cadastrada no Worker foi recusada. Confira a chave no Cloudflare.';
+  if (codigo === 'limite') return 'O limite de triagens por hora foi atingido. O que já foi triado está guardado. Tente o resto mais tarde.';
+  if (status === 404 || status === 405) return 'O Worker publicado ainda não tem a triagem. Atualize o código do worker.js no Cloudflare.';
+  return 'Não foi possível concluir a triagem. Tente de novo.';
+}
+document.addEventListener('click', e => {
+  if (e.target.id === 'tri-rodar') rodarTriagem();
+  if (e.target.id === 'tri-parar') { triagem.parar = true; e.target.disabled = true; e.target.textContent = 'Parando'; }
+  const f = e.target.closest && e.target.closest('#triagem [data-fd][data-fc]');
+  if (f) {
+    const igual = triagem.fd === f.dataset.fd && triagem.fc === f.dataset.fc;
+    triagem.fd = igual ? 'todos' : f.dataset.fd; triagem.fc = igual ? 'todos' : f.dataset.fc;
+    estado.pagina = 1; desenhar();
+  }
+});
+
+// ---------------------------------------------------------------- administração
+// Aparece só com ?admin no endereço. Mostra de onde vêm as triagens e gera o triagens.json,
+// juntando o banco do Worker, o arquivo já publicado e o que está neste navegador.
+const servidor = { situacao: 'consultando', banco: false, triagens: 0, avaliacoes: 0, versaoTriagem: '' };
+let exportStatus = '', exportando = false;
+async function consultarEstado(){
+  const proxy = (window.MONITOR_PROXY || '').replace(/\/+$/, '');
+  try {
+    const r = await fetch(proxy + '/estado');
+    if (r.ok) Object.assign(servidor, await r.json(), { situacao: 'ok' });
+    else servidor.situacao = 'antigo';
+  } catch (e) { servidor.situacao = 'fora'; }
+  desenharAdmin();
+}
+const contar = (n, um, varios) => `${fmt(n)} ${n === 1 ? um : varios}`;
+const nTri = n => contar(n, 'triagem', 'triagens');
+const nAval = n => contar(n, 'avaliação', 'avaliações');
+function desenharAdmin(){
+  const el = $('#admin'); if (!ADMIN || !el) return;
+  el.hidden = false;
+  const nLocal = Object.keys(TRI_LOCAL).length;
+  const arq = { ok: `tem ${nTri(arquivo.triagens)}${arquivo.avaliacoes ? ` e ${nAval(arquivo.avaliacoes)}` : ''}${arquivo.gerado ? `, gerado em ${dataBR(arquivo.gerado)}` : ''}`,
+    ausente: 'ainda não foi publicado', 'outra versao': 'é de outra versão do critério e foi ignorado', carregando: 'está carregando' }[arquivo.situacao];
+  const srv = servidor.situacao === 'ok'
+    ? (servidor.banco ? `está ligado e guarda ${nTri(servidor.triagens || 0)} e ${nAval(servidor.avaliacoes || 0)}` : 'não está ligado ao Worker (falta a ligação DB no Cloudflare)')
+      + (servidor.versaoTriagem && servidor.versaoTriagem !== VERSAO_TRIAGEM ? `. Atenção, o Worker usa o critério ${servidor.versaoTriagem} e a página usa ${VERSAO_TRIAGEM}` : '')
+    : { antigo: 'não responde, provavelmente o Worker publicado ainda é a versão anterior', fora: 'não respondeu', consultando: 'está sendo consultado' }[servidor.situacao];
+  el.innerHTML = `<div class="wrap">
+    <p><b>Administração.</b> O arquivo triagens.json ${arq}. O banco do Worker ${srv}. Este navegador guarda ${nTri(nLocal)} ${nLocal === 1 ? 'feita' : 'feitas'} aqui${triLocalCheio ? ', e o espaço dele encheu, então as novas ficam só no banco' : ''}.</p>
+    <button type="button" class="btn-go" id="exportar" ${exportando ? 'disabled' : ''}>${exportando ? 'Exportando' : 'Exportar triagens.json'}</button>
+    <span class="admin-status" role="status" aria-live="polite">${esc(exportStatus)}</span>
+  </div>`;
+}
+async function exportarTriagens(){
+  if (exportando) return;
+  exportando = true; exportStatus = 'Reunindo as triagens do banco, do arquivo publicado e deste navegador.'; desenharAdmin();
+  const proxy = (window.MONITOR_PROXY || '').replace(/\/+$/, '');
+  const tri = Object.assign({}, TRI), aval = Object.assign({}, AVAL);
+  let doBanco = false;
+  try {
+    const r = await fetch(proxy + '/exportar');
+    if (r.ok) {
+      const j = await r.json();
+      if (j.versao === VERSAO_TRIAGEM) { Object.assign(tri, j.triagens || {}); doBanco = true; }
+      if (j.versaoAvaliacao === VERSAO_AVALIACAO) Object.assign(aval, j.avaliacoes || {});
+    }
+  } catch (e) { /* segue com o que há na página */ }
+  const limpo = {};
+  for (const k of Object.keys(tri)) {
+    const t = tri[k];
+    if (t && ['prejudica', 'incerto', 'sem'].includes(t.d)) limpo[k] = { d: t.d, t: t.t || '', c: t.c || '', m: t.m || '' };
+  }
+  for (const k of Object.keys(aval)) if (!aval[k] || !aval[k].avaliacao) delete aval[k];
+  // Uma entrada por linha, para que o histórico do GitHub mostre só o que mudou.
+  const linhas = obj => Object.keys(obj).sort().map(k => JSON.stringify(k) + ':' + JSON.stringify(obj[k])).join(',\n');
+  const texto = '{\n"versao":' + JSON.stringify(VERSAO_TRIAGEM) + ',\n"versaoAvaliacao":' + JSON.stringify(VERSAO_AVALIACAO) +
+    ',\n"gerado":' + JSON.stringify(new Date().toISOString()) + ',\n"triagens":{\n' + linhas(limpo) + '\n},\n"avaliacoes":{\n' + linhas(aval) + '\n}\n}\n';
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([texto], { type: 'application/json' }));
+  a.download = 'triagens.json';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  const nt = Object.keys(limpo).length, na = Object.keys(aval).length;
+  exportando = false;
+  exportStatus = `Arquivo gerado com ${nTri(nt)} e ${nAval(na)}` +
+    (doBanco ? '.' : ', sem o banco do Worker, que não respondeu. Entraram só o arquivo publicado e o que está neste navegador.') +
+    ' Suba o triagens.json para o repositório do site no GitHub, no lugar do anterior.';
+  desenharAdmin();
+}
+document.addEventListener('click', e => { if (e.target.id === 'exportar') exportarTriagens(); });
+
+// ---------------------------------------------------------------- avaliação por IA
+const NOME_POSICAO = { conflita: 'Efeito negativo', converge: 'Sem efeito negativo', misto: 'Efeito negativo em parte', neutro: 'Sem efeito negativo' };
+const CLASSE_POSICAO = { conflita: 'ameaca', converge: 'neutro', misto: 'misto', neutro: 'neutro' };
+function painelAvaliacao(it){
+  if (estado.avaliando.has(it.chave)) return '<div class="aval-andamento" role="status">Lendo o texto integral do projeto. Leva de 20 a 60 segundos.</div>';
+  if (estado.erroAval[it.chave]) return `<div class="aval-erro">${esc(estado.erroAval[it.chave])}</div>`;
+  const r = AVAL[it.chave]; if (!r) return '';
+  const a = r.avaliacao || {};
+  const pos = NOME_POSICAO[a.posicao] ? a.posicao : 'neutro';
+  const lista = xs => (Array.isArray(xs) && xs.length) ? `<ul>${xs.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '';
+  return `<section class="aval" aria-label="Avaliação">
+    <span class="selo ${CLASSE_POSICAO[pos]}">${NOME_POSICAO[pos]}${a.intensidade && pos !== 'neutro' ? `, intensidade ${esc(a.intensidade === 'media' ? 'média' : a.intensidade)}` : ''}</span>
+    <span class="meta-aval">Avaliação por IA feita sobre ${esc(r.fonte || 'o texto')} em ${dataBR(r.data)}, confiança ${esc(a.confianca === 'media' ? 'média' : (a.confianca || 'não informada'))}.${r.urlTexto ? ` <a href="${esc(r.urlTexto)}" target="_blank" rel="noopener">Ler o texto integral</a>` : ''}</span>
+    ${a.resumo ? `<p><span class="rotulo">O que o projeto faz.</span> ${esc(a.resumo)}</p>` : ''}
+    ${a.argumento ? `<p><span class="rotulo">Por quê.</span> ${esc(a.argumento)}</p>` : ''}
+    ${lista(a.efeitos) ? `<p class="rotulo">Efeitos concretos</p>${lista(a.efeitos)}` : ''}
+    ${lista(a.diretrizes) ? `<p class="rotulo">Diretrizes envolvidas</p>${lista(a.diretrizes)}` : ''}
+    ${a.trecho ? `<blockquote>${esc(a.trecho)}</blockquote>` : ''}
+    ${a.atencao ? `<p class="atencao"><span class="rotulo">Antes de divulgar.</span> ${esc(a.atencao)}</p>` : ''}
+  </section>`;
+}
+
+function desenharBarra(){
+  let barra = $('#barra-avaliar');
+  if (!barra) {
+    barra = document.createElement('div');
+    barra.id = 'barra-avaliar'; barra.className = 'barra-avaliar';
+    $('#resultado').appendChild(barra);
+  }
+  const pendentes = [...estado.marcados].filter(c => !AVAL[c] && !estado.avaliando.has(c));
+  const n = estado.marcados.size;
+  barra.hidden = n === 0 && estado.avaliando.size === 0;
+  if (barra.hidden) return;
+  const emCurso = estado.avaliando.size;
+  barra.innerHTML = `<p>${n} ${n === 1 ? 'projeto marcado' : 'projetos marcados'}${emCurso ? `, ${emCurso} em avaliação` : ''}
+      <small>A IA lê o texto integral de cada projeto e resume o que ele muda de fato. Projetos já avaliados não são cobrados de novo.</small></p>
+    <button type="button" class="btn-go" id="avaliar" ${pendentes.length && !emCurso ? '' : 'disabled'}>${pendentes.length ? `Avaliar ${pendentes.length === 1 ? 'o marcado' : `os ${pendentes.length} marcados`}` : 'Todos já avaliados'}</button>
+    <button type="button" class="btn-sec" id="desmarcar">Desmarcar todos</button>`;
+}
+
+document.addEventListener('change', e => {
+  const c = e.target.closest && e.target.closest('input[data-marcar]'); if (!c) return;
+  const chave = c.dataset.marcar;
+  c.checked ? estado.marcados.add(chave) : estado.marcados.delete(chave);
+  const ficha = c.closest('.ficha'); if (ficha) ficha.classList.toggle('marcada', c.checked);
+  desenharBarra();
+});
+document.addEventListener('click', e => {
+  if (e.target.id === 'desmarcar') { estado.marcados.clear(); desenharLista(filtrados(baseFiltrada())); }
+  if (e.target.id === 'avaliar') avaliarMarcados();
+});
+
+const MAX_POR_VEZ = 15;
+async function avaliarMarcados(){
+  const proxy = (window.MONITOR_PROXY || '').replace(/\/+$/, '');
+  const porChave = new Map(estado.itens.map(it => [it.chave, it]));
+  const fila = [...estado.marcados].filter(c => !AVAL[c] && porChave.has(c)).slice(0, MAX_POR_VEZ);
+  if (!proxy) { fila.forEach(c => estado.erroAval[c] = 'A avaliação precisa do serviço intermediário configurado em config.js.'); desenharLista(filtrados(baseFiltrada())); return; }
+  fila.forEach(c => { estado.avaliando.add(c); delete estado.erroAval[c]; });
+  desenharLista(filtrados(baseFiltrada()));
+  await Motor.emParalelo(fila.map(chave => async () => {
+    const it = porChave.get(chave);
+    try {
+      const r = await fetch(proxy + '/avaliar', {
+        method: 'POST', headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ chave, casa: it.casa.includes('Câmara') && it.idCamara ? 'Câmara' : 'Senado', idCamara: it.idCamara || '',
+          urlDocumento: it.urlDocumento || '', ementa: it.ementa, data: it.data, autores: it.autores || [],
+          partidos: it.partidos.map(p => NOME_PARTIDO[p]), temas: it.temas.map(t => TEMA[t.id].tema) })
+      });
+      const j = await r.json().catch(() => ({}));
+      if (r.ok && j.avaliacao) guardarAval(chave, j);
+      else estado.erroAval[chave] = mensagemErroAval(j.error, r.status);
+    } catch (e) { estado.erroAval[chave] = 'O serviço de avaliação não respondeu. Tente de novo em instantes.'; }
+    estado.avaliando.delete(chave);
+    atualizarFicha(it);
+  }), 2);
+  desenharBarra();
+}
+function mensagemErroAval(codigo, status){
+  if (codigo === 'sem_chave') return 'A avaliação ainda não está ativada. Falta cadastrar a chave ANTHROPIC_API_KEY no Worker do Cloudflare.';
+  if (codigo === 'chave_recusada') return 'A chave da API da Anthropic cadastrada no Worker foi recusada. Confira a chave no Cloudflare.';
+  if (codigo === 'limite') return 'O limite de avaliações por hora foi atingido. Tente de novo mais tarde.';
+  if (codigo === 'limite_anthropic') return 'A API da Anthropic pediu uma pausa. Tente de novo em um minuto.';
+  if (status === 404 || status === 405) return 'O Worker publicado ainda é a versão sem avaliação. Atualize o código do worker.js no Cloudflare.';
+  return 'Não foi possível concluir a avaliação deste projeto. Tente de novo.';
+}
+function atualizarFicha(it){
+  const ficha = document.querySelector(`.ficha[data-chave="${CSS.escape(it.chave)}"]`);
+  if (!ficha) { desenharBarra(); return; }
+  const antigo = ficha.querySelector('.aval, .aval-andamento, .aval-erro');
+  const html = painelAvaliacao(it);
+  if (antigo) antigo.outerHTML = html || ''; else if (html) ficha.insertAdjacentHTML('beforeend', html);
+  const rot = ficha.querySelector('.marca');
+  if (rot && AVAL[it.chave]) rot.lastChild.textContent = ' Avaliado';
+  desenharBarra();
+}
+
+async function carregarAutores(pag){
+  const faltam = pag.filter(it => !it.autores && it.idCamara);
+  await Motor.emParalelo(faltam.map(it => async () => {
+    try { it.autores = await Motor.autoresCamara(it, buscarJson); } catch (e) { it.autores = []; }
+    const span = document.querySelector(`[data-autores="${it.idCamara}"]`);
+    if (span) span.textContent = it.autores.length ? it.autores.join('; ') : 'Autores não informados';
+  }), 4);
+}
+
+function baixarCSV(lista){
+  const cab = ['projeto', 'casa', 'data_apresentacao', 'partidos', 'siglas', 'partido_atual_do_autor', 'autores', 'areas', 'temas', 'termos_encontrados', 'homenagem', 'ementa', 'link',
+    'triagem_efeito', 'triagem_programa_flavio', 'triagem_motivo', 'avaliacao_posicao', 'avaliacao_intensidade', 'avaliacao_resumo', 'avaliacao_argumento', 'avaliacao_confianca'];
+  const q = v => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
+  const linhas = lista.map(it => {
+    const ts = temasDoItem(it);
+    return [it.chave, it.casa.join(' e '), it.data, it.partidos.map(p => NOME_PARTIDO[p]).join('; '), it.siglasEncontradas.join('; '),
+      it.viaDeputados.join('; '), (it.autores || []).join('; '), [...new Set(ts.map(t => CADERNO[TEMA[t.id].caderno].subtitulo))].join('; '),
+      ts.map(t => TEMA[t.id].tema).join('; '), [...new Set(ts.flatMap(t => t.termos))].join('; '),
+      it.homenagem ? 'sim' : 'não', it.ementa, it.link,
+      TRI[it.chave] ? nomeEfeito(TRI[it.chave]) : '', TRI[it.chave] ? NOME_TRI[TRI[it.chave].c] || '' : '', TRI[it.chave] ? TRI[it.chave].m : '',
+      ...(a => [a.posicao, a.intensidade, a.resumo, a.argumento, a.confianca])((AVAL[it.chave] || {}).avaliacao || {})].map(q).join(';');
+  });
+  const blob = new Blob(['﻿' + cab.join(';') + '\n' + linhas.join('\n')], { type: 'text/csv;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `exterminadores-do-futuro-${new Date().toISOString().slice(0,10)}.csv`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+
+// ---------------------------------------------------------------- temas e termos
+function desenharTaxonomia(){
+  const q = Motor.normalizar($('#tax-busca').value.trim());
+  $('#taxonomia').innerHTML = TAX.cadernos.map(c => {
+    const temas = TAX.temas.filter(t => t.caderno === c.id && (!q || Motor.normalizar(t.tema + ' ' + t.termos.join(' ')).includes(q)));
+    if (!temas.length) return '';
+    return `<section class="tax-area"><h3>${esc(c.subtitulo)}</h3><p>Caderno ${esc(c.nome)}</p>` + temas.map(t => `
+      <div class="tax-tema">
+        <h4>${esc(t.tema)}<span class="sec">seções ${esc(t.secoes)}, ${t.termos.length} termos</span></h4>
+        <p class="termos">${t.termos.map(x => esc(x.replace(/^=/, ''))).join(', ')}</p>
+        ${t.excluir && t.excluir.length ? `<p class="exc">Fica de fora quando a ementa fala em ${t.excluir.map(esc).join(', ')}</p>` : ''}
+      </div>`).join('') + '</section>';
+  }).join('') || '<div class="vazio-box"><p>Nenhum tema ou termo com essas palavras.</p></div>';
+}
+$('#tax-busca').addEventListener('input', desenharTaxonomia);
+desenharTaxonomia();
+
+document.querySelector('.tabs').addEventListener('click', e => {
+  const b = e.target.closest('button[data-tab]'); if (!b) return;
+  document.querySelectorAll('.tabs button').forEach(x => x.setAttribute('aria-selected', x === b ? 'true' : 'false'));
+  $('#aba-busca').hidden = b.dataset.tab !== 'busca';
+  $('#aba-taxonomia').hidden = b.dataset.tab !== 'taxonomia';
+});
+document.addEventListener('keydown', e => {
+  if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('table.matrix td[data-p]')) { e.preventDefault(); e.target.click(); }
+});
+
+desenhar();
+if (ADMIN) { desenharAdmin(); consultarEstado(); }
+})();
+</script>
+</body>
+</html>
