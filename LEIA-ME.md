@@ -15,15 +15,17 @@ A ferramenta reúne os projetos apresentados por PL, Novo, PP, União Brasil, Po
 | `promessas.js` | Trechos do programa de Flávio, com página, e os temas onde a prática aparece |
 | `taxonomia.js` | Temas e termos usados na classificação (é aqui que se ajustam os termos) |
 | `config.js` | Endereço do serviço intermediário |
-| `triagens.json` | Triagens e avaliações já feitas, publicadas junto com a página (gerado pelo modo de administração) |
+| `projetos.json` | Projetos já buscados, para a página abrir pronta (gerado pelo modo de administração) |
+| `triagens.json` | Casos verificados, triagens e avaliações já feitas (gerado pelo modo de administração) |
+| `compartilhar.jpg` | Imagem que aparece na prévia do link no WhatsApp e nas redes |
 | `worker.js` | Serviço intermediário para o Cloudflare Workers |
 
 ## Publicação
 
 1. **Serviço intermediário no Cloudflare.** O Worker se chama `exterminadores-proxy`. Cole nele o conteúdo de `worker.js` e publique. A lista `ORIGENS_PERMITIDAS` já contém o exterminadores.com.br e, durante a transição, os endereços antigos (lulafezefara.com.br e GitHub Pages).
-2. **Chave da Anthropic.** Em Settings, Variables and Secrets, cadastre `ANTHROPIC_API_KEY` como Secret.
+2. **Segredos.** Em Settings, Variables and Secrets, cadastre como Secret a `ANTHROPIC_API_KEY` e a `ADMIN_KEY` (veja a seção Chave de administração).
 3. **Banco D1.** Veja a seção seguinte.
-4. **Página.** Suba `index.html`, `motor.js`, `taxonomia.js`, `promessas.js`, `config.js`, `triagens.json` e `CNAME` para a raiz do repositório `exterminadores-do-futuro`, que publica o exterminadores.com.br pelo GitHub Pages. Depois de publicar, recarregue com Ctrl+Shift+R.
+4. **Página.** Suba `index.html`, `motor.js`, `taxonomia.js`, `promessas.js`, `config.js`, `projetos.json`, `triagens.json`, `compartilhar.jpg` e `CNAME` para a raiz do repositório `exterminadores-do-futuro`, que publica o exterminadores.com.br pelo GitHub Pages. Depois de publicar, recarregue com Ctrl+Shift+R.
 
 ## Banco D1 (armazenamento permanente das triagens)
 
@@ -54,6 +56,46 @@ O botão de triagem só manda à IA o que não estiver em nenhum desses lugares.
 O arquivo traz uma triagem por linha, então o histórico do GitHub mostra exatamente o que entrou a cada atualização.
 
 **Versão do critério.** O arquivo só é aceito se a versão gravada nele for igual à constante `VERSAO_TRIAGEM` do `index.html` (hoje `t7`). Ao mudar o critério da triagem, troque `VERSAO_TRIAGEM` no `worker.js` e no `index.html`, rode as triagens de novo e exporte um novo arquivo. O mesmo vale para `VERSAO_AVALIACAO`.
+
+## Página pronta ao abrir (projetos.json)
+
+Sem o `projetos.json`, cada visitante precisa clicar em Buscar projetos e esperar as centenas de consultas às APIs. Com ele, a página abre com os projetos já carregados, a triagem preenchida e a data em que os dados foram reunidos.
+
+**Para gerar.** Abra `?admin`, escolha o recorte (por exemplo, a legislatura atual, com todos os partidos, as duas Casas e os tipos desejados) e clique em Buscar projetos. Se aparecer o aviso de que parte dos dados não chegou, use Buscar de novo o que faltou. Depois clique em **Exportar projetos.json** e suba o arquivo para o repositório. Entram no arquivo só os projetos ligados a algum tema, que são os que a página mostra.
+
+Quem clicar em Buscar projetos continua fazendo a busca ao vivo, o que serve para ver o que foi apresentado depois da data do arquivo. Vale gerar um arquivo novo a cada poucos dias e, em seguida, triar os projetos novos e exportar o `triagens.json`.
+
+## Casos verificados
+
+A triagem é feita por IA e pode errar. Por isso a página separa o que a equipe conferiu do que é classificação automática.
+
+- No modo de administração, cada projeto tem a opção **Verificado pela equipe**. Ao marcar, abre um campo com o texto da checagem, que começa com o motivo da triagem e pode ser reescrito.
+- Os casos verificados aparecem no topo da página, em **Casos verificados**, com o selo Verificado e botões de compartilhar. Eles aparecem mesmo antes de qualquer busca, porque os dados do projeto vão junto com a verificação.
+- No resto da lista, os selos da triagem levam a marca **IA** e o motivo aparece como "Triagem automática por IA, ainda não verificada".
+- A barra lateral tem a opção Mostrar só casos verificados pela equipe.
+
+As marcações ficam no navegador de quem administra até a exportação. Para publicar, use **Exportar triagens.json**, que agora inclui os casos verificados, e suba o arquivo. Desmarcar um caso já publicado e exportar de novo o retira da página.
+
+## Compartilhar
+
+Cada projeto e cada caso verificado têm os botões **Compartilhar** e **Copiar mensagem**. No celular, Compartilhar abre a lista de aplicativos. No computador, abre o WhatsApp Web. A mensagem traz o número do projeto, a Casa, os autores, a ementa, o link oficial e um link direto para o projeto na plataforma, no formato `exterminadores.com.br/?p=PL 123/2025`.
+
+Só os casos verificados levam o texto da checagem na mensagem. A triagem automática nunca é compartilhada.
+
+O link direto abre a página mostrando só aquele projeto, com um botão para voltar à lista completa. Funciona para os projetos que estão no `projetos.json`.
+
+## Prévia do link
+
+O `index.html` traz as metatags que o WhatsApp, o Instagram, o Facebook e o X usam para montar a prévia do link, com a imagem `compartilhar.jpg` (1200 por 630 pixels). O WhatsApp guarda prévias antigas por algum tempo, então a primeira vez que o link for colado depois da publicação pode ainda aparecer sem imagem.
+
+## Chave de administração
+
+As rotas que gastam créditos (`/triar` e `/avaliar`) só funcionam com a chave de administração.
+
+1. No Worker `exterminadores-proxy`, em Settings, Variables and Secrets, cadastre um Secret chamado `ADMIN_KEY` com uma senha longa, que só você conheça. Publique.
+2. Abra `?admin`, escreva a mesma senha no campo **Chave de administração** e tecle Tab ou clique fora. A faixa amarela confirma quando a chave foi aceita.
+
+A chave fica guardada só no seu navegador. Para o público, os botões de triagem, de marcação e de avaliação não aparecem. Sem o segredo `ADMIN_KEY`, o Worker continua aceitando triagens de qualquer pessoa, como antes, e a faixa de administração avisa.
 
 ## Como a busca funciona
 

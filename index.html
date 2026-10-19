@@ -6,6 +6,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Os exterminadores do futuro</title>
 <meta name="description" content="Flávio Bolsonaro diz uma coisa e propõe outra. Compare o que ele promete no programa de governo com os projetos que ele e seus aliados apresentam no Congresso.">
+<!-- Prévia do link no WhatsApp, Instagram, Facebook e X -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Os exterminadores do futuro">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://exterminadores.com.br/">
+<meta property="og:title" content="Os exterminadores do futuro">
+<meta property="og:description" content="Flávio Bolsonaro diz uma coisa e propõe outra. Veja, com dados oficiais da Câmara e do Senado, o que ele e seus aliados propõem no Congresso.">
+<meta property="og:image" content="https://exterminadores.com.br/compartilhar.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Os exterminadores do futuro. Flávio Bolsonaro diz uma coisa e propõe outra.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://exterminadores.com.br/compartilhar.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -14,6 +27,7 @@
   --night:#151a2e; --night-2:#222944; --red:#d42a2f; --red-ink:#ffffff;
   --paper:#edeff2; --sheet:#ffffff; --ink:#151a2e; --ink-2:#4a5068; --ink-3:#6f758a;
   --line:#d6d9e0; --mark:#ffe24a; --mark-ink:#151a2e; --warn:#7a4f00; --warn-soft:#fff3d4;
+  --ver:#1f7a44; --wa:#128c4b;
   --heat-0:#e4e7ec; --heat-1:#f6cfd0; --heat-2:#ec9a9d; --heat-3:#df5f63; --heat-4:#b51f24;
   --display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
   --text:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -51,6 +65,7 @@ button,input,select{font:inherit;color:inherit}
 .hero h1{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(38px,8vw,110px);line-height:.9;letter-spacing:0;margin:22px 0 0;max-width:none;hyphens:none}
 .hero .lede{font-size:clamp(18px,2vw,23px);line-height:1.45;max-width:46ch;margin:26px 0 0;color:#dfe2ee}
 .hero .slogan{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(30px,5.1vw,66px);line-height:.95;margin:18px 0 0;color:var(--mark)}
+@media (max-width:700px){.hero .slogan br{display:none}}
 .hero .lede-2{font-size:15px;color:#aeb4cb;margin:12px 0 0;max-width:62ch}
 .roster{background:var(--red);color:var(--red-ink)}
 .roster .wrap{display:flex;gap:8px 22px;align-items:baseline;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}
@@ -90,6 +105,7 @@ main .wrap{display:grid;grid-template-columns:300px minmax(0,1fr);gap:34px;paddi
 .side h2{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:32px;line-height:1;margin:0 0 10px}
 .toggle{display:flex;gap:8px;align-items:flex-start;font-size:14px;margin:6px 0;cursor:pointer;color:var(--ink-2)}
 .toggle input{margin-top:4px;accent-color:var(--red)}
+.toggle[hidden]{display:none}
 .side .clear{border:0;background:none;color:var(--red);font-weight:600;padding:0;cursor:pointer;font-size:14px;margin:6px 0 14px}
 .grupo{border-top:2px solid var(--ink);padding:10px 0 6px}
 .grupo summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:8px;align-items:baseline}
@@ -166,6 +182,7 @@ details.detalhe > .corpo{padding:4px 16px 16px;border-top:1px solid var(--line)}
 
 /* triagem por IA */
 .triagem{background:var(--sheet);border:1px solid var(--line);border-left:4px solid var(--red);padding:14px 16px;margin:0 0 18px}
+.triagem:empty{display:none}
 .triagem h3{margin:0 0 4px;font-size:17px}
 .triagem > p{margin:0 0 10px;font-size:14.5px;color:var(--ink-2);max-width:78ch}
 .tri-contas{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14.5px;margin:0 0 12px}
@@ -295,6 +312,37 @@ mark{background:var(--mark);color:var(--mark-ink);padding:0 2px}
 .tax-tema .termos{font-size:14px;color:var(--ink-2);margin:6px 0 0}
 .tax-tema .exc{font-size:13px;color:var(--ink-3);margin:6px 0 0}
 
+/* casos verificados */
+.destaques{margin:0 0 22px}
+.destaques > h2{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(30px,3.6vw,44px);line-height:.95;margin:0 0 6px}
+.destaques > p{color:var(--ink-2);max-width:66ch;margin:0 0 14px}
+.dest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:10px}
+.destaque{background:var(--sheet);border:1px solid var(--line);border-top:4px solid var(--ver);padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.destaque .topo{display:flex;gap:6px 10px;align-items:baseline;flex-wrap:wrap}
+.destaque .num{font-family:var(--display);font-weight:900;font-size:24px;line-height:1;text-transform:uppercase}
+.destaque .casa{font-size:13px;color:var(--ink-3);font-weight:600}
+.destaque .nota{margin:0;font-weight:600;font-size:16px;line-height:1.4}
+.destaque .ementa{margin:0;font-size:14px;color:var(--ink-2);display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.destaque .autores{margin:0;font-size:13px;color:var(--ink-3)}
+.destaque .acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:4px}
+.dest-mais{margin-top:10px}
+.selo-ver{background:var(--ver);color:#fff;font-size:12.5px;font-weight:700;border-radius:3px;padding:1px 7px}
+.selo-ia{font-size:11px;font-weight:700;border-radius:3px;padding:1px 5px;background:var(--paper);color:var(--ink-3);letter-spacing:.04em}
+.ficha.verificada::before{background:var(--ver)}
+.tri-motivo.ver b{color:var(--ver)}
+/* compartilhar */
+.btn-mini{border:1.5px solid var(--ink);background:transparent;border-radius:4px;padding:5px 10px;font-weight:600;font-size:13.5px;cursor:pointer;color:var(--ink)}
+.btn-mini.forte{background:var(--wa);border-color:var(--wa);color:#fff}
+.rodape-ficha .btn-mini{margin-left:auto}
+.rodape-ficha .acoes-ficha{display:flex;gap:8px;margin-left:auto}
+/* painel de verificação (administração) */
+.ver-admin{margin-top:12px;padding:10px 12px;background:var(--warn-soft);border-radius:4px;font-size:14px}
+.ver-admin label{display:flex;gap:8px;align-items:center;font-weight:700;cursor:pointer}
+.ver-admin input{accent-color:var(--ver)}
+.ver-admin textarea{width:100%;margin-top:8px;border:1.5px solid var(--line);background:var(--sheet);border-radius:4px;padding:8px;font:inherit;min-height:64px;resize:vertical}
+.ver-admin small{display:block;color:var(--ink-3);margin-top:4px}
+.aviso-foco{background:var(--sheet);border:1px solid var(--line);border-left:4px solid var(--ver);padding:12px 16px;margin:0 0 16px;font-size:14.5px}
+
 /* administração (?admin no endereço) */
 .admin{background:var(--warn-soft);color:var(--ink);border-bottom:1px solid var(--line)}
 .admin .wrap{display:flex;gap:10px 18px;align-items:center;flex-wrap:wrap;padding-top:12px;padding-bottom:12px;font-size:14px}
@@ -303,6 +351,8 @@ mark{background:var(--mark);color:var(--mark-ink);padding:0 2px}
 .admin .btn-go:disabled{opacity:.45;cursor:default}
 .admin-status{flex-basis:100%;font-size:13.5px;color:var(--ink-2)}
 .admin-status:empty{display:none}
+.admin .chave-admin{display:flex;gap:6px;align-items:center;font-size:13.5px}
+.admin .chave-admin input{border:1.5px solid var(--line);background:var(--sheet);border-radius:4px;padding:7px 9px;width:180px}
 
 footer{background:var(--night);color:#b5bacd;font-size:13.5px}
 footer .wrap{padding-top:22px;padding-bottom:30px}
@@ -321,7 +371,7 @@ footer p{max-width:90ch;margin:0 0 6px}
       </nav>
     </div>
     <h1>Os exterminadores<br>do futuro</h1>
-    <p class="slogan">Flávio Bolsonaro diz uma coisa<br>e propõe outra.</p>
+    <p class="slogan">Flávio Bolsonaro diz uma coisa <br><span style="white-space:nowrap">e propõe outra.</span></p>
     <p class="lede">O programa de governo de Flávio Bolsonaro é uma peça de ficção. A plataforma de fato está nas proposições legislativas que ele e seus aliados apresentam no Congresso Nacional. E é isso que você vê aqui, tema a tema, com os dados oficiais da Câmara e do Senado.</p>
     <p class="lede-2">Fazemos a checagem dos projetos defendidos pelos parlamentares conservadores e reacionários que ameaçam nossos direitos e o Brasil.</p>
   </div>
@@ -380,7 +430,8 @@ footer p{max-width:90ch;margin:0 0 6px}
         <label class="toggle"><input type="checkbox" id="so-tema" checked> Mostrar só projetos ligados a algum tema</label>
         <label class="toggle"><input type="checkbox" id="sem-homenagem" checked> Esconder homenagens e datas comemorativas</label>
         <label class="toggle"><input type="checkbox" id="so-flavio"> Mostrar só projetos de autoria do próprio Flávio Bolsonaro</label>
-        <label class="toggle"><input type="checkbox" id="so-marcados"> Mostrar só projetos marcados ou avaliados</label>
+        <label class="toggle"><input type="checkbox" id="so-verificados"> Mostrar só casos verificados pela equipe</label>
+        <label class="toggle" id="rotulo-marcados" hidden><input type="checkbox" id="so-marcados"> Mostrar só projetos marcados ou avaliados</label>
         <button type="button" class="clear" id="limpar-temas">Limpar temas escolhidos</button>
         <div id="filtro-temas"></div>
       </aside>
@@ -428,7 +479,8 @@ const $ = s => document.querySelector(s);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt = n => n.toLocaleString('pt-BR');
 
-const estado = { abertos: { promessas: false, matriz: false }, promessaSel: null, promessaPendente: null, marcados: new Set(), avaliando: new Set(), erroAval: {}, itens: [], avisos: [], temas: new Set(), partidoSel: null, cadernoSel: null, texto: '', pagina: 1, buscando: false, consulta: null, opc: null };
+const estado = { abertos: { promessas: false, matriz: false }, promessaSel: null, promessaPendente: null, marcados: new Set(), avaliando: new Set(), erroAval: {}, itens: [], avisos: [], temas: new Set(), partidoSel: null, cadernoSel: null, texto: '', pagina: 1, buscando: false, consulta: null, opc: null,
+  foco: null, focoPendente: new URLSearchParams(location.search).get('p'), origem: '', dataBase: '', destaquesTodos: false };
 
 // Versões do critério de triagem e de avaliação. Precisam ser iguais às do worker.js
 // (VERSAO_TRIAGEM e VERSAO_AVALIACAO), senão o arquivo triagens.json é ignorado.
@@ -457,6 +509,21 @@ function guardarTri(res){ Object.assign(TRI, res); Object.assign(TRI_LOCAL, res)
 function somarTri(res){ let n = 0; for (const k in res) if (!TRI[k] && res[k] && res[k].d) { TRI[k] = res[k]; n++; } return n; }
 function somarAval(res){ let n = 0; for (const k in res) if (!AVAL[k] && res[k] && res[k].avaliacao) { AVAL[k] = res[k]; n++; } return n; }
 
+// Casos verificados pela equipe. Vêm do triagens.json publicado (campo "verificados").
+// No modo de administração, as marcações feitas neste navegador ficam em VER_LOCAL até a exportação.
+// Uma entrada local com removido:true desfaz uma verificação já publicada.
+let VER_ARQ = {};
+let VER_LOCAL = {};
+try { VER_LOCAL = ADMIN ? JSON.parse(localStorage.getItem('exterminadores-verificados') || '{}') : {}; } catch (e) { VER_LOCAL = {}; }
+let VER = {};
+function juntarVer(){
+  VER = Object.assign({}, VER_ARQ);
+  for (const k in VER_LOCAL) { if (VER_LOCAL[k] && VER_LOCAL[k].removido) delete VER[k]; else VER[k] = VER_LOCAL[k]; }
+}
+function gravarVerLocal(){ try { localStorage.setItem('exterminadores-verificados', JSON.stringify(VER_LOCAL)); } catch (e) {} }
+juntarVer();
+const ehVerificado = ch => !!VER[ch];
+
 // Arquivo fixo com as triagens já feitas, publicado na mesma pasta da página.
 const arquivo = { triagens: 0, avaliacoes: 0, gerado: '', situacao: 'carregando' };
 const arquivoPronto = fetch('triagens.json', { cache: 'no-cache' })
@@ -469,10 +536,79 @@ const arquivoPronto = fetch('triagens.json', { cache: 'no-cache' })
     somarTri(j.triagens || {});
     if (j.versaoAvaliacao === VERSAO_AVALIACAO) { arquivo.avaliacoes = Object.keys(j.avaliacoes || {}).length; somarAval(j.avaliacoes || {}); }
     arquivo.situacao = 'ok';
-    if (estado.opc) desenhar();
   })
   .catch(() => { arquivo.situacao = 'ausente'; })
   .finally(() => desenharAdmin());
+// Os casos verificados valem mesmo se o critério da triagem mudar, então são lidos à parte.
+const verificadosPronto = fetch('triagens.json', { cache: 'no-cache' })
+  .then(r => r.ok ? r.json() : null)
+  .then(j => { VER_ARQ = (j && j.verificados) || {}; arquivo.verificados = Object.keys(VER_ARQ).length; juntarVer(); })
+  .catch(() => {});
+Promise.all([arquivoPronto, verificadosPronto]).then(() => desenhar());
+
+// Projetos já buscados e publicados junto com a página (projetos.json), para que a página abra pronta.
+// Os temas são guardados só pelo identificador; os trechos marcados nas ementas são recalculados ao exibir.
+const projetosArq = { situacao: 'carregando', total: 0, gerado: '' };
+function itemDoArquivo(x){
+  return { chave: x.c, casa: x.k || [], sigla: (x.c || '').split(' ')[0], data: x.d || '', ementa: x.e || '',
+    partidos: x.p || [], siglasEncontradas: x.s || [], viaDeputados: x.v || [], idCamara: x.i || '', link: x.l || '',
+    autores: x.a || null, situacao: x.t || '', urlDocumento: x.u || '', homenagem: !!x.h,
+    temas: (x.m || []).filter(id => TEMA[id]).map(id => ({ id, termos: [], trechos: [] })), _semTrechos: true };
+}
+function itemParaArquivo(it){
+  const x = { c: it.chave, k: it.casa, d: it.data, e: it.ementa, p: it.partidos, s: it.siglasEncontradas, m: it.temas.map(t => t.id) };
+  if (it.viaDeputados && it.viaDeputados.length) x.v = it.viaDeputados;
+  if (it.idCamara) x.i = it.idCamara;
+  if (it.link) x.l = it.link;
+  if (it.autores && it.autores.length) x.a = it.autores;
+  if (it.situacao) x.t = it.situacao;
+  if (it.urlDocumento) x.u = it.urlDocumento;
+  if (it.homenagem) x.h = 1;
+  return x;
+}
+const projetosPronto = fetch('projetos.json', { cache: 'no-cache' })
+  .then(r => r.ok ? r.json() : null)
+  .then(j => {
+    if (!j || !Array.isArray(j.itens)) { projetosArq.situacao = 'ausente'; return; }
+    projetosArq.situacao = 'ok'; projetosArq.total = j.itens.length; projetosArq.gerado = j.gerado || '';
+    // Se alguém já fez uma busca ao vivo antes de o arquivo chegar, mantém a busca.
+    if (estado.opc) return;
+    estado.itens = j.itens.map(itemDoArquivo);
+    estado.avisos = j.avisos || [];
+    estado.opc = Object.assign({ partidos: [], casas: [], tipos: [], antecessoras: false, inicio: '', fim: '' }, j.busca || {});
+    estado.origem = 'arquivo'; estado.dataBase = j.gerado || '';
+    acertarFormulario(estado.opc);
+    aplicarFocoPendente();
+    desenhar();
+    consultarGuardadas();
+  })
+  .catch(() => { projetosArq.situacao = 'ausente'; })
+  .finally(() => { desenharAdmin(); if (projetosArq.situacao !== 'ok' && estado.focoPendente) desenhar(); });
+
+// Ajusta a barra de busca para mostrar o recorte dos dados carregados.
+function acertarFormulario(opc){
+  const marcar = (el, vals) => el.querySelectorAll('.chip').forEach(b => b.setAttribute('aria-pressed', vals.includes(b.dataset.v) ? 'true' : 'false'));
+  if (opc.partidos.length) marcar($('#partidos'), opc.partidos);
+  if (opc.casas.length) marcar($('#casas'), opc.casas);
+  if (opc.tipos.length) marcar($('#tipos'), opc.tipos);
+  $('#antecessoras').checked = !!opc.antecessoras;
+  if (opc.inicio && opc.fim) { $('#inicio').value = opc.inicio; $('#fim').value = opc.fim; $('#preset').value = 'livre'; }
+}
+
+// Link direto para um projeto (?p=PL 123/2025). Mostra só aquele projeto, sem filtros.
+function aplicarFocoPendente(){
+  const ch = estado.focoPendente; if (!ch) return;
+  if (!estado.itens.some(it => it.chave === ch)) return;
+  estado.focoPendente = null; estado.foco = ch;
+  estado.temas.clear(); estado.partidoSel = null; estado.cadernoSel = null; estado.texto = ''; estado.promessaSel = null; estado.pagina = 1;
+  triagem.fd = 'todos'; triagem.fc = 'todos';
+  setTimeout(() => { const el = $('#lista'); if (el) el.scrollIntoView({ block: 'start' }); }, 50);
+}
+function tirarFoco(){
+  estado.foco = null;
+  const u = new URL(location.href); u.searchParams.delete('p'); history.replaceState(null, '', u.pathname + u.search + u.hash);
+}
+
 
 // Depois de cada busca, pergunta ao Worker o que já foi triado por qualquer pessoa, sem chamar a IA.
 let avaliacoesConsultadas = false;
@@ -657,12 +793,14 @@ async function executarBusca(opc, completar){
         atualizar();
       });
     } finally { clearInterval(relogio); }
-    estado.itens = r.itens; estado.avisos = r.avisos; estado.opc = opc;
-    if (!completar) { estado.temas.clear(); estado.partidoSel = null; estado.cadernoSel = null; estado.texto = ''; estado.promessaSel = null; }
+    estado.itens = r.itens; estado.avisos = r.avisos; estado.opc = opc; estado.origem = 'busca'; estado.dataBase = '';
+    if (!completar) { estado.temas.clear(); estado.partidoSel = null; estado.cadernoSel = null; estado.texto = ''; estado.promessaSel = null; if (estado.foco) tirarFoco(); }
+    aplicarFocoPendente();
     if (estado.promessaPendente) { aplicarPromessa(estado.promessaPendente); estado.promessaPendente = null; }
     estado.pagina = 1;
     $('#status').textContent = `${fmt(r.itens.length)} projetos recebidos em ${Math.round((Date.now() - t0) / 1000)} s`;
     desenhar();
+    desenharAdmin();
     consultarGuardadas();
   } catch (e) {
     $('#status').textContent = estado.consulta.signal.aborted ? 'Busca interrompida.' : 'A busca não terminou porque as APIs não responderam. Tente de novo ou diminua o período.';
@@ -670,10 +808,12 @@ async function executarBusca(opc, completar){
 }
 
 // ---------------------------------------------------------------- filtros locais
-['#so-tema', '#sem-homenagem', '#so-marcados', '#so-flavio'].forEach(s => $(s).addEventListener('change', () => { estado.pagina = 1; desenhar(); }));
-$('#limpar-temas').addEventListener('click', () => { estado.temas.clear(); estado.cadernoSel = null; estado.promessaSel = null; estado.pagina = 1; desenhar(); });
+['#so-tema', '#sem-homenagem', '#so-marcados', '#so-flavio', '#so-verificados'].forEach(s => $(s).addEventListener('change', () => { estado.pagina = 1; if (estado.foco) tirarFoco(); desenhar(); }));
+if (ADMIN) $('#rotulo-marcados').hidden = false;
+$('#limpar-temas').addEventListener('click', () => { if (estado.foco) tirarFoco(); estado.temas.clear(); estado.cadernoSel = null; estado.promessaSel = null; estado.pagina = 1; desenhar(); });
 $('#filtro-temas').addEventListener('change', e => {
   const c = e.target.closest('input[data-tema]'); if (!c) return;
+  if (estado.foco) tirarFoco();
   c.checked ? estado.temas.add(c.dataset.tema) : estado.temas.delete(c.dataset.tema);
   estado.cadernoSel = null; estado.promessaSel = null; estado.pagina = 1; desenhar();
 });
@@ -681,6 +821,8 @@ $('#filtro-temas').addEventListener('change', e => {
 function baseFiltrada(semTriagem){
   const txt = Motor.normalizar(estado.texto.trim());
   return estado.itens.filter(it => {
+    if (estado.foco) return it.chave === estado.foco;
+    if ($('#so-verificados').checked && !ehVerificado(it.chave)) return false;
     if ($('#sem-homenagem').checked && it.homenagem) return false;
     if ($('#so-marcados').checked && !estado.marcados.has(it.chave) && !AVAL[it.chave]) return false;
     if ($('#so-flavio').checked && !ehFlavio(it)) return false;
@@ -735,6 +877,7 @@ function contarPromessa(pr, base){ const ids = new Set(pr.temas); return base.fi
 
 function aplicarPromessa(k){
   const pr = promessaDe(k); if (!pr) return;
+  if (estado.foco) tirarFoco();
   estado.temas = new Set(pr.temas.filter(id => TEMA[id]));
   estado.promessaSel = k; estado.cadernoSel = null; estado.partidoSel = null; estado.pagina = 1;
 }
@@ -772,7 +915,8 @@ function ligarPromessas(){
 }
 
 function desenharMapa(){
-  $('#resultado').innerHTML = `<div class="promessas-sec">
+  const carregando = projetosArq.situacao === 'carregando';
+  $('#resultado').innerHTML = `${carregando ? '<p class="metodo" style="margin:0 0 16px">Carregando os projetos publicados.</p>' : ''}${avisoFocoAusente()}${destaquesHTML()}<div class="promessas-sec">
     <h2>Flávio promete. Olha o que eles propõem.</h2>
     <p>Cada cartão traz um trecho literal do programa de governo de Flávio Bolsonaro, com a página. Embaixo, o que o PL e os partidos aliados vêm apresentando no Congresso sobre o mesmo assunto. Escolha o período na barra acima e clique em Buscar projetos, ou clique direto num cartão.</p>
     ${cartoesPromessas()}
@@ -785,7 +929,7 @@ function contraste(lista){
   const pr = promessaDe(estado.promessaSel); if (!pr) return '';
   return `<div class="contraste" id="contraste">
     <div class="c-diz"><p class="rot">Flávio promete</p><blockquote>“${esc(pr.trecho)}”</blockquote><p class="pag">Programa de governo, p. ${pr.pagina}</p></div>
-    <div class="c-faz"><p class="rot">Mas olha o que ${$('#so-flavio').checked ? 'ele propõe' : 'eles propõem'}</p><p><strong>${fmt(lista.length)}</strong> ${lista.length === 1 ? 'projeto' : 'projetos'} ${quemPropoe()}${qualTriagem(true)}, apresentados ${periodoTexto()}, mostram ${esc(pr.olhe)}. Leia as ementas, marque os que contradizem a promessa e peça a avaliação do texto integral.</p></div>
+    <div class="c-faz"><p class="rot">Mas olha o que ${$('#so-flavio').checked ? 'ele propõe' : 'eles propõem'}</p><p><strong>${fmt(lista.length)}</strong> ${lista.length === 1 ? 'projeto' : 'projetos'} ${quemPropoe()}${qualTriagem(true)}, apresentados ${periodoTexto()}, mostram ${esc(pr.olhe)}. ${ADMIN ? 'Leia as ementas, marque os que contradizem a promessa e peça a avaliação do texto integral.' : 'Leia as ementas e compartilhe os casos que mostram a contradição.'}</p></div>
   </div>`;
 }
 
@@ -815,7 +959,8 @@ function desenhar(){
   const nPartidos = new Set(lista.flatMap(it => it.partidos.map(p => p === 'PRB' ? 'REPUBLICANOS' : p))).size;
   const nFlavio = lista.filter(ehFlavio).length;
   const avisos = blocoFaltou();
-  const metodo = notaMetodo();
+  const metodo = notaMetodo() + (estado.origem === 'arquivo' && estado.dataBase
+    ? `<p class="metodo">Dados oficiais da Câmara e do Senado reunidos em ${dataBR(estado.dataBase)}. Para incluir o que foi apresentado depois, clique em Buscar projetos.</p>` : '');
   const faltaFlavio = $('#so-flavio').checked && (!estado.opc.casas.includes('senado') || !estado.opc.partidos.includes('PL'));
   const avisoFlavio = faltaFlavio ? '<p class="metodo">Flávio Bolsonaro é senador pelo PL desde o fim de 2021, depois de passar por PSL e Republicanos. Para ver os projetos dele, inclua o Senado e o PL na busca.</p>' : '';
   if (!estado.itens.length){
@@ -824,6 +969,8 @@ function desenhar(){
   }
   $('#resultado').innerHTML = `
     ${avisos}
+    ${avisoFocoAusente()}
+    ${estado.foco ? '' : destaquesHTML()}
     <p class="frase"><strong>${fmt(lista.length)}</strong> projetos de ${nPartidos} ${nPartidos === 1 ? 'partido' : 'partidos'} em ${nTemas} ${nTemas === 1 ? 'tema' : 'temas'}${esc(qualTriagem())}, apresentados ${periodoTexto()}.${nFlavio && !$('#so-flavio').checked ? ` Destes, ${fmt(nFlavio)} ${nFlavio === 1 ? 'tem' : 'têm'} o próprio Flávio Bolsonaro como autor.` : ''}</p>
     ${metodo}${avisoFlavio}
     <section class="triagem" id="triagem" aria-label="Triagem por IA">${painelTriagem()}</section>
@@ -860,13 +1007,14 @@ function desenhar(){
   $('.matrix').addEventListener('click', e => {
     const td = e.target.closest('td[data-p]'); if (!td) return;
     const p = td.dataset.p || null;
+    if (estado.foco) tirarFoco();
     const igual = estado.partidoSel === p && estado.cadernoSel === td.dataset.c;
     estado.partidoSel = igual ? null : p; estado.cadernoSel = igual ? null : td.dataset.c; estado.pagina = 1; desenhar();
   });
   $('.ativos').addEventListener('click', e => {
     const b = e.target.closest('button[data-rm]'); if (!b) return;
     const k = b.dataset.rm;
-    if (k === 'partido') estado.partidoSel = null; else if (k === 'caderno') estado.cadernoSel = null; else { estado.temas.delete(k); estado.promessaSel = null; }
+    if (k === 'foco') tirarFoco(); else if (k === 'partido') estado.partidoSel = null; else if (k === 'caderno') estado.cadernoSel = null; else { estado.temas.delete(k); estado.promessaSel = null; }
     estado.pagina = 1; desenhar();
   });
   desenharLista(lista);
@@ -904,6 +1052,7 @@ function notaMetodo(){
 
 function chipsAtivos(){
   const out = [];
+  if (estado.foco) out.push(`<span class="ativo">Só o ${esc(estado.foco)}<button data-rm="foco" aria-label="Ver todos os projetos">×</button></span>`);
   if (estado.partidoSel) out.push(`<span class="ativo">${esc(NOME_PARTIDO[estado.partidoSel])}<button data-rm="partido" aria-label="Tirar filtro de partido">×</button></span>`);
   if (estado.cadernoSel) out.push(`<span class="ativo">${esc(CADERNO[estado.cadernoSel].subtitulo)}<button data-rm="caderno" aria-label="Tirar filtro de área">×</button></span>`);
   estado.temas.forEach(id => out.push(`<span class="ativo">${esc(TEMA[id].tema)}<button data-rm="${esc(id)}" aria-label="Tirar tema">×</button></span>`));
@@ -961,6 +1110,8 @@ function desenharLista(lista){
   const ini = (estado.pagina - 1) * POR_PAGINA;
   const pag = lista.slice(ini, ini + POR_PAGINA);
   $('#lista').innerHTML = pag.length ? pag.map(it => {
+    // Projetos vindos do projetos.json chegam sem os trechos marcados; calcula só para os que vão aparecer.
+    if (it._semTrechos) { const r = Motor.classificar(it.ementa, TC); if (r.length) it.temas = r; delete it._semTrechos; }
     const ts = temasDoItem(it);
     const trechos = ts.flatMap(t => it.temas.find(x => x.id === t.id).trechos);
     const via = it.viaDeputados.length ? `<span class="alerta" title="A API da Câmara recusou o filtro por sigla, então vale o partido atual do deputado">${esc(it.viaDeputados.join(', '))} pelo partido atual do autor</span>` : '';
@@ -968,13 +1119,17 @@ function desenharLista(lista){
     const situacao = it.situacao ? it.situacao.charAt(0) + it.situacao.slice(1).toLowerCase() : '';
     const marcado = estado.marcados.has(it.chave);
     const flavio = ehFlavio(it);
-    return `<article class="ficha ${marcado ? 'marcada' : ''} ${flavio ? 'do-flavio' : ''}" data-chave="${esc(it.chave)}">
-      <div class="topo"><span class="num">${esc(it.chave)}</span><span class="casa">${it.casa.join(' e ')}</span>${flavio ? '<span class="flavio">Autoria de Flávio Bolsonaro</span>' : ''}${seloTriagem(it)}${it.siglasEncontradas.map(s => `<span class="partido">${esc(s)}</span>`).join('')}${via}<span class="data">${dataBR(it.data)}</span>
-        <label class="marca"><input type="checkbox" data-marcar="${esc(it.chave)}" ${marcado ? 'checked' : ''}> ${AVAL[it.chave] ? 'Avaliado' : 'Marcar para avaliar'}</label></div>
+    const ver = VER[it.chave];
+    return `<article class="ficha ${marcado ? 'marcada' : ''} ${flavio ? 'do-flavio' : ''} ${ver ? 'verificada' : ''}" data-chave="${esc(it.chave)}">
+      <div class="topo"><span class="num">${esc(it.chave)}</span><span class="casa">${it.casa.join(' e ')}</span>${flavio ? '<span class="flavio">Autoria de Flávio Bolsonaro</span>' : ''}${ver ? '<span class="selo-ver">Verificado pela equipe</span>' : ''}${seloTriagem(it)}${it.siglasEncontradas.map(s => `<span class="partido">${esc(s)}</span>`).join('')}${via}<span class="data">${dataBR(it.data)}</span>
+        ${ADMIN ? `<label class="marca"><input type="checkbox" data-marcar="${esc(it.chave)}" ${marcado ? 'checked' : ''}> ${AVAL[it.chave] ? 'Avaliado' : 'Marcar para avaliar'}</label>` : ''}</div>
       <p class="ementa">${marcar(it.ementa, trechos)}</p>
       <div class="temas">${ts.map(t => `<span class="tema" title="Termos encontrados: ${esc(t.termos.join(', '))}">${esc(TEMA[t.id].tema)}</span>`).join('')}</div>
-      ${TRI[it.chave] && TRI[it.chave].m ? `<p class="tri-motivo"><b>Triagem.</b> ${esc(TRI[it.chave].m)}</p>` : ''}
-      <div class="rodape-ficha">${autores ? `<span>${autores}</span>` : ''}${situacao ? `<span>${esc(situacao)}</span>` : ''}${it.link ? `<a href="${esc(it.link)}" target="_blank" rel="noopener">Ver ficha oficial</a>` : ''}</div>
+      ${ver && ver.nota ? `<p class="tri-motivo ver"><b>Checagem da equipe.</b> ${esc(ver.nota)}</p>`
+        : TRI[it.chave] && TRI[it.chave].m ? `<p class="tri-motivo"><b>Triagem automática por IA, ainda não verificada.</b> ${esc(TRI[it.chave].m)}</p>` : ''}
+      <div class="rodape-ficha">${autores ? `<span>${autores}</span>` : ''}${situacao ? `<span>${esc(situacao)}</span>` : ''}${it.link ? `<a href="${esc(it.link)}" target="_blank" rel="noopener">Ver ficha oficial</a>` : ''}
+        <span class="acoes-ficha"><button type="button" class="btn-mini forte" data-compartilhar="${esc(it.chave)}">Compartilhar</button><button type="button" class="btn-mini" data-copiar="${esc(it.chave)}">Copiar mensagem</button></span></div>
+      ${ADMIN ? painelVerificacao(it) : ''}
       ${painelAvaliacao(it)}
     </article>`;
   }).join('') : '<div class="vazio-box"><p>Nenhum projeto atende a esses filtros. Tire algum tema ou clique de novo na célula escolhida.</p></div>';
@@ -999,7 +1154,8 @@ function seloTriagem(it){
   const nome = nomeEfeito(t);
   const d = nome ? `<span class="tri tri-${grupoEfeito(t).startsWith('p-') ? 'prejudica' : grupoEfeito(t)}" title="Efeito do projeto, segundo a triagem por IA da ementa">${esc(nome)}</span>` : '';
   const c = NOME_TRI[t.c] ? `<span class="tri tri-${t.c}" title="O que o programa de Flávio diz sobre o assunto, segundo a triagem por IA da ementa">${NOME_TRI[t.c]}</span>` : '';
-  return d + c;
+  if (!d && !c) return '';
+  return (ehVerificado(it.chave) ? '' : '<span class="selo-ia" title="Classificação automática feita por IA a partir da ementa, ainda não verificada pela equipe">IA</span>') + d + c;
 }
 // Só entram na triagem os projetos ligados a algum tema e que não são homenagens.
 const candidatosTriagem = () => estado.itens.filter(it => it.temas.length && !it.homenagem);
@@ -1039,11 +1195,13 @@ function painelTriagem(){
       <tfoot><tr><th scope="row">Total</th>${C.map(c => cel('todos', c, totC[c] || 0, 'tot')).join('')}${cel('todos', 'todos', triados, 'tot')}</tr></tfoot>
     </table>
     <p class="tri-nota">A tabela e o botão de triagem consideram a lista atual, com os filtros escolhidos. Cada projeto conta uma única vez, pela área do tema mais atingido. Clique num número, numa linha ou numa coluna para filtrar a lista.${semEfeito ? ` <button type="button" class="link-tri" data-fd="sem" data-fc="todos">${fmt(semEfeito)} ${semEfeito === 1 ? 'projeto sem efeito negativo aparente ficou' : 'projetos sem efeito negativo aparente ficaram'} fora da tabela</button>.` : ''}${semTriagem ? ` ${fmt(semTriagem)} ${semTriagem === 1 ? 'projeto da lista ainda não foi triado' : 'projetos da lista ainda não foram triados'}.` : ''}</p>` : '';
+  if (!ADMIN && !triados && !semEfeito) return '';
   return `<h3>Triagem por IA</h3>
-    <p>A IA lê a ementa, aponta o efeito negativo e compara com o programa de Flávio, para mostrar o que ele contradiz e o que esconde do eleitor. Confira antes de divulgar.</p>
+    <p>${ADMIN ? 'A IA lê a ementa, aponta o efeito negativo e compara com o programa de Flávio, para mostrar o que ele contradiz e o que esconde do eleitor. Confira antes de divulgar.'
+      : 'Uma inteligência artificial leu a ementa de cada projeto, apontou o efeito negativo e comparou com o programa de Flávio Bolsonaro. É uma classificação automática. Os casos conferidos pela equipe aparecem com o selo Verificado.'}</p>
     ${tabela}
     <div class="tri-acoes">
-      ${triagem.rodando
+      ${!ADMIN ? '' : triagem.rodando
         ? `<button type="button" class="btn-sec" id="tri-parar">Parar a triagem</button>`
         : `<button type="button" class="btn-go" id="tri-rodar" ${pendentesBusca ? '' : 'disabled'}>${pendentesBusca ? `Triar ${pendentesBusca === 1 ? 'o projeto que falta' : `os ${fmt(pendentesBusca)} projetos que faltam`} na lista` : 'Todos os projetos da lista já foram triados'}</button>`}
       ${triagem.fd !== 'todos' || triagem.fc !== 'todos' ? '<button type="button" class="btn-sec" data-fd="todos" data-fc="todos">Mostrar todos os projetos</button>' : ''}
@@ -1073,11 +1231,11 @@ async function rodarTriagem(){
   await Motor.emParalelo(lotes.map(lote => async () => {
     if (triagem.parar || erroGeral) return;
     try {
-      const r = await fetch(proxy + '/triar', { method: 'POST', headers: { 'content-type': 'application/json' },
+      const r = await fetch(proxy + '/triar', { method: 'POST', headers: cabecalhosAdmin(),
         body: JSON.stringify({ itens: lote.map(it => ({ chave: it.chave, ementa: it.ementa, temas: it.temas.map(t => t.id) })) }) });
       const j = await r.json().catch(() => ({}));
       if (r.ok && j.resultados) guardarTri(j.resultados);
-      else if (j.error === 'sem_chave' || j.error === 'chave_recusada' || j.error === 'limite' || r.status === 404 || r.status === 405) erroGeral = mensagemErroTri(j.error, r.status);
+      else if (j.error === 'sem_chave' || j.error === 'chave_recusada' || j.error === 'limite' || j.error === 'sem_permissao' || r.status === 404 || r.status === 405) erroGeral = mensagemErroTri(j.error, r.status);
       else ultimoMotivo = [j.error || ('http ' + r.status), j.detalhe || ''].join(' ').trim();
     } catch (e) { ultimoMotivo = 'o serviço intermediário não respondeu'; }
     triagem.feitos += lote.length;
@@ -1092,7 +1250,7 @@ async function rodarTriagem(){
     await Motor.emParalelo(lotes2.map(lote => async () => {
       if (triagem.parar) return;
       try {
-        const r = await fetch(proxy + '/triar', { method: 'POST', headers: { 'content-type': 'application/json' },
+        const r = await fetch(proxy + '/triar', { method: 'POST', headers: cabecalhosAdmin(),
           body: JSON.stringify({ itens: lote.map(it => ({ chave: it.chave, ementa: it.ementa, temas: it.temas.map(t => t.id) })) }) });
         const j = await r.json().catch(() => ({}));
         if (r.ok && j.resultados) guardarTri(j.resultados);
@@ -1114,6 +1272,7 @@ document.addEventListener('keydown', e => {
   if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('#triagem td[data-fd]')) { e.preventDefault(); e.target.click(); }
 });
 function mensagemErroTri(codigo, status){
+  if (codigo === 'sem_permissao') return 'A chave de administração está ausente ou errada. Preencha o campo Chave de administração na faixa amarela, com o mesmo valor de ADMIN_KEY cadastrado no Worker.';
   if (codigo === 'sem_chave') return 'A triagem ainda não está ativada. Falta cadastrar a chave ANTHROPIC_API_KEY no Worker do Cloudflare.';
   if (codigo === 'chave_recusada') return 'A chave da API da Anthropic cadastrada no Worker foi recusada. Confira a chave no Cloudflare.';
   if (codigo === 'limite') return 'O limite de triagens por hora foi atingido. O que já foi triado está guardado. Tente o resto mais tarde.';
@@ -1125,6 +1284,7 @@ document.addEventListener('click', e => {
   if (e.target.id === 'tri-parar') { triagem.parar = true; e.target.disabled = true; e.target.textContent = 'Parando'; }
   const f = e.target.closest && e.target.closest('#triagem [data-fd][data-fc]');
   if (f) {
+    if (estado.foco) tirarFoco();
     const igual = triagem.fd === f.dataset.fd && triagem.fc === f.dataset.fc;
     triagem.fd = igual ? 'todos' : f.dataset.fd; triagem.fc = igual ? 'todos' : f.dataset.fc;
     estado.pagina = 1; desenhar();
@@ -1139,7 +1299,7 @@ let exportStatus = '', exportando = false;
 async function consultarEstado(){
   const proxy = (window.MONITOR_PROXY || '').replace(/\/+$/, '');
   try {
-    const r = await fetch(proxy + '/estado');
+    const r = await fetch(proxy + '/estado', { headers: CHAVE_ADMIN ? { 'x-admin-key': CHAVE_ADMIN } : {} });
     if (r.ok) Object.assign(servidor, await r.json(), { situacao: 'ok' });
     else servidor.situacao = 'antigo';
   } catch (e) { servidor.situacao = 'fora'; }
@@ -1148,22 +1308,59 @@ async function consultarEstado(){
 const contar = (n, um, varios) => `${fmt(n)} ${n === 1 ? um : varios}`;
 const nTri = n => contar(n, 'triagem', 'triagens');
 const nAval = n => contar(n, 'avaliação', 'avaliações');
+// Chave de administração. Fica só no navegador de quem administra e vai junto nas chamadas
+// que gastam créditos (/triar e /avaliar). O Worker compara com o segredo ADMIN_KEY.
+let CHAVE_ADMIN = '';
+try { CHAVE_ADMIN = localStorage.getItem('exterminadores-chave-admin') || ''; } catch (e) {}
+function cabecalhosAdmin(){
+  const h = { 'content-type': 'application/json' };
+  if (CHAVE_ADMIN) h['x-admin-key'] = CHAVE_ADMIN;
+  return h;
+}
+
 function desenharAdmin(){
   const el = $('#admin'); if (!ADMIN || !el) return;
   el.hidden = false;
   const nLocal = Object.keys(TRI_LOCAL).length;
+  const nVer = Object.keys(VER).length;
+  const nVerLocal = Object.keys(VER_LOCAL).length;
   const arq = { ok: `tem ${nTri(arquivo.triagens)}${arquivo.avaliacoes ? ` e ${nAval(arquivo.avaliacoes)}` : ''}${arquivo.gerado ? `, gerado em ${dataBR(arquivo.gerado)}` : ''}`,
     ausente: 'ainda não foi publicado', 'outra versao': 'é de outra versão do critério e foi ignorado', carregando: 'está carregando' }[arquivo.situacao];
+  const proj = { ok: `tem ${contar(projetosArq.total, 'projeto', 'projetos')}${projetosArq.gerado ? `, reunidos em ${dataBR(projetosArq.gerado)}` : ''}`,
+    ausente: 'ainda não foi publicado', carregando: 'está carregando' }[projetosArq.situacao];
   const srv = servidor.situacao === 'ok'
     ? (servidor.banco ? `está ligado e guarda ${nTri(servidor.triagens || 0)} e ${nAval(servidor.avaliacoes || 0)}` : 'não está ligado ao Worker (falta a ligação DB no Cloudflare)')
       + (servidor.versaoTriagem && servidor.versaoTriagem !== VERSAO_TRIAGEM ? `. Atenção, o Worker usa o critério ${servidor.versaoTriagem} e a página usa ${VERSAO_TRIAGEM}` : '')
     : { antigo: 'não responde, provavelmente o Worker publicado ainda é a versão anterior', fora: 'não respondeu', consultando: 'está sendo consultado' }[servidor.situacao];
+  const chave = servidor.situacao !== 'ok' ? ''
+    : !servidor.adminExigido ? ' O Worker ainda não exige chave de administração (falta o segredo ADMIN_KEY), então qualquer pessoa pode pedir triagens.'
+    : servidor.adminOk ? ' A chave de administração deste navegador foi aceita.' : ' A chave de administração deste navegador está ausente ou errada.';
+  const buscaPronta = estado.origem === 'busca' && estado.itens.length;
   el.innerHTML = `<div class="wrap">
-    <p><b>Administração.</b> O arquivo triagens.json ${arq}. O banco do Worker ${srv}. Este navegador guarda ${nTri(nLocal)} ${nLocal === 1 ? 'feita' : 'feitas'} aqui${triLocalCheio ? ', e o espaço dele encheu, então as novas ficam só no banco' : ''}.</p>
+    <p><b>Administração.</b> O arquivo projetos.json ${proj}. O triagens.json ${arq}, com ${contar(nVer, 'caso verificado', 'casos verificados')}${nVerLocal ? ` (${contar(nVerLocal, 'mudança', 'mudanças')} feitas aqui e ainda não exportadas)` : ''}. O banco do Worker ${srv}.${chave} Este navegador guarda ${nTri(nLocal)} ${nLocal === 1 ? 'feita' : 'feitas'} aqui${triLocalCheio ? ', e o espaço dele encheu, então as novas ficam só no banco' : ''}.</p>
+    <label class="chave-admin">Chave de administração <input type="password" id="chave-admin" value="${esc(CHAVE_ADMIN)}" autocomplete="off"></label>
     <button type="button" class="btn-go" id="exportar" ${exportando ? 'disabled' : ''}>${exportando ? 'Exportando' : 'Exportar triagens.json'}</button>
+    <button type="button" class="btn-go" id="exportar-projetos" ${buscaPronta ? '' : 'disabled'} title="${buscaPronta ? '' : 'Faça antes uma busca com Buscar projetos'}">Exportar projetos.json</button>
     <span class="admin-status" role="status" aria-live="polite">${esc(exportStatus)}</span>
   </div>`;
 }
+document.addEventListener('change', e => {
+  if (e.target.id !== 'chave-admin') return;
+  CHAVE_ADMIN = e.target.value.trim();
+  try { localStorage.setItem('exterminadores-chave-admin', CHAVE_ADMIN); } catch (er) {}
+  consultarEstado();
+});
+
+function baixarTexto(nome, texto){
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([texto], { type: 'application/json' }));
+  a.download = nome;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+// Uma entrada por linha, para que o histórico do GitHub mostre só o que mudou.
+const linhasJson = obj => Object.keys(obj).sort().map(k => JSON.stringify(k) + ':' + JSON.stringify(obj[k])).join(',\n');
+
 async function exportarTriagens(){
   if (exportando) return;
   exportando = true; exportStatus = 'Reunindo as triagens do banco, do arquivo publicado e deste navegador.'; desenharAdmin();
@@ -1184,23 +1381,170 @@ async function exportarTriagens(){
     if (t && ['prejudica', 'incerto', 'sem'].includes(t.d)) limpo[k] = { d: t.d, t: t.t || '', c: t.c || '', m: t.m || '' };
   }
   for (const k of Object.keys(aval)) if (!aval[k] || !aval[k].avaliacao) delete aval[k];
-  // Uma entrada por linha, para que o histórico do GitHub mostre só o que mudou.
-  const linhas = obj => Object.keys(obj).sort().map(k => JSON.stringify(k) + ':' + JSON.stringify(obj[k])).join(',\n');
   const texto = '{\n"versao":' + JSON.stringify(VERSAO_TRIAGEM) + ',\n"versaoAvaliacao":' + JSON.stringify(VERSAO_AVALIACAO) +
-    ',\n"gerado":' + JSON.stringify(new Date().toISOString()) + ',\n"triagens":{\n' + linhas(limpo) + '\n},\n"avaliacoes":{\n' + linhas(aval) + '\n}\n}\n';
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([texto], { type: 'application/json' }));
-  a.download = 'triagens.json';
-  document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-  const nt = Object.keys(limpo).length, na = Object.keys(aval).length;
+    ',\n"gerado":' + JSON.stringify(new Date().toISOString()) + ',\n"verificados":{\n' + linhasJson(VER) +
+    '\n},\n"triagens":{\n' + linhasJson(limpo) + '\n},\n"avaliacoes":{\n' + linhasJson(aval) + '\n}\n}\n';
+  baixarTexto('triagens.json', texto);
+  const nt = Object.keys(limpo).length, na = Object.keys(aval).length, nv = Object.keys(VER).length;
   exportando = false;
-  exportStatus = `Arquivo gerado com ${nTri(nt)} e ${nAval(na)}` +
+  exportStatus = `Arquivo gerado com ${nTri(nt)}, ${nAval(na)} e ${contar(nv, 'caso verificado', 'casos verificados')}` +
     (doBanco ? '.' : ', sem o banco do Worker, que não respondeu. Entraram só o arquivo publicado e o que está neste navegador.') +
-    ' Suba o triagens.json para o repositório do site no GitHub, no lugar do anterior.';
+    ' Suba o triagens.json para o repositório do site no GitHub, no lugar do anterior. As marcações de verificação continuam guardadas neste navegador até o novo arquivo estar no ar.';
   desenharAdmin();
 }
-document.addEventListener('click', e => { if (e.target.id === 'exportar') exportarTriagens(); });
+function exportarProjetos(){
+  if (estado.origem !== 'busca' || !estado.itens.length) return;
+  // Vão para o arquivo só os projetos ligados a algum tema, que são os que a página mostra por padrão.
+  const itens = estado.itens.filter(it => it.temas.length);
+  const busca = estado.opc;
+  const texto = '{\n"versao":1,\n"gerado":' + JSON.stringify(new Date().toISOString()) +
+    ',\n"busca":' + JSON.stringify({ partidos: busca.partidos, casas: busca.casas, tipos: busca.tipos, antecessoras: busca.antecessoras, inicio: busca.inicio, fim: busca.fim }) +
+    ',\n"avisos":' + JSON.stringify(estado.avisos.filter(a => a.tipo === 'metodo')) +
+    ',\n"itens":[\n' + itens.map(it => JSON.stringify(itemParaArquivo(it))).join(',\n') + '\n]\n}\n';
+  baixarTexto('projetos.json', texto);
+  const falhas = estado.avisos.some(a => a.tipo === 'falha');
+  exportStatus = `Arquivo projetos.json gerado com ${contar(itens.length, 'projeto', 'projetos')}, apresentados ${periodoTexto()}.` +
+    (falhas ? ' Atenção, parte das consultas às APIs falhou nesta busca. Use Buscar de novo o que faltou e exporte outra vez antes de publicar.' : '') +
+    ' Suba o arquivo para o repositório do site no GitHub, ao lado do index.html.';
+  desenharAdmin();
+}
+document.addEventListener('click', e => {
+  if (e.target.id === 'exportar') exportarTriagens();
+  if (e.target.id === 'exportar-projetos') exportarProjetos();
+});
+
+// ---------------------------------------------------------------- casos verificados
+// Copia os dados do projeto para a verificação, para que o destaque apareça mesmo sem o projetos.json.
+function dadosDoCaso(it){
+  return { chave: it.chave, casa: it.casa, data: it.data, ementa: it.ementa, autores: (it.autores || []).slice(0, 6),
+    partidos: it.siglasEncontradas, link: it.link || '' };
+}
+function painelVerificacao(it){
+  const v = VER[it.chave];
+  const sugestao = (TRI[it.chave] && TRI[it.chave].m) || '';
+  return `<div class="ver-admin">
+    <label><input type="checkbox" data-verificar="${esc(it.chave)}" ${v ? 'checked' : ''}> Verificado pela equipe</label>
+    ${v ? `<textarea data-nota="${esc(it.chave)}" placeholder="Texto da checagem, que aparece no destaque e na mensagem compartilhada">${esc(v.nota || '')}</textarea>
+    <small>O texto aparece no destaque e na mensagem de compartilhamento. Salvo neste navegador. Para publicar, use Exportar triagens.json.</small>`
+    : `<small>Marque depois de conferir o texto integral. ${sugestao ? 'O motivo da triagem entra como ponto de partida do texto da checagem.' : ''}</small>`}
+  </div>`;
+}
+document.addEventListener('change', e => {
+  const c = e.target.closest && e.target.closest('input[data-verificar]'); if (!c) return;
+  const ch = c.dataset.verificar;
+  const it = estado.itens.find(x => x.chave === ch);
+  if (c.checked && it) {
+    VER_LOCAL[ch] = Object.assign(dadosDoCaso(it), { nota: (VER[ch] && VER[ch].nota) || (TRI[ch] && TRI[ch].m) || '', data: new Date().toISOString().slice(0, 10) });
+  } else if (!c.checked) {
+    if (VER_ARQ[ch]) VER_LOCAL[ch] = { removido: true }; else delete VER_LOCAL[ch];
+  }
+  gravarVerLocal(); juntarVer(); desenhar(); desenharAdmin();
+});
+document.addEventListener('input', e => {
+  const t = e.target.closest && e.target.closest('textarea[data-nota]'); if (!t) return;
+  const ch = t.dataset.nota;
+  if (!VER[ch]) return;
+  VER_LOCAL[ch] = Object.assign({}, VER[ch], { nota: t.value });
+  gravarVerLocal(); juntarVer();
+});
+document.addEventListener('change', e => {
+  if (e.target.closest && e.target.closest('textarea[data-nota]')) { desenharAdmin(); const d = $('.destaques'); if (d) d.outerHTML = destaquesHTML(); }
+});
+
+const MAX_DESTAQUES = 6;
+function destaquesHTML(){
+  const casos = Object.values(VER).filter(v => v && v.chave).sort((a, b) => (b.data || '').localeCompare(a.data || ''));
+  if (!casos.length) return '';
+  const mostrar = estado.destaquesTodos ? casos : casos.slice(0, MAX_DESTAQUES);
+  return `<section class="destaques" aria-label="Casos verificados">
+    <h2>Casos verificados</h2>
+    <p>Projetos conferidos pela equipe, que mostram o que o programa de Flávio Bolsonaro esconde ou contradiz. Compartilhe.</p>
+    <div class="dest-grid">${mostrar.map(v => `<article class="destaque">
+      <div class="topo"><span class="num">${esc(v.chave)}</span><span class="casa">${esc((v.casa || []).join(' e '))}</span><span class="selo-ver">Verificado</span>${(v.partidos || []).map(p => `<span class="partido">${esc(p)}</span>`).join('')}</div>
+      ${v.nota ? `<p class="nota">${esc(v.nota)}</p>` : ''}
+      <p class="ementa">${esc(v.ementa)}</p>
+      ${v.autores && v.autores.length ? `<p class="autores">${esc(v.autores.join('; '))}</p>` : ''}
+      <div class="acoes">
+        <button type="button" class="btn-mini forte" data-compartilhar="${esc(v.chave)}">Compartilhar</button>
+        <button type="button" class="btn-mini" data-copiar="${esc(v.chave)}">Copiar mensagem</button>
+        ${estado.itens.some(it => it.chave === v.chave) ? `<button type="button" class="btn-mini" data-ver-projeto="${esc(v.chave)}">Ver o projeto</button>`
+          : v.link ? `<a class="btn-mini" href="${esc(v.link)}" target="_blank" rel="noopener" style="text-decoration:none">Ficha oficial</a>` : ''}
+      </div>
+    </article>`).join('')}</div>
+    ${casos.length > MAX_DESTAQUES ? `<button type="button" class="btn-sec dest-mais" id="dest-mais">${estado.destaquesTodos ? 'Mostrar menos' : `Ver todos os ${casos.length} casos verificados`}</button>` : ''}
+  </section>`;
+}
+
+// Aviso para quem abre um link direto de um projeto que não está nos dados carregados.
+function avisoFocoAusente(){
+  const ch = estado.focoPendente;
+  if (!ch || estado.foco) return '';
+  const v = VER[ch];
+  if (projetosArq.situacao === 'carregando' && !estado.opc) return '';
+  return `<div class="aviso-foco">${v
+    ? `O link aponta para o ${esc(ch)}, que está entre os casos verificados abaixo.`
+    : `O link aponta para o ${esc(ch)}, que não está nos projetos carregados. Ajuste o período na barra de busca e clique em Buscar projetos.`}</div>`;
+}
+
+// ---------------------------------------------------------------- compartilhar
+const enderecoBase = () => location.origin + location.pathname.replace(/index\.html$/, '');
+const linkDoProjeto = ch => enderecoBase() + '?p=' + encodeURIComponent(ch);
+function casoParaCompartilhar(ch){
+  const it = estado.itens.find(x => x.chave === ch);
+  const v = VER[ch];
+  if (!it && !v) return null;
+  return {
+    chave: ch,
+    casa: (it ? it.casa : v.casa) || [],
+    ementa: it ? it.ementa : v.ementa,
+    autores: (it && it.autores && it.autores.length ? it.autores : (v && v.autores) || []),
+    link: (it && it.link) || (v && v.link) || '',
+    nota: v ? v.nota : ''
+  };
+}
+// Só vai na mensagem o texto de checagem conferido pela equipe. A triagem automática não é compartilhada.
+function textoCompartilhar(ch){
+  const c = casoParaCompartilhar(ch); if (!c) return '';
+  const autores = c.autores.slice(0, 3).join('; ') + (c.autores.length > 3 ? ' e outros' : '');
+  const partes = [
+    `*${c.chave}*${c.casa.length ? ', ' + c.casa.join(' e ') : ''}${autores ? '\nAutoria de ' + autores : ''}`,
+    c.ementa,
+  ];
+  if (c.nota) partes.push(`✅ *Checagem da equipe.* ${c.nota}`);
+  if (c.link) partes.push(`Ficha oficial no Congresso\n${c.link}`);
+  partes.push(`*Flávio Bolsonaro diz uma coisa e propõe outra.* Veja este e outros projetos em\n${linkDoProjeto(c.chave)}`);
+  return partes.join('\n\n');
+}
+async function compartilhar(ch){
+  const texto = textoCompartilhar(ch); if (!texto) return;
+  if (navigator.share && /Android|iPhone|iPad|Mobile/i.test(navigator.userAgent)) {
+    try { await navigator.share({ text: texto }); return; } catch (e) { if (e && e.name === 'AbortError') return; }
+  }
+  window.open('https://wa.me/?text=' + encodeURIComponent(texto), '_blank', 'noopener');
+}
+async function copiarMensagem(ch, botao){
+  const texto = textoCompartilhar(ch); if (!texto) return;
+  let ok = false;
+  try { await navigator.clipboard.writeText(texto); ok = true; }
+  catch (e) {
+    const t = document.createElement('textarea'); t.value = texto; document.body.appendChild(t); t.select();
+    try { ok = document.execCommand('copy'); } catch (er) {} t.remove();
+  }
+  if (botao) { const antes = botao.textContent; botao.textContent = ok ? 'Mensagem copiada' : 'Não foi possível copiar'; setTimeout(() => { botao.textContent = antes; }, 2200); }
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('[data-compartilhar],[data-copiar],[data-ver-projeto],#dest-mais');
+  if (!b) return;
+  if (b.id === 'dest-mais') { estado.destaquesTodos = !estado.destaquesTodos; const d = $('.destaques'); if (d) d.outerHTML = destaquesHTML(); return; }
+  if (b.dataset.compartilhar) compartilhar(b.dataset.compartilhar);
+  if (b.dataset.copiar) copiarMensagem(b.dataset.copiar, b);
+  if (b.dataset.verProjeto) {
+    estado.focoPendente = b.dataset.verProjeto; aplicarFocoPendente();
+    const u = new URL(location.href); u.searchParams.set('p', estado.foco); history.replaceState(null, '', u.pathname + u.search + u.hash);
+    desenhar();
+  }
+});
+
 
 // ---------------------------------------------------------------- avaliação por IA
 const NOME_POSICAO = { conflita: 'Efeito negativo', converge: 'Sem efeito negativo', misto: 'Efeito negativo em parte', neutro: 'Sem efeito negativo' };
@@ -1225,6 +1569,7 @@ function painelAvaliacao(it){
 }
 
 function desenharBarra(){
+  if (!ADMIN) return;
   let barra = $('#barra-avaliar');
   if (!barra) {
     barra = document.createElement('div');
@@ -1266,7 +1611,7 @@ async function avaliarMarcados(){
     const it = porChave.get(chave);
     try {
       const r = await fetch(proxy + '/avaliar', {
-        method: 'POST', headers: { 'content-type': 'application/json' },
+        method: 'POST', headers: cabecalhosAdmin(),
         body: JSON.stringify({ chave, casa: it.casa.includes('Câmara') && it.idCamara ? 'Câmara' : 'Senado', idCamara: it.idCamara || '',
           urlDocumento: it.urlDocumento || '', ementa: it.ementa, data: it.data, autores: it.autores || [],
           partidos: it.partidos.map(p => NOME_PARTIDO[p]), temas: it.temas.map(t => TEMA[t.id].tema) })
@@ -1281,6 +1626,7 @@ async function avaliarMarcados(){
   desenharBarra();
 }
 function mensagemErroAval(codigo, status){
+  if (codigo === 'sem_permissao') return 'A chave de administração está ausente ou errada. Preencha o campo Chave de administração na faixa amarela.';
   if (codigo === 'sem_chave') return 'A avaliação ainda não está ativada. Falta cadastrar a chave ANTHROPIC_API_KEY no Worker do Cloudflare.';
   if (codigo === 'chave_recusada') return 'A chave da API da Anthropic cadastrada no Worker foi recusada. Confira a chave no Cloudflare.';
   if (codigo === 'limite') return 'O limite de avaliações por hora foi atingido. Tente de novo mais tarde.';
