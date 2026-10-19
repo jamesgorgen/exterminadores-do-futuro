@@ -1,7 +1,10 @@
 {
 "versao":"t7",
 "versaoAvaliacao":"v1",
-"gerado":"2026-10-17T17:57:36.266Z",
+"gerado":"2026-10-19T03:46:06.958Z",
+"verificados":{
+
+},
 "triagens":{
 "PDL 1/2024":{"d":"incerto","t":"infra-digital","c":"contradiz","m":"Susta acordo que agiliza bloqueio de sites por ordem judicial, o que contraria a promessa de liberdade de expressão e de não punir quem pensa diferente (p. 66)"},
 "PDL 1/2025":{"d":"prejudica","t":"profissionais-seguranca","c":"omite","m":"Susta regras de uso da força dos agentes de segurança, retirando limites e proteção, sem o programa tratar desse ponto"},
