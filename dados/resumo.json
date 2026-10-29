@@ -1,10 +1,10 @@
 {
- "gerado": "2026-10-29T10:20:30.929Z",
+ "gerado": "2026-10-29T10:37:14.743Z",
  "inicio": "2023-02-01",
  "totais": {
   "proposicoes": 26223,
-  "direita": 2346,
-  "extrema": 630,
+  "direita": 2343,
+  "extrema": 629,
   "votacoes": 2425,
   "disputadas": 640,
   "vitorias": 352,
@@ -14,7 +14,7 @@
  },
  "porPauta": {
   "armas": {
-   "prop": 288,
+   "prop": 286,
    "extrema": 47,
    "prop30": 0,
    "vot": 6,
@@ -38,8 +38,8 @@
    "derrotas": 0
   },
   "costumes": {
-   "prop": 235,
-   "extrema": 168,
+   "prop": 234,
+   "extrema": 167,
    "prop30": 0,
    "vot": 9,
    "vitorias": 6,
