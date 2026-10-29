@@ -1,5 +1,5 @@
 {
- "inicio": "2026-10-29T18:56:44.455Z",
+ "inicio": "2026-10-29T23:08:10.729Z",
  "modo": "diario",
  "amostras": {
   "camara_deputado": {
@@ -101,23 +101,23 @@
    "dataApresentacao": "2026-02-24T15:48"
   },
   "senado_proposicao": {
-   "autoria": "Senador Jaime Bagattoli (PL/RO)",
+   "autoria": "Senador Astronauta Marcos Pontes (PL/SP)",
    "casaIdentificadora": "SF",
-   "codigoMateria": 175811,
-   "dataApresentacao": "2026-09-17",
-   "dataSituacaoAtual": "2026-09-17",
-   "dataUltimaAtualizacao": "2026-09-23T17:15:00.866",
-   "ementa": "Altera as Leis nºs 9.478, de 6 de agosto de 1997, e 12.351, de 22 de dezembro de 2010, para destinar parcela da receita de royalties da União relativos à exploração de hidrocarbonetos da bacia da Foz do Rio Amazonas e da Margem Equatorial, à cobertura das despesas salariais do quadro funcional especial em extinção da União relativo aos servidores ativos e inativos e aos pensionistas dos ex-territórios do Amapá, Roraima e Rondônia de que trata o art. 31 da Emenda Constitucional nº 19, de 1998.",
+   "codigoMateria": 175785,
+   "dataApresentacao": "2026-09-14",
+   "dataSituacaoAtual": "2026-09-14",
+   "dataUltimaAtualizacao": "2026-09-17T16:00:01.228",
+   "ementa": "Dispõe sobre a avaliação das políticas públicas no âmbito da administração pública federal, com fundamento no art. 37, § 16, da Constituição Federal.",
    "enteIdentificador": "SF",
-   "id": 9109177,
-   "identificacao": "PL 5396/2026",
+   "id": 9107988,
+   "identificacao": "PL 5357/2026",
    "objetivo": "Iniciadora",
    "situacaoAtual": "AGUARDANDO DESPACHO",
    "tipoConteudo": "Norma Geral",
    "tipoDocumento": "Projeto de Lei Ordinária",
    "tramitando": "Sim",
    "ultimaInformacaoAtualizada": "PUBLICACAO_OFICIAL",
-   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/04a1f73d-36dd-457f-92d9-d1e52a1d03c1"
+   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/9221d835-186c-443f-b684-9fe6bad6ce7a"
   }
  },
  "contagens": {
@@ -128,11 +128,12 @@
   "senado_plenario_votacoes_achadas": 3,
   "votacoes_S_plenario": 3,
   "senado_comissao_votacoes_achadas": 0,
-  "proposicoes_camara_registros": 8460,
+  "proposicoes_camara_registros": 8461,
   "proposicoes_data_corrigida": 3,
-  "senado_processo_registros": 157,
+  "senado_processo_registros": 159,
   "proposicoes_senado": 57,
-  "correcoes_aplicadas": 560
+  "classificados": 1,
+  "correcoes_aplicadas": 578
  },
  "erros": [
   "votações Senado 2026-09-14: http 400"
@@ -146,7 +147,7 @@
   "senado_comissao": {
    "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20260914&dataFim=20261029",
    "tamanho": 220,
-   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"29/10/2026 15:46:15\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
+   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"29/10/2026 20:08:24\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
   },
   "senado_processo": {
    "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-09-14&dataFimApresentacao=2026-09-15",
@@ -154,5 +155,5 @@
    "inicio": "[{\"autoria\":\"Senador Astronauta Marcos Pontes (PL/SP)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175785,\"dataApresentacao\":\"2026-09-14\",\"dataSituacaoAtual\":\"2026-09-14\",\"dataUltimaAtualizacao\":\"2026-09-17T16:00:01.228\",\"ementa\":\"Dispõe sobre a avaliação das políticas públicas no âmbito da administração pública federal, com fundamento no art. 37, § 16, da Constituição Federal.\",\"enteIdentificador\":\"SF\",\"id\":9107988,\"identificacao\":\"PL 5357/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/9221d835-186c-443f-b684-9fe6bad6ce7a\"},{\"autoria\":\"Senador Astronauta Marcos Pontes (PL/SP)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175786,\"dataApresentacao\":\"2026-09-14\",\"dataSituacaoAtual\":\"2026-09-14\",\"dataUltimaAtualizacao\":\"2026-09-17T16:00:01.439\",\"ementa\":\"Institui o marco legal de biossegurança, de bioproteção e de gestão do risco aplicável a atividades que envolvam agentes biológicos, materiais biológicos e ativos associados.\",\"enteIdentificador\":\"SF\",\"id\":9108010,\"identificacao\":\"PL 5358/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-get"
   }
  },
- "fim": "2026-10-29T18:57:57.181Z"
+ "fim": "2026-10-29T23:09:49.490Z"
 }
