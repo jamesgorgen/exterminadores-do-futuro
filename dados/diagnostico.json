@@ -1,5 +1,5 @@
 {
- "inicio": "2026-10-29T12:43:06.784Z",
+ "inicio": "2026-10-29T13:03:01.937Z",
  "modo": "diario",
  "amostras": {
   "camara_deputado": {
@@ -91,14 +91,14 @@
    "siglaVotoParlamentar": "Sim"
   },
   "camara_proposicao": {
-   "id": 2604173,
-   "uri": "https://dadosabertos.camara.leg.br/api/v2/proposicoes/2604173",
-   "siglaTipo": "PEC",
-   "codTipo": 136,
-   "numero": 3,
+   "id": 2610267,
+   "uri": "https://dadosabertos.camara.leg.br/api/v2/proposicoes/2610267",
+   "siglaTipo": "PL",
+   "codTipo": 139,
+   "numero": 1252,
    "ano": 2026,
-   "ementa": "Altera o art. 155 da Constituição Federal para estabelecer alíquota máxima e base de cálculo exclusiva do Imposto sobre a Propriedade de Veículos Automotores – IPVA, e acrescenta dispositivos ao Ato das Disposições Constitucionais Transitórias para limitar despesas com publicidade institucional e com o Poder Legislativo.",
-   "dataApresentacao": "2026-02-24T15:48"
+   "ementa": "Institui, no âmbito da União, o Dia Nacional do Povo Cigano, inscreve essa efeméride no calendário oficial da República Federativa do Brasil e dá outras providências.",
+   "dataApresentacao": "2026-03-18T14:01"
   },
   "senado_proposicao": {
    "autoria": "Senador Jaime Bagattoli (PL/RO)",
@@ -128,11 +128,13 @@
   "senado_plenario_votacoes_achadas": 3,
   "votacoes_S_plenario": 3,
   "senado_comissao_votacoes_achadas": 0,
-  "proposicoes_camara_registros": 8382,
+  "proposicoes_camara_registros": 8447,
   "proposicoes_data_corrigida": 3,
   "senado_processo_registros": 155,
   "proposicoes_senado": 55,
-  "correcoes_aplicadas": 393
+  "classificados": 1,
+  "graduados": 525,
+  "correcoes_aplicadas": 480
  },
  "erros": [
   "votações Senado 2026-09-14: http 400"
@@ -146,7 +148,7 @@
   "senado_comissao": {
    "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20260914&dataFim=20261029",
    "tamanho": 220,
-   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"29/10/2026 09:34:50\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
+   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"29/10/2026 09:43:16\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
   },
   "senado_processo": {
    "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-09-16&dataFimApresentacao=2026-09-30",
@@ -154,5 +156,5 @@
    "inicio": "[{\"autoria\":\"Senador Jaime Bagattoli (PL/RO)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175811,\"dataApresentacao\":\"2026-09-17\",\"dataSituacaoAtual\":\"2026-09-17\",\"dataUltimaAtualizacao\":\"2026-09-23T17:15:00.866\",\"ementa\":\"Altera as Leis nºs 9.478, de 6 de agosto de 1997, e 12.351, de 22 de dezembro de 2010, para destinar parcela da receita de royalties da União relativos à exploração de hidrocarbonetos da bacia da Foz do Rio Amazonas e da Margem Equatorial, à cobertura das despesas salariais do quadro funcional especial em extinção da União relativo aos servidores ativos e inativos e aos pensionistas dos ex-territórios do Amapá, Roraima e Rondônia de que trata o art. 31 da Emenda Constitucional nº 19, de 1998.\",\"enteIdentificador\":\"SF\",\"id\":9109177,\"identificacao\":\"PL 5396/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/04a1f73d-36dd-457f-92d9-d1e52a1d03c1\"},{\"autoria\":\"Senador Esperidião Amin (PP/SC)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175813,\"dataApresentacao\":\"2026-09-17\",\"dataSituacaoAtual\":\"2026-09-17\",\"dataUltimaAtualizacao\":\"2026-09-23T17:15:01.042\",\"ementa\":\"Altera a Lei nº 9.250, de 26 de dezembro de 1995, para instituir a atualização anual pelo Índice Nacional de Preços ao Consumidor Amplo (IPCA) dos valores das tabelas de r"
   }
  },
- "fim": "2026-10-29T12:44:18.773Z"
+ "fim": "2026-10-29T13:11:00.252Z"
 }
