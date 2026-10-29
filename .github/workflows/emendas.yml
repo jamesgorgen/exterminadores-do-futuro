@@ -56,7 +56,7 @@ jobs:
         run: |
           git config user.name "robo-exterminadores"
           git config user.email "robo-exterminadores@users.noreply.github.com"
-          git add dados/emendas.json; git add dados/populacao-municipios.json dados/populacao-log.txt 2>/dev/null || true
+          git add dados/emendas.json dados/emendas-municipios.json; git add dados/populacao-municipios.json dados/populacao-log.txt 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "Nada mudou."
           else
