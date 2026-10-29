@@ -471,11 +471,11 @@ async function coletarVotacoesSenado(ini, fim) {
   log('Senado, votações de plenário');
   for (const [a, b] of Motor.janelasMensais(ini, fim)) {
     let achadas = [];
-    for (const fmt of [s => s.replace(/-/g, ''), s => s]) {
+    for (const fmt of [s => s, s => s.replace(/-/g, '')]) {
       try {
         achadas = acharVotacoes(await baixarSenado(`${API_SENADO}/votacao?dataInicio=${fmt(a)}&dataFim=${fmt(b)}`, 'senado_votacao_' + (fmt(a) === a ? 'iso' : 'compacta')));
         if (achadas.length) break;
-      } catch (e) { erro(`votações Senado ${fmt(a)}`, e); }
+      } catch (e) { if (fmt(a) !== a) erro(`votações Senado ${a}`, e); }
     }
     contar('senado_plenario_votacoes_achadas', achadas.length);
     if (achadas[0]) { amostra('senado_votacao', achadas[0].votacao); amostra('senado_voto', achadas[0].votos[0]); }
