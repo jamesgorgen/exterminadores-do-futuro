@@ -64,6 +64,18 @@
       ],
       "g": "extrema"
     },
+    "PDL 384/2026": {
+      "s": "",
+      "m": ""
+    },
+    "PDL 385/2026": {
+      "s": "avanca",
+      "p": [
+        "ambiente"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
     "PDL 389/2026": {
       "s": "barra",
       "p": [
@@ -227,12 +239,51 @@
       ],
       "g": "extrema"
     },
+    "PL 2261/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo",
+        "drogas"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
+    "PL 2287/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
+    "PL 2297/2026": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ],
+      "m": ""
+    },
     "PL 2324/2026": {
       "s": "avanca",
       "p": [
         "soberania"
       ],
       "g": "extrema",
+      "m": ""
+    },
+    "PL 2343/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
+    "PL 2344/2026": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ],
       "m": ""
     },
     "PL 2391/2026": {
