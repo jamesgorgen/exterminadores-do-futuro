@@ -9,6 +9,14 @@
       "g": "extrema",
       "m": ""
     },
+    "PDL 563/2026": {
+      "s": "avanca",
+      "p": [
+        "privilegios",
+        "soberania"
+      ],
+      "g": "direita"
+    },
     "PDL 693/2026": {
       "s": "avanca",
       "p": [
@@ -58,9 +66,39 @@
       ],
       "m": "Revoga a Lei de Alienação Parental, demanda de movimentos de defesa de mulheres e crianças."
     },
+    "PL 2644/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
+    "PL 2668/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
+    "PL 2766/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "direita"
+    },
     "PL 2790/2026": {
       "s": "",
       "m": ""
+    },
+    "PL 2812/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "direita"
     },
     "PL 2935/2026": {
       "s": "avanca",
@@ -947,6 +985,13 @@
         "armas"
       ],
       "m": "Restringe entidades de tiro a modalidades olímpicas e cancela registros de CACs, o que vai contra a pauta armamentista."
+    },
+    "PLP 146/2026": {
+      "s": "avanca",
+      "p": [
+        "privilegios"
+      ],
+      "g": "direita"
     },
     "PLP 212/2026": {
       "s": "avanca",
