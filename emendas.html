@@ -253,8 +253,8 @@ h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size
 </div></section>
 </main>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script src="lib/d3.min.js?v=7.9.0"></script>
+<script src="lib/topojson.min.js?v=3.0.2"></script>
 <script>
 'use strict';
 const NOME_PAUTA = { punitivismo: 'Punitivismo e militarização', drogas: 'Política de drogas', privilegios: 'Privilégios econômicos', religiao: 'Religião e Estado', igualdade: 'Igualdade e direitos' };
@@ -345,7 +345,7 @@ const METRICAS_M = [['hab', 'Por habitante'], ['total', 'Valor recebido'], ['ext
 const NIVEIS = [10, 24, 38, 52, 66, 82, 100];
 // Valores do município no ano escolhido (ano da emenda), ou a soma de todos os anos.
 function reg(c) {
-  const x = MUN.m[c]; if (!x) return null;
+  const x = MUN.m[c]; if (!x || !x.a) return null;
   if (anoMapa !== 'todos') return x.a[anoMapa] || null;
   const soma = MUN.campos.map(() => 0);
   Object.values(x.a).forEach(v => v.forEach((n, i) => soma[i] += n));
@@ -444,7 +444,7 @@ function iniciarMapa() {
   $('#fUf').innerHTML = '<option value="">Brasil</option>' + Object.entries(D.estados).sort((a, b) => a[1].nome.localeCompare(b[1].nome)).map(([uf, x]) => `<option value="${uf}">${esc(x.nome)}</option>`).join('');
   $('#fUf').addEventListener('change', () => { ufZoom = $('#fUf').value; munAtual = null; if (ufZoom) desenharEstado(ufZoom); desenharMun(); });
   desenharEstado(ufAtual);
-  Promise.all([fetch('dados/municipios.topo.json').then(r => r.json()), fetch('dados/emendas-municipios.json').then(r => r.json())]).then(([t, m]) => {
+  Promise.all([fetch('dados/municipios.topo.json').then(r => r.json()), fetch('dados/emendas-municipios.json', { cache: 'no-cache' }).then(r => r.json())]).then(([t, m]) => {
     TOPO = t; MUN = m; MUN.campos.forEach((c, i) => IX[c] = i);
     FEAT = topojson.feature(TOPO, TOPO.objects[Object.keys(TOPO.objects)[0]]).features;
     // O d3 espera os anéis no sentido horário; polígonos no sentido inverso cobririam o globo inteiro.
@@ -463,7 +463,7 @@ function iniciarMapa() {
       dica.style.left = x + 'px'; dica.style.top = (e.clientY - caixa.top + 12) + 'px';
     });
     $('#mapaMun').addEventListener('pointerleave', () => { dica.hidden = true; });
-  }).catch(() => { $('#mapaMun').innerHTML = '<p class="carregando">Não foi possível carregar o mapa dos municípios.</p>'; });
+  }).catch(e => { console.error(e); $('#mapaMun').innerHTML = '<p class="carregando">Não foi possível carregar o mapa dos municípios. Recarregue a página.</p>'; });
 }
 
 // ------------------------------------------------ 3. parlamentares
@@ -525,7 +525,7 @@ $('#busca').addEventListener('input', () => {
   const exato = lista().find(p => norm(p.n) === q);
   if (exato) desenharPerfil(exato.k); else desenharRanking();
 });
-fetch('dados/emendas.json').then(r => { if (!r.ok) throw new Error('arquivo de emendas indisponível'); return r.json(); }).then(d => {
+fetch('dados/emendas.json', { cache: 'no-cache' }).then(r => { if (!r.ok) throw new Error('arquivo de emendas indisponível'); return r.json(); }).then(d => {
   D = d;
   $('#fGrupo').innerHTML = '<option value="">Todos os grupos</option>' + D.ordem.map(g => `<option value="${g}">${esc(D.grupos[g].nome)}</option>`).join('');
   $('#fGrupo').value = 'extrema';
