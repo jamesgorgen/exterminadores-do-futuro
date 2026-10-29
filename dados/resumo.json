@@ -1,0 +1,149 @@
+{
+ "gerado": "2026-10-29T03:54:00.627Z",
+ "inicio": "2026/10/01",
+ "totais": {
+  "proposicoes": 5637,
+  "direita": 576,
+  "extrema": 9,
+  "votacoes": 155,
+  "disputadas": 53,
+  "vitorias": 31,
+  "derrotas": 16,
+  "nucleo": 295,
+  "alinhados": 60
+ },
+ "porPauta": {
+  "armas": {
+   "prop": 38,
+   "extrema": 0,
+   "prop30": 0,
+   "vot": 4,
+   "vitorias": 1,
+   "derrotas": 0
+  },
+  "punitivismo": {
+   "prop": 246,
+   "extrema": 2,
+   "prop30": 11,
+   "vot": 3,
+   "vitorias": 3,
+   "derrotas": 0
+  },
+  "instituicoes": {
+   "prop": 20,
+   "extrema": 3,
+   "prop30": 1,
+   "vot": 0,
+   "vitorias": 0,
+   "derrotas": 0
+  },
+  "costumes": {
+   "prop": 39,
+   "extrema": 3,
+   "prop30": 0,
+   "vot": 3,
+   "vitorias": 3,
+   "derrotas": 0
+  },
+  "religiao": {
+   "prop": 13,
+   "extrema": 0,
+   "prop30": 0,
+   "vot": 7,
+   "vitorias": 4,
+   "derrotas": 0
+  },
+  "educacao": {
+   "prop": 22,
+   "extrema": 0,
+   "prop30": 2,
+   "vot": 2,
+   "vitorias": 0,
+   "derrotas": 2
+  },
+  "ambiente": {
+   "prop": 50,
+   "extrema": 0,
+   "prop30": 1,
+   "vot": 3,
+   "vitorias": 2,
+   "derrotas": 0
+  },
+  "povos": {
+   "prop": 18,
+   "extrema": 1,
+   "prop30": 0,
+   "vot": 0,
+   "vitorias": 0,
+   "derrotas": 0
+  },
+  "movimentos": {
+   "prop": 10,
+   "extrema": 1,
+   "prop30": 0,
+   "vot": 0,
+   "vitorias": 0,
+   "derrotas": 0
+  },
+  "trabalho": {
+   "prop": 28,
+   "extrema": 0,
+   "prop30": 0,
+   "vot": 4,
+   "vitorias": 4,
+   "derrotas": 0
+  },
+  "estado": {
+   "prop": 45,
+   "extrema": 0,
+   "prop30": 4,
+   "vot": 4,
+   "vitorias": 3,
+   "derrotas": 0
+  },
+  "privilegios": {
+   "prop": 51,
+   "extrema": 0,
+   "prop30": 3,
+   "vot": 1,
+   "vitorias": 1,
+   "derrotas": 0
+  },
+  "plataformas": {
+   "prop": 21,
+   "extrema": 0,
+   "prop30": 1,
+   "vot": 0,
+   "vitorias": 0,
+   "derrotas": 0
+  },
+  "igualdade": {
+   "prop": 3,
+   "extrema": 0,
+   "prop30": 0,
+   "vot": 0,
+   "vitorias": 0,
+   "derrotas": 0
+  },
+  "drogas": {
+   "prop": 12,
+   "extrema": 0,
+   "prop30": 0,
+   "vot": 1,
+   "vitorias": 1,
+   "derrotas": 0
+  },
+  "externa": {
+   "prop": 5,
+   "extrema": 0,
+   "prop30": 0,
+   "vot": 1,
+   "vitorias": 1,
+   "derrotas": 0
+  }
+ },
+ "recentes": {
+  "proposicoes": 1,
+  "votacoes": 0
+ }
+}

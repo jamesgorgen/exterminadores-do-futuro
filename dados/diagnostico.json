@@ -1,0 +1,77 @@
+{
+ "inicio": "2026-10-29T03:54:00.627Z",
+ "modo": "completo",
+ "amostras": {
+  "camara_deputado": {
+   "id": 220593,
+   "uri": "https://dadosabertos.camara.leg.br/api/v2/deputados/220593",
+   "nome": "Abilio Brunini",
+   "siglaPartido": "PL",
+   "uriPartido": "https://dadosabertos.camara.leg.br/api/v2/partidos/37906",
+   "siglaUf": "MT",
+   "idLegislatura": 57,
+   "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/220593.jpg",
+   "email": null
+  },
+  "camara_arq_votacao": {
+   "id": "2585316-23",
+   "uri": "https://dadosabertos.camara.leg.br/api/v2/votacoes/2585316-23",
+   "data": "2026-02-02",
+   "dataHoraRegistro": "2026-02-02T14:38:11",
+   "idOrgao": 186,
+   "uriOrgao": "https://dadosabertos.camara.leg.br/api/v2/orgaos/186",
+   "siglaOrgao": "CCP",
+   "idEvento": 0,
+   "uriEvento": "",
+   "aprovacao": 1,
+   "votosSim": 0,
+   "votosNao": 0,
+   "votosOutros": 0,
+   "descricao": "Realizar o encaminhamento do PL-5874/2025 à CCJC (tramitação simultânea), em razão da aprovação de requerimento de urgência.",
+   "ultimaAberturaVotacao": "{\"dataHoraRegistro\":\"\",\"descricao\":\"\"}",
+   "ultimaApresentacaoProposicao": "{\"dataHoraRegistro\":\"\",\"descricao\":\"\",\"idProposicao\":0,\"uriProposicao\":\"\"}"
+  },
+  "camara_arq_voto": {
+   "idVotacao": "1228863-102",
+   "uriVotacao": "https://dadosabertos.camara.leg.br/api/v2/votacoes/1228863-102",
+   "dataHoraVoto": "2026-06-10T14:46:15",
+   "voto": "Não",
+   "deputado_": "{\"id\":\"204501\",\"uri\":\"https://dadosabertos.camara.leg.br/api/v2/deputados/204501\",\"nome\":\"Alencar Santana\",\"siglaPartido\":\"PT\",\"uriPartido\":\"https://dadosabertos.camara.leg.br/api/v2/partidos/36844\",\"siglaUf\":\"SP\",\"idLegislatura\":\"57\",\"urlFoto\":\"https://www.camara.leg.br/internet/deputado/bandep/204"
+  },
+  "camara_arq_orientacao": {
+   "idVotacao": "2236186-60",
+   "uriVotacao": "https://dadosabertos.camara.leg.br/api/v2/votacoes/2236186-60",
+   "siglaOrgao": "PLEN",
+   "descricao": "Rejeitada a Subemenda Substitutiva ao Projeto de Lei Complementar nº 281, de 2019, adotada pelo relator da Comissão Especial. Sim: 252; Não: 176; Total: 428.",
+   "siglaBancada": "Minoria",
+   "uriBancada": "",
+   "orientacao": ""
+  },
+  "camara_arq_objeto": {
+   "idVotacao": "2555417-29",
+   "uriVotacao": "https://dadosabertos.camara.leg.br/api/v2/votacoes/2555417-29",
+   "data": "2026-02-02",
+   "descricao": "Aprovada a Medida Provisória nº 1.312, de 2025.",
+   "proposicao_": "{\"id\":2592069,\"uri\":\"https://dadosabertos.camara.leg.br/api/v2/proposicoes/2592069\",\"ementa\":\"Recebido PARECER (CN) Nº 25, DE 2025, da COMISSÃO MISTA DE PLANOS, ORÇAMENTOS PÚBLICOS E FISCALIZAÇÃO, sobre a Medida Provisória n° 1312, de 2025, que Abre crédito extraordinário, em favor do Ministério da "
+  },
+  "camara_proposicao": {
+   "id": 2604173,
+   "uri": "https://dadosabertos.camara.leg.br/api/v2/proposicoes/2604173",
+   "siglaTipo": "PEC",
+   "codTipo": 136,
+   "numero": 3,
+   "ano": 2026,
+   "ementa": "Altera o art. 155 da Constituição Federal para estabelecer alíquota máxima e base de cálculo exclusiva do Imposto sobre a Propriedade de Veículos Automotores – IPVA, e acrescenta dispositivos ao Ato das Disposições Constitucionais Transitórias para limitar despesas com publicidade institucional e com o Poder Legislativo.",
+   "dataApresentacao": "2026-02-24T15:48"
+  }
+ },
+ "contagens": {
+  "deputados": 882,
+  "votacoes_C_plenario": 126,
+  "votacoes_C_comissao": 29,
+  "proposicoes_camara_registros": 8378,
+  "classificados": 5489
+ },
+ "erros": [],
+ "fim": "2026-10-29T03:58:13.424Z"
+}
