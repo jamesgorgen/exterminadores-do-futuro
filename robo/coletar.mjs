@@ -45,7 +45,7 @@ const MAX_CLASSIFICACOES = +(process.env.MAX_CLASSIFICACOES || 60000);
 const SEM_IA = process.env.SEM_IA === '1';
 const TIPOS = ['PL', 'PLP', 'PEC', 'PDL'];
 const MODELO = 'claude-haiku-5-5';
-const VERSAO_CLASSIFICACAO = 'd1';   // mude para refazer todas as classificações
+const VERSAO_CLASSIFICACAO = 'd2';   // mude para refazer todas as classificações
 
 const API_CAMARA = 'https://dadosabertos.camara.leg.br/api/v2';
 const ARQ_CAMARA = 'https://dadosabertos.camara.leg.br/arquivos';
@@ -523,6 +523,10 @@ CAMPOS
 
 REGRAS
 - Julgue só o conteúdo da ementa. Os autores e os partidos não são informados.
+- Confira o sentido antes de responder. Um item que cria, amplia ou protege direitos de mulheres, pessoas LGBTQIA+, pessoas intersexo, população negra, povos indígenas, trabalhadores ou do meio ambiente vai contra a pauta da direita ("barra"), mesmo que trate do mesmo tema. Só é "avanca" o item que restringe, retira ou ataca esses direitos, ou que segue a descrição da pauta.
+- Novos crimes ou penas maiores para proteger grupos vulneráveis (violência contra a mulher, abuso de crianças, crimes contra idosos, crimes digitais contra a intimidade) não são punitivismo. Deixe "s" vazio, a não ser que o item também reduza garantias processuais ou amplie a letalidade policial.
+- Só use uma pauta quando o item tratar de fato do que a descrição dela diz. Regras de consumo, de mercado, tributárias ou de serviços sem relação direta com as descrições ficam com "s" vazio.
+- Em votações de requerimento (urgência, adiamento, retirada de pauta, apensação), julgue a matéria a que o requerimento se refere. Se a matéria não estiver clara, deixe "s" vazio.
 - Homenagens, datas comemorativas, denominações e ajustes administrativos ficam com "s" vazio.
 - Na dúvida, deixe "s" vazio. É melhor deixar de marcar do que marcar errado.
 

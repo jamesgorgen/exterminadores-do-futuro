@@ -36,7 +36,7 @@
         descricao: 'Flexibilização do porte e da posse de armas, ampliação de categorias com direito a arma, CACs e clubes de tiro, redução de controle e rastreamento de armas e munições.',
         extrema: 'Armamento amplo da população, fim do Estatuto do Desarmamento, arma como instrumento de defesa política ou contra o Estado.' },
       { id: 'punitivismo', nome: 'Punitivismo e militarização da segurança',
-        descricao: 'Endurecimento penal como resposta principal, aumento de penas, redução da maioridade penal, fim da saída temporária, restrição de progressão de regime, ampliação de poderes e de excludentes para policiais.',
+        descricao: 'Endurecimento penal como resposta principal e redução de garantias. Redução da maioridade penal, fim da saída temporária, restrição de progressão de regime e de audiência de custódia, prisão preventiva como regra, aumento genérico de penas, ampliação de poderes e de excludentes para policiais, militarização da segurança. Não entram novos crimes ou penas para proteger mulheres, crianças, idosos, pessoas com deficiência, minorias ou vítimas de crimes digitais, nem medidas de prevenção e de inteligência.',
         extrema: 'Pena de morte, prisão perpétua, castração química, excludente de ilicitude amplo, licença para matar, uso das Forças Armadas na segurança pública como regra.' },
       { id: 'instituicoes', nome: 'Anistia e ataque às instituições',
         descricao: 'Limitação de poderes do STF e do TSE, impeachment de ministros, mudanças nas regras eleitorais que favorecem o próprio campo, voto impresso.',
