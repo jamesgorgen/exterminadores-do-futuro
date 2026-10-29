@@ -46,7 +46,7 @@ const SEM_IA = process.env.SEM_IA === '1';
 const TIPOS = ['PL', 'PLP', 'PEC', 'PDL'];
 const MODELO = 'claude-haiku-5-5';
 const VERSAO_CLASSIFICACAO = 'd2';
-const VERSAO_GRAU = 'g1';          // mude para refazer só o grau (direita ou extrema-direita)   // mude para refazer todas as classificações
+const VERSAO_GRAU = 'g2';          // mude para refazer só o grau (direita ou extrema-direita)   // mude para refazer todas as classificações
 
 const API_CAMARA = 'https://dadosabertos.camara.leg.br/api/v2';
 const ARQ_CAMARA = 'https://dadosabertos.camara.leg.br/arquivos';
@@ -590,12 +590,19 @@ CRITÉRIOS GERAIS DE EXTREMA-DIREITA (basta um)
 - Armamento amplo da população ou arma como instrumento de defesa política.
 - Defende interferência estrangeira ou sanções contra o próprio país.
 
-Use "direita" para o que é conservador, liberal ou punitivista dentro do jogo democrático, sem nenhum dos traços acima (por exemplo, aumentar a pena de um crime, privatizar uma empresa, flexibilizar uma regra trabalhista, criar uma escola cívico-militar).
+Use "direita" para o que é conservador, liberal ou punitivista dentro do jogo democrático, sem nenhum dos traços acima. Exemplos de direita, e não de extrema-direita, são aumentar a pena de um crime, vedar fiança ou liberdade provisória em crimes específicos, estender o porte de arma a uma categoria profissional, privatizar uma empresa, flexibilizar uma regra trabalhista, dispensar licenciamento de atividade de baixo impacto, criar escola cívico-militar, financiar comunidades terapêuticas.
+
+Use "fora" quando, olhando de novo, o item não faz avançar nenhuma pauta da direita (é neutro, técnico, amplia direitos ou garantias, ou vai contra a pauta, como restringir armas ou registros de CACs).
+
+REGRAS DO GRAU
+- O traço de extrema-direita tem de estar claro na ementa. Não presuma efeitos que a ementa não diz ("pode restringir", "abre caminho para").
+- Sustar um decreto ou uma resolução só é extrema-direita quando o ato sustado protege direitos, terras, o meio ambiente ou a democracia de forma reconhecível pela ementa.
+- Espera-se que a extrema-direita seja uma parte menor do conjunto. Na dúvida entre os dois graus, use "direita".
 
 O campo "m" é o motivo, em até 20 palavras, em tom informativo e sem dois-pontos.
 
 Responda somente com JSON válido, neste formato.
-{"r":[{"n":1,"g":"extrema","m":"Susta a homologação de terras indígenas já demarcadas"},{"n":2,"g":"direita","m":"Aumenta a pena do crime de furto"}]}`;
+{"r":[{"n":1,"g":"extrema","m":"Susta a homologação de terras indígenas já demarcadas"},{"n":2,"g":"direita","m":"Aumenta a pena do crime de furto"},{"n":3,"g":"fora","m":""}]}`;
 
 async function graduarLote(itens) {
   const lista = itens.map((it, k) => `${k + 1}. ${it.chave}. ${String(it.texto).slice(0, 700)}`).join('\n');
@@ -604,7 +611,9 @@ async function graduarLote(itens) {
   let n = 0;
   for (const x of res) {
     const it = itens[(+x.n) - 1]; if (!it) continue;
-    const c = classificacoes.c[it.chave]; if (!c || c.s !== 'avanca') continue;
+    const c = classificacoes.c[it.chave]; if (!c || (c.s !== 'avanca' && !c.fora)) continue;
+    if (x.g === 'fora') { if (!c.fora) c.fora = c.p; c.s = ''; c.p = []; c.g = ''; c.m = ''; c.vg = VERSAO_GRAU; n++; continue; }
+    if (c.fora) { c.s = 'avanca'; c.p = c.fora; delete c.fora; }
     c.g = x.g === 'extrema' ? 'extrema' : 'direita';
     if (x.m) c.m = String(x.m).slice(0, 200);
     c.vg = VERSAO_GRAU; n++;
@@ -613,7 +622,7 @@ async function graduarLote(itens) {
 }
 
 async function graduarPendentes(itens) {
-  const pend = itens.filter(it => { const c = classificacoes.c[it.chave]; return c && c.s === 'avanca' && c.vg !== VERSAO_GRAU; });
+  const pend = itens.filter(it => { const c = classificacoes.c[it.chave]; return c && (c.s === 'avanca' || c.fora) && c.vg !== VERSAO_GRAU; });
   log(`Grau, ${pend.length} itens a revisar`);
   if (!pend.length || SEM_IA || !process.env.ANTHROPIC_API_KEY) return;
   const lotes = [];
