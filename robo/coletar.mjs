@@ -45,7 +45,8 @@ const MAX_CLASSIFICACOES = +(process.env.MAX_CLASSIFICACOES || 60000);
 const SEM_IA = process.env.SEM_IA === '1';
 const TIPOS = ['PL', 'PLP', 'PEC', 'PDL'];
 const MODELO = 'claude-haiku-5-5';
-const VERSAO_CLASSIFICACAO = 'd2';   // mude para refazer todas as classificações
+const VERSAO_CLASSIFICACAO = 'd2';
+const VERSAO_GRAU = 'g1';          // mude para refazer só o grau (direita ou extrema-direita)   // mude para refazer todas as classificações
 
 const API_CAMARA = 'https://dadosabertos.camara.leg.br/api/v2';
 const ARQ_CAMARA = 'https://dadosabertos.camara.leg.br/arquivos';
@@ -533,10 +534,10 @@ REGRAS
 Responda somente com JSON válido, sem texto antes ou depois, neste formato.
 {"r":[{"n":1,"s":"avanca","p":["armas"],"g":"direita","m":"Amplia o porte de armas para vigilantes de empresas privadas"},{"n":2,"s":"","p":[],"g":"","m":""}]}`;
 
-async function classificarLote(itens) {
-  const lista = itens.map((it, k) => `${k + 1}. ${it.chave}. ${String(it.texto).slice(0, 700)}`).join('\n');
-  const corpo = { model: MODELO, max_tokens: Math.min(8000, 1200 + itens.length * 120), thinking: { type: 'disabled' },
-    system: [{ type: 'text', text: INSTRUCOES, cache_control: { type: 'ephemeral' } }], messages: [{ role: 'user', content: 'ITENS\n' + lista }] };
+// Chamada à API da Anthropic que devolve a lista "r" da resposta em JSON, ou null.
+async function chamarClaude(sistema, texto, maxTokens) {
+  const corpo = { model: MODELO, max_tokens: maxTokens, thinking: { type: 'disabled' },
+    system: [{ type: 'text', text: sistema, cache_control: { type: 'ephemeral' } }], messages: [{ role: 'user', content: texto }] };
   let atraso = 3000;
   for (let i = 0; i < 4; i++) {
     let r;
@@ -548,20 +549,81 @@ async function classificarLote(itens) {
     if (r.status === 401 || r.status === 403) throw new Error('chave da Anthropic recusada');
     if (!r.ok) { await espera(atraso); atraso *= 2; continue; }
     const j = await r.json();
-    const texto = (j.content || []).filter(b => b.type === 'text').map(b => b.text).join('');
+    const t = (j.content || []).filter(b => b.type === 'text').map(b => b.text).join('');
     let res;
-    try { res = JSON.parse(texto.slice(texto.indexOf('{'), texto.lastIndexOf('}') + 1)).r; } catch (e) { res = null; }
-    if (!Array.isArray(res)) { await espera(atraso); continue; }
-    const saida = {};
-    for (const x of res) {
-      const it = itens[(+x.n) - 1]; if (!it) continue;
-      const s = ['avanca', 'barra'].includes(x.s) ? x.s : '';
-      const p = s ? (Array.isArray(x.p) ? x.p : []).filter(id => IDS_PAUTAS.has(id)).slice(0, 3) : [];
-      saida[it.chave] = { s: p.length ? s : '', p, g: s === 'avanca' && p.length ? (x.g === 'extrema' ? 'extrema' : 'direita') : '', m: p.length ? String(x.m || '').slice(0, 200) : '' };
-    }
-    return saida;
+    try { res = JSON.parse(t.slice(t.indexOf('{'), t.lastIndexOf('}') + 1)).r; } catch (e) { res = null; }
+    if (Array.isArray(res)) return res;
+    await espera(atraso);
   }
-  return {};
+  return null;
+}
+
+async function classificarLote(itens) {
+  const lista = itens.map((it, k) => `${k + 1}. ${it.chave}. ${String(it.texto).slice(0, 700)}`).join('\n');
+  const res = await chamarClaude(INSTRUCOES, 'ITENS\n' + lista, Math.min(8000, 1200 + itens.length * 120));
+  if (!res) return {};
+  const saida = {};
+  for (const x of res) {
+    const it = itens[(+x.n) - 1]; if (!it) continue;
+    const s = ['avanca', 'barra'].includes(x.s) ? x.s : '';
+    const p = s ? (Array.isArray(x.p) ? x.p : []).filter(id => IDS_PAUTAS.has(id)).slice(0, 3) : [];
+    saida[it.chave] = { s: p.length ? s : '', p, g: s === 'avanca' && p.length ? (x.g === 'extrema' ? 'extrema' : 'direita') : '', m: p.length ? String(x.m || '').slice(0, 200) : '' };
+  }
+  return saida;
+}
+
+// Segunda etapa, só para o que faz avançar a pauta da direita. Decide o grau com uma instrução dedicada,
+// porque na primeira etapa a cautela ("na dúvida, deixe vazio") puxava tudo para o grau direita.
+const LISTA_GRAUS = PAUTAS.lista.map(p => `- ${p.id} (${p.nome}). Extrema-direita quando: ${p.extrema}`).join('\n');
+const INSTRUCOES_GRAU = `Você é analista de um observatório da direita e da extrema-direita no Congresso Nacional brasileiro. Todos os itens abaixo já foram identificados como projetos ou votações que fazem avançar a pauta da direita. Sua tarefa é só decidir o grau de cada um, "direita" ou "extrema".
+
+O QUE CARACTERIZA A EXTREMA-DIREITA, POR PAUTA
+${LISTA_GRAUS}
+
+CRITÉRIOS GERAIS DE EXTREMA-DIREITA (basta um)
+- Ataca a democracia, o sistema eleitoral, o STF, o TSE ou juízes por suas decisões, ou livra de punição quem atentou contra o Estado Democrático de Direito.
+- Retira direitos já garantidos de grupos inteiros (mulheres, pessoas LGBTQIA+, população negra, indígenas, quilombolas, trabalhadores), e não apenas deixa de ampliá-los.
+- Trata movimentos sociais, ocupações de terra, protestos ou adversários políticos como terroristas ou criminosos.
+- Amplia a violência do Estado sem controle, como licença para matar, legítima defesa presumida ou preventiva, excludente de ilicitude para agentes, pena de morte, prisão perpétua ou castração.
+- Desfaz demarcações ou homologações de terras indígenas ou impede novas, revoga proteções ambientais de áreas protegidas, ou anistia desmatamento ilegal.
+- Impõe preceitos religiosos ao Estado ou à lei, ou restringe o aborto nos casos já permitidos (estupro, risco de vida, anencefalia), inclusive pelo Estatuto do Nascituro.
+- Armamento amplo da população ou arma como instrumento de defesa política.
+- Defende interferência estrangeira ou sanções contra o próprio país.
+
+Use "direita" para o que é conservador, liberal ou punitivista dentro do jogo democrático, sem nenhum dos traços acima (por exemplo, aumentar a pena de um crime, privatizar uma empresa, flexibilizar uma regra trabalhista, criar uma escola cívico-militar).
+
+O campo "m" é o motivo, em até 20 palavras, em tom informativo e sem dois-pontos.
+
+Responda somente com JSON válido, neste formato.
+{"r":[{"n":1,"g":"extrema","m":"Susta a homologação de terras indígenas já demarcadas"},{"n":2,"g":"direita","m":"Aumenta a pena do crime de furto"}]}`;
+
+async function graduarLote(itens) {
+  const lista = itens.map((it, k) => `${k + 1}. ${it.chave}. ${String(it.texto).slice(0, 700)}`).join('\n');
+  const res = await chamarClaude(INSTRUCOES_GRAU, 'ITENS\n' + lista, Math.min(8000, 800 + itens.length * 90));
+  if (!res) return 0;
+  let n = 0;
+  for (const x of res) {
+    const it = itens[(+x.n) - 1]; if (!it) continue;
+    const c = classificacoes.c[it.chave]; if (!c || c.s !== 'avanca') continue;
+    c.g = x.g === 'extrema' ? 'extrema' : 'direita';
+    if (x.m) c.m = String(x.m).slice(0, 200);
+    c.vg = VERSAO_GRAU; n++;
+  }
+  return n;
+}
+
+async function graduarPendentes(itens) {
+  const pend = itens.filter(it => { const c = classificacoes.c[it.chave]; return c && c.s === 'avanca' && c.vg !== VERSAO_GRAU; });
+  log(`Grau, ${pend.length} itens a revisar`);
+  if (!pend.length || SEM_IA || !process.env.ANTHROPIC_API_KEY) return;
+  const lotes = [];
+  for (let i = 0; i < pend.length; i += 25) lotes.push(pend.slice(i, i + 25));
+  let feitos = 0;
+  await Motor.emParalelo(lotes.map(l => async () => {
+    try { feitos += await graduarLote(l); }
+    catch (e) { erro('grau', e); if (/recusada/.test(e.message)) throw e; }
+  }), 4);
+  contar('graduados', feitos);
 }
 
 async function classificarPendentes(itens) {
@@ -643,6 +705,7 @@ export async function executar() {
     else { vt.ck = 'V:' + vt.id; paraClassificar.push({ chave: vt.ck, texto: [vt.desc, vt.me].filter(Boolean).join(' ') }); }
   }
   await classificarPendentes(paraClassificar);
+  await graduarPendentes(paraClassificar);
 
   // Alinhamento.
   const conta = calcularAlinhamento(todasVot);

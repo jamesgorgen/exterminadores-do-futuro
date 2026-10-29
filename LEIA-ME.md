@@ -39,6 +39,8 @@ O grau vale para o projeto ou para a votação, e nunca para a pessoa. A classif
 
 Para refazer todas as classificações depois de mudar as pautas, troque `VERSAO_CLASSIFICACAO` em `robo/coletar.mjs` e rode o robô.
 
+O grau passa por uma segunda etapa, com instruções próprias, só para os itens que fazem avançar a pauta da direita. Para refazer apenas o grau, troque `VERSAO_GRAU` em `robo/coletar.mjs`.
+
 ## Arquivos
 
 | Arquivo | Para que serve |
