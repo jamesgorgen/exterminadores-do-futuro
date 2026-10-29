@@ -119,6 +119,14 @@
       ],
       "g": "direita"
     },
+    "PDL 69/2026": {
+      "s": "avanca",
+      "p": [
+        "privilegios",
+        "soberania"
+      ],
+      "g": "extrema"
+    },
     "PDL 693/2026": {
       "s": "avanca",
       "p": [
@@ -169,6 +177,23 @@
     },
     "PL 1148/2023": {
       "s": ""
+    },
+    "PL 1211/2026": {
+      "s": "avanca",
+      "p": [
+        "instituicoes"
+      ],
+      "g": "direita",
+      "m": ""
+    },
+    "PL 1345/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo",
+        "privilegios"
+      ],
+      "g": "direita",
+      "m": ""
     },
     "PL 1372/2023": {
       "s": "barra",
@@ -1267,12 +1292,83 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 5821/2025": {
+      "s": "avanca",
+      "p": [
+        "trabalho",
+        "privilegios"
+      ],
+      "g": "extrema"
+    },
+    "PL 5836/2025": {
+      "s": "avanca",
+      "p": [
+        "instituicoes"
+      ],
+      "g": "extrema"
+    },
+    "PL 5850/2025": {
+      "s": "avanca",
+      "p": [
+        "punitivismo",
+        "plataformas"
+      ],
+      "g": "extrema"
+    },
+    "PL 5905/2025": {
+      "s": "avanca",
+      "p": [
+        "armas",
+        "punitivismo"
+      ],
+      "g": "direita",
+      "m": ""
+    },
+    "PL 6033/2025": {
+      "s": "avanca",
+      "p": [
+        "armas"
+      ],
+      "g": "extrema"
+    },
+    "PL 6217/2025": {
+      "s": "avanca",
+      "p": [
+        "punitivismo",
+        "plataformas"
+      ],
+      "g": "direita",
+      "m": ""
+    },
+    "PL 622/2026": {
+      "s": "avanca",
+      "p": [
+        "povos",
+        "movimentos"
+      ],
+      "g": "extrema"
+    },
+    "PL 649/2026": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ],
+      "m": ""
+    },
     "PL 682/2024": {
       "s": "barra",
       "p": [
         "armas"
       ],
       "m": "Restringe entidades de tiro a modalidades olímpicas e cancela registros de CACs, o que vai contra a pauta armamentista."
+    },
+    "PL 751/2026": {
+      "s": "avanca",
+      "p": [
+        "costumes",
+        "plataformas"
+      ],
+      "g": "extrema"
     },
     "PLP 146/2026": {
       "s": "avanca",
