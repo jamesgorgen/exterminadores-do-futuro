@@ -12,7 +12,7 @@ def arq(nome):
 n=lambda s: re.sub(r'\s+',' ',unicodedata.normalize('NFD',str(s)).encode('ascii','ignore').decode().upper().strip())
 num=lambda s: pd.to_numeric(s.str.replace('.','',regex=False).str.replace(',','.',regex=False),errors='coerce').fillna(0)
 GRUPOS=[('extrema','Extrema-direita',['PL','NOVO','MISSAO']),('direita','Direita',['PP','UNIAO','REPUBLICANOS','PODE','PSD','CIDADANIA','SOLIDARIEDADE']),
-        ('alinhados','Alinhados',['MDB','PDT','REDE','PSB']),('esquerda','Esquerda',['PT','PSOL','PCDOB']),('outros','Outros partidos',[])]
+        ('alinhados','Alinhados',['MDB','PDT','REDE','PSB','PV']),('esquerda','Esquerda',['PT','PSOL','PCDOB']),('outros','Outros partidos',[])]
 PART={p:g for g,_,ps in GRUPOS for p in ps}
 par=json.load(open(f'{OBS}/parlamentares.json'))['p']; ind=json.load(open(f'{OBS}/indice.json'))['p']
 pornome={}
