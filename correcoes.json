@@ -148,11 +148,7 @@
       "m": ""
     },
     "PL 3463/2026": {
-      "s": "barra",
-      "p": [
-        "punitivismo"
-      ],
-      "m": ""
+      "s": ""
     },
     "PL 3466/2026": {
       "s": "avanca",
@@ -234,11 +230,11 @@
       "g": "direita"
     },
     "PL 3769/2026": {
-      "s": "barra",
+      "s": "avanca",
       "p": [
         "punitivismo"
       ],
-      "m": ""
+      "g": "direita"
     },
     "PL 3776/2026": {
       "s": "avanca",
@@ -459,11 +455,11 @@
       "m": ""
     },
     "PL 5076/2026": {
-      "s": "avanca",
+      "s": "barra",
       "p": [
-        "externa"
+        "soberania"
       ],
-      "g": "direita"
+      "m": "Protege a economia nacional contra a aplicação de sanções estrangeiras no país, em defesa da soberania."
     },
     "PL 5079/2026": {
       "s": "avanca",

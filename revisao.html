@@ -111,6 +111,7 @@ kbd{font:12px/1 ui-monospace,monospace;border:1px solid var(--line);border-botto
   <select id="fPauta" aria-label="Pauta"><option value="">Todas as pautas</option></select>
   <select id="fCasa" aria-label="Casa"><option value="">Câmara e Senado</option><option value="C">Câmara</option><option value="S">Senado</option></select>
   <input type="search" id="fBusca" placeholder="Número (PL 1234/2025) ou palavra da ementa" aria-label="Buscar">
+  <select id="fCerteza" aria-label="Certeza da IA"><option value="baixa">Só os de certeza baixa</option><option value="">Certeza alta e baixa</option></select>
   <label class="chk"><input type="checkbox" id="fEsconder" checked> Esconder conferidos</label>
 </div></div>
 
@@ -243,6 +244,7 @@ function itensDaLista() {
     if (lista === 'corrigidos' && !conferido && !Object.prototype.hasOwnProperty.call(pend, b.chave)) continue;
     if (lista === 'todos' && !busca) continue;
     if (esconder && lista !== 'corrigidos' && conferido && !Object.prototype.hasOwnProperty.call(pend, b.chave)) continue;
+    if ($('#fCerteza').value === 'baixa' && ['direita', 'extrema', 'fora'].includes(lista) && a.cf === 'alta') continue;
     if (casa && !(b.tipo === 'p' ? (b.it.k || []).includes(casa) : b.it.k === casa)) continue;
     if (pauta) { const x = efetiva(b.chave); const pp = [...(x.p || []), ...(a.p || []), ...(a.fora || [])]; if (!pp.includes(pauta)) continue; }
     if (busca) { const txt = norm(b.chave + ' ' + (b.tipo === 'p' ? b.it.e : (b.it.me || '') + ' ' + (b.it.desc || ''))); if (!busca.split(/\s+/).every(t => txt.includes(t))) continue; }
@@ -281,6 +283,7 @@ function cartao(b) {
   const meta = b.tipo === 'p' ? esc((it.k || []).map(k => CASA[k]).join(' e ')) : esc(CASA[it.k] + ', ' + (it.pl ? 'plenário' : (it.o || 'comissão')));
   const texto = b.tipo === 'p' ? it.e : (it.me || it.desc);
   const link = b.tipo === 'p' ? linkProp(it) : '';
+  const certeza = (D.ia[b.chave] || {}).cf;
   const iaTxt = a.fora ? `Descartado na revisão do grau (pautas originais ${esc(a.fora.map(p => PAUTA[p] ? PAUTA[p].nome : p).join(', '))})` : esc(descreve(a)) + (a.m ? ` — ${esc(a.m)}` : '');
   const s = x.s || 'fora';
   return `<article class="cartao ${classeDe(x)}${pendente ? ' pendente' : ''}" tabindex="0" data-chave="${esc(b.chave)}">
@@ -290,7 +293,7 @@ function cartao(b) {
     <p class="ementa">${esc(texto)}</p>
     ${b.tipo === 'v' && it.me && it.desc ? `<p class="autores">${esc(it.desc)}</p>` : ''}
     ${b.tipo === 'p' ? autores(it.a) : ''}
-    <p class="ia"><b>IA.</b> ${iaTxt}</p>
+    <p class="ia"><b>IA.</b> ${iaTxt}${certeza ? ` <span class="meta">(certeza ${certeza})</span>` : ''}</p>
     <div class="linha"><span class="rot">Sentido</span><span class="seg">
       <button type="button" class="avanca" data-s="avanca" aria-pressed="${s === 'avanca'}">Faz avançar a pauta</button>
       <button type="button" class="contra" data-s="barra" aria-pressed="${s === 'barra'}">Contra a pauta</button>
@@ -406,7 +409,7 @@ async function salvar() {
 $('#salvar').addEventListener('click', salvar);
 $('#descartar').addEventListener('click', () => { if (!confirm('Descartar todas as alterações não salvas?')) return; pend = {}; guardarPend(); atualizarBarra(); desenhar(); });
 $('#mais').addEventListener('click', mais);
-['#fTipo', '#fLista', '#fPauta', '#fCasa', '#fEsconder'].forEach(s => $(s).addEventListener('change', desenhar));
+['#fTipo', '#fLista', '#fPauta', '#fCasa', '#fCerteza', '#fEsconder'].forEach(s => $(s).addEventListener('change', desenhar));
 let tBusca; $('#fBusca').addEventListener('input', () => { clearTimeout(tBusca); tBusca = setTimeout(desenhar, 250); });
 window.addEventListener('beforeunload', e => { if (Object.keys(pend).length) { e.preventDefault(); e.returnValue = ''; } });
 

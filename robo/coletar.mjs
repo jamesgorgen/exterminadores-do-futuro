@@ -46,7 +46,7 @@ const SEM_IA = process.env.SEM_IA === '1';
 const TIPOS = ['PL', 'PLP', 'PEC', 'PDL'];
 const MODELO = 'claude-haiku-5-5';
 const VERSAO_CLASSIFICACAO = 'd3';   // mude para refazer todas as classificações
-const VERSAO_GRAU = 'g3';          // mude para refazer só o grau (direita ou extrema-direita)
+const VERSAO_GRAU = 'g4';          // mude para refazer só o grau (direita ou extrema-direita)
 
 const API_CAMARA = 'https://dadosabertos.camara.leg.br/api/v2';
 const ARQ_CAMARA = 'https://dadosabertos.camara.leg.br/arquivos';
@@ -574,62 +574,81 @@ async function classificarLote(itens) {
 
 // Segunda etapa, só para o que faz avançar a pauta da direita. Decide o grau com uma instrução dedicada,
 // porque na primeira etapa a cautela ("na dúvida, deixe vazio") puxava tudo para o grau direita.
-const LISTA_GRAUS = PAUTAS.lista.map(p => `- ${p.id} (${p.nome}). Extrema-direita quando: ${p.extrema}`).join('\n');
-const INSTRUCOES_GRAU = `Você é analista de um observatório da direita e da extrema-direita no Congresso Nacional brasileiro. Todos os itens abaixo já foram identificados como projetos ou votações que fazem avançar a pauta da direita. Sua tarefa é só decidir o grau de cada um, "direita" ou "extrema".
+const LISTA_GRAUS = PAUTAS.lista.map(p => `- ${p.id} (${p.nome}). ${p.descricao} Extrema-direita quando: ${p.extrema}`).join('\n');
+function instrucoesGrau(exemplos) {
+  return `Você é analista de um observatório da direita e da extrema-direita no Congresso Nacional brasileiro. Todos os itens abaixo já foram identificados como projetos ou votações que fazem avançar a pauta da direita. Para cada um, decida o grau, revise as pautas e diga quanta certeza você tem.
 
-O QUE CARACTERIZA A EXTREMA-DIREITA, POR PAUTA
+PAUTAS E O QUE CARACTERIZA A EXTREMA-DIREITA EM CADA UMA
 ${LISTA_GRAUS}
 
 CRITÉRIOS GERAIS DE EXTREMA-DIREITA (basta um)
 - Ataca a democracia, o sistema eleitoral, o STF, o TSE ou juízes por suas decisões, ou livra de punição quem atentou contra o Estado Democrático de Direito.
-- Retira direitos já garantidos de grupos inteiros (mulheres, pessoas LGBTQIA+, população negra, indígenas, quilombolas, trabalhadores), e não apenas deixa de ampliá-los.
+- Retira direitos já garantidos de grupos inteiros (mulheres, pessoas LGBTQIA+, população negra, indígenas, quilombolas, trabalhadores).
 - Trata movimentos sociais, ocupações de terra, protestos ou adversários políticos como terroristas ou criminosos.
 - Amplia a violência do Estado sem controle, como licença para matar, legítima defesa presumida ou preventiva, excludente de ilicitude para agentes, pena de morte, prisão perpétua ou castração.
-- Desfaz demarcações ou homologações de terras indígenas ou impede novas, revoga proteções ambientais de áreas protegidas, ou anistia desmatamento ilegal.
-- Impõe preceitos religiosos ao Estado ou à lei, ou restringe o aborto nos casos já permitidos (estupro, risco de vida, anencefalia), inclusive pelo Estatuto do Nascituro.
-- Armamento amplo da população ou arma como instrumento de defesa política.
+- Desfaz demarcações ou homologações de terras indígenas ou impede novas, revoga proteções de áreas protegidas, ou anistia desmatamento ilegal.
+- Impõe preceitos religiosos ao Estado, à lei ou à escola, ou restringe o aborto nos casos já permitidos, inclusive pelo Estatuto do Nascituro.
 - Defende interferência estrangeira ou sanções contra o próprio país.
 
-Use "direita" para o que é conservador, liberal ou punitivista dentro do jogo democrático, sem nenhum dos traços acima. Exemplos de direita, e não de extrema-direita, são aumentar a pena de um crime, vedar fiança ou liberdade provisória em crimes específicos, estender o porte de arma a uma categoria profissional, privatizar uma empresa, flexibilizar uma regra trabalhista, dispensar licenciamento de atividade de baixo impacto, criar escola cívico-militar, financiar comunidades terapêuticas.
+CRITÉRIOS DA EQUIPE POR TEMA (seguem a régua do observatório e prevalecem sobre a intuição)
+- Punitivismo. É extrema-direita aumentar a pena de crimes comuns (furto, roubo, dano, resistência, associação criminosa, tráfico de drogas), acabar com benefícios penais (tráfico privilegiado, livramento condicional, progressão de regime, saída temporária), antecipar a execução da pena, ampliar prisões cautelares como regra ou endurecer o processo contra o réu. É direita criar tipos penais pontuais, aumentar penas de estelionato, fraudes e crimes econômicos, criar programas contra o crime organizado, medidas de gestão, informação e inteligência, e benefícios a policiais.
+- Armas. É extrema-direita qualquer ampliação de posse ou porte de arma a novas categorias ou pessoas, a facilitação de registros e renovações de CACs e de clubes de tiro, e a ampliação da legítima defesa.
+- Educação. É extrema-direita a escola cívico-militar, o ensino domiciliar, a punição de pais ou alunos por indisciplina, a censura a professores e o ensino religioso ou confessional imposto.
+- Drogas. É extrema-direita o endurecimento penal; é direita o financiamento ou a regulação de comunidades terapêuticas e sanções administrativas ao consumo.
+- Economia, trabalho e Estado. Privilégios fiscais, flexibilizações trabalhistas, privatizações e desregulação econômica são em geral direita. São extrema-direita só quando retiram direitos de forma ampla (por exemplo, fim da Justiça do Trabalho ou do combate ao trabalho escravo).
 
-Use "fora" quando, olhando de novo, o item não faz avançar nenhuma pauta da direita (é neutro, técnico, amplia direitos ou garantias, ou vai contra a pauta, como restringir armas ou registros de CACs).
+PAUTAS
+- Liste todas as pautas que se aplicam, até três, pelos identificadores acima. Exemplos frequentes de combinação são armas com punitivismo, educação com religião, punitivismo com movimentos, drogas com punitivismo.
 
-REGRAS DO GRAU
-- O traço de extrema-direita tem de estar claro na ementa. Não presuma efeitos que a ementa não diz ("pode restringir", "abre caminho para").
-- Sustar um decreto ou uma resolução só é extrema-direita quando o ato sustado protege direitos, terras, o meio ambiente ou a democracia de forma reconhecível pela ementa.
-- Espera-se que a extrema-direita seja uma parte menor do conjunto. Na dúvida entre os dois graus, use "direita".
+CERTEZA
+- "c" é "alta" quando o caso se encaixa com clareza nos critérios e nos exemplos da equipe, e "baixa" quando a ementa é ambígua, técnica, pode ser lida nos dois sentidos ou quando você hesitou entre os graus ou sobre se é pauta da direita. Os itens de certeza baixa vão para a revisão humana, por isso não economize no "baixa" quando houver dúvida real.
 
-O campo "m" é o motivo, em até 20 palavras, em tom informativo e sem dois-pontos.
+Use "fora" no campo "g" quando, olhando de novo, o item não faz avançar nenhuma pauta da direita (é neutro, técnico, amplia direitos ou garantias, ou vai contra a pauta, como restringir armas ou proteger a soberania contra sanções estrangeiras).
 
+REGRAS
+- O traço de extrema-direita tem de estar claro na ementa. Não presuma efeitos que a ementa não diz.
+- O campo "m" é o motivo, em até 20 palavras, em tom informativo e sem dois-pontos.
+${exemplos ? `
+CASOS JÁ DECIDIDOS PELA EQUIPE (siga o mesmo raciocínio em casos parecidos)
+${exemplos}
+` : ''}
 Responda somente com JSON válido, neste formato.
-{"r":[{"n":1,"g":"extrema","m":"Susta a homologação de terras indígenas já demarcadas"},{"n":2,"g":"direita","m":"Aumenta a pena do crime de furto"},{"n":3,"g":"fora","m":""}]}`;
+{"r":[{"n":1,"g":"extrema","p":["armas","punitivismo"],"c":"alta","m":"Estende o porte de arma a guardas municipais"},{"n":2,"g":"direita","p":["privilegios"],"c":"baixa","m":"Isenta dividendos de imposto de renda"},{"n":3,"g":"fora","p":[],"c":"alta","m":""}]}`;
+}
 
-async function graduarLote(itens) {
+async function graduarLote(itens, sistema, versao) {
   const lista = itens.map((it, k) => `${k + 1}. ${it.chave}. ${String(it.texto).slice(0, 700)}`).join('\n');
-  const res = await chamarClaude(INSTRUCOES_GRAU, 'ITENS\n' + lista, Math.min(8000, 800 + itens.length * 90));
+  const res = await chamarClaude(sistema, 'ITENS\n' + lista, Math.min(8000, 900 + itens.length * 110));
   if (!res) return 0;
   let n = 0;
   for (const x of res) {
     const it = itens[(+x.n) - 1]; if (!it) continue;
     const c = classificacoes.c[it.chave]; if (!c || (c.s !== 'avanca' && !c.fora)) continue;
-    if (x.g === 'fora') { if (!c.fora) c.fora = c.p; c.s = ''; c.p = []; c.g = ''; c.m = ''; c.vg = VERSAO_GRAU; n++; continue; }
+    const cf = x.c === 'alta' ? 'alta' : 'baixa';
+    if (x.g === 'fora') { if (!c.fora) c.fora = c.p; c.s = ''; c.p = []; c.g = ''; c.m = ''; c.cf = cf; c.vg = versao; n++; continue; }
     if (c.fora) { c.s = 'avanca'; c.p = c.fora; delete c.fora; }
+    const pp = (Array.isArray(x.p) ? x.p : []).filter(id => IDS_PAUTAS.has(id)).slice(0, 3);
+    if (pp.length) c.p = pp;
     c.g = x.g === 'extrema' ? 'extrema' : 'direita';
     if (x.m) c.m = String(x.m).slice(0, 200);
-    c.vg = VERSAO_GRAU; n++;
+    c.cf = cf; c.vg = versao; n++;
   }
   return n;
 }
 
-async function graduarPendentes(itens) {
-  const pend = itens.filter(it => { const c = classificacoes.c[it.chave]; return c && (c.s === 'avanca' || c.fora) && c.vg !== VERSAO_GRAU; });
-  log(`Grau, ${pend.length} itens a revisar`);
+// Os casos corrigidos pela equipe entram como exemplos. A versão do grau inclui um contador que sobe a cada
+// 30 correções novas, o que faz o robô refazer o grau sozinho à medida que a equipe ensina a IA.
+async function graduarPendentes(itens, exemplos, nCorrecoes) {
+  const versao = `${VERSAO_GRAU}-${Math.floor(nCorrecoes / 30)}`;
+  const pend = itens.filter(it => { const c = classificacoes.c[it.chave]; return c && (c.s === 'avanca' || c.fora) && c.vg !== versao; });
+  log(`Grau, ${pend.length} itens a revisar (versão ${versao}, ${nCorrecoes} correções como exemplo)`);
   if (!pend.length || SEM_IA || !process.env.ANTHROPIC_API_KEY) return;
+  const sistema = instrucoesGrau(exemplos);
   const lotes = [];
   for (let i = 0; i < pend.length; i += 25) lotes.push(pend.slice(i, i + 25));
   let feitos = 0;
   await Motor.emParalelo(lotes.map(l => async () => {
-    try { feitos += await graduarLote(l); }
+    try { feitos += await graduarLote(l, sistema, versao); }
     catch (e) { erro('grau', e); if (/recusada/.test(e.message)) throw e; }
   }), 4);
   contar('graduados', feitos);
@@ -713,17 +732,32 @@ export async function executar() {
     if (vt.mat && (vistos.has(vt.mat) || vt.me)) { if (!vistos.has(vt.mat)) { paraClassificar.push({ chave: vt.mat, texto: vt.me }); vistos.add(vt.mat); } vt.ck = vt.mat; }
     else { vt.ck = 'V:' + vt.id; paraClassificar.push({ chave: vt.ck, texto: [vt.desc, vt.me].filter(Boolean).join(' ') }); }
   }
-  await classificarPendentes(paraClassificar);
-  await graduarPendentes(paraClassificar);
-
   // Correções da equipe (correcoes.json na raiz) valem por cima da classificação da IA.
   let correcoes = {};
   try { correcoes = JSON.parse(fs.readFileSync(path.join(RAIZ, 'correcoes.json'), 'utf8')).correcoes || {}; }
   catch (e) { if (fs.existsSync(path.join(RAIZ, 'correcoes.json'))) erro('correcoes.json com erro de formato', e); }
+  // Exemplos para a IA, a partir das correções da equipe (até 150, com a ementa).
+  const ementaDe = new Map(paraClassificar.map(it => [it.chave, it.texto]));
+  const descreveCorrecao = (k, c) => {
+    const ia = classificacoes.c[k] || {};
+    const sent = c.s !== undefined ? c.s : (ia.s || (ia.fora || c.g || c.p ? 'avanca' : ''));
+    const ppIa = ia.p && ia.p.length ? ia.p : (ia.fora || []);
+    if (!sent) return 'não é pauta da direita';
+    if (sent === 'barra') return 'contra a pauta da direita';
+    const g = c.g || ia.g || 'direita';
+    const pp = Array.isArray(c.p) ? c.p : ppIa;
+    return `${g === 'extrema' ? 'extrema-direita' : 'direita'}${pp.length ? ', pautas ' + pp.join(', ') : ''}`;
+  };
+  const exemplos = Object.entries(correcoes).filter(([k, c]) => c && typeof c === 'object' && ementaDe.get(k))
+    .slice(-150).map(([k, c]) => `- ${k}. ${String(ementaDe.get(k)).slice(0, 260)} => ${descreveCorrecao(k, c)}`).join('\n');
+  await classificarPendentes(paraClassificar);
+  await graduarPendentes(paraClassificar, exemplos, Object.keys(correcoes).length);
+
   const classificado = k => {
     const ia = classificacoes.c[k] || {};
     const c = correcoes[k];
     const x = { s: ia.s || '', p: ia.p || [], g: ia.g || '', m: ia.m || '' };
+    if (ia.cf) x.cf = ia.cf;
     if (c && typeof c === 'object') {
       if (c.s !== undefined) x.s = ['avanca', 'barra'].includes(c.s) ? c.s : '';
       if (Array.isArray(c.p)) x.p = c.p.filter(id => IDS_PAUTAS.has(id)).slice(0, 3);
