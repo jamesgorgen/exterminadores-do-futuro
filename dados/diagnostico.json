@@ -1,5 +1,5 @@
 {
- "inicio": "2026-10-29T11:09:40.745Z",
+ "inicio": "2026-10-29T11:51:33.102Z",
  "modo": "diario",
  "amostras": {
   "camara_deputado": {
@@ -132,9 +132,9 @@
   "proposicoes_data_corrigida": 3,
   "senado_processo_registros": 155,
   "proposicoes_senado": 55,
-  "classificados": 26553,
-  "graduados": 775,
-  "correcoes_aplicadas": 8
+  "classificados": 25,
+  "graduados": 1,
+  "correcoes_aplicadas": 240
  },
  "erros": [
   "votações Senado 2026-09-14: http 400"
@@ -148,7 +148,7 @@
   "senado_comissao": {
    "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20260914&dataFim=20261029",
    "tamanho": 220,
-   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"29/10/2026 07:37:24\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
+   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"29/10/2026 08:30:56\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
   },
   "senado_processo": {
    "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-09-14&dataFimApresentacao=2026-09-15",
@@ -156,5 +156,5 @@
    "inicio": "[{\"autoria\":\"Senador Astronauta Marcos Pontes (PL/SP)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175785,\"dataApresentacao\":\"2026-09-14\",\"dataSituacaoAtual\":\"2026-09-14\",\"dataUltimaAtualizacao\":\"2026-09-17T16:00:01.228\",\"ementa\":\"Dispõe sobre a avaliação das políticas públicas no âmbito da administração pública federal, com fundamento no art. 37, § 16, da Constituição Federal.\",\"enteIdentificador\":\"SF\",\"id\":9107988,\"identificacao\":\"PL 5357/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/9221d835-186c-443f-b684-9fe6bad6ce7a\"},{\"autoria\":\"Senador Astronauta Marcos Pontes (PL/SP)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175786,\"dataApresentacao\":\"2026-09-14\",\"dataSituacaoAtual\":\"2026-09-14\",\"dataUltimaAtualizacao\":\"2026-09-17T16:00:01.439\",\"ementa\":\"Institui o marco legal de biossegurança, de bioproteção e de gestão do risco aplicável a atividades que envolvam agentes biológicos, materiais biológicos e ativos associados.\",\"enteIdentificador\":\"SF\",\"id\":9108010,\"identificacao\":\"PL 5358/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-get"
   }
  },
- "fim": "2026-10-29T11:30:13.741Z"
+ "fim": "2026-10-29T11:52:47.537Z"
 }
