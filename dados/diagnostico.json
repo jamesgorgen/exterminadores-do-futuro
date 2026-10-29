@@ -1,5 +1,5 @@
 {
- "inicio": "2026-10-29T13:03:01.937Z",
+ "inicio": "2026-10-29T13:14:59.773Z",
  "modo": "diario",
  "amostras": {
   "camara_deputado": {
@@ -91,33 +91,33 @@
    "siglaVotoParlamentar": "Sim"
   },
   "camara_proposicao": {
-   "id": 2610267,
-   "uri": "https://dadosabertos.camara.leg.br/api/v2/proposicoes/2610267",
-   "siglaTipo": "PL",
-   "codTipo": 139,
-   "numero": 1252,
+   "id": 2604173,
+   "uri": "https://dadosabertos.camara.leg.br/api/v2/proposicoes/2604173",
+   "siglaTipo": "PEC",
+   "codTipo": 136,
+   "numero": 3,
    "ano": 2026,
-   "ementa": "Institui, no âmbito da União, o Dia Nacional do Povo Cigano, inscreve essa efeméride no calendário oficial da República Federativa do Brasil e dá outras providências.",
-   "dataApresentacao": "2026-03-18T14:01"
+   "ementa": "Altera o art. 155 da Constituição Federal para estabelecer alíquota máxima e base de cálculo exclusiva do Imposto sobre a Propriedade de Veículos Automotores – IPVA, e acrescenta dispositivos ao Ato das Disposições Constitucionais Transitórias para limitar despesas com publicidade institucional e com o Poder Legislativo.",
+   "dataApresentacao": "2026-02-24T15:48"
   },
   "senado_proposicao": {
-   "autoria": "Senador Jaime Bagattoli (PL/RO)",
+   "autoria": "Senadora Dra. Eudócia (PSDB/AL)",
    "casaIdentificadora": "SF",
-   "codigoMateria": 175811,
-   "dataApresentacao": "2026-09-17",
-   "dataSituacaoAtual": "2026-09-17",
-   "dataUltimaAtualizacao": "2026-09-23T17:15:00.866",
-   "ementa": "Altera as Leis nºs 9.478, de 6 de agosto de 1997, e 12.351, de 22 de dezembro de 2010, para destinar parcela da receita de royalties da União relativos à exploração de hidrocarbonetos da bacia da Foz do Rio Amazonas e da Margem Equatorial, à cobertura das despesas salariais do quadro funcional especial em extinção da União relativo aos servidores ativos e inativos e aos pensionistas dos ex-territórios do Amapá, Roraima e Rondônia de que trata o art. 31 da Emenda Constitucional nº 19, de 1998.",
+   "codigoMateria": 175895,
+   "dataApresentacao": "2026-10-01",
+   "dataSituacaoAtual": "2026-10-01",
+   "dataUltimaAtualizacao": "2026-10-06T15:15:01.05",
+   "ementa": "Altera a Lei nº 8.080, de 19 de setembro de 1990 - Lei Orgânica da Saúde, para dispor sobre o requerimento administrativo para fornecimento de medicamento destinado ao tratamento de pessoa com câncer.",
    "enteIdentificador": "SF",
-   "id": 9109177,
-   "identificacao": "PL 5396/2026",
+   "id": 9111471,
+   "identificacao": "PL 5503/2026",
    "objetivo": "Iniciadora",
    "situacaoAtual": "AGUARDANDO DESPACHO",
    "tipoConteudo": "Norma Geral",
    "tipoDocumento": "Projeto de Lei Ordinária",
    "tramitando": "Sim",
    "ultimaInformacaoAtualizada": "PUBLICACAO_OFICIAL",
-   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/04a1f73d-36dd-457f-92d9-d1e52a1d03c1"
+   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/c870a6cc-8c8f-4fc6-bfc5-601e31410b00"
   }
  },
  "contagens": {
@@ -133,7 +133,7 @@
   "senado_processo_registros": 155,
   "proposicoes_senado": 55,
   "classificados": 1,
-  "graduados": 525,
+  "graduados": 500,
   "correcoes_aplicadas": 480
  },
  "erros": [
@@ -146,15 +146,15 @@
    "inicio": "[]"
   },
   "senado_comissao": {
-   "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20260914&dataFim=20261029",
+   "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAS?dataInicio=20260914&dataFim=20261029",
    "tamanho": 220,
-   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"29/10/2026 09:43:16\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
+   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"29/10/2026 10:03:11\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
   },
   "senado_processo": {
-   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-09-16&dataFimApresentacao=2026-09-30",
-   "tamanho": 17417,
-   "inicio": "[{\"autoria\":\"Senador Jaime Bagattoli (PL/RO)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175811,\"dataApresentacao\":\"2026-09-17\",\"dataSituacaoAtual\":\"2026-09-17\",\"dataUltimaAtualizacao\":\"2026-09-23T17:15:00.866\",\"ementa\":\"Altera as Leis nºs 9.478, de 6 de agosto de 1997, e 12.351, de 22 de dezembro de 2010, para destinar parcela da receita de royalties da União relativos à exploração de hidrocarbonetos da bacia da Foz do Rio Amazonas e da Margem Equatorial, à cobertura das despesas salariais do quadro funcional especial em extinção da União relativo aos servidores ativos e inativos e aos pensionistas dos ex-territórios do Amapá, Roraima e Rondônia de que trata o art. 31 da Emenda Constitucional nº 19, de 1998.\",\"enteIdentificador\":\"SF\",\"id\":9109177,\"identificacao\":\"PL 5396/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/04a1f73d-36dd-457f-92d9-d1e52a1d03c1\"},{\"autoria\":\"Senador Esperidião Amin (PP/SC)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175813,\"dataApresentacao\":\"2026-09-17\",\"dataSituacaoAtual\":\"2026-09-17\",\"dataUltimaAtualizacao\":\"2026-09-23T17:15:01.042\",\"ementa\":\"Altera a Lei nº 9.250, de 26 de dezembro de 1995, para instituir a atualização anual pelo Índice Nacional de Preços ao Consumidor Amplo (IPCA) dos valores das tabelas de r"
+   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-10-01&dataFimApresentacao=2026-10-15",
+   "tamanho": 18273,
+   "inicio": "[{\"autoria\":\"Senadora Dra. Eudócia (PSDB/AL)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175895,\"dataApresentacao\":\"2026-10-01\",\"dataSituacaoAtual\":\"2026-10-01\",\"dataUltimaAtualizacao\":\"2026-10-06T15:15:01.05\",\"ementa\":\"Altera a Lei nº 8.080, de 19 de setembro de 1990 - Lei Orgânica da Saúde, para dispor sobre o requerimento administrativo para fornecimento de medicamento destinado ao tratamento de pessoa com câncer.\",\"enteIdentificador\":\"SF\",\"id\":9111471,\"identificacao\":\"PL 5503/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/c870a6cc-8c8f-4fc6-bfc5-601e31410b00\"},{\"autoria\":\"Senadora Dra. Eudócia (PSDB/AL)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175896,\"dataApresentacao\":\"2026-10-01\",\"dataSituacaoAtual\":\"2026-10-01\",\"dataUltimaAtualizacao\":\"2026-10-06T15:15:01.211\",\"ementa\":\"Institui o Programa Nacional de Reaproveitamento de Medicamentos Oncológicos de Alto Custo, no âmbito do SUS.\",\"enteIdentificador\":\"SF\",\"id\":9111493,\"identificacao\":\"PL 5505/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/99138d"
   }
  },
- "fim": "2026-10-29T13:11:00.252Z"
+ "fim": "2026-10-29T13:18:35.734Z"
 }
