@@ -1,5 +1,5 @@
 {
- "inicio": "2026-10-29T18:46:00.876Z",
+ "inicio": "2026-10-29T18:56:44.455Z",
  "modo": "diario",
  "amostras": {
   "camara_deputado": {
@@ -101,23 +101,23 @@
    "dataApresentacao": "2026-02-24T15:48"
   },
   "senado_proposicao": {
-   "autoria": "Senadora Dra. Eudócia (PSDB/AL)",
+   "autoria": "Senador Jaime Bagattoli (PL/RO)",
    "casaIdentificadora": "SF",
-   "codigoMateria": 175895,
-   "dataApresentacao": "2026-10-01",
-   "dataSituacaoAtual": "2026-10-01",
-   "dataUltimaAtualizacao": "2026-10-06T15:15:01.05",
-   "ementa": "Altera a Lei nº 8.080, de 19 de setembro de 1990 - Lei Orgânica da Saúde, para dispor sobre o requerimento administrativo para fornecimento de medicamento destinado ao tratamento de pessoa com câncer.",
+   "codigoMateria": 175811,
+   "dataApresentacao": "2026-09-17",
+   "dataSituacaoAtual": "2026-09-17",
+   "dataUltimaAtualizacao": "2026-09-23T17:15:00.866",
+   "ementa": "Altera as Leis nºs 9.478, de 6 de agosto de 1997, e 12.351, de 22 de dezembro de 2010, para destinar parcela da receita de royalties da União relativos à exploração de hidrocarbonetos da bacia da Foz do Rio Amazonas e da Margem Equatorial, à cobertura das despesas salariais do quadro funcional especial em extinção da União relativo aos servidores ativos e inativos e aos pensionistas dos ex-territórios do Amapá, Roraima e Rondônia de que trata o art. 31 da Emenda Constitucional nº 19, de 1998.",
    "enteIdentificador": "SF",
-   "id": 9111471,
-   "identificacao": "PL 5503/2026",
+   "id": 9109177,
+   "identificacao": "PL 5396/2026",
    "objetivo": "Iniciadora",
    "situacaoAtual": "AGUARDANDO DESPACHO",
    "tipoConteudo": "Norma Geral",
    "tipoDocumento": "Projeto de Lei Ordinária",
    "tramitando": "Sim",
    "ultimaInformacaoAtualizada": "PUBLICACAO_OFICIAL",
-   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/c870a6cc-8c8f-4fc6-bfc5-601e31410b00"
+   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/04a1f73d-36dd-457f-92d9-d1e52a1d03c1"
   }
  },
  "contagens": {
@@ -132,9 +132,7 @@
   "proposicoes_data_corrigida": 3,
   "senado_processo_registros": 157,
   "proposicoes_senado": 57,
-  "classificados": 4,
-  "graduados": 1500,
-  "correcoes_aplicadas": 533
+  "correcoes_aplicadas": 560
  },
  "erros": [
   "votações Senado 2026-09-14: http 400"
@@ -151,10 +149,10 @@
    "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"29/10/2026 15:46:15\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
   },
   "senado_processo": {
-   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-10-01&dataFimApresentacao=2026-10-15",
-   "tamanho": 18273,
-   "inicio": "[{\"autoria\":\"Senadora Dra. Eudócia (PSDB/AL)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175895,\"dataApresentacao\":\"2026-10-01\",\"dataSituacaoAtual\":\"2026-10-01\",\"dataUltimaAtualizacao\":\"2026-10-06T15:15:01.05\",\"ementa\":\"Altera a Lei nº 8.080, de 19 de setembro de 1990 - Lei Orgânica da Saúde, para dispor sobre o requerimento administrativo para fornecimento de medicamento destinado ao tratamento de pessoa com câncer.\",\"enteIdentificador\":\"SF\",\"id\":9111471,\"identificacao\":\"PL 5503/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/c870a6cc-8c8f-4fc6-bfc5-601e31410b00\"},{\"autoria\":\"Senadora Dra. Eudócia (PSDB/AL)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175896,\"dataApresentacao\":\"2026-10-01\",\"dataSituacaoAtual\":\"2026-10-01\",\"dataUltimaAtualizacao\":\"2026-10-06T15:15:01.211\",\"ementa\":\"Institui o Programa Nacional de Reaproveitamento de Medicamentos Oncológicos de Alto Custo, no âmbito do SUS.\",\"enteIdentificador\":\"SF\",\"id\":9111493,\"identificacao\":\"PL 5505/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/99138d"
+   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-09-14&dataFimApresentacao=2026-09-15",
+   "tamanho": 5047,
+   "inicio": "[{\"autoria\":\"Senador Astronauta Marcos Pontes (PL/SP)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175785,\"dataApresentacao\":\"2026-09-14\",\"dataSituacaoAtual\":\"2026-09-14\",\"dataUltimaAtualizacao\":\"2026-09-17T16:00:01.228\",\"ementa\":\"Dispõe sobre a avaliação das políticas públicas no âmbito da administração pública federal, com fundamento no art. 37, § 16, da Constituição Federal.\",\"enteIdentificador\":\"SF\",\"id\":9107988,\"identificacao\":\"PL 5357/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/9221d835-186c-443f-b684-9fe6bad6ce7a\"},{\"autoria\":\"Senador Astronauta Marcos Pontes (PL/SP)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175786,\"dataApresentacao\":\"2026-09-14\",\"dataSituacaoAtual\":\"2026-09-14\",\"dataUltimaAtualizacao\":\"2026-09-17T16:00:01.439\",\"ementa\":\"Institui o marco legal de biossegurança, de bioproteção e de gestão do risco aplicável a atividades que envolvam agentes biológicos, materiais biológicos e ativos associados.\",\"enteIdentificador\":\"SF\",\"id\":9108010,\"identificacao\":\"PL 5358/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-get"
   }
  },
- "fim": "2026-10-29T18:54:19.262Z"
+ "fim": "2026-10-29T18:57:57.181Z"
 }
