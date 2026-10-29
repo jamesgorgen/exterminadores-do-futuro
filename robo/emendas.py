@@ -162,11 +162,15 @@ try: popm=json.load(open(os.path.join(OBS,'populacao-municipios.json')))['pop']
 except Exception: pass
 ORD=[g for g,_,_ in GRUPOS]
 municipios={}
+fmun['ano']=fmun['Código da Emenda'].str[:4]
 for cod,x in fmun.groupby('cod'):
-    gv=x.groupby('g').valor.sum()
     top=x.groupby('k').valor.sum().sort_values(ascending=False).head(3)
-    municipios[cod]=[round(x.valor.sum()),*[round(gv.get(g,0)) for g in ORD],round(x[x.pixm].valor.sum()),popm.get(cod,0),[[k,round(v)] for k,v in top.items()]]
-json.dump({'gerado':pd.Timestamp.now().isoformat()[:19],'campos':['total',*ORD,'pix','pop','top'],'cobertura_nomes':round(cob_mun,4),
+    anos={}
+    for an,y in x.groupby('ano'):
+        gv=y.groupby('g').valor.sum()
+        anos[an]=[round(y.valor.sum()),*[round(gv.get(g,0)) for g in ORD],round(y[y.pixm].valor.sum())]
+    municipios[cod]={'p':popm.get(cod,0),'t':[[k,round(v)] for k,v in top.items()],'a':anos}
+json.dump({'gerado':pd.Timestamp.now().isoformat()[:19],'campos':['total',*ORD,'pix'],'anos':sorted(fmun['ano'].unique().tolist()),'cobertura_nomes':round(cob_mun,4),
   'total_pago':round(fav[fav['Código da Emenda'].str[:4].ge('2023')].valor.sum()),'total_mapa':round(fmun.valor.sum()),
   'tem_pop':bool(popm),'m':municipios},open(os.path.join(os.path.dirname(SAIDA),'emendas-municipios.json'),'w'),ensure_ascii=False,separators=(',',':'))
 print('municípios',len(municipios),'ligação por nome',round(cob_mun,3),'pop',len(popm))

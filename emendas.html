@@ -202,6 +202,7 @@ h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size
   <p class="intro">Quanto cada município recebeu em emendas individuais e de quais grupos veio o dinheiro. Escolha um estado para aproximar o mapa e ver a ficha do estado, ou clique num município para ver a sua.</p>
   <div class="busca"><div class="chips" id="metricas" role="group" aria-label="O que o mapa mostra" style="margin:0"></div>
     <select id="fUf" aria-label="Estado"></select></div>
+  <div class="chips" id="anosMapa" role="group" aria-label="Ano da emenda"></div>
   <div class="mapa-area">
     <div class="mapa-caixa"><div id="mapaMun" class="mapa-mun" role="img" aria-label="Mapa dos municípios do Brasil"><p class="carregando">Carregando o mapa…</p></div>
       <div class="dica-mapa" id="dicaMapa" hidden></div><div class="escala" id="escala"></div><p class="nota" id="notaMapa"></p></div>
@@ -337,16 +338,24 @@ function desenharTemas() {
 }
 
 // ------------------------------------------------ estados
-let metrica = 'hab', ufAtual = 'SP', ufZoom = '', TOPO = null, FEAT = null, MUN = null, IX = {}, munAtual = null;
+let anoMapa = 'todos', metrica = 'hab', ufAtual = 'SP', ufZoom = '', TOPO = null, FEAT = null, MUN = null, IX = {}, munAtual = null;
 const UFCOD = { 11: 'RO', 12: 'AC', 13: 'AM', 14: 'RR', 15: 'PA', 16: 'AP', 17: 'TO', 21: 'MA', 22: 'PI', 23: 'CE', 24: 'RN', 25: 'PB', 26: 'PE', 27: 'AL', 28: 'SE', 29: 'BA', 31: 'MG', 32: 'ES', 33: 'RJ', 35: 'SP', 41: 'PR', 42: 'SC', 43: 'RS', 50: 'MS', 51: 'MT', 52: 'GO', 53: 'DF' };
 const ufDe = c => UFCOD[String(c).slice(0, 2)];
 const METRICAS_M = [['hab', 'Por habitante'], ['total', 'Valor recebido'], ['ext', 'Fatia da extrema-direita'], ['dir', 'Fatia da direita e da extrema-direita'], ['esq', 'Fatia da esquerda']];
 const NIVEIS = [10, 24, 38, 52, 66, 82, 100];
+// Valores do município no ano escolhido (ano da emenda), ou a soma de todos os anos.
+function reg(c) {
+  const x = MUN.m[c]; if (!x) return null;
+  if (anoMapa !== 'todos') return x.a[anoMapa] || null;
+  const soma = MUN.campos.map(() => 0);
+  Object.values(x.a).forEach(v => v.forEach((n, i) => soma[i] += n));
+  return soma;
+}
 function vm(c, m) {
-  const r = MUN.m[c]; if (!r) return null;
+  const r = reg(c); if (!r) return null;
   const t = r[IX.total];
-  if (m === 'total') return t;
-  if (m === 'hab') return r[IX.pop] ? t / r[IX.pop] : null;
+  if (m === 'total') return t || null;
+  if (m === 'hab') { const p = MUN.m[c].p; return p ? t / p : null; }
   if (!t) return null;
   return m === 'ext' ? r[IX.extrema] / t : m === 'dir' ? (r[IX.extrema] + r[IX.direita]) / t : r[IX.esquerda] / t;
 }
@@ -375,24 +384,24 @@ function desenharMun() {
   $('#escala').innerHTML = vis.length ? `<span class="num">${fmtM(Math.min(...vis), metrica)}</span><span class="cx">${NIVEIS.map(n => `<span style="--c:color-mix(in srgb, var(--red) ${n}%, var(--sheet))"></span>`).join('')}</span><span class="num">${fmtM(Math.max(...vis), metrica)}</span>` : '';
 }
 function desenharMunicipio(c) {
-  const f = FEAT.find(x => x.properties.id === c); const r = MUN.m[c];
+  const f = FEAT.find(x => x.properties.id === c); const r0 = reg(c); const r = r0 && r0[IX.total] ? r0 : null; const info = MUN.m[c] || {};
   munAtual = c; const uf = ufDe(c);
-  if (!r) { $('#estado').innerHTML = `<article class="estado"><h3 class="nome-uf">${esc(f ? f.properties.name : '')} (${uf})</h3><p class="sub">Nenhum pagamento de emenda individual a este município, à prefeitura ou a entidades locais no período.</p><button type="button" class="btn-uf" data-ver-uf="${uf}">Ver a ficha de ${esc(D.estados[uf] ? D.estados[uf].nome : uf)}</button></article>`; desenharMun(); return; }
-  const t = r[IX.total], pop = r[IX.pop];
+  if (!r) { $('#estado').innerHTML = `<article class="estado"><h3 class="nome-uf">${esc(f ? f.properties.name : '')} (${uf})</h3><p class="sub">Nenhum pagamento de emenda individual ${anoMapa === 'todos' ? 'de 2023 a 2026' : 'de ' + anoMapa} a este município, à prefeitura ou a entidades locais.</p><button type="button" class="btn-uf" data-ver-uf="${uf}">Ver a ficha de ${esc(D.estados[uf] ? D.estados[uf].nome : uf)}</button></article>`; desenharMun(); return; }
+  const t = r[IX.total], pop = info.p;
   const pilha = D.ordem.map(g => `<span style="--cor:${cor(g)};width:${100 * r[IX[g]] / t}%" title="${esc(D.grupos[g].nome)}: ${pct(r[IX[g]] / t, 0)}"></span>`).join('');
   const leg = D.ordem.filter(g => r[IX[g]] > 0).map(g => `<span style="--cor:${cor(g)}"><i></i>${esc(D.grupos[g].nome)} ${pct(r[IX[g]] / t, 0)}</span>`).join('');
-  const top = (r[IX.top] || []).map(([k, v]) => { const p = D.parl[k]; return p ? `<li><span><button type="button" data-k="${esc(k)}">${esc(p.n)}</button> <span class="sub">${esc(partido(p))}/${esc(p.uf || '')}</span></span><span class="num">${reais(v)}</span></li>` : ''; }).join('');
+  const top = (info.t || []).map(([k, v]) => { const p = D.parl[k]; return p ? `<li><span><button type="button" data-k="${esc(k)}">${esc(p.n)}</button> <span class="sub">${esc(partido(p))}/${esc(p.uf || '')}</span></span><span class="num">${reais(v)}</span></li>` : ''; }).join('');
   $('#estado').innerHTML = `<article class="estado">
     <h3 class="nome-uf">${esc(f ? f.properties.name : c)} (${uf})</h3>
     <div class="kpis">
-      <div class="kpi"><b class="num">${reais(t)}</b><span>recebido, emendas de 2023 a 2026</span></div>
+      <div class="kpi"><b class="num">${reais(t)}</b><span>recebido, emendas de ${anoMapa === 'todos' ? '2023 a 2026' : anoMapa}</span></div>
       <div class="kpi"><b class="num">${pop ? 'R$ ' + Math.round(t / pop).toLocaleString('pt-BR') : '—'}</b><span>por habitante</span></div>
       <div class="kpi"><b class="num">${pct(r[IX.pix] / t, 0)}</b><span>em emendas Pix</span></div>
       <div class="kpi"><b class="num">${pop ? pop.toLocaleString('pt-BR') : '—'}</b><span>habitantes (Censo 2022)</span></div>
     </div>
     <div class="rot">De onde veio o dinheiro</div>
     <div class="pilha">${pilha}</div><div class="leg-pilha">${leg}</div>
-    <div style="margin-top:14px"><h4 class="rot" style="margin:0 0 8px">Quem mais destinou</h4><ul class="lista">${top}</ul></div>
+    <div style="margin-top:14px"><h4 class="rot" style="margin:0 0 8px">Quem mais destinou, de 2023 a 2026</h4><ul class="lista">${top}</ul></div>
     <button type="button" class="btn-uf" data-ver-uf="${uf}">Ver a ficha de ${esc(D.estados[uf] ? D.estados[uf].nome : uf)}</button>
   </article>`;
   desenharMun();
@@ -427,6 +436,10 @@ function desenharEstado(uf) {
   </article>`;
 }
 
+function desenharAnosMapa() {
+  const anos = [['todos', '2023 a 2026'], ...(MUN.anos || []).map(a => [a, a === '2026' ? '2026 (parcial)' : a])];
+  $('#anosMapa').innerHTML = anos.map(([v, t]) => `<button type="button" class="chip" data-ano-mapa="${v}" aria-pressed="${v === anoMapa}">${t}</button>`).join('');
+}
 function iniciarMapa() {
   $('#fUf').innerHTML = '<option value="">Brasil</option>' + Object.entries(D.estados).sort((a, b) => a[1].nome.localeCompare(b[1].nome)).map(([uf, x]) => `<option value="${uf}">${esc(x.nome)}</option>`).join('');
   $('#fUf').addEventListener('change', () => { ufZoom = $('#fUf').value; munAtual = null; if (ufZoom) desenharEstado(ufZoom); desenharMun(); });
@@ -437,8 +450,8 @@ function iniciarMapa() {
     // O d3 espera os anéis no sentido horário; polígonos no sentido inverso cobririam o globo inteiro.
     FEAT.forEach(f => { if (d3.geoArea(f) > 2 * Math.PI) { const g = f.geometry; if (g.type === 'Polygon') g.coordinates.forEach(r => r.reverse()); else if (g.type === 'MultiPolygon') g.coordinates.forEach(p => p.forEach(r => r.reverse())); } });
     if (!MUN.tem_pop) metrica = 'total';
-    desenharMetricas(); desenharMun();
-    $('#notaMapa').textContent = `O mapa usa os pagamentos já feitos a prefeituras, fundos municipais e entidades sediadas em cada município (${reais(MUN.total_mapa)} de ${reais(MUN.total_pago)} pagos). Repasses intermediados pela Caixa e transferências a governos estaduais não têm município identificado. As cores dividem os municípios visíveis em sete faixas com o mesmo número de municípios.`;
+    desenharAnosMapa(); desenharMetricas(); desenharMun();
+    $('#notaMapa').textContent = `O mapa usa os pagamentos já feitos a prefeituras, fundos municipais e entidades sediadas em cada município (${reais(MUN.total_mapa)} de ${reais(MUN.total_pago)} pagos). Repasses intermediados pela Caixa e transferências a governos estaduais não têm município identificado. O ano é o da emenda, isto é, do empenho; o pagamento pode ter ocorrido depois. As cores dividem os municípios visíveis em sete faixas com o mesmo número de municípios.`;
     const dica = $('#dicaMapa');
     $('#mapaMun').addEventListener('pointermove', e => {
       const pth = e.target.closest('path.m'); if (!pth) { dica.hidden = true; return; }
@@ -503,6 +516,7 @@ document.addEventListener('click', e => {
   const t = e.target.closest('.tema [data-k], .estado [data-k]'); if (t) { abrir(t.dataset.k); return; }
   const m = e.target.closest('[data-metrica]'); if (m) { metrica = m.dataset.metrica; desenharMetricas(); desenharMun(); return; }
   const vu = e.target.closest('[data-ver-uf]'); if (vu) { ufZoom = vu.dataset.verUf; $('#fUf').value = ufZoom; munAtual = null; desenharEstado(ufZoom); desenharMun(); return; }
+  const am = e.target.closest('[data-ano-mapa]'); if (am) { anoMapa = am.dataset.anoMapa; desenharAnosMapa(); if (munAtual) desenharMunicipio(munAtual); else desenharMun(); return; }
   const pm = e.target.closest('#mapaMun path.m'); if (pm) { desenharMunicipio(pm.dataset.c); }
 });
 ['#fGrupo', '#fOrdem'].forEach(s => $(s).addEventListener('change', desenharRanking));
