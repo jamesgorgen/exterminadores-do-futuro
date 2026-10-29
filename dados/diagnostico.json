@@ -1,5 +1,5 @@
 {
- "inicio": "2026-10-29T04:06:53.315Z",
+ "inicio": "2026-10-29T09:41:41.458Z",
  "modo": "completo",
  "amostras": {
   "camara_deputado": {
@@ -43,9 +43,9 @@
    "uriVotacao": "https://dadosabertos.camara.leg.br/api/v2/votacoes/2374400-121",
    "siglaOrgao": "PLEN",
    "descricao": "Rejeitada a Emenda do Senado Federal nº 3. Sim: 120; não: 261; abstenção: 1; total: 382.",
-   "siglaBancada": "Governo",
+   "siglaBancada": "Bl MdbPsdRepPode",
    "uriBancada": "",
-   "orientacao": "Não"
+   "orientacao": "Liberado"
   },
   "camara_arq_objeto": {
    "idVotacao": "2345501-28",
@@ -129,21 +129,21 @@
    "dataApresentacao": "2024-02-29T15:32"
   },
   "senado_proposicao": {
-   "autoria": "Senador Paulo Paim (PT/RS)",
+   "autoria": "Senador Flávio Arns (PSB/PR)",
    "casaIdentificadora": "SF",
-   "codigoMateria": 155901,
-   "dataApresentacao": "2023-02-16",
-   "dataSituacaoAtual": "2023-04-11",
-   "ementa": "Permite que sejam excluídas do cálculo do limite de endividamento de entes subnacionais as operações de crédito com recursos do FGTS destinadas a investimentos em saneamento e habitação.",
+   "codigoMateria": 155746,
+   "dataApresentacao": "2023-02-01",
+   "dataSituacaoAtual": "2024-09-17",
+   "ementa": "Dispõe sobre a responsabilidade educacional na garantia de oferta e de padrão de qualidade na educação básica pública.",
    "enteIdentificador": "SF",
-   "id": 8369951,
-   "identificacao": "PL 566/2023",
+   "id": 8361390,
+   "identificacao": "PL 88/2023",
    "objetivo": "Iniciadora",
-   "situacaoAtual": "AGUARDANDO DESIGNAÇÃO DO RELATOR",
+   "situacaoAtual": "PRONTA PARA A PAUTA NA COMISSÃO",
    "tipoConteudo": "Norma Geral",
    "tipoDocumento": "Projeto de Lei Ordinária",
    "tramitando": "Sim",
-   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/9c58b4b3-31cd-4b60-8b9b-e7a4a590e3d4"
+   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/8ee2c99d-0c43-45ab-9f7f-8bc60602349b"
   }
  },
  "contagens": {
@@ -157,18 +157,15 @@
   "senado_comissao_votacoes_achadas": 644,
   "votacoes_S_comissao": 644,
   "proposicoes_camara_registros": 42521,
-  "proposicoes_data_corrigida": 23,
-  "senado_processo_registros": 6119,
-  "proposicoes_senado": 3069,
-  "classificados": 21026
+  "proposicoes_data_corrigida": 24,
+  "senado_processo_registros": 6128,
+  "proposicoes_senado": 3077,
+  "classificados": 26553
  },
  "erros": [
   "votações Senado 2024-01-01: http 400",
   "votações Senado 2025-01-01: http 400",
-  "votações Senado 2026-01-01: http 400",
-  "proposições Senado PL 2026-01-16: falhou https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-01-16&dataFimApresentacao=2026-01-31",
-  "proposições Senado PLP 2026-01-01: falhou https://legis.senado.leg.br/dadosabertos/processo?sigla=PLP&dataInicioApresentacao=2026-01-01&dataFimApresentacao=2026-01-15",
-  "proposições Senado PLP 2025-12-16: falhou https://legis.senado.leg.br/dadosabertos/processo?sigla=PLP&dataInicioApresentacao=2025-12-16&dataFimApresentacao=2025-12-31"
+  "votações Senado 2026-01-01: http 400"
  ],
  "brutos": {
   "senado_votacao_iso": {
@@ -179,13 +176,13 @@
   "senado_comissao": {
    "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20230201&dataFim=20230430",
    "tamanho": 3189,
-   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"29/10/2026 01:07:19\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"},\"Votacoes\":{\"Votacao\":{\"CodigoVotacao\":\"34188\",\"SiglaCasaColegiado\":\"SF\",\"CodigoReuniao\":\"11134\",\"DataHoraInicioReuniao\":\"2023-03-21T09:19:00\",\"NumeroReuniaoColegiado\":\"3\",\"TipoReuniao\":\"Extraordinária\",\"CodigoColegiado\":\"38\",\"SiglaColegiado\":\"CAE\",\"NomeColegiado\":\"Comissão de Assuntos Econômicos\",\"CodigoParlamentarPresidente\":\"5899\",\"NomeParlamentarPresidente\":\"Vanderlan Cardoso\",\"IdentificacaoMateria\":\"PL 3071/2019\",\"DescricaoIdentificacaoMateria\":\"Projeto de Lei n° 3071, de 2019\",\"DescricaoVotacao\":\"PL 3071/2019\",\"Votos\":{\"Voto\":[{\"CodigoParlamentar\":\"5905\",\"NomeParlamentar\":\"Rodrigo Cunha\",\"SiglaPartidoParlamentar\":\"UNIÃO\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"5982\",\"NomeParlamentar\":\"Alessandro Vieira\",\"SiglaPartidoParlamentar\":\"PSDB\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"N\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"6331\",\"NomeParlamentar\":\"Sergio Moro\",\"SiglaPartidoParlamentar\":\"UNIÃO\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"4560\",\"NomeParlamentar\":\"Sérgio Petecão\",\"SiglaPartidoParlamentar\":\"PSD\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"5967\",\"NomeParlamentar\":\"Angelo Coronel\""
+   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"29/10/2026 06:42:25\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"},\"Votacoes\":{\"Votacao\":{\"CodigoVotacao\":\"34188\",\"SiglaCasaColegiado\":\"SF\",\"CodigoReuniao\":\"11134\",\"DataHoraInicioReuniao\":\"2023-03-21T09:19:00\",\"NumeroReuniaoColegiado\":\"3\",\"TipoReuniao\":\"Extraordinária\",\"CodigoColegiado\":\"38\",\"SiglaColegiado\":\"CAE\",\"NomeColegiado\":\"Comissão de Assuntos Econômicos\",\"CodigoParlamentarPresidente\":\"5899\",\"NomeParlamentarPresidente\":\"Vanderlan Cardoso\",\"IdentificacaoMateria\":\"PL 3071/2019\",\"DescricaoIdentificacaoMateria\":\"Projeto de Lei n° 3071, de 2019\",\"DescricaoVotacao\":\"PL 3071/2019\",\"Votos\":{\"Voto\":[{\"CodigoParlamentar\":\"5905\",\"NomeParlamentar\":\"Rodrigo Cunha\",\"SiglaPartidoParlamentar\":\"UNIÃO\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"5982\",\"NomeParlamentar\":\"Alessandro Vieira\",\"SiglaPartidoParlamentar\":\"PSDB\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"N\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"6331\",\"NomeParlamentar\":\"Sergio Moro\",\"SiglaPartidoParlamentar\":\"UNIÃO\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"4560\",\"NomeParlamentar\":\"Sérgio Petecão\",\"SiglaPartidoParlamentar\":\"PSD\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"5967\",\"NomeParlamentar\":\"Angelo Coronel\""
   },
   "senado_processo": {
-   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2023-03-01&dataFimApresentacao=2023-03-15",
-   "tamanho": 66650,
-   "inicio": "[{\"autoria\":\"Senador Paulo Paim (PT/RS)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":155964,\"dataApresentacao\":\"2023-03-01\",\"dataSituacaoAtual\":\"2023-04-17\",\"ementa\":\"Altera o Plano de Benefícios da Previdência Social, para suprimir a previsão de desconto de benefícios e de inscrição em dívida ativa no caso de cessação de benefício por revogação de decisão judicial.\",\"enteIdentificador\":\"SF\",\"id\":8373745,\"identificacao\":\"PL 744/2023\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESIGNAÇÃO DO RELATOR\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/d1241f35-80c6-42ec-811d-b58e8d2ba684\"},{\"autoria\":\"Senador Jorge Kajuru (PSB/GO)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":155968,\"dataApresentacao\":\"2023-03-01\",\"dataSituacaoAtual\":\"2023-04-17\",\"ementa\":\"Dispõe sobre a gratuidade de estacionamento em favor de pessoas idosas ou com deficiência de baixa renda.\",\"enteIdentificador\":\"SF\",\"id\":8374089,\"identificacao\":\"PL 762/2023\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESIGNAÇÃO DO RELATOR\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/8037e1b0-83d3-443f-b545-d7baf382b547\"},{\"autoria\":\"Senador Carlos Viana (PODEMOS/MG)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":155972,\"dataApresentacao\":\"2023-03-02\",\"dataDeliberacao\":\"2023-"
+   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2023-02-01&dataFimApresentacao=2023-02-15",
+   "tamanho": 36747,
+   "inicio": "[{\"autoria\":\"Senador Flávio Arns (PSB/PR)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":155746,\"dataApresentacao\":\"2023-02-01\",\"dataSituacaoAtual\":\"2024-09-17\",\"ementa\":\"Dispõe sobre a responsabilidade educacional na garantia de oferta e de padrão de qualidade na educação básica pública.\",\"enteIdentificador\":\"SF\",\"id\":8361390,\"identificacao\":\"PL 88/2023\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"PRONTA PARA A PAUTA NA COMISSÃO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/8ee2c99d-0c43-45ab-9f7f-8bc60602349b\"},{\"autoria\":\"Senador Paulo Paim (PT/RS)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":155747,\"dataApresentacao\":\"2023-02-02\",\"dataSituacaoAtual\":\"2025-07-03\",\"ementa\":\"Institui a Política Nacional de Fornecimento Gratuito de Medicamentos Formulados de Derivado Vegetal à Base de Canabidiol, em associação com outras substâncias canabinoides, incluindo o tetrahidrocanabinol, nas unidades de saúde públicas e privadas conveniadas ao Sistema Único de Saúde – SUS.\",\"enteIdentificador\":\"SF\",\"id\":8361394,\"identificacao\":\"PL 89/2023\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESIGNAÇÃO DO RELATOR\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/4a178758-c7e8-4c85-b85d-46bed308d72d\"},{\"autoria\":\"Senador Ciro Nogueira (PP/PI)\",\"casaIde"
   }
  },
- "fim": "2026-10-29T04:26:19.252Z"
+ "fim": "2026-10-29T10:03:09.450Z"
 }
