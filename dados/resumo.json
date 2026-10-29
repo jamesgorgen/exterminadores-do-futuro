@@ -1,10 +1,10 @@
 {
- "gerado": "2026-10-29T12:29:15.064Z",
+ "gerado": "2026-10-29T12:43:06.784Z",
  "inicio": "2023-02-01",
  "totais": {
   "proposicoes": 26227,
-  "direita": 2524,
-  "extrema": 1001,
+  "direita": 2526,
+  "extrema": 1003,
   "votacoes": 2425,
   "disputadas": 640,
   "vitorias": 352,
@@ -23,7 +23,7 @@
   },
   "punitivismo": {
    "prop": 1239,
-   "extrema": 379,
+   "extrema": 381,
    "prop30": 9,
    "vot": 24,
    "vitorias": 20,
@@ -94,7 +94,7 @@
    "derrotas": 1
   },
   "estado": {
-   "prop": 121,
+   "prop": 120,
    "extrema": 20,
    "prop30": 2,
    "vot": 12,
@@ -102,7 +102,7 @@
    "derrotas": 2
   },
   "privilegios": {
-   "prop": 271,
+   "prop": 274,
    "extrema": 15,
    "prop30": 2,
    "vot": 52,
@@ -126,7 +126,7 @@
    "derrotas": 2
   },
   "drogas": {
-   "prop": 76,
+   "prop": 77,
    "extrema": 19,
    "prop30": 1,
    "vot": 1,
@@ -134,7 +134,7 @@
    "derrotas": 0
   },
   "soberania": {
-   "prop": 46,
+   "prop": 47,
    "extrema": 17,
    "prop30": 0,
    "vot": 5,
