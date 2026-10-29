@@ -64,6 +64,8 @@ button,input,select{font:inherit;color:inherit}
 .abas .wrap{display:flex;gap:2px;overflow-x:auto}
 .abas button{border:0;background:transparent;padding:14px 14px 12px;font-weight:700;font-size:15px;color:var(--ink-2);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap}
 .abas button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--red)}
+.abas .aba-link{padding:14px 14px 12px;font-weight:700;font-size:15px;color:var(--ink-2);text-decoration:none;border-bottom:3px solid transparent;white-space:nowrap}
+.abas .aba-link:hover{color:var(--ink)}
 main .wrap{padding-top:26px;padding-bottom:64px}
 h2.titulo{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(30px,3.6vw,46px);line-height:.95;margin:0 0 8px}
 p.sub{color:var(--ink-2);max-width:70ch;margin:0 0 18px}
@@ -189,6 +191,7 @@ footer a{color:#fff}
   <button role="tab" data-aba="parlamentares" aria-selected="false">Parlamentares</button>
   <button role="tab" data-aba="proposicoes" aria-selected="false">Proposições</button>
   <button role="tab" data-aba="votacoes" aria-selected="false">Votações</button>
+  <a class="aba-link" href="emendas.html">Emendas</a>
   <button role="tab" data-aba="metodo" aria-selected="false">Como funciona</button>
 </div></nav>
 

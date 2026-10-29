@@ -1,0 +1,61 @@
+# Atualização mensal do módulo de emendas parlamentares.
+# Baixa o arquivo do Portal da Transparência, gera dados/emendas.json e grava no repositório.
+# Também pode ser disparada à mão em Actions > Atualizar emendas > Run workflow.
+name: Atualizar emendas
+
+on:
+  schedule:
+    - cron: '43 11 7 * *'
+  workflow_dispatch:
+    inputs:
+      url:
+        description: 'Endereço do arquivo .zip de emendas (em branco = Portal da Transparência)'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+concurrency:
+  group: atualizar-dados
+  cancel-in-progress: false
+
+jobs:
+  emendas:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Baixar o repositório
+        uses: actions/checkout@v4
+
+      - name: Preparar o Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Instalar o pandas
+        run: pip install pandas
+
+      - name: Baixar as emendas do Portal da Transparência
+        env:
+          URL: ${{ inputs.url || 'https://portaldatransparencia.gov.br/download-de-dados/emendas-parlamentares/UNICO' }}
+        run: |
+          curl -fL --retry 3 --retry-delay 20 -A "Mozilla/5.0 (observatorio exterminadores-do-futuro)" -o /tmp/emendas.zip "$URL"
+          mkdir -p /tmp/emendas && unzip -o -q /tmp/emendas.zip -d /tmp/emendas
+          ls -la /tmp/emendas
+
+      - name: Gerar os dados do módulo
+        run: python robo/emendas.py /tmp/emendas
+
+      - name: Gravar no repositório
+        run: |
+          git config user.name "robo-exterminadores"
+          git config user.email "robo-exterminadores@users.noreply.github.com"
+          git add dados/emendas.json
+          if git diff --cached --quiet; then
+            echo "Nada mudou."
+          else
+            git commit -m "Atualiza as emendas ($(date -u +%Y-%m-%d))"
+            git pull --rebase --autostash
+            git push
+          fi

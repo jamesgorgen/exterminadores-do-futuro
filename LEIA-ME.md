@@ -51,6 +51,8 @@ Na página de revisão, as filas mostram por padrão só os itens de certeza bai
 | `pautas.js` | Pautas, núcleo e regras do índice |
 | `correcoes.json` | Correções da equipe à classificação da IA |
 | `revisao.html` | Página de revisão da triagem, para a equipe |
+| `emendas.html` | Módulo de emendas parlamentares |
+| `robo/emendas.py` | Gera os dados do módulo de emendas |
 | `robo/motor.js` | Funções de busca e de classificação por tema, usadas pelo robô |
 | `taxonomia.js` | Temas dos Cadernos do Futuro, usados para marcar os temas das ementas |
 | `robo/coletar.mjs` | O robô de coleta |
@@ -82,7 +84,15 @@ Na pasta `dados`
 3. **Chave da Anthropic.** Em Settings, Secrets and variables, Actions, crie o segredo `ANTHROPIC_API_KEY`.
 4. **Primeira execução.** Em Actions, Atualizar dados, Run workflow, escolha `completo`. A primeira execução reúne a legislatura inteira e leva cerca de 20 minutos. As seguintes rodam sozinhas todo dia e levam poucos minutos.
 
-## Correções da equipe
+## Emendas parlamentares
+
+A página `emendas.html` mostra para onde os parlamentares destinam as emendas individuais ao Orçamento, de 2023 em diante, em três partes. A primeira compara como cada grupo divide o dinheiro. A segunda mostra onze áreas (saúde, transferências especiais Pix, educação, assistência social, urbanismo, agricultura, esporte e lazer, segurança e defesa, cultura, direitos da cidadania e outras funções). A terceira traz o perfil de cada parlamentar, com municípios, entidades favorecidas e convênios.
+
+- **Grupos, definidos só pelo partido.** Extrema-direita reúne PL e Novo. Direita reúne PP, União Brasil, Republicanos, Podemos e PSD. Alinhados reúne MDB, PDT, Rede e PSB. Esquerda reúne PT, PSOL e PCdoB. Outros partidos reúne os demais. A lista fica no início de `robo/emendas.py` (`GRUPOS`) e vale só para este módulo.
+- **Atualização.** O agendamento `.github/workflows/emendas.yml` roda todo dia 7, baixa o arquivo de emendas do Portal da Transparência, gera `dados/emendas.json` com `robo/emendas.py` e grava no repositório. Se o download falhar, os dados anteriores continuam no ar. Também pode ser disparado à mão, em Actions, Atualizar emendas, informando outro endereço do arquivo, se for preciso.
+- **Ligação dos autores.** Os autores são ligados pelo nome aos parlamentares de `dados/parlamentares.json`, o que cobre cerca de 91% do valor.
+
+
 
 O jeito mais simples é a página de revisão, em https://exterminadores.com.br/revisao.html (não aparece no site nem nos buscadores). Ela mostra os projetos e as votações em filas (o que a IA marcou como direita, como extrema-direita, como contra a pauta, o que descartou e o que a equipe já conferiu), com botões para sentido, grau e pautas, um campo de nota e atalhos de teclado. As alterações ficam guardadas no navegador até alguém clicar em Salvar no site, que grava tudo no `correcoes.json` de uma vez.
 

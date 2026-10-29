@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Para onde deputados e senadores da direita e da extrema-direita mandam o dinheiro das emendas individuais ao Orçamento, de 2023 a 2026.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Os exterminadores do futuro">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://exterminadores.com.br/emendas.html">
+<meta property="og:title" content="Emendas da direita | Os exterminadores do futuro">
+<meta property="og:description" content="Para onde a direita e a extrema-direita mandam o dinheiro das emendas ao Orçamento. Dados do Portal da Transparência.">
+<meta property="og:image" content="https://exterminadores.com.br/compartilhar.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<title>Emendas da direita</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* Mesma identidade do observatório: faixa noturna, vermelho de alerta, tipografia condensada nos títulos.
+   Layout: três seções empilhadas (perfil de gasto, pautas, parlamentar), cada uma com resumo antes do detalhe. */
+:root{
+  --night:#151a2e; --night-2:#222944; --red:#d42a2f; --paper:#edeff2; --sheet:#ffffff; --ink:#151a2e; --ink-2:#4a5068; --ink-3:#6f758a;
+  --line:#d6d9e0; --mark:#ffe24a;
+  --g-extrema:#8c1015; --g-direita:#d42a2f; --g-alinhados:#c98a1b; --g-esquerda:#1f6b8c; --g-outros:#8a90a3;
+  --display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --text:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --night:#0f1324; --night-2:#1c2240; --red:#e8454a; --paper:#171b2c; --sheet:#1f2438; --ink:#eef0f6; --ink-2:#b7bccd; --ink-3:#959bb0; --line:#2f3550;
+    --g-extrema:#ff5a60; --g-direita:#f08a8d; --g-alinhados:#e8b25a; --g-esquerda:#6cb8d8; --g-outros:#9aa0b5; color-scheme:dark; }
+}
+:root[data-theme="dark"]{ --night:#0f1324; --night-2:#1c2240; --red:#e8454a; --paper:#171b2c; --sheet:#1f2438; --ink:#eef0f6; --ink-2:#b7bccd; --ink-3:#959bb0; --line:#2f3550;
+  --g-extrema:#ff5a60; --g-direita:#f08a8d; --g-alinhados:#e8b25a; --g-esquerda:#6cb8d8; --g-outros:#9aa0b5; color-scheme:dark; }
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 var(--text);-webkit-font-smoothing:antialiased}
+a{color:var(--red)}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--mark);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(20px, env(safe-area-inset-left, 0px));padding-right:max(20px, env(safe-area-inset-right, 0px))}
+@media (max-width:560px){.wrap{padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}}
+.num{font-variant-numeric:tabular-nums}
+
+.topo{background:var(--night);color:#fff}
+.topo .wrap{padding-block:20px 30px}
+.marca{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:20px;letter-spacing:.02em;color:#fff;text-decoration:none}
+.topo h1{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(40px,7vw,88px);line-height:.9;margin:14px 0 0;text-wrap:balance}
+.topo h1 span{color:var(--mark)}
+.topo .lede{font-size:clamp(16px,1.8vw,20px);line-height:1.45;max-width:60ch;margin:16px 0 0;color:#dfe2ee}
+.secoes{background:var(--red);color:#fff}
+.secoes .wrap{display:flex;gap:6px 22px;flex-wrap:wrap;padding-block:11px}
+.secoes a{color:#fff;font-weight:700;font-size:15px;text-decoration:none;border-bottom:2px solid transparent}
+.secoes a:hover{border-color:#fff}
+
+section{padding-block:40px 10px}
+h2{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(30px,4.4vw,48px);line-height:.95;margin:0 0 8px;text-wrap:balance}
+h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:24px;line-height:1;margin:0;letter-spacing:.01em}
+.intro{max-width:70ch;color:var(--ink-2);margin:0 0 18px}
+.rot{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3)}
+
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 16px}
+.chip{border:1px solid var(--line);background:var(--sheet);border-radius:999px;padding:5px 13px;font-size:14px;font-weight:600;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--sheet);border-color:var(--ink)}
+
+.grupos{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:0 0 22px}
+@media (max-width:980px){.grupos{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:560px){.grupos{grid-template-columns:1fr}}
+.gt{background:var(--sheet);border:1px solid var(--line);border-top:5px solid var(--cor);border-radius:6px;padding:12px 14px;min-width:0}
+.gt b{display:block;font-size:15px}
+.gt .partidos{font-size:12px;color:var(--ink-3);min-height:18px}
+.gt .grande{font-family:var(--display);font-weight:900;font-size:30px;line-height:1.1;margin-top:6px}
+.gt dl{margin:6px 0 0;display:grid;grid-template-columns:auto auto;justify-content:space-between;gap:2px 10px;font-size:13px;color:var(--ink-2)}
+.gt dd{margin:0;text-align:right;font-weight:600;color:var(--ink)}
+
+.painel{background:var(--sheet);border:1px solid var(--line);border-radius:8px;padding:18px 18px 12px}
+.legenda{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--ink-2);margin:0 0 6px}
+.legenda span{display:inline-flex;align-items:center;gap:6px}
+.legenda i{width:11px;height:11px;border-radius:50%;background:var(--cor);display:inline-block}
+.grafico{overflow-x:auto}
+.grafico svg{display:block;width:100%;min-width:560px}
+.grafico text{fill:var(--ink-2);font:13px var(--text)}
+.grafico .eixo{stroke:var(--line)}
+.nota{font-size:13px;color:var(--ink-3);margin:10px 0 0;max-width:80ch}
+
+.temas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:860px){.temas{grid-template-columns:1fr}}
+.temas > .tema:last-child:nth-child(odd){grid-column:1/-1}
+#temasSaude{grid-template-columns:1fr}
+#temasSaude .barras{max-width:760px}
+.tema{background:var(--sheet);border:1px solid var(--line);border-radius:8px;padding:16px 18px;min-width:0;display:flex;flex-direction:column;gap:10px}
+.tema .cab{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.tema p{margin:0;font-size:14px;color:var(--ink-2)}
+.pauta{font-size:12px;font-weight:700;border-radius:4px;padding:2px 7px;background:var(--paper);color:var(--ink-2);white-space:nowrap}
+.barras{display:grid;grid-template-columns:minmax(0,9.5em) minmax(0,1fr) auto;gap:5px 10px;align-items:center;font-size:13px}
+.barras .b{height:14px;border-radius:3px;background:var(--cor);min-width:2px}
+.barras .v{font-weight:600;text-align:right}
+.sub{font-size:13px;color:var(--ink-3)}
+.lista{list-style:none;margin:0;padding:0;display:grid;gap:4px;font-size:14px}
+.lista li{display:flex;justify-content:space-between;gap:10px;min-width:0}
+.lista li span:first-child{min-width:0;overflow-wrap:anywhere}
+.lista li > .num{white-space:nowrap}
+.lista button{border:0;background:none;padding:0;color:var(--red);font-weight:600;cursor:pointer;text-align:left}
+.ex{border-top:1px solid var(--line);padding-top:8px;display:grid;gap:6px}
+.ex div{font-size:13px;color:var(--ink-2)}
+.ex b{color:var(--ink)}
+.divisor{margin:28px 0 12px}
+
+.busca{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 14px}
+.busca input,.busca select{border:1px solid var(--line);border-radius:6px;padding:9px 11px;background:var(--sheet);min-height:42px;max-width:100%}
+.busca input{flex:1 1 280px}
+.duas{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:860px){.duas{grid-template-columns:1fr}}
+.ranking{background:var(--sheet);border:1px solid var(--line);border-radius:8px;max-height:640px;overflow:auto}
+.ranking button{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:center;width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);background:none;padding:9px 12px;cursor:pointer;font-size:14px}
+.ranking button[aria-current="true"]{background:var(--paper)}
+.ranking .pt{width:9px;height:9px;border-radius:50%;background:var(--cor)}
+.ranking small{display:block;color:var(--ink-3);font-size:12px}
+.perfil{background:var(--sheet);border:1px solid var(--line);border-top:6px solid var(--cor);border-radius:8px;padding:18px;min-width:0}
+.perfil .nome{font-family:var(--display);font-weight:900;font-size:clamp(30px,4vw,42px);line-height:1;text-transform:uppercase;margin:0}
+.perfil .meta{color:var(--ink-2);margin:6px 0 0;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.selo{font-size:12px;font-weight:700;border-radius:4px;padding:2px 8px;background:var(--cor);color:#fff}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:16px 0}
+@media (max-width:560px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.kpi{border:1px solid var(--line);border-radius:6px;padding:9px 11px}
+.kpi b{display:block;font-family:var(--display);font-size:26px;line-height:1.1}
+.kpi span{font-size:12px;color:var(--ink-3)}
+.blocos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+@media (max-width:700px){.blocos{grid-template-columns:1fr}}
+.blocos > div{min-width:0}
+.blocos h4{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);margin:0 0 8px}
+.temas-p{display:flex;flex-wrap:wrap;gap:6px}
+.temas-p span{font-size:13px;border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+.temas-p span b{font-weight:700}
+.link-obs{display:inline-block;margin-top:16px;font-weight:700}
+.metodo{padding-block:30px 60px}
+.metodo ul{max-width:85ch;color:var(--ink-2);font-size:14px;padding-left:20px}
+.metodo li{margin:6px 0}
+.carregando{padding:30px 0;color:var(--ink-2)}
+@media (prefers-reduced-motion: no-preference){.barras .b{transition:width .3s ease}}
+</style>
+</head>
+<body>
+<header class="topo"><div class="wrap">
+  <a class="marca" href="./">Os exterminadores do futuro</a>
+  <h1>Emendas da <span>direita</span></h1>
+  <p class="lede">Para onde deputados e senadores da direita e da extrema-direita mandam o dinheiro das emendas individuais ao Orçamento. Valores empenhados de 2023 a 2026, com os dados do Portal da Transparência.</p>
+</div></header>
+<nav class="secoes" aria-label="Seções"><div class="wrap">
+  <a href="#perfil-gasto">Para onde vai o dinheiro</a><a href="#pautas">Por área</a><a href="#parlamentares">Por parlamentar</a><a href="#metodo">Como foi feito</a>
+</div></nav>
+
+<main>
+<section id="perfil-gasto"><div class="wrap">
+  <h2>Para onde vai o dinheiro</h2>
+  <p class="intro">A saúde recebe a maior parte das emendas em todos os campos, porque a lei obriga a destinar ao menos metade delas à área. A diferença aparece no restante. O gráfico mostra como cada grupo divide o dinheiro com finalidade definida, sem a saúde e sem as emendas Pix.</p>
+  <div class="chips" id="anos" role="group" aria-label="Ano da emenda"></div>
+  <div class="grupos" id="grupos"></div>
+  <div class="painel">
+    <div class="legenda" id="legenda"></div>
+    <div class="grafico" id="grafico"></div>
+    <p class="nota">Porcentagem do valor empenhado em emendas individuais com finalidade definida, excluída a saúde. As emendas Pix (transferências especiais) caem na conta de estados e municípios sem finalidade registrada e aparecem só nos quadros acima.</p>
+  </div>
+</div></section>
+
+<section id="pautas"><div class="wrap">
+  <h2>Emendas por área</h2>
+  <p class="intro">Todas as emendas individuais, divididas em onze áreas, das transferências Pix às áreas ligadas às pautas que o observatório acompanha. As barras mostram a média por parlamentar de cada grupo, para comparar grupos de tamanhos diferentes.</p>
+  <div class="temas" id="temas"></div>
+</div></section>
+
+<section id="parlamentares"><div class="wrap">
+  <h2>Por parlamentar</h2>
+  <p class="intro">Escolha um deputado ou senador para ver quanto destinou, para quais áreas, municípios e entidades, e os convênios assinados com o dinheiro das suas emendas.</p>
+  <div class="busca">
+    <input id="busca" list="nomes" placeholder="Nome do parlamentar" aria-label="Buscar parlamentar" autocomplete="off">
+    <datalist id="nomes"></datalist>
+    <select id="fGrupo" aria-label="Grupo"></select>
+    <select id="fOrdem" aria-label="Ordenar">
+      <option value="emp">Maior valor total</option>
+      <option value="pix">Maior parcela em emendas Pix</option>
+      <option value="saude">Mais em saúde</option>
+      <option value="educacao">Mais em educação</option>
+      <option value="assistencia">Mais em assistência social</option>
+      <option value="urbanismo">Mais em urbanismo</option>
+      <option value="agricultura">Mais em agricultura</option>
+      <option value="esporte">Mais em esporte e lazer</option>
+      <option value="seguranca">Mais em segurança e defesa</option>
+      <option value="cultura">Mais em cultura</option>
+      <option value="direitos">Mais em direitos da cidadania</option>
+    </select>
+  </div>
+  <div class="duas">
+    <div class="ranking" id="ranking" aria-label="Lista de parlamentares"></div>
+    <div id="perfil"><p class="carregando">Carregando os dados das emendas…</p></div>
+  </div>
+</div></section>
+
+<section class="metodo" id="metodo"><div class="wrap">
+  <h2>Como foi feito</h2>
+  <ul id="metodoLista">
+    <li>Fonte. Arquivos de emendas parlamentares do Portal da Transparência (emendas, pagamentos por favorecido e convênios). Entram só as emendas individuais de 2023 a 2026. As de bancada, de comissão e de relator não têm autor individual e ficam de fora. O ano de 2026 ainda está em execução.</li>
+    <li>Grupos. Extrema-direita reúne PL e Novo. Direita reúne PP, União Brasil, Republicanos, Podemos e PSD. Alinhados reúne MDB, PDT, Rede e PSB. Esquerda reúne PT, PSOL e PCdoB. Outros partidos reúne PSDB, Avante, PV, Solidariedade, Cidadania, PRD, Missão e parlamentares sem partido. Os grupos são definidos pelo partido, e o partido considerado é o mais recente de cada parlamentar.</li>
+    <li>Valores. Os quadros e as áreas usam o valor empenhado, que é o compromisso de gasto. O perfil de cada parlamentar mostra também o valor pago, somando os restos a pagar quitados.</li>
+    <li>Áreas. Seguem a função orçamentária de cada emenda. Segurança e defesa soma as funções segurança pública e defesa nacional. Transferências especiais (Pix) reúne as emendas sem finalidade definida, qualquer que seja a área em que o dinheiro venha a ser gasto.</li>
+    <li>Médias. A média por parlamentar divide o valor do grupo pelo número de parlamentares do grupo com emendas no período. Senadores têm cota de emendas maior que a de deputados, o que pesa nas médias de grupos com mais senadores.</li>
+    <li>Destinos. Os municípios que mais receberam vêm dos pagamentos por favorecido, sem contar a Caixa e os órgãos federais que apenas intermediam os repasses.</li>
+    <li>Autoria. Os autores foram ligados aos parlamentares do observatório pelo nome. A ligação cobre <span id="cobertura">91%</span> do valor. O restante é, sobretudo, de ex-parlamentares com emendas de 2023.</li>
+  </ul>
+</div></section>
+</main>
+
+<script>
+'use strict';
+const NOME_PAUTA = { punitivismo: 'Punitivismo e militarização', drogas: 'Política de drogas', privilegios: 'Privilégios econômicos', religiao: 'Religião e Estado', igualdade: 'Igualdade e direitos' };
+const NOME_PARTIDO = { PSB: 'PSB', PDT: 'PDT', MDB: 'MDB', PSOL: 'PSOL', PT: 'PT', PSD: 'PSD', PP: 'PP', PL: 'PL', PSDB: 'PSDB', PV: 'PV', PRD: 'PRD', PODE: 'Podemos', UNIAO: 'União Brasil', REPUBLICANOS: 'Republicanos', SOLIDARIEDADE: 'Solidariedade', CIDADANIA: 'Cidadania', AVANTE: 'Avante', NOVO: 'Novo', REDE: 'Rede', PCDOB: 'PCdoB', SP: 'Sem partido', OUTROS: 'Outros' };
+const $ = s => document.querySelector(s);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const norm = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+const cor = g => `var(--g-${g})`;
+const partido = p => NOME_PARTIDO[p.p] || p.s || p.p || '';
+const casa = c => c === 'S' ? 'Senado' : 'Câmara';
+function reais(v) {
+  const a = Math.abs(v);
+  const f = (x, d) => x.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d });
+  if (a >= 1e9) return 'R$ ' + f(v / 1e9, 1) + ' bi';
+  if (a >= 1e6) return 'R$ ' + f(v / 1e6, a >= 1e8 ? 0 : 1) + ' mi';
+  if (a >= 1e3) return 'R$ ' + f(v / 1e3, 0) + ' mil';
+  return 'R$ ' + f(v, 0);
+}
+const pct = (v, d = 1) => (v * 100).toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d }) + '%';
+let D, ano = 'todos', atual = null;
+
+// ------------------------------------------------ 1. perfil de gasto
+function desenharAnos() {
+  const anos = [['todos', '2023 a 2026'], ['2023', '2023'], ['2024', '2024'], ['2025', '2025'], ['2026', '2026 (parcial)']];
+  $('#anos').innerHTML = anos.map(([v, t]) => `<button type="button" class="chip" data-ano="${v}" aria-pressed="${v === ano}">${t}</button>`).join('');
+}
+function desenharGrupos() {
+  const P = D.perfil[ano];
+  $('#grupos').innerHTML = D.ordem.map(g => {
+    const x = P[g], G = D.grupos[g];
+    const partidos = G.partidos.length ? G.partidos.map(p => NOME_PARTIDO[p] || p).join(', ') : 'PSDB, Avante, PV, Solidariedade, Cidadania, PRD, Missão e sem partido';
+    return `<div class="gt" style="--cor:${cor(g)}"><b>${esc(G.nome)}</b><div class="partidos">${esc(partidos)}</div>
+      <div class="grande num">${reais(x.total)}</div>
+      <dl class="num"><dt>Parlamentares</dt><dd>${x.n}</dd><dt>Por parlamentar</dt><dd>${x.n ? reais(x.total / x.n) : '—'}</dd>
+      <dt>Emendas Pix</dt><dd>${x.total ? pct(x.pix / x.total, 0) : '—'}</dd><dt>Saúde</dt><dd>${x.total ? pct(x.saude / x.total, 0) : '—'}</dd></dl></div>`;
+  }).join('');
+  $('#legenda').innerHTML = D.ordem.map(g => `<span style="--cor:${cor(g)}"><i></i>${esc(D.grupos[g].nome)}</span>`).join('');
+}
+function desenharGrafico() {
+  const P = D.perfil[ano];
+  const tot = {}; const somaG = {};
+  for (const g of D.ordem) { somaG[g] = Object.values(P[g].funcoes).reduce((a, b) => a + b, 0); for (const [f, v] of Object.entries(P[g].funcoes)) tot[f] = (tot[f] || 0) + v; }
+  const funcoes = Object.entries(tot).filter(([f]) => f !== 'Encargos especiais').sort((a, b) => b[1] - a[1]).slice(0, 11).map(([f]) => f);
+  const linhas = funcoes.map(f => ({ f, v: Object.fromEntries(D.ordem.map(g => [g, somaG[g] ? (P[g].funcoes[f] || 0) / somaG[g] : 0])) }));
+  const max = Math.max(0.05, ...linhas.flatMap(l => Object.values(l.v)));
+  const passo = max > 0.3 ? 0.1 : max > 0.15 ? 0.05 : 0.025;
+  const topo = Math.ceil(max / passo) * passo;
+  const W = 900, esq = 210, dir = 24, h = 34, cab = 26, H = cab + linhas.length * h + 8;
+  const x = v => esq + (W - esq - dir) * v / topo;
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Divisão das emendas por área, por grupo">`;
+  for (let t = 0; t <= topo + 1e-9; t += passo) s += `<line class="eixo" x1="${x(t)}" x2="${x(t)}" y1="${cab - 6}" y2="${H - 4}"/><text x="${x(t)}" y="${cab - 12}" text-anchor="middle">${pct(t, 0)}</text>`;
+  linhas.forEach((l, i) => {
+    const y = cab + i * h + h / 2;
+    const vs = D.ordem.map(g => l.v[g]);
+    s += `<text x="${esq - 12}" y="${y + 4}" text-anchor="end">${esc(l.f)}</text>`;
+    s += `<line class="eixo" x1="${x(Math.min(...vs))}" x2="${x(Math.max(...vs))}" y1="${y}" y2="${y}" stroke-width="3"/>`;
+    D.ordem.forEach(g => { s += `<circle cx="${x(l.v[g])}" cy="${y}" r="7" fill="${cor(g)}" stroke="var(--sheet)" stroke-width="2"><title>${esc(D.grupos[g].nome)}, ${esc(l.f)}: ${pct(l.v[g])}</title></circle>`; });
+  });
+  $('#grafico').innerHTML = s + '</svg>';
+}
+
+// ------------------------------------------------ 2. pautas
+function cartaoTema(t) {
+  const max = Math.max(...D.ordem.map(g => t.media[g]), 1);
+  const barras = D.ordem.map(g => `<span>${esc(D.grupos[g].nome)}</span><span class="b" style="--cor:${cor(g)};width:${100 * t.media[g] / max}%"></span><span class="v num">${reais(t.media[g])}</span>`).join('');
+  const soma = D.ordem.reduce((a, g) => a + t.total[g], 0);
+  const direita = t.total.extrema + t.total.direita;
+  const top = t.top.slice(0, 3).map(p => `<li><span><button type="button" data-k="${esc(p.k)}">${esc(p.n)}</button> <span class="sub">${esc(partido(p))}/${esc(p.uf || '')}</span></span><span class="num">${reais(p.v)}</span></li>`).join('');
+  const ex = (t.exemplos || []).slice(0, 2).map(e => { const p = D.parl[e.k]; return `<div><b>${reais(e.v)}</b> · ${esc(e.obj)}${e.loc ? ` <span class="sub">(${esc(e.loc)})</span>` : ''}${p ? ` <span class="sub">— ${esc(p.n)}</span>` : ''}</div>`; }).join('');
+  return `<article class="tema">
+    <div class="cab"><h3>${esc(t.nome)}</h3>${t.pauta && NOME_PAUTA[t.pauta] ? `<span class="pauta">Pauta: ${esc(NOME_PAUTA[t.pauta])}</span>` : ''}</div>
+    <p>${esc(t.desc)}</p>
+    <div class="rot">Média por parlamentar${t.medida === 'recebido' ? ', valor recebido' : ''}</div>
+    <div class="barras">${barras}</div>
+    <div class="sub">Total ${reais(soma)}, dos quais ${soma ? pct(direita / soma, 0) : '—'} vindos da direita e da extrema-direita.</div>
+    <div><div class="rot">Quem mais destinou</div><ul class="lista">${top}</ul></div>
+    ${ex ? `<div class="ex"><div class="rot">${t.id === 'pix' ? 'Maiores repasses' : 'Exemplos de convênios'}</div>${ex}</div>` : ''}
+  </article>`;
+}
+function desenharTemas() {
+    $('#temas').innerHTML = D.temas.map(cartaoTema).join('');
+}
+
+// ------------------------------------------------ 3. parlamentares
+const lista = () => Object.values(D.parl);
+function chaveOrdem(p, o) { if (o === 'emp') return p.emp; if (o === 'pix') return p.emp ? p.pix / p.emp : 0; return (p.temas || {})[o] || 0; }
+function desenharRanking() {
+  const g = $('#fGrupo').value, o = $('#fOrdem').value, q = norm($('#busca').value);
+  let ps = lista().filter(p => (!g || p.g === g) && (!q || norm(p.n).includes(q)));
+  ps.sort((a, b) => chaveOrdem(b, o) - chaveOrdem(a, o));
+  ps = ps.slice(0, 60);
+  $('#ranking').innerHTML = ps.map(p => `<button type="button" data-k="${esc(p.k)}" aria-current="${atual === p.k}" style="--cor:${cor(p.g)}"><span class="pt"></span>
+    <span>${esc(p.n)}<small>${esc(partido(p))}/${esc(p.uf || '')} · ${casa(p.c)}</small></span>
+    <span class="num">${o === 'pix' ? pct(chaveOrdem(p, o), 0) : reais(chaveOrdem(p, o))}</span></button>`).join('') || '<p class="carregando" style="padding:12px">Nenhum parlamentar encontrado.</p>';
+}
+function linhas(arr, fmt) { return arr.map(fmt).join(''); }
+function desenharPerfil(k) {
+  const p = D.parl[k]; if (!p) return;
+  atual = k;
+  const T = Object.fromEntries(D.temas.map(t => [t.id, t.nome]));
+  const fs = p.pix ? [...p.funcoes, ['Emendas Pix', p.pix]].sort((a, b) => b[1] - a[1]) : p.funcoes;
+  const maxF = Math.max(...fs.map(f => f[1]), 1);
+  const funcoes = fs.slice(0, 8).map(([f, v]) => `<span>${esc(f)}</span><span class="b" style="--cor:${cor(p.g)};width:${100 * v / maxF}%"></span><span class="v num">${reais(v)}</span>`).join('');
+  const temas = Object.entries(p.temas || {}).sort((a, b) => b[1] - a[1]).map(([t, v]) => `<span>${esc(T[t] || t)} <b class="num">${reais(v)}</b></span>`).join('');
+  $('#perfil').innerHTML = `<article class="perfil" style="--cor:${cor(p.g)}">
+    <h3 class="nome">${esc(p.n)}</h3>
+    <p class="meta"><span class="selo">${esc(D.grupos[p.g].nome)}</span><span>${esc(partido(p))}/${esc(p.uf || '')} · ${casa(p.c)}</span></p>
+    <div class="kpis">
+      <div class="kpi"><b class="num">${reais(p.emp)}</b><span>empenhado, 2023 a 2026</span></div>
+      <div class="kpi"><b class="num">${reais(p.pago)}</b><span>já pago</span></div>
+      <div class="kpi"><b class="num">${p.emp ? pct(p.pix / p.emp, 0) : '—'}</b><span>em emendas Pix</span></div>
+      <div class="kpi"><b class="num">${p.nmun || 0}</b><span>municípios beneficiados</span></div>
+    </div>
+    ${temas ? `<h4 class="rot" style="margin:0 0 8px">Áreas ligadas às pautas</h4><div class="temas-p">${temas}</div>` : ''}
+    <div class="blocos" style="margin-top:16px">
+      <div><h4>Por área</h4><div class="barras">${funcoes}</div></div>
+      <div><h4>Municípios que mais receberam</h4><ul class="lista">${linhas(p.munis.slice(0, 8), ([m, v]) => `<li><span>${esc(m)}</span><span class="num">${reais(v)}</span></li>`)}</ul></div>
+      <div><h4>Entidades e empresas que mais receberam</h4>${p.favs.length ? `<ul class="lista">${linhas(p.favs, ([f, nj, v]) => `<li><span>${esc(f)} <span class="sub">${esc(nj)}</span></span><span class="num">${reais(v)}</span></li>`)}</ul>` : '<p class="sub">Nenhum pagamento a entidade privada registrado.</p>'}</div>
+      <div><h4>Convênios assinados</h4>${p.objs.length ? `<ul class="lista">${linhas(p.objs, ([o, v, l]) => `<li><span>${esc(o)} <span class="sub">${esc(l)}</span></span><span class="num">${reais(v)}</span></li>`)}</ul>` : '<p class="sub">Nenhum convênio ligado às emendas deste parlamentar no período.</p>'}</div>
+    </div>
+    <a class="link-obs" href="./?parlamentar=${encodeURIComponent(p.k)}">Ver votos e projetos no observatório</a>
+  </article>`;
+  desenharRanking();
+}
+function abrir(k) { desenharPerfil(k); document.getElementById('parlamentares').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); }
+
+// ------------------------------------------------ início
+document.addEventListener('click', e => {
+  const a = e.target.closest('[data-ano]'); if (a) { ano = a.dataset.ano; desenharAnos(); desenharGrupos(); desenharGrafico(); return; }
+  const r = e.target.closest('#ranking [data-k]'); if (r) { desenharPerfil(r.dataset.k); return; }
+  const t = e.target.closest('.tema [data-k]'); if (t) { abrir(t.dataset.k); }
+});
+['#fGrupo', '#fOrdem'].forEach(s => $(s).addEventListener('change', desenharRanking));
+$('#busca').addEventListener('input', () => {
+  const q = norm($('#busca').value);
+  const exato = lista().find(p => norm(p.n) === q);
+  if (exato) desenharPerfil(exato.k); else desenharRanking();
+});
+fetch('dados/emendas.json').then(r => { if (!r.ok) throw new Error('arquivo de emendas indisponível'); return r.json(); }).then(d => {
+  D = d;
+  $('#fGrupo').innerHTML = '<option value="">Todos os grupos</option>' + D.ordem.map(g => `<option value="${g}">${esc(D.grupos[g].nome)}</option>`).join('');
+  $('#fGrupo').value = 'extrema';
+  $('#nomes').innerHTML = lista().map(p => `<option value="${esc(p.n)}">`).join('');
+  $('#cobertura').textContent = pct(1 - D.cobertura.sem_vinculo / D.cobertura.total, 0);
+  desenharAnos(); desenharGrupos(); desenharGrafico(); desenharTemas();
+  const primeiro = lista().filter(p => p.g === 'extrema').sort((a, b) => b.emp - a.emp)[0];
+  desenharPerfil(primeiro.k);
+}).catch(e => { $('#perfil').innerHTML = `<p class="carregando">Não foi possível carregar as emendas (${esc(e.message)}).</p>`; });
+</script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0442ff160c604457a59372125331648a"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
