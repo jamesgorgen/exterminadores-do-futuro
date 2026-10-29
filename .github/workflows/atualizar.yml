@@ -15,6 +15,10 @@ on:
         options:
           - diario
           - completo
+      inicio:
+        description: 'Data inicial da coleta completa, AAAA-MM-DD (em branco = 2023-02-01). Use uma data recente para um teste rápido.'
+        required: false
+        default: ''
 
 permissions:
   contents: write
@@ -41,6 +45,7 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           MODO: ${{ inputs.modo || 'diario' }}
+          INICIO: ${{ inputs.inicio || '2023-02-01' }}
           NODE_OPTIONS: --max-old-space-size=6144
 
       - name: Gravar os dados no repositório
