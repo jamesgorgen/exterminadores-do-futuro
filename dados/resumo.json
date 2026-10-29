@@ -1,8 +1,8 @@
 {
- "gerado": "2026-10-29T13:14:59.773Z",
+ "gerado": "2026-10-29T14:24:46.905Z",
  "inicio": "2023-02-01",
  "totais": {
-  "proposicoes": 26228,
+  "proposicoes": 26230,
   "direita": 2487,
   "extrema": 1050,
   "votacoes": 2425,
@@ -86,8 +86,8 @@
    "derrotas": 0
   },
   "trabalho": {
-   "prop": 89,
-   "extrema": 16,
+   "prop": 90,
+   "extrema": 17,
    "prop30": 1,
    "vot": 22,
    "vitorias": 20,
