@@ -1,10 +1,10 @@
 {
- "gerado": "2026-10-29T12:05:10.716Z",
+ "gerado": "2026-10-29T12:12:28.085Z",
  "inicio": "2023-02-01",
  "totais": {
-  "proposicoes": 26223,
+  "proposicoes": 26227,
   "direita": 2494,
-  "extrema": 1003,
+  "extrema": 1004,
   "votacoes": 2425,
   "disputadas": 640,
   "vitorias": 352,
@@ -23,7 +23,7 @@
   },
   "punitivismo": {
    "prop": 1210,
-   "extrema": 408,
+   "extrema": 409,
    "prop30": 7,
    "vot": 17,
    "vitorias": 13,
@@ -70,7 +70,7 @@
    "derrotas": 3
   },
   "povos": {
-   "prop": 105,
+   "prop": 104,
    "extrema": 79,
    "prop30": 1,
    "vot": 25,
