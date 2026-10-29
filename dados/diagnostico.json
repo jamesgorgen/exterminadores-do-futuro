@@ -1,5 +1,5 @@
 {
- "inicio": "2026-10-29T04:04:17.713Z",
+ "inicio": "2026-10-29T04:06:53.315Z",
  "modo": "completo",
  "amostras": {
   "camara_deputado": {
@@ -14,145 +14,178 @@
    "email": null
   },
   "camara_arq_votacao": {
-   "id": "2585316-23",
-   "uri": "https://dadosabertos.camara.leg.br/api/v2/votacoes/2585316-23",
-   "data": "2026-02-02",
-   "dataHoraRegistro": "2026-02-02T14:38:11",
-   "idOrgao": 186,
-   "uriOrgao": "https://dadosabertos.camara.leg.br/api/v2/orgaos/186",
-   "siglaOrgao": "CCP",
-   "idEvento": 0,
-   "uriEvento": "",
+   "id": "2345501-28",
+   "uri": "https://dadosabertos.camara.leg.br/api/v2/votacoes/2345501-28",
+   "data": "2023-01-09",
+   "dataHoraRegistro": "2023-01-09T21:22:54",
+   "idOrgao": 180,
+   "uriOrgao": "https://dadosabertos.camara.leg.br/api/v2/orgaos/180",
+   "siglaOrgao": "PLEN",
+   "idEvento": 67053,
+   "uriEvento": "https://dadosabertos.camara.leg.br/api/v2/eventos/67053",
    "aprovacao": 1,
    "votosSim": 0,
    "votosNao": 0,
    "votosOutros": 0,
-   "descricao": "Realizar o encaminhamento do PL-5874/2025 à CCJC (tramitação simultânea), em razão da aprovação de requerimento de urgência.",
-   "ultimaAberturaVotacao": "{\"dataHoraRegistro\":\"\",\"descricao\":\"\"}",
-   "ultimaApresentacaoProposicao": "{\"dataHoraRegistro\":\"\",\"descricao\":\"\",\"idProposicao\":0,\"uriProposicao\":\"\"}"
+   "descricao": "Aprovada a Redação Final assinada pelo Relator, Dep. Rubens Pereira Junior (PT-MA).",
+   "ultimaAberturaVotacao": "{\"dataHoraRegistro\":\"2023-01-09T21:22:42\",\"descricao\":\"Votação da Redação Final.\"}",
+   "ultimaApresentacaoProposicao": "{\"dataHoraRegistro\":\"2023-01-09T21:00:20\",\"descricao\":\"Parecer proferido em Plenário pelo Relator, Dep. Rubens Pereira Junior (PT-MA), pela Comissão de Constituição e Justiça e de Cidadania, que conclui pela constitucionalidade, juridicidade e boa técnica legislativa e, no mérito, pela aprovação do "
   },
   "camara_arq_voto": {
-   "idVotacao": "1228863-102",
-   "uriVotacao": "https://dadosabertos.camara.leg.br/api/v2/votacoes/1228863-102",
-   "dataHoraVoto": "2026-06-10T14:46:15",
-   "voto": "Não",
-   "deputado_": "{\"id\":\"204501\",\"uri\":\"https://dadosabertos.camara.leg.br/api/v2/deputados/204501\",\"nome\":\"Alencar Santana\",\"siglaPartido\":\"PT\",\"uriPartido\":\"https://dadosabertos.camara.leg.br/api/v2/partidos/36844\",\"siglaUf\":\"SP\",\"idLegislatura\":\"57\",\"urlFoto\":\"https://www.camara.leg.br/internet/deputado/bandep/204"
+   "idVotacao": "1197773-90",
+   "uriVotacao": "https://dadosabertos.camara.leg.br/api/v2/votacoes/1197773-90",
+   "dataHoraVoto": "2023-08-09T19:27:16",
+   "voto": "Sim",
+   "deputado_": "{\"id\":\"220714\",\"uri\":\"https://dadosabertos.camara.leg.br/api/v2/deputados/220714\",\"nome\":\"Adail Filho\",\"siglaPartido\":\"REPUBLICANOS\",\"uriPartido\":\"https://dadosabertos.camara.leg.br/api/v2/partidos/37908\",\"siglaUf\":\"AM\",\"idLegislatura\":\"57\",\"urlFoto\":\"https://www.camara.leg.br/internet/deputado/band"
   },
   "camara_arq_orientacao": {
-   "idVotacao": "2236186-60",
-   "uriVotacao": "https://dadosabertos.camara.leg.br/api/v2/votacoes/2236186-60",
+   "idVotacao": "2374400-121",
+   "uriVotacao": "https://dadosabertos.camara.leg.br/api/v2/votacoes/2374400-121",
    "siglaOrgao": "PLEN",
-   "descricao": "Rejeitada a Subemenda Substitutiva ao Projeto de Lei Complementar nº 281, de 2019, adotada pelo relator da Comissão Especial. Sim: 252; Não: 176; Total: 428.",
-   "siglaBancada": "Minoria",
+   "descricao": "Rejeitada a Emenda do Senado Federal nº 3. Sim: 120; não: 261; abstenção: 1; total: 382.",
+   "siglaBancada": "Governo",
    "uriBancada": "",
-   "orientacao": ""
+   "orientacao": "Não"
   },
   "camara_arq_objeto": {
-   "idVotacao": "2555417-29",
-   "uriVotacao": "https://dadosabertos.camara.leg.br/api/v2/votacoes/2555417-29",
-   "data": "2026-02-02",
-   "descricao": "Aprovada a Medida Provisória nº 1.312, de 2025.",
-   "proposicao_": "{\"id\":2592069,\"uri\":\"https://dadosabertos.camara.leg.br/api/v2/proposicoes/2592069\",\"ementa\":\"Recebido PARECER (CN) Nº 25, DE 2025, da COMISSÃO MISTA DE PLANOS, ORÇAMENTOS PÚBLICOS E FISCALIZAÇÃO, sobre a Medida Provisória n° 1312, de 2025, que Abre crédito extraordinário, em favor do Ministério da "
+   "idVotacao": "2345501-28",
+   "uriVotacao": "https://dadosabertos.camara.leg.br/api/v2/votacoes/2345501-28",
+   "data": "2023-01-09",
+   "descricao": "Aprovada a Redação Final assinada pelo Relator, Dep. Rubens Pereira Junior (PT-MA).",
+   "proposicao_": "{\"id\":2345502,\"uri\":\"https://dadosabertos.camara.leg.br/api/v2/proposicoes/2345502\",\"ementa\":\"Requer, nos termos do artigo 155 do Regimento Interno, tramitação sob o regime urgência da Mensagem nº 14, de 2023.\",\"codTipo\":392,\"siglaTipo\":\"REQ\",\"numero\":1,\"ano\":2023,\"titulo\":\"REQ 1/2023\"}"
   },
   "senado_votacao": {
-   "ano": 2019,
+   "ano": 2023,
    "casaSessao": "SF",
-   "codigoMateria": 174386,
-   "codigoSessao": 591267,
-   "codigoSessaoLegislativa": 874,
-   "codigoSessaoVotacao": 7106,
-   "dataApresentacao": "2026-05-28",
-   "dataSessao": "2026-10-14",
-   "descricaoVotacao": "Votação nominal da Proposta de Emenda à Constituição nº 221, de 2019, em primeiro turno.",
-   "ementa": "Altera o art. 7º da Constituição Federal para reduzir a duração máxima semanal do trabalho e prever 2 (dois) dias de repouso semanal remunerado, sem qualquer redução salarial; e dá outras providências.",
-   "idProcesso": 9056435,
-   "identificacao": "PEC 221/2019",
-   "informeLegislativo": "{\"casaColegiado\":\"SF\",\"casaEnteAdm\":\"SF\",\"codigoColegiado\":1998,\"data\":\"2026-10-14\",\"id\":2319636,\"idEnteAdm\":13594,\"idEvento\":11392905,\"nomeColegiado\":\"Plenário do Senado Federal\",\"nomeEnteAdm\":\"Secretaria de Atas e Diários\",\"numeroAutuacao\":1,\"siglaColegiado\":\"PLEN\",\"siglaEnteAdm\":\"SEADI\",\"texto\":\"",
-   "numero": "221",
-   "numeroSessao": 134,
+   "codigoMateria": 155773,
+   "codigoSessao": 320695,
+   "codigoSessaoLegislativa": 868,
+   "codigoSessaoVotacao": 6674,
+   "dataApresentacao": "2023-02-03",
+   "dataSessao": "2023-02-08",
+   "descricaoVotacao": "Votação nominal do Projeto de Decreto Legislativo nº 2, de 2023.",
+   "ementa": "Escolhe o Senhor Johnathan Pereira de Jesus para o cargo de Ministro do Tribunal de Contas da União, nos termos do inciso II do § 2º do art. 73 da Constituição Federal.",
+   "idProcesso": 8361684,
+   "identificacao": "PDL 2/2023",
+   "informeLegislativo": "{\"casaColegiado\":\"SF\",\"casaEnteAdm\":\"SF\",\"codigoColegiado\":1998,\"data\":\"2023-02-08\",\"id\":2117980,\"idEnteAdm\":13594,\"idEvento\":10407331,\"nomeColegiado\":\"Plenário do Senado Federal\",\"nomeEnteAdm\":\"Secretaria de Atas e Diários\",\"numeroAutuacao\":1,\"siglaColegiado\":\"PLEN\",\"siglaEnteAdm\":\"SEADI\",\"texto\":\"",
+   "numero": "2",
+   "numeroSessao": 1,
    "resultadoVotacao": "A",
    "sequencialSessao": 1,
-   "sequencialVotacao": 4420,
-   "sigla": "PEC",
+   "sequencialVotacao": 3995,
+   "sigla": "PDL",
    "siglaTipoSessao": "DOR",
-   "totalVotosAbstencao": null,
-   "totalVotosNao": null,
-   "totalVotosSim": null,
-   "votacaoSecreta": "N",
-   "votos": "[81] {\"codigoParlamentar\":5672,\"descricaoVotoParlamentar\":null,\"nomeParlamentar\":\"Alan Rick\",\"sexoParlamentar\":\"M\",\"siglaPartidoParlamentar\":\"REPUBLICANOS\",\"siglaUFParlamentar\":\"AC\",\"siglaVotoParlamentar\":\"Sim\"}"
+   "totalVotosAbstencao": 1,
+   "totalVotosNao": 2,
+   "totalVotosSim": 72,
+   "votacaoSecreta": "S",
+   "votos": "[81] {\"codigoParlamentar\":5672,\"descricaoVotoParlamentar\":null,\"nomeParlamentar\":\"Alan Rick\",\"sexoParlamentar\":\"M\",\"siglaPartidoParlamentar\":\"UNIÃO\",\"siglaUFParlamentar\":\"AC\",\"siglaVotoParlamentar\":\"Votou\"}"
   },
   "senado_voto": {
    "codigoParlamentar": 5672,
    "descricaoVotoParlamentar": null,
    "nomeParlamentar": "Alan Rick",
    "sexoParlamentar": "M",
-   "siglaPartidoParlamentar": "REPUBLICANOS",
+   "siglaPartidoParlamentar": "UNIÃO",
    "siglaUFParlamentar": "AC",
-   "siglaVotoParlamentar": "Sim"
+   "siglaVotoParlamentar": "Votou"
+  },
+  "senado_comissao_votacao": {
+   "CodigoVotacao": "34188",
+   "SiglaCasaColegiado": "SF",
+   "CodigoReuniao": "11134",
+   "DataHoraInicioReuniao": "2023-03-21T09:19:00",
+   "NumeroReuniaoColegiado": "3",
+   "TipoReuniao": "Extraordinária",
+   "CodigoColegiado": "38",
+   "SiglaColegiado": "CAE",
+   "NomeColegiado": "Comissão de Assuntos Econômicos",
+   "CodigoParlamentarPresidente": "5899",
+   "NomeParlamentarPresidente": "Vanderlan Cardoso",
+   "IdentificacaoMateria": "PL 3071/2019",
+   "DescricaoIdentificacaoMateria": "Projeto de Lei n° 3071, de 2019",
+   "DescricaoVotacao": "PL 3071/2019",
+   "Votos": "{\"Voto\":[{\"CodigoParlamentar\":\"5905\",\"NomeParlamentar\":\"Rodrigo Cunha\",\"SiglaPartidoParlamentar\":\"UNIÃO\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"5982\",\"NomeParlamentar\":\"Alessandro Vieira\",\"SiglaPartidoParlamentar\":\"PSDB\",\"SiglaCasaParlamentar\"",
+   "TotalVotosSim": "13",
+   "TotalVotosNao": "1",
+   "TotalVotosAbstencao": "0"
+  },
+  "senado_comissao_voto": {
+   "CodigoParlamentar": "5905",
+   "NomeParlamentar": "Rodrigo Cunha",
+   "SiglaPartidoParlamentar": "UNIÃO",
+   "SiglaCasaParlamentar": "SF",
+   "QualidadeVoto": "S",
+   "VotoPresidente": "false"
   },
   "camara_proposicao": {
-   "id": 2604173,
-   "uri": "https://dadosabertos.camara.leg.br/api/v2/proposicoes/2604173",
-   "siglaTipo": "PEC",
-   "codTipo": 136,
-   "numero": 3,
-   "ano": 2026,
-   "ementa": "Altera o art. 155 da Constituição Federal para estabelecer alíquota máxima e base de cálculo exclusiva do Imposto sobre a Propriedade de Veículos Automotores – IPVA, e acrescenta dispositivos ao Ato das Disposições Constitucionais Transitórias para limitar despesas com publicidade institucional e com o Poder Legislativo.",
-   "dataApresentacao": "2026-02-24T15:48"
+   "id": 2419066,
+   "uri": "https://dadosabertos.camara.leg.br/api/v2/proposicoes/2419066",
+   "siglaTipo": "PDL",
+   "codTipo": 557,
+   "numero": 24,
+   "ano": 2024,
+   "ementa": "Este Decreto Legislativo susta os efeitos da Nota Técnica Conjunta n° 2/2024-SAPS/SAES/MS.",
+   "dataApresentacao": "2024-02-29T15:32"
   },
   "senado_proposicao": {
-   "autoria": "Senadora Dra. Eudócia (PSDB/AL)",
+   "autoria": "Senador Paulo Paim (PT/RS)",
    "casaIdentificadora": "SF",
-   "codigoMateria": 175895,
-   "dataApresentacao": "2026-10-01",
-   "dataSituacaoAtual": "2026-10-01",
-   "dataUltimaAtualizacao": "2026-10-06T15:15:01.05",
-   "ementa": "Altera a Lei nº 8.080, de 19 de setembro de 1990 - Lei Orgânica da Saúde, para dispor sobre o requerimento administrativo para fornecimento de medicamento destinado ao tratamento de pessoa com câncer.",
+   "codigoMateria": 155901,
+   "dataApresentacao": "2023-02-16",
+   "dataSituacaoAtual": "2023-04-11",
+   "ementa": "Permite que sejam excluídas do cálculo do limite de endividamento de entes subnacionais as operações de crédito com recursos do FGTS destinadas a investimentos em saneamento e habitação.",
    "enteIdentificador": "SF",
-   "id": 9111471,
-   "identificacao": "PL 5503/2026",
+   "id": 8369951,
+   "identificacao": "PL 566/2023",
    "objetivo": "Iniciadora",
-   "situacaoAtual": "AGUARDANDO DESPACHO",
+   "situacaoAtual": "AGUARDANDO DESIGNAÇÃO DO RELATOR",
    "tipoConteudo": "Norma Geral",
    "tipoDocumento": "Projeto de Lei Ordinária",
    "tramitando": "Sim",
-   "ultimaInformacaoAtualizada": "PUBLICACAO_OFICIAL",
-   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/c870a6cc-8c8f-4fc6-bfc5-601e31410b00"
+   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/9c58b4b3-31cd-4b60-8b9b-e7a4a590e3d4"
   }
  },
  "contagens": {
   "deputados": 882,
-  "votacoes_C_plenario": 125,
-  "votacoes_C_comissao": 29,
-  "votacoes_sem_sim_nao": 1,
-  "senado_plenario_votacoes_achadas": 3,
-  "votacoes_S_plenario": 3,
-  "senado_comissao_votacoes_achadas": 0,
-  "proposicoes_camara_registros": 8378,
-  "proposicoes_data_corrigida": 3,
-  "senado_processo_registros": 128,
-  "proposicoes_senado": 28,
-  "classificados": 30
+  "votacoes_C_plenario": 1126,
+  "votacoes_C_comissao": 472,
+  "votacoes_sem_sim_nao": 2,
+  "senado_plenario_votacoes_achadas": 426,
+  "senado_secretas": 240,
+  "votacoes_S_plenario": 186,
+  "senado_comissao_votacoes_achadas": 644,
+  "votacoes_S_comissao": 644,
+  "proposicoes_camara_registros": 42521,
+  "proposicoes_data_corrigida": 23,
+  "senado_processo_registros": 6119,
+  "proposicoes_senado": 3069,
+  "classificados": 21026
  },
  "erros": [
-  "votações Senado 20261001: http 400"
+  "votações Senado 2024-01-01: http 400",
+  "votações Senado 2025-01-01: http 400",
+  "votações Senado 2026-01-01: http 400",
+  "proposições Senado PL 2026-01-16: falhou https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-01-16&dataFimApresentacao=2026-01-31",
+  "proposições Senado PLP 2026-01-01: falhou https://legis.senado.leg.br/dadosabertos/processo?sigla=PLP&dataInicioApresentacao=2026-01-01&dataFimApresentacao=2026-01-15",
+  "proposições Senado PLP 2025-12-16: falhou https://legis.senado.leg.br/dadosabertos/processo?sigla=PLP&dataInicioApresentacao=2025-12-16&dataFimApresentacao=2025-12-31"
  ],
  "brutos": {
   "senado_votacao_iso": {
-   "url": "https://legis.senado.leg.br/dadosabertos/votacao?dataInicio=2026-10-01&dataFim=2026-10-29",
-   "tamanho": 55335,
-   "inicio": "[{\"ano\":2019,\"casaSessao\":\"SF\",\"codigoMateria\":174386,\"codigoSessao\":591267,\"codigoSessaoLegislativa\":874,\"codigoSessaoVotacao\":7106,\"dataApresentacao\":\"2026-05-28\",\"dataSessao\":\"2026-10-14\",\"descricaoVotacao\":\"Votação nominal da Proposta de Emenda à Constituição nº 221, de 2019, em primeiro turno.\",\"ementa\":\"Altera o art. 7º da Constituição Federal para reduzir a duração máxima semanal do trabalho e prever 2 (dois) dias de repouso semanal remunerado, sem qualquer redução salarial; e dá outras providências.\",\"idProcesso\":9056435,\"identificacao\":\"PEC 221/2019\",\"informeLegislativo\":{\"casaColegiado\":\"SF\",\"casaEnteAdm\":\"SF\",\"codigoColegiado\":1998,\"data\":\"2026-10-14\",\"id\":2319636,\"idEnteAdm\":13594,\"idEvento\":11392905,\"nomeColegiado\":\"Plenário do Senado Federal\",\"nomeEnteAdm\":\"Secretaria de Atas e Diários\",\"numeroAutuacao\":1,\"siglaColegiado\":\"PLEN\",\"siglaEnteAdm\":\"SEADI\",\"texto\":\"(Sessão Deliberativa Ordinária - semipresencial - de 14 de outubro de 2026) \\nQuinta e última sessão de discussão da matéria encerrada em 1º turno. \\nCalendário especial aprovado para a matéria (Requerimento nº 706/2026). \\nEmenda nº 37 encaminhada à publicação.  \\nParecer nº 207/2026-Plen/SF proferido pelo Senador Omar Aziz e encaminhado à publicação (contrário à emenda nº 37). \\nDestaque retirado pelo autor (Requerimento nº 710/2026 encaminhado à publicação). \\nProposta aprovada em 1º turno (Sim: 75; Não: 1; Presidente: 1; Total: 77). \\nDiscussão da matéria encerrada em 2º turno. \\nProposta aprovada em 2"
+   "url": "https://legis.senado.leg.br/dadosabertos/votacao?dataInicio=2023-02-01&dataFim=2023-02-28",
+   "tamanho": 18130,
+   "inicio": "[{\"ano\":2023,\"casaSessao\":\"SF\",\"codigoMateria\":155773,\"codigoSessao\":320695,\"codigoSessaoLegislativa\":868,\"codigoSessaoVotacao\":6674,\"dataApresentacao\":\"2023-02-03\",\"dataSessao\":\"2023-02-08\",\"descricaoVotacao\":\"Votação nominal do Projeto de Decreto Legislativo nº 2, de 2023.\",\"ementa\":\"Escolhe o Senhor Johnathan Pereira de Jesus para o cargo de Ministro do Tribunal de Contas da União, nos termos do inciso II do § 2º do art. 73 da Constituição Federal.\",\"idProcesso\":8361684,\"identificacao\":\"PDL 2/2023\",\"informeLegislativo\":{\"casaColegiado\":\"SF\",\"casaEnteAdm\":\"SF\",\"codigoColegiado\":1998,\"data\":\"2023-02-08\",\"id\":2117980,\"idEnteAdm\":13594,\"idEvento\":10407331,\"nomeColegiado\":\"Plenário do Senado Federal\",\"nomeEnteAdm\":\"Secretaria de Atas e Diários\",\"numeroAutuacao\":1,\"siglaColegiado\":\"PLEN\",\"siglaEnteAdm\":\"SEADI\",\"texto\":\"(Sessão Deliberativa Ordinária, realizada em 08/02/2023)  \\r\\nAprovada a indicação do Senhor Johnathan Pereira de Jesus para exercer o cargo de Ministro do Tribunal de Contas da União, com o seguinte resultado: Sim - 72, Não - 2, Abst. - 1, Total - 75. \\r\\nA matéria vai à promulgação. \\r\\nSerá feita a devida comunicação à Câmara dos Deputados e à Presidência da República.\"},\"numero\":\"2\",\"numeroSessao\":1,\"resultadoVotacao\":\"A\",\"sequencialSessao\":1,\"sequencialVotacao\":3995,\"sigla\":\"PDL\",\"siglaTipoSessao\":\"DOR\",\"totalVotosAbstencao\":1,\"totalVotosNao\":2,\"totalVotosSim\":72,\"votacaoSecreta\":\"S\",\"votos\":[{\"codigoParlamentar\":5672,\"descricaoVotoParlamentar\":null,\"nomeParl"
   },
   "senado_comissao": {
-   "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20261001&dataFim=20261029",
-   "tamanho": 220,
-   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"29/10/2026 01:04:29\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
+   "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20230201&dataFim=20230430",
+   "tamanho": 3189,
+   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"29/10/2026 01:07:19\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"},\"Votacoes\":{\"Votacao\":{\"CodigoVotacao\":\"34188\",\"SiglaCasaColegiado\":\"SF\",\"CodigoReuniao\":\"11134\",\"DataHoraInicioReuniao\":\"2023-03-21T09:19:00\",\"NumeroReuniaoColegiado\":\"3\",\"TipoReuniao\":\"Extraordinária\",\"CodigoColegiado\":\"38\",\"SiglaColegiado\":\"CAE\",\"NomeColegiado\":\"Comissão de Assuntos Econômicos\",\"CodigoParlamentarPresidente\":\"5899\",\"NomeParlamentarPresidente\":\"Vanderlan Cardoso\",\"IdentificacaoMateria\":\"PL 3071/2019\",\"DescricaoIdentificacaoMateria\":\"Projeto de Lei n° 3071, de 2019\",\"DescricaoVotacao\":\"PL 3071/2019\",\"Votos\":{\"Voto\":[{\"CodigoParlamentar\":\"5905\",\"NomeParlamentar\":\"Rodrigo Cunha\",\"SiglaPartidoParlamentar\":\"UNIÃO\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"5982\",\"NomeParlamentar\":\"Alessandro Vieira\",\"SiglaPartidoParlamentar\":\"PSDB\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"N\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"6331\",\"NomeParlamentar\":\"Sergio Moro\",\"SiglaPartidoParlamentar\":\"UNIÃO\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"4560\",\"NomeParlamentar\":\"Sérgio Petecão\",\"SiglaPartidoParlamentar\":\"PSD\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"5967\",\"NomeParlamentar\":\"Angelo Coronel\""
   },
   "senado_processo": {
-   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-10-16&dataFimApresentacao=2026-10-29",
-   "tamanho": 29348,
-   "inicio": "[{\"autoria\":\"Senador Dr. Hiran (PP/RR)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175985,\"dataApresentacao\":\"2026-10-19\",\"dataSituacaoAtual\":\"2026-10-19\",\"dataUltimaAtualizacao\":\"2026-10-21T15:30:01.3\",\"ementa\":\"Altera o art. 9º da Lei nº 15.211, de 17 de setembro de 2025 (Estatuto Digital da Criança e do Adolescente), para admitir a estimativa de idade por biometria facial como mecanismo de verificação de idade e para ampliar, de forma graduada, as categorias de serviços digitais de acesso restrito a maiores de 18 (dezoito) anos.\",\"enteIdentificador\":\"SF\",\"id\":9115144,\"identificacao\":\"PL 5593/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/3dc7461f-fa42-46e9-aa85-0ff9dd90f0a9\"},{\"autoria\":\"Câmara dos Deputados\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175994,\"dataApresentacao\":\"2026-10-19\",\"dataSituacaoAtual\":\"2026-10-20\",\"dataUltimaAtualizacao\":\"2026-10-23T18:30:01.076\",\"ementa\":\"Altera a Lei nº 8.080, de 19 de setembro de 1990 (Lei Orgânica da Saúde), para determinar a aceitação, pelas unidades do Sistema Único de Saúde (SUS), de exames realizados em serviços privados.\",\"enteIdentificador\":\"SF\",\"id\":9115232,\"identificacao\":\"PL 1123/2025\",\"objetivo\":\"Revisora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocum"
+   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2023-03-01&dataFimApresentacao=2023-03-15",
+   "tamanho": 66650,
+   "inicio": "[{\"autoria\":\"Senador Paulo Paim (PT/RS)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":155964,\"dataApresentacao\":\"2023-03-01\",\"dataSituacaoAtual\":\"2023-04-17\",\"ementa\":\"Altera o Plano de Benefícios da Previdência Social, para suprimir a previsão de desconto de benefícios e de inscrição em dívida ativa no caso de cessação de benefício por revogação de decisão judicial.\",\"enteIdentificador\":\"SF\",\"id\":8373745,\"identificacao\":\"PL 744/2023\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESIGNAÇÃO DO RELATOR\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/d1241f35-80c6-42ec-811d-b58e8d2ba684\"},{\"autoria\":\"Senador Jorge Kajuru (PSB/GO)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":155968,\"dataApresentacao\":\"2023-03-01\",\"dataSituacaoAtual\":\"2023-04-17\",\"ementa\":\"Dispõe sobre a gratuidade de estacionamento em favor de pessoas idosas ou com deficiência de baixa renda.\",\"enteIdentificador\":\"SF\",\"id\":8374089,\"identificacao\":\"PL 762/2023\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESIGNAÇÃO DO RELATOR\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/8037e1b0-83d3-443f-b545-d7baf382b547\"},{\"autoria\":\"Senador Carlos Viana (PODEMOS/MG)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":155972,\"dataApresentacao\":\"2023-03-02\",\"dataDeliberacao\":\"2023-"
   }
  },
- "fim": "2026-10-29T04:05:30.641Z"
+ "fim": "2026-10-29T04:26:19.252Z"
 }
