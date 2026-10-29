@@ -1,0 +1,58 @@
+# Atualização diária dos dados do observatório.
+# Roda todo dia às 6h17 (horário de Brasília) e também pode ser disparada à mão em Actions > Atualizar dados > Run workflow.
+name: Atualizar dados
+
+on:
+  schedule:
+    - cron: '17 9 * * *'
+  workflow_dispatch:
+    inputs:
+      modo:
+        description: 'diario (só o que é novo) ou completo (refaz a legislatura inteira)'
+        required: true
+        default: 'diario'
+        type: choice
+        options:
+          - diario
+          - completo
+
+permissions:
+  contents: write
+
+concurrency:
+  group: atualizar-dados
+  cancel-in-progress: false
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    steps:
+      - name: Baixar o repositório
+        uses: actions/checkout@v4
+
+      - name: Preparar o Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Coletar, classificar e calcular
+        run: node robo/coletar.mjs
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          MODO: ${{ inputs.modo || 'diario' }}
+          NODE_OPTIONS: --max-old-space-size=6144
+
+      - name: Gravar os dados no repositório
+        if: always()
+        run: |
+          git config user.name "robo-exterminadores"
+          git config user.email "robo-exterminadores@users.noreply.github.com"
+          git add dados
+          if git diff --cached --quiet; then
+            echo "Nada mudou."
+          else
+            git commit -m "Atualiza os dados ($(date -u +%Y-%m-%d))"
+            git pull --rebase --autostash
+            git push
+          fi
