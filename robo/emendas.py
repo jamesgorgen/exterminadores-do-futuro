@@ -48,7 +48,9 @@ TEMAS=[
  ('outras','Outras funções','', 'Demais áreas com finalidade definida, sobretudo '+', '.join(f.lower() for f in outras_top[:-1])+' e '+outras_top[-1].lower()+'.', NP & ~F.isin(LISTADAS)),
 ]
 for tid,_,_,_,mask in TEMAS: e['t_'+tid]=mask.values
-gr={g:{'nome':nm,'partidos':ps,'n':int(e[e.g==g].k.nunique())} for g,nm,ps in GRUPOS}
+gr={g:{'nome':nm,'partidos':ps,'n':int(e[e.g==g].k.nunique()),
+       'dep':int(e[(e.g==g)&(e.k.str[0]=='C')].k.nunique()),'sen':int(e[(e.g==g)&(e.k.str[0]=='S')].k.nunique())} for g,nm,ps in GRUPOS}
+totg={g:e[e.g==g].emp.sum() for g,_,_ in GRUPOS}
 anos=['todos','2023','2024','2025','2026']
 perfil={}
 for a in anos:
@@ -78,17 +80,19 @@ for tid,nome,pauta,desc,_ in TEMAS:
     x=e[e['t_'+tid]]
     pg={g:round(x[x.g==g].emp.sum()) for g,_,_ in GRUPOS}
     med={g:(round(pg[g]/gr[g]['n']) if gr[g]['n'] else 0) for g in pg}
+    fatia={g:(round(pg[g]/totg[g],4) if totg[g] else 0) for g in pg}
+    alc={g:(round(x[(x.g==g)&(x.emp>0)].k.nunique()/gr[g]['n'],3) if gr[g]['n'] else 0) for g in pg}
     top=x.groupby('k').emp.sum().sort_values(ascending=False).head(5)
     codigos=set(x['Código da Emenda'])
     if tid=='pix':
         fp=fav[fav['Código da Emenda'].isin(codigos) & fav['Natureza Jurídica'].fillna('').str.contains('Município|Estado|Fundo')]
         mg=fp.groupby(['Favorecido','UF Favorecido','k']).valor.sum().sort_values(ascending=False).head(3)
-        temas.append({'id':tid,'nome':nome,'pauta':pauta,'desc':desc,'total':pg,'media':med,'top':[dict(nome_par(k),v=round(v)) for k,v in top.items()],
+        temas.append({'id':tid,'nome':nome,'pauta':pauta,'desc':desc,'total':pg,'media':med,'fatia':fatia,'alcance':alc,'top':[dict(nome_par(k),v=round(v)) for k,v in top.items()],
           'exemplos':[{'k':kk,'obj':'Repasse a '+re.sub(r'\b(De|Da|Do|Das|Dos|E)\b',lambda m:m.group(0).lower(),fv.title()),'v':round(v),'loc':uf} for (fv,uf,kk),v in mg.items()],'medida':'empenhado'})
         continue
     c=cv[cv['Código da Emenda'].isin(codigos)].sort_values('valor',ascending=False).drop_duplicates('obj').head(4)
     ex=[{'k':r.k,'obj':r.obj[:220],'v':round(r.valor),'loc':r.loc} for r in c.itertuples()]
-    temas.append({'id':tid,'nome':nome,'pauta':pauta,'desc':desc,'total':pg,'media':med,'top':[dict(nome_par(k),v=round(v)) for k,v in top.items()],'exemplos':ex,'medida':'empenhado'})
+    temas.append({'id':tid,'nome':nome,'pauta':pauta,'desc':desc,'total':pg,'media':med,'fatia':fatia,'alcance':alc,'top':[dict(nome_par(k),v=round(v)) for k,v in top.items()],'exemplos':ex,'medida':'empenhado'})
 # perfis
 parl={}
 for k,x in e.groupby('k'):
@@ -106,9 +110,41 @@ for k,x in e.groupby('k'):
       'favs':[[a_,b_,round(v)] for (a_,b_),v in f.items()],
       'objs':[[r.obj[:200],round(r.valor),r.loc] for r in c.itertuples()]})
     parl[k]=d
+
+# ------------------------------------------------ distribuição por estado
+# População do Censo 2022 (IBGE).
+POP={'AC':830018,'AL':3127683,'AP':733759,'AM':3941613,'BA':14141626,'CE':8794957,'DF':2817381,'ES':3833712,'GO':7056495,'MA':6776699,
+ 'MT':3658649,'MS':2757013,'MG':20539989,'PA':8120131,'PB':3974687,'PR':11444380,'PE':9058931,'PI':3271199,'RJ':16055174,'RN':3302729,
+ 'RS':10882965,'RO':1581196,'RR':636707,'SC':7610361,'SP':44411238,'SE':2210004,'TO':1511460}
+NOME_UF={'ACRE':'AC','ALAGOAS':'AL','AMAPA':'AP','AMAZONAS':'AM','BAHIA':'BA','CEARA':'CE','DISTRITO FEDERAL':'DF','ESPIRITO SANTO':'ES','GOIAS':'GO',
+ 'MARANHAO':'MA','MATO GROSSO':'MT','MATO GROSSO DO SUL':'MS','MINAS GERAIS':'MG','PARA':'PA','PARAIBA':'PB','PARANA':'PR','PERNAMBUCO':'PE','PIAUI':'PI',
+ 'RIO DE JANEIRO':'RJ','RIO GRANDE DO NORTE':'RN','RIO GRANDE DO SUL':'RS','RONDONIA':'RO','RORAIMA':'RR','SANTA CATARINA':'SC','SAO PAULO':'SP','SERGIPE':'SE','TOCANTINS':'TO'}
+NOMES={'AC':'Acre','AL':'Alagoas','AP':'Amapá','AM':'Amazonas','BA':'Bahia','CE':'Ceará','DF':'Distrito Federal','ES':'Espírito Santo','GO':'Goiás','MA':'Maranhão',
+ 'MT':'Mato Grosso','MS':'Mato Grosso do Sul','MG':'Minas Gerais','PA':'Pará','PB':'Paraíba','PR':'Paraná','PE':'Pernambuco','PI':'Piauí','RJ':'Rio de Janeiro','RN':'Rio Grande do Norte',
+ 'RS':'Rio Grande do Sul','RO':'Rondônia','RR':'Roraima','SC':'Santa Catarina','SP':'São Paulo','SE':'Sergipe','TO':'Tocantins'}
+titulo=lambda t: re.sub(r"\b(De|Da|Do|Das|Dos|E|D')\b",lambda m:m.group(0).lower(),str(t).title())
+e['uf']=e['UF'].map(lambda x: NOME_UF.get(n(x)))
+semuf=e[e.uf.isna()].emp.sum()
+e['uf_autor']=e.k.map(lambda k: par[k].get('uf'))
+area_de={}
+for t in TEMAS: area_de[t[0]]=t[1]
+estados={}
+fm=fav[~fav['Natureza Jurídica'].fillna('').str.contains('Economia Mista|Federal|Empresa Pública') & fav['Município Favorecido'].fillna('').ne('')]
+for uf,x in e[e.uf.notna()].groupby('uf'):
+    tot_uf=x.emp.sum()
+    porg={g:round(x[x.g==g].emp.sum()) for g,_,_ in GRUPOS}
+    top=x.groupby('k').emp.sum().sort_values(ascending=False).head(6)
+    mun=fm[fm['UF Favorecido']==uf].groupby('Município Favorecido').valor.sum().sort_values(ascending=False).head(6)
+    areas={t[0]:round(x[x['t_'+t[0]]].emp.sum()) for t in TEMAS}
+    fora=x[x.uf_autor.notna() & (x.uf_autor!=uf)].emp.sum()
+    bancada={g:int(x[(x.g==g)&(x.uf_autor==uf)].k.nunique()) for g,_,_ in GRUPOS}
+    estados[uf]={'nome':NOMES[uf],'pop':POP[uf],'total':round(tot_uf),'pago':round(x.pago.sum()),
+      'pix':round(x[x.pix].emp.sum()),'grupos':porg,'bancada':bancada,'fora':round(fora),
+      'top':[dict(nome_par(k),v=round(v)) for k,v in top.items()],
+      'munis':[[titulo(m_),round(v)] for m_,v in mun.items()],'areas':areas}
 saida={'gerado':pd.Timestamp.now().isoformat()[:19],'fonte':'Portal da Transparência, emendas parlamentares','periodo':'2023 a 2026 (2026 parcial)',
   'grupos':gr,'ordem':[g for g,_,_ in GRUPOS],'perfil':perfil,'temas':temas,'parl':parl,
-  'cobertura':{'total':round(tot),'sem_vinculo':round(semv)}}
+  'cobertura':{'total':round(tot),'sem_vinculo':round(semv)},'estados':estados,'sem_uf':round(semuf)}
 json.dump(saida,open(SAIDA,'w'),ensure_ascii=False,separators=(',',':'))
 print('parl',len(parl),'cobertura',round(1-semv/tot,3),{g:v['n'] for g,v in gr.items()})
 for t in temas: print(t['id'],{g:round(v/1e6,1) for g,v in t['total'].items()},{g:round(v/1e3) for g,v in t['media'].items()})

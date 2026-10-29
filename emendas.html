@@ -94,6 +94,8 @@ h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size
 .barras{display:grid;grid-template-columns:minmax(0,9.5em) minmax(0,1fr) auto;gap:5px 10px;align-items:center;font-size:13px}
 .barras .b{height:14px;border-radius:3px;background:var(--cor);min-width:2px}
 .barras .v{font-weight:600;text-align:right}
+.barras.b4{grid-template-columns:minmax(0,9.5em) minmax(0,1fr) auto auto}
+.barras .a{text-align:right;color:var(--ink-3)}
 .sub{font-size:13px;color:var(--ink-3)}
 .lista{list-style:none;margin:0;padding:0;display:grid;gap:4px;font-size:14px}
 .lista li{display:flex;justify-content:space-between;gap:10px;min-width:0}
@@ -132,6 +134,20 @@ h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size
 .temas-p span{font-size:13px;border:1px solid var(--line);border-radius:999px;padding:3px 10px}
 .temas-p span b{font-weight:700}
 .link-obs{display:inline-block;margin-top:16px;font-weight:700}
+.mapa-area{display:grid;grid-template-columns:minmax(0,520px) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:900px){.mapa-area{grid-template-columns:1fr}}
+.mapa{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;max-width:520px}
+.uf{aspect-ratio:1;max-width:100%;border:0;border-radius:6px;background:var(--fundo);color:var(--texto);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;font-weight:700;font-size:15px;line-height:1.1;padding:2px}
+.uf small{font-weight:500;font-size:11px;opacity:.9}
+.uf[aria-pressed="true"]{outline:3px solid var(--ink);outline-offset:2px}
+.escala{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-3);margin-top:10px;max-width:520px}
+.escala i{flex:1;height:10px;border-radius:3px;background:linear-gradient(90deg,color-mix(in srgb,var(--red) 12%,var(--sheet)),var(--red))}
+.estado{background:var(--sheet);border:1px solid var(--line);border-radius:8px;padding:18px;min-width:0}
+.pilha{display:flex;height:22px;border-radius:4px;overflow:hidden;margin:6px 0 4px}
+.pilha span{background:var(--cor);min-width:2px}
+.leg-pilha{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--ink-2)}
+.leg-pilha span{display:inline-flex;align-items:center;gap:5px}
+.leg-pilha i{width:10px;height:10px;border-radius:2px;background:var(--cor)}
 .metodo{padding-block:30px 60px}
 .metodo ul{max-width:85ch;color:var(--ink-2);font-size:14px;padding-left:20px}
 .metodo li{margin:6px 0}
@@ -146,7 +162,7 @@ h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size
   <p class="lede">Para onde deputados e senadores da direita e da extrema-direita mandam o dinheiro das emendas individuais ao Orçamento. Valores empenhados de 2023 a 2026, com os dados do Portal da Transparência.</p>
 </div></header>
 <nav class="secoes" aria-label="Seções"><div class="wrap">
-  <a href="#perfil-gasto">Para onde vai o dinheiro</a><a href="#pautas">Por área</a><a href="#parlamentares">Por parlamentar</a><a href="#metodo">Como foi feito</a>
+  <a href="#perfil-gasto">Para onde vai o dinheiro</a><a href="#pautas">Por área</a><a href="#estados">Por estado</a><a href="#parlamentares">Por parlamentar</a><a href="#metodo">Como foi feito</a>
 </div></nav>
 
 <main>
@@ -164,8 +180,18 @@ h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size
 
 <section id="pautas"><div class="wrap">
   <h2>Emendas por área</h2>
-  <p class="intro">Todas as emendas individuais, divididas em onze áreas, das transferências Pix às áreas ligadas às pautas que o observatório acompanha. As barras mostram a média por parlamentar de cada grupo, para comparar grupos de tamanhos diferentes.</p>
+  <p class="intro">Todas as emendas individuais, divididas em onze áreas. As barras mostram que fatia do dinheiro de cada grupo foi para a área, o que permite comparar grupos de tamanhos diferentes e com números distintos de senadores. A última coluna mostra quantos parlamentares do grupo destinaram ao menos uma emenda à área.</p>
   <div class="temas" id="temas"></div>
+</div></section>
+
+<section id="estados"><div class="wrap">
+  <h2>Por estado</h2>
+  <p class="intro">Quanto cada estado recebeu em emendas individuais e de quais grupos veio o dinheiro. Estados pequenos recebem muito mais por habitante, porque todos têm três senadores e ao menos oito deputados, cada um com a mesma cota.</p>
+  <div class="chips" id="metricas" role="group" aria-label="O que o mapa mostra"></div>
+  <div class="mapa-area">
+    <div><div class="mapa" id="mapa" role="group" aria-label="Mapa dos estados"></div><div class="escala" id="escala"></div></div>
+    <div id="estado"></div>
+  </div>
 </div></section>
 
 <section id="parlamentares"><div class="wrap">
@@ -202,7 +228,8 @@ h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size
     <li>Grupos. Extrema-direita reúne PL, Novo e Missão. Direita reúne PP, União Brasil, Republicanos, Podemos, PSD, Cidadania e Solidariedade. Alinhados reúne MDB, PDT, Rede, PSB e PV. Esquerda reúne PT, PSOL e PCdoB. Outros partidos reúne PSDB, Avante, PRD e parlamentares sem partido. Os grupos são definidos pelo partido, e o partido considerado é o mais recente de cada parlamentar.</li>
     <li>Valores. Os quadros e as áreas usam o valor empenhado, que é o compromisso de gasto. O perfil de cada parlamentar mostra também o valor pago, somando os restos a pagar quitados.</li>
     <li>Áreas. Seguem a função orçamentária de cada emenda. Segurança e defesa soma as funções segurança pública e defesa nacional. Transferências especiais (Pix) reúne as emendas sem finalidade definida, qualquer que seja a área em que o dinheiro venha a ser gasto.</li>
-    <li>Médias. A média por parlamentar divide o valor do grupo pelo número de parlamentares do grupo com emendas no período. Senadores têm cota de emendas maior que a de deputados, o que pesa nas médias de grupos com mais senadores.</li>
+    <li>Fatias em vez de médias. Cada parlamentar tem a mesma cota de emendas dentro da sua Casa, e a dos senadores é cerca de duas vezes maior que a dos deputados. Por isso o total por parlamentar quase não varia entre grupos, e médias por área misturam essa diferença de cota com a escolha de destino. Nas áreas, a média também é puxada por poucos parlamentares que concentram valores altos, enquanto a mediana fica em zero sempre que menos da metade do grupo destina algo à área. A fatia do dinheiro de cada grupo e a parcela de parlamentares que destinaram algo mostram melhor as prioridades.</li>
+    <li>Estados. O mapa considera o estado de destino informado em cada emenda. Ficam de fora as emendas sem estado definido (aplicação nacional ou em vários estados), que somam <span id="semUf">R$ 3,6 bi</span>. O valor por habitante usa a população do Censo 2022 do IBGE.</li>
     <li>Destinos. Os municípios que mais receberam vêm dos pagamentos por favorecido, sem contar a Caixa e os órgãos federais que apenas intermediam os repasses.</li>
     <li>Autoria. Os autores foram ligados aos parlamentares do observatório pelo nome. A ligação cobre <span id="cobertura">91%</span> do valor. O restante é, sobretudo, de ex-parlamentares com emendas de 2023.</li>
   </ul>
@@ -242,7 +269,7 @@ function desenharGrupos() {
     const partidos = G.partidos.length ? G.partidos.map(p => NOME_PARTIDO[p] || p).join(', ') : 'PSDB, Avante, PRD e sem partido';
     return `<div class="gt" style="--cor:${cor(g)}"><b>${esc(G.nome)}</b><div class="partidos">${esc(partidos)}</div>
       <div class="grande num">${reais(x.total)}</div>
-      <dl class="num"><dt>Parlamentares</dt><dd>${x.n}</dd><dt>Por parlamentar</dt><dd>${x.n ? reais(x.total / x.n) : '—'}</dd>
+      <dl class="num"><dt>Deputados</dt><dd>${G.dep}</dd><dt>Senadores</dt><dd>${G.sen}</dd>
       <dt>Emendas Pix</dt><dd>${x.total ? pct(x.pix / x.total, 0) : '—'}</dd><dt>Saúde</dt><dd>${x.total ? pct(x.saude / x.total, 0) : '—'}</dd></dl></div>`;
   }).join('');
   $('#legenda').innerHTML = D.ordem.map(g => `<span style="--cor:${cor(g)}"><i></i>${esc(D.grupos[g].nome)}</span>`).join('');
@@ -272,8 +299,8 @@ function desenharGrafico() {
 
 // ------------------------------------------------ 2. pautas
 function cartaoTema(t) {
-  const max = Math.max(...D.ordem.map(g => t.media[g]), 1);
-  const barras = D.ordem.map(g => `<span>${esc(D.grupos[g].nome)}</span><span class="b" style="--cor:${cor(g)};width:${100 * t.media[g] / max}%"></span><span class="v num">${reais(t.media[g])}</span>`).join('');
+  const max = Math.max(...D.ordem.map(g => t.fatia[g]), 0.0001);
+  const barras = D.ordem.map(g => `<span>${esc(D.grupos[g].nome)}</span><span class="b" style="--cor:${cor(g)};width:${100 * t.fatia[g] / max}%"></span><span class="v num">${pct(t.fatia[g], t.fatia[g] < 0.1 ? 1 : 0)}</span><span class="a num" title="Parcela dos parlamentares do grupo que destinaram emendas à área">${pct(t.alcance[g], 0)}</span>`).join('');
   const soma = D.ordem.reduce((a, g) => a + t.total[g], 0);
   const direita = t.total.extrema + t.total.direita;
   const top = t.top.slice(0, 3).map(p => `<li><span><button type="button" data-k="${esc(p.k)}">${esc(p.n)}</button> <span class="sub">${esc(partido(p))}/${esc(p.uf || '')}</span></span><span class="num">${reais(p.v)}</span></li>`).join('');
@@ -281,8 +308,7 @@ function cartaoTema(t) {
   return `<article class="tema">
     <div class="cab"><h3>${esc(t.nome)}</h3>${t.pauta && NOME_PAUTA[t.pauta] ? `<span class="pauta">Pauta: ${esc(NOME_PAUTA[t.pauta])}</span>` : ''}</div>
     <p>${esc(t.desc)}</p>
-    <div class="rot">Média por parlamentar${t.medida === 'recebido' ? ', valor recebido' : ''}</div>
-    <div class="barras">${barras}</div>
+    <div class="barras b4"><span class="rot">Grupo</span><span class="rot">Fatia das emendas do grupo</span><span></span><span class="rot a">Destinaram</span>${barras}</div>
     <div class="sub">Total ${reais(soma)}, dos quais ${soma ? pct(direita / soma, 0) : '—'} vindos da direita e da extrema-direita.</div>
     <div><div class="rot">Quem mais destinou</div><ul class="lista">${top}</ul></div>
     ${ex ? `<div class="ex"><div class="rot">${t.id === 'pix' ? 'Maiores repasses' : 'Exemplos de convênios'}</div>${ex}</div>` : ''}
@@ -290,6 +316,53 @@ function cartaoTema(t) {
 }
 function desenharTemas() {
     $('#temas').innerHTML = D.temas.map(cartaoTema).join('');
+}
+
+// ------------------------------------------------ estados
+const GRADE = { RR: [0, 2], AP: [0, 4], AM: [1, 1], PA: [1, 3], MA: [1, 4], CE: [1, 5], RN: [1, 6], AC: [2, 0], RO: [2, 1], MT: [2, 2], TO: [2, 3], PI: [2, 4], PE: [2, 5], PB: [2, 6],
+  GO: [3, 3], DF: [3, 4], BA: [3, 5], AL: [3, 6], MS: [4, 2], SP: [4, 3], MG: [4, 4], ES: [4, 5], SE: [4, 6], PR: [5, 3], RJ: [5, 4], SC: [6, 3], RS: [7, 3] };
+const METRICAS = [['hab', 'Por habitante'], ['ext', 'Fatia da extrema-direita'], ['dir', 'Fatia da direita e da extrema-direita'], ['esq', 'Fatia da esquerda']];
+let metrica = 'hab', ufAtual = 'SP';
+function valorMetrica(x, m) { if (m === 'hab') return x.total / x.pop; const g = x.grupos; return (m === 'ext' ? g.extrema : m === 'dir' ? g.extrema + g.direita : g.esquerda) / x.total; }
+const fmtMetrica = (v, m) => m === 'hab' ? 'R$ ' + Math.round(v).toLocaleString('pt-BR') : pct(v, 0);
+function desenharMetricas() { $('#metricas').innerHTML = METRICAS.map(([v, t]) => `<button type="button" class="chip" data-metrica="${v}" aria-pressed="${v === metrica}">${t}</button>`).join(''); }
+function desenharMapa() {
+  const E = D.estados, vals = Object.values(E).map(x => valorMetrica(x, metrica));
+  const min = Math.min(...vals), max = Math.max(...vals);
+  $('#mapa').innerHTML = Object.entries(GRADE).map(([uf, [r, c]]) => {
+    const x = E[uf]; if (!x) return '';
+    const v = valorMetrica(x, metrica), t = max > min ? (v - min) / (max - min) : 0;
+    const forte = Math.round(12 + 88 * t);
+    return `<button type="button" class="uf" data-uf="${uf}" aria-pressed="${uf === ufAtual}" style="grid-row:${r + 1};grid-column:${c + 1};--fundo:color-mix(in srgb,var(--red) ${forte}%,var(--sheet));--texto:${forte > 55 ? '#fff' : 'var(--ink)'}" title="${esc(x.nome)}: ${fmtMetrica(v, metrica)}">${uf}<small class="num">${fmtMetrica(v, metrica).replace('R$ ', '')}</small></button>`;
+  }).join('');
+  $('#escala').innerHTML = `<span class="num">${fmtMetrica(min, metrica)}</span><i></i><span class="num">${fmtMetrica(max, metrica)}</span>`;
+}
+function desenharEstado(uf) {
+  const x = D.estados[uf]; if (!x) return; ufAtual = uf;
+  const pilha = D.ordem.map(g => `<span style="--cor:${cor(g)};width:${100 * x.grupos[g] / x.total}%" title="${esc(D.grupos[g].nome)}: ${pct(x.grupos[g] / x.total, 0)}"></span>`).join('');
+  const leg = D.ordem.filter(g => x.grupos[g] > 0).map(g => `<span style="--cor:${cor(g)}"><i></i>${esc(D.grupos[g].nome)} ${pct(x.grupos[g] / x.total, 0)}</span>`).join('');
+  const banc = D.ordem.filter(g => x.bancada[g]).map(g => `${x.bancada[g]} ${esc(D.grupos[g].nome.toLowerCase())}`).join(', ');
+  const T = Object.fromEntries(D.temas.map(t => [t.id, t.nome]));
+  const areas = Object.entries(x.areas).filter(([t, v]) => v > 0).sort((a, b) => b[1] - a[1]).slice(0, 6);
+  $('#estado').innerHTML = `<article class="estado">
+    <h3 class="nome" style="font-family:var(--display);font-weight:900;font-size:clamp(28px,3.6vw,40px);text-transform:uppercase;margin:0">${esc(x.nome)}</h3>
+    <div class="kpis">
+      <div class="kpi"><b class="num">${reais(x.total)}</b><span>empenhado, 2023 a 2026</span></div>
+      <div class="kpi"><b class="num">R$ ${Math.round(x.total / x.pop).toLocaleString('pt-BR')}</b><span>por habitante</span></div>
+      <div class="kpi"><b class="num">${pct(x.pix / x.total, 0)}</b><span>em emendas Pix</span></div>
+      <div class="kpi"><b class="num">${reais(x.pago)}</b><span>já pago</span></div>
+    </div>
+    <div class="rot">De onde veio o dinheiro</div>
+    <div class="pilha">${pilha}</div><div class="leg-pilha">${leg}</div>
+    ${banc ? `<p class="sub" style="margin:8px 0 0">Parlamentares do estado com emendas no período: ${banc}.</p>` : ''}
+    ${x.fora / x.total >= 0.01 ? `<p class="sub" style="margin:4px 0 0">${pct(x.fora / x.total, 0)} do valor veio de parlamentares de outros estados.</p>` : ''}
+    <div class="blocos" style="margin-top:16px">
+      <div><h4>Quem mais destinou</h4><ul class="lista">${x.top.map(p => `<li><span><button type="button" data-k="${esc(p.k)}">${esc(p.n)}</button> <span class="sub">${esc(partido(p))}</span></span><span class="num">${reais(p.v)}</span></li>`).join('')}</ul></div>
+      <div><h4>Municípios que mais receberam</h4><ul class="lista">${x.munis.map(([m, v]) => `<li><span>${esc(m)}</span><span class="num">${reais(v)}</span></li>`).join('')}</ul></div>
+      <div><h4>Principais áreas</h4><ul class="lista">${areas.map(([t, v]) => `<li><span>${esc(T[t] || t)}</span><span class="num">${pct(v / x.total, 0)}</span></li>`).join('')}</ul></div>
+    </div>
+  </article>`;
+  desenharMapa();
 }
 
 // ------------------------------------------------ 3. parlamentares
@@ -339,7 +412,9 @@ function abrir(k) { desenharPerfil(k); document.getElementById('parlamentares').
 document.addEventListener('click', e => {
   const a = e.target.closest('[data-ano]'); if (a) { ano = a.dataset.ano; desenharAnos(); desenharGrupos(); desenharGrafico(); return; }
   const r = e.target.closest('#ranking [data-k]'); if (r) { desenharPerfil(r.dataset.k); return; }
-  const t = e.target.closest('.tema [data-k]'); if (t) { abrir(t.dataset.k); }
+  const t = e.target.closest('.tema [data-k], .estado [data-k]'); if (t) { abrir(t.dataset.k); return; }
+  const m = e.target.closest('[data-metrica]'); if (m) { metrica = m.dataset.metrica; desenharMetricas(); desenharMapa(); return; }
+  const u = e.target.closest('[data-uf]'); if (u) { desenharEstado(u.dataset.uf); }
 });
 ['#fGrupo', '#fOrdem'].forEach(s => $(s).addEventListener('change', desenharRanking));
 $('#busca').addEventListener('input', () => {
@@ -354,6 +429,7 @@ fetch('dados/emendas.json').then(r => { if (!r.ok) throw new Error('arquivo de e
   $('#nomes').innerHTML = lista().map(p => `<option value="${esc(p.n)}">`).join('');
   $('#cobertura').textContent = pct(1 - D.cobertura.sem_vinculo / D.cobertura.total, 0);
   desenharAnos(); desenharGrupos(); desenharGrafico(); desenharTemas();
+  if (D.estados) { $('#semUf').textContent = reais(D.sem_uf); desenharMetricas(); desenharEstado(ufAtual); } else document.getElementById('estados').hidden = true;
   const primeiro = lista().filter(p => p.g === 'extrema').sort((a, b) => b.emp - a.emp)[0];
   desenharPerfil(primeiro.k);
 }).catch(e => { $('#perfil').innerHTML = `<p class="carregando">Não foi possível carregar as emendas (${esc(e.message)}).</p>`; });
