@@ -1,10 +1,10 @@
 {
- "gerado": "2026-10-29T11:51:33.102Z",
+ "gerado": "2026-10-29T12:03:26.803Z",
  "inicio": "2023-02-01",
  "totais": {
   "proposicoes": 26223,
-  "direita": 2373,
-  "extrema": 663,
+  "direita": 2377,
+  "extrema": 666,
   "votacoes": 2425,
   "disputadas": 640,
   "vitorias": 352,
@@ -14,7 +14,7 @@
  },
  "porPauta": {
   "armas": {
-   "prop": 274,
+   "prop": 275,
    "extrema": 62,
    "prop30": 1,
    "vot": 10,
@@ -22,8 +22,8 @@
    "derrotas": 0
   },
   "punitivismo": {
-   "prop": 1118,
-   "extrema": 105,
+   "prop": 1122,
+   "extrema": 107,
    "prop30": 8,
    "vot": 18,
    "vitorias": 14,
@@ -38,8 +38,8 @@
    "derrotas": 0
   },
   "costumes": {
-   "prop": 255,
-   "extrema": 168,
+   "prop": 256,
+   "extrema": 169,
    "prop30": 1,
    "vot": 14,
    "vitorias": 8,
@@ -55,7 +55,7 @@
   },
   "educacao": {
    "prop": 89,
-   "extrema": 29,
+   "extrema": 30,
    "prop30": 1,
    "vot": 4,
    "vitorias": 2,
@@ -102,7 +102,7 @@
    "derrotas": 2
   },
   "privilegios": {
-   "prop": 69,
+   "prop": 70,
    "extrema": 4,
    "prop30": 0,
    "vot": 12,
@@ -110,7 +110,7 @@
    "derrotas": 2
   },
   "plataformas": {
-   "prop": 75,
+   "prop": 76,
    "extrema": 51,
    "prop30": 0,
    "vot": 2,
@@ -134,7 +134,7 @@
    "derrotas": 0
   },
   "soberania": {
-   "prop": 39,
+   "prop": 38,
    "extrema": 15,
    "prop30": 0,
    "vot": 17,
