@@ -1,9 +1,112 @@
 {
   "_leia": "Correções da equipe à classificação da IA. A chave é a do projeto (ex. PL 682/2024) ou a da votação sem matéria (ex. V:C:2585316-23). Campos, todos opcionais: s = avanca, barra ou vazio (vazio tira o item da lista); p = pautas de pautas.js; g = direita ou extrema; m = texto exibido como Checagem da equipe. Ao salvar este arquivo no GitHub, o robô roda sozinho e o site se atualiza em poucos minutos.",
   "correcoes": {
-    "PL 682/2024": { "s": "barra", "p": ["armas"], "m": "Restringe entidades de tiro a modalidades olímpicas e cancela registros de CACs, o que vai contra a pauta armamentista." },
-    "PL 1372/2023": { "s": "barra", "p": ["costumes"], "m": "Revoga a Lei de Alienação Parental, demanda de movimentos de defesa de mulheres e crianças." },
-    "PL 1148/2023": { "s": "" },
-    "PL 3142/2023": { "s": "" }
+    "PL 1148/2023": {
+      "s": ""
+    },
+    "PL 1372/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ],
+      "m": "Revoga a Lei de Alienação Parental, demanda de movimentos de defesa de mulheres e crianças."
+    },
+    "PL 3142/2023": {
+      "s": ""
+    },
+    "PL 5318/2026": {
+      "s": "avanca",
+      "p": [
+        "ambiente"
+      ],
+      "g": "direita"
+    },
+    "PL 5378/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "direita"
+    },
+    "PL 5380/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo",
+        "trabalho"
+      ],
+      "g": "direita"
+    },
+    "PL 5494/2026": {
+      "s": "avanca",
+      "p": [
+        "armas",
+        "punitivismo"
+      ],
+      "g": "direita"
+    },
+    "PL 5545/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo",
+        "drogas"
+      ],
+      "g": "direita"
+    },
+    "PL 5566/2026": {
+      "s": "avanca",
+      "p": [
+        "costumes",
+        "igualdade"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
+    "PL 5572/2026": {
+      "s": "avanca",
+      "p": [
+        "educacao"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
+    "PL 5581/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "direita"
+    },
+    "PL 5584/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "direita"
+    },
+    "PL 5612/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
+    "PL 5621/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo",
+        "povos",
+        "movimentos"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
+    "PL 682/2024": {
+      "s": "barra",
+      "p": [
+        "armas"
+      ],
+      "m": "Restringe entidades de tiro a modalidades olímpicas e cancela registros de CACs, o que vai contra a pauta armamentista."
+    }
   }
 }
