@@ -49,6 +49,19 @@
       ],
       "g": "extrema"
     },
+    "PDL 164/2026": {
+      "s": "",
+      "m": ""
+    },
+    "PDL 243/2026": {
+      "s": "avanca",
+      "p": [
+        "instituicoes",
+        "plataformas"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
     "PDL 252/2026": {
       "s": "avanca",
       "p": [
@@ -63,6 +76,30 @@
         "povos"
       ],
       "g": "extrema"
+    },
+    "PDL 266/2026": {
+      "s": "",
+      "m": ""
+    },
+    "PDL 267/2026": {
+      "s": "",
+      "m": ""
+    },
+    "PDL 273/2026": {
+      "s": "avanca",
+      "p": [
+        "estado",
+        "privilegios"
+      ],
+      "g": "direita"
+    },
+    "PDL 352/2026": {
+      "s": "",
+      "m": ""
+    },
+    "PDL 355/2026": {
+      "s": "",
+      "m": ""
     },
     "PDL 384/2026": {
       "s": "",
@@ -203,8 +240,20 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 1134/2026": {
+      "s": "",
+      "m": ""
+    },
     "PL 1148/2023": {
       "s": ""
+    },
+    "PL 1209/2026": {
+      "s": "avanca",
+      "p": [
+        "privilegios",
+        "plataformas"
+      ],
+      "g": "direita"
     },
     "PL 1211/2026": {
       "s": "avanca",
@@ -212,6 +261,15 @@
         "instituicoes"
       ],
       "g": "direita",
+      "m": ""
+    },
+    "PL 1279/2026": {
+      "s": "avanca",
+      "p": [
+        "religiao",
+        "privilegios"
+      ],
+      "g": "extrema",
       "m": ""
     },
     "PL 1345/2026": {
@@ -223,12 +281,157 @@
       "g": "direita",
       "m": ""
     },
+    "PL 1356/2026": {
+      "s": "barra",
+      "p": [
+        "privilegios",
+        "plataformas"
+      ],
+      "m": ""
+    },
     "PL 1372/2023": {
       "s": "barra",
       "p": [
         "costumes"
       ],
       "m": "Revoga a Lei de Alienação Parental, demanda de movimentos de defesa de mulheres e crianças."
+    },
+    "PL 1496/2026": {
+      "s": "barra",
+      "p": [
+        "estado",
+        "plataformas"
+      ],
+      "m": ""
+    },
+    "PL 1613/2026": {
+      "s": "avanca",
+      "p": [
+        "trabalho",
+        "privilegios"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
+    "PL 1668/2026": {
+      "s": "avanca",
+      "p": [
+        "religiao",
+        "privilegios"
+      ],
+      "g": "direita"
+    },
+    "PL 1827/2026": {
+      "s": "barra",
+      "p": [
+        "costumes",
+        "plataformas"
+      ],
+      "m": ""
+    },
+    "PL 1880/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo",
+        "privilegios"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
+    "PL 1911/2026": {
+      "s": "avanca",
+      "p": [
+        "ambiente",
+        "privilegios"
+      ],
+      "g": "direita"
+    },
+    "PL 1923/2026": {
+      "s": "avanca",
+      "p": [
+        "privilegios"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
+    "PL 1946/2026": {
+      "s": "avanca",
+      "p": [
+        "instituicoes"
+      ],
+      "g": "direita"
+    },
+    "PL 1954/2026": {
+      "s": "barra",
+      "p": [
+        "ambiente",
+        "privilegios"
+      ],
+      "m": ""
+    },
+    "PL 1976/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo",
+        "privilegios"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
+    "PL 2001/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo",
+        "plataformas"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
+    "PL 2040/2026": {
+      "s": "barra",
+      "p": [
+        "ambiente",
+        "soberania"
+      ],
+      "m": ""
+    },
+    "PL 2041/2026": {
+      "s": "avanca",
+      "p": [
+        "movimentos",
+        "trabalho"
+      ],
+      "g": "direita"
+    },
+    "PL 2077/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
+    "PL 2091/2026": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ],
+      "m": ""
+    },
+    "PL 2110/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
+    "PL 2147/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "direita"
     },
     "PL 2149/2026": {
       "s": "avanca",
@@ -238,6 +441,38 @@
         "trabalho"
       ],
       "g": "extrema"
+    },
+    "PL 2196/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "direita"
+    },
+    "PL 2244/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo",
+        "educacao"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
+    "PL 2250/2026": {
+      "s": "avanca",
+      "p": [
+        "ambiente",
+        "privilegios"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
+    "PL 2253/2026": {
+      "s": "avanca",
+      "p": [
+        "privilegios"
+      ],
+      "g": "direita"
     },
     "PL 2261/2026": {
       "s": "avanca",
