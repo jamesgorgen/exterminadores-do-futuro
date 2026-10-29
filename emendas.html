@@ -134,7 +134,17 @@ h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size
 .temas-p span{font-size:13px;border:1px solid var(--line);border-radius:999px;padding:3px 10px}
 .temas-p span b{font-weight:700}
 .link-obs{display:inline-block;margin-top:16px;font-weight:700}
-.mapa-area{display:grid;grid-template-columns:minmax(0,520px) minmax(0,1fr);gap:20px;align-items:start}
+.mapa-area{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:20px;align-items:start}
+.mapa-caixa{position:relative;min-width:0}
+.mapa-mun{background:var(--sheet);border:1px solid var(--line);border-radius:8px;padding:8px;min-height:300px}
+.mapa-mun svg{display:block;width:100%;height:auto}
+.mapa-mun path.m{cursor:pointer}
+.mapa-mun path.m:hover{stroke:var(--ink);stroke-width:1.2}
+.mapa-mun path.sel{stroke:var(--ink);stroke-width:2}
+.mapa-mun path.bordas{fill:none;stroke:var(--ink);stroke-opacity:.45;stroke-width:.7;pointer-events:none}
+.dica-mapa{position:absolute;pointer-events:none;background:var(--ink);color:var(--sheet);font-size:13px;padding:6px 9px;border-radius:5px;max-width:240px;z-index:3}
+.escala .cx{display:flex;flex:1;height:10px;border-radius:3px;overflow:hidden}
+.escala .cx span{flex:1;background:var(--c)}
 @media (max-width:900px){.mapa-area{grid-template-columns:1fr}}
 .mapa{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;max-width:520px}
 .uf{aspect-ratio:1;max-width:100%;border:0;border-radius:6px;background:var(--fundo);color:var(--texto);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;font-weight:700;font-size:15px;line-height:1.1;padding:2px}
@@ -143,6 +153,9 @@ h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size
 .escala{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-3);margin-top:10px;max-width:520px}
 .escala i{flex:1;height:10px;border-radius:3px;background:linear-gradient(90deg,color-mix(in srgb,var(--red) 12%,var(--sheet)),var(--red))}
 .estado{background:var(--sheet);border:1px solid var(--line);border-radius:8px;padding:18px;min-width:0}
+.estado .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+.nome-uf{font-family:var(--display);font-weight:900;font-size:clamp(28px,3.6vw,40px);text-transform:uppercase;margin:0;line-height:1}
+.btn-uf{margin-top:14px;border:1px solid var(--line);background:var(--sheet);border-radius:6px;padding:7px 12px;font-weight:700;cursor:pointer}
 .pilha{display:flex;height:22px;border-radius:4px;overflow:hidden;margin:6px 0 4px}
 .pilha span{background:var(--cor);min-width:2px}
 .leg-pilha{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--ink-2)}
@@ -185,11 +198,13 @@ h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size
 </div></section>
 
 <section id="estados"><div class="wrap">
-  <h2>Por estado</h2>
-  <p class="intro">Quanto cada estado recebeu em emendas individuais e de quais grupos veio o dinheiro. Estados pequenos recebem muito mais por habitante, porque todos têm três senadores e ao menos oito deputados, cada um com a mesma cota.</p>
-  <div class="chips" id="metricas" role="group" aria-label="O que o mapa mostra"></div>
+  <h2>Por estado e município</h2>
+  <p class="intro">Quanto cada município recebeu em emendas individuais e de quais grupos veio o dinheiro. Escolha um estado para aproximar o mapa e ver a ficha do estado, ou clique num município para ver a sua.</p>
+  <div class="busca"><div class="chips" id="metricas" role="group" aria-label="O que o mapa mostra" style="margin:0"></div>
+    <select id="fUf" aria-label="Estado"></select></div>
   <div class="mapa-area">
-    <div><div class="mapa" id="mapa" role="group" aria-label="Mapa dos estados"></div><div class="escala" id="escala"></div></div>
+    <div class="mapa-caixa"><div id="mapaMun" class="mapa-mun" role="img" aria-label="Mapa dos municípios do Brasil"><p class="carregando">Carregando o mapa…</p></div>
+      <div class="dica-mapa" id="dicaMapa" hidden></div><div class="escala" id="escala"></div><p class="nota" id="notaMapa"></p></div>
     <div id="estado"></div>
   </div>
 </div></section>
@@ -229,13 +244,16 @@ h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size
     <li>Valores. Os quadros e as áreas usam o valor empenhado, que é o compromisso de gasto. O perfil de cada parlamentar mostra também o valor pago, somando os restos a pagar quitados.</li>
     <li>Áreas. Seguem a função orçamentária de cada emenda. Segurança e defesa soma as funções segurança pública e defesa nacional. Transferências especiais (Pix) reúne as emendas sem finalidade definida, qualquer que seja a área em que o dinheiro venha a ser gasto.</li>
     <li>Fatias em vez de médias. Cada parlamentar tem a mesma cota de emendas dentro da sua Casa, e a dos senadores é cerca de duas vezes maior que a dos deputados. Por isso o total por parlamentar quase não varia entre grupos, e médias por área misturam essa diferença de cota com a escolha de destino. Nas áreas, a média também é puxada por poucos parlamentares que concentram valores altos, enquanto a mediana fica em zero sempre que menos da metade do grupo destina algo à área. A fatia do dinheiro de cada grupo e a parcela de parlamentares que destinaram algo mostram melhor as prioridades.</li>
-    <li>Estados. O mapa considera o estado de destino informado em cada emenda. Ficam de fora as emendas sem estado definido (aplicação nacional ou em vários estados), que somam <span id="semUf">R$ 3,6 bi</span>. O valor por habitante usa a população do Censo 2022 do IBGE.</li>
+    <li>Municípios. O mapa liga os pagamentos de cada emenda ao município do favorecido (prefeitura, fundo municipal ou entidade local), pelo nome e pela UF, com a malha municipal do IBGE. Usa o valor efetivamente recebido. Repasses intermediados pela Caixa e transferências a governos estaduais ficam de fora.</li>
+    <li>Estados. A ficha de cada estado considera o estado de destino informado em cada emenda. Ficam de fora as emendas sem estado definido (aplicação nacional ou em vários estados), que somam <span id="semUf">R$ 3,6 bi</span>. O valor por habitante usa a população do Censo 2022 do IBGE.</li>
     <li>Destinos. Os municípios que mais receberam vêm dos pagamentos por favorecido, sem contar a Caixa e os órgãos federais que apenas intermediam os repasses.</li>
     <li>Autoria. Os autores foram ligados aos parlamentares do observatório pelo nome. A ligação cobre <span id="cobertura">91%</span> do valor. O restante é, sobretudo, de ex-parlamentares com emendas de 2023.</li>
   </ul>
 </div></section>
 </main>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
 <script>
 'use strict';
 const NOME_PAUTA = { punitivismo: 'Punitivismo e militarização', drogas: 'Política de drogas', privilegios: 'Privilégios econômicos', religiao: 'Religião e Estado', igualdade: 'Igualdade e direitos' };
@@ -319,24 +337,69 @@ function desenharTemas() {
 }
 
 // ------------------------------------------------ estados
-const GRADE = { RR: [0, 2], AP: [0, 4], AM: [1, 1], PA: [1, 3], MA: [1, 4], CE: [1, 5], RN: [1, 6], AC: [2, 0], RO: [2, 1], MT: [2, 2], TO: [2, 3], PI: [2, 4], PE: [2, 5], PB: [2, 6],
-  GO: [3, 3], DF: [3, 4], BA: [3, 5], AL: [3, 6], MS: [4, 2], SP: [4, 3], MG: [4, 4], ES: [4, 5], SE: [4, 6], PR: [5, 3], RJ: [5, 4], SC: [6, 3], RS: [7, 3] };
-const METRICAS = [['hab', 'Por habitante'], ['ext', 'Fatia da extrema-direita'], ['dir', 'Fatia da direita e da extrema-direita'], ['esq', 'Fatia da esquerda']];
-let metrica = 'hab', ufAtual = 'SP';
+let metrica = 'hab', ufAtual = 'SP', ufZoom = '', TOPO = null, FEAT = null, MUN = null, IX = {}, munAtual = null;
+const UFCOD = { 11: 'RO', 12: 'AC', 13: 'AM', 14: 'RR', 15: 'PA', 16: 'AP', 17: 'TO', 21: 'MA', 22: 'PI', 23: 'CE', 24: 'RN', 25: 'PB', 26: 'PE', 27: 'AL', 28: 'SE', 29: 'BA', 31: 'MG', 32: 'ES', 33: 'RJ', 35: 'SP', 41: 'PR', 42: 'SC', 43: 'RS', 50: 'MS', 51: 'MT', 52: 'GO', 53: 'DF' };
+const ufDe = c => UFCOD[String(c).slice(0, 2)];
+const METRICAS_M = [['hab', 'Por habitante'], ['total', 'Valor recebido'], ['ext', 'Fatia da extrema-direita'], ['dir', 'Fatia da direita e da extrema-direita'], ['esq', 'Fatia da esquerda']];
+const NIVEIS = [10, 24, 38, 52, 66, 82, 100];
+function vm(c, m) {
+  const r = MUN.m[c]; if (!r) return null;
+  const t = r[IX.total];
+  if (m === 'total') return t;
+  if (m === 'hab') return r[IX.pop] ? t / r[IX.pop] : null;
+  if (!t) return null;
+  return m === 'ext' ? r[IX.extrema] / t : m === 'dir' ? (r[IX.extrema] + r[IX.direita]) / t : r[IX.esquerda] / t;
+}
+const fmtM = (v, m) => v == null ? 'sem dados' : m === 'hab' ? 'R$ ' + Math.round(v).toLocaleString('pt-BR') : m === 'total' ? reais(v) : pct(v, 0);
+function quebras(vals) {
+  const v = vals.filter(x => x != null).sort((a, b) => a - b); if (!v.length) return [];
+  return NIVEIS.slice(1).map((_, i) => v[Math.min(v.length - 1, Math.floor(v.length * (i + 1) / NIVEIS.length))]);
+}
+function classe(v, q) { if (v == null) return -1; let i = 0; while (i < q.length && v > q[i]) i++; return i; }
+function desenharMun() {
+  if (!FEAT || !MUN) return;
+  const feats = ufZoom ? FEAT.filter(f => ufDe(f.properties.id) === ufZoom) : FEAT;
+  const W = 800, H = ufZoom ? 640 : 760;
+  const proj = d3.geoMercator().fitExtent([[6, 6], [W - 6, H - 6]], { type: 'FeatureCollection', features: feats });
+  const path = d3.geoPath(proj);
+  const q = quebras(feats.map(f => vm(f.properties.id, metrica)));
+  const obj = TOPO.objects[Object.keys(TOPO.objects)[0]];
+  const bordas = topojson.mesh(TOPO, obj, (a, b) => a === b || ufDe(a.properties.id) !== ufDe(b.properties.id));
+  const caixa = d3.select('#mapaMun').html('');
+  const svg = caixa.append('svg').attr('viewBox', `0 0 ${W} ${H}`).style('overflow', 'hidden');
+  svg.append('g').selectAll('path').data(feats).join('path').attr('class', f => 'm' + (f.properties.id === munAtual ? ' sel' : '')).attr('d', path)
+    .attr('data-c', f => f.properties.id).attr('fill', f => { const k = classe(vm(f.properties.id, metrica), q); return k < 0 ? 'var(--line)' : `color-mix(in srgb, var(--red) ${NIVEIS[k]}%, var(--sheet))`; })
+    .attr('stroke', ufZoom ? 'var(--sheet)' : 'none').attr('stroke-width', ufZoom ? .4 : 0);
+  svg.append('path').attr('class', 'bordas').attr('d', path(bordas));
+  const vis = feats.map(f => vm(f.properties.id, metrica)).filter(v => v != null);
+  $('#escala').innerHTML = vis.length ? `<span class="num">${fmtM(Math.min(...vis), metrica)}</span><span class="cx">${NIVEIS.map(n => `<span style="--c:color-mix(in srgb, var(--red) ${n}%, var(--sheet))"></span>`).join('')}</span><span class="num">${fmtM(Math.max(...vis), metrica)}</span>` : '';
+}
+function desenharMunicipio(c) {
+  const f = FEAT.find(x => x.properties.id === c); const r = MUN.m[c];
+  munAtual = c; const uf = ufDe(c);
+  if (!r) { $('#estado').innerHTML = `<article class="estado"><h3 class="nome-uf">${esc(f ? f.properties.name : '')} (${uf})</h3><p class="sub">Nenhum pagamento de emenda individual a este município, à prefeitura ou a entidades locais no período.</p><button type="button" class="btn-uf" data-ver-uf="${uf}">Ver a ficha de ${esc(D.estados[uf] ? D.estados[uf].nome : uf)}</button></article>`; desenharMun(); return; }
+  const t = r[IX.total], pop = r[IX.pop];
+  const pilha = D.ordem.map(g => `<span style="--cor:${cor(g)};width:${100 * r[IX[g]] / t}%" title="${esc(D.grupos[g].nome)}: ${pct(r[IX[g]] / t, 0)}"></span>`).join('');
+  const leg = D.ordem.filter(g => r[IX[g]] > 0).map(g => `<span style="--cor:${cor(g)}"><i></i>${esc(D.grupos[g].nome)} ${pct(r[IX[g]] / t, 0)}</span>`).join('');
+  const top = (r[IX.top] || []).map(([k, v]) => { const p = D.parl[k]; return p ? `<li><span><button type="button" data-k="${esc(k)}">${esc(p.n)}</button> <span class="sub">${esc(partido(p))}/${esc(p.uf || '')}</span></span><span class="num">${reais(v)}</span></li>` : ''; }).join('');
+  $('#estado').innerHTML = `<article class="estado">
+    <h3 class="nome-uf">${esc(f ? f.properties.name : c)} (${uf})</h3>
+    <div class="kpis">
+      <div class="kpi"><b class="num">${reais(t)}</b><span>recebido, emendas de 2023 a 2026</span></div>
+      <div class="kpi"><b class="num">${pop ? 'R$ ' + Math.round(t / pop).toLocaleString('pt-BR') : '—'}</b><span>por habitante</span></div>
+      <div class="kpi"><b class="num">${pct(r[IX.pix] / t, 0)}</b><span>em emendas Pix</span></div>
+      <div class="kpi"><b class="num">${pop ? pop.toLocaleString('pt-BR') : '—'}</b><span>habitantes (Censo 2022)</span></div>
+    </div>
+    <div class="rot">De onde veio o dinheiro</div>
+    <div class="pilha">${pilha}</div><div class="leg-pilha">${leg}</div>
+    <div style="margin-top:14px"><h4 class="rot" style="margin:0 0 8px">Quem mais destinou</h4><ul class="lista">${top}</ul></div>
+    <button type="button" class="btn-uf" data-ver-uf="${uf}">Ver a ficha de ${esc(D.estados[uf] ? D.estados[uf].nome : uf)}</button>
+  </article>`;
+  desenharMun();
+}
 function valorMetrica(x, m) { if (m === 'hab') return x.total / x.pop; const g = x.grupos; return (m === 'ext' ? g.extrema : m === 'dir' ? g.extrema + g.direita : g.esquerda) / x.total; }
 const fmtMetrica = (v, m) => m === 'hab' ? 'R$ ' + Math.round(v).toLocaleString('pt-BR') : pct(v, 0);
-function desenharMetricas() { $('#metricas').innerHTML = METRICAS.map(([v, t]) => `<button type="button" class="chip" data-metrica="${v}" aria-pressed="${v === metrica}">${t}</button>`).join(''); }
-function desenharMapa() {
-  const E = D.estados, vals = Object.values(E).map(x => valorMetrica(x, metrica));
-  const min = Math.min(...vals), max = Math.max(...vals);
-  $('#mapa').innerHTML = Object.entries(GRADE).map(([uf, [r, c]]) => {
-    const x = E[uf]; if (!x) return '';
-    const v = valorMetrica(x, metrica), t = max > min ? (v - min) / (max - min) : 0;
-    const forte = Math.round(12 + 88 * t);
-    return `<button type="button" class="uf" data-uf="${uf}" aria-pressed="${uf === ufAtual}" style="grid-row:${r + 1};grid-column:${c + 1};--fundo:color-mix(in srgb,var(--red) ${forte}%,var(--sheet));--texto:${forte > 55 ? '#fff' : 'var(--ink)'}" title="${esc(x.nome)}: ${fmtMetrica(v, metrica)}">${uf}<small class="num">${fmtMetrica(v, metrica).replace('R$ ', '')}</small></button>`;
-  }).join('');
-  $('#escala').innerHTML = `<span class="num">${fmtMetrica(min, metrica)}</span><i></i><span class="num">${fmtMetrica(max, metrica)}</span>`;
-}
+function desenharMetricas() { $('#metricas').innerHTML = (MUN && !MUN.tem_pop ? METRICAS_M.filter(m => m[0] !== 'hab') : METRICAS_M).map(([v, t]) => `<button type="button" class="chip" data-metrica="${v}" aria-pressed="${v === metrica}">${t}</button>`).join(''); }
 function desenharEstado(uf) {
   const x = D.estados[uf]; if (!x) return; ufAtual = uf;
   const pilha = D.ordem.map(g => `<span style="--cor:${cor(g)};width:${100 * x.grupos[g] / x.total}%" title="${esc(D.grupos[g].nome)}: ${pct(x.grupos[g] / x.total, 0)}"></span>`).join('');
@@ -345,7 +408,7 @@ function desenharEstado(uf) {
   const T = Object.fromEntries(D.temas.map(t => [t.id, t.nome]));
   const areas = Object.entries(x.areas).filter(([t, v]) => v > 0).sort((a, b) => b[1] - a[1]).slice(0, 6);
   $('#estado').innerHTML = `<article class="estado">
-    <h3 class="nome" style="font-family:var(--display);font-weight:900;font-size:clamp(28px,3.6vw,40px);text-transform:uppercase;margin:0">${esc(x.nome)}</h3>
+    <h3 class="nome-uf">${esc(x.nome)}</h3>
     <div class="kpis">
       <div class="kpi"><b class="num">${reais(x.total)}</b><span>empenhado, 2023 a 2026</span></div>
       <div class="kpi"><b class="num">R$ ${Math.round(x.total / x.pop).toLocaleString('pt-BR')}</b><span>por habitante</span></div>
@@ -362,7 +425,32 @@ function desenharEstado(uf) {
       <div><h4>Principais áreas</h4><ul class="lista">${areas.map(([t, v]) => `<li><span>${esc(T[t] || t)}</span><span class="num">${pct(v / x.total, 0)}</span></li>`).join('')}</ul></div>
     </div>
   </article>`;
-  desenharMapa();
+}
+
+function iniciarMapa() {
+  $('#fUf').innerHTML = '<option value="">Brasil</option>' + Object.entries(D.estados).sort((a, b) => a[1].nome.localeCompare(b[1].nome)).map(([uf, x]) => `<option value="${uf}">${esc(x.nome)}</option>`).join('');
+  $('#fUf').addEventListener('change', () => { ufZoom = $('#fUf').value; munAtual = null; if (ufZoom) desenharEstado(ufZoom); desenharMun(); });
+  desenharEstado(ufAtual);
+  Promise.all([fetch('dados/municipios.topo.json').then(r => r.json()), fetch('dados/emendas-municipios.json').then(r => r.json())]).then(([t, m]) => {
+    TOPO = t; MUN = m; MUN.campos.forEach((c, i) => IX[c] = i);
+    FEAT = topojson.feature(TOPO, TOPO.objects[Object.keys(TOPO.objects)[0]]).features;
+    // O d3 espera os anéis no sentido horário; polígonos no sentido inverso cobririam o globo inteiro.
+    FEAT.forEach(f => { if (d3.geoArea(f) > 2 * Math.PI) { const g = f.geometry; if (g.type === 'Polygon') g.coordinates.forEach(r => r.reverse()); else if (g.type === 'MultiPolygon') g.coordinates.forEach(p => p.forEach(r => r.reverse())); } });
+    if (!MUN.tem_pop) metrica = 'total';
+    desenharMetricas(); desenharMun();
+    $('#notaMapa').textContent = `O mapa usa os pagamentos já feitos a prefeituras, fundos municipais e entidades sediadas em cada município (${reais(MUN.total_mapa)} de ${reais(MUN.total_pago)} pagos). Repasses intermediados pela Caixa e transferências a governos estaduais não têm município identificado. As cores dividem os municípios visíveis em sete faixas com o mesmo número de municípios.`;
+    const dica = $('#dicaMapa');
+    $('#mapaMun').addEventListener('pointermove', e => {
+      const pth = e.target.closest('path.m'); if (!pth) { dica.hidden = true; return; }
+      const f = FEAT.find(x => x.properties.id === pth.dataset.c);
+      const caixa = $('.mapa-caixa').getBoundingClientRect();
+      dica.innerHTML = `<b>${esc(f.properties.name)} (${ufDe(f.properties.id)})</b><br>${fmtM(vm(f.properties.id, metrica), metrica)}`;
+      dica.hidden = false;
+      const x = Math.min(e.clientX - caixa.left + 12, caixa.width - 200);
+      dica.style.left = x + 'px'; dica.style.top = (e.clientY - caixa.top + 12) + 'px';
+    });
+    $('#mapaMun').addEventListener('pointerleave', () => { dica.hidden = true; });
+  }).catch(() => { $('#mapaMun').innerHTML = '<p class="carregando">Não foi possível carregar o mapa dos municípios.</p>'; });
 }
 
 // ------------------------------------------------ 3. parlamentares
@@ -413,8 +501,9 @@ document.addEventListener('click', e => {
   const a = e.target.closest('[data-ano]'); if (a) { ano = a.dataset.ano; desenharAnos(); desenharGrupos(); desenharGrafico(); return; }
   const r = e.target.closest('#ranking [data-k]'); if (r) { desenharPerfil(r.dataset.k); return; }
   const t = e.target.closest('.tema [data-k], .estado [data-k]'); if (t) { abrir(t.dataset.k); return; }
-  const m = e.target.closest('[data-metrica]'); if (m) { metrica = m.dataset.metrica; desenharMetricas(); desenharMapa(); return; }
-  const u = e.target.closest('[data-uf]'); if (u) { desenharEstado(u.dataset.uf); }
+  const m = e.target.closest('[data-metrica]'); if (m) { metrica = m.dataset.metrica; desenharMetricas(); desenharMun(); return; }
+  const vu = e.target.closest('[data-ver-uf]'); if (vu) { ufZoom = vu.dataset.verUf; $('#fUf').value = ufZoom; munAtual = null; desenharEstado(ufZoom); desenharMun(); return; }
+  const pm = e.target.closest('#mapaMun path.m'); if (pm) { desenharMunicipio(pm.dataset.c); }
 });
 ['#fGrupo', '#fOrdem'].forEach(s => $(s).addEventListener('change', desenharRanking));
 $('#busca').addEventListener('input', () => {
@@ -429,7 +518,7 @@ fetch('dados/emendas.json').then(r => { if (!r.ok) throw new Error('arquivo de e
   $('#nomes').innerHTML = lista().map(p => `<option value="${esc(p.n)}">`).join('');
   $('#cobertura').textContent = pct(1 - D.cobertura.sem_vinculo / D.cobertura.total, 0);
   desenharAnos(); desenharGrupos(); desenharGrafico(); desenharTemas();
-  if (D.estados) { $('#semUf').textContent = reais(D.sem_uf); desenharMetricas(); desenharEstado(ufAtual); } else document.getElementById('estados').hidden = true;
+  if (D.estados) { $('#semUf').textContent = reais(D.sem_uf); iniciarMapa(); } else document.getElementById('estados').hidden = true;
   const primeiro = lista().filter(p => p.g === 'extrema').sort((a, b) => b.emp - a.emp)[0];
   desenharPerfil(primeiro.k);
 }).catch(e => { $('#perfil').innerHTML = `<p class="carregando">Não foi possível carregar as emendas (${esc(e.message)}).</p>`; });

@@ -7,12 +7,12 @@ BASES = ['https://servicodados.ibge.gov.br/api/v3/agregados/4714/periodos/2022/v
          'https://apisidra.ibge.gov.br/values/t/4714/n6/in%20n3%20{uf}/v/93/p/2022']
 def baixar(url):
     req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (observatorio exterminadores-do-futuro)', 'Accept': 'application/json'})
-    with urllib.request.urlopen(req, timeout=120) as r:
+    with urllib.request.urlopen(req, timeout=25) as r:
         return json.load(r)
 pop = {}
 for uf in UFS:
     ok = False
-    for tent in range(3):
+    for tent in range(2):
         for i, base in enumerate(BASES):
             try:
                 j = baixar(base.format(uf=uf))
@@ -29,6 +29,8 @@ for uf in UFS:
         if ok: break
         time.sleep(5 * (tent + 1))
     print(uf, 'ok' if ok else 'FALHOU', len(pop))
+    if not ok and not pop:
+        raise SystemExit('IBGE inacessível; a população fica para a próxima execução')
 if len(pop) < 5000:
     raise SystemExit(f'poucos municípios: {len(pop)}')
 json.dump({'fonte': 'IBGE, Censo 2022, tabela 4714', 'pop': pop}, open(os.path.join(RAIZ, 'dados', 'populacao-municipios.json'), 'w'), separators=(',', ':'))

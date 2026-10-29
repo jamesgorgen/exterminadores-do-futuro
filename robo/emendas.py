@@ -142,6 +142,34 @@ for uf,x in e[e.uf.notna()].groupby('uf'):
       'pix':round(x[x.pix].emp.sum()),'grupos':porg,'bancada':bancada,'fora':round(fora),
       'top':[dict(nome_par(k),v=round(v)) for k,v in top.items()],
       'munis':[[titulo(m_),round(v)] for m_,v in mun.items()],'areas':areas}
+
+# ------------------------------------------------ distribuição por município
+# Pagamentos a prefeituras, fundos municipais e entidades locais, ligados ao código do IBGE pelo nome e pela UF.
+UFCOD={'11':'RO','12':'AC','13':'AM','14':'RR','15':'PA','16':'AP','17':'TO','21':'MA','22':'PI','23':'CE','24':'RN','25':'PB','26':'PE','27':'AL','28':'SE','29':'BA',
+ '31':'MG','32':'ES','33':'RJ','35':'SP','41':'PR','42':'SC','43':'RS','50':'MS','51':'MT','52':'GO','53':'DF'}
+def chave_mun(nome,uf): return re.sub(r'[^A-Z]','',n(nome).replace("D'",'D').replace('-',''))+'|'+uf
+topo=json.load(open(os.path.join(OBS,'municipios.topo.json')))
+obj=list(topo['objects'].values())[0]['geometries']
+cod_por_nome={chave_mun(g['properties']['name'],UFCOD[g['properties']['id'][:2]]):g['properties']['id'] for g in obj}
+NAT_MUN=r'Município|Fundo Público da Administração Direta Municipal|Associação Privada|Fundação Privada|Organização Religiosa|Cooperativa|Organização Social|Sociedade Empresária|Empresário|Entidade Sindical|Serviço Social'
+fmun=fav[fav['Código da Emenda'].str[:4].ge('2023') & fav['Natureza Jurídica'].fillna('').str.contains(NAT_MUN) & ~fav['Natureza Jurídica'].fillna('').str.contains('Estadual|Federal')].copy()
+fmun['cod']=[cod_por_nome.get(chave_mun(m,u)) for m,u in zip(fmun['Município Favorecido'].fillna(''),fmun['UF Favorecido'].fillna(''))]
+cob_mun=fmun[fmun.cod.notna()].valor.sum()/fmun.valor.sum() if len(fmun) else 0
+fmun=fmun[fmun.cod.notna()]
+fmun['pixm']=fmun['Tipo de Emenda'].str.contains('Especiais')
+popm={}
+try: popm=json.load(open(os.path.join(OBS,'populacao-municipios.json')))['pop']
+except Exception: pass
+ORD=[g for g,_,_ in GRUPOS]
+municipios={}
+for cod,x in fmun.groupby('cod'):
+    gv=x.groupby('g').valor.sum()
+    top=x.groupby('k').valor.sum().sort_values(ascending=False).head(3)
+    municipios[cod]=[round(x.valor.sum()),*[round(gv.get(g,0)) for g in ORD],round(x[x.pixm].valor.sum()),popm.get(cod,0),[[k,round(v)] for k,v in top.items()]]
+json.dump({'gerado':pd.Timestamp.now().isoformat()[:19],'campos':['total',*ORD,'pix','pop','top'],'cobertura_nomes':round(cob_mun,4),
+  'total_pago':round(fav[fav['Código da Emenda'].str[:4].ge('2023')].valor.sum()),'total_mapa':round(fmun.valor.sum()),
+  'tem_pop':bool(popm),'m':municipios},open(os.path.join(os.path.dirname(SAIDA),'emendas-municipios.json'),'w'),ensure_ascii=False,separators=(',',':'))
+print('municípios',len(municipios),'ligação por nome',round(cob_mun,3),'pop',len(popm))
 saida={'gerado':pd.Timestamp.now().isoformat()[:19],'fonte':'Portal da Transparência, emendas parlamentares','periodo':'2023 a 2026 (2026 parcial)',
   'grupos':gr,'ordem':[g for g,_,_ in GRUPOS],'perfil':perfil,'temas':temas,'parl':parl,
   'cobertura':{'total':round(tot),'sem_vinculo':round(semv)},'estados':estados,'sem_uf':round(semuf)}
