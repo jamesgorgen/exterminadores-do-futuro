@@ -539,7 +539,7 @@ async function chamarClaude(sistema, texto, maxTokens) {
   const corpo = { model: MODELO, max_tokens: maxTokens, thinking: { type: 'disabled' },
     system: [{ type: 'text', text: sistema, cache_control: { type: 'ephemeral' } }], messages: [{ role: 'user', content: texto }] };
   let atraso = 3000;
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 7; i++) {
     let r;
     try {
       r = await rede.fetch('https://api.anthropic.com/v1/messages', { method: 'POST', signal: AbortSignal.timeout(120000),
@@ -547,14 +547,17 @@ async function chamarClaude(sistema, texto, maxTokens) {
     } catch (e) { await espera(atraso); atraso *= 2; continue; }
     if (r.status === 400 && corpo.thinking) { delete corpo.thinking; continue; }
     if (r.status === 401 || r.status === 403) throw new Error('chave da Anthropic recusada');
-    if (!r.ok) { await espera(atraso); atraso *= 2; continue; }
+    if (!r.ok) { contar('ia_http_' + r.status); const ra = +r.headers.get('retry-after'); await espera(ra ? ra * 1000 + 500 : atraso); atraso = Math.min(atraso * 2, 60000); continue; }
     const j = await r.json();
     const t = (j.content || []).filter(b => b.type === 'text').map(b => b.text).join('');
     let res;
     try { res = JSON.parse(t.slice(t.indexOf('{'), t.lastIndexOf('}') + 1)).r; } catch (e) { res = null; }
     if (Array.isArray(res)) return res;
+    contar('ia_json_invalido' + (j.stop_reason === 'max_tokens' ? '_cortado' : ''));
+    if (j.stop_reason === 'max_tokens') corpo.max_tokens = Math.min(16000, corpo.max_tokens * 2);
     await espera(atraso);
   }
+  contar('ia_lotes_falharam');
   return null;
 }
 
@@ -618,7 +621,7 @@ Responda somente com JSON válido, neste formato.
 
 async function graduarLote(itens, sistema, versao) {
   const lista = itens.map((it, k) => `${k + 1}. ${it.chave}. ${String(it.texto).slice(0, 700)}`).join('\n');
-  const res = await chamarClaude(sistema, 'ITENS\n' + lista, Math.min(8000, 900 + itens.length * 110));
+  const res = await chamarClaude(sistema, 'ITENS\n' + lista, Math.min(10000, 1500 + itens.length * 160));
   if (!res) return 0;
   let n = 0;
   for (const x of res) {
@@ -650,7 +653,7 @@ async function graduarPendentes(itens, exemplos, nCorrecoes) {
   await Motor.emParalelo(lotes.map(l => async () => {
     try { feitos += await graduarLote(l, sistema, versao); }
     catch (e) { erro('grau', e); if (/recusada/.test(e.message)) throw e; }
-  }), 4);
+  }), 2);
   contar('graduados', feitos);
 }
 
