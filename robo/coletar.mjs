@@ -95,6 +95,41 @@ async function baixar(url, { tentativas = 4, tempo = 90000, tipo = 'json' } = {}
   throw new Error('falhou ' + url);
 }
 
+// XML simples -> objeto (filhos repetidos viram lista, atributos são ignorados, texto vira string).
+function xmlParaObjeto(xml) {
+  const raiz = {}; const pilha = [{ nome: '#', obj: raiz }];
+  const re = /<(\/?)([A-Za-z_][\w.:-]*)[^>]*?(\/?)>|([^<]+)/g;
+  let m;
+  xml = String(xml).replace(/<\?[\s\S]*?\?>|<!--[\s\S]*?-->|<!DOCTYPE[^>]*>/g, '');
+  while ((m = re.exec(xml))) {
+    const topo = pilha[pilha.length - 1];
+    if (m[4] !== undefined) { const t = m[4].trim(); if (t) topo.texto = (topo.texto || '') + t.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, '&'); continue; }
+    if (m[1]) {   // fechamento
+      const no = pilha.pop(); const pai = pilha[pilha.length - 1];
+      const valor = Object.keys(no.obj).length ? no.obj : (no.texto || '');
+      const ja = pai.obj[no.nome];
+      pai.obj[no.nome] = ja === undefined ? valor : Array.isArray(ja) ? [...ja, valor] : [ja, valor];
+      continue;
+    }
+    if (m[3]) { const pai = topo; const ja = pai.obj[m[2]]; pai.obj[m[2]] = ja === undefined ? '' : Array.isArray(ja) ? [...ja, ''] : [ja, '']; continue; }
+    pilha.push({ nome: m[2], obj: {} });
+  }
+  return raiz;
+}
+// Listas de um único item no XML viram objeto; esta função garante a lista.
+const comoLista = v => Array.isArray(v) ? v : v && typeof v === 'object' ? [v] : [];
+
+// Senado: aceita JSON ou XML e guarda no diagnóstico a primeira resposta bruta de cada tipo de consulta.
+async function baixarSenado(url, rotulo, opcoes = {}) {
+  const texto = await baixar(url, Object.assign({}, opcoes, { tipo: 'texto' }));
+  if (!diag.brutos) diag.brutos = {};
+  if (!diag.brutos[rotulo]) diag.brutos[rotulo] = { url, tamanho: texto.length, inicio: texto.slice(0, 1500) };
+  const t = texto.trim();
+  if (!t) return null;
+  if (t[0] === '<') return xmlParaObjeto(t);
+  return JSON.parse(t);
+}
+
 // Procura um campo pelo nome, sem diferenciar maiúsculas, inclusive em objetos aninhados de um nível
 // ("deputado_id", "deputado_.id" ou "deputado.id").
 function pega(o, ...nomes) {
@@ -185,6 +220,9 @@ function arquivoProposicoes(a) {
   return proposicoesPorAno[a];
 }
 function guardarProposicao(it) {
+  // Algumas datas de apresentação vêm erradas na fonte (PL de 2026 com data de 2009). O ano do número prevalece.
+  const anoChave = +String(it.c).split('/')[1];
+  if (anoChave && it.d && ano(it.d) !== anoChave) { contar('proposicoes_data_corrigida'); it.d = `${anoChave}-01-01`; }
   const mapa = arquivoProposicoes(ano(it.d || it.c.split('/')[1]));
   const ja = mapa.get(it.c);
   if (ja) {
@@ -229,9 +267,13 @@ async function coletarProposicoesSenado(ini, fim) {
   log(`Senado, proposições em ${janelas.length} quinzenas`);
   const porNome = new Map(Object.entries(parlamentares.p).filter(([k]) => k[0] === 'S').map(([k, v]) => [chaveNome(v.n), k]));
   await Motor.emParalelo(janelas.map(([a, b]) => async () => {
-    let lista;
-    try { lista = registros(await baixar(Motor.urlSenado(TIPOS, a, b))); }
-    catch (e) { erro(`proposições Senado ${a}`, e); return; }
+    // Uma consulta por tipo, porque a API pode não aceitar a sigla repetida.
+    let lista = [];
+    for (const tipo of TIPOS) {
+      try { lista = lista.concat(registros(await baixarSenado(Motor.urlSenado([tipo], a, b), 'senado_processo'))); }
+      catch (e) { erro(`proposições Senado ${tipo} ${a}`, e); }
+    }
+    contar('senado_processo_registros', lista.length);
     amostra('senado_proposicao', lista[0]);
     for (const d of lista) {
       if (pega(d, 'objetivo') === 'Revisora') continue;
@@ -269,6 +311,7 @@ function arquivoVotacoes(a) {
 // e com os votos agrupados por tipo ({S: [códigos], N: [...], A, O, '-'}), o que reduz o tamanho dos arquivos.
 function guardarVotacao(v) {
   if (!v || !v.d || !Object.keys(v.v || {}).length) return;
+  if (!Object.values(v.v).some(c => c === 'S' || c === 'N')) { contar('votacoes_sem_sim_nao'); return; }
   const b = posicao(v.v, v.ps || {}, NUCLEO);
   const g = posicao(v.v, v.ps || {}, REFERENCIA);
   const grupos = {};
@@ -428,12 +471,13 @@ async function coletarVotacoesSenado(ini, fim) {
   log('Senado, votações de plenário');
   for (const [a, b] of Motor.janelasMensais(ini, fim)) {
     let achadas = [];
-    for (const fmt of [s => s, s => s.replace(/-/g, '')]) {
+    for (const fmt of [s => s.replace(/-/g, ''), s => s]) {
       try {
-        achadas = acharVotacoes(await baixar(`${API_SENADO}/votacao?dataInicio=${fmt(a)}&dataFim=${fmt(b)}`));
+        achadas = acharVotacoes(await baixarSenado(`${API_SENADO}/votacao?dataInicio=${fmt(a)}&dataFim=${fmt(b)}`, 'senado_votacao_' + (fmt(a) === a ? 'iso' : 'compacta')));
         if (achadas.length) break;
-      } catch (e) { if (fmt(a) === a.replace(/-/g, '')) contar('senado_plenario_falha_mes'); }
+      } catch (e) { erro(`votações Senado ${fmt(a)}`, e); }
     }
+    contar('senado_plenario_votacoes_achadas', achadas.length);
     if (achadas[0]) { amostra('senado_votacao', achadas[0].votacao); amostra('senado_voto', achadas[0].votos[0]); }
     achadas.forEach(x => guardarVotacao(votacaoSenado(x, true)));
   }
@@ -452,12 +496,13 @@ async function coletarVotacoesSenado(ini, fim) {
     ];
     for (const u of urls) {
       try {
-        const j = await baixar(u, { tentativas: 2 });
+        const j = await baixarSenado(u, 'senado_comissao', { tentativas: 2 });
         const achadas = acharVotacoes(j);
+        contar('senado_comissao_votacoes_achadas', achadas.length);
         if (achadas[0]) { amostra('senado_comissao_votacao', achadas[0].votacao); amostra('senado_comissao_voto', achadas[0].votos[0]); }
         achadas.forEach(x => guardarVotacao(votacaoSenado(x, false, com)));
         return;
-      } catch (e) { if (u === urls[urls.length - 1]) contar('senado_comissao_falha'); }
+      } catch (e) { if (u === urls[urls.length - 1]) { contar('senado_comissao_falha'); if (!diag.erros.some(x => x.startsWith('comissão Senado'))) erro(`comissão Senado ${com}`, e); } }
     }
   }), 3);
 }
@@ -616,7 +661,12 @@ export async function executar() {
     indice[k] = { n: p.n, c: p.c, p: p.p, s: p.s, uf: p.uf, i, vd: c.vd, va: c.va, cl: classe, np: pr.n, nd: pr.d, nx: pr.x, pp: pr.pp };
   }
 
-  // Gravação.
+  // Gravação. Apaga arquivos de anos anteriores à legislatura, criados por datas erradas da fonte.
+  fs.mkdirSync(DADOS, { recursive: true });
+  for (const f of fs.readdirSync(DADOS)) {
+    const mm = /^(proposicoes|votacoes)-(\d{4})\.json$/.exec(f);
+    if (mm && +mm[2] < 2023) { fs.unlinkSync(path.join(DADOS, f)); delete (mm[1] === 'proposicoes' ? proposicoesPorAno : votacoesPorAno)[mm[2]]; }
+  }
   for (const [a, m] of Object.entries(proposicoesPorAno)) {
     const itens = [...m.values()].sort((x, y) => (y.d || '').localeCompare(x.d || ''));
     if (itens.length) gravarJson(`proposicoes-${a}.json`, { ano: +a, itens }, true);
