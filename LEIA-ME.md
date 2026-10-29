@@ -1,159 +1,101 @@
-# Os exterminadores do futuro
+# Os exterminadores do futuro — observatório da direita no Congresso
 
-Flávio diz uma coisa e propõe outra. A página põe lado a lado trechos literais do programa de governo de Flávio Bolsonaro e os projetos que ele e seus aliados apresentam no Congresso.
+O que a direita faz no Congresso, todos os dias. Um observatório dos movimentos da direita e da extrema-direita na Câmara e no Senado, a partir dos projetos apresentados e das votações nominais, com os dados oficiais das duas Casas atualizados diariamente.
 
-Projetos defendidos pelos parlamentares conservadores e reacionários no Brasil organizados por temas que ameaçam nossos direitos e do Brasil.
+A versão anterior, da campanha do segundo turno de 2026, está guardada no repositório `exterminadores-arquivo`.
 
-A ferramenta reúne os projetos apresentados por PL, Novo, PP, União Brasil, Podemos e Republicanos (inclusive com a sigla antiga PRB) na Câmara e no Senado e os classifica pelos temas dos Cadernos do Futuro do Brasil.
+## Como funciona
+
+Um robô roda todo dia às 6h17 (horário de Brasília) no GitHub Actions, de graça para repositórios públicos.
+
+1. Lista os deputados das legislaturas desde 2023 e reconhece os senadores pelos votos e pela autoria.
+2. Reúne os projetos de lei (PL, PLP, PEC e PDL) apresentados por deputados e senadores de todos os partidos. Na Câmara, a busca é feita pela autoria de cada deputado. No Senado, quinzena a quinzena, lendo os autores.
+3. Reúne as votações nominais dos plenários e das comissões. Na Câmara, pelos arquivos anuais completos de votações, votos, orientações e objetos, com a API como reserva. No Senado, pela API de votações de plenário e pela de votações em comissão.
+4. Classifica cada projeto e cada votação pelas pautas de `pautas.js`, com o Claude Haiku. O que já foi classificado não é refeito.
+5. Calcula o índice de alinhamento de cada parlamentar e grava tudo na pasta `dados`.
+
+A página (`index.html`) só lê os arquivos da pasta `dados`. Não depende de servidor nem do Worker do Cloudflare.
+
+## Quem é a direita
+
+- **Núcleo.** Parlamentares de PL, Novo, PP, União Brasil, Republicanos e Podemos (lista `nucleo` em `pautas.js`).
+- **Posição da direita numa votação.** A maioria dos votos Sim e Não do núcleo, quando ao menos 60% dele vota no mesmo sentido. O PT é a referência do campo do governo, pela mesma regra.
+- **Votações disputadas.** Aquelas em que a direita e o PT votam em sentidos opostos.
+- **Índice de alinhamento.** Porcentagem das votações disputadas em que o parlamentar votou como a direita. Exige ao menos 10 votações disputadas.
+- **Alinhados e próximos.** Parlamentares de outros partidos com índice de 80% ou mais (alinhados) ou de 60% a 80% (próximos).
+
+As regras ficam em `pautas.js` (campo `indice`). Mudanças nelas valem a partir da execução seguinte. Mudanças no núcleo exigem uma execução completa, porque a posição do bloco é gravada em cada votação na hora da coleta.
+
+## Pautas e grau
+
+São 16 pautas, listadas em `pautas.js` com a descrição do que entra e do que caracteriza a extrema-direita. Para cada projeto e votação, a IA indica
+
+- se o item faz avançar a pauta da direita (`avanca`), se vai contra ela (`barra`) ou se não trata de nenhuma;
+- quais pautas, de uma a três;
+- o grau, direita ou extrema-direita, quando o item faz avançar a pauta;
+- um motivo curto.
+
+O grau vale para o projeto ou para a votação, e nunca para a pessoa. A classificação lê só a ementa e aparece na página com a marca IA.
+
+Para refazer todas as classificações depois de mudar as pautas, troque `VERSAO_CLASSIFICACAO` em `robo/coletar.mjs` e rode o robô.
 
 ## Arquivos
 
 | Arquivo | Para que serve |
 |---|---|
-| `index.html` | A página da ferramenta |
-| `motor.js` | Consulta as APIs, filtra por partido e classifica as ementas |
-| `promessas.js` | Trechos do programa de Flávio, com página, e os temas onde a prática aparece |
-| `taxonomia.js` | Temas e termos usados na classificação (é aqui que se ajustam os termos) |
-| `config.js` | Endereço do serviço intermediário |
-| `projetos.json` | Projetos já buscados, para a página abrir pronta (gerado pelo modo de administração) |
-| `triagens.json` | Casos verificados, triagens e avaliações já feitas (gerado pelo modo de administração) |
-| `compartilhar.jpg` | Imagem que aparece na prévia do link no WhatsApp e nas redes |
-| `worker.js` | Serviço intermediário para o Cloudflare Workers |
+| `index.html` | A página |
+| `pautas.js` | Pautas, núcleo e regras do índice |
+| `robo/motor.js` | Funções de busca e de classificação por tema, usadas pelo robô |
+| `taxonomia.js` | Temas dos Cadernos do Futuro, usados para marcar os temas das ementas |
+| `robo/coletar.mjs` | O robô de coleta |
+| `.github/workflows/atualizar.yml` | O agendamento do robô no GitHub Actions |
+| `compartilhar.jpg` | Imagem da prévia do link |
+| `CNAME` | Domínio exterminadores.com.br |
+| `dados/` | Gerada pelo robô (não edite à mão) |
+
+Na pasta `dados`
+
+| Arquivo | Conteúdo |
+|---|---|
+| `resumo.json` | Totais e números por pauta |
+| `indice.json` | Índice e contagens de cada parlamentar |
+| `proposicoes-direita.json` | Projetos que fazem avançar alguma pauta |
+| `votacoes-resumo.json` | Todas as votações nominais, sem os votos individuais |
+| `votacoes-AAAA.json` | Votações do ano com o voto de cada parlamentar |
+| `proposicoes-AAAA.json` | Todos os projetos do ano |
+| `classificacoes.json` | Classificações já feitas pela IA |
+| `parlamentares.json` | Cadastro de deputados e senadores |
+| `diagnostico.json` | Amostras dos dados brutos, contagens e erros da última execução |
+| `estado.json` | Controle interno do robô |
+| `verificados.json` | Opcional. Casos conferidos pela equipe, mantidos à mão |
 
 ## Publicação
 
-1. **Serviço intermediário no Cloudflare.** O Worker se chama `exterminadores-proxy`. Cole nele o conteúdo de `worker.js` e publique. A lista `ORIGENS_PERMITIDAS` já contém o exterminadores.com.br e, durante a transição, os endereços antigos (lulafezefara.com.br e GitHub Pages).
-2. **Segredos.** Em Settings, Variables and Secrets, cadastre como Secret a `ANTHROPIC_API_KEY` e a `ADMIN_KEY` (veja a seção Chave de administração).
-3. **Banco D1.** Veja a seção seguinte.
-4. **Página.** Suba `index.html`, `motor.js`, `taxonomia.js`, `promessas.js`, `config.js`, `projetos.json`, `triagens.json`, `compartilhar.jpg` e `CNAME` para a raiz do repositório `exterminadores-do-futuro`, que publica o exterminadores.com.br pelo GitHub Pages. Depois de publicar, recarregue com Ctrl+Shift+R.
-
-## Banco D1 (armazenamento permanente das triagens)
-
-Triagens e avaliações ficam guardadas num banco D1 do próprio Cloudflare. Ele é único para o mundo todo e não expira, então o que uma pessoa triou serve a todos os visitantes, em qualquer cidade, sem nova chamada à IA. O volume da ferramenta cabe com folga no plano gratuito.
-
-Para ligar o banco, uma vez só.
-
-1. No painel do Cloudflare, abra **Storage & Databases**, depois **D1 SQL Database**, e clique em **Create**. Dê o nome `exterminadores` e confirme.
-2. Abra o Worker `exterminadores-proxy`, vá em **Settings**, depois **Bindings**, e clique em **Add**. Escolha **D1 database**, escreva `DB` (maiúsculo) como nome da variável e selecione o banco `exterminadores`. Salve e publique (Deploy).
-3. Abra a página com `?admin` no fim do endereço (https://exterminadores.com.br/?admin). A faixa amarela de administração deve dizer que o banco do Worker está ligado.
-
-As tabelas são criadas sozinhas na primeira chamada. Não é preciso rodar nenhum comando. Sem o banco, o Worker continua funcionando com o cache local do Cloudflare, como antes, mas esse cache vale só para o data center de quem triou e pode ser apagado a qualquer momento.
-
-Triagens antigas que ainda estiverem nesse cache local passam para o banco automaticamente quando alguém pede a triagem do mesmo projeto.
-
-## Triagens publicadas e modo de administração
-
-A página procura as triagens já feitas em três lugares, nesta ordem.
-
-1. **`triagens.json`**, publicado na mesma pasta da página. É o estoque principal. Qualquer visitante já abre a legislatura triada sem nenhuma chamada ao Worker para isso.
-2. **Banco do Worker.** Depois de cada busca, a página pergunta ao Worker, pela rota `/consultar`, o que já foi triado por qualquer pessoa e ainda não está no arquivo. Essa consulta não chama a IA e não custa créditos.
-3. **Navegador de quem triou.** O que cada pessoa tria fica também no navegador dela, como reserva.
-
-O botão de triagem só manda à IA o que não estiver em nenhum desses lugares.
-
-**Para atualizar o `triagens.json`.** Abra a página com `?admin` no endereço. A faixa de administração mostra quantas triagens estão no arquivo publicado, no banco e no seu navegador. O botão **Exportar triagens.json** junta tudo (banco, arquivo publicado e navegador) e baixa um arquivo novo. Suba esse arquivo para a raiz do repositório no GitHub, no lugar do anterior. Vale repetir isso de tempos em tempos para incorporar os projetos novos.
-
-O arquivo traz uma triagem por linha, então o histórico do GitHub mostra exatamente o que entrou a cada atualização.
-
-**Versão do critério.** O arquivo só é aceito se a versão gravada nele for igual à constante `VERSAO_TRIAGEM` do `index.html` (hoje `t7`). Ao mudar o critério da triagem, troque `VERSAO_TRIAGEM` no `worker.js` e no `index.html`, rode as triagens de novo e exporte um novo arquivo. O mesmo vale para `VERSAO_AVALIACAO`.
-
-## Página pronta ao abrir (projetos.json)
-
-Sem o `projetos.json`, cada visitante precisa clicar em Buscar projetos e esperar as centenas de consultas às APIs. Com ele, a página abre com os projetos já carregados, a triagem preenchida e a data em que os dados foram reunidos.
-
-**Para gerar.** Abra `?admin`, escolha o recorte (por exemplo, a legislatura atual, com todos os partidos, as duas Casas e os tipos desejados) e clique em Buscar projetos. Se aparecer o aviso de que parte dos dados não chegou, use Buscar de novo o que faltou. Depois clique em **Exportar projetos.json** e suba o arquivo para o repositório. Entram no arquivo só os projetos ligados a algum tema, que são os que a página mostra.
-
-Quem clicar em Buscar projetos continua fazendo a busca ao vivo, o que serve para ver o que foi apresentado depois da data do arquivo. Vale gerar um arquivo novo a cada poucos dias e, em seguida, triar os projetos novos e exportar o `triagens.json`.
+1. **Arquivos.** Suba para o repositório `exterminadores-do-futuro` os arquivos desta pasta. Os arquivos da versão anterior (`config.js`, `promessas.js`, `projetos.json`, `triagens.json` e o `motor.js` da raiz) foram retirados.
+2. **Agendamento.** Crie o arquivo `.github/workflows/atualizar.yml`. Pelo site do GitHub, use Add file, Create new file, escreva o caminho completo no nome do arquivo e cole o conteúdo.
+3. **Chave da Anthropic.** Em Settings, Secrets and variables, Actions, crie o segredo `ANTHROPIC_API_KEY`.
+4. **Primeira execução.** Em Actions, Atualizar dados, Run workflow, escolha `completo`. A primeira execução reúne a legislatura inteira e leva cerca de 20 minutos. As seguintes rodam sozinhas todo dia e levam poucos minutos.
 
 ## Casos verificados
 
-A triagem é feita por IA e pode errar. Por isso a página separa o que a equipe conferiu do que é classificação automática.
+Para destacar casos conferidos pela equipe, crie `dados/verificados.json` neste formato. O robô não mexe nesse arquivo.
 
-- No modo de administração, cada projeto tem a opção **Verificado pela equipe**. Ao marcar, abre um campo com o texto da checagem, que começa com o motivo da triagem e pode ser reescrito.
-- Os casos verificados aparecem no topo da página, em **Casos verificados**, com o selo Verificado e botões de compartilhar. Eles aparecem mesmo antes de qualquer busca, porque os dados do projeto vão junto com a verificação.
-- No resto da lista, os selos da triagem levam a marca **IA** e o motivo aparece como "Triagem automática por IA, ainda não verificada".
-- A barra lateral tem a opção Mostrar só casos verificados pela equipe.
+```json
+{ "casos": {
+  "PL 1234/2025": { "chave": "PL 1234/2025", "casa": ["C"], "data": "2025-05-10", "ementa": "Texto da ementa",
+    "autores": ["C204554"], "i": 2489123, "nota": "Texto da checagem da equipe",
+    "x": { "s": "avanca", "p": ["armas"], "g": "direita" } }
+} }
+```
 
-As marcações ficam no navegador de quem administra até a exportação. Para publicar, use **Exportar triagens.json**, que agora inclui os casos verificados, e suba o arquivo. Desmarcar um caso já publicado e exportar de novo o retira da página.
+## Custos
 
-## Compartilhar
-
-Cada projeto e cada caso verificado têm os botões **Compartilhar** e **Copiar mensagem**. No celular, Compartilhar abre a lista de aplicativos. No computador, abre o WhatsApp Web. A mensagem traz o número do projeto, a Casa, os autores, a ementa, o link oficial e um link direto para o projeto na plataforma, no formato `exterminadores.com.br/?p=PL 123/2025`.
-
-Só os casos verificados levam o texto da checagem na mensagem. A triagem automática nunca é compartilhada.
-
-O link direto abre a página mostrando só aquele projeto, com um botão para voltar à lista completa. Funciona para os projetos que estão no `projetos.json`.
-
-## Prévia do link
-
-O `index.html` traz as metatags que o WhatsApp, o Instagram, o Facebook e o X usam para montar a prévia do link, com a imagem `compartilhar.jpg` (1200 por 630 pixels). O WhatsApp guarda prévias antigas por algum tempo, então a primeira vez que o link for colado depois da publicação pode ainda aparecer sem imagem.
-
-## Chave de administração
-
-As rotas que gastam créditos (`/triar` e `/avaliar`) só funcionam com a chave de administração.
-
-1. No Worker `exterminadores-proxy`, em Settings, Variables and Secrets, cadastre um Secret chamado `ADMIN_KEY` com uma senha longa, que só você conheça. Publique.
-2. Abra `?admin`, escreva a mesma senha no campo **Chave de administração** e tecle Tab ou clique fora. A faixa amarela confirma quando a chave foi aceita.
-
-A chave fica guardada só no seu navegador. Para o público, os botões de triagem, de marcação e de avaliação não aparecem. Sem o segredo `ADMIN_KEY`, o Worker continua aceitando triagens de qualquer pessoa, como antes, e a faixa de administração avisa.
-
-## Como a busca funciona
-
-- **Câmara.** Usa o filtro de partido do autor da própria API, ano a ano, e aplica o recorte de datas na própria página, porque a API não conclui buscas por partido com intervalo de datas. A API também recusa o filtro para a sigla UNIÃO, então nesse caso a ferramenta lista os deputados do partido e busca pela autoria de cada um. Nesse caminho vale o partido atual do deputado, e o resultado aparece marcado.
-- **Senado.** A API não filtra por partido. A ferramenta baixa todas as proposições do período quinzena a quinzena e lê a sigla registrada na autoria, que é a do momento da apresentação. Projetos vindos da Câmara são descartados para não duplicar.
-- **Temas.** Cada ementa é comparada com os termos da taxonomia. Acentos e maiúsculas não importam, e o termo encontra variações de até três letras no fim. Siglas curtas (IA, SUS, CAR) valem só como palavra inteira em maiúsculas. Termos iniciados por `=` valem só como palavra exata.
-- **Cache.** O Worker guarda cada resposta das APIs do Congresso por seis horas. Buscas repetidas ficam rápidas e aliviam as APIs.
-
-## Flávio promete, mas olha
-
-Cada área tem cartões com um trecho literal do programa de Flávio e a página do documento. Depois da busca, cada cartão mostra quantos projetos do PL e aliados tratam do mesmo assunto, e o botão Ver os projetos filtra a lista e abre a faixa de contraste. Projetos em que o próprio Flávio é autor recebem um selo amarelo, e a opção Mostrar só projetos de autoria do próprio Flávio Bolsonaro isola esses projetos (ele é senador, então é preciso incluir o Senado e o PL na busca).
-
-A contagem mostra que o campo dele legisla sobre aquele assunto, e não que cada projeto contradiz a promessa. Antes de divulgar um caso, leia a ementa e peça a avaliação do texto integral.
-
-Para trocar uma promessa, edite `promessas.js` mantendo o trecho literal e a página, e atualize também `PROMESSAS_FLAVIO` no `worker.js`.
-
-## Triagem por IA pelas ementas
-
-A triagem serve para encontrar o que o programa de Flávio contradiz ou esconde do eleitor. Ela não destaca projetos bons.
-
-Depois da busca, o botão de triagem manda ao Worker as ementas dos projetos da lista atual que ainda não foram triados (com os filtros escolhidos, ligados a algum tema e sem homenagens), em lotes de 25. O Claude Haiku 5.5 (`MODELO_TRIAGEM` no `worker.js`) faz dois julgamentos.
-
-- **Efeito negativo.** Se o projeto tem efeito negativo, efeito a conferir ou nenhum efeito negativo aparente, e qual dos 74 temas da taxonomia é o mais atingido (constante `TEMAS`, que deve acompanhar o `taxonomia.js`). A régua é a síntese das diretrizes dos Cadernos do Futuro (constante `REFERENCIA`), usada sem citação.
-- **O que o programa de Flávio diz.** Se o projeto contradiz uma promessa do programa, trata de algo que o programa omite ou faz o que o programa declara abertamente. A comparação usa a estrutura do programa (`PROGRAMA_FLAVIO`) e as promessas literais com página (`PROMESSAS_FLAVIO`, as mesmas de `promessas.js`). Nas contradições, o motivo cita a promessa e a página.
-
-A tabela cruza as sete áreas (efeito negativo) e o efeito a conferir com as três colunas (contradiz, omitido, declarado). Cada projeto conta uma única vez. Os projetos sem efeito negativo aparente ficam fora da tabela, com um atalho para vê-los. Clicar numa célula, linha ou coluna filtra a lista, e os cartões das promessas e a planilha acompanham.
-
-- As instruções fixas vão com cache no pedido à Anthropic, o que reduz o custo dos lotes seguintes.
-- Cada projeto é triado uma única vez e fica guardado no banco D1 sem prazo de validade.
-- O custo é da ordem de um décimo de centavo de dólar por lote de 25 ementas.
-
-## Avaliação por IA dos projetos marcados
-
-Depois da busca, marque os projetos que interessam e clique em Avaliar. O Worker lê o texto integral oficial de cada projeto (o PDF da Câmara ou do Senado) e pede ao Claude Sonnet 5.5 uma avaliação à luz dos Cadernos do Futuro, com posição (conflita, converge, misto ou neutro), resumo do que o projeto faz de fato, efeitos, diretrizes envolvidas, trecho de apoio e pontos a conferir antes de divulgar.
-
-- Cada avaliação fica guardada no banco D1 e entra no `triagens.json` na próxima exportação, então avaliar de novo o mesmo projeto não gera custo e a avaliação aparece para todos os visitantes.
-- O limite é de 40 avaliações por hora por pessoa e 15 por clique.
-- Cada avaliação custa de 2 a 7 centavos de dólar, umas cinquenta vezes mais que a triagem de uma ementa.
-- A síntese das diretrizes usada como régua está no próprio `worker.js` (constante `REFERENCIA`). Para ajustar o critério, edite esse texto e mude `VERSAO_AVALIACAO` no `worker.js` e no `index.html`.
-- Como a página é pública, qualquer visitante pode pedir triagens e avaliações com a sua chave. Vale definir um limite mensal de gasto no console da Anthropic.
-
-## Rotas do Worker
-
-| Rota | O que faz | Usa a IA |
-|---|---|---|
-| `GET /?url=` | Repassa consultas às APIs da Câmara e do Senado | Não |
-| `POST /triar` | Tria até 25 ementas, devolvendo de graça as já triadas | Só para as novas |
-| `POST /avaliar` | Avalia o texto integral de um projeto | Só se ainda não avaliado |
-| `POST /consultar` | Devolve as triagens e avaliações guardadas | Não |
-| `GET /exportar` | Devolve tudo o que está no banco, para o `triagens.json` | Não |
-| `GET /estado` | Diz se o banco está ligado e quanto guarda | Não |
-
-## Para ajustar a taxonomia
-
-Edite `taxonomia.js`. Cada tema tem `termos` (o que procurar) e `excluir` (o que descarta o tema quando aparece). Se mudar os identificadores dos temas, atualize também a lista `TEMAS` no `worker.js`. Depois de salvar e publicar, a aba Temas e termos da própria página mostra a versão em uso.
+O GitHub Actions é gratuito para repositório público. A IA custa cerca de 2 dólares na primeira execução completa e centavos por dia depois. Vale definir um limite mensal de gasto no console da Anthropic.
 
 ## Limites conhecidos
 
-- A classificação lê apenas a ementa. Serve como triagem e não substitui a leitura do texto.
-- Coautorias de partidos diferentes fazem a proposição aparecer em mais de um partido.
-- Períodos longos geram centenas de consultas. A legislatura inteira pode levar alguns minutos na primeira vez.
+- A classificação lê só a ementa e serve como triagem.
+- Votações simbólicas e secretas ficam de fora, porque não há registro do voto de cada parlamentar.
+- Nos projetos da Câmara, o partido do autor é o mais recente. Nas votações, é o da data do voto.
+- Votações secretas do Senado (autoridades, embaixadores) ficam de fora.
+- Se uma consulta ao Senado falhar numa execução completa, a execução diária só refaz os últimos 45 dias. Uma nova execução completa recupera o que faltou.
