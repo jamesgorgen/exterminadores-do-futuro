@@ -199,9 +199,9 @@ h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size
 
 <section id="estados"><div class="wrap">
   <h2>Por estado e município</h2>
-  <p class="intro">Quanto cada município recebeu em emendas individuais e de quais grupos veio o dinheiro. Escolha um estado para aproximar o mapa e ver a ficha do estado, ou clique num município para ver a sua.</p>
+  <p class="intro">Quanto cada município recebeu em emendas individuais e de quais grupos veio o dinheiro. Escolha um estado na lista ao lado das opções do mapa para aproximá-lo e ver a ficha do estado, ou clique num município para ver a sua.</p>
   <div class="busca"><div class="chips" id="metricas" role="group" aria-label="O que o mapa mostra" style="margin:0"></div>
-    <select id="fUf" aria-label="Estado"></select></div>
+    <select id="fUf" aria-label="Estado"></select><button type="button" class="btn-uf" id="voltarBr" hidden style="margin:0">Voltar ao Brasil</button></div>
   <div class="chips" id="anosMapa" role="group" aria-label="Ano da emenda"></div>
   <div class="mapa-area">
     <div class="mapa-caixa"><div id="mapaMun" class="mapa-mun" role="img" aria-label="Mapa dos municípios do Brasil"><p class="carregando">Carregando o mapa…</p></div>
@@ -366,6 +366,8 @@ function quebras(vals) {
 }
 function classe(v, q) { if (v == null) return -1; let i = 0; while (i < q.length && v > q[i]) i++; return i; }
 function desenharMun() {
+  $('#voltarBr').hidden = !ufZoom;
+  if ($('#fUf').value !== ufZoom) $('#fUf').value = ufZoom;
   if (!FEAT || !MUN) return;
   const feats = ufZoom ? FEAT.filter(f => ufDe(f.properties.id) === ufZoom) : FEAT;
   const W = 800, H = ufZoom ? 640 : 760;
@@ -515,6 +517,7 @@ document.addEventListener('click', e => {
   const r = e.target.closest('#ranking [data-k]'); if (r) { desenharPerfil(r.dataset.k); return; }
   const t = e.target.closest('.tema [data-k], .estado [data-k]'); if (t) { abrir(t.dataset.k); return; }
   const m = e.target.closest('[data-metrica]'); if (m) { metrica = m.dataset.metrica; desenharMetricas(); desenharMun(); return; }
+  if (e.target.closest('#voltarBr')) { ufZoom = ''; munAtual = null; desenharMun(); return; }
   const vu = e.target.closest('[data-ver-uf]'); if (vu) { ufZoom = vu.dataset.verUf; $('#fUf').value = ufZoom; munAtual = null; desenharEstado(ufZoom); desenharMun(); return; }
   const am = e.target.closest('[data-ano-mapa]'); if (am) { anoMapa = am.dataset.anoMapa; desenharAnosMapa(); if (munAtual) desenharMunicipio(munAtual); else desenharMun(); return; }
   const pm = e.target.closest('#mapaMun path.m'); if (pm) { desenharMunicipio(pm.dataset.c); }
