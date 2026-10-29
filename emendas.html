@@ -142,9 +142,9 @@ h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size
 .mapa-mun path.m{cursor:pointer}
 .mapa-mun path.m:hover{stroke:var(--ink);stroke-width:1.2}
 .mapa-mun path.sel{stroke:var(--ink);stroke-width:2}
-.mapa-mun path.bordas{fill:none;stroke:var(--ink);stroke-opacity:.45;stroke-width:.7;pointer-events:none}
+.mapa-mun path.bordas{fill:none;stroke:#fff;stroke-opacity:.9;stroke-width:1;pointer-events:none}
 .dica-mapa{position:absolute;pointer-events:none;background:var(--ink);color:var(--sheet);font-size:13px;padding:6px 9px;border-radius:5px;max-width:240px;z-index:3}
-.escala .cx{display:flex;flex:1;height:10px;border-radius:3px;overflow:hidden}
+.escala .cx{display:flex;flex:1;height:12px;border-radius:3px;overflow:hidden}
 .escala .cx span{flex:1;background:var(--c)}
 @media (max-width:900px){.mapa-area{grid-template-columns:1fr}}
 .mapa{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;max-width:520px}
@@ -349,7 +349,8 @@ let anoMapa = 'todos', metrica = 'hab', ufAtual = 'SP', ufZoom = '', TOPO = null
 const UFCOD = { 11: 'RO', 12: 'AC', 13: 'AM', 14: 'RR', 15: 'PA', 16: 'AP', 17: 'TO', 21: 'MA', 22: 'PI', 23: 'CE', 24: 'RN', 25: 'PB', 26: 'PE', 27: 'AL', 28: 'SE', 29: 'BA', 31: 'MG', 32: 'ES', 33: 'RJ', 35: 'SP', 41: 'PR', 42: 'SC', 43: 'RS', 50: 'MS', 51: 'MT', 52: 'GO', 53: 'DF' };
 const ufDe = c => UFCOD[String(c).slice(0, 2)];
 const METRICAS_M = [['hab', 'Por habitante'], ['total', 'Valor recebido'], ['ext', 'Fatia da extrema-direita'], ['dir', 'Fatia da direita e da extrema-direita'], ['esq', 'Fatia da esquerda']];
-const NIVEIS = [10, 24, 38, 52, 66, 82, 100];
+// Escala sequencial em várias cores (do amarelo-claro ao vinho escuro), com nove faixas bem distintas entre si.
+const CORES = ['#fff3b0', '#fed976', '#feb24c', '#fd8d3c', '#f45b2f', '#de2a1f', '#b30d22', '#7a0026', '#3d0a2b'];
 // Valores do município no ano escolhido (ano da emenda), ou a soma de todos os anos.
 function reg(c) {
   const x = MUN.m[c]; if (!x || !x.a) return null;
@@ -369,7 +370,7 @@ function vm(c, m) {
 const fmtM = (v, m) => v == null ? 'sem dados' : m === 'hab' ? 'R$ ' + Math.round(v).toLocaleString('pt-BR') : m === 'total' ? reais(v) : pct(v, 0);
 function quebras(vals) {
   const v = vals.filter(x => x != null).sort((a, b) => a - b); if (!v.length) return [];
-  return NIVEIS.slice(1).map((_, i) => v[Math.min(v.length - 1, Math.floor(v.length * (i + 1) / NIVEIS.length))]);
+  return CORES.slice(1).map((_, i) => v[Math.min(v.length - 1, Math.floor(v.length * (i + 1) / CORES.length))]);
 }
 function classe(v, q) { if (v == null) return -1; let i = 0; while (i < q.length && v > q[i]) i++; return i; }
 function desenharMun() {
@@ -386,11 +387,11 @@ function desenharMun() {
   const caixa = d3.select('#mapaMun').html('');
   const svg = caixa.append('svg').attr('viewBox', `0 0 ${W} ${H}`).style('overflow', 'hidden');
   svg.append('g').selectAll('path').data(feats).join('path').attr('class', f => 'm' + (f.properties.id === munAtual ? ' sel' : '')).attr('d', path)
-    .attr('data-c', f => f.properties.id).attr('fill', f => { const k = classe(vm(f.properties.id, metrica), q); return k < 0 ? 'var(--line)' : `color-mix(in srgb, var(--red) ${NIVEIS[k]}%, var(--sheet))`; })
+    .attr('data-c', f => f.properties.id).attr('fill', f => { const k = classe(vm(f.properties.id, metrica), q); return k < 0 ? 'var(--line)' : CORES[k]; })
     .attr('stroke', ufZoom ? 'var(--sheet)' : 'none').attr('stroke-width', ufZoom ? .4 : 0);
   svg.append('path').attr('class', 'bordas').attr('d', path(bordas));
   const vis = feats.map(f => vm(f.properties.id, metrica)).filter(v => v != null);
-  $('#escala').innerHTML = vis.length ? `<span class="num">${fmtM(Math.min(...vis), metrica)}</span><span class="cx">${NIVEIS.map(n => `<span style="--c:color-mix(in srgb, var(--red) ${n}%, var(--sheet))"></span>`).join('')}</span><span class="num">${fmtM(Math.max(...vis), metrica)}</span>` : '';
+  $('#escala').innerHTML = vis.length ? `<span class="num">${fmtM(Math.min(...vis), metrica)}</span><span class="cx">${CORES.map((c, i) => `<span style="--c:${c}" title="${i === 0 ? 'até ' + fmtM(q[0], metrica) : i === CORES.length - 1 ? 'acima de ' + fmtM(q[i - 1], metrica) : fmtM(q[i - 1], metrica) + ' a ' + fmtM(q[i], metrica)}"></span>`).join('')}</span><span class="num">${fmtM(Math.max(...vis), metrica)}</span>` : '';
 }
 function desenharMunicipio(c) {
   const f = FEAT.find(x => x.properties.id === c); const r0 = reg(c); const r = r0 && r0[IX.total] ? r0 : null; const info = MUN.m[c] || {};
@@ -459,7 +460,7 @@ function iniciarMapa() {
     FEAT.forEach(f => { if (d3.geoArea(f) > 2 * Math.PI) { const g = f.geometry; if (g.type === 'Polygon') g.coordinates.forEach(r => r.reverse()); else if (g.type === 'MultiPolygon') g.coordinates.forEach(p => p.forEach(r => r.reverse())); } });
     if (!MUN.tem_pop) metrica = 'total';
     desenharAnosMapa(); desenharMetricas(); desenharMun();
-    $('#notaMapa').textContent = `O mapa usa os pagamentos já feitos a prefeituras, fundos municipais e entidades sediadas em cada município (${reais(MUN.total_mapa)} de ${reais(MUN.total_pago)} pagos). Repasses intermediados pela Caixa e transferências a governos estaduais não têm município identificado. O ano é o da emenda, isto é, do empenho; o pagamento pode ter ocorrido depois. As cores dividem os municípios visíveis em sete faixas com o mesmo número de municípios.`;
+    $('#notaMapa').textContent = `O mapa usa os pagamentos já feitos a prefeituras, fundos municipais e entidades sediadas em cada município (${reais(MUN.total_mapa)} de ${reais(MUN.total_pago)} pagos). Repasses intermediados pela Caixa e transferências a governos estaduais não têm município identificado. O ano é o da emenda, isto é, do empenho; o pagamento pode ter ocorrido depois. As cores dividem os municípios visíveis em nove faixas com o mesmo número de municípios, do amarelo (menores valores) ao vinho (maiores). Passe o mouse sobre a legenda para ver os limites de cada faixa.`;
     const dica = $('#dicaMapa');
     $('#mapaMun').addEventListener('pointermove', e => {
       const pth = e.target.closest('path.m'); if (!pth) { dica.hidden = true; return; }
