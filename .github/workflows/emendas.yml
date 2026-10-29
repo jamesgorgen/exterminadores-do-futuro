@@ -39,7 +39,7 @@ jobs:
       - name: Baixar a população dos municípios (IBGE, Censo 2022)
         continue-on-error: true
         run: |
-          if [ ! -f dados/populacao-municipios.json ]; then python robo/populacao.py; fi
+          if [ ! -f dados/populacao-municipios.json ]; then python robo/populacao.py 2>&1 | tee /tmp/populacao.log; cp /tmp/populacao.log dados/populacao-log.txt; fi
 
       - name: Baixar as emendas do Portal da Transparência
         env:
@@ -56,7 +56,7 @@ jobs:
         run: |
           git config user.name "robo-exterminadores"
           git config user.email "robo-exterminadores@users.noreply.github.com"
-          git add dados/emendas.json dados/populacao-municipios.json 2>/dev/null || git add dados/emendas.json
+          git add dados/emendas.json; git add dados/populacao-municipios.json dados/populacao-log.txt 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "Nada mudou."
           else
