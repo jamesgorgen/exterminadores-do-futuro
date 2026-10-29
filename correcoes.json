@@ -42,6 +42,28 @@
       ],
       "g": "direita"
     },
+    "PDL 160/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "extrema"
+    },
+    "PDL 252/2026": {
+      "s": "avanca",
+      "p": [
+        "ambiente"
+      ],
+      "g": "extrema"
+    },
+    "PDL 262/2026": {
+      "s": "avanca",
+      "p": [
+        "ambiente",
+        "povos"
+      ],
+      "g": "extrema"
+    },
     "PDL 389/2026": {
       "s": "barra",
       "p": [
@@ -155,6 +177,15 @@
       ],
       "m": "Revoga a Lei de Alienação Parental, demanda de movimentos de defesa de mulheres e crianças."
     },
+    "PL 2149/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo",
+        "instituicoes",
+        "trabalho"
+      ],
+      "g": "extrema"
+    },
     "PL 2391/2026": {
       "s": "",
       "m": ""
@@ -173,6 +204,13 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 2539/2026": {
+      "s": "avanca",
+      "p": [
+        "plataformas"
+      ],
+      "g": "extrema"
     },
     "PL 2603/2026": {
       "s": "barra",
@@ -915,6 +953,14 @@
         "punitivismo"
       ],
       "g": "direita"
+    },
+    "PL 5094/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo",
+        "educacao"
+      ],
+      "g": "extrema"
     },
     "PL 5101/2026": {
       "s": "barra",
