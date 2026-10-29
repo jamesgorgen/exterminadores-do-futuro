@@ -1,0 +1,9 @@
+{
+  "_leia": "Correções da equipe à classificação da IA. A chave é a do projeto (ex. PL 682/2024) ou a da votação sem matéria (ex. V:C:2585316-23). Campos, todos opcionais: s = avanca, barra ou vazio (vazio tira o item da lista); p = pautas de pautas.js; g = direita ou extrema; m = texto exibido como Checagem da equipe. Ao salvar este arquivo no GitHub, o robô roda sozinho e o site se atualiza em poucos minutos.",
+  "correcoes": {
+    "PL 682/2024": { "s": "barra", "p": ["armas"], "m": "Restringe entidades de tiro a modalidades olímpicas e cancela registros de CACs, o que vai contra a pauta armamentista." },
+    "PL 1372/2023": { "s": "barra", "p": ["costumes"], "m": "Revoga a Lei de Alienação Parental, demanda de movimentos de defesa de mulheres e crianças." },
+    "PL 1148/2023": { "s": "" },
+    "PL 3142/2023": { "s": "" }
+  }
+}

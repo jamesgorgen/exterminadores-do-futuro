@@ -47,6 +47,7 @@ O grau passa por uma segunda etapa, com instruções próprias, só para os iten
 |---|---|
 | `index.html` | A página |
 | `pautas.js` | Pautas, núcleo e regras do índice |
+| `correcoes.json` | Correções da equipe à classificação da IA |
 | `robo/motor.js` | Funções de busca e de classificação por tema, usadas pelo robô |
 | `taxonomia.js` | Temas dos Cadernos do Futuro, usados para marcar os temas das ementas |
 | `robo/coletar.mjs` | O robô de coleta |
@@ -77,6 +78,27 @@ Na pasta `dados`
 2. **Agendamento.** Crie o arquivo `.github/workflows/atualizar.yml`. Pelo site do GitHub, use Add file, Create new file, escreva o caminho completo no nome do arquivo e cole o conteúdo.
 3. **Chave da Anthropic.** Em Settings, Secrets and variables, Actions, crie o segredo `ANTHROPIC_API_KEY`.
 4. **Primeira execução.** Em Actions, Atualizar dados, Run workflow, escolha `completo`. A primeira execução reúne a legislatura inteira e leva cerca de 20 minutos. As seguintes rodam sozinhas todo dia e levam poucos minutos.
+
+## Correções da equipe
+
+Quando a IA errar, corrija no arquivo `correcoes.json`, na raiz do repositório. Pelo site do GitHub, abra o arquivo, clique no lápis, edite e salve com Commit changes. O robô roda sozinho ao salvar e o site se atualiza em poucos minutos. O item corrigido aparece com o selo "Conferido pela equipe" no lugar de "IA".
+
+A chave é a do projeto (`PL 682/2024`) ou, para votações sem matéria, a da votação (`V:C:2585316-23`). Uma correção de projeto vale também para as votações desse projeto. Todos os campos são opcionais e só substituem o que for informado.
+
+- `s`, sentido. `avanca` (faz avançar a pauta da direita), `barra` (vai contra ela) ou `""` (tira o item da lista).
+- `p`, pautas, pelos identificadores de `pautas.js`, por exemplo `["armas"]`.
+- `g`, grau. `direita` ou `extrema`.
+- `m`, texto que aparece como "Checagem da equipe".
+
+```json
+{ "correcoes": {
+  "PL 682/2024": { "s": "barra", "p": ["armas"], "m": "Restringe registros de CACs." },
+  "PL 1148/2023": { "s": "" },
+  "PL 2289/2025": { "g": "extrema" }
+} }
+```
+
+Cuidado com as vírgulas e as aspas. Se o arquivo ficar com erro de formato, as correções deixam de valer e o erro aparece em `dados/diagnostico.json`.
 
 ## Casos verificados
 

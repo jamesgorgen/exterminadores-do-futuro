@@ -267,7 +267,9 @@ function selosClass(x){
   const pautas = (x.p || []).map(p => `<span class="selo s-pauta">${esc(PAUTA[p] ? PAUTA[p].nome : p)}</span>`).join('');
   const grau = x.s === 'barra' ? '<span class="selo s-contra">Contra a pauta da direita</span>'
     : x.g === 'extrema' ? '<span class="selo s-ext">Extrema-direita</span>' : '<span class="selo s-dir">Direita</span>';
-  return '<span class="selo s-ia" title="Classificação automática por inteligência artificial, a partir da ementa">IA</span>' + grau + pautas;
+  const origem = x.eq ? '<span class="selo s-ver" title="Classificação conferida pela equipe do observatório">Conferido pela equipe</span>'
+    : '<span class="selo s-ia" title="Classificação automática por inteligência artificial, a partir da ementa">IA</span>';
+  return origem + grau + pautas;
 }
 const classeCartao = x => !x || !x.s ? '' : x.s === 'barra' ? 'contra' : x.g === 'extrema' ? 'ext' : 'dir';
 function autoresHTML(a){
@@ -282,7 +284,7 @@ function cartaoProp(it){
     <div class="topo"><span class="num">${esc(it.c)}</span><span class="meta">${esc((it.k || []).map(k => CASA[k]).join(' e '))}</span>${ver ? '<span class="selo s-ver">Verificado</span>' : ''}<span class="data">${dataBR(it.d)}</span></div>
     <div class="topo">${selosClass(x)}</div>
     <p class="ementa">${esc(it.e)}</p>
-    ${ver && ver.nota ? `<p class="motivo"><b>Checagem da equipe.</b> ${esc(ver.nota)}</p>` : x.m ? `<p class="motivo"><b>Triagem automática.</b> ${esc(x.m)}</p>` : ''}
+    ${ver && ver.nota ? `<p class="motivo"><b>Checagem da equipe.</b> ${esc(ver.nota)}</p>` : x.m ? `<p class="motivo"><b>${x.eq ? 'Checagem da equipe.' : 'Triagem automática.'}</b> ${esc(x.m)}</p>` : ''}
     ${autoresHTML(it.a)}
     <div class="acoes">${linkProp(it) ? `<a class="btn" href="${esc(linkProp(it))}" target="_blank" rel="noopener">Ficha oficial</a>` : ''}
       <button type="button" class="btn forte" data-comp="p:${esc(it.c)}">Compartilhar</button><button type="button" class="btn" data-copiar="p:${esc(it.c)}">Copiar</button></div>
@@ -302,7 +304,7 @@ function cartaoVot(v){
     <div class="topo">${res ? `<span class="selo s-pauta">${res}</span>` : ''}${v.disp && v.venceu !== null ? (v.venceu ? '<span class="selo s-venceu">A direita venceu</span>' : '<span class="selo s-perdeu">A direita perdeu</span>') : ''}${selosClass(x)}</div>
     <p class="ementa">${esc(v.me || v.desc)}</p>
     ${v.me && v.desc ? `<p class="motivo">${esc(v.desc)}</p>` : ''}
-    ${x.m ? `<p class="motivo"><b>Triagem automática.</b> ${esc(x.m)}</p>` : ''}
+    ${x.m ? `<p class="motivo"><b>${x.eq ? 'Checagem da equipe.' : 'Triagem automática.'}</b> ${esc(x.m)}</p>` : ''}
     <p class="bloco">${bloco}</p>
     ${placar(v.t || {})}
     <div class="votos-det" data-votos="${esc(v.id)}" hidden></div>

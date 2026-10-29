@@ -716,11 +716,32 @@ export async function executar() {
   await classificarPendentes(paraClassificar);
   await graduarPendentes(paraClassificar);
 
+  // Correções da equipe (correcoes.json na raiz) valem por cima da classificação da IA.
+  let correcoes = {};
+  try { correcoes = JSON.parse(fs.readFileSync(path.join(RAIZ, 'correcoes.json'), 'utf8')).correcoes || {}; }
+  catch (e) { if (fs.existsSync(path.join(RAIZ, 'correcoes.json'))) erro('correcoes.json com erro de formato', e); }
+  const classificado = k => {
+    const ia = classificacoes.c[k] || {};
+    const c = correcoes[k];
+    const x = { s: ia.s || '', p: ia.p || [], g: ia.g || '', m: ia.m || '' };
+    if (c && typeof c === 'object') {
+      if (c.s !== undefined) x.s = ['avanca', 'barra'].includes(c.s) ? c.s : '';
+      if (Array.isArray(c.p)) x.p = c.p.filter(id => IDS_PAUTAS.has(id)).slice(0, 3);
+      if (c.g !== undefined) x.g = c.g === 'extrema' ? 'extrema' : 'direita';
+      if (c.m !== undefined) x.m = String(c.m);
+      if (!x.s) { x.p = []; x.g = ''; if (c.m === undefined) x.m = ''; }
+      else if (x.s === 'barra') x.g = '';
+      else if (!x.g) x.g = 'direita';
+      x.eq = 1; contar('correcoes_aplicadas');
+    }
+    return x;
+  };
+
   // Alinhamento.
   const conta = calcularAlinhamento(todasVot);
   const contaProp = {};
   for (const it of todasPropFinal) {
-    const cl = classificacoes.c[it.c];
+    const cl = classificado(it.c);
     for (const a of it.a || []) {
       const c = contaProp[a] || (contaProp[a] = { n: 0, d: 0, x: 0, pp: {} });
       c.n++;
@@ -757,7 +778,7 @@ export async function executar() {
   gravarJson('indice.json', { gerado: AGORA.toISOString(), regras: PAUTAS.indice, nucleo: PAUTAS.nucleo, referencia: PAUTAS.referenciaGoverno, p: indice }, true);
 
   // Arquivos leves para a página.
-  const cl = k => classificacoes.c[k] || {};
+  const cl = classificado;
   const direita = todasPropFinal.filter(it => cl(it.c).s === 'avanca')
     .map(it => ({ c: it.c, k: it.k, d: it.d, e: it.e, a: it.a, p: it.p, m: it.m, i: it.i, ss: it.ss, x: cl(it.c) }))
     .sort((x, y) => (y.d || '').localeCompare(x.d || ''));
