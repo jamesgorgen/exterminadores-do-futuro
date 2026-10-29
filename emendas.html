@@ -33,6 +33,7 @@
 :root[data-theme="dark"]{ --night:#0f1324; --night-2:#1c2240; --red:#e8454a; --paper:#171b2c; --sheet:#1f2438; --ink:#eef0f6; --ink-2:#b7bccd; --ink-3:#959bb0; --line:#2f3550;
   --g-extrema:#ff5a60; --g-direita:#f08a8d; --g-alinhados:#e8b25a; --g-esquerda:#6cb8d8; --g-outros:#9aa0b5; color-scheme:dark; }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 var(--text);-webkit-font-smoothing:antialiased}
 a{color:var(--red)}
 button,input,select{font:inherit;color:inherit}
@@ -155,6 +156,11 @@ h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size
 .estado{background:var(--sheet);border:1px solid var(--line);border-radius:8px;padding:18px;min-width:0}
 .estado .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
 .nome-uf{font-family:var(--display);font-weight:900;font-size:clamp(28px,3.6vw,40px);text-transform:uppercase;margin:0;line-height:1}
+.seletor-uf{position:relative}
+.lista-uf{position:absolute;z-index:6;top:calc(100% + 6px);left:0;width:min(560px,calc(100vw - 40px));background:var(--sheet);border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.18);padding:8px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px}
+@media (max-width:560px){.lista-uf{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.lista-uf button{border:0;background:none;text-align:left;padding:7px 9px;border-radius:5px;cursor:pointer;font-size:14px}
+.lista-uf button:hover,.lista-uf button:focus-visible{background:var(--paper)}
 .btn-uf{margin-top:14px;border:1px solid var(--line);background:var(--sheet);border-radius:6px;padding:7px 12px;font-weight:700;cursor:pointer}
 .pilha{display:flex;height:22px;border-radius:4px;overflow:hidden;margin:6px 0 4px}
 .pilha span{background:var(--cor);min-width:2px}
@@ -199,9 +205,10 @@ h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size
 
 <section id="estados"><div class="wrap">
   <h2>Por estado e município</h2>
-  <p class="intro">Quanto cada município recebeu em emendas individuais e de quais grupos veio o dinheiro. Escolha um estado na lista ao lado das opções do mapa para aproximá-lo e ver a ficha do estado, ou clique num município para ver a sua.</p>
+  <p class="intro">Quanto cada município recebeu em emendas individuais e de quais grupos veio o dinheiro. Escolha um estado no botão Estado para aproximar o mapa e ver a ficha do estado, ou clique num município para ver a sua.</p>
   <div class="busca"><div class="chips" id="metricas" role="group" aria-label="O que o mapa mostra" style="margin:0"></div>
-    <select id="fUf" aria-label="Estado"></select><button type="button" class="btn-uf" id="voltarBr" hidden style="margin:0">Voltar ao Brasil</button></div>
+    <div class="seletor-uf"><button type="button" class="btn-uf" id="abrirUf" aria-expanded="false" aria-controls="listaUf" style="margin:0">Estado: <b id="nomeUf">Brasil</b> ▾</button>
+      <div class="lista-uf" id="listaUf" hidden></div></div><button type="button" class="btn-uf" id="voltarBr" hidden style="margin:0">Voltar ao Brasil</button></div>
   <div class="chips" id="anosMapa" role="group" aria-label="Ano da emenda"></div>
   <div class="mapa-area">
     <div class="mapa-caixa"><div id="mapaMun" class="mapa-mun" role="img" aria-label="Mapa dos municípios do Brasil"><p class="carregando">Carregando o mapa…</p></div>
@@ -367,7 +374,7 @@ function quebras(vals) {
 function classe(v, q) { if (v == null) return -1; let i = 0; while (i < q.length && v > q[i]) i++; return i; }
 function desenharMun() {
   $('#voltarBr').hidden = !ufZoom;
-  if ($('#fUf').value !== ufZoom) $('#fUf').value = ufZoom;
+  $('#nomeUf').textContent = ufZoom && D.estados[ufZoom] ? D.estados[ufZoom].nome : 'Brasil';
   if (!FEAT || !MUN) return;
   const feats = ufZoom ? FEAT.filter(f => ufDe(f.properties.id) === ufZoom) : FEAT;
   const W = 800, H = ufZoom ? 640 : 760;
@@ -443,8 +450,7 @@ function desenharAnosMapa() {
   $('#anosMapa').innerHTML = anos.map(([v, t]) => `<button type="button" class="chip" data-ano-mapa="${v}" aria-pressed="${v === anoMapa}">${t}</button>`).join('');
 }
 function iniciarMapa() {
-  $('#fUf').innerHTML = '<option value="">Brasil</option>' + Object.entries(D.estados).sort((a, b) => a[1].nome.localeCompare(b[1].nome)).map(([uf, x]) => `<option value="${uf}">${esc(x.nome)}</option>`).join('');
-  $('#fUf').addEventListener('change', () => { ufZoom = $('#fUf').value; munAtual = null; if (ufZoom) desenharEstado(ufZoom); desenharMun(); });
+  $('#listaUf').innerHTML = '<button type="button" data-escolher-uf="">Brasil</button>' + Object.entries(D.estados).sort((a, b) => a[1].nome.localeCompare(b[1].nome)).map(([uf, x]) => `<button type="button" data-escolher-uf="${uf}">${esc(x.nome)}</button>`).join('');
   desenharEstado(ufAtual);
   Promise.all([fetch('dados/municipios.topo.json').then(r => r.json()), fetch('dados/emendas-municipios.json', { cache: 'no-cache' }).then(r => r.json())]).then(([t, m]) => {
     TOPO = t; MUN = m; MUN.campos.forEach((c, i) => IX[c] = i);
@@ -518,7 +524,11 @@ document.addEventListener('click', e => {
   const t = e.target.closest('.tema [data-k], .estado [data-k]'); if (t) { abrir(t.dataset.k); return; }
   const m = e.target.closest('[data-metrica]'); if (m) { metrica = m.dataset.metrica; desenharMetricas(); desenharMun(); return; }
   if (e.target.closest('#voltarBr')) { ufZoom = ''; munAtual = null; desenharMun(); return; }
-  const vu = e.target.closest('[data-ver-uf]'); if (vu) { ufZoom = vu.dataset.verUf; $('#fUf').value = ufZoom; munAtual = null; desenharEstado(ufZoom); desenharMun(); return; }
+  if (e.target.closest('#abrirUf')) { const l = $('#listaUf'); l.hidden = !l.hidden;
+    if (!l.hidden) { const b = $('#abrirUf').getBoundingClientRect(), w = Math.min(560, window.innerWidth - 40); l.style.width = w + 'px'; l.style.left = Math.min(0, window.innerWidth - 20 - b.left - w) + 'px'; } $('#abrirUf').setAttribute('aria-expanded', String(!l.hidden)); return; }
+  const eu = e.target.closest('[data-escolher-uf]'); if (eu) { $('#listaUf').hidden = true; $('#abrirUf').setAttribute('aria-expanded', 'false'); ufZoom = eu.dataset.escolherUf; munAtual = null; if (ufZoom) desenharEstado(ufZoom); desenharMun(); return; }
+  if (!e.target.closest('#listaUf') && $('#listaUf')) $('#listaUf').hidden = true;
+  const vu = e.target.closest('[data-ver-uf]'); if (vu) { ufZoom = vu.dataset.verUf; munAtual = null; desenharEstado(ufZoom); desenharMun(); return; }
   const am = e.target.closest('[data-ano-mapa]'); if (am) { anoMapa = am.dataset.anoMapa; desenharAnosMapa(); if (munAtual) desenharMunicipio(munAtual); else desenharMun(); return; }
   const pm = e.target.closest('#mapaMun path.m'); if (pm) { desenharMunicipio(pm.dataset.c); }
 });
