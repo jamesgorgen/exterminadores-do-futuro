@@ -48,6 +48,7 @@ O grau passa por uma segunda etapa, com instruções próprias, só para os iten
 | `index.html` | A página |
 | `pautas.js` | Pautas, núcleo e regras do índice |
 | `correcoes.json` | Correções da equipe à classificação da IA |
+| `revisao.html` | Página de revisão da triagem, para a equipe |
 | `robo/motor.js` | Funções de busca e de classificação por tema, usadas pelo robô |
 | `taxonomia.js` | Temas dos Cadernos do Futuro, usados para marcar os temas das ementas |
 | `robo/coletar.mjs` | O robô de coleta |
@@ -80,6 +81,12 @@ Na pasta `dados`
 4. **Primeira execução.** Em Actions, Atualizar dados, Run workflow, escolha `completo`. A primeira execução reúne a legislatura inteira e leva cerca de 20 minutos. As seguintes rodam sozinhas todo dia e levam poucos minutos.
 
 ## Correções da equipe
+
+O jeito mais simples é a página de revisão, em https://exterminadores.com.br/revisao.html (não aparece no site nem nos buscadores). Ela mostra os projetos e as votações em filas (o que a IA marcou como direita, como extrema-direita, como contra a pauta, o que descartou e o que a equipe já conferiu), com botões para sentido, grau e pautas, um campo de nota e atalhos de teclado. As alterações ficam guardadas no navegador até alguém clicar em Salvar no site, que grava tudo no `correcoes.json` de uma vez.
+
+Para salvar, cada pessoa precisa de uma chave de acesso do GitHub com permissão Contents, Read and write, só neste repositório. A própria página explica como criar, em Acesso ao GitHub. A pessoa precisa ser colaboradora do repositório (Settings, Collaborators).
+
+Também é possível editar o arquivo à mão, como descrito abaixo.
 
 Quando a IA errar, corrija no arquivo `correcoes.json`, na raiz do repositório. Pelo site do GitHub, abra o arquivo, clique no lápis, edite e salve com Commit changes. O robô roda sozinho ao salvar e o site se atualiza em poucos minutos. O item corrigido aparece com o selo "Conferido pela equipe" no lugar de "IA".
 

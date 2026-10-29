@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Revisão da triagem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#151a2e; --red:#d42a2f; --paper:#edeff2; --sheet:#fff; --ink:#151a2e; --ink-2:#4a5068; --ink-3:#6f758a;
+  --line:#d6d9e0; --mark:#ffe24a; --ext:#8c1015; --dir:#d42a2f; --contra:#1f6b8c; --fora:#5d6378; --ver:#1f7a44; --pend:#a35d00; --pend-soft:#fff3d4;
+  --display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif; --text:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --night:#0f1324; --red:#e8454a; --paper:#171b2c; --sheet:#1f2438; --ink:#eef0f6; --ink-2:#b7bccd; --ink-3:#959bb0;
+    --line:#2f3550; --ext:#ff6b70; --dir:#f08a8d; --contra:#6cb8d8; --fora:#9aa0b5; --ver:#5cc78a; --pend:#f0c46a; --pend-soft:#3a3120; }
+}
+:root[data-theme="dark"]{ --night:#0f1324; --red:#e8454a; --paper:#171b2c; --sheet:#1f2438; --ink:#eef0f6; --ink-2:#b7bccd; --ink-3:#959bb0;
+  --line:#2f3550; --ext:#ff6b70; --dir:#f08a8d; --contra:#6cb8d8; --fora:#9aa0b5; --ver:#5cc78a; --pend:#f0c46a; --pend-soft:#3a3120; }
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font:15px/1.5 var(--text);-webkit-font-smoothing:antialiased;padding-bottom:90px}
+a{color:var(--red)}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--mark);outline-offset:2px}
+[hidden]{display:none!important}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+@media (max-width:560px){.wrap{padding:0 16px}}
+header{background:var(--night);color:#fff}
+header .wrap{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding-top:14px;padding-bottom:14px}
+header h1{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:30px;line-height:1;margin:0}
+header h1 small{display:block;font-size:15px;color:var(--mark);letter-spacing:.02em}
+header .direita{margin-left:auto;display:flex;gap:8px;align-items:center}
+header .estado{font-size:13px;color:#c7cbe0}
+.btn{border:1px solid var(--line);background:var(--sheet);border-radius:6px;padding:7px 12px;cursor:pointer;font-weight:600;font-size:14px;line-height:1.2}
+.btn:hover{border-color:var(--ink-3)}
+.btn.forte{background:var(--red);border-color:var(--red);color:#fff}
+.btn.claro{background:transparent;color:#fff;border-color:#4a5274}
+.btn:disabled{opacity:.45;cursor:default}
+.filtros{background:var(--sheet);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.filtros .wrap{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding-top:10px;padding-bottom:10px}
+.filtros select,.filtros input{border:1px solid var(--line);border-radius:6px;padding:7px 9px;background:var(--sheet);min-height:36px;max-width:100%}
+.filtros input[type=search]{flex:1 1 220px}
+.filtros label.chk{display:flex;gap:6px;align-items:center;font-size:14px;color:var(--ink-2)}
+.contagem{font-size:14px;color:var(--ink-2);margin:14px 0 8px}
+.aviso{background:var(--pend-soft);border:1px solid var(--pend);border-radius:8px;padding:12px 14px;margin:14px 0;font-size:14px}
+.cartao{background:var(--sheet);border:1px solid var(--line);border-left:5px solid var(--line);border-radius:8px;padding:14px 16px;margin:0 0 12px}
+.cartao.dir{border-left-color:var(--dir)} .cartao.ext{border-left-color:var(--ext)} .cartao.contra{border-left-color:var(--contra)} .cartao.fora{border-left-color:var(--fora)}
+.cartao.pendente{box-shadow:0 0 0 2px var(--pend)}
+.topo{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+.num{font-family:var(--display);font-weight:900;font-size:22px;line-height:1}
+.meta{font-size:13px;color:var(--ink-3)}
+.topo .lado{margin-left:auto;display:flex;gap:6px;align-items:center}
+.selo{display:inline-block;font-size:12px;font-weight:700;border-radius:4px;padding:2px 7px;line-height:1.5}
+.s-salvo{background:var(--ver);color:#fff} .s-pend{background:var(--pend);color:#fff}
+.ementa{margin:8px 0 6px}
+.autores{font-size:13px;color:var(--ink-3);margin:0 0 8px}
+.ia{font-size:13px;color:var(--ink-2);background:var(--paper);border-radius:6px;padding:7px 10px;margin:0 0 10px}
+.ia b{color:var(--ink)}
+.linha{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:8px 0}
+.rot{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);min-width:62px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.seg button{border:0;border-right:1px solid var(--line);background:var(--sheet);padding:7px 12px;cursor:pointer;font-size:14px;font-weight:600}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed=true].avanca,.seg button[aria-pressed=true].direita{background:var(--dir);color:#fff}
+.seg button[aria-pressed=true].extrema{background:var(--ext);color:#fff}
+.seg button[aria-pressed=true].contra{background:var(--contra);color:#fff}
+.seg button[aria-pressed=true].fora{background:var(--fora);color:#fff}
+.seg button:disabled{opacity:.4;cursor:default}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--sheet);border-radius:999px;padding:4px 10px;font-size:13px;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--sheet);border-color:var(--ink)}
+.chip:disabled{opacity:.4;cursor:default}
+textarea{width:100%;border:1px solid var(--line);border-radius:6px;padding:8px 10px;background:var(--sheet);min-height:40px;resize:vertical}
+.acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.mais{display:block;margin:16px auto}
+.rodape{position:fixed;left:0;right:0;bottom:0;background:var(--night);color:#fff;z-index:10;box-shadow:0 -2px 12px rgba(0,0,0,.2)}
+.rodape .wrap{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}
+.rodape .btn:not(.forte){color:var(--ink)}
+@media (max-width:560px){.filtros{position:static}}
+.rodape .msg{flex:1 1 240px;font-size:14px}
+dialog{border:1px solid var(--line);border-radius:10px;background:var(--sheet);color:var(--ink);max-width:620px;width:calc(100% - 32px);padding:20px}
+dialog::backdrop{background:rgba(10,12,24,.55)}
+dialog h2{font-family:var(--display);text-transform:uppercase;font-size:26px;margin:0 0 10px}
+dialog ol{padding-left:20px} dialog li{margin:4px 0}
+dialog input{width:100%;border:1px solid var(--line);border-radius:6px;padding:8px 10px;background:var(--sheet)}
+.carregando{padding:40px 0;text-align:center;color:var(--ink-2)}
+kbd{font:12px/1 ui-monospace,monospace;border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:2px 5px;background:var(--paper)}
+.dica{font-size:13px;color:var(--ink-3);margin:6px 0 0}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <h1>Os exterminadores do futuro<small>Revisão da triagem da IA</small></h1>
+  <div class="direita"><span class="estado" id="estadoToken"></span><button class="btn claro" type="button" id="abrirConfig">Acesso ao GitHub</button><a class="btn claro" href="./" target="_blank" rel="noopener" style="text-decoration:none">Ver o site</a></div>
+</div></header>
+
+<div class="filtros"><div class="wrap">
+  <select id="fTipo" aria-label="Tipo"><option value="p">Projetos</option><option value="v">Votações</option></select>
+  <select id="fLista" aria-label="Lista">
+    <option value="direita">IA marcou como direita</option>
+    <option value="extrema">IA marcou como extrema-direita</option>
+    <option value="barra">IA marcou como contra a pauta</option>
+    <option value="fora">IA descartou na revisão do grau</option>
+    <option value="corrigidos">Já conferidos pela equipe</option>
+    <option value="todos">Todos (use a busca)</option>
+  </select>
+  <select id="fPauta" aria-label="Pauta"><option value="">Todas as pautas</option></select>
+  <select id="fCasa" aria-label="Casa"><option value="">Câmara e Senado</option><option value="C">Câmara</option><option value="S">Senado</option></select>
+  <input type="search" id="fBusca" placeholder="Número (PL 1234/2025) ou palavra da ementa" aria-label="Buscar">
+  <label class="chk"><input type="checkbox" id="fEsconder" checked> Esconder conferidos</label>
+</div></div>
+
+<main class="wrap">
+  <div id="avisoToken" class="aviso" hidden>Para salvar as correções no site, configure o acesso ao GitHub. Você pode revisar antes e salvar depois, porque as alterações ficam guardadas neste navegador.</div>
+  <p class="contagem" id="contagem"></p>
+  <div id="lista"><p class="carregando">Carregando os dados do observatório…</p></div>
+  <button class="btn mais" type="button" id="mais" hidden>Mostrar mais</button>
+  <p class="dica">Atalhos no cartão em foco. <kbd>A</kbd> faz avançar, <kbd>C</kbd> contra, <kbd>N</kbd> não é pauta, <kbd>D</kbd> direita, <kbd>E</kbd> extrema, <kbd>Enter</kbd> confirma e passa ao próximo, <kbd>J</kbd> e <kbd>K</kbd> navegam.</p>
+</main>
+
+<div class="rodape"><div class="wrap">
+  <span class="msg" id="msg">Nenhuma alteração pendente.</span>
+  <button class="btn" type="button" id="descartar" disabled>Descartar</button>
+  <button class="btn forte" type="button" id="salvar" disabled>Salvar no site</button>
+</div></div>
+
+<dialog id="config">
+  <h2>Acesso ao GitHub</h2>
+  <p>As correções são gravadas no arquivo <code>correcoes.json</code> do repositório. Para isso, cada pessoa da equipe usa uma chave de acesso do GitHub, guardada só neste navegador.</p>
+  <ol>
+    <li>Entre no GitHub com uma conta que tenha acesso ao repositório e abra <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a>.</li>
+    <li>Dê um nome (por exemplo, "revisão exterminadores") e escolha a validade.</li>
+    <li>Em <b>Repository access</b>, marque <b>Only select repositories</b> e escolha <b>jamesgorgen/exterminadores-do-futuro</b>.</li>
+    <li>Em <b>Permissions</b>, procure <b>Contents</b> e escolha <b>Read and write</b>.</li>
+    <li>Clique em <b>Generate token</b>, copie a chave e cole abaixo.</li>
+  </ol>
+  <label for="token"><b>Chave de acesso</b></label>
+  <input id="token" type="password" autocomplete="off" placeholder="github_pat_…">
+  <p class="dica" id="testeToken"></p>
+  <div class="acoes"><button class="btn forte" type="button" id="gravarToken">Guardar e testar</button><button class="btn" type="button" id="apagarToken">Apagar a chave</button><button class="btn" type="button" id="fecharConfig">Fechar</button></div>
+</dialog>
+
+<script src="pautas.js"></script>
+<script>
+'use strict';
+const REPO = 'jamesgorgen/exterminadores-do-futuro';
+const ARQ = 'correcoes.json';
+const ANOS = [2023, 2024, 2025, 2026, 2027, 2028];
+const P = window.PAUTAS;
+const PAUTA = Object.fromEntries(P.lista.map(p => [p.id, p]));
+const CASA = { C: 'Câmara', S: 'Senado' };
+const NOME_PARTIDO = { PODE: 'Podemos', UNIAO: 'União Brasil', REPUBLICANOS: 'Republicanos', SOLIDARIEDADE: 'Solidariedade', CIDADANIA: 'Cidadania', AVANTE: 'Avante', NOVO: 'Novo', REDE: 'Rede', PCDOB: 'PCdoB', SP: 'Sem partido', OUTROS: 'Outros' };
+const $ = s => document.querySelector(s);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const norm = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+const dataBR = d => d ? d.slice(8, 10) + '/' + d.slice(5, 7) + '/' + d.slice(0, 4) : '';
+const ls = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }, del(k) { try { localStorage.removeItem(k); } catch (e) {} } };
+
+const D = { ia: {}, props: new Map(), vots: [], indice: {} };
+let salvas = {};                 // correções já gravadas no repositório
+let pend = {};                   // alterações locais ainda não salvas (valor null = apagar a correção)
+let extras = { _leia: '' };      // demais campos do arquivo
+try { pend = JSON.parse(ls.get('revisao-pendentes') || '{}') || {}; } catch (e) { pend = {}; }
+const guardarPend = () => ls.set('revisao-pendentes', JSON.stringify(pend));
+const token = () => ls.get('revisao-token') || '';
+
+// ------------------------------------------------------------ dados
+async function json(url) { const r = await fetch(url, { cache: 'no-store' }); if (!r.ok) throw new Error(url + ' ' + r.status); return r.json(); }
+const b64dec = b => decodeURIComponent(escape(atob(b.replace(/\n/g, ''))));
+const b64enc = s => btoa(unescape(encodeURIComponent(s)));
+async function lerCorrecoesGitHub() {
+  const r = await fetch(`https://api.github.com/repos/${REPO}/contents/${ARQ}?ref=main`, { headers: { Authorization: 'Bearer ' + token(), Accept: 'application/vnd.github+json' }, cache: 'no-store' });
+  if (r.status === 404) return { sha: null, dados: { correcoes: {} } };
+  if (!r.ok) throw new Error('GitHub respondeu ' + r.status);
+  const j = await r.json();
+  return { sha: j.sha, dados: JSON.parse(b64dec(j.content)) };
+}
+async function carregarCorrecoes() {
+  let dados = null;
+  if (token()) { try { dados = (await lerCorrecoesGitHub()).dados; } catch (e) { dados = null; } }
+  if (!dados) { try { dados = await json(ARQ + '?t=' + Date.now()); } catch (e) { dados = { correcoes: {} }; } }
+  salvas = dados.correcoes || {};
+  extras = Object.fromEntries(Object.entries(dados).filter(([k]) => k !== 'correcoes'));
+}
+async function carregar() {
+  const [cl, ind, vr] = await Promise.all([json('dados/classificacoes.json'), json('dados/indice.json').catch(() => ({ p: {} })), json('dados/votacoes-resumo.json').catch(() => ({ itens: [] }))]);
+  D.ia = cl.c || {}; D.indice = ind.p || {}; D.vots = vr.itens || [];
+  const anos = await Promise.all(ANOS.map(a => json(`dados/proposicoes-${a}.json`).catch(() => null)));
+  for (const j of anos) if (j) for (const it of j.itens) D.props.set(it.c, it);
+  await carregarCorrecoes();
+}
+
+// ------------------------------------------------------------ classificação efetiva
+function ia(chave) {
+  const c = D.ia[chave] || {};
+  if (c.fora) return { s: '', p: [], g: '', m: '', fora: c.fora };
+  return { s: c.s || '', p: c.p || [], g: c.g || '', m: c.m || '' };
+}
+function correcao(chave) { return Object.prototype.hasOwnProperty.call(pend, chave) ? pend[chave] : salvas[chave]; }
+function efetiva(chave) {
+  const x = Object.assign({}, ia(chave)); delete x.fora;
+  const c = correcao(chave);
+  if (c && typeof c === 'object') {
+    if (c.s !== undefined) x.s = ['avanca', 'barra'].includes(c.s) ? c.s : '';
+    if (Array.isArray(c.p)) x.p = c.p.slice(0, 3);
+    if (c.g !== undefined) x.g = c.g === 'extrema' ? 'extrema' : 'direita';
+    if (c.m !== undefined) x.m = c.m;
+    if (!x.s) { x.p = []; x.g = ''; } else if (x.s === 'barra') x.g = ''; else if (!x.g) x.g = 'direita';
+    x.eq = true;
+  }
+  return x;
+}
+const classeDe = x => !x.s ? 'fora' : x.s === 'barra' ? 'contra' : x.g === 'extrema' ? 'ext' : 'dir';
+function descreve(x) {
+  if (!x.s) return 'Não é pauta da direita';
+  const pautas = (x.p || []).map(p => PAUTA[p] ? PAUTA[p].nome : p).join(', ');
+  return (x.s === 'barra' ? 'Contra a pauta da direita' : x.g === 'extrema' ? 'Extrema-direita' : 'Direita') + (pautas ? ' · ' + pautas : '');
+}
+
+// ------------------------------------------------------------ lista
+const chaveVot = v => v.mat || 'V:' + v.id;
+function itensDaLista() {
+  const tipo = $('#fTipo').value, lista = $('#fLista').value, pauta = $('#fPauta').value, casa = $('#fCasa').value;
+  const busca = norm($('#fBusca').value.trim()), esconder = $('#fEsconder').checked;
+  let base;
+  if (tipo === 'p') base = [...D.props.values()].map(it => ({ tipo: 'p', chave: it.c, it }));
+  else {
+    const vistos = new Set(); base = [];
+    for (const v of D.vots) { const k = chaveVot(v); if (vistos.has(k)) continue; vistos.add(k); base.push({ tipo: 'v', chave: k, it: v }); }
+  }
+  const out = [];
+  for (const b of base) {
+    const a = D.ia[b.chave] || {};
+    const conferido = correcao(b.chave) !== undefined && correcao(b.chave) !== null;
+    if (lista === 'direita' && !(a.s === 'avanca' && a.g !== 'extrema')) continue;
+    if (lista === 'extrema' && !(a.s === 'avanca' && a.g === 'extrema')) continue;
+    if (lista === 'barra' && a.s !== 'barra') continue;
+    if (lista === 'fora' && !a.fora) continue;
+    if (lista === 'corrigidos' && !conferido && !Object.prototype.hasOwnProperty.call(pend, b.chave)) continue;
+    if (lista === 'todos' && !busca) continue;
+    if (esconder && lista !== 'corrigidos' && conferido && !Object.prototype.hasOwnProperty.call(pend, b.chave)) continue;
+    if (casa && !(b.tipo === 'p' ? (b.it.k || []).includes(casa) : b.it.k === casa)) continue;
+    if (pauta) { const x = efetiva(b.chave); const pp = [...(x.p || []), ...(a.p || []), ...(a.fora || [])]; if (!pp.includes(pauta)) continue; }
+    if (busca) { const txt = norm(b.chave + ' ' + (b.tipo === 'p' ? b.it.e : (b.it.me || '') + ' ' + (b.it.desc || ''))); if (!busca.split(/\s+/).every(t => txt.includes(t))) continue; }
+    out.push(b);
+  }
+  out.sort((x, y) => String(y.it.d || '').localeCompare(String(x.it.d || '')));
+  return out;
+}
+let atual = [], mostrados = 0;
+const PASSO = 25;
+function desenhar() {
+  atual = itensDaLista(); mostrados = 0;
+  $('#lista').innerHTML = '';
+  $('#contagem').textContent = atual.length ? `${atual.length.toLocaleString('pt-BR')} itens nesta lista` : ($('#fLista').value === 'todos' && !$('#fBusca').value.trim() ? 'Digite um número ou uma palavra para buscar entre todos os itens.' : 'Nenhum item nesta lista.');
+  mais();
+}
+function mais() {
+  const frag = atual.slice(mostrados, mostrados + PASSO).map(cartao).join('');
+  $('#lista').insertAdjacentHTML('beforeend', frag);
+  mostrados += PASSO;
+  $('#mais').hidden = mostrados >= atual.length;
+}
+function autores(a) {
+  if (!a || !a.length) return '';
+  const n = a.slice(0, 4).map(k => { const p = D.indice[k]; return p ? `${p.n} (${NOME_PARTIDO[p.p] || p.s || p.p || ''}/${p.uf || ''})` : ''; }).filter(Boolean);
+  return n.length ? `<p class="autores">${esc(n.join('; '))}${a.length > 4 ? ` e mais ${a.length - 4}` : ''}</p>` : '';
+}
+const linkProp = it => it.i ? (it.k && it.k[0] === 'S' ? 'https://www25.senado.leg.br/web/atividade/materias/-/materia/' + it.i : 'https://www.camara.leg.br/propostas-legislativas/' + it.i) : '';
+function cartao(b) {
+  const x = efetiva(b.chave), a = ia(b.chave);
+  const it = b.it;
+  const pendente = Object.prototype.hasOwnProperty.call(pend, b.chave);
+  const salvo = !pendente && salvas[b.chave] !== undefined;
+  const c = correcao(b.chave);
+  const nota = c && typeof c === 'object' && c.m !== undefined ? c.m : '';
+  const meta = b.tipo === 'p' ? esc((it.k || []).map(k => CASA[k]).join(' e ')) : esc(CASA[it.k] + ', ' + (it.pl ? 'plenário' : (it.o || 'comissão')));
+  const texto = b.tipo === 'p' ? it.e : (it.me || it.desc);
+  const link = b.tipo === 'p' ? linkProp(it) : '';
+  const iaTxt = a.fora ? `Descartado na revisão do grau (pautas originais ${esc(a.fora.map(p => PAUTA[p] ? PAUTA[p].nome : p).join(', '))})` : esc(descreve(a)) + (a.m ? ` — ${esc(a.m)}` : '');
+  const s = x.s || 'fora';
+  return `<article class="cartao ${classeDe(x)}${pendente ? ' pendente' : ''}" tabindex="0" data-chave="${esc(b.chave)}">
+    <div class="topo"><span class="num">${esc(b.chave.startsWith('V:') ? 'Votação' : b.chave)}</span><span class="meta">${meta}</span><span class="meta">${dataBR(it.d)}</span>
+      ${link ? `<a class="meta" href="${esc(link)}" target="_blank" rel="noopener">Ficha oficial</a>` : ''}
+      <span class="lado">${pendente ? '<span class="selo s-pend">Não salvo</span>' : salvo ? '<span class="selo s-salvo">Conferido</span>' : ''}</span></div>
+    <p class="ementa">${esc(texto)}</p>
+    ${b.tipo === 'v' && it.me && it.desc ? `<p class="autores">${esc(it.desc)}</p>` : ''}
+    ${b.tipo === 'p' ? autores(it.a) : ''}
+    <p class="ia"><b>IA.</b> ${iaTxt}</p>
+    <div class="linha"><span class="rot">Sentido</span><span class="seg">
+      <button type="button" class="avanca" data-s="avanca" aria-pressed="${s === 'avanca'}">Faz avançar a pauta</button>
+      <button type="button" class="contra" data-s="barra" aria-pressed="${s === 'barra'}">Contra a pauta</button>
+      <button type="button" class="fora" data-s="" aria-pressed="${s === 'fora'}">Não é pauta</button></span></div>
+    <div class="linha"><span class="rot">Grau</span><span class="seg">
+      <button type="button" class="direita" data-g="direita" aria-pressed="${x.s === 'avanca' && x.g !== 'extrema'}" ${x.s === 'avanca' ? '' : 'disabled'}>Direita</button>
+      <button type="button" class="extrema" data-g="extrema" aria-pressed="${x.s === 'avanca' && x.g === 'extrema'}" ${x.s === 'avanca' ? '' : 'disabled'}>Extrema-direita</button></span></div>
+    <div class="linha"><span class="rot">Pautas</span><span class="chips">${P.lista.map(p => `<button type="button" class="chip" data-p="${p.id}" aria-pressed="${(x.p || []).includes(p.id)}" ${x.s ? '' : 'disabled'} title="${esc(p.descricao)}">${esc(p.nome)}</button>`).join('')}</span></div>
+    <div class="linha" style="display:block"><textarea data-nota rows="1" placeholder="Nota da equipe (opcional). Aparece no site como Checagem da equipe.">${esc(nota)}</textarea></div>
+    <div class="acoes"><button type="button" class="btn forte" data-confirmar>${pendente || salvo ? 'Confirmar' : 'Confirmar como está'}</button>
+      ${pendente ? '<button type="button" class="btn" data-desfazer>Desfazer</button>' : ''}
+      ${salvo ? '<button type="button" class="btn" data-remover>Voltar para a IA</button>' : ''}</div>
+  </article>`;
+}
+
+// ------------------------------------------------------------ edição
+function estadoDoCartao(el) {
+  const s = el.querySelector('[data-s][aria-pressed=true]');
+  const g = el.querySelector('[data-g][aria-pressed=true]');
+  return { s: s ? s.dataset.s : '', g: g ? g.dataset.g : '', p: [...el.querySelectorAll('[data-p][aria-pressed=true]')].map(b => b.dataset.p), m: el.querySelector('[data-nota]').value.trim() };
+}
+function registrar(el) {
+  const chave = el.dataset.chave, st = estadoDoCartao(el), a = ia(chave);
+  let entrada;
+  if (!st.s) entrada = { s: '' };
+  else {
+    entrada = { s: st.s, p: st.p.length ? st.p : (a.p.length ? a.p : (a.fora || [])) };
+    if (st.s === 'avanca') entrada.g = st.g || 'direita';
+  }
+  if (st.m) entrada.m = st.m;
+  else if (st.s !== a.s || (st.s === 'avanca' && entrada.g !== a.g)) entrada.m = '';   // o motivo da IA deixa de valer
+  if (entrada.s && !entrada.p.length) { alert('Escolha ao menos uma pauta.'); return false; }
+  pend[chave] = entrada; guardarPend(); atualizarBarra();
+  return true;
+}
+function redesenharCartao(el) {
+  const b = atual.find(x => x.chave === el.dataset.chave); if (!b) return el;
+  el.insertAdjacentHTML('afterend', cartao(b)); const novo = el.nextElementSibling; el.remove(); return novo;
+}
+function proximo(el) { const n = el.nextElementSibling; if (n && n.classList.contains('cartao')) n.focus(); else if (!$('#mais').hidden) { mais(); const m = el.nextElementSibling; if (m) m.focus(); } }
+
+$('#lista').addEventListener('click', e => {
+  const el = e.target.closest('.cartao'); if (!el) return;
+  const bt = e.target.closest('button'); if (!bt || bt.disabled) return;
+  if (bt.dataset.s !== undefined) {
+    el.querySelectorAll('[data-s]').forEach(b => b.setAttribute('aria-pressed', b === bt));
+    const avanca = bt.dataset.s === 'avanca';
+    el.querySelectorAll('[data-g]').forEach(b => { b.disabled = !avanca; if (!avanca) b.setAttribute('aria-pressed', 'false'); });
+    if (avanca && !el.querySelector('[data-g][aria-pressed=true]')) el.querySelector('[data-g=direita]').setAttribute('aria-pressed', 'true');
+    el.querySelectorAll('[data-p]').forEach(b => { b.disabled = !bt.dataset.s; });
+    if (bt.dataset.s && !el.querySelector('[data-p][aria-pressed=true]')) { const a = ia(el.dataset.chave); (a.p.length ? a.p : (a.fora || [])).forEach(p => { const c = el.querySelector(`[data-p="${p}"]`); if (c) c.setAttribute('aria-pressed', 'true'); }); }
+    el.className = 'cartao ' + classeDe({ s: bt.dataset.s, g: el.querySelector('[data-g][aria-pressed=true]')?.dataset.g });
+    registrar(el); el.classList.add('pendente');
+    return;
+  }
+  if (bt.dataset.g) { el.querySelectorAll('[data-g]').forEach(b => b.setAttribute('aria-pressed', b === bt)); el.className = 'cartao ' + (bt.dataset.g === 'extrema' ? 'ext' : 'dir'); registrar(el); el.classList.add('pendente'); return; }
+  if (bt.dataset.p) {
+    const on = bt.getAttribute('aria-pressed') !== 'true';
+    if (on && el.querySelectorAll('[data-p][aria-pressed=true]').length >= 3) { alert('No máximo três pautas.'); return; }
+    bt.setAttribute('aria-pressed', on); registrar(el); el.classList.add('pendente'); return;
+  }
+  if (bt.hasAttribute('data-confirmar')) { if (registrar(el)) { const n = redesenharCartao(el); proximo(n); } return; }
+  if (bt.hasAttribute('data-desfazer')) { delete pend[el.dataset.chave]; guardarPend(); atualizarBarra(); redesenharCartao(el); return; }
+  if (bt.hasAttribute('data-remover')) { pend[el.dataset.chave] = null; guardarPend(); atualizarBarra(); redesenharCartao(el); return; }
+});
+$('#lista').addEventListener('change', e => { if (e.target.matches('[data-nota]')) { const el = e.target.closest('.cartao'); registrar(el); el.classList.add('pendente'); } });
+document.addEventListener('keydown', e => {
+  const el = document.activeElement && document.activeElement.classList && document.activeElement.classList.contains('cartao') ? document.activeElement : null;
+  if (!el || e.ctrlKey || e.metaKey || e.altKey) return;
+  const clicar = sel => { const b = el.querySelector(sel); if (b && !b.disabled) b.click(); };
+  const k = e.key.toLowerCase();
+  if (k === 'a') clicar('[data-s=avanca]'); else if (k === 'c') clicar('[data-s=barra]'); else if (k === 'n') clicar('[data-s=""]');
+  else if (k === 'd') clicar('[data-g=direita]'); else if (k === 'e') clicar('[data-g=extrema]');
+  else if (k === 'enter') { e.preventDefault(); clicar('[data-confirmar]'); }
+  else if (k === 'j') { e.preventDefault(); proximo(el); }
+  else if (k === 'k') { e.preventDefault(); const p = el.previousElementSibling; if (p) p.focus(); }
+  else return;
+});
+
+// ------------------------------------------------------------ salvar
+function atualizarBarra() {
+  const n = Object.keys(pend).length;
+  $('#msg').textContent = n ? `${n} ${n === 1 ? 'alteração não salva' : 'alterações não salvas'}. Ficam guardadas neste navegador até você salvar.` : 'Nenhuma alteração pendente.';
+  $('#salvar').disabled = !n; $('#descartar').disabled = !n;
+}
+async function salvar() {
+  if (!token()) { $('#config').showModal(); return; }
+  const n = Object.keys(pend).length; if (!n) return;
+  $('#salvar').disabled = true; $('#msg').textContent = 'Salvando…';
+  for (let tentativa = 0; tentativa < 2; tentativa++) {
+    try {
+      const { sha, dados } = await lerCorrecoesGitHub();
+      const corr = Object.assign({}, dados.correcoes || {});
+      for (const [k, v] of Object.entries(pend)) { if (v === null) delete corr[k]; else corr[k] = v; }
+      const ordenado = Object.fromEntries(Object.keys(corr).sort().map(k => [k, corr[k]]));
+      const novo = Object.assign({}, dados, { correcoes: ordenado });
+      if (!novo._leia && extras._leia) novo._leia = extras._leia;
+      const texto = JSON.stringify(novo, null, 2) + '\n';
+      const corpo = { message: `Correções da equipe pela página de revisão (${n} ${n === 1 ? 'item' : 'itens'})`, content: b64enc(texto), branch: 'main' };
+      if (sha) corpo.sha = sha;
+      const r = await fetch(`https://api.github.com/repos/${REPO}/contents/${ARQ}`, { method: 'PUT', headers: { Authorization: 'Bearer ' + token(), Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' }, body: JSON.stringify(corpo) });
+      if (r.status === 409 || r.status === 422) continue;   // alguém salvou ao mesmo tempo, tenta de novo com a versão nova
+      if (r.status === 401 || r.status === 403) throw new Error('a chave de acesso foi recusada. Confira se ela tem permissão Contents, Read and write, neste repositório');
+      if (!r.ok) throw new Error('o GitHub respondeu ' + r.status);
+      salvas = ordenado; pend = {}; guardarPend();
+      atualizarBarra(); desenhar();
+      $('#msg').textContent = `${n} ${n === 1 ? 'correção salva' : 'correções salvas'}. O robô já começou a atualizar o site, o que leva alguns minutos.`;
+      return;
+    } catch (e) { atualizarBarra(); $('#msg').textContent = 'Não foi possível salvar, porque ' + e.message + '.'; $('#salvar').disabled = false; return; }
+  }
+  atualizarBarra(); $('#msg').textContent = 'Não foi possível salvar por conflito com outra gravação. Tente de novo.';
+}
+$('#salvar').addEventListener('click', salvar);
+$('#descartar').addEventListener('click', () => { if (!confirm('Descartar todas as alterações não salvas?')) return; pend = {}; guardarPend(); atualizarBarra(); desenhar(); });
+$('#mais').addEventListener('click', mais);
+['#fTipo', '#fLista', '#fPauta', '#fCasa', '#fEsconder'].forEach(s => $(s).addEventListener('change', desenhar));
+let tBusca; $('#fBusca').addEventListener('input', () => { clearTimeout(tBusca); tBusca = setTimeout(desenhar, 250); });
+window.addEventListener('beforeunload', e => { if (Object.keys(pend).length) { e.preventDefault(); e.returnValue = ''; } });
+
+// ------------------------------------------------------------ acesso
+function mostrarEstadoToken() { $('#estadoToken').textContent = token() ? 'Acesso configurado' : 'Sem acesso para salvar'; $('#avisoToken').hidden = !!token(); }
+$('#abrirConfig').addEventListener('click', () => { $('#token').value = token(); $('#testeToken').textContent = ''; $('#config').showModal(); });
+$('#fecharConfig').addEventListener('click', () => $('#config').close());
+$('#apagarToken').addEventListener('click', () => { ls.del('revisao-token'); $('#token').value = ''; $('#testeToken').textContent = 'Chave apagada deste navegador.'; mostrarEstadoToken(); });
+$('#gravarToken').addEventListener('click', async () => {
+  const t = $('#token').value.trim(); if (!t) return;
+  $('#testeToken').textContent = 'Testando…';
+  try {
+    const r = await fetch(`https://api.github.com/repos/${REPO}`, { headers: { Authorization: 'Bearer ' + t, Accept: 'application/vnd.github+json' } });
+    if (!r.ok) throw new Error('recusada (' + r.status + ')');
+    const j = await r.json();
+    if (!j.permissions || !j.permissions.push) throw new Error('aceita, mas sem permissão de escrita no repositório');
+    ls.set('revisao-token', t); mostrarEstadoToken();
+    $('#testeToken').textContent = 'Chave aceita, com permissão de escrita. Pode fechar esta janela.';
+    await carregarCorrecoes(); desenhar();
+  } catch (e) { $('#testeToken').textContent = 'A chave foi ' + e.message + '.'; }
+});
+
+// ------------------------------------------------------------ início
+for (const p of P.lista) $('#fPauta').insertAdjacentHTML('beforeend', `<option value="${p.id}">${esc(p.nome)}</option>`);
+mostrarEstadoToken(); atualizarBarra();
+carregar().then(desenhar).catch(e => { $('#lista').innerHTML = `<p class="carregando">Não foi possível carregar os dados (${esc(e.message)}).</p>`; });
+</script>
+</body>
+</html>
