@@ -1,15 +1,15 @@
 {
- "gerado": "2026-10-29T03:54:00.627Z",
- "inicio": "2026/10/01",
+ "gerado": "2026-10-29T04:04:17.713Z",
+ "inicio": "2026-10-01",
  "totais": {
-  "proposicoes": 5637,
+  "proposicoes": 5665,
   "direita": 576,
   "extrema": 9,
-  "votacoes": 155,
+  "votacoes": 158,
   "disputadas": 53,
   "vitorias": 31,
   "derrotas": 16,
-  "nucleo": 295,
+  "nucleo": 301,
   "alinhados": 60
  },
  "porPauta": {
@@ -89,8 +89,8 @@
    "prop": 28,
    "extrema": 0,
    "prop30": 0,
-   "vot": 4,
-   "vitorias": 4,
+   "vot": 6,
+   "vitorias": 6,
    "derrotas": 0
   },
   "estado": {

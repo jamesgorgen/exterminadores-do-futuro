@@ -1,5 +1,5 @@
 {
- "inicio": "2026-10-29T03:54:00.627Z",
+ "inicio": "2026-10-29T04:04:17.713Z",
  "modo": "completo",
  "amostras": {
   "camara_deputado": {
@@ -54,6 +54,42 @@
    "descricao": "Aprovada a Medida Provisória nº 1.312, de 2025.",
    "proposicao_": "{\"id\":2592069,\"uri\":\"https://dadosabertos.camara.leg.br/api/v2/proposicoes/2592069\",\"ementa\":\"Recebido PARECER (CN) Nº 25, DE 2025, da COMISSÃO MISTA DE PLANOS, ORÇAMENTOS PÚBLICOS E FISCALIZAÇÃO, sobre a Medida Provisória n° 1312, de 2025, que Abre crédito extraordinário, em favor do Ministério da "
   },
+  "senado_votacao": {
+   "ano": 2019,
+   "casaSessao": "SF",
+   "codigoMateria": 174386,
+   "codigoSessao": 591267,
+   "codigoSessaoLegislativa": 874,
+   "codigoSessaoVotacao": 7106,
+   "dataApresentacao": "2026-05-28",
+   "dataSessao": "2026-10-14",
+   "descricaoVotacao": "Votação nominal da Proposta de Emenda à Constituição nº 221, de 2019, em primeiro turno.",
+   "ementa": "Altera o art. 7º da Constituição Federal para reduzir a duração máxima semanal do trabalho e prever 2 (dois) dias de repouso semanal remunerado, sem qualquer redução salarial; e dá outras providências.",
+   "idProcesso": 9056435,
+   "identificacao": "PEC 221/2019",
+   "informeLegislativo": "{\"casaColegiado\":\"SF\",\"casaEnteAdm\":\"SF\",\"codigoColegiado\":1998,\"data\":\"2026-10-14\",\"id\":2319636,\"idEnteAdm\":13594,\"idEvento\":11392905,\"nomeColegiado\":\"Plenário do Senado Federal\",\"nomeEnteAdm\":\"Secretaria de Atas e Diários\",\"numeroAutuacao\":1,\"siglaColegiado\":\"PLEN\",\"siglaEnteAdm\":\"SEADI\",\"texto\":\"",
+   "numero": "221",
+   "numeroSessao": 134,
+   "resultadoVotacao": "A",
+   "sequencialSessao": 1,
+   "sequencialVotacao": 4420,
+   "sigla": "PEC",
+   "siglaTipoSessao": "DOR",
+   "totalVotosAbstencao": null,
+   "totalVotosNao": null,
+   "totalVotosSim": null,
+   "votacaoSecreta": "N",
+   "votos": "[81] {\"codigoParlamentar\":5672,\"descricaoVotoParlamentar\":null,\"nomeParlamentar\":\"Alan Rick\",\"sexoParlamentar\":\"M\",\"siglaPartidoParlamentar\":\"REPUBLICANOS\",\"siglaUFParlamentar\":\"AC\",\"siglaVotoParlamentar\":\"Sim\"}"
+  },
+  "senado_voto": {
+   "codigoParlamentar": 5672,
+   "descricaoVotoParlamentar": null,
+   "nomeParlamentar": "Alan Rick",
+   "sexoParlamentar": "M",
+   "siglaPartidoParlamentar": "REPUBLICANOS",
+   "siglaUFParlamentar": "AC",
+   "siglaVotoParlamentar": "Sim"
+  },
   "camara_proposicao": {
    "id": 2604173,
    "uri": "https://dadosabertos.camara.leg.br/api/v2/proposicoes/2604173",
@@ -63,15 +99,60 @@
    "ano": 2026,
    "ementa": "Altera o art. 155 da Constituição Federal para estabelecer alíquota máxima e base de cálculo exclusiva do Imposto sobre a Propriedade de Veículos Automotores – IPVA, e acrescenta dispositivos ao Ato das Disposições Constitucionais Transitórias para limitar despesas com publicidade institucional e com o Poder Legislativo.",
    "dataApresentacao": "2026-02-24T15:48"
+  },
+  "senado_proposicao": {
+   "autoria": "Senadora Dra. Eudócia (PSDB/AL)",
+   "casaIdentificadora": "SF",
+   "codigoMateria": 175895,
+   "dataApresentacao": "2026-10-01",
+   "dataSituacaoAtual": "2026-10-01",
+   "dataUltimaAtualizacao": "2026-10-06T15:15:01.05",
+   "ementa": "Altera a Lei nº 8.080, de 19 de setembro de 1990 - Lei Orgânica da Saúde, para dispor sobre o requerimento administrativo para fornecimento de medicamento destinado ao tratamento de pessoa com câncer.",
+   "enteIdentificador": "SF",
+   "id": 9111471,
+   "identificacao": "PL 5503/2026",
+   "objetivo": "Iniciadora",
+   "situacaoAtual": "AGUARDANDO DESPACHO",
+   "tipoConteudo": "Norma Geral",
+   "tipoDocumento": "Projeto de Lei Ordinária",
+   "tramitando": "Sim",
+   "ultimaInformacaoAtualizada": "PUBLICACAO_OFICIAL",
+   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/c870a6cc-8c8f-4fc6-bfc5-601e31410b00"
   }
  },
  "contagens": {
   "deputados": 882,
-  "votacoes_C_plenario": 126,
+  "votacoes_C_plenario": 125,
   "votacoes_C_comissao": 29,
+  "votacoes_sem_sim_nao": 1,
+  "senado_plenario_votacoes_achadas": 3,
+  "votacoes_S_plenario": 3,
+  "senado_comissao_votacoes_achadas": 0,
   "proposicoes_camara_registros": 8378,
-  "classificados": 5489
+  "proposicoes_data_corrigida": 3,
+  "senado_processo_registros": 128,
+  "proposicoes_senado": 28,
+  "classificados": 30
  },
- "erros": [],
- "fim": "2026-10-29T03:58:13.424Z"
+ "erros": [
+  "votações Senado 20261001: http 400"
+ ],
+ "brutos": {
+  "senado_votacao_iso": {
+   "url": "https://legis.senado.leg.br/dadosabertos/votacao?dataInicio=2026-10-01&dataFim=2026-10-29",
+   "tamanho": 55335,
+   "inicio": "[{\"ano\":2019,\"casaSessao\":\"SF\",\"codigoMateria\":174386,\"codigoSessao\":591267,\"codigoSessaoLegislativa\":874,\"codigoSessaoVotacao\":7106,\"dataApresentacao\":\"2026-05-28\",\"dataSessao\":\"2026-10-14\",\"descricaoVotacao\":\"Votação nominal da Proposta de Emenda à Constituição nº 221, de 2019, em primeiro turno.\",\"ementa\":\"Altera o art. 7º da Constituição Federal para reduzir a duração máxima semanal do trabalho e prever 2 (dois) dias de repouso semanal remunerado, sem qualquer redução salarial; e dá outras providências.\",\"idProcesso\":9056435,\"identificacao\":\"PEC 221/2019\",\"informeLegislativo\":{\"casaColegiado\":\"SF\",\"casaEnteAdm\":\"SF\",\"codigoColegiado\":1998,\"data\":\"2026-10-14\",\"id\":2319636,\"idEnteAdm\":13594,\"idEvento\":11392905,\"nomeColegiado\":\"Plenário do Senado Federal\",\"nomeEnteAdm\":\"Secretaria de Atas e Diários\",\"numeroAutuacao\":1,\"siglaColegiado\":\"PLEN\",\"siglaEnteAdm\":\"SEADI\",\"texto\":\"(Sessão Deliberativa Ordinária - semipresencial - de 14 de outubro de 2026) \\nQuinta e última sessão de discussão da matéria encerrada em 1º turno. \\nCalendário especial aprovado para a matéria (Requerimento nº 706/2026). \\nEmenda nº 37 encaminhada à publicação.  \\nParecer nº 207/2026-Plen/SF proferido pelo Senador Omar Aziz e encaminhado à publicação (contrário à emenda nº 37). \\nDestaque retirado pelo autor (Requerimento nº 710/2026 encaminhado à publicação). \\nProposta aprovada em 1º turno (Sim: 75; Não: 1; Presidente: 1; Total: 77). \\nDiscussão da matéria encerrada em 2º turno. \\nProposta aprovada em 2"
+  },
+  "senado_comissao": {
+   "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20261001&dataFim=20261029",
+   "tamanho": 220,
+   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"29/10/2026 01:04:29\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
+  },
+  "senado_processo": {
+   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-10-16&dataFimApresentacao=2026-10-29",
+   "tamanho": 29348,
+   "inicio": "[{\"autoria\":\"Senador Dr. Hiran (PP/RR)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175985,\"dataApresentacao\":\"2026-10-19\",\"dataSituacaoAtual\":\"2026-10-19\",\"dataUltimaAtualizacao\":\"2026-10-21T15:30:01.3\",\"ementa\":\"Altera o art. 9º da Lei nº 15.211, de 17 de setembro de 2025 (Estatuto Digital da Criança e do Adolescente), para admitir a estimativa de idade por biometria facial como mecanismo de verificação de idade e para ampliar, de forma graduada, as categorias de serviços digitais de acesso restrito a maiores de 18 (dezoito) anos.\",\"enteIdentificador\":\"SF\",\"id\":9115144,\"identificacao\":\"PL 5593/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/3dc7461f-fa42-46e9-aa85-0ff9dd90f0a9\"},{\"autoria\":\"Câmara dos Deputados\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175994,\"dataApresentacao\":\"2026-10-19\",\"dataSituacaoAtual\":\"2026-10-20\",\"dataUltimaAtualizacao\":\"2026-10-23T18:30:01.076\",\"ementa\":\"Altera a Lei nº 8.080, de 19 de setembro de 1990 (Lei Orgânica da Saúde), para determinar a aceitação, pelas unidades do Sistema Único de Saúde (SUS), de exames realizados em serviços privados.\",\"enteIdentificador\":\"SF\",\"id\":9115232,\"identificacao\":\"PL 1123/2025\",\"objetivo\":\"Revisora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocum"
+  }
+ },
+ "fim": "2026-10-29T04:05:30.641Z"
 }
