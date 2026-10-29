@@ -1,10 +1,10 @@
 {
- "gerado": "2026-10-29T09:41:41.458Z",
+ "gerado": "2026-10-29T10:15:21.075Z",
  "inicio": "2023-02-01",
  "totais": {
   "proposicoes": 26223,
   "direita": 2807,
-  "extrema": 115,
+  "extrema": 997,
   "votacoes": 2425,
   "disputadas": 640,
   "vitorias": 352,
@@ -15,7 +15,7 @@
  "porPauta": {
   "armas": {
    "prop": 315,
-   "extrema": 10,
+   "extrema": 179,
    "prop30": 0,
    "vot": 7,
    "vitorias": 5,
@@ -23,7 +23,7 @@
   },
   "punitivismo": {
    "prop": 1166,
-   "extrema": 23,
+   "extrema": 212,
    "prop30": 9,
    "vot": 18,
    "vitorias": 15,
@@ -31,7 +31,7 @@
   },
   "instituicoes": {
    "prop": 146,
-   "extrema": 28,
+   "extrema": 103,
    "prop30": 4,
    "vot": 9,
    "vitorias": 9,
@@ -39,7 +39,7 @@
   },
   "costumes": {
    "prop": 256,
-   "extrema": 36,
+   "extrema": 202,
    "prop30": 1,
    "vot": 11,
    "vitorias": 8,
@@ -47,7 +47,7 @@
   },
   "religiao": {
    "prop": 91,
-   "extrema": 1,
+   "extrema": 40,
    "prop30": 0,
    "vot": 8,
    "vitorias": 5,
@@ -55,7 +55,7 @@
   },
   "educacao": {
    "prop": 88,
-   "extrema": 0,
+   "extrema": 33,
    "prop30": 1,
    "vot": 8,
    "vitorias": 4,
@@ -63,7 +63,7 @@
   },
   "ambiente": {
    "prop": 184,
-   "extrema": 9,
+   "extrema": 100,
    "prop30": 1,
    "vot": 37,
    "vitorias": 25,
@@ -71,7 +71,7 @@
   },
   "povos": {
    "prop": 95,
-   "extrema": 20,
+   "extrema": 86,
    "prop30": 0,
    "vot": 35,
    "vitorias": 19,
@@ -79,7 +79,7 @@
   },
   "movimentos": {
    "prop": 67,
-   "extrema": 7,
+   "extrema": 48,
    "prop30": 0,
    "vot": 0,
    "vitorias": 0,
@@ -87,7 +87,7 @@
   },
   "trabalho": {
    "prop": 127,
-   "extrema": 0,
+   "extrema": 14,
    "prop30": 0,
    "vot": 20,
    "vitorias": 17,
@@ -95,7 +95,7 @@
   },
   "estado": {
    "prop": 169,
-   "extrema": 0,
+   "extrema": 17,
    "prop30": 1,
    "vot": 21,
    "vitorias": 8,
@@ -103,7 +103,7 @@
   },
   "privilegios": {
    "prop": 149,
-   "extrema": 0,
+   "extrema": 10,
    "prop30": 1,
    "vot": 19,
    "vitorias": 11,
@@ -111,7 +111,7 @@
   },
   "plataformas": {
    "prop": 68,
-   "extrema": 3,
+   "extrema": 36,
    "prop30": 0,
    "vot": 4,
    "vitorias": 2,
@@ -119,7 +119,7 @@
   },
   "igualdade": {
    "prop": 17,
-   "extrema": 4,
+   "extrema": 15,
    "prop30": 1,
    "vot": 4,
    "vitorias": 1,
@@ -127,7 +127,7 @@
   },
   "drogas": {
    "prop": 66,
-   "extrema": 1,
+   "extrema": 17,
    "prop30": 1,
    "vot": 3,
    "vitorias": 3,
@@ -135,7 +135,7 @@
   },
   "externa": {
    "prop": 19,
-   "extrema": 0,
+   "extrema": 6,
    "prop30": 0,
    "vot": 6,
    "vitorias": 5,
