@@ -45,8 +45,8 @@ const MAX_CLASSIFICACOES = +(process.env.MAX_CLASSIFICACOES || 60000);
 const SEM_IA = process.env.SEM_IA === '1';
 const TIPOS = ['PL', 'PLP', 'PEC', 'PDL'];
 const MODELO = 'claude-haiku-5-5';
-const VERSAO_CLASSIFICACAO = 'd2';
-const VERSAO_GRAU = 'g2';          // mude para refazer só o grau (direita ou extrema-direita)   // mude para refazer todas as classificações
+const VERSAO_CLASSIFICACAO = 'd3';   // mude para refazer todas as classificações
+const VERSAO_GRAU = 'g3';          // mude para refazer só o grau (direita ou extrema-direita)
 
 const API_CAMARA = 'https://dadosabertos.camara.leg.br/api/v2';
 const ARQ_CAMARA = 'https://dadosabertos.camara.leg.br/arquivos';
@@ -792,8 +792,8 @@ export async function executar() {
   const desde = d => new Date(AGORA - d * 86400000).toISOString().slice(0, 10);
   const porPauta = {};
   for (const p of PAUTAS.lista) porPauta[p.id] = { prop: 0, extrema: 0, prop30: 0, vot: 0, vitorias: 0, derrotas: 0 };
-  for (const it of direita) { const x = it.x; if (x.s !== 'avanca') continue; for (const p of x.p) { porPauta[p].prop++; if (x.g === 'extrema') porPauta[p].extrema++; if (it.d >= desde(30)) porPauta[p].prop30++; } }
-  for (const vt of resumoVot) { if (!vt.x.p) continue; for (const p of vt.x.p) { porPauta[p].vot++; if (vt.venceu === true) porPauta[p].vitorias++; if (vt.venceu === false) porPauta[p].derrotas++; } }
+  for (const it of direita) { const x = it.x; if (x.s !== 'avanca') continue; for (const p of x.p) { if (!porPauta[p]) continue; porPauta[p].prop++; if (x.g === 'extrema') porPauta[p].extrema++; if (it.d >= desde(30)) porPauta[p].prop30++; } }
+  for (const vt of resumoVot) { if (!vt.x.p) continue; for (const p of vt.x.p) { if (!porPauta[p]) continue; porPauta[p].vot++; if (vt.venceu === true) porPauta[p].vitorias++; if (vt.venceu === false) porPauta[p].derrotas++; } }
   gravarJson('resumo.json', {
     gerado: AGORA.toISOString(), inicio: INICIO,
     totais: { proposicoes: todasPropFinal.length, direita: direita.filter(it => it.x.s === 'avanca').length, extrema: direita.filter(it => it.x.g === 'extrema').length,

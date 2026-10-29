@@ -69,7 +69,7 @@
         descricao: 'Desonerações e benefícios fiscais sem contrapartida, perdão de dívidas de setores econômicos, proteção de grandes fortunas, de dividendos e de setores como o agronegócio e o sistema financeiro.',
         extrema: 'Anistia a sonegadores e a crimes contra a ordem tributária em larga escala.' },
       { id: 'plataformas', nome: 'Plataformas digitais e desinformação',
-        descricao: 'Oposição à regulação das plataformas digitais e à responsabilização por conteúdos, enfraquecimento do combate à desinformação em nome da liberdade de expressão.',
+        descricao: 'Oposição à moderação de conteúdo e à responsabilização das plataformas por conteúdos ilegais, enfraquecimento do combate à desinformação e ao discurso de ódio em nome da liberdade de expressão. Temas de dados, nuvem, infraestrutura e poder econômico das big techs ficam na pauta de soberania nacional e digital.',
         extrema: 'Proteção legal à desinformação eleitoral e ao discurso de ódio, punição a quem combate a desinformação.' },
       { id: 'igualdade', nome: 'Cotas e igualdade racial',
         descricao: 'Fim ou restrição das cotas raciais e de ações afirmativas, enfraquecimento de políticas de igualdade racial.',
@@ -77,9 +77,9 @@
       { id: 'drogas', nome: 'Política de drogas proibicionista',
         descricao: 'Endurecimento da Lei de Drogas, criminalização do porte para uso, internação compulsória, financiamento de comunidades terapêuticas.',
         extrema: 'Internação forçada em massa e punição penal de usuários como política principal.' },
-      { id: 'externa', nome: 'Alinhamento externo e soberania',
-        descricao: 'Alinhamento automático a governos estrangeiros, oposição à integração regional e aos BRICS, apoio a sanções contra o Brasil ou a autoridades brasileiras.',
-        extrema: 'Defesa de interferência estrangeira em instituições brasileiras ou de sanções contra o próprio país.' }
+      { id: 'soberania', nome: 'Soberania nacional e digital',
+        descricao: 'Entrega de recursos estratégicos ao controle estrangeiro (petróleo e pré-sal, minerais críticos e terras raras, energia, água, terras, Alcântara e bases militares), alinhamento automático a governos estrangeiros em política externa, comercial e de defesa, oposição à integração regional e aos BRICS, fim de exigências de conteúdo local e de política industrial nacional. Inclui soberania digital, como oposição a dados e nuvem sob jurisdição brasileira, à tributação e à regulação econômica das big techs estrangeiras, a infraestrutura digital e inteligência artificial nacionais, e a dependência tecnológica do exterior. Privatizações e concessões em geral ficam na pauta de privatização; marque esta só quando o projeto entregar explicitamente o controle a estrangeiros ou abrir mão de controle nacional sobre recurso ou tecnologia estratégica.',
+        extrema: 'Defesa de sanções, tarifas ou interferência estrangeira contra o próprio país ou suas instituições, apoio a governos estrangeiros contra decisões da Justiça brasileira, venda de terras, recursos ou infraestrutura estratégica sem nenhum controle nacional.' }
     ]
   };
 
