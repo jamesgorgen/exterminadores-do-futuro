@@ -88,7 +88,7 @@ Na pasta `dados`
 
 A página `emendas.html` mostra para onde os parlamentares destinam as emendas individuais ao Orçamento, de 2023 em diante, em três partes. A primeira compara como cada grupo divide o dinheiro. A segunda mostra onze áreas (saúde, transferências especiais Pix, educação, assistência social, urbanismo, agricultura, esporte e lazer, segurança e defesa, cultura, direitos da cidadania e outras funções). A terceira traz o perfil de cada parlamentar, com municípios, entidades favorecidas e convênios.
 
-- **Grupos, definidos só pelo partido.** Extrema-direita reúne PL e Novo. Direita reúne PP, União Brasil, Republicanos, Podemos e PSD. Alinhados reúne MDB, PDT, Rede e PSB. Esquerda reúne PT, PSOL e PCdoB. Outros partidos reúne os demais. A lista fica no início de `robo/emendas.py` (`GRUPOS`) e vale só para este módulo.
+- **Grupos, definidos só pelo partido.** Extrema-direita reúne PL, Novo e Missão. Direita reúne PP, União Brasil, Republicanos, Podemos, PSD, Cidadania e Solidariedade. Alinhados reúne MDB, PDT, Rede e PSB. Esquerda reúne PT, PSOL e PCdoB. Outros partidos reúne os demais (PSDB, Avante, PV, PRD e sem partido). A lista fica no início de `robo/emendas.py` (`GRUPOS`) e vale só para este módulo.
 - **Atualização.** O agendamento `.github/workflows/emendas.yml` roda todo dia 7, baixa o arquivo de emendas do Portal da Transparência, gera `dados/emendas.json` com `robo/emendas.py` e grava no repositório. Se o download falhar, os dados anteriores continuam no ar. Também pode ser disparado à mão, em Actions, Atualizar emendas, informando outro endereço do arquivo, se for preciso.
 - **Ligação dos autores.** Os autores são ligados pelo nome aos parlamentares de `dados/parlamentares.json`, o que cobre cerca de 91% do valor.
 

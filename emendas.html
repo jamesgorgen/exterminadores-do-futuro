@@ -199,7 +199,7 @@ h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size
   <h2>Como foi feito</h2>
   <ul id="metodoLista">
     <li>Fonte. Arquivos de emendas parlamentares do Portal da Transparência (emendas, pagamentos por favorecido e convênios). Entram só as emendas individuais de 2023 a 2026. As de bancada, de comissão e de relator não têm autor individual e ficam de fora. O ano de 2026 ainda está em execução.</li>
-    <li>Grupos. Extrema-direita reúne PL e Novo. Direita reúne PP, União Brasil, Republicanos, Podemos e PSD. Alinhados reúne MDB, PDT, Rede e PSB. Esquerda reúne PT, PSOL e PCdoB. Outros partidos reúne PSDB, Avante, PV, Solidariedade, Cidadania, PRD, Missão e parlamentares sem partido. Os grupos são definidos pelo partido, e o partido considerado é o mais recente de cada parlamentar.</li>
+    <li>Grupos. Extrema-direita reúne PL, Novo e Missão. Direita reúne PP, União Brasil, Republicanos, Podemos, PSD, Cidadania e Solidariedade. Alinhados reúne MDB, PDT, Rede e PSB. Esquerda reúne PT, PSOL e PCdoB. Outros partidos reúne PSDB, Avante, PV, PRD e parlamentares sem partido. Os grupos são definidos pelo partido, e o partido considerado é o mais recente de cada parlamentar.</li>
     <li>Valores. Os quadros e as áreas usam o valor empenhado, que é o compromisso de gasto. O perfil de cada parlamentar mostra também o valor pago, somando os restos a pagar quitados.</li>
     <li>Áreas. Seguem a função orçamentária de cada emenda. Segurança e defesa soma as funções segurança pública e defesa nacional. Transferências especiais (Pix) reúne as emendas sem finalidade definida, qualquer que seja a área em que o dinheiro venha a ser gasto.</li>
     <li>Médias. A média por parlamentar divide o valor do grupo pelo número de parlamentares do grupo com emendas no período. Senadores têm cota de emendas maior que a de deputados, o que pesa nas médias de grupos com mais senadores.</li>
@@ -212,12 +212,12 @@ h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size
 <script>
 'use strict';
 const NOME_PAUTA = { punitivismo: 'Punitivismo e militarização', drogas: 'Política de drogas', privilegios: 'Privilégios econômicos', religiao: 'Religião e Estado', igualdade: 'Igualdade e direitos' };
-const NOME_PARTIDO = { PSB: 'PSB', PDT: 'PDT', MDB: 'MDB', PSOL: 'PSOL', PT: 'PT', PSD: 'PSD', PP: 'PP', PL: 'PL', PSDB: 'PSDB', PV: 'PV', PRD: 'PRD', PODE: 'Podemos', UNIAO: 'União Brasil', REPUBLICANOS: 'Republicanos', SOLIDARIEDADE: 'Solidariedade', CIDADANIA: 'Cidadania', AVANTE: 'Avante', NOVO: 'Novo', REDE: 'Rede', PCDOB: 'PCdoB', SP: 'Sem partido', OUTROS: 'Outros' };
+const NOME_PARTIDO = { MISSAO: 'Missão', PSB: 'PSB', PDT: 'PDT', MDB: 'MDB', PSOL: 'PSOL', PT: 'PT', PSD: 'PSD', PP: 'PP', PL: 'PL', PSDB: 'PSDB', PV: 'PV', PRD: 'PRD', PODE: 'Podemos', UNIAO: 'União Brasil', REPUBLICANOS: 'Republicanos', SOLIDARIEDADE: 'Solidariedade', CIDADANIA: 'Cidadania', AVANTE: 'Avante', NOVO: 'Novo', REDE: 'Rede', PCDOB: 'PCdoB', SP: 'Sem partido', OUTROS: 'Outros' };
 const $ = s => document.querySelector(s);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const norm = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 const cor = g => `var(--g-${g})`;
-const partido = p => NOME_PARTIDO[p.p] || p.s || p.p || '';
+const partido = p => (p.p === 'OUTROS' || p.p === 'SP') ? (p.s || 'Sem partido') : (NOME_PARTIDO[p.p] || p.s || p.p || '');
 const casa = c => c === 'S' ? 'Senado' : 'Câmara';
 function reais(v) {
   const a = Math.abs(v);
@@ -239,7 +239,7 @@ function desenharGrupos() {
   const P = D.perfil[ano];
   $('#grupos').innerHTML = D.ordem.map(g => {
     const x = P[g], G = D.grupos[g];
-    const partidos = G.partidos.length ? G.partidos.map(p => NOME_PARTIDO[p] || p).join(', ') : 'PSDB, Avante, PV, Solidariedade, Cidadania, PRD, Missão e sem partido';
+    const partidos = G.partidos.length ? G.partidos.map(p => NOME_PARTIDO[p] || p).join(', ') : 'PSDB, Avante, PV, PRD e sem partido';
     return `<div class="gt" style="--cor:${cor(g)}"><b>${esc(G.nome)}</b><div class="partidos">${esc(partidos)}</div>
       <div class="grande num">${reais(x.total)}</div>
       <dl class="num"><dt>Parlamentares</dt><dd>${x.n}</dd><dt>Por parlamentar</dt><dd>${x.n ? reais(x.total / x.n) : '—'}</dd>
