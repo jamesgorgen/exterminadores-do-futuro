@@ -276,6 +276,13 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 1316/2026": {
+      "s": "avanca",
+      "p": [
+        "privilegios"
+      ],
+      "g": "direita"
+    },
     "PL 1345/2026": {
       "s": "avanca",
       "p": [
@@ -284,6 +291,13 @@
       ],
       "g": "direita",
       "m": ""
+    },
+    "PL 1346/2026": {
+      "s": "avanca",
+      "p": [
+        "drogas"
+      ],
+      "g": "direita"
     },
     "PL 1356/2026": {
       "s": "barra",
@@ -308,6 +322,15 @@
       ],
       "m": ""
     },
+    "PL 1568/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo",
+        "costumes"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
     "PL 1613/2026": {
       "s": "avanca",
       "p": [
@@ -321,6 +344,14 @@
       "s": "avanca",
       "p": [
         "religiao",
+        "privilegios"
+      ],
+      "g": "direita"
+    },
+    "PL 1824/2026": {
+      "s": "avanca",
+      "p": [
+        "estado",
         "privilegios"
       ],
       "g": "direita"
@@ -342,6 +373,22 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 1886/2026": {
+      "s": "avanca",
+      "p": [
+        "privilegios"
+      ],
+      "g": "direita"
+    },
+    "PL 1906/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo",
+        "educacao"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
     "PL 1911/2026": {
       "s": "avanca",
       "p": [
@@ -357,6 +404,21 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 1934/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo",
+        "educacao"
+      ],
+      "g": "direita"
+    },
+    "PL 1937/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "direita"
     },
     "PL 1946/2026": {
       "s": "avanca",
@@ -381,6 +443,13 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 1998/2026": {
+      "s": "avanca",
+      "p": [
+        "privilegios"
+      ],
+      "g": "direita"
     },
     "PL 2001/2026": {
       "s": "avanca",
@@ -953,6 +1022,13 @@
       ],
       "m": ""
     },
+    "PL 3603/2026": {
+      "s": "avanca",
+      "p": [
+        "drogas"
+      ],
+      "g": "direita"
+    },
     "PL 3606/2026": {
       "s": "avanca",
       "p": [
@@ -1487,6 +1563,21 @@
         "armas"
       ],
       "g": "extrema",
+      "m": ""
+    },
+    "PL 5298/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "direita"
+    },
+    "PL 5303/2026": {
+      "s": "barra",
+      "p": [
+        "punitivismo",
+        "costumes"
+      ],
       "m": ""
     },
     "PL 5318/2026": {
