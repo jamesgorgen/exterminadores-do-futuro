@@ -434,6 +434,7 @@ function desenharEstado(uf) {
       <div class="kpi"><b class="num">${pct(x.pix / x.total, 0)}</b><span>em emendas Pix</span></div>
       <div class="kpi"><b class="num">${reais(x.pago)}</b><span>já pago</span></div>
     </div>
+    <a class="link-obs" style="margin:0 0 12px" href="dossie.html?tipo=estado&uf=${uf}">Gerar dossiê do estado para imprimir</a>
     <div class="rot">De onde veio o dinheiro</div>
     <div class="pilha">${pilha}</div><div class="leg-pilha">${leg}</div>
     ${banc ? `<p class="sub" style="margin:8px 0 0">Parlamentares do estado com emendas no período: ${banc}.</p>` : ''}
@@ -513,6 +514,7 @@ function desenharPerfil(k) {
       <div><h4>Convênios assinados</h4>${p.objs.length ? `<ul class="lista">${linhas(p.objs, ([o, v, l]) => `<li><span>${esc(o)} <span class="sub">${esc(l)}</span></span><span class="num">${reais(v)}</span></li>`)}</ul>` : '<p class="sub">Nenhum convênio ligado às emendas deste parlamentar no período.</p>'}</div>
     </div>
     <a class="link-obs" href="./?parlamentar=${encodeURIComponent(p.k)}">Ver votos e projetos no observatório</a>
+    <a class="link-obs" style="margin-left:16px" href="dossie.html?tipo=parlamentar&id=${encodeURIComponent(p.k)}">Gerar dossiê para imprimir</a>
   </article>`;
   desenharRanking();
 }

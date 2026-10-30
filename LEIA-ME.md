@@ -51,6 +51,7 @@ Na página de revisão, as filas mostram por padrão só os itens de certeza bai
 | `pautas.js` | Pautas, núcleo e regras do índice |
 | `correcoes.json` | Correções da equipe à classificação da IA |
 | `revisao.html` | Página de revisão da triagem, para a equipe |
+| `dossie.html` | Dossiês para imprimir (parlamentar e estado) |
 | `emendas.html` | Módulo de emendas parlamentares |
 | `robo/emendas.py` | Gera os dados do módulo de emendas |
 | `robo/motor.js` | Funções de busca e de classificação por tema, usadas pelo robô |

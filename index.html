@@ -528,6 +528,7 @@ async function desenharPerfil(k){
     <h3>${esc(p.n)}</h3>
     <div class="linha-perfil"><span>${esc(nomePartido(p.p, p.s))}/${esc(p.uf || '')}, ${CASA[p.c] || ''}</span>${p.cl ? `<span class="selo s-cl-${p.cl}">${CLASSE[p.cl]}</span>` : ''}
       ${p.i !== null && p.i !== undefined ? `<span>Índice de alinhamento <b>${String(p.i).replace('.', ',')}%</b>, em ${fmt(p.vd)} votações disputadas</span>` : ''}
+      <a class="btn" href="dossie.html?tipo=parlamentar&id=${encodeURIComponent(k)}" style="text-decoration:none">Gerar dossiê</a>
       <button type="button" class="btn" data-fechar-perfil>Fechar</button></div>
     <div class="topo">${pautas.map(([id, n]) => `<span class="selo s-pauta">${esc(PAUTA[id] ? PAUTA[id].nome : id)} ${n}</span>`).join(' ')}</div>
     <h4>Projetos com pauta da direita (${fmt(props.length)})</h4>
