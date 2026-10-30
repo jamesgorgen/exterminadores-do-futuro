@@ -1,5 +1,5 @@
 {
- "inicio": "2026-10-29T23:26:23.581Z",
+ "inicio": "2026-10-30T15:59:56.831Z",
  "modo": "diario",
  "amostras": {
   "camara_deputado": {
@@ -91,33 +91,33 @@
    "siglaVotoParlamentar": "Sim"
   },
   "camara_proposicao": {
-   "id": 2604173,
-   "uri": "https://dadosabertos.camara.leg.br/api/v2/proposicoes/2604173",
-   "siglaTipo": "PEC",
-   "codTipo": 136,
-   "numero": 3,
+   "id": 2601286,
+   "uri": "https://dadosabertos.camara.leg.br/api/v2/proposicoes/2601286",
+   "siglaTipo": "PL",
+   "codTipo": 139,
+   "numero": 387,
    "ano": 2026,
-   "ementa": "Altera o art. 155 da Constituição Federal para estabelecer alíquota máxima e base de cálculo exclusiva do Imposto sobre a Propriedade de Veículos Automotores – IPVA, e acrescenta dispositivos ao Ato das Disposições Constitucionais Transitórias para limitar despesas com publicidade institucional e com o Poder Legislativo.",
-   "dataApresentacao": "2026-02-24T15:48"
+   "ementa": "Veda os supersalários em âmbito nacional, regulando a aplicação do limite máximo remuneratório mensal de agentes políticos e públicos de que tratam o inciso XI do caput e os §§ 9º e 11 do art. 37 da Constituição Federal, acrescenta dispositivos no Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal) e na Lei nº 8.429, de 2 de junho de 1992 (Lei de Improbidade Administrativa), estabelecendo critérios objetivos para caracterização de parcelas indenizatórias e veda pagamentos que não correspondam a ressarcimento efetivo de despesa.",
+   "dataApresentacao": "2026-02-06T18:22"
   },
   "senado_proposicao": {
-   "autoria": "Senador Astronauta Marcos Pontes (PL/SP)",
+   "autoria": "Senadora Dra. Eudócia (PSDB/AL)",
    "casaIdentificadora": "SF",
-   "codigoMateria": 175785,
-   "dataApresentacao": "2026-09-14",
-   "dataSituacaoAtual": "2026-09-14",
-   "dataUltimaAtualizacao": "2026-09-17T16:00:01.228",
-   "ementa": "Dispõe sobre a avaliação das políticas públicas no âmbito da administração pública federal, com fundamento no art. 37, § 16, da Constituição Federal.",
+   "codigoMateria": 175895,
+   "dataApresentacao": "2026-10-01",
+   "dataSituacaoAtual": "2026-10-01",
+   "dataUltimaAtualizacao": "2026-10-06T15:15:01.05",
+   "ementa": "Altera a Lei nº 8.080, de 19 de setembro de 1990 - Lei Orgânica da Saúde, para dispor sobre o requerimento administrativo para fornecimento de medicamento destinado ao tratamento de pessoa com câncer.",
    "enteIdentificador": "SF",
-   "id": 9107988,
-   "identificacao": "PL 5357/2026",
+   "id": 9111471,
+   "identificacao": "PL 5503/2026",
    "objetivo": "Iniciadora",
    "situacaoAtual": "AGUARDANDO DESPACHO",
    "tipoConteudo": "Norma Geral",
    "tipoDocumento": "Projeto de Lei Ordinária",
    "tramitando": "Sim",
    "ultimaInformacaoAtualizada": "PUBLICACAO_OFICIAL",
-   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/9221d835-186c-443f-b684-9fe6bad6ce7a"
+   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/c870a6cc-8c8f-4fc6-bfc5-601e31410b00"
   }
  },
  "contagens": {
@@ -128,32 +128,62 @@
   "senado_plenario_votacoes_achadas": 3,
   "votacoes_S_plenario": 3,
   "senado_comissao_votacoes_achadas": 0,
-  "proposicoes_camara_registros": 8461,
+  "proposicoes_camara_registros": 7646,
   "proposicoes_data_corrigida": 3,
-  "senado_processo_registros": 159,
-  "proposicoes_senado": 57,
-  "graduados": 1503,
-  "correcoes_aplicadas": 662
+  "senado_processo_registros": 156,
+  "proposicoes_senado": 54,
+  "correcoes_aplicadas": 664
  },
  "erros": [
-  "votações Senado 2026-09-14: http 400"
+  "votações Senado 2026-09-15: http 400",
+  "proposições C160545 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=160545&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id",
+  "proposições C204503 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=204503&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id",
+  "proposições C178927 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=178927&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id",
+  "proposições C204353 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=204353&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id",
+  "proposições C178937 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=178937&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id",
+  "proposições C178881 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=178881&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id",
+  "proposições C220596 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=220596&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id",
+  "proposições C220707 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=220707&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id",
+  "proposições C204356 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=204356&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id",
+  "proposições C220715 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=220715&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id",
+  "proposições C107970 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=107970&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id",
+  "proposições C220556 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=220556&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id",
+  "proposições C220632 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=220632&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id",
+  "proposições C178831 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=178831&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id",
+  "proposições C220657 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=220657&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id",
+  "proposições C204423 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=204423&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id",
+  "proposições C133439 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=133439&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id",
+  "proposições C178882 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=178882&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id",
+  "proposições C204515 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=204515&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id",
+  "proposições C220676 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=220676&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id",
+  "proposições C123756 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=123756&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id",
+  "proposições C220544 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=220544&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id",
+  "proposições C160553 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=160553&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id",
+  "proposições C220638 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=220638&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id",
+  "proposições C220675 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=220675&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id",
+  "proposições C220549 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=220549&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id",
+  "proposições C73433 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=73433&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id",
+  "proposições C141391 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=141391&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id",
+  "proposições C160541 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=160541&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id",
+  "proposições C160600 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=160600&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id",
+  "proposições C74090 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=74090&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id"
  ],
  "brutos": {
   "senado_votacao_iso": {
-   "url": "https://legis.senado.leg.br/dadosabertos/votacao?dataInicio=2026-09-14&dataFim=2026-09-30",
+   "url": "https://legis.senado.leg.br/dadosabertos/votacao?dataInicio=2026-09-15&dataFim=2026-09-30",
    "tamanho": 2,
    "inicio": "[]"
   },
   "senado_comissao": {
-   "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20260914&dataFim=20261029",
+   "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20260915&dataFim=20261030",
    "tamanho": 220,
-   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"29/10/2026 20:08:24\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
+   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"30/10/2026 13:00:41\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
   },
   "senado_processo": {
-   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-09-14&dataFimApresentacao=2026-09-15",
-   "tamanho": 5047,
-   "inicio": "[{\"autoria\":\"Senador Astronauta Marcos Pontes (PL/SP)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175785,\"dataApresentacao\":\"2026-09-14\",\"dataSituacaoAtual\":\"2026-09-14\",\"dataUltimaAtualizacao\":\"2026-09-17T16:00:01.228\",\"ementa\":\"Dispõe sobre a avaliação das políticas públicas no âmbito da administração pública federal, com fundamento no art. 37, § 16, da Constituição Federal.\",\"enteIdentificador\":\"SF\",\"id\":9107988,\"identificacao\":\"PL 5357/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/9221d835-186c-443f-b684-9fe6bad6ce7a\"},{\"autoria\":\"Senador Astronauta Marcos Pontes (PL/SP)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175786,\"dataApresentacao\":\"2026-09-14\",\"dataSituacaoAtual\":\"2026-09-14\",\"dataUltimaAtualizacao\":\"2026-09-17T16:00:01.439\",\"ementa\":\"Institui o marco legal de biossegurança, de bioproteção e de gestão do risco aplicável a atividades que envolvam agentes biológicos, materiais biológicos e ativos associados.\",\"enteIdentificador\":\"SF\",\"id\":9108010,\"identificacao\":\"PL 5358/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-get"
+   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-10-01&dataFimApresentacao=2026-10-15",
+   "tamanho": 18273,
+   "inicio": "[{\"autoria\":\"Senadora Dra. Eudócia (PSDB/AL)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175895,\"dataApresentacao\":\"2026-10-01\",\"dataSituacaoAtual\":\"2026-10-01\",\"dataUltimaAtualizacao\":\"2026-10-06T15:15:01.05\",\"ementa\":\"Altera a Lei nº 8.080, de 19 de setembro de 1990 - Lei Orgânica da Saúde, para dispor sobre o requerimento administrativo para fornecimento de medicamento destinado ao tratamento de pessoa com câncer.\",\"enteIdentificador\":\"SF\",\"id\":9111471,\"identificacao\":\"PL 5503/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/c870a6cc-8c8f-4fc6-bfc5-601e31410b00\"},{\"autoria\":\"Senadora Dra. Eudócia (PSDB/AL)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175896,\"dataApresentacao\":\"2026-10-01\",\"dataSituacaoAtual\":\"2026-10-01\",\"dataUltimaAtualizacao\":\"2026-10-06T15:15:01.211\",\"ementa\":\"Institui o Programa Nacional de Reaproveitamento de Medicamentos Oncológicos de Alto Custo, no âmbito do SUS.\",\"enteIdentificador\":\"SF\",\"id\":9111493,\"identificacao\":\"PL 5505/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/99138d"
   }
  },
- "fim": "2026-10-29T23:34:53.972Z"
+ "fim": "2026-10-30T16:11:30.657Z"
 }

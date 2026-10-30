@@ -1,5 +1,5 @@
 {
- "gerado": "2026-10-29T23:26:23.581Z",
+ "gerado": "2026-10-30T15:59:56.831Z",
  "inicio": "2023-02-01",
  "totais": {
   "proposicoes": 26244,
@@ -16,7 +16,7 @@
   "armas": {
    "prop": 282,
    "extrema": 184,
-   "prop30": 2,
+   "prop30": 1,
    "vot": 6,
    "vitorias": 5,
    "derrotas": 0
@@ -24,7 +24,7 @@
   "punitivismo": {
    "prop": 1243,
    "extrema": 426,
-   "prop30": 9,
+   "prop30": 8,
    "vot": 19,
    "vitorias": 15,
    "derrotas": 0
@@ -32,7 +32,7 @@
   "instituicoes": {
    "prop": 201,
    "extrema": 149,
-   "prop30": 2,
+   "prop30": 1,
    "vot": 25,
    "vitorias": 23,
    "derrotas": 0
