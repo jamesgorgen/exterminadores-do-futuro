@@ -24,7 +24,8 @@
     blocos: { extrema: ['PL', 'NOVO', 'MISSAO'], direita: ['PP', 'UNIAO', 'REPUBLICANOS', 'PODE'] },
     nucleo: ['PL', 'NOVO', 'MISSAO', 'PP', 'UNIAO', 'REPUBLICANOS', 'PODE'],
     // Partido usado como referência do campo do governo para identificar votações disputadas.
-    referenciaGoverno: ['PT'],
+    // Esquerda e aliados, referência do campo do governo.
+    referenciaGoverno: ['PT', 'PSB', 'REDE', 'PCDOB', 'PDT', 'PV'],
     // Regras do índice de alinhamento.
     indice: {
       coesaoMinima: 0.6,       // o bloco e a referência precisam votar ao menos 60% num mesmo sentido

@@ -310,8 +310,8 @@ function cartaoVot(v){
   const x = v.x || {};
   const res = v.res === 'A' ? 'Aprovada' : v.res === 'R' ? 'Rejeitada' : '';
   const pos = (rot, b, c) => b ? `${rot} votou <b>${VOTO[b]}</b>${c ? ` (${Math.round(c * 100)}%)` : ''}` : `${rot} se dividiu`;
-  const bloco = v.be !== undefined ? `${pos('A extrema-direita', v.be, v.bec)}, ${pos('a direita', v.bd, v.bdc).charAt(0).toLowerCase() + pos('a direita', v.bd, v.bdc).slice(1)}${v.gv ? ` e o PT votou <b>${VOTO[v.gv]}</b>` : ''}.`
-    : v.bl ? `A direita votou <b>${VOTO[v.bl]}</b>${v.blc ? ` (${Math.round(v.blc * 100)}% do bloco)` : ''}${v.gv ? `, o PT votou <b>${VOTO[v.gv]}</b>` : ''}.` : 'A direita se dividiu.';
+  const bloco = v.be !== undefined ? `${pos('A extrema-direita', v.be, v.bec)}, ${pos('a direita', v.bd, v.bdc).charAt(0).toLowerCase() + pos('a direita', v.bd, v.bdc).slice(1)}${v.gv ? ` e a esquerda votou <b>${VOTO[v.gv]}</b>` : ''}.`
+    : v.bl ? `A direita votou <b>${VOTO[v.bl]}</b>${v.blc ? ` (${Math.round(v.blc * 100)}% do bloco)` : ''}${v.gv ? `, a esquerda votou <b>${VOTO[v.gv]}</b>` : ''}.` : 'A direita se dividiu.';
   const selVit = (disp, vit, rot) => disp && vit !== null && vit !== undefined ? (vit ? `<span class="selo s-venceu">${rot} venceu</span>` : `<span class="selo s-perdeu">${rot} perdeu</span>`) : '';
   const vitorias = v.be !== undefined ? selVit(v.dispE, v.vE, 'A extrema-direita') + selVit(v.dispD, v.vD, 'A direita') : selVit(v.disp, v.venceu, 'A direita');
   return `<article class="cartao ${classeCartao(x)}">
@@ -347,7 +347,7 @@ function desenharMovimentos(){
       <div class="kpis">
         <div class="kpi"><b>${fmt(propRec.length)}</b><span>projetos novos com pauta da direita</span></div>
         <div class="kpi ext"><b>${fmt(propRec.filter(it => it.x.g === 'extrema').length)}</b><span>de extrema-direita</span></div>
-        <div class="kpi"><b>${fmt(votRec.filter(v => v.disp).length)}</b><span>votações disputadas com o PT</span></div>
+        <div class="kpi"><b>${fmt(votRec.filter(v => v.disp).length)}</b><span>votações disputadas com a esquerda</span></div>
         <div class="kpi ext"><b>${fmt(votRec.filter(v => v.dispE && v.vE === true).length)}</b><span>vencidas pela extrema-direita</span></div>
         <div class="kpi"><b>${fmt(votRec.filter(v => v.dispD && v.vD === true).length)}</b><span>vencidas pela direita</span></div>
       </div>
@@ -450,7 +450,7 @@ function desenharVotacoes(){
   const paginas = Math.max(1, Math.ceil(lista.length / POR_PAGINA)); f.pagina = Math.min(f.pagina, paginas);
   $('#aba-votacoes').innerHTML = `
     <h2 class="titulo">Votações nominais</h2>
-    <p class="sub">Votações em que cada parlamentar registrou o voto, nos plenários e nas comissões. A posição da extrema-direita é a da maioria dos parlamentares de ${esc(BLOCO_E())}, e a da direita, a da maioria de ${esc(BLOCO_D())}. Disputadas são as votações em que ao menos um desses blocos e o PT votaram em sentidos opostos.</p>
+    <p class="sub">Votações em que cada parlamentar registrou o voto, nos plenários e nas comissões. A posição da extrema-direita é a da maioria dos parlamentares de ${esc(BLOCO_E())}, e a da direita, a da maioria de ${esc(BLOCO_D())}. Disputadas são as votações em que ao menos um desses blocos e a esquerda votaram em sentidos opostos.</p>
     <div class="filtros">
       <label class="sr" for="fv-texto">Procurar</label><input type="search" id="fv-texto" placeholder="Procurar por matéria ou palavra" value="${esc(f.texto)}">
       <select id="fv-casa" aria-label="Casa">${opcoes([['C', 'Câmara'], ['S', 'Senado']], f.casa, 'Câmara e Senado')}</select>
@@ -514,7 +514,7 @@ function desenharParlamentares(){
   const r = D.regras || P.indice;
   $('#aba-parlamentares').innerHTML = `
     <h2 class="titulo">Parlamentares</h2>
-    <p class="sub">São dois blocos. Extrema-direita reúne ${esc(BLOCO_E())}, e direita, ${esc(BLOCO_D())}. Cada índice é a porcentagem das votações em que aquele bloco e o PT se opuseram em que o parlamentar votou como o bloco. Alinhados, de qualquer outro partido, têm o maior dos dois índices em ${Math.round(r.alinhado * 100)}% ou mais, e próximos, de ${Math.round(r.proximo * 100)}% a ${Math.round(r.alinhado * 100)}%. O índice só aparece a partir de ${r.votacoesMinimas} votações disputadas.</p>
+    <p class="sub">São dois blocos. Extrema-direita reúne ${esc(BLOCO_E())}, e direita, ${esc(BLOCO_D())}. Cada índice é a porcentagem das votações em que aquele bloco e a esquerda se opuseram em que o parlamentar votou como o bloco. Alinhados, de qualquer outro partido, têm o maior dos dois índices em ${Math.round(r.alinhado * 100)}% ou mais, e próximos, de ${Math.round(r.proximo * 100)}% a ${Math.round(r.alinhado * 100)}%. O índice só aparece a partir de ${r.votacoesMinimas} votações disputadas.</p>
     <div id="perfil"></div>
     <div class="filtros">
       <label class="sr" for="fa-texto">Procurar parlamentar</label><input type="search" id="fa-texto" placeholder="Procurar parlamentar" value="${esc(f.texto)}">
@@ -577,8 +577,8 @@ function desenharMetodo(){
     <h2 class="titulo">Como funciona</h2>
     <p>Todo dia, um robô consulta os dados abertos da Câmara dos Deputados e do Senado Federal e reúne os projetos de lei, de lei complementar, de emenda à Constituição e de decreto legislativo apresentados por deputados e senadores, e todas as votações nominais dos plenários e das comissões, com o voto de cada parlamentar.</p>
     <h3>Quem é a direita</h3>
-    <p>São dois blocos. A extrema-direita reúne os parlamentares de ${esc(BLOCO_E())}, e a direita, os de ${esc(BLOCO_D())}. Em cada votação nominal, a posição de cada bloco é a da maioria dos seus votos, desde que ao menos ${Math.round(r.coesaoMinima * 100)}% dele vote no mesmo sentido. A mesma regra define a posição do PT, usada como referência do campo do governo.</p>
-    <p>Disputadas são as votações em que ao menos um dos dois blocos e o PT votaram em sentidos opostos. Cada parlamentar tem dois índices. O índice com a extrema-direita é a porcentagem das votações em que a extrema-direita e o PT se opuseram em que ele votou como a extrema-direita, e o índice com a direita segue a mesma regra para o bloco da direita, contando só votos Sim e Não e a partir de ${r.votacoesMinimas} votações. Parlamentares de outros partidos aparecem como alinhados quando o maior dos dois índices chega a ${Math.round(r.alinhado * 100)}%, e como próximos, de ${Math.round(r.proximo * 100)}% a ${Math.round(r.alinhado * 100)}%.</p>
+    <p>São dois blocos. A extrema-direita reúne os parlamentares de ${esc(BLOCO_E())}, e a direita, os de ${esc(BLOCO_D())}. Em cada votação nominal, a posição de cada bloco é a da maioria dos seus votos, desde que ao menos ${Math.round(r.coesaoMinima * 100)}% dele vote no mesmo sentido. A mesma regra define a posição da esquerda e aliados (${esc((P.referenciaGoverno || []).map(p => nomePartido(p)).join(', '))}), usada como referência do campo do governo.</p>
+    <p>Disputadas são as votações em que ao menos um dos dois blocos e a esquerda votaram em sentidos opostos. Cada parlamentar tem dois índices. O índice com a extrema-direita é a porcentagem das votações em que a extrema-direita e a esquerda se opuseram em que ele votou como a extrema-direita, e o índice com a direita segue a mesma regra para o bloco da direita, contando só votos Sim e Não e a partir de ${r.votacoesMinimas} votações. Parlamentares de outros partidos aparecem como alinhados quando o maior dos dois índices chega a ${Math.round(r.alinhado * 100)}%, e como próximos, de ${Math.round(r.proximo * 100)}% a ${Math.round(r.alinhado * 100)}%.</p>
     <h3>Pautas e grau</h3>
     <p>Uma inteligência artificial lê a ementa de cada projeto e de cada votação e indica se o item faz avançar alguma das pautas abaixo, se vai contra ela ou se não trata de nenhuma. Quando faz avançar, indica o grau, direita ou extrema-direita. O grau vale para o projeto ou para a votação, e não para a pessoa. A classificação é automática e serve como triagem. Os casos conferidos pela equipe recebem o selo Verificado.</p>
     <div class="pautas-met">${P.lista.map(p => `<div><b>${esc(p.nome)}</b>${esc(p.descricao)}<small>Extrema-direita quando ${esc(p.extrema.charAt(0).toLowerCase() + p.extrema.slice(1))}</small></div>`).join('')}</div>
@@ -608,7 +608,7 @@ function textoComp(ref){
   const v = D.vot.find(x => x.id === id); if (!v) return '';
   const t = v.t || {};
   return [`*${v.mat || 'Votação'}*, ${CASA[v.k]}, ${v.pl ? 'plenário' : v.o}, ${dataBR(v.d)}`, v.me || v.desc,
-    (v.be || v.bd || v.bl) ? `${v.be !== undefined ? `A extrema-direita votou ${VOTO[v.be] || 'dividida'}, a direita votou ${VOTO[v.bd] || 'dividida'}` : `A direita votou ${VOTO[v.bl]}`}${v.gv ? ` e o PT votou ${VOTO[v.gv]}` : ''}. ${v.res === 'A' ? 'Aprovada' : v.res === 'R' ? 'Rejeitada' : ''}, com ${t.S || 0} votos sim e ${t.N || 0} não.` : '',
+    (v.be || v.bd || v.bl) ? `${v.be !== undefined ? `A extrema-direita votou ${VOTO[v.be] || 'dividida'}, a direita votou ${VOTO[v.bd] || 'dividida'}` : `A direita votou ${VOTO[v.bl]}`}${v.gv ? ` e a esquerda votou ${VOTO[v.gv]}` : ''}. ${v.res === 'A' ? 'Aprovada' : v.res === 'R' ? 'Rejeitada' : ''}, com ${t.S || 0} votos sim e ${t.N || 0} não.` : '',
     `*Os exterminadores do futuro*, observatório da direita no Congresso\n${base()}?v=${encodeURIComponent(id)}`].filter(Boolean).join('\n\n');
 }
 async function compartilhar(ref){
