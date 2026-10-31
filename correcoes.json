@@ -1452,6 +1452,13 @@
       ],
       "g": "direita"
     },
+    "PL 3831/2025": {
+      "s": "barra",
+      "p": [
+        "soberania"
+      ],
+      "m": ""
+    },
     "PL 3882/2026": {
       "s": "avanca",
       "p": [
@@ -1488,6 +1495,15 @@
         "punitivismo"
       ],
       "g": "direita"
+    },
+    "PL 4212/2025": {
+      "s": "avanca",
+      "p": [
+        "privilegios",
+        "soberania"
+      ],
+      "g": "extrema",
+      "m": ""
     },
     "PL 4245/2026": {
       "s": "avanca",
@@ -1550,6 +1566,14 @@
         "movimentos"
       ],
       "g": "extrema"
+    },
+    "PL 4405/2025": {
+      "s": "barra",
+      "p": [
+        "privilegios",
+        "soberania"
+      ],
+      "m": ""
     },
     "PL 451/2026": {
       "s": "avanca",
@@ -2562,6 +2586,15 @@
         "privilegios"
       ],
       "g": "direita"
+    },
+    "PLP 246/2025": {
+      "s": "avanca",
+      "p": [
+        "plataformas",
+        "soberania"
+      ],
+      "g": "extrema",
+      "m": ""
     },
     "PLP 246/2026": {
       "s": "avanca",
