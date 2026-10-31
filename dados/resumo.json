@@ -1,24 +1,29 @@
 {
- "gerado": "2026-10-31T23:05:33.935Z",
+ "gerado": "2026-10-31T23:20:43.906Z",
  "inicio": "2023-02-01",
  "totais": {
   "proposicoes": 26244,
   "direita": 2499,
   "extrema": 1280,
   "votacoes": 2425,
-  "disputadas": 1178,
-  "vitorias": 430,
-  "derrotas": 180,
+  "disputadas": 1174,
+  "vitorias": 508,
+  "derrotas": 118,
   "dispE": 1166,
   "vitoriasE": 360,
   "derrotasE": 608,
-  "dispD": 487,
+  "dispD": 448,
   "vitoriasD": 345,
-  "derrotasD": 53,
-  "extremaParl": 143,
-  "direitaParl": 248,
-  "nucleo": 391,
-  "alinhados": 100
+  "derrotasD": 26,
+  "grupos": {
+   "extrema": 143,
+   "direita": 328,
+   "centro": 106,
+   "esquerda": 170,
+   "sp": 2
+  },
+  "nucleo": 471,
+  "alinhados": 75
  },
  "porPauta": {
   "armas": {
@@ -114,7 +119,7 @@
    "extrema": 38,
    "prop30": 3,
    "vot": 29,
-   "vitorias": 17,
+   "vitorias": 16,
    "derrotas": 7
   },
   "plataformas": {

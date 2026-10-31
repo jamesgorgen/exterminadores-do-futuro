@@ -1,5 +1,5 @@
 {
- "inicio": "2026-10-31T23:05:33.935Z",
+ "inicio": "2026-10-31T23:20:43.906Z",
  "modo": "completo",
  "amostras": {
   "camara_deputado": {
@@ -160,7 +160,6 @@
   "proposicoes_data_corrigida": 24,
   "senado_processo_registros": 6132,
   "proposicoes_senado": 3079,
-  "graduados": 1500,
   "correcoes_aplicadas": 1176
  },
  "erros": [
@@ -177,7 +176,7 @@
   "senado_comissao": {
    "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20230201&dataFim=20230430",
    "tamanho": 3189,
-   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"31/10/2026 20:03:05\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"},\"Votacoes\":{\"Votacao\":{\"CodigoVotacao\":\"34188\",\"SiglaCasaColegiado\":\"SF\",\"CodigoReuniao\":\"11134\",\"DataHoraInicioReuniao\":\"2023-03-21T09:19:00\",\"NumeroReuniaoColegiado\":\"3\",\"TipoReuniao\":\"Extraordinária\",\"CodigoColegiado\":\"38\",\"SiglaColegiado\":\"CAE\",\"NomeColegiado\":\"Comissão de Assuntos Econômicos\",\"CodigoParlamentarPresidente\":\"5899\",\"NomeParlamentarPresidente\":\"Vanderlan Cardoso\",\"IdentificacaoMateria\":\"PL 3071/2019\",\"DescricaoIdentificacaoMateria\":\"Projeto de Lei n° 3071, de 2019\",\"DescricaoVotacao\":\"PL 3071/2019\",\"Votos\":{\"Voto\":[{\"CodigoParlamentar\":\"5905\",\"NomeParlamentar\":\"Rodrigo Cunha\",\"SiglaPartidoParlamentar\":\"UNIÃO\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"5982\",\"NomeParlamentar\":\"Alessandro Vieira\",\"SiglaPartidoParlamentar\":\"PSDB\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"N\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"6331\",\"NomeParlamentar\":\"Sergio Moro\",\"SiglaPartidoParlamentar\":\"UNIÃO\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"4560\",\"NomeParlamentar\":\"Sérgio Petecão\",\"SiglaPartidoParlamentar\":\"PSD\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"5967\",\"NomeParlamentar\":\"Angelo Coronel\""
+   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"31/10/2026 20:06:21\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"},\"Votacoes\":{\"Votacao\":{\"CodigoVotacao\":\"34188\",\"SiglaCasaColegiado\":\"SF\",\"CodigoReuniao\":\"11134\",\"DataHoraInicioReuniao\":\"2023-03-21T09:19:00\",\"NumeroReuniaoColegiado\":\"3\",\"TipoReuniao\":\"Extraordinária\",\"CodigoColegiado\":\"38\",\"SiglaColegiado\":\"CAE\",\"NomeColegiado\":\"Comissão de Assuntos Econômicos\",\"CodigoParlamentarPresidente\":\"5899\",\"NomeParlamentarPresidente\":\"Vanderlan Cardoso\",\"IdentificacaoMateria\":\"PL 3071/2019\",\"DescricaoIdentificacaoMateria\":\"Projeto de Lei n° 3071, de 2019\",\"DescricaoVotacao\":\"PL 3071/2019\",\"Votos\":{\"Voto\":[{\"CodigoParlamentar\":\"5905\",\"NomeParlamentar\":\"Rodrigo Cunha\",\"SiglaPartidoParlamentar\":\"UNIÃO\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"5982\",\"NomeParlamentar\":\"Alessandro Vieira\",\"SiglaPartidoParlamentar\":\"PSDB\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"N\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"6331\",\"NomeParlamentar\":\"Sergio Moro\",\"SiglaPartidoParlamentar\":\"UNIÃO\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"4560\",\"NomeParlamentar\":\"Sérgio Petecão\",\"SiglaPartidoParlamentar\":\"PSD\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"5967\",\"NomeParlamentar\":\"Angelo Coronel\""
   },
   "senado_processo": {
    "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2023-02-16&dataFimApresentacao=2023-02-28",
@@ -185,5 +184,5 @@
    "inicio": "[{\"autoria\":\"Senador Paulo Paim (PT/RS)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":155901,\"dataApresentacao\":\"2023-02-16\",\"dataSituacaoAtual\":\"2023-04-11\",\"ementa\":\"Permite que sejam excluídas do cálculo do limite de endividamento de entes subnacionais as operações de crédito com recursos do FGTS destinadas a investimentos em saneamento e habitação.\",\"enteIdentificador\":\"SF\",\"id\":8369951,\"identificacao\":\"PL 566/2023\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESIGNAÇÃO DO RELATOR\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/9c58b4b3-31cd-4b60-8b9b-e7a4a590e3d4\"},{\"autoria\":\"Senador Eduardo Girão (NOVO/CE)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":155903,\"dataApresentacao\":\"2023-02-16\",\"dataSituacaoAtual\":\"2023-04-10\",\"ementa\":\"Modifica as Leis nºs 9.868, de 10 de novembro de 1999, e 9.882, de 3 de dezembro de 1999, para dispor sobre a modulação de efeitos das decisões declaratórias de inconstitucionalidade proferidas pelo Supremo Tribunal Federal.\",\"enteIdentificador\":\"SF\",\"id\":8370207,\"identificacao\":\"PL 584/2023\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESIGNAÇÃO DO RELATOR\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/c43a35ac-15e8-4bf8-aec1-fb5206b794e8\"},{\"autoria\":\"Senador Jorge Seif (PL/SC)\",\"casaI"
   }
  },
- "fim": "2026-10-31T23:18:03.705Z"
+ "fim": "2026-10-31T23:27:12.128Z"
 }
