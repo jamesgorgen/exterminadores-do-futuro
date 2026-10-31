@@ -1,6 +1,13 @@
 {
   "_leia": "Correções da equipe à classificação da IA. A chave é a do projeto (ex. PL 682/2024) ou a da votação sem matéria (ex. V:C:2585316-23). Campos, todos opcionais: s = avanca, barra ou vazio (vazio tira o item da lista); p = pautas de pautas.js; g = direita ou extrema; m = texto exibido como Checagem da equipe. Ao salvar este arquivo no GitHub, o robô roda sozinho e o site se atualiza em poucos minutos.",
   "correcoes": {
+    "PDL 100/2026": {
+      "s": "avanca",
+      "p": [
+        "estado"
+      ],
+      "g": "direita"
+    },
     "PDL 1001/2026": {
       "s": "avanca",
       "p": [
@@ -224,6 +231,13 @@
       ],
       "g": "direita"
     },
+    "PDL 97/2026": {
+      "s": "avanca",
+      "p": [
+        "estado"
+      ],
+      "g": "direita"
+    },
     "PEC 15/2026": {
       "s": "avanca",
       "p": [
@@ -240,6 +254,30 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 1009/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo",
+        "estado"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
+    "PL 1110/2026": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ],
+      "m": ""
+    },
+    "PL 1115/2026": {
+      "s": "barra",
+      "p": [
+        "punitivismo",
+        "costumes"
+      ],
+      "m": ""
+    },
     "PL 1134/2026": {
       "s": "",
       "m": ""
@@ -250,6 +288,15 @@
     },
     "PL 1148/2023": {
       "s": ""
+    },
+    "PL 120/2026": {
+      "s": "avanca",
+      "p": [
+        "ambiente",
+        "povos"
+      ],
+      "g": "extrema",
+      "m": ""
     },
     "PL 1209/2026": {
       "s": "avanca",
@@ -522,6 +569,23 @@
       ],
       "g": "direita"
     },
+    "PL 220/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
+    "PL 221/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo",
+        "instituicoes"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
     "PL 2244/2026": {
       "s": "avanca",
       "p": [
@@ -570,6 +634,13 @@
         "punitivismo"
       ],
       "m": ""
+    },
+    "PL 23/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "direita"
     },
     "PL 2324/2026": {
       "s": "avanca",
@@ -701,6 +772,13 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 285/2026": {
+      "s": "avanca",
+      "p": [
+        "estado"
+      ],
+      "g": "direita"
+    },
     "PL 2935/2026": {
       "s": "avanca",
       "p": [
@@ -754,6 +832,14 @@
       "s": "avanca",
       "p": [
         "punitivismo"
+      ],
+      "g": "direita"
+    },
+    "PL 305/2026": {
+      "s": "avanca",
+      "p": [
+        "estado",
+        "privilegios"
       ],
       "g": "direita"
     },
@@ -969,6 +1055,14 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 346/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
     "PL 3463/2026": {
       "s": ""
     },
@@ -1060,6 +1154,15 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 3636/2026": {
+      "s": "avanca",
+      "p": [
+        "armas",
+        "punitivismo"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
     "PL 3643/2026": {
       "s": "avanca",
       "p": [
@@ -1134,6 +1237,14 @@
       ],
       "g": "direita"
     },
+    "PL 397/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
     "PL 4048/2026": {
       "s": "avanca",
       "p": [
@@ -1163,6 +1274,15 @@
       ],
       "g": "direita"
     },
+    "PL 426/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo",
+        "privilegios"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
     "PL 4317/2026": {
       "s": "avanca",
       "p": [
@@ -1177,6 +1297,20 @@
       ],
       "g": "direita"
     },
+    "PL 456/2026": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ],
+      "m": ""
+    },
+    "PL 465/2026": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ],
+      "m": ""
+    },
     "PL 4663/2026": {
       "s": "avanca",
       "p": [
@@ -1184,6 +1318,10 @@
         "privilegios"
       ],
       "g": "direita"
+    },
+    "PL 467/2026": {
+      "s": "",
+      "m": ""
     },
     "PL 4729/2026": {
       "s": "avanca",
@@ -1303,6 +1441,13 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 492/2026": {
+      "s": "avanca",
+      "p": [
+        "estado"
+      ],
+      "g": "direita"
     },
     "PL 4923/2026": {
       "s": "barra",
@@ -1652,6 +1797,15 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 5567/2026": {
+      "s": "avanca",
+      "p": [
+        "armas",
+        "trabalho"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
     "PL 5572/2026": {
       "s": "avanca",
       "p": [
@@ -1809,12 +1963,46 @@
       ],
       "m": ""
     },
+    "PL 6549/2025": {
+      "s": "avanca",
+      "p": [
+        "armas",
+        "privilegios"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
     "PL 682/2024": {
       "s": "barra",
       "p": [
         "armas"
       ],
       "m": "Restringe entidades de tiro a modalidades olímpicas e cancela registros de CACs, o que vai contra a pauta armamentista."
+    },
+    "PL 6855/2025": {
+      "s": "avanca",
+      "p": [
+        "punitivismo",
+        "trabalho",
+        "privilegios"
+      ],
+      "g": "direita"
+    },
+    "PL 7207/2025": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
+    "PL 739/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "extrema",
+      "m": ""
     },
     "PL 751/2026": {
       "s": "avanca",
@@ -1824,7 +2012,39 @@
       ],
       "g": "extrema"
     },
+    "PL 816/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
+    "PL 872/2026": {
+      "s": "avanca",
+      "p": [
+        "privilegios",
+        "soberania"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
+    "PL 960/2026": {
+      "s": "avanca",
+      "p": [
+        "instituicoes"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
     "PLP 146/2026": {
+      "s": "avanca",
+      "p": [
+        "privilegios"
+      ],
+      "g": "direita"
+    },
+    "PLP 21/2026": {
       "s": "avanca",
       "p": [
         "privilegios"
@@ -1865,6 +2085,30 @@
       "p": [
         "punitivismo",
         "estado",
+        "privilegios"
+      ],
+      "g": "direita"
+    },
+    "PLP 283/2025": {
+      "s": "avanca",
+      "p": [
+        "estado",
+        "soberania"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
+    "PLP 56/2026": {
+      "s": "avanca",
+      "p": [
+        "privilegios"
+      ],
+      "g": "direita"
+    },
+    "PLP 66/2026": {
+      "s": "avanca",
+      "p": [
+        "religiao",
         "privilegios"
       ],
       "g": "direita"
