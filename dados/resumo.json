@@ -1,5 +1,5 @@
 {
- "gerado": "2026-10-31T23:20:43.906Z",
+ "gerado": "2026-10-31T23:34:45.345Z",
  "inicio": "2023-02-01",
  "totais": {
   "proposicoes": 26244,
@@ -16,14 +16,18 @@
   "vitoriasD": 345,
   "derrotasD": 26,
   "grupos": {
-   "extrema": 143,
-   "direita": 328,
-   "centro": 106,
-   "esquerda": 170,
-   "sp": 2
+   "extrema": 119,
+   "direita": 249,
+   "centro": 83,
+   "esquerda": 142,
+   "sp": 1
   },
-  "nucleo": 471,
-  "alinhados": 75
+  "nucleo": 368,
+  "alinhados": 61,
+  "emExercicio": {
+   "C": 513,
+   "S": 81
+  }
  },
  "porPauta": {
   "armas": {
