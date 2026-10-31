@@ -8,6 +8,15 @@
       ],
       "g": "direita"
     },
+    "PDL 1000/2026": {
+      "s": "avanca",
+      "p": [
+        "instituicoes",
+        "costumes"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
     "PDL 1001/2026": {
       "s": "avanca",
       "p": [
@@ -1363,6 +1372,14 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 3255/2026": {
+      "s": "avanca",
+      "p": [
+        "ambiente",
+        "privilegios"
+      ],
+      "g": "direita"
+    },
     "PL 3271/2026": {
       "s": "avanca",
       "p": [
@@ -1522,6 +1539,13 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 3527/2026": {
+      "s": "avanca",
+      "p": [
+        "estado"
+      ],
+      "g": "direita"
     },
     "PL 3539/2026": {
       "s": "avanca",
