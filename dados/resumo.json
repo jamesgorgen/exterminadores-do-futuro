@@ -1,10 +1,10 @@
 {
- "gerado": "2026-10-31T23:34:45.345Z",
+ "gerado": "2026-10-31T23:41:04.849Z",
  "inicio": "2023-02-01",
  "totais": {
   "proposicoes": 26244,
   "direita": 2499,
-  "extrema": 1280,
+  "extrema": 1281,
   "votacoes": 2425,
   "disputadas": 1174,
   "vitorias": 508,
@@ -48,7 +48,7 @@
   },
   "instituicoes": {
    "prop": 250,
-   "extrema": 200,
+   "extrema": 201,
    "prop30": 1,
    "vot": 22,
    "vitorias": 20,
@@ -56,7 +56,7 @@
   },
   "costumes": {
    "prop": 280,
-   "extrema": 238,
+   "extrema": 239,
    "prop30": 1,
    "vot": 12,
    "vitorias": 8,
