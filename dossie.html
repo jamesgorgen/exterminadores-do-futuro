@@ -254,7 +254,9 @@ async function dossieEstado(uf) {
   const [ind, prop, em, mun, topo] = await Promise.all([json('dados/indice.json'), json('dados/proposicoes-direita.json'), json('dados/emendas.json').catch(() => null), json('dados/emendas-municipios.json').catch(() => null), fetch('dados/municipios.topo.json').then(r => r.json()).catch(() => null)]);
   const nome = UFNOME[uf]; if (!nome) throw new Error('estado não encontrado');
   document.title = 'Dossiê ' + nome;
-  const banc = Object.entries(ind.p).filter(([k, p]) => p.uf === uf && (p.vd || p.np)).map(([k, p]) => Object.assign({ k }, p));
+  // Bancada atual, de quem está em exercício (dados antigos sem a marca usam quem votou ou apresentou projeto).
+  const temEx = Object.values(ind.p).some(p => p.ex);
+  const banc = Object.entries(ind.p).filter(([k, p]) => p.uf === uf && (temEx ? p.ex : (p.vd || p.np))).map(([k, p]) => Object.assign({ k }, p));
   const dep = banc.filter(p => p.c === 'C'), sen = banc.filter(p => p.c === 'S');
   const nucE = banc.filter(p => p.cl === 'extrema').length, nucD = banc.filter(p => p.cl === 'direita').length, ali = banc.filter(p => p.al === 'alinhado').length, prox = banc.filter(p => p.al === 'proximo').length;
   const media = campo => { const l = banc.filter(p => p[campo] != null); return l.length ? l.reduce((a, p) => a + p[campo], 0) / l.length : null; };

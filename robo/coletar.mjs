@@ -215,6 +215,44 @@ async function coletarDeputados(ini, fim) {
   }
 }
 
+// ------------------------------------------------------------------ 1b. quem está no mandato hoje
+// Câmara (lista sem legislatura = deputados em exercício) e Senado (lista atual). O partido atual vem daqui.
+function procuraParlamentares(o, out = []) {
+  if (Array.isArray(o)) { o.forEach(x => procuraParlamentares(x, out)); return out; }
+  if (!o || typeof o !== 'object') return out;
+  const id = o.IdentificacaoParlamentar || o.identificacaoParlamentar;
+  if (id && typeof id === 'object') { out.push(id); return out; }
+  Object.values(o).forEach(v => procuraParlamentares(v, out));
+  return out;
+}
+async function coletarEmExercicio() {
+  const camara = [], senado = [];
+  let pagina = 1, total = 1;
+  try {
+    while (pagina <= total) {
+      const j = await baixar(`${API_CAMARA}/deputados?itens=100&pagina=${pagina}&ordem=ASC&ordenarPor=nome`);
+      camara.push(...registros(j)); total = Motor.ultimaPagina(j); pagina++;
+    }
+  } catch (e) { erro('deputados em exercício', e); }
+  try {
+    const j = await baixarSenado(`${API_SENADO}/senador/lista/atual.json`, 'senado_atual');
+    senado.push(...procuraParlamentares(j));
+  } catch (e) { erro('senadores em exercício', e); }
+  contar('deputados_em_exercicio', camara.length); contar('senadores_em_exercicio', senado.length);
+  // Só troca a marca quando a lista veio completa; senão mantém a da execução anterior.
+  if (camara.length >= 500) {
+    for (const p of Object.entries(parlamentares.p)) if (p[0][0] === 'C') delete p[1].ex;
+    for (const d of camara) registrarParlamentar('C' + pega(d, 'id'), { n: pega(d, 'nome'), s: pega(d, 'siglaPartido'), p: idPartido(pega(d, 'siglaPartido')), uf: pega(d, 'siglaUf'), c: 'C', d: HOJE, ex: 1 });
+  } else erro('deputados em exercício', new Error(`lista incompleta (${camara.length})`));
+  if (senado.length >= 78) {
+    for (const p of Object.entries(parlamentares.p)) if (p[0][0] === 'S') delete p[1].ex;
+    for (const d of senado) {
+      const sig = pega(d, 'SiglaPartidoParlamentar', 'siglaPartidoParlamentar');
+      registrarParlamentar('S' + pega(d, 'CodigoParlamentar', 'codigoParlamentar'), { n: pega(d, 'NomeParlamentar', 'nomeParlamentar'), s: sig, p: idPartido(sig), uf: pega(d, 'UfParlamentar', 'SiglaUFParlamentar', 'ufParlamentar'), c: 'S', d: HOJE, ex: 1 });
+    }
+  } else erro('senadores em exercício', new Error(`lista incompleta (${senado.length})`));
+}
+
 // ------------------------------------------------------------------ 2. proposições
 const proposicoesPorAno = {};
 function arquivoProposicoes(a) {
@@ -721,6 +759,7 @@ export async function executar() {
   log(`Modo ${completo ? 'completo' : 'diário'}, período ${ini} a ${HOJE}`);
 
   await coletarDeputados(INICIO, HOJE);
+  await coletarEmExercicio();
 
   // Votações primeiro, porque trazem os códigos dos senadores usados para ligar a autoria das proposições.
   for (const a of anos) {
@@ -809,9 +848,9 @@ export async function executar() {
     // Grupo pelo partido; para quem está fora dos dois blocos, marca também se vota com a direita (alinhado ou próximo).
     const classe = grupoDoPartido(p.p);
     const al = classe === 'extrema' || classe === 'direita' ? '' : m >= PAUTAS.indice.alinhado * 100 ? 'alinhado' : m >= PAUTAS.indice.proximo * 100 ? 'proximo' : '';
-    if (!c.vd && !pr.n) continue;
+    if (!c.vd && !pr.n && !p.ex) continue;
     indice[k] = { n: p.n, c: p.c, p: p.p, s: p.s, uf: p.uf, i, vd: c.vd, va: c.va, ie, vde: c.vde, vae: c.vae, id, vdd: c.vdd, vad: c.vad,
-      cl: classe, al, np: pr.n, nd: pr.d, nx: pr.x, pp: pr.pp };
+      cl: classe, al, ex: p.ex ? 1 : 0, np: pr.n, nd: pr.d, nx: pr.x, pp: pr.pp };
   }
 
   // Gravação. Apaga arquivos de anos anteriores à legislatura, criados por datas erradas da fonte.
@@ -850,6 +889,7 @@ export async function executar() {
   for (const p of PAUTAS.lista) porPauta[p.id] = { prop: 0, extrema: 0, prop30: 0, vot: 0, vitorias: 0, derrotas: 0 };
   for (const it of direita) { const x = it.x; if (x.s !== 'avanca') continue; for (const p of x.p) { if (!porPauta[p]) continue; porPauta[p].prop++; if (x.g === 'extrema') porPauta[p].extrema++; if (it.d >= desde(30)) porPauta[p].prop30++; } }
   for (const vt of resumoVot) { if (!vt.x.p) continue; for (const p of vt.x.p) { if (!porPauta[p]) continue; porPauta[p].vot++; const vv = vt.dispE ? vt.vE : vt.venceu; if (vv === true) porPauta[p].vitorias++; if (vv === false) porPauta[p].derrotas++; } }
+  const emExercicio = Object.values(indice).filter(p => p.ex);
   gravarJson('resumo.json', {
     gerado: AGORA.toISOString(), inicio: INICIO,
     totais: { proposicoes: todasPropFinal.length, direita: direita.filter(it => it.x.s === 'avanca').length, extrema: direita.filter(it => it.x.g === 'extrema').length,
@@ -857,8 +897,9 @@ export async function executar() {
       derrotas: resumoVot.filter(v => v.disp && v.venceu === false).length,
       dispE: resumoVot.filter(v => v.dispE).length, vitoriasE: resumoVot.filter(v => v.dispE && v.vE === true).length, derrotasE: resumoVot.filter(v => v.dispE && v.vE === false).length,
       dispD: resumoVot.filter(v => v.dispD).length, vitoriasD: resumoVot.filter(v => v.dispD && v.vD === true).length, derrotasD: resumoVot.filter(v => v.dispD && v.vD === false).length,
-      grupos: Object.fromEntries(['extrema', 'direita', 'centro', 'esquerda', 'sp'].map(g => [g, Object.values(indice).filter(p => p.cl === g).length])),
-      nucleo: Object.values(indice).filter(p => p.cl === 'extrema' || p.cl === 'direita').length, alinhados: Object.values(indice).filter(p => p.al === 'alinhado').length },
+      grupos: Object.fromEntries(['extrema', 'direita', 'centro', 'esquerda', 'sp'].map(g => [g, emExercicio.filter(p => p.cl === g).length])),
+      nucleo: emExercicio.filter(p => p.cl === 'extrema' || p.cl === 'direita').length, alinhados: emExercicio.filter(p => p.al === 'alinhado').length,
+      emExercicio: { C: emExercicio.filter(p => p.c === 'C').length, S: emExercicio.filter(p => p.c === 'S').length } },
     porPauta,
     recentes: { proposicoes: direita.filter(it => it.x.s === 'avanca' && it.d >= desde(7)).length, votacoes: resumoVot.filter(v => v.d >= desde(7)).length }
   });

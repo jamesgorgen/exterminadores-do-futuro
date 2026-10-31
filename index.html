@@ -223,7 +223,7 @@ const NOME_PARTIDO = { MISSAO: 'Missão', DC: 'DC', AVANTE: 'Avante', CIDADANIA:
   PSB: 'PSB', PSD: 'PSD', PSDB: 'PSDB', PSOL: 'PSOL', PT: 'PT', PV: 'PV', REDE: 'Rede', REPUBLICANOS: 'Republicanos', SOLIDARIEDADE: 'Solidariedade', UNIAO: 'União Brasil', OUTROS: 'Outros', SP: 'Sem partido' };
 const nomePartido = (id, s) => NOME_PARTIDO[id] || s || id || '';
 const CLASSE = { extrema: 'Extrema-direita', direita: 'Direita', centro: 'Centro-direita', esquerda: 'Esquerda', sp: 'Sem partido', nucleo: 'Núcleo da direita', alinhado: 'Vota com a direita', proximo: 'Vota próximo da direita' };
-const seloGrupo = p => (p.cl ? `<span class="selo s-cl-${p.cl}">${CLASSE[p.cl] || p.cl}</span>` : '') + (p.al ? ` <span class="selo s-cl-${p.al}">${CLASSE[p.al]}</span>` : '');
+const seloGrupo = p => (p.cl ? `<span class="selo s-cl-${p.cl}">${CLASSE[p.cl] || p.cl}</span>` : '') + (p.al ? ` <span class="selo s-cl-${p.al}">${CLASSE[p.al]}</span>` : '') + (p.ex === 0 ? ' <span class="selo s-cl-sp">Fora do mandato</span>' : '');
 const listaE = l => l.length > 1 ? l.slice(0, -1).join(', ') + ' e ' + l[l.length - 1] : l.join('');
 const GRUPO_TXT = g => listaE(((P.grupos || {})[g] || []).map(x => nomePartido(x)));
 const BLOCO_E = () => listaE(((P.blocos || {}).extrema || []).map(p => nomePartido(p)));
@@ -246,7 +246,7 @@ const est = {
   aba: 'movimentos',
   prop: { pauta: '', grau: '', casa: '', partido: '', ano: '', texto: '', pagina: 1, foco: '' },
   vot: { casa: '', local: '', disp: true, pauta: '', resultado: '', ano: '', texto: '', pagina: 1, foco: '' },
-  parl: { casa: '', classe: 'direita', partido: '', uf: '', texto: '', ordem: 'ie', pagina: 1, sel: '' }
+  parl: { casa: '', mandato: '', classe: 'direita', partido: '', uf: '', texto: '', ordem: 'ie', pagina: 1, sel: '' }
 };
 
 // ---------------------------------------------------------------- dados
@@ -495,7 +495,9 @@ async function mostrarVotos(id, botao){
 // ---------------------------------------------------------------- parlamentares
 function filtrarParl(){
   const f = est.parl, txt = norm(f.texto);
+  const temEx = Object.values(D.indice).some(p => p.ex);
   return Object.entries(D.indice).filter(([k, p]) => {
+    if (temEx && !f.mandato && !p.ex) return false;
     if (f.casa && p.c !== f.casa) return false;
     if (f.classe === 'direita' && p.cl !== 'extrema' && p.cl !== 'direita' && !p.al) return false;
     if (f.classe === 'direita_b' && p.cl !== 'direita') return false;
@@ -520,12 +522,13 @@ function desenharParlamentares(){
   const r = D.regras || P.indice;
   $('#aba-parlamentares').innerHTML = `
     <h2 class="titulo">Parlamentares</h2>
-    <p class="sub">Grupos pelo partido. Extrema-direita reúne ${esc(GRUPO_TXT('extrema'))}; direita, ${esc(GRUPO_TXT('direita'))}; centro-direita, ${esc(GRUPO_TXT('centro'))}; esquerda, ${esc(GRUPO_TXT('esquerda'))}. Cada parlamentar tem dois índices, a porcentagem das votações em que a extrema-direita e a esquerda se opuseram em que votou como a extrema-direita, e o mesmo para a direita. Quem é de outro grupo e tem o maior dos dois índices em ${Math.round(r.alinhado * 100)}% ou mais aparece como "vota com a direita", e de ${Math.round(r.proximo * 100)}% a ${Math.round(r.alinhado * 100)}%, como "vota próximo da direita". O índice só aparece a partir de ${r.votacoesMinimas} votações disputadas.</p>
+    <p class="sub">Grupos pelo partido. Extrema-direita reúne ${esc(GRUPO_TXT('extrema'))}; direita, ${esc(GRUPO_TXT('direita'))}; centro-direita, ${esc(GRUPO_TXT('centro'))}; esquerda, ${esc(GRUPO_TXT('esquerda'))}. Cada parlamentar tem dois índices, a porcentagem das votações em que a extrema-direita e a esquerda se opuseram em que votou como a extrema-direita, e o mesmo para a direita. Quem é de outro grupo e tem o maior dos dois índices em ${Math.round(r.alinhado * 100)}% ou mais aparece como "vota com a direita", e de ${Math.round(r.proximo * 100)}% a ${Math.round(r.alinhado * 100)}%, como "vota próximo da direita". O índice só aparece a partir de ${r.votacoesMinimas} votações disputadas. A lista mostra quem está em exercício hoje; suplentes que já saíram, licenciados e ex-parlamentares aparecem ao escolher "Também quem já deixou o mandato".</p>
     <div id="perfil"></div>
     <div class="filtros">
       <label class="sr" for="fa-texto">Procurar parlamentar</label><input type="search" id="fa-texto" placeholder="Procurar parlamentar" value="${esc(f.texto)}">
       <select id="fa-classe" aria-label="Grupo">${opcoes([['direita', 'Extrema-direita, direita e quem vota com elas'], ['extrema', 'Extrema-direita'], ['direita_b', 'Direita'], ['centro', 'Centro-direita'], ['esquerda', 'Esquerda'], ['sp', 'Sem partido'], ['al', 'De outros grupos que votam com a direita']], f.classe, 'Todos os parlamentares')}</select>
       <select id="fa-casa" aria-label="Casa">${opcoes([['C', 'Câmara'], ['S', 'Senado']], f.casa, 'Câmara e Senado')}</select>
+      <select id="fa-mandato" aria-label="Mandato">${opcoes([['todos', 'Também quem já deixou o mandato']], f.mandato, 'Em exercício hoje')}</select>
       <select id="fa-partido" aria-label="Partido">${opcoes(partidos, f.partido, 'Todos os partidos')}</select>
       <select id="fa-uf" aria-label="Estado">${opcoes(ufs, f.uf, 'Todos os estados')}</select>
       <select id="fa-ordem" aria-label="Ordenar">${opcoes([['id', 'Maior índice com a direita'], ['nd', 'Mais projetos da direita'], ['nx', 'Mais projetos de extrema-direita'], ['n', 'Nome']], f.ordem === 'ie' ? '' : f.ordem, 'Maior índice com a extrema-direita')}</select>
