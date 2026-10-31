@@ -1,5 +1,5 @@
 {
- "inicio": "2026-10-31T02:16:29.247Z",
+ "inicio": "2026-10-31T02:35:32.486Z",
  "modo": "diario",
  "amostras": {
   "camara_deputado": {
@@ -101,23 +101,23 @@
    "dataApresentacao": "2026-02-24T15:48"
   },
   "senado_proposicao": {
-   "autoria": "Senadora Dra. Eudócia (PSDB/AL)",
+   "autoria": "Senador Jaime Bagattoli (PL/RO)",
    "casaIdentificadora": "SF",
-   "codigoMateria": 175895,
-   "dataApresentacao": "2026-10-01",
-   "dataSituacaoAtual": "2026-10-01",
-   "dataUltimaAtualizacao": "2026-10-06T15:15:01.05",
-   "ementa": "Altera a Lei nº 8.080, de 19 de setembro de 1990 - Lei Orgânica da Saúde, para dispor sobre o requerimento administrativo para fornecimento de medicamento destinado ao tratamento de pessoa com câncer.",
+   "codigoMateria": 175811,
+   "dataApresentacao": "2026-09-17",
+   "dataSituacaoAtual": "2026-09-17",
+   "dataUltimaAtualizacao": "2026-09-23T17:15:00.866",
+   "ementa": "Altera as Leis nºs 9.478, de 6 de agosto de 1997, e 12.351, de 22 de dezembro de 2010, para destinar parcela da receita de royalties da União relativos à exploração de hidrocarbonetos da bacia da Foz do Rio Amazonas e da Margem Equatorial, à cobertura das despesas salariais do quadro funcional especial em extinção da União relativo aos servidores ativos e inativos e aos pensionistas dos ex-territórios do Amapá, Roraima e Rondônia de que trata o art. 31 da Emenda Constitucional nº 19, de 1998.",
    "enteIdentificador": "SF",
-   "id": 9111471,
-   "identificacao": "PL 5503/2026",
+   "id": 9109177,
+   "identificacao": "PL 5396/2026",
    "objetivo": "Iniciadora",
    "situacaoAtual": "AGUARDANDO DESPACHO",
    "tipoConteudo": "Norma Geral",
    "tipoDocumento": "Projeto de Lei Ordinária",
    "tramitando": "Sim",
    "ultimaInformacaoAtualizada": "PUBLICACAO_OFICIAL",
-   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/c870a6cc-8c8f-4fc6-bfc5-601e31410b00"
+   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/04a1f73d-36dd-457f-92d9-d1e52a1d03c1"
   }
  },
  "contagens": {
@@ -132,8 +132,9 @@
   "proposicoes_data_corrigida": 3,
   "senado_processo_registros": 153,
   "proposicoes_senado": 51,
-  "graduados": 1525,
-  "correcoes_aplicadas": 787
+  "ia_json_invalido": 1,
+  "graduados": 1478,
+  "correcoes_aplicadas": 879
  },
  "erros": [
   "votações Senado 2026-09-16: http 400"
@@ -145,9 +146,9 @@
    "inicio": "[]"
   },
   "senado_comissao": {
-   "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAS?dataInicio=20260916&dataFim=20261031",
+   "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20260916&dataFim=20261031",
    "tamanho": 220,
-   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"30/10/2026 23:17:42\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
+   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"30/10/2026 23:27:16\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
   },
   "senado_processo": {
    "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-09-16&dataFimApresentacao=2026-09-30",
@@ -155,5 +156,5 @@
    "inicio": "[{\"autoria\":\"Senador Jaime Bagattoli (PL/RO)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175811,\"dataApresentacao\":\"2026-09-17\",\"dataSituacaoAtual\":\"2026-09-17\",\"dataUltimaAtualizacao\":\"2026-09-23T17:15:00.866\",\"ementa\":\"Altera as Leis nºs 9.478, de 6 de agosto de 1997, e 12.351, de 22 de dezembro de 2010, para destinar parcela da receita de royalties da União relativos à exploração de hidrocarbonetos da bacia da Foz do Rio Amazonas e da Margem Equatorial, à cobertura das despesas salariais do quadro funcional especial em extinção da União relativo aos servidores ativos e inativos e aos pensionistas dos ex-territórios do Amapá, Roraima e Rondônia de que trata o art. 31 da Emenda Constitucional nº 19, de 1998.\",\"enteIdentificador\":\"SF\",\"id\":9109177,\"identificacao\":\"PL 5396/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/04a1f73d-36dd-457f-92d9-d1e52a1d03c1\"},{\"autoria\":\"Senador Esperidião Amin (PP/SC)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175813,\"dataApresentacao\":\"2026-09-17\",\"dataSituacaoAtual\":\"2026-09-17\",\"dataUltimaAtualizacao\":\"2026-09-23T17:15:01.042\",\"ementa\":\"Altera a Lei nº 9.250, de 26 de dezembro de 1995, para instituir a atualização anual pelo Índice Nacional de Preços ao Consumidor Amplo (IPCA) dos valores das tabelas de r"
   }
  },
- "fim": "2026-10-31T02:25:43.037Z"
+ "fim": "2026-10-31T02:45:47.300Z"
 }
