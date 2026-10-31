@@ -18,13 +18,13 @@ A página (`index.html`) só lê os arquivos da pasta `dados`. Não depende de s
 
 ## Quem é a direita
 
-- **Núcleo.** Parlamentares de PL, Novo, Missão, PP, União Brasil, Republicanos e Podemos (lista `nucleo` em `pautas.js`).
-- **Posição da direita numa votação.** A maioria dos votos Sim e Não do núcleo, quando ao menos 60% dele vota no mesmo sentido. A esquerda e aliados (PT, PSOL, PSB, Rede, PCdoB, PDT e PV) são a referência do campo do governo, pela mesma regra.
+- **Grupos, definidos pelo partido** (campo `grupos` em `pautas.js`). Extrema-direita reúne PL, Novo e Missão. Direita reúne PP, União Brasil, Republicanos, Podemos e PSD. Centro-direita reúne Cidadania, Avante, Solidariedade, MDB, PRD, PSDB e DC. Esquerda reúne PT, PSOL, PCdoB, PSB, PDT, Rede e PV. Quem não tem partido fica em "Sem partido". A mesma divisão vale para votações, emendas e dossiês.
+- **Posição dos blocos numa votação.** A posição da extrema-direita e a da direita são, cada uma, a maioria dos votos Sim e Não do bloco, quando ao menos 60% dele vota no mesmo sentido. A esquerda é a referência do campo do governo, pela mesma regra.
 - **Votações disputadas.** Aquelas em que um dos blocos (extrema-direita ou direita) e a esquerda votam em sentidos opostos.
-- **Índice de alinhamento.** Porcentagem das votações disputadas em que o parlamentar votou como a direita. Exige ao menos 10 votações disputadas.
-- **Alinhados e próximos.** Parlamentares de outros partidos com índice de 80% ou mais (alinhados) ou de 60% a 80% (próximos).
+- **Índices.** Cada parlamentar tem um índice com a extrema-direita e outro com a direita, a porcentagem das votações disputadas em que votou como o bloco. Exige ao menos 10 votações disputadas.
+- **Vota com a direita.** Parlamentares da centro-direita, da esquerda ou sem partido cujo maior índice chega a 80% recebem o selo "vota com a direita", e de 60% a 80%, "vota próximo da direita" (campo `al` em `indice.json`; o grupo fica em `cl`).
 
-As regras ficam em `pautas.js` (campo `indice`). Mudanças nelas valem a partir da execução seguinte. Mudanças no núcleo exigem uma execução completa, porque a posição do bloco é gravada em cada votação na hora da coleta.
+As regras ficam em `pautas.js` (campo `indice`). Mudanças nelas valem a partir da execução seguinte. Mudanças nos grupos exigem uma execução completa, porque a posição do bloco é gravada em cada votação na hora da coleta.
 
 ## Pautas e grau
 
@@ -89,7 +89,7 @@ Na pasta `dados`
 
 A página `emendas.html` mostra para onde os parlamentares destinam as emendas individuais ao Orçamento, de 2023 em diante, em quatro partes. A primeira compara como cada grupo divide o dinheiro. A segunda mostra onze áreas (saúde, transferências especiais Pix, educação, assistência social, urbanismo, agricultura, esporte e lazer, segurança e defesa, cultura, direitos da cidadania e outras funções). A terceira mostra a distribuição por estado e por município, com um mapa dos municípios (malha do IBGE em `dados/municipios.topo.json`), a ficha de cada estado e município e a origem do dinheiro por grupo. O mapa usa os pagamentos a prefeituras, fundos municipais e entidades locais, ligados ao município pelo nome e pela UF, e fica em `dados/emendas-municipios.json`. O valor por habitante dos municípios depende de `dados/populacao-municipios.json`, que o robô tenta baixar do IBGE a cada execução (`robo/populacao.py`). A quarta traz o perfil de cada parlamentar, com municípios, entidades favorecidas e convênios. As áreas são comparadas pela fatia do dinheiro de cada grupo e pela parcela de parlamentares que destinaram algo, e não por médias, porque a cota de emendas é igual dentro de cada Casa e as médias por área são distorcidas por poucos valores altos.
 
-- **Grupos, definidos só pelo partido.** Extrema-direita reúne PL, Novo e Missão. Direita reúne PP, União Brasil, Republicanos, Podemos, PSD, Cidadania e Solidariedade. Esquerda e aliados reúne PT, PSOL, PSB, Rede, PCdoB, PDT e PV, a mesma referência usada nas votações. Outros partidos reúne os demais (MDB, PSDB, Avante, PRD, DC e sem partido). A lista fica no início de `robo/emendas.py` (`GRUPOS`).
+- **Grupos, definidos só pelo partido.** São os mesmos das votações (extrema-direita, direita, centro-direita, esquerda e sem partido). A lista fica no início de `robo/emendas.py` (`GRUPOS`) e precisa acompanhar a de `pautas.js`.
 - **Atualização.** O agendamento `.github/workflows/emendas.yml` roda todo dia 7, baixa o arquivo de emendas do Portal da Transparência, gera `dados/emendas.json` com `robo/emendas.py` e grava no repositório. Se o download falhar, os dados anteriores continuam no ar. Também pode ser disparado à mão, em Actions, Atualizar emendas, informando outro endereço do arquivo, se for preciso.
 - **Ligação dos autores.** Os autores são ligados pelo nome aos parlamentares de `dados/parlamentares.json`, o que cobre cerca de 91% do valor.
 

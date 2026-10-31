@@ -11,8 +11,10 @@ def arq(nome):
     return sorted(c)[-1]
 n=lambda s: re.sub(r'\s+',' ',unicodedata.normalize('NFD',str(s)).encode('ascii','ignore').decode().upper().strip())
 num=lambda s: pd.to_numeric(s.str.replace('.','',regex=False).str.replace(',','.',regex=False),errors='coerce').fillna(0)
-GRUPOS=[('extrema','Extrema-direita',['PL','NOVO','MISSAO']),('direita','Direita',['PP','UNIAO','REPUBLICANOS','PODE','PSD','CIDADANIA','SOLIDARIEDADE']),
-        ('esquerda','Esquerda e aliados',['PT','PSOL','PSB','REDE','PCDOB','PDT','PV']),('outros','Outros partidos',[])]
+# Mesma divisão de pautas.js (grupos).
+GRUPOS=[('extrema','Extrema-direita',['PL','NOVO','MISSAO']),('direita','Direita',['PP','UNIAO','REPUBLICANOS','PODE','PSD']),
+        ('centro','Centro-direita',['CIDADANIA','AVANTE','SOLIDARIEDADE','MDB','PRD','PSDB','DC']),
+        ('esquerda','Esquerda',['PT','PSOL','PCDOB','PSB','PDT','REDE','PV']),('sp','Sem partido',[])]
 PART={p:g for g,_,ps in GRUPOS for p in ps}
 par=json.load(open(f'{OBS}/parlamentares.json'))['p']; ind=json.load(open(f'{OBS}/indice.json'))['p']
 pornome={}
@@ -21,7 +23,7 @@ for k,v in par.items():
     pornome.setdefault(n(v['n']),k)
 def grupo(k):
     v=par[k]; sig=n(v.get('s','')).replace(' ','')
-    return PART.get(v.get('p','')) or PART.get(sig) or 'outros'
+    return PART.get(v.get('p','')) or PART.get(sig) or 'sp'
 e=pd.read_csv(arq('EmendasParlamentares.csv'),sep=';',encoding='latin1',dtype=str)
 e=e[(e['Ano da Emenda']>='2023')&e['Tipo de Emenda'].str.startswith('Emenda Individual')].copy()
 e['emp']=num(e['Valor Empenhado']); e['pago']=num(e['Valor Pago'])+num(e['Valor Restos A Pagar Pagos'])

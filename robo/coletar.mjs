@@ -169,6 +169,8 @@ const idPartido = s => { if (/^s[\s.\/]*part|sem partido/i.test(String(s || ''))
 const NUCLEO = new Set(PAUTAS.nucleo);
 const EXTREMA = new Set((PAUTAS.blocos || {}).extrema || []);
 const DIREITA = new Set((PAUTAS.blocos || {}).direita || []);
+const GRUPO_DE = new Map(Object.entries(PAUTAS.grupos || {}).flatMap(([g, ps]) => ps.map(x => [x, g])));
+const grupoDoPartido = id => GRUPO_DE.get(id) || 'sp';
 const REFERENCIA = new Set(PAUTAS.referenciaGoverno);
 
 function codigoVoto(v) {
@@ -804,11 +806,12 @@ export async function executar() {
     const i = ind(c.va, c.vd), ie = ind(c.vae, c.vde), id = ind(c.vad, c.vdd);
     // Alinhados e próximos: parlamentares de outros partidos, pelo maior dos dois índices.
     const m = Math.max(ie ?? -1, id ?? -1);
-    const classe = EXTREMA.has(p.p) ? 'extrema' : DIREITA.has(p.p) ? 'direita'
-      : m >= PAUTAS.indice.alinhado * 100 ? 'alinhado' : m >= PAUTAS.indice.proximo * 100 ? 'proximo' : '';
+    // Grupo pelo partido; para quem está fora dos dois blocos, marca também se vota com a direita (alinhado ou próximo).
+    const classe = grupoDoPartido(p.p);
+    const al = classe === 'extrema' || classe === 'direita' ? '' : m >= PAUTAS.indice.alinhado * 100 ? 'alinhado' : m >= PAUTAS.indice.proximo * 100 ? 'proximo' : '';
     if (!c.vd && !pr.n) continue;
     indice[k] = { n: p.n, c: p.c, p: p.p, s: p.s, uf: p.uf, i, vd: c.vd, va: c.va, ie, vde: c.vde, vae: c.vae, id, vdd: c.vdd, vad: c.vad,
-      cl: classe, np: pr.n, nd: pr.d, nx: pr.x, pp: pr.pp };
+      cl: classe, al, np: pr.n, nd: pr.d, nx: pr.x, pp: pr.pp };
   }
 
   // Gravação. Apaga arquivos de anos anteriores à legislatura, criados por datas erradas da fonte.
@@ -854,8 +857,8 @@ export async function executar() {
       derrotas: resumoVot.filter(v => v.disp && v.venceu === false).length,
       dispE: resumoVot.filter(v => v.dispE).length, vitoriasE: resumoVot.filter(v => v.dispE && v.vE === true).length, derrotasE: resumoVot.filter(v => v.dispE && v.vE === false).length,
       dispD: resumoVot.filter(v => v.dispD).length, vitoriasD: resumoVot.filter(v => v.dispD && v.vD === true).length, derrotasD: resumoVot.filter(v => v.dispD && v.vD === false).length,
-      extremaParl: Object.values(indice).filter(p => p.cl === 'extrema').length, direitaParl: Object.values(indice).filter(p => p.cl === 'direita').length,
-      nucleo: Object.values(indice).filter(p => p.cl === 'extrema' || p.cl === 'direita').length, alinhados: Object.values(indice).filter(p => p.cl === 'alinhado').length },
+      grupos: Object.fromEntries(['extrema', 'direita', 'centro', 'esquerda', 'sp'].map(g => [g, Object.values(indice).filter(p => p.cl === g).length])),
+      nucleo: Object.values(indice).filter(p => p.cl === 'extrema' || p.cl === 'direita').length, alinhados: Object.values(indice).filter(p => p.al === 'alinhado').length },
     porPauta,
     recentes: { proposicoes: direita.filter(it => it.x.s === 'avanca' && it.d >= desde(7)).length, votacoes: resumoVot.filter(v => v.d >= desde(7)).length }
   });

@@ -22,16 +22,16 @@
 :root{
   --night:#151a2e; --night-2:#222944; --red:#d42a2f; --paper:#edeff2; --sheet:#ffffff; --ink:#151a2e; --ink-2:#4a5068; --ink-3:#6f758a;
   --line:#d6d9e0; --mark:#ffe24a;
-  --g-extrema:#8c1015; --g-direita:#d42a2f; --g-alinhados:#c98a1b; --g-esquerda:#1f6b8c; --g-outros:#8a90a3;
+  --g-extrema:#8c1015; --g-direita:#d42a2f; --g-centro:#c98a1b; --g-esquerda:#1f6b8c; --g-sp:#8a90a3;
   --display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
   --text:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){ --night:#0f1324; --night-2:#1c2240; --red:#e8454a; --paper:#171b2c; --sheet:#1f2438; --ink:#eef0f6; --ink-2:#b7bccd; --ink-3:#959bb0; --line:#2f3550;
-    --g-extrema:#ff5a60; --g-direita:#f08a8d; --g-alinhados:#e8b25a; --g-esquerda:#6cb8d8; --g-outros:#9aa0b5; color-scheme:dark; }
+    --g-extrema:#ff5a60; --g-direita:#f08a8d; --g-centro:#e8b25a; --g-esquerda:#6cb8d8; --g-sp:#9aa0b5; color-scheme:dark; }
 }
 :root[data-theme="dark"]{ --night:#0f1324; --night-2:#1c2240; --red:#e8454a; --paper:#171b2c; --sheet:#1f2438; --ink:#eef0f6; --ink-2:#b7bccd; --ink-3:#959bb0; --line:#2f3550;
-  --g-extrema:#ff5a60; --g-direita:#f08a8d; --g-alinhados:#e8b25a; --g-esquerda:#6cb8d8; --g-outros:#9aa0b5; color-scheme:dark; }
+  --g-extrema:#ff5a60; --g-direita:#f08a8d; --g-centro:#e8b25a; --g-esquerda:#6cb8d8; --g-sp:#9aa0b5; color-scheme:dark; }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 var(--text);-webkit-font-smoothing:antialiased}
@@ -63,8 +63,8 @@ h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size
 .chip{border:1px solid var(--line);background:var(--sheet);border-radius:999px;padding:5px 13px;font-size:14px;font-weight:600;cursor:pointer}
 .chip[aria-pressed="true"]{background:var(--ink);color:var(--sheet);border-color:var(--ink)}
 
-.grupos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 22px}
-@media (max-width:980px){.grupos{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.grupos{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:0 0 22px}
+@media (max-width:980px){.grupos{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:560px){.grupos{grid-template-columns:1fr}}
 .gt{background:var(--sheet);border:1px solid var(--line);border-top:5px solid var(--cor);border-radius:6px;padding:12px 14px;min-width:0}
 .gt b{display:block;font-size:15px}
@@ -248,7 +248,7 @@ h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size
   <h2>Como foi feito</h2>
   <ul id="metodoLista">
     <li>Fonte. Arquivos de emendas parlamentares do Portal da Transparência (emendas, pagamentos por favorecido e convênios). Entram só as emendas individuais de 2023 a 2026. As de bancada, de comissão e de relator não têm autor individual e ficam de fora. O ano de 2026 ainda está em execução.</li>
-    <li>Grupos. Extrema-direita reúne PL, Novo e Missão. Direita reúne PP, União Brasil, Republicanos, Podemos, PSD, Cidadania e Solidariedade. Esquerda e aliados reúne PT, PSOL, PSB, Rede, PCdoB, PDT e PV. Outros partidos reúne MDB, PSDB, Avante, PRD, DC e parlamentares sem partido. Os grupos são definidos pelo partido, e o partido considerado é o mais recente de cada parlamentar.</li>
+    <li>Grupos. Extrema-direita reúne PL, Novo e Missão. Direita reúne PP, União Brasil, Republicanos, Podemos e PSD. Centro-direita reúne Cidadania, Avante, Solidariedade, MDB, PRD, PSDB e DC. Esquerda reúne PT, PSOL, PCdoB, PSB, PDT, Rede e PV. Os grupos são definidos pelo partido, e o partido considerado é o mais recente de cada parlamentar.</li>
     <li>Valores. Os quadros e as áreas usam o valor empenhado, que é o compromisso de gasto. O perfil de cada parlamentar mostra também o valor pago, somando os restos a pagar quitados.</li>
     <li>Áreas. Seguem a função orçamentária de cada emenda. Segurança e defesa soma as funções segurança pública e defesa nacional. Transferências especiais (Pix) reúne as emendas sem finalidade definida, qualquer que seja a área em que o dinheiro venha a ser gasto.</li>
     <li>Fatias em vez de médias. Cada parlamentar tem a mesma cota de emendas dentro da sua Casa, e a dos senadores é cerca de duas vezes maior que a dos deputados. Por isso o total por parlamentar quase não varia entre grupos, e médias por área misturam essa diferença de cota com a escolha de destino. Nas áreas, a média também é puxada por poucos parlamentares que concentram valores altos, enquanto a mediana fica em zero sempre que menos da metade do grupo destina algo à área. A fatia do dinheiro de cada grupo e a parcela de parlamentares que destinaram algo mostram melhor as prioridades.</li>
@@ -292,7 +292,7 @@ function desenharGrupos() {
   const P = D.perfil[ano];
   $('#grupos').innerHTML = D.ordem.map(g => {
     const x = P[g], G = D.grupos[g];
-    const partidos = G.partidos.length ? G.partidos.map(p => NOME_PARTIDO[p] || p).join(', ') : 'MDB, PSDB, Avante, PRD, DC e sem partido';
+    const partidos = G.partidos.length ? G.partidos.map(p => NOME_PARTIDO[p] || p).join(', ') : 'parlamentares sem partido';
     return `<div class="gt" style="--cor:${cor(g)}"><b>${esc(G.nome)}</b><div class="partidos">${esc(partidos)}</div>
       <div class="grande num">${reais(x.total)}</div>
       <dl class="num"><dt>Deputados</dt><dd>${G.dep}</dd><dt>Senadores</dt><dd>${G.sen}</dd>
@@ -348,7 +348,7 @@ function desenharTemas() {
 let anoMapa = 'todos', metrica = 'hab', ufAtual = 'SP', ufZoom = '', TOPO = null, FEAT = null, MUN = null, IX = {}, munAtual = null;
 const UFCOD = { 11: 'RO', 12: 'AC', 13: 'AM', 14: 'RR', 15: 'PA', 16: 'AP', 17: 'TO', 21: 'MA', 22: 'PI', 23: 'CE', 24: 'RN', 25: 'PB', 26: 'PE', 27: 'AL', 28: 'SE', 29: 'BA', 31: 'MG', 32: 'ES', 33: 'RJ', 35: 'SP', 41: 'PR', 42: 'SC', 43: 'RS', 50: 'MS', 51: 'MT', 52: 'GO', 53: 'DF' };
 const ufDe = c => UFCOD[String(c).slice(0, 2)];
-const METRICAS_M = [['hab', 'Por habitante'], ['total', 'Valor recebido'], ['ext', 'Fatia da extrema-direita'], ['dir', 'Fatia da direita e da extrema-direita'], ['esq', 'Fatia da esquerda']];
+const METRICAS_M = [['hab', 'Por habitante'], ['total', 'Valor recebido'], ['ext', 'Fatia da extrema-direita'], ['dir', 'Fatia da direita e da extrema-direita'], ['esq', 'Fatia da esquerda'], ['cen', 'Fatia da centro-direita']];
 // Escala sequencial em várias cores (do amarelo-claro ao vinho escuro), com nove faixas bem distintas entre si.
 const CORES = ['#fff3b0', '#fed976', '#feb24c', '#fd8d3c', '#f45b2f', '#de2a1f', '#b30d22', '#7a0026', '#3d0a2b'];
 // Valores do município no ano escolhido (ano da emenda), ou a soma de todos os anos.
@@ -365,7 +365,7 @@ function vm(c, m) {
   if (m === 'total') return t || null;
   if (m === 'hab') { const p = MUN.m[c].p; return p ? t / p : null; }
   if (!t) return null;
-  return m === 'ext' ? r[IX.extrema] / t : m === 'dir' ? (r[IX.extrema] + r[IX.direita]) / t : r[IX.esquerda] / t;
+  return m === 'ext' ? r[IX.extrema] / t : m === 'dir' ? (r[IX.extrema] + r[IX.direita]) / t : m === 'cen' ? r[IX.centro] / t : r[IX.esquerda] / t;
 }
 const fmtM = (v, m) => v == null ? 'sem dados' : m === 'hab' ? 'R$ ' + Math.round(v).toLocaleString('pt-BR') : m === 'total' ? reais(v) : pct(v, 0);
 function quebras(vals) {

@@ -18,14 +18,20 @@
   const PAUTAS = {
     versao: '2026-10-29',
 
-    // Partidos que formam o núcleo do campo monitorado. A posição do bloco em cada votação
-    // é a da maioria dos votos dos parlamentares desses partidos.
-    // Dois blocos: extrema-direita e direita. O núcleo é a soma dos dois.
-    blocos: { extrema: ['PL', 'NOVO', 'MISSAO'], direita: ['PP', 'UNIAO', 'REPUBLICANOS', 'PODE'] },
-    nucleo: ['PL', 'NOVO', 'MISSAO', 'PP', 'UNIAO', 'REPUBLICANOS', 'PODE'],
-    // Partido usado como referência do campo do governo para identificar votações disputadas.
-    // Esquerda e aliados, referência do campo do governo.
-    referenciaGoverno: ['PT', 'PSOL', 'PSB', 'REDE', 'PCDOB', 'PDT', 'PV'],
+    // Divisão dos partidos usada em todo o observatório (votações, emendas e dossiês).
+    // Partidos que não estão em nenhuma lista entram como sem partido.
+    grupos: {
+      extrema: ['PL', 'NOVO', 'MISSAO'],
+      direita: ['PP', 'UNIAO', 'REPUBLICANOS', 'PODE', 'PSD'],
+      centro: ['CIDADANIA', 'AVANTE', 'SOLIDARIEDADE', 'MDB', 'PRD', 'PSDB', 'DC'],
+      esquerda: ['PT', 'PSOL', 'PCDOB', 'PSB', 'PDT', 'REDE', 'PV']
+    },
+    nomesGrupos: { extrema: 'Extrema-direita', direita: 'Direita', centro: 'Centro-direita', esquerda: 'Esquerda', sp: 'Sem partido' },
+    // Blocos cuja posição é calculada em cada votação: extrema-direita e direita. O núcleo é a soma dos dois.
+    blocos: { extrema: ['PL', 'NOVO', 'MISSAO'], direita: ['PP', 'UNIAO', 'REPUBLICANOS', 'PODE', 'PSD'] },
+    nucleo: ['PL', 'NOVO', 'MISSAO', 'PP', 'UNIAO', 'REPUBLICANOS', 'PODE', 'PSD'],
+    // Referência do campo do governo para identificar votações disputadas: a esquerda.
+    referenciaGoverno: ['PT', 'PSOL', 'PCDOB', 'PSB', 'PDT', 'REDE', 'PV'],
     // Regras do índice de alinhamento.
     indice: {
       coesaoMinima: 0.6,       // o bloco e a referência precisam votar ao menos 60% num mesmo sentido
