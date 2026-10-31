@@ -63,8 +63,8 @@ h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size
 .chip{border:1px solid var(--line);background:var(--sheet);border-radius:999px;padding:5px 13px;font-size:14px;font-weight:600;cursor:pointer}
 .chip[aria-pressed="true"]{background:var(--ink);color:var(--sheet);border-color:var(--ink)}
 
-.grupos{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:0 0 22px}
-@media (max-width:980px){.grupos{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.grupos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 22px}
+@media (max-width:980px){.grupos{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:560px){.grupos{grid-template-columns:1fr}}
 .gt{background:var(--sheet);border:1px solid var(--line);border-top:5px solid var(--cor);border-radius:6px;padding:12px 14px;min-width:0}
 .gt b{display:block;font-size:15px}
@@ -248,7 +248,7 @@ h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size
   <h2>Como foi feito</h2>
   <ul id="metodoLista">
     <li>Fonte. Arquivos de emendas parlamentares do Portal da Transparência (emendas, pagamentos por favorecido e convênios). Entram só as emendas individuais de 2023 a 2026. As de bancada, de comissão e de relator não têm autor individual e ficam de fora. O ano de 2026 ainda está em execução.</li>
-    <li>Grupos. Extrema-direita reúne PL, Novo e Missão. Direita reúne PP, União Brasil, Republicanos, Podemos, PSD, Cidadania e Solidariedade. Alinhados reúne MDB, PDT, Rede, PSB e PV. Esquerda reúne PT, PSOL e PCdoB. Outros partidos reúne PSDB, Avante, PRD e parlamentares sem partido. Os grupos são definidos pelo partido, e o partido considerado é o mais recente de cada parlamentar.</li>
+    <li>Grupos. Extrema-direita reúne PL, Novo e Missão. Direita reúne PP, União Brasil, Republicanos, Podemos, PSD, Cidadania e Solidariedade. Esquerda e aliados reúne PT, PSOL, PSB, Rede, PCdoB, PDT e PV. Outros partidos reúne MDB, PSDB, Avante, PRD, DC e parlamentares sem partido. Os grupos são definidos pelo partido, e o partido considerado é o mais recente de cada parlamentar.</li>
     <li>Valores. Os quadros e as áreas usam o valor empenhado, que é o compromisso de gasto. O perfil de cada parlamentar mostra também o valor pago, somando os restos a pagar quitados.</li>
     <li>Áreas. Seguem a função orçamentária de cada emenda. Segurança e defesa soma as funções segurança pública e defesa nacional. Transferências especiais (Pix) reúne as emendas sem finalidade definida, qualquer que seja a área em que o dinheiro venha a ser gasto.</li>
     <li>Fatias em vez de médias. Cada parlamentar tem a mesma cota de emendas dentro da sua Casa, e a dos senadores é cerca de duas vezes maior que a dos deputados. Por isso o total por parlamentar quase não varia entre grupos, e médias por área misturam essa diferença de cota com a escolha de destino. Nas áreas, a média também é puxada por poucos parlamentares que concentram valores altos, enquanto a mediana fica em zero sempre que menos da metade do grupo destina algo à área. A fatia do dinheiro de cada grupo e a parcela de parlamentares que destinaram algo mostram melhor as prioridades.</li>
@@ -265,7 +265,7 @@ h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size
 <script>
 'use strict';
 const NOME_PAUTA = { punitivismo: 'Punitivismo e militarização', drogas: 'Política de drogas', privilegios: 'Privilégios econômicos', religiao: 'Religião e Estado', igualdade: 'Igualdade e direitos' };
-const NOME_PARTIDO = { MISSAO: 'Missão', PSB: 'PSB', PDT: 'PDT', MDB: 'MDB', PSOL: 'PSOL', PT: 'PT', PSD: 'PSD', PP: 'PP', PL: 'PL', PSDB: 'PSDB', PV: 'PV', PRD: 'PRD', PODE: 'Podemos', UNIAO: 'União Brasil', REPUBLICANOS: 'Republicanos', SOLIDARIEDADE: 'Solidariedade', CIDADANIA: 'Cidadania', AVANTE: 'Avante', NOVO: 'Novo', REDE: 'Rede', PCDOB: 'PCdoB', SP: 'Sem partido', OUTROS: 'Outros' };
+const NOME_PARTIDO = { DC: 'DC', MISSAO: 'Missão', PSB: 'PSB', PDT: 'PDT', MDB: 'MDB', PSOL: 'PSOL', PT: 'PT', PSD: 'PSD', PP: 'PP', PL: 'PL', PSDB: 'PSDB', PV: 'PV', PRD: 'PRD', PODE: 'Podemos', UNIAO: 'União Brasil', REPUBLICANOS: 'Republicanos', SOLIDARIEDADE: 'Solidariedade', CIDADANIA: 'Cidadania', AVANTE: 'Avante', NOVO: 'Novo', REDE: 'Rede', PCDOB: 'PCdoB', SP: 'Sem partido', OUTROS: 'Outros' };
 const $ = s => document.querySelector(s);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const norm = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
@@ -292,7 +292,7 @@ function desenharGrupos() {
   const P = D.perfil[ano];
   $('#grupos').innerHTML = D.ordem.map(g => {
     const x = P[g], G = D.grupos[g];
-    const partidos = G.partidos.length ? G.partidos.map(p => NOME_PARTIDO[p] || p).join(', ') : 'PSDB, Avante, PRD e sem partido';
+    const partidos = G.partidos.length ? G.partidos.map(p => NOME_PARTIDO[p] || p).join(', ') : 'MDB, PSDB, Avante, PRD, DC e sem partido';
     return `<div class="gt" style="--cor:${cor(g)}"><b>${esc(G.nome)}</b><div class="partidos">${esc(partidos)}</div>
       <div class="grande num">${reais(x.total)}</div>
       <dl class="num"><dt>Deputados</dt><dd>${G.dep}</dd><dt>Senadores</dt><dd>${G.sen}</dd>
