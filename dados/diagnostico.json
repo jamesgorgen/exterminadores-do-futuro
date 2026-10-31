@@ -1,5 +1,5 @@
 {
- "inicio": "2026-10-30T21:42:58.394Z",
+ "inicio": "2026-10-31T02:16:29.247Z",
  "modo": "diario",
  "amostras": {
   "camara_deputado": {
@@ -101,27 +101,27 @@
    "dataApresentacao": "2026-02-24T15:48"
   },
   "senado_proposicao": {
-   "autoria": "Senador Jader Barbalho (MDB/PA)",
+   "autoria": "Senadora Dra. Eudócia (PSDB/AL)",
    "casaIdentificadora": "SF",
-   "codigoMateria": 175799,
-   "dataApresentacao": "2026-09-15",
-   "dataSituacaoAtual": "2026-09-15",
-   "dataUltimaAtualizacao": "2026-09-18T15:15:01.293",
-   "ementa": "Altera a Lei nº 8.069, de 13 de julho de 1990 (Estatuto da Criança e do Adolescente), para instituir o \"Certificado Instituição Amiga da Infância\".",
+   "codigoMateria": 175895,
+   "dataApresentacao": "2026-10-01",
+   "dataSituacaoAtual": "2026-10-01",
+   "dataUltimaAtualizacao": "2026-10-06T15:15:01.05",
+   "ementa": "Altera a Lei nº 8.080, de 19 de setembro de 1990 - Lei Orgânica da Saúde, para dispor sobre o requerimento administrativo para fornecimento de medicamento destinado ao tratamento de pessoa com câncer.",
    "enteIdentificador": "SF",
-   "id": 9108470,
-   "identificacao": "PL 5379/2026",
+   "id": 9111471,
+   "identificacao": "PL 5503/2026",
    "objetivo": "Iniciadora",
    "situacaoAtual": "AGUARDANDO DESPACHO",
    "tipoConteudo": "Norma Geral",
    "tipoDocumento": "Projeto de Lei Ordinária",
    "tramitando": "Sim",
    "ultimaInformacaoAtualizada": "PUBLICACAO_OFICIAL",
-   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/b956ffba-d180-4d46-b6cc-3899d8e079d9"
+   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/c870a6cc-8c8f-4fc6-bfc5-601e31410b00"
   }
  },
  "contagens": {
-  "deputados": 700,
+  "deputados": 882,
   "votacoes_C_plenario": 125,
   "votacoes_C_comissao": 29,
   "votacoes_sem_sim_nao": 1,
@@ -130,32 +130,30 @@
   "senado_comissao_votacoes_achadas": 0,
   "proposicoes_camara_registros": 8461,
   "proposicoes_data_corrigida": 3,
-  "senado_processo_registros": 156,
-  "proposicoes_senado": 54,
-  "graduados": 1528,
-  "correcoes_aplicadas": 699
+  "senado_processo_registros": 153,
+  "proposicoes_senado": 51,
+  "graduados": 1525,
+  "correcoes_aplicadas": 787
  },
  "erros": [
-  "deputados leg 57 pág 8: falhou https://dadosabertos.camara.leg.br/api/v2/deputados?idLegislatura=57&itens=100&pagina=8&ordem=ASC&ordenarPor=nome",
-  "deputados leg 57 pág 9: falhou https://dadosabertos.camara.leg.br/api/v2/deputados?idLegislatura=57&itens=100&pagina=9&ordem=ASC&ordenarPor=nome",
-  "votações Senado 2026-09-15: http 400"
+  "votações Senado 2026-09-16: http 400"
  ],
  "brutos": {
   "senado_votacao_iso": {
-   "url": "https://legis.senado.leg.br/dadosabertos/votacao?dataInicio=2026-09-15&dataFim=2026-09-30",
+   "url": "https://legis.senado.leg.br/dadosabertos/votacao?dataInicio=2026-09-16&dataFim=2026-09-30",
    "tamanho": 2,
    "inicio": "[]"
   },
   "senado_comissao": {
-   "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20260915&dataFim=20261030",
+   "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAS?dataInicio=20260916&dataFim=20261031",
    "tamanho": 220,
-   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"30/10/2026 18:46:46\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
+   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"30/10/2026 23:17:42\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
   },
   "senado_processo": {
-   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-09-15&dataFimApresentacao=2026-09-30",
-   "tamanho": 19832,
-   "inicio": "[{\"autoria\":\"Senador Jader Barbalho (MDB/PA)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175799,\"dataApresentacao\":\"2026-09-15\",\"dataSituacaoAtual\":\"2026-09-15\",\"dataUltimaAtualizacao\":\"2026-09-18T15:15:01.293\",\"ementa\":\"Altera a Lei nº 8.069, de 13 de julho de 1990 (Estatuto da Criança e do Adolescente), para instituir o \\\"Certificado Instituição Amiga da Infância\\\".\",\"enteIdentificador\":\"SF\",\"id\":9108470,\"identificacao\":\"PL 5379/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/b956ffba-d180-4d46-b6cc-3899d8e079d9\"},{\"autoria\":\"Senador Zequinha Marinho (PODE/PA)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175803,\"dataApresentacao\":\"2026-09-15\",\"dataSituacaoAtual\":\"2026-09-15\",\"dataUltimaAtualizacao\":\"2026-09-18T15:15:01.672\",\"ementa\":\"Altera a Lei nº 14.751, de 12 de dezembro de 2023, para dispor sobre o escalonamento vertical, percentual e proporcional da remuneração dos cargos integrantes das carreiras das Polícias Militares e dos Corpos de Bombeiros Militares dos Estados, do Distrito Federal e dos Territórios.\",\"enteIdentificador\":\"SF\",\"id\":9108512,\"identificacao\":\"PL 5380/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaIn"
+   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-09-16&dataFimApresentacao=2026-09-30",
+   "tamanho": 17417,
+   "inicio": "[{\"autoria\":\"Senador Jaime Bagattoli (PL/RO)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175811,\"dataApresentacao\":\"2026-09-17\",\"dataSituacaoAtual\":\"2026-09-17\",\"dataUltimaAtualizacao\":\"2026-09-23T17:15:00.866\",\"ementa\":\"Altera as Leis nºs 9.478, de 6 de agosto de 1997, e 12.351, de 22 de dezembro de 2010, para destinar parcela da receita de royalties da União relativos à exploração de hidrocarbonetos da bacia da Foz do Rio Amazonas e da Margem Equatorial, à cobertura das despesas salariais do quadro funcional especial em extinção da União relativo aos servidores ativos e inativos e aos pensionistas dos ex-territórios do Amapá, Roraima e Rondônia de que trata o art. 31 da Emenda Constitucional nº 19, de 1998.\",\"enteIdentificador\":\"SF\",\"id\":9109177,\"identificacao\":\"PL 5396/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/04a1f73d-36dd-457f-92d9-d1e52a1d03c1\"},{\"autoria\":\"Senador Esperidião Amin (PP/SC)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175813,\"dataApresentacao\":\"2026-09-17\",\"dataSituacaoAtual\":\"2026-09-17\",\"dataUltimaAtualizacao\":\"2026-09-23T17:15:01.042\",\"ementa\":\"Altera a Lei nº 9.250, de 26 de dezembro de 1995, para instituir a atualização anual pelo Índice Nacional de Preços ao Consumidor Amplo (IPCA) dos valores das tabelas de r"
   }
  },
- "fim": "2026-10-30T21:54:52.764Z"
+ "fim": "2026-10-31T02:25:43.037Z"
 }
