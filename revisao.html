@@ -45,6 +45,10 @@ header .estado{font-size:13px;color:#c7cbe0}
 .filtros select,.filtros input{border:1px solid var(--line);border-radius:6px;padding:7px 9px;background:var(--sheet);min-height:36px;max-width:100%}
 .filtros input[type=search]{flex:1 1 220px}
 .filtros label.chk{display:flex;gap:6px;align-items:center;font-size:14px;color:var(--ink-2)}
+.situacao{background:var(--sheet);border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin:14px 0 0;font-size:14px;color:var(--ink-2);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:760px){.situacao{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.situacao b{display:block;font-size:20px;color:var(--ink)}
+.situacao .nota-s{grid-column:1/-1;font-size:13px;color:var(--ink-3)}
 .contagem{font-size:14px;color:var(--ink-2);margin:14px 0 8px}
 .aviso{background:var(--pend-soft);border:1px solid var(--pend);border-radius:8px;padding:12px 14px;margin:14px 0;font-size:14px}
 .cartao{background:var(--sheet);border:1px solid var(--line);border-left:5px solid var(--line);border-radius:8px;padding:14px 16px;margin:0 0 12px}
@@ -116,6 +120,7 @@ kbd{font:12px/1 ui-monospace,monospace;border:1px solid var(--line);border-botto
 </div></div>
 
 <main class="wrap">
+  <div id="situacao" class="situacao"></div>
   <div id="avisoToken" class="aviso" hidden>Para salvar as correções no site, configure o acesso ao GitHub. Você pode revisar antes e salvar depois, porque as alterações ficam guardadas neste navegador.</div>
   <p class="contagem" id="contagem"></p>
   <div id="lista"><p class="carregando">Carregando os dados do observatório…</p></div>
@@ -399,7 +404,7 @@ async function salvar() {
       if (r.status === 401 || r.status === 403) throw new Error('a chave de acesso foi recusada. Confira se ela tem permissão Contents, Read and write, neste repositório');
       if (!r.ok) throw new Error('o GitHub respondeu ' + r.status);
       salvas = ordenado; pend = {}; guardarPend();
-      atualizarBarra(); desenhar();
+      atualizarBarra(); desenharSituacao(); desenhar();
       $('#msg').textContent = `${n} ${n === 1 ? 'correção salva' : 'correções salvas'}. O robô já começou a atualizar o site, o que leva alguns minutos.`;
       return;
     } catch (e) { atualizarBarra(); $('#msg').textContent = 'Não foi possível salvar, porque ' + e.message + '.'; $('#salvar').disabled = false; return; }
@@ -435,7 +440,22 @@ $('#gravarToken').addEventListener('click', async () => {
 // ------------------------------------------------------------ início
 for (const p of P.lista) $('#fPauta').insertAdjacentHTML('beforeend', `<option value="${p.id}">${esc(p.nome)}</option>`);
 mostrarEstadoToken(); atualizarBarra();
-carregar().then(desenhar).catch(e => { $('#lista').innerHTML = `<p class="carregando">Não foi possível carregar os dados (${esc(e.message)}).</p>`; });
+// Situação do aprendizado: quantas correções existem, com quantas a IA foi reclassificada e quando será a próxima vez.
+function desenharSituacao() {
+  const n = Object.keys(salvas).length;
+  const versoes = {}; Object.values(D.ia).forEach(c => { if (c.vg) versoes[c.vg] = (versoes[c.vg] || 0) + 1; });
+  const vg = Object.entries(versoes).sort((a, b) => b[1] - a[1])[0];
+  const lote = vg ? +String(vg[0]).split('-').pop() : null;
+  const usadas = lote == null ? null : lote * 30;
+  const proxima = lote == null ? null : (lote + 1) * 30;
+  const fila = Object.entries(D.ia).filter(([k, c]) => c.s === 'avanca' && c.cf !== 'alta' && salvas[k] === undefined).length;
+  $('#situacao').innerHTML = `<div><b class="num">${n.toLocaleString('pt-BR')}</b>correções salvas pela equipe</div>
+    <div><b class="num">${usadas == null ? '—' : usadas + ' a ' + (proxima - 1)}</b>correções existiam na última reclassificação geral</div>
+    <div><b class="num">${proxima == null ? '—' : n >= proxima ? 'em curso' : proxima}</b>${proxima != null && n >= proxima ? 'reclassificação geral (o robô está refazendo)' : 'correções disparam a próxima reclassificação geral'}</div>
+    <div><b class="num">${fila.toLocaleString('pt-BR')}</b>itens de certeza baixa ainda não conferidos</div>
+    <p class="nota-s">Cada correção salva vale no site na hora. A IA usa as correções mais recentes como exemplos ao classificar projetos novos e, a cada 30 correções, refaz o grau de todos os projetos da direita. Os números da reclassificação mudam alguns minutos depois de salvar.</p>`;
+}
+carregar().then(() => { desenharSituacao(); desenhar(); }).catch(e => { $('#lista').innerHTML = `<p class="carregando">Não foi possível carregar os dados (${esc(e.message)}).</p>`; });
 </script>
 </body>
 </html>
