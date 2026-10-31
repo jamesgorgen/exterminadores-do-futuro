@@ -18,7 +18,7 @@ A página (`index.html`) só lê os arquivos da pasta `dados`. Não depende de s
 
 ## Quem é a direita
 
-- **Núcleo.** Parlamentares de PL, Novo, PP, União Brasil, Republicanos e Podemos (lista `nucleo` em `pautas.js`).
+- **Núcleo.** Parlamentares de PL, Novo, Missão, PP, União Brasil, Republicanos e Podemos (lista `nucleo` em `pautas.js`).
 - **Posição da direita numa votação.** A maioria dos votos Sim e Não do núcleo, quando ao menos 60% dele vota no mesmo sentido. O PT é a referência do campo do governo, pela mesma regra.
 - **Votações disputadas.** Aquelas em que a direita e o PT votam em sentidos opostos.
 - **Índice de alinhamento.** Porcentagem das votações disputadas em que o parlamentar votou como a direita. Exige ao menos 10 votações disputadas.

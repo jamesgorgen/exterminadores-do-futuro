@@ -20,7 +20,7 @@
 
     // Partidos que formam o núcleo do campo monitorado. A posição do bloco em cada votação
     // é a da maioria dos votos dos parlamentares desses partidos.
-    nucleo: ['PL', 'NOVO', 'PP', 'UNIAO', 'REPUBLICANOS', 'PODE'],
+    nucleo: ['PL', 'NOVO', 'MISSAO', 'PP', 'UNIAO', 'REPUBLICANOS', 'PODE'],
     // Partido usado como referência do campo do governo para identificar votações disputadas.
     referenciaGoverno: ['PT'],
     // Regras do índice de alinhamento.

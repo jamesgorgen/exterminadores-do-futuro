@@ -123,7 +123,7 @@ td.d,th.d{text-align:right;white-space:nowrap}
 </div></div>
 <main class="folha" id="folha"><p class="carregando">Carregando os dados…</p></main>
 
-<script src="pautas.js?v=20261029b"></script>
+<script src="pautas.js?v=20261031"></script>
 <script src="lib/d3.min.js?v=7.9.0"></script>
 <script src="lib/topojson.min.js?v=3.0.2"></script>
 <script>
@@ -163,7 +163,7 @@ const barras = (linhas, fmtv, cor) => { const m = Math.max(...linhas.map(l => l[
 
 const METODO = `<h2>Notas de método</h2><dl class="metodo">
   <dt>Fontes</dt><dd>Dados abertos da Câmara dos Deputados e do Senado Federal (proposições e votações nominais de plenário e comissões, desde fevereiro de 2023), Portal da Transparência (emendas parlamentares individuais de 2023 a 2026) e IBGE (Censo 2022).</dd>
-  <dt>Núcleo da direita</dt><dd>Parlamentares de PL, Novo, PP, União Brasil, Republicanos e Podemos.</dd>
+  <dt>Núcleo da direita</dt><dd>Parlamentares de PL, Novo, Missão, PP, União Brasil, Republicanos e Podemos.</dd>
   <dt>Votações disputadas e índice de alinhamento</dt><dd>A posição da direita numa votação é a da maioria do núcleo, quando ao menos 60% dele vota no mesmo sentido. A referência do campo do governo é a bancada do PT, pela mesma regra. Disputadas são as votações em que as duas posições se opõem. O índice é a porcentagem dessas votações em que o parlamentar votou como a direita, calculado a partir de 10 votações disputadas. Alinhados têm índice de 80% ou mais e próximos, de 60% a 80%.</dd>
   <dt>Pautas e grau</dt><dd>Cada proposição é classificada, a partir da ementa, nas 16 pautas acompanhadas, com o sentido (faz avançar ou vai contra a pauta da direita) e o grau (direita ou extrema-direita). A classificação inicial é feita por inteligência artificial e serve como triagem. Os itens marcados como conferidos foram revisados pela equipe. O grau se refere à proposição, não à pessoa.</dd>
   <dt>Emendas</dt><dd>Valores empenhados em emendas individuais, salvo indicação de valor pago ou recebido. Transferências especiais (Pix) são repassadas a estados e municípios sem finalidade definida. Nas emendas, os grupos são definidos pelo partido: extrema-direita (PL, Novo, Missão), direita (PP, União Brasil, Republicanos, Podemos, PSD, Cidadania, Solidariedade), alinhados (MDB, PDT, Rede, PSB, PV), esquerda (PT, PSOL, PCdoB) e outros.</dd>
