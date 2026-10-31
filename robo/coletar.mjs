@@ -46,7 +46,7 @@ const SEM_IA = process.env.SEM_IA === '1';
 const TIPOS = ['PL', 'PLP', 'PEC', 'PDL'];
 const MODELO = 'claude-haiku-5-5';
 const VERSAO_CLASSIFICACAO = 'd3';   // mude para refazer todas as classificações
-const VERSAO_GRAU = 'g4';          // mude para refazer só o grau (direita ou extrema-direita)
+const VERSAO_GRAU = 'g5';          // mude para refazer só o grau (direita ou extrema-direita)
 
 const API_CAMARA = 'https://dadosabertos.camara.leg.br/api/v2';
 const ARQ_CAMARA = 'https://dadosabertos.camara.leg.br/arquivos';
@@ -739,7 +739,7 @@ export async function executar() {
   let correcoes = {};
   try { correcoes = JSON.parse(fs.readFileSync(path.join(RAIZ, 'correcoes.json'), 'utf8')).correcoes || {}; }
   catch (e) { if (fs.existsSync(path.join(RAIZ, 'correcoes.json'))) erro('correcoes.json com erro de formato', e); }
-  // Exemplos para a IA, a partir das correções da equipe (até 150, com a ementa).
+  // Exemplos para a IA, a partir das correções da equipe (até 300, com a ementa).
   const ementaDe = new Map(paraClassificar.map(it => [it.chave, it.texto]));
   const descreveCorrecao = (k, c) => {
     const ia = classificacoes.c[k] || {};
@@ -752,7 +752,7 @@ export async function executar() {
     return `${g === 'extrema' ? 'extrema-direita' : 'direita'}${pp.length ? ', pautas ' + pp.join(', ') : ''}`;
   };
   const exemplos = Object.entries(correcoes).filter(([k, c]) => c && typeof c === 'object' && ementaDe.get(k))
-    .slice(-150).map(([k, c]) => `- ${k}. ${String(ementaDe.get(k)).slice(0, 260)} => ${descreveCorrecao(k, c)}`).join('\n');
+    .slice(-300).map(([k, c]) => `- ${k}. ${String(ementaDe.get(k)).slice(0, 260)} => ${descreveCorrecao(k, c)}`).join('\n');
   await classificarPendentes(paraClassificar);
   await graduarPendentes(paraClassificar, exemplos, Object.keys(correcoes).length);
 
