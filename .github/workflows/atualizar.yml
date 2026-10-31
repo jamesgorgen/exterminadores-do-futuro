@@ -61,6 +61,12 @@ jobs:
             echo "Nada mudou."
           else
             git commit -m "Atualiza os dados ($(date -u +%Y-%m-%d))"
-            git pull --rebase --autostash
-            git push
+            # Outras execuções ou a página de revisão podem ter gravado no meio do caminho.
+            # Tenta algumas vezes; nos arquivos de dados, prevalece a versão desta execução.
+            for i in 1 2 3 4 5; do
+              if git pull --rebase -X theirs && git push; then exit 0; fi
+              git rebase --abort 2>/dev/null || true
+              sleep $((i * 10))
+            done
+            exit 1
           fi
