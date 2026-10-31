@@ -165,7 +165,7 @@ function anosDoPeriodo(ini, fim) { const out = []; for (let a = ano(ini); a <= a
 // Sigla de partido -> id do partido (lista do motor), ou a própria sigla.
 const SIGLA_PARA_ID = new Map();
 for (const p of Motor.PARTIDOS) [...p.camara, ...p.senado, ...p.antecessoras].forEach(s => SIGLA_PARA_ID.set(s.toUpperCase(), p.id));
-const idPartido = s => { if (/^s\s*\/?\s*part|sem partido/i.test(String(s || ''))) return 'SP'; const k = Motor.normalizar(String(s || '')).toUpperCase().replace(/\s+/g, ' ').trim(); return SIGLA_PARA_ID.get(String(s || '').toUpperCase().trim()) || SIGLA_PARA_ID.get(k) || (k ? 'OUTROS' : ''); };
+const idPartido = s => { if (/^s[\s.\/]*part|sem partido/i.test(String(s || ''))) return 'SP'; const k = Motor.normalizar(String(s || '')).toUpperCase().replace(/\s+/g, ' ').trim(); return SIGLA_PARA_ID.get(String(s || '').toUpperCase().trim()) || SIGLA_PARA_ID.get(k) || (k ? 'OUTROS' : ''); };
 const NUCLEO = new Set(PAUTAS.nucleo);
 const REFERENCIA = new Set(PAUTAS.referenciaGoverno);
 

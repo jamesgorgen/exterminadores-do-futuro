@@ -215,7 +215,7 @@ footer a{color:#fff}
 'use strict';
 const P = window.PAUTAS;
 const PAUTA = Object.fromEntries(P.lista.map(p => [p.id, p]));
-const NOME_PARTIDO = { AVANTE: 'Avante', CIDADANIA: 'Cidadania', MDB: 'MDB', NOVO: 'Novo', PCDOB: 'PCdoB', PDT: 'PDT', PL: 'PL', PODE: 'Podemos', PP: 'PP', PRD: 'PRD',
+const NOME_PARTIDO = { MISSAO: 'Missão', DC: 'DC', AVANTE: 'Avante', CIDADANIA: 'Cidadania', MDB: 'MDB', NOVO: 'Novo', PCDOB: 'PCdoB', PDT: 'PDT', PL: 'PL', PODE: 'Podemos', PP: 'PP', PRD: 'PRD',
   PSB: 'PSB', PSD: 'PSD', PSDB: 'PSDB', PSOL: 'PSOL', PT: 'PT', PV: 'PV', REDE: 'Rede', REPUBLICANOS: 'Republicanos', SOLIDARIEDADE: 'Solidariedade', UNIAO: 'União Brasil', OUTROS: 'Outros', SP: 'Sem partido' };
 const nomePartido = (id, s) => NOME_PARTIDO[id] || s || id || '';
 const CLASSE = { nucleo: 'Núcleo da direita', alinhado: 'Alinhado à direita', proximo: 'Próximo da direita' };

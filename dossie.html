@@ -131,7 +131,7 @@ td.d,th.d{text-align:right;white-space:nowrap}
 const $ = s => document.querySelector(s);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const P = window.PAUTAS; const PAUTA = Object.fromEntries(P.lista.map(p => [p.id, p.nome]));
-const NOME_PARTIDO = { PODE: 'Podemos', UNIAO: 'União Brasil', REPUBLICANOS: 'Republicanos', SOLIDARIEDADE: 'Solidariedade', CIDADANIA: 'Cidadania', AVANTE: 'Avante', NOVO: 'Novo', REDE: 'Rede', PCDOB: 'PCdoB', SP: 'Sem partido' };
+const NOME_PARTIDO = { MISSAO: 'Missão', DC: 'DC', PODE: 'Podemos', UNIAO: 'União Brasil', REPUBLICANOS: 'Republicanos', SOLIDARIEDADE: 'Solidariedade', CIDADANIA: 'Cidadania', AVANTE: 'Avante', NOVO: 'Novo', REDE: 'Rede', PCDOB: 'PCdoB', SP: 'Sem partido' };
 const partido = p => (p.p === 'OUTROS' || p.p === 'SP') ? (p.s || 'Sem partido') : (NOME_PARTIDO[p.p] || p.s || p.p || '');
 const CASA = { C: 'Câmara dos Deputados', S: 'Senado Federal' };
 const CARGO = { C: 'Deputado(a) federal', S: 'Senador(a)' };

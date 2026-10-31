@@ -159,7 +159,7 @@ const ANOS = [2023, 2024, 2025, 2026, 2027, 2028];
 const P = window.PAUTAS;
 const PAUTA = Object.fromEntries(P.lista.map(p => [p.id, p]));
 const CASA = { C: 'Câmara', S: 'Senado' };
-const NOME_PARTIDO = { PODE: 'Podemos', UNIAO: 'União Brasil', REPUBLICANOS: 'Republicanos', SOLIDARIEDADE: 'Solidariedade', CIDADANIA: 'Cidadania', AVANTE: 'Avante', NOVO: 'Novo', REDE: 'Rede', PCDOB: 'PCdoB', SP: 'Sem partido', OUTROS: 'Outros' };
+const NOME_PARTIDO = { MISSAO: 'Missão', DC: 'DC', PODE: 'Podemos', UNIAO: 'União Brasil', REPUBLICANOS: 'Republicanos', SOLIDARIEDADE: 'Solidariedade', CIDADANIA: 'Cidadania', AVANTE: 'Avante', NOVO: 'Novo', REDE: 'Rede', PCDOB: 'PCdoB', SP: 'Sem partido', OUTROS: 'Outros' };
 const $ = s => document.querySelector(s);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const norm = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();

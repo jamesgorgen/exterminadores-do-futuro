@@ -14,7 +14,9 @@
   // Siglas que não estiverem aqui entram no grupo OUTROS, descoberto a cada busca.
   const PARTIDOS = [
     { id: 'AVANTE', nome: 'Avante', camara: ['AVANTE'], senado: ['AVANTE'], antecessoras: ['PTdoB'] },
+    { id: 'DC', nome: 'DC', camara: ['DC'], senado: ['DC'], antecessoras: ['PSDC'] },
     { id: 'CIDADANIA', nome: 'Cidadania', camara: ['CIDADANIA'], senado: ['CIDADANIA'], antecessoras: ['PPS'] },
+    { id: 'MISSAO', nome: 'Missão', camara: ['MISSÃO', 'MISSAO'], senado: ['MISSÃO', 'MISSAO'], antecessoras: [] },
     { id: 'MDB', nome: 'MDB', camara: ['MDB'], senado: ['MDB'], antecessoras: ['PMDB'] },
     { id: 'NOVO', nome: 'Novo', camara: ['NOVO'], senado: ['NOVO'], antecessoras: [] },
     { id: 'PCDOB', nome: 'PCdoB', camara: ['PCdoB'], senado: ['PCDOB', 'PC DO B'], antecessoras: [] },
@@ -41,7 +43,7 @@
   const TIPOS = ['PL', 'PLP', 'PEC', 'PDL'];
   const SIGLAS_SO_DEPUTADOS = new Set(['UNIÃO']);
   // Último ano em que cada sigla antiga existiu. Fora disso não há o que buscar.
-  const SIGLA_ATE = { PR: 2019, PPB: 2003, DEM: 2022, PSL: 2022, PTN: 2017, PRB: 2019, PSC: 2023, PTB: 2023, PATRIOTA: 2023,
+  const SIGLA_ATE = { PSDC: 2017, PR: 2019, PPB: 2003, DEM: 2022, PSL: 2022, PTN: 2017, PRB: 2019, PSC: 2023, PTB: 2023, PATRIOTA: 2023,
     PROS: 2023, PPS: 2019, PMDB: 2017, PTdoB: 2017 };
 
   const API_CAMARA = 'https://dadosabertos.camara.leg.br/api/v2/proposicoes';
