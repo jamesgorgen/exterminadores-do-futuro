@@ -167,6 +167,8 @@ const SIGLA_PARA_ID = new Map();
 for (const p of Motor.PARTIDOS) [...p.camara, ...p.senado, ...p.antecessoras].forEach(s => SIGLA_PARA_ID.set(s.toUpperCase(), p.id));
 const idPartido = s => { if (/^s[\s.\/]*part|sem partido/i.test(String(s || ''))) return 'SP'; const k = Motor.normalizar(String(s || '')).toUpperCase().replace(/\s+/g, ' ').trim(); return SIGLA_PARA_ID.get(String(s || '').toUpperCase().trim()) || SIGLA_PARA_ID.get(k) || (k ? 'OUTROS' : ''); };
 const NUCLEO = new Set(PAUTAS.nucleo);
+const EXTREMA = new Set((PAUTAS.blocos || {}).extrema || []);
+const DIREITA = new Set((PAUTAS.blocos || {}).direita || []);
 const REFERENCIA = new Set(PAUTAS.referenciaGoverno);
 
 function codigoVoto(v) {
@@ -315,11 +317,18 @@ function guardarVotacao(v) {
   if (!Object.values(v.v).some(c => c === 'S' || c === 'N')) { contar('votacoes_sem_sim_nao'); return; }
   const b = posicao(v.v, v.ps || {}, NUCLEO);
   const g = posicao(v.v, v.ps || {}, REFERENCIA);
+  const e = posicao(v.v, v.ps || {}, EXTREMA);
+  const d = posicao(v.v, v.ps || {}, DIREITA);
   const grupos = {};
   for (const [k, c] of Object.entries(v.v)) (grupos[c] || (grupos[c] = [])).push(+k.slice(1));
-  const sai = Object.assign({}, v, { v: grupos, bl: b.pos, blc: b.coesao, gv: g.pos, disp: !!(b.pos && g.pos && b.pos !== g.pos) });
+  const oposto = x => !!(x.pos && g.pos && x.pos !== g.pos);
+  const ganhou = pos => pos && v.res ? ((pos === 'S') === (v.res === 'A')) : null;
+  // bl e disp: núcleo inteiro (os dois blocos somados). be/bd e dispE/dispD: cada bloco contra o PT.
+  const sai = Object.assign({}, v, { v: grupos, bl: b.pos, blc: b.coesao, gv: g.pos, be: e.pos, bec: e.coesao, bd: d.pos, bdc: d.coesao,
+    dispE: oposto(e), dispD: oposto(d) });
+  sai.disp = sai.dispE || sai.dispD;
   delete sai.ps;
-  sai.venceu = sai.bl && sai.res ? ((sai.bl === 'S') === (sai.res === 'A')) : null;
+  sai.venceu = ganhou(sai.bl); sai.vE = ganhou(sai.be); sai.vD = ganhou(sai.bd);
   arquivoVotacoes(ano(v.d)).set(v.id, sai);
   contar('votacoes_' + v.k + (v.pl ? '_plenario' : '_comissao'));
 }
@@ -686,15 +695,17 @@ function posicao(votos, ps, grupo) {
   const c = Math.max(s, n) / t;
   return { pos: c >= PAUTAS.indice.coesaoMinima ? (s >= n ? 'S' : 'N') : '', coesao: Math.round(c * 100) / 100 };
 }
+// Para cada parlamentar, votos com cada bloco nas votações em que aquele bloco e o PT se opuseram.
 function calcularAlinhamento(todasVotacoes) {
   const conta = {};
   for (const vt of todasVotacoes) {
     if (!vt.disp) continue;
     for (const [k, v] of votosDe(vt)) {
       if (v !== 'S' && v !== 'N') continue;
-      const c = conta[k] || (conta[k] = { vd: 0, va: 0, vdc: 0, vds: 0 });
-      c.vd++; if (v === vt.bl) c.va++;
-      if (vt.k === 'C') c.vdc++; else c.vds++;
+      const c = conta[k] || (conta[k] = { vd: 0, va: 0, vde: 0, vae: 0, vdd: 0, vad: 0 });
+      c.vd++; if (vt.bl && v === vt.bl) c.va++;
+      if (vt.dispE) { c.vde++; if (v === vt.be) c.vae++; }
+      if (vt.dispD) { c.vdd++; if (v === vt.bd) c.vad++; }
     }
   }
   return conta;
@@ -787,12 +798,17 @@ export async function executar() {
   }
   const indice = {};
   for (const [k, p] of Object.entries(parlamentares.p)) {
-    const c = conta[k] || { vd: 0, va: 0, vdc: 0, vds: 0 };
+    const c = conta[k] || { vd: 0, va: 0, vde: 0, vae: 0, vdd: 0, vad: 0 };
     const pr = contaProp[k] || { n: 0, d: 0, x: 0, pp: {} };
-    const i = c.vd >= PAUTAS.indice.votacoesMinimas ? Math.round(1000 * c.va / c.vd) / 10 : null;
-    const classe = NUCLEO.has(p.p) ? 'nucleo' : i !== null && i >= PAUTAS.indice.alinhado * 100 ? 'alinhado' : i !== null && i >= PAUTAS.indice.proximo * 100 ? 'proximo' : '';
+    const ind = (a, t) => t >= PAUTAS.indice.votacoesMinimas ? Math.round(1000 * a / t) / 10 : null;
+    const i = ind(c.va, c.vd), ie = ind(c.vae, c.vde), id = ind(c.vad, c.vdd);
+    // Alinhados e próximos: parlamentares de outros partidos, pelo maior dos dois índices.
+    const m = Math.max(ie ?? -1, id ?? -1);
+    const classe = EXTREMA.has(p.p) ? 'extrema' : DIREITA.has(p.p) ? 'direita'
+      : m >= PAUTAS.indice.alinhado * 100 ? 'alinhado' : m >= PAUTAS.indice.proximo * 100 ? 'proximo' : '';
     if (!c.vd && !pr.n) continue;
-    indice[k] = { n: p.n, c: p.c, p: p.p, s: p.s, uf: p.uf, i, vd: c.vd, va: c.va, cl: classe, np: pr.n, nd: pr.d, nx: pr.x, pp: pr.pp };
+    indice[k] = { n: p.n, c: p.c, p: p.p, s: p.s, uf: p.uf, i, vd: c.vd, va: c.va, ie, vde: c.vde, vae: c.vae, id, vdd: c.vdd, vad: c.vad,
+      cl: classe, np: pr.n, nd: pr.d, nx: pr.x, pp: pr.pp };
   }
 
   // Gravação. Apaga arquivos de anos anteriores à legislatura, criados por datas erradas da fonte.
@@ -821,7 +837,7 @@ export async function executar() {
     .sort((x, y) => (y.d || '').localeCompare(x.d || ''));
   gravarJson('proposicoes-direita.json', { gerado: AGORA.toISOString(), itens: direita }, true);
   const resumoVot = todasVot.map(vt => ({ id: vt.id, k: vt.k, o: vt.o, pl: vt.pl, d: vt.d, desc: vt.desc, mat: vt.mat, me: vt.me, res: vt.res,
-    bl: vt.bl, blc: vt.blc, gv: vt.gv, disp: vt.disp, venceu: vt.venceu, ori: vt.ori, x: cl(vt.ck),
+    bl: vt.bl, blc: vt.blc, gv: vt.gv, disp: vt.disp, venceu: vt.venceu, be: vt.be, bec: vt.bec, bd: vt.bd, bdc: vt.bdc, dispE: vt.dispE, dispD: vt.dispD, vE: vt.vE, vD: vt.vD, ori: vt.ori, x: cl(vt.ck),
     t: Object.fromEntries(Object.entries(vt.v || {}).map(([c, l]) => [c, l.length])) }))
     .sort((x, y) => (y.d || '').localeCompare(x.d || ''));
   gravarJson('votacoes-resumo.json', { gerado: AGORA.toISOString(), itens: resumoVot }, true);
@@ -830,13 +846,16 @@ export async function executar() {
   const porPauta = {};
   for (const p of PAUTAS.lista) porPauta[p.id] = { prop: 0, extrema: 0, prop30: 0, vot: 0, vitorias: 0, derrotas: 0 };
   for (const it of direita) { const x = it.x; if (x.s !== 'avanca') continue; for (const p of x.p) { if (!porPauta[p]) continue; porPauta[p].prop++; if (x.g === 'extrema') porPauta[p].extrema++; if (it.d >= desde(30)) porPauta[p].prop30++; } }
-  for (const vt of resumoVot) { if (!vt.x.p) continue; for (const p of vt.x.p) { if (!porPauta[p]) continue; porPauta[p].vot++; if (vt.venceu === true) porPauta[p].vitorias++; if (vt.venceu === false) porPauta[p].derrotas++; } }
+  for (const vt of resumoVot) { if (!vt.x.p) continue; for (const p of vt.x.p) { if (!porPauta[p]) continue; porPauta[p].vot++; const vv = vt.dispE ? vt.vE : vt.venceu; if (vv === true) porPauta[p].vitorias++; if (vv === false) porPauta[p].derrotas++; } }
   gravarJson('resumo.json', {
     gerado: AGORA.toISOString(), inicio: INICIO,
     totais: { proposicoes: todasPropFinal.length, direita: direita.filter(it => it.x.s === 'avanca').length, extrema: direita.filter(it => it.x.g === 'extrema').length,
       votacoes: resumoVot.length, disputadas: resumoVot.filter(v => v.disp).length, vitorias: resumoVot.filter(v => v.disp && v.venceu === true).length,
       derrotas: resumoVot.filter(v => v.disp && v.venceu === false).length,
-      nucleo: Object.values(indice).filter(p => p.cl === 'nucleo').length, alinhados: Object.values(indice).filter(p => p.cl === 'alinhado').length },
+      dispE: resumoVot.filter(v => v.dispE).length, vitoriasE: resumoVot.filter(v => v.dispE && v.vE === true).length, derrotasE: resumoVot.filter(v => v.dispE && v.vE === false).length,
+      dispD: resumoVot.filter(v => v.dispD).length, vitoriasD: resumoVot.filter(v => v.dispD && v.vD === true).length, derrotasD: resumoVot.filter(v => v.dispD && v.vD === false).length,
+      extremaParl: Object.values(indice).filter(p => p.cl === 'extrema').length, direitaParl: Object.values(indice).filter(p => p.cl === 'direita').length,
+      nucleo: Object.values(indice).filter(p => p.cl === 'extrema' || p.cl === 'direita').length, alinhados: Object.values(indice).filter(p => p.cl === 'alinhado').length },
     porPauta,
     recentes: { proposicoes: direita.filter(it => it.x.s === 'avanca' && it.d >= desde(7)).length, votacoes: resumoVot.filter(v => v.d >= desde(7)).length }
   });

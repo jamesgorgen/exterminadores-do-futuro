@@ -89,8 +89,9 @@ p.sub{color:var(--ink-2);max-width:70ch;margin:0 0 18px}
 .s-venceu{background:var(--ink);color:var(--sheet)}
 .s-perdeu{background:transparent;color:var(--ink-2);border:1.5px solid var(--ink-3)}
 .s-partido{background:var(--night-2);color:#fff}
-.s-cl-nucleo{background:var(--ext);color:#fff}
-.s-cl-alinhado{background:var(--dir);color:#fff}
+.s-cl-nucleo,.s-cl-extrema{background:var(--ext);color:#fff}
+.s-cl-direita{background:var(--dir);color:#fff}
+.s-cl-alinhado{background:transparent;color:var(--dir);border:1.5px solid var(--dir)}
 .s-cl-proximo{background:var(--warn-soft);color:var(--warn);border:1px solid var(--warn)}
 
 /* cartões */
@@ -218,7 +219,12 @@ const PAUTA = Object.fromEntries(P.lista.map(p => [p.id, p]));
 const NOME_PARTIDO = { MISSAO: 'Missão', DC: 'DC', AVANTE: 'Avante', CIDADANIA: 'Cidadania', MDB: 'MDB', NOVO: 'Novo', PCDOB: 'PCdoB', PDT: 'PDT', PL: 'PL', PODE: 'Podemos', PP: 'PP', PRD: 'PRD',
   PSB: 'PSB', PSD: 'PSD', PSDB: 'PSDB', PSOL: 'PSOL', PT: 'PT', PV: 'PV', REDE: 'Rede', REPUBLICANOS: 'Republicanos', SOLIDARIEDADE: 'Solidariedade', UNIAO: 'União Brasil', OUTROS: 'Outros', SP: 'Sem partido' };
 const nomePartido = (id, s) => NOME_PARTIDO[id] || s || id || '';
-const CLASSE = { nucleo: 'Núcleo da direita', alinhado: 'Alinhado à direita', proximo: 'Próximo da direita' };
+const CLASSE = { extrema: 'Extrema-direita', direita: 'Direita', nucleo: 'Núcleo da direita', alinhado: 'Alinhado à direita', proximo: 'Próximo da direita' };
+const BLOCO_E = () => ((P.blocos || {}).extrema || []).map(p => nomePartido(p)).join(', ');
+const BLOCO_D = () => ((P.blocos || {}).direita || []).map(p => nomePartido(p)).join(', ');
+const indiceTxt = v => v === null || v === undefined ? '—' : String(v).replace('.', ',') + '%';
+// Posição que o parlamentar deveria seguir: a do seu bloco; para os de fora, a do núcleo inteiro.
+const posBloco = (p, v) => p && p.cl === 'extrema' ? v.be : p && p.cl === 'direita' ? v.bd : v.bl;
 const CASA = { C: 'Câmara', S: 'Senado' };
 const VOTO = { S: 'Sim', N: 'Não', A: 'Abstenção', O: 'Obstrução', '-': 'Outro' };
 
@@ -234,7 +240,7 @@ const est = {
   aba: 'movimentos',
   prop: { pauta: '', grau: '', casa: '', partido: '', ano: '', texto: '', pagina: 1, foco: '' },
   vot: { casa: '', local: '', disp: true, pauta: '', resultado: '', ano: '', texto: '', pagina: 1, foco: '' },
-  parl: { casa: '', classe: 'direita', partido: '', uf: '', texto: '', ordem: 'i', pagina: 1, sel: '' }
+  parl: { casa: '', classe: 'direita', partido: '', uf: '', texto: '', ordem: 'ie', pagina: 1, sel: '' }
 };
 
 // ---------------------------------------------------------------- dados
@@ -262,7 +268,8 @@ function desenharFaixa(){
   $('#faixa').innerHTML = `<span>Atualizado em ${g.toLocaleDateString('pt-BR')} às ${g.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</span>
     <span><b>${fmt(r.totais.direita)}</b>projetos da direita</span>
     <span><b>${fmt(r.totais.extrema)}</b>de extrema-direita</span>
-    <span><b>${fmt(r.totais.disputadas)}</b>votações disputadas</span>`;
+    <span><b>${fmt(r.totais.disputadas)}</b>votações disputadas</span>${r.totais.vitoriasE != null ? `
+    <span><b>${fmt(r.totais.vitoriasE)}</b>vitórias da extrema-direita</span>` : ''}`;
 }
 
 // ---------------------------------------------------------------- selos e cartões
@@ -302,10 +309,14 @@ function placar(t){
 function cartaoVot(v){
   const x = v.x || {};
   const res = v.res === 'A' ? 'Aprovada' : v.res === 'R' ? 'Rejeitada' : '';
-  const bloco = v.bl ? `A direita votou <b>${VOTO[v.bl]}</b>${v.blc ? ` (${Math.round(v.blc * 100)}% do bloco)` : ''}${v.gv ? `, o PT votou <b>${VOTO[v.gv]}</b>` : ''}.` : 'A direita se dividiu.';
+  const pos = (rot, b, c) => b ? `${rot} votou <b>${VOTO[b]}</b>${c ? ` (${Math.round(c * 100)}%)` : ''}` : `${rot} se dividiu`;
+  const bloco = v.be !== undefined ? `${pos('A extrema-direita', v.be, v.bec)}, ${pos('a direita', v.bd, v.bdc).charAt(0).toLowerCase() + pos('a direita', v.bd, v.bdc).slice(1)}${v.gv ? ` e o PT votou <b>${VOTO[v.gv]}</b>` : ''}.`
+    : v.bl ? `A direita votou <b>${VOTO[v.bl]}</b>${v.blc ? ` (${Math.round(v.blc * 100)}% do bloco)` : ''}${v.gv ? `, o PT votou <b>${VOTO[v.gv]}</b>` : ''}.` : 'A direita se dividiu.';
+  const selVit = (disp, vit, rot) => disp && vit !== null && vit !== undefined ? (vit ? `<span class="selo s-venceu">${rot} venceu</span>` : `<span class="selo s-perdeu">${rot} perdeu</span>`) : '';
+  const vitorias = v.be !== undefined ? selVit(v.dispE, v.vE, 'A extrema-direita') + selVit(v.dispD, v.vD, 'A direita') : selVit(v.disp, v.venceu, 'A direita');
   return `<article class="cartao ${classeCartao(x)}">
     <div class="topo"><span class="num">${esc(v.mat || 'Votação')}</span><span class="meta">${esc(CASA[v.k])}, ${v.pl ? 'plenário' : esc(v.o || 'comissão')}</span><span class="data">${dataBR(v.d)}</span></div>
-    <div class="topo">${res ? `<span class="selo s-pauta">${res}</span>` : ''}${v.disp && v.venceu !== null ? (v.venceu ? '<span class="selo s-venceu">A direita venceu</span>' : '<span class="selo s-perdeu">A direita perdeu</span>') : ''}${selosClass(x)}</div>
+    <div class="topo">${res ? `<span class="selo s-pauta">${res}</span>` : ''}${vitorias}${selosClass(x)}</div>
     <p class="ementa">${esc(v.me || v.desc)}</p>
     ${v.me && v.desc ? `<p class="motivo">${esc(v.desc)}</p>` : ''}
     ${x.m ? `<p class="motivo"><b>${x.eq ? 'Checagem da equipe.' : 'Triagem automática.'}</b> ${esc(x.m)}</p>` : ''}
@@ -337,7 +348,8 @@ function desenharMovimentos(){
         <div class="kpi"><b>${fmt(propRec.length)}</b><span>projetos novos com pauta da direita</span></div>
         <div class="kpi ext"><b>${fmt(propRec.filter(it => it.x.g === 'extrema').length)}</b><span>de extrema-direita</span></div>
         <div class="kpi"><b>${fmt(votRec.filter(v => v.disp).length)}</b><span>votações disputadas com o PT</span></div>
-        <div class="kpi"><b>${fmt(votRec.filter(v => v.disp && v.venceu === true).length)}</b><span>vencidas pela direita</span></div>
+        <div class="kpi ext"><b>${fmt(votRec.filter(v => v.dispE && v.vE === true).length)}</b><span>vencidas pela extrema-direita</span></div>
+        <div class="kpi"><b>${fmt(votRec.filter(v => v.dispD && v.vD === true).length)}</b><span>vencidas pela direita</span></div>
       </div>
     </div>
     ${casos.length ? `<div class="secao"><h2 class="titulo">Casos verificados</h2><p class="sub">Conferidos pela equipe.</p><div class="grade">${casos.slice(0, 6).map(c => cartaoProp(Object.assign({ c: c.chave, k: c.casa, d: c.data, e: c.ementa, a: c.autores, i: c.i, x: c.x || {} }))).join('')}</div></div>` : ''}
@@ -423,8 +435,10 @@ function filtrarVot(){
     if (f.local === 'pl' && !v.pl) return false;
     if (f.local === 'com' && v.pl) return false;
     if (f.pauta && !((v.x && v.x.p) || []).includes(f.pauta)) return false;
-    if (f.resultado === 'venceu' && v.venceu !== true) return false;
-    if (f.resultado === 'perdeu' && v.venceu !== false) return false;
+    if (f.resultado === 'eventeu' && !(v.dispE && v.vE === true)) return false;
+    if (f.resultado === 'eperdeu' && !(v.dispE && v.vE === false)) return false;
+    if (f.resultado === 'dventeu' && !(v.dispD && v.vD === true)) return false;
+    if (f.resultado === 'dperdeu' && !(v.dispD && v.vD === false)) return false;
     if (f.ano && !String(v.d).startsWith(f.ano)) return false;
     if (txt && !norm([v.mat, v.me, v.desc, v.o].join(' ')).includes(txt)) return false;
     return true;
@@ -436,13 +450,13 @@ function desenharVotacoes(){
   const paginas = Math.max(1, Math.ceil(lista.length / POR_PAGINA)); f.pagina = Math.min(f.pagina, paginas);
   $('#aba-votacoes').innerHTML = `
     <h2 class="titulo">Votações nominais</h2>
-    <p class="sub">Votações em que cada parlamentar registrou o voto, nos plenários e nas comissões. A posição da direita é a da maioria dos parlamentares de ${esc(P.nucleo.map(p => nomePartido(p)).join(', '))}. Disputadas são as votações em que esse bloco e o PT votaram em sentidos opostos.</p>
+    <p class="sub">Votações em que cada parlamentar registrou o voto, nos plenários e nas comissões. A posição da extrema-direita é a da maioria dos parlamentares de ${esc(BLOCO_E())}, e a da direita, a da maioria de ${esc(BLOCO_D())}. Disputadas são as votações em que ao menos um desses blocos e o PT votaram em sentidos opostos.</p>
     <div class="filtros">
       <label class="sr" for="fv-texto">Procurar</label><input type="search" id="fv-texto" placeholder="Procurar por matéria ou palavra" value="${esc(f.texto)}">
       <select id="fv-casa" aria-label="Casa">${opcoes([['C', 'Câmara'], ['S', 'Senado']], f.casa, 'Câmara e Senado')}</select>
       <select id="fv-local" aria-label="Local">${opcoes([['pl', 'Plenário'], ['com', 'Comissões']], f.local, 'Plenário e comissões')}</select>
       <select id="fv-pauta" aria-label="Pauta">${opcoes(P.lista.map(p => [p.id, p.nome]), f.pauta, 'Todas as pautas')}</select>
-      <select id="fv-resultado" aria-label="Resultado">${opcoes([['venceu', 'A direita venceu'], ['perdeu', 'A direita perdeu']], f.resultado, 'Vitórias e derrotas')}</select>
+      <select id="fv-resultado" aria-label="Resultado">${opcoes([['eventeu', 'A extrema-direita venceu'], ['eperdeu', 'A extrema-direita perdeu'], ['dventeu', 'A direita venceu'], ['dperdeu', 'A direita perdeu']], f.resultado, 'Vitórias e derrotas')}</select>
       <select id="fv-ano" aria-label="Ano">${opcoes(anosDe(D.vot).map(a => [a, a]), f.ano, 'Todos os anos')}</select>
       <label class="chk"><input type="checkbox" id="fv-disp" ${f.disp ? 'checked' : ''}> Só disputadas</label>
     </div>
@@ -463,11 +477,12 @@ async function mostrarVotos(id, botao){
   for (const [c, ids] of Object.entries(det.v || {})) for (const n of ids) {
     const k = det.k + n, p = D.indice[k];
     if (!p) continue;
-    if (p.cl && (c === 'S' || c === 'N') && v.bl && c !== v.bl) grupos.contra.push(p);
+    const alvo = posBloco(p, v);
+    if ((p.cl === 'extrema' || p.cl === 'direita' || p.cl === 'nucleo') && (c === 'S' || c === 'N') && alvo && c !== alvo) grupos.contra.push(p);
     if (!p.cl && v.bl && c === v.bl && (c === 'S' || c === 'N')) grupos.com.push(p);
   }
   const nomes = l => l.length ? l.slice(0, 40).map(p => `${esc(p.n)} (${esc(nomePartido(p.p, p.s))}/${esc(p.uf || '')})`).join('; ') + (l.length > 40 ? ` e mais ${l.length - 40}` : '') : 'Ninguém.';
-  caixa.innerHTML = v.bl ? `<h5>Da direita, votaram contra o bloco</h5><p>${nomes(grupos.contra)}</p>
+  caixa.innerHTML = (v.bl || v.be || v.bd) ? `<h5>Da extrema-direita e da direita, votaram contra o próprio bloco</h5><p>${nomes(grupos.contra)}</p>
     <h5>De fora do campo, votaram com a direita</h5><p>${nomes(grupos.com)}</p>` : '<p>O bloco da direita se dividiu nesta votação.</p>';
 }
 
@@ -477,14 +492,17 @@ function filtrarParl(){
   return Object.entries(D.indice).filter(([k, p]) => {
     if (f.casa && p.c !== f.casa) return false;
     if (f.classe === 'direita' && !p.cl) return false;
-    if (f.classe && f.classe !== 'direita' && p.cl !== f.classe) return false;
+    if (f.classe === 'blocos' && p.cl !== 'extrema' && p.cl !== 'direita') return false;
+    if (f.classe === 'direita_b' && p.cl !== 'direita') return false;
+    if (f.classe && !['direita', 'blocos', 'direita_b'].includes(f.classe) && p.cl !== f.classe) return false;
     if (f.partido && p.p !== f.partido) return false;
     if (f.uf && p.uf !== f.uf) return false;
     if (txt && !norm(p.n).includes(txt)) return false;
     return true;
   }).sort(([, a], [, b]) => f.ordem === 'nd' ? (b.nd || 0) - (a.nd || 0) || (b.nx || 0) - (a.nx || 0)
     : f.ordem === 'nx' ? (b.nx || 0) - (a.nx || 0) || (b.nd || 0) - (a.nd || 0)
-    : f.ordem === 'n' ? a.n.localeCompare(b.n) : (b.i ?? -1) - (a.i ?? -1) || (b.vd || 0) - (a.vd || 0));
+    : f.ordem === 'n' ? a.n.localeCompare(b.n) : f.ordem === 'id' ? (b.id ?? -1) - (a.id ?? -1) || (b.vdd || 0) - (a.vdd || 0)
+    : (b.ie ?? b.i ?? -1) - (a.ie ?? a.i ?? -1) || (b.vde || b.vd || 0) - (a.vde || a.vd || 0));
 }
 function desenharParlamentares(){
   const f = est.parl;
@@ -496,29 +514,29 @@ function desenharParlamentares(){
   const r = D.regras || P.indice;
   $('#aba-parlamentares').innerHTML = `
     <h2 class="titulo">Parlamentares</h2>
-    <p class="sub">O índice de alinhamento é a porcentagem de votações disputadas em que o parlamentar votou como a maioria do bloco da direita. Núcleo são os parlamentares de ${esc(P.nucleo.map(p => nomePartido(p)).join(', '))}. Alinhados, de qualquer outro partido, têm índice de ${Math.round(r.alinhado * 100)}% ou mais, e próximos, de ${Math.round(r.proximo * 100)}% a ${Math.round(r.alinhado * 100)}%. O índice só aparece a partir de ${r.votacoesMinimas} votações disputadas.</p>
+    <p class="sub">São dois blocos. Extrema-direita reúne ${esc(BLOCO_E())}, e direita, ${esc(BLOCO_D())}. Cada índice é a porcentagem das votações em que aquele bloco e o PT se opuseram em que o parlamentar votou como o bloco. Alinhados, de qualquer outro partido, têm o maior dos dois índices em ${Math.round(r.alinhado * 100)}% ou mais, e próximos, de ${Math.round(r.proximo * 100)}% a ${Math.round(r.alinhado * 100)}%. O índice só aparece a partir de ${r.votacoesMinimas} votações disputadas.</p>
     <div id="perfil"></div>
     <div class="filtros">
       <label class="sr" for="fa-texto">Procurar parlamentar</label><input type="search" id="fa-texto" placeholder="Procurar parlamentar" value="${esc(f.texto)}">
-      <select id="fa-classe" aria-label="Grupo">${opcoes([['direita', 'Núcleo, alinhados e próximos'], ['nucleo', 'Núcleo da direita'], ['alinhado', 'Alinhados à direita'], ['proximo', 'Próximos da direita']], f.classe, 'Todos os parlamentares')}</select>
+      <select id="fa-classe" aria-label="Grupo">${opcoes([['direita', 'Extrema-direita, direita, alinhados e próximos'], ['extrema', 'Extrema-direita'], ['direita-bloco', 'Direita'], ['alinhado', 'Alinhados'], ['proximo', 'Próximos']].map(([v, t]) => [v === 'direita-bloco' ? 'direita_b' : v, t]), f.classe, 'Todos os parlamentares')}</select>
       <select id="fa-casa" aria-label="Casa">${opcoes([['C', 'Câmara'], ['S', 'Senado']], f.casa, 'Câmara e Senado')}</select>
       <select id="fa-partido" aria-label="Partido">${opcoes(partidos, f.partido, 'Todos os partidos')}</select>
       <select id="fa-uf" aria-label="Estado">${opcoes(ufs, f.uf, 'Todos os estados')}</select>
-      <select id="fa-ordem" aria-label="Ordenar">${opcoes([['nd', 'Mais projetos da direita'], ['nx', 'Mais projetos de extrema-direita'], ['n', 'Nome']], f.ordem === 'i' ? '' : f.ordem, 'Maior índice de alinhamento')}</select>
+      <select id="fa-ordem" aria-label="Ordenar">${opcoes([['id', 'Maior índice com a direita'], ['nd', 'Mais projetos da direita'], ['nx', 'Mais projetos de extrema-direita'], ['n', 'Nome']], f.ordem === 'ie' ? '' : f.ordem, 'Maior índice com a extrema-direita')}</select>
     </div>
     <p class="contagem">${fmt(lista.length)} parlamentares</p>
     <div class="tabela-wrap"><table class="parl">
-      <thead><tr><th>Parlamentar</th><th>Partido</th><th>Casa</th><th>Grupo</th><th>Índice de alinhamento</th><th>Votações disputadas</th><th>Projetos da direita</th><th>Extrema-direita</th></tr></thead>
+      <thead><tr><th>Parlamentar</th><th>Partido</th><th>Casa</th><th>Grupo</th><th>Índice com a extrema-direita</th><th>Índice com a direita</th><th>Projetos da direita</th><th>Extrema-direita</th></tr></thead>
       <tbody>${lista.slice((f.pagina - 1) * 50, f.pagina * 50).map(([k, p]) => `<tr class="linha" data-parl="${esc(k)}" tabindex="0">
         <td><b>${esc(p.n)}</b></td><td>${esc(nomePartido(p.p, p.s))}/${esc(p.uf || '')}</td><td>${CASA[p.c] || ''}</td>
         <td>${p.cl ? `<span class="selo s-cl-${p.cl}">${CLASSE[p.cl]}</span>` : ''}</td>
-        <td>${p.i !== null && p.i !== undefined ? `<span class="barra"><span class="fundo"><span style="width:${p.i}%"></span></span><b>${String(p.i).replace('.', ',')}%</b></span>` : '<span class="meta">sem votações suficientes</span>'}</td>
-        <td>${fmt(p.vd)}</td><td>${fmt(p.nd)}</td><td>${fmt(p.nx)}</td></tr>`).join('')}</tbody>
+        ${[[p.ie, p.vde], [p.id, p.vdd]].map(([iv, n]) => `<td>${iv !== null && iv !== undefined ? `<span class="barra"><span class="fundo"><span style="width:${iv}%"></span></span><b>${indiceTxt(iv)}</b></span><span class="meta"> em ${fmt(n)}</span>` : '<span class="meta">sem votações suficientes</span>'}</td>`).join('')}
+        <td>${fmt(p.nd)}</td><td>${fmt(p.nx)}</td></tr>`).join('')}</tbody>
     </table></div>
     ${paginador(f.pagina, paginas, 'parl')}`;
-  if (f.ordem === 'i') $('#fa-ordem').value = '';
+  if (f.ordem === 'ie') $('#fa-ordem').value = '';
   ligarFiltros('fa', est.parl, desenharParlamentares);
-  $('#fa-ordem').addEventListener('change', e => { est.parl.ordem = e.target.value || 'i'; desenharParlamentares(); });
+  $('#fa-ordem').addEventListener('change', e => { est.parl.ordem = e.target.value || 'ie'; desenharParlamentares(); });
   if (f.sel) desenharPerfil(f.sel);
 }
 async function desenharPerfil(k){
@@ -528,7 +546,7 @@ async function desenharPerfil(k){
   el.innerHTML = `<div class="perfil" id="perfil-caixa">
     <h3>${esc(p.n)}</h3>
     <div class="linha-perfil"><span>${esc(nomePartido(p.p, p.s))}/${esc(p.uf || '')}, ${CASA[p.c] || ''}</span>${p.cl ? `<span class="selo s-cl-${p.cl}">${CLASSE[p.cl]}</span>` : ''}
-      ${p.i !== null && p.i !== undefined ? `<span>Índice de alinhamento <b>${String(p.i).replace('.', ',')}%</b>, em ${fmt(p.vd)} votações disputadas</span>` : ''}
+      ${p.ie != null || p.id != null ? `<span>Índice com a extrema-direita <b>${indiceTxt(p.ie)}</b>${p.vde ? ` em ${fmt(p.vde)} votações` : ''}; com a direita <b>${indiceTxt(p.id)}</b>${p.vdd ? ` em ${fmt(p.vdd)}` : ''}</span>` : p.i != null ? `<span>Índice de alinhamento <b>${indiceTxt(p.i)}</b>, em ${fmt(p.vd)} votações disputadas</span>` : ''}
       <a class="btn" href="dossie.html?tipo=parlamentar&id=${encodeURIComponent(k)}" style="text-decoration:none">Gerar dossiê</a>
       <button type="button" class="btn" data-fechar-perfil>Fechar</button></div>
     <div class="topo">${pautas.map(([id, n]) => `<span class="selo s-pauta">${esc(PAUTA[id] ? PAUTA[id].nome : id)} ${n}</span>`).join(' ')}</div>
@@ -546,7 +564,7 @@ async function desenharPerfil(k){
     const det = mapas[anos.indexOf(String(v.d).slice(0, 4))].get(v.id); if (!det) continue;
     const voto = Object.entries(det.v || {}).find(([, ids]) => ids.includes(id));
     if (!voto) continue;
-    linhas.push(`<div><span class="meta">${dataBR(v.d)}</span><b>${esc(v.mat || 'Votação')}</b><span>${esc(VOTO[voto[0]] || voto[0])}</span>${v.bl ? (voto[0] === v.bl ? '<span class="selo s-dir">com a direita</span>' : (voto[0] === 'S' || voto[0] === 'N') ? '<span class="selo s-perdeu">contra a direita</span>' : '') : ''}<span class="meta">${esc(String(v.me || v.desc).slice(0, 110))}</span></div>`);
+    linhas.push(`<div><span class="meta">${dataBR(v.d)}</span><b>${esc(v.mat || 'Votação')}</b><span>${esc(VOTO[voto[0]] || voto[0])}</span>${(() => { const alvo = posBloco(p, v); const rot = p.cl === 'extrema' ? 'o bloco da extrema-direita' : p.cl === 'direita' ? 'o bloco da direita' : 'a direita'; return alvo ? (voto[0] === alvo ? `<span class="selo s-dir">com ${rot}</span>` : (voto[0] === 'S' || voto[0] === 'N') ? `<span class="selo s-perdeu">contra ${rot}</span>` : '') : ''; })()}<span class="meta">${esc(String(v.me || v.desc).slice(0, 110))}</span></div>`);
     if (linhas.length >= 15) break;
   }
   const caixa = $('#perfil-votos'); if (caixa) caixa.innerHTML = linhas.join('') || '<p class="meta">Nenhum voto em votação disputada.</p>';
@@ -559,8 +577,8 @@ function desenharMetodo(){
     <h2 class="titulo">Como funciona</h2>
     <p>Todo dia, um robô consulta os dados abertos da Câmara dos Deputados e do Senado Federal e reúne os projetos de lei, de lei complementar, de emenda à Constituição e de decreto legislativo apresentados por deputados e senadores, e todas as votações nominais dos plenários e das comissões, com o voto de cada parlamentar.</p>
     <h3>Quem é a direita</h3>
-    <p>O núcleo são os parlamentares de ${esc(P.nucleo.map(p => nomePartido(p)).join(', '))}. Em cada votação nominal, a posição da direita é a da maioria dos votos desse núcleo, desde que ao menos ${Math.round(r.coesaoMinima * 100)}% dele vote no mesmo sentido. A mesma regra define a posição do PT, usada como referência do campo do governo.</p>
-    <p>Disputadas são as votações em que a direita e o PT votaram em sentidos opostos. O índice de alinhamento de cada parlamentar é a porcentagem dessas votações em que ele votou como a direita, contando só votos Sim e Não. Parlamentares de outros partidos com índice de ${Math.round(r.alinhado * 100)}% ou mais aparecem como alinhados, e de ${Math.round(r.proximo * 100)}% a ${Math.round(r.alinhado * 100)}%, como próximos. Abaixo de ${r.votacoesMinimas} votações disputadas o índice não é calculado.</p>
+    <p>São dois blocos. A extrema-direita reúne os parlamentares de ${esc(BLOCO_E())}, e a direita, os de ${esc(BLOCO_D())}. Em cada votação nominal, a posição de cada bloco é a da maioria dos seus votos, desde que ao menos ${Math.round(r.coesaoMinima * 100)}% dele vote no mesmo sentido. A mesma regra define a posição do PT, usada como referência do campo do governo.</p>
+    <p>Disputadas são as votações em que ao menos um dos dois blocos e o PT votaram em sentidos opostos. Cada parlamentar tem dois índices. O índice com a extrema-direita é a porcentagem das votações em que a extrema-direita e o PT se opuseram em que ele votou como a extrema-direita, e o índice com a direita segue a mesma regra para o bloco da direita, contando só votos Sim e Não e a partir de ${r.votacoesMinimas} votações. Parlamentares de outros partidos aparecem como alinhados quando o maior dos dois índices chega a ${Math.round(r.alinhado * 100)}%, e como próximos, de ${Math.round(r.proximo * 100)}% a ${Math.round(r.alinhado * 100)}%.</p>
     <h3>Pautas e grau</h3>
     <p>Uma inteligência artificial lê a ementa de cada projeto e de cada votação e indica se o item faz avançar alguma das pautas abaixo, se vai contra ela ou se não trata de nenhuma. Quando faz avançar, indica o grau, direita ou extrema-direita. O grau vale para o projeto ou para a votação, e não para a pessoa. A classificação é automática e serve como triagem. Os casos conferidos pela equipe recebem o selo Verificado.</p>
     <div class="pautas-met">${P.lista.map(p => `<div><b>${esc(p.nome)}</b>${esc(p.descricao)}<small>Extrema-direita quando ${esc(p.extrema.charAt(0).toLowerCase() + p.extrema.slice(1))}</small></div>`).join('')}</div>
@@ -590,7 +608,7 @@ function textoComp(ref){
   const v = D.vot.find(x => x.id === id); if (!v) return '';
   const t = v.t || {};
   return [`*${v.mat || 'Votação'}*, ${CASA[v.k]}, ${v.pl ? 'plenário' : v.o}, ${dataBR(v.d)}`, v.me || v.desc,
-    v.bl ? `A direita votou ${VOTO[v.bl]}${v.gv ? ` e o PT votou ${VOTO[v.gv]}` : ''}. ${v.res === 'A' ? 'Aprovada' : v.res === 'R' ? 'Rejeitada' : ''}, com ${t.S || 0} votos sim e ${t.N || 0} não.` : '',
+    (v.be || v.bd || v.bl) ? `${v.be !== undefined ? `A extrema-direita votou ${VOTO[v.be] || 'dividida'}, a direita votou ${VOTO[v.bd] || 'dividida'}` : `A direita votou ${VOTO[v.bl]}`}${v.gv ? ` e o PT votou ${VOTO[v.gv]}` : ''}. ${v.res === 'A' ? 'Aprovada' : v.res === 'R' ? 'Rejeitada' : ''}, com ${t.S || 0} votos sim e ${t.N || 0} não.` : '',
     `*Os exterminadores do futuro*, observatório da direita no Congresso\n${base()}?v=${encodeURIComponent(id)}`].filter(Boolean).join('\n\n');
 }
 async function compartilhar(ref){

@@ -20,6 +20,8 @@
 
     // Partidos que formam o núcleo do campo monitorado. A posição do bloco em cada votação
     // é a da maioria dos votos dos parlamentares desses partidos.
+    // Dois blocos: extrema-direita e direita. O núcleo é a soma dos dois.
+    blocos: { extrema: ['PL', 'NOVO', 'MISSAO'], direita: ['PP', 'UNIAO', 'REPUBLICANOS', 'PODE'] },
     nucleo: ['PL', 'NOVO', 'MISSAO', 'PP', 'UNIAO', 'REPUBLICANOS', 'PODE'],
     // Partido usado como referência do campo do governo para identificar votações disputadas.
     referenciaGoverno: ['PT'],

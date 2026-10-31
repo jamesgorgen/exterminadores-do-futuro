@@ -135,7 +135,8 @@ const NOME_PARTIDO = { MISSAO: 'Missão', DC: 'DC', PODE: 'Podemos', UNIAO: 'Uni
 const partido = p => (p.p === 'OUTROS' || p.p === 'SP') ? (p.s || 'Sem partido') : (NOME_PARTIDO[p.p] || p.s || p.p || '');
 const CASA = { C: 'Câmara dos Deputados', S: 'Senado Federal' };
 const CARGO = { C: 'Deputado(a) federal', S: 'Senador(a)' };
-const CLASSE = { nucleo: 'Núcleo da direita', alinhado: 'Alinhado(a) à direita', proximo: 'Próximo(a) da direita' };
+const CLASSE = { extrema: 'Extrema-direita', direita: 'Direita', nucleo: 'Núcleo da direita', alinhado: 'Alinhado(a) à direita', proximo: 'Próximo(a) da direita' };
+const indTxt = v => v == null ? '—' : String(v).replace('.', ',') + '%';
 const GRUPOS = { extrema: 'Extrema-direita', direita: 'Direita', alinhados: 'Alinhados', esquerda: 'Esquerda', outros: 'Outros partidos' };
 const ORDEM_G = ['extrema', 'direita', 'alinhados', 'esquerda', 'outros'];
 const VOTO = { S: 'Sim', N: 'Não', A: 'Abstenção', O: 'Obstrução', '-': 'Outro' };
@@ -163,8 +164,8 @@ const barras = (linhas, fmtv, cor) => { const m = Math.max(...linhas.map(l => l[
 
 const METODO = `<h2>Notas de método</h2><dl class="metodo">
   <dt>Fontes</dt><dd>Dados abertos da Câmara dos Deputados e do Senado Federal (proposições e votações nominais de plenário e comissões, desde fevereiro de 2023), Portal da Transparência (emendas parlamentares individuais de 2023 a 2026) e IBGE (Censo 2022).</dd>
-  <dt>Núcleo da direita</dt><dd>Parlamentares de PL, Novo, Missão, PP, União Brasil, Republicanos e Podemos.</dd>
-  <dt>Votações disputadas e índice de alinhamento</dt><dd>A posição da direita numa votação é a da maioria do núcleo, quando ao menos 60% dele vota no mesmo sentido. A referência do campo do governo é a bancada do PT, pela mesma regra. Disputadas são as votações em que as duas posições se opõem. O índice é a porcentagem dessas votações em que o parlamentar votou como a direita, calculado a partir de 10 votações disputadas. Alinhados têm índice de 80% ou mais e próximos, de 60% a 80%.</dd>
+  <dt>Blocos</dt><dd>Extrema-direita reúne os parlamentares de PL, Novo e Missão. Direita reúne os de PP, União Brasil, Republicanos e Podemos.</dd>
+  <dt>Votações disputadas e índices de alinhamento</dt><dd>A posição de cada bloco numa votação é a da maioria dos seus parlamentares, quando ao menos 60% deles votam no mesmo sentido. A referência do campo do governo é a bancada do PT, pela mesma regra. Disputadas são as votações em que o bloco e o PT se opõem. Cada parlamentar tem dois índices, a porcentagem das votações disputadas pela extrema-direita em que votou como ela e a das disputadas pela direita em que votou como ela, calculados a partir de 10 votações. Parlamentares de outros partidos são alinhados quando o maior dos dois índices chega a 80% e próximos de 60% a 80%.</dd>
   <dt>Pautas e grau</dt><dd>Cada proposição é classificada, a partir da ementa, nas 16 pautas acompanhadas, com o sentido (faz avançar ou vai contra a pauta da direita) e o grau (direita ou extrema-direita). A classificação inicial é feita por inteligência artificial e serve como triagem. Os itens marcados como conferidos foram revisados pela equipe. O grau se refere à proposição, não à pessoa.</dd>
   <dt>Emendas</dt><dd>Valores empenhados em emendas individuais, salvo indicação de valor pago ou recebido. Transferências especiais (Pix) são repassadas a estados e municípios sem finalidade definida. Nas emendas, os grupos são definidos pelo partido: extrema-direita (PL, Novo, Missão), direita (PP, União Brasil, Republicanos, Podemos, PSD, Cidadania, Solidariedade), alinhados (MDB, PDT, Rede, PSB, PV), esquerda (PT, PSOL, PCdoB) e outros.</dd>
 </dl>`;
@@ -176,13 +177,16 @@ async function dossieParlamentar(k) {
   document.title = 'Dossiê ' + p.n;
   const casa = k[0], num = +k.slice(1);
   // Votos nas votações disputadas
-  const disp = vr.itens.filter(v => v.disp && v.k === casa);
+  const disp = vr.itens.filter(v => (v.dispE || v.dispD || v.disp) && v.k === casa);
   const anos = [...new Set(disp.map(v => v.d.slice(0, 4)))];
   const arqs = await Promise.all(anos.map(a => json(`dados/votacoes-${a}.json`).catch(() => ({ itens: [] }))));
   const votos = new Map();
   arqs.forEach(a => a.itens.forEach(v => { for (const [c, l] of Object.entries(v.v || {})) if (l.includes(num)) { votos.set(v.id, c); break; } }));
-  let com = 0, contra = 0, fora = 0;
-  const linhasV = disp.map(v => { const c = votos.get(v.id); const tipo = !c || !['S', 'N'].includes(c) ? 'fora' : c === v.bl ? 'com' : 'contra'; if (tipo === 'com') com++; else if (tipo === 'contra') contra++; else fora++; return { v, c, tipo }; });
+  // Placar com cada bloco, nas votações em que aquele bloco e o PT se opuseram.
+  const placar = chave => { const r = { com: 0, contra: 0, fora: 0, total: 0 }; disp.filter(v => v['disp' + chave]).forEach(v => { const c = votos.get(v.id); r.total++; if (!c || !['S', 'N'].includes(c)) r.fora++; else if (c === v['b' + chave.toLowerCase()]) r.com++; else r.contra++; }); return r; };
+  const pE = placar('E'), pD = placar('D');
+  const alvo = v => p.cl === 'direita' ? v.bd : p.cl === 'extrema' ? v.be : (v.be || v.bd);
+  const linhasV = disp.map(v => { const c = votos.get(v.id), a = alvo(v); const tipo = !c || !['S', 'N'].includes(c) || !a ? 'fora' : c === a ? 'com' : 'contra'; return { v, c, tipo }; });
   const vistos = new Set();
   const destaque = linhasV.filter(l => l.c && l.v.x && l.v.x.s).sort((a, b) => b.v.d.localeCompare(a.v.d))
     .filter(l => { const ch = (l.v.mat || l.v.id) + l.v.d; if (vistos.has(ch)) return false; vistos.add(ch); return true; }).slice(0, 15);
@@ -198,10 +202,10 @@ async function dossieParlamentar(k) {
     <p class="sub">${CARGO[casa]} · ${esc(partido(p))}/${esc(p.uf || '')} · ${CASA[casa]}</p>
     <div class="meta">Gerado em ${hoje}. Período coberto de fevereiro de 2023 a ${hoje.replace(/^\d+ de /, '')}.</div></header>
   <section><h2>Resumo</h2>
-    <p class="leve">${p.cl ? `Classificação no observatório: <b>${CLASSE[p.cl]}</b>.` : 'Não integra o núcleo da direita nem atinge 60% de alinhamento nas votações disputadas.'}${grupoE ? ` Nas emendas, o partido está no grupo <b>${grupoE}</b>.` : ''}</p>
+    <p class="leve">${p.cl ? `Classificação no observatório: <b>${CLASSE[p.cl]}</b>.` : 'Não integra os blocos da extrema-direita e da direita nem atinge 60% de alinhamento com eles.'}${grupoE ? ` Nas emendas, o partido está no grupo <b>${grupoE}</b>.` : ''}</p>
     <div class="kpis num">
-      <div class="kpi"><b>${p.i == null ? '—' : String(p.i).replace('.', ',') + '%'}</b><span>índice de alinhamento com a direita</span></div>
-      <div class="kpi"><b>${fmt(p.vd)}</b><span>votações disputadas em que votou</span></div>
+      <div class="kpi"><b>${indTxt(p.ie ?? p.i)}</b><span>índice de alinhamento com a extrema-direita${p.vde ? `, em ${fmt(p.vde)} votações` : ''}</span></div>
+      <div class="kpi"><b>${indTxt(p.id)}</b><span>índice de alinhamento com a direita${p.vdd ? `, em ${fmt(p.vdd)} votações` : ''}</span></div>
       <div class="kpi"><b>${fmt(meus.length)}</b><span>proposições com pauta da direita, de ${fmt(p.np)} apresentadas</span></div>
       <div class="kpi"><b>${fmt(ext)}</b><span>de grau extrema-direita</span></div>
     </div>
@@ -222,11 +226,12 @@ async function dossieParlamentar(k) {
   </section>`;
 
   h += `<section><h2>Votações disputadas</h2>
-    ${disp.length ? `<p class="leve">Em ${fmt(disp.length)} votações nominais da ${casa === 'C' ? 'Câmara' : 'casa'} a direita e o PT votaram em sentidos opostos. ${esc(p.n)} votou como a direita em ${fmt(com)}, contra a direita em ${fmt(contra)} e não votou ou registrou outro voto em ${fmt(fora)}.</p>
-    <div class="pilha" style="max-width:120mm"><span style="--cor:var(--accent);width:${100 * com / disp.length}%"></span><span style="--cor:var(--g-esquerda);width:${100 * contra / disp.length}%"></span><span style="--cor:var(--line);width:${100 * fora / disp.length}%"></span></div>
-    <div class="leg"><span><i style="--cor:var(--accent)"></i>Com a direita ${pct(com / disp.length)}</span><span><i style="--cor:var(--g-esquerda)"></i>Contra ${pct(contra / disp.length)}</span><span><i style="--cor:var(--line)"></i>Ausente ou outro ${pct(fora / disp.length)}</span></div>
-    ${destaque.length ? `<h3>Votações ligadas às pautas acompanhadas (uma por matéria e data)</h3><div class="tabela"><table><thead><tr><th>Data</th><th>Matéria</th><th>Pauta</th><th>Direita</th><th>Voto</th><th>Resultado</th></tr></thead><tbody>
-    ${destaque.map(({ v, c, tipo }) => `<tr><td class="num">${dataBR(v.d)}</td><td><b>${esc(v.mat || 'Votação')}</b> <span class="peq">${v.pl ? 'Plenário' : esc(v.o)}</span><br><span class="ementa">${esc(corta(v.me || v.desc, 150))}</span></td><td>${esc(pautas(v.x))}<br>${etqGrau(v.x)}</td><td>${VOTO[v.bl] || ''}</td><td class="${tipo === 'com' ? 'voto-com' : tipo === 'contra' ? 'voto-contra' : ''}">${VOTO[c] || ''}</td><td>${v.res === 'A' ? 'Aprovada' : v.res === 'R' ? 'Rejeitada' : ''}</td></tr>`).join('')}
+    ${disp.length ? `<p class="leve">Placar de ${esc(p.n)} nas votações nominais da ${casa === 'C' ? 'Câmara' : 'Senado'} em que cada bloco e o PT votaram em sentidos opostos.</p>
+    ${[['extrema-direita', pE, 'var(--accent)'], ['direita', pD, 'var(--g-direita)']].filter(([, r]) => r.total).map(([rot, r, c]) => `<h3>Com a ${rot}, em ${fmt(r.total)} votações disputadas</h3>
+    <div class="pilha" style="max-width:120mm"><span style="--cor:${c};width:${100 * r.com / r.total}%"></span><span style="--cor:var(--g-esquerda);width:${100 * r.contra / r.total}%"></span><span style="--cor:var(--line);width:${100 * r.fora / r.total}%"></span></div>
+    <div class="leg"><span><i style="--cor:${c}"></i>Votou como a ${rot} ${pct(r.com / r.total)} (${fmt(r.com)})</span><span><i style="--cor:var(--g-esquerda)"></i>Contra ${pct(r.contra / r.total)} (${fmt(r.contra)})</span><span><i style="--cor:var(--line)"></i>Ausente ou outro ${pct(r.fora / r.total)}</span></div>`).join('')}
+    ${destaque.length ? `<h3>Votações ligadas às pautas acompanhadas (uma por matéria e data)</h3><div class="tabela"><table><thead><tr><th>Data</th><th>Matéria</th><th>Pauta</th><th>Extrema-direita</th><th>Direita</th><th>Voto</th><th>Resultado</th></tr></thead><tbody>
+    ${destaque.map(({ v, c, tipo }) => `<tr><td class="num">${dataBR(v.d)}</td><td><b>${esc(v.mat || 'Votação')}</b> <span class="peq">${v.pl ? 'Plenário' : esc(v.o)}</span><br><span class="ementa">${esc(corta(v.me || v.desc, 150))}</span></td><td>${esc(pautas(v.x))}<br>${etqGrau(v.x)}</td><td>${VOTO[v.be] || (v.be === '' ? 'dividida' : '')}</td><td>${VOTO[v.bd] || (v.bd === '' ? 'dividida' : '')}</td><td class="${tipo === 'com' ? 'voto-com' : tipo === 'contra' ? 'voto-contra' : ''}">${VOTO[c] || ''}</td><td>${v.res === 'A' ? 'Aprovada' : v.res === 'R' ? 'Rejeitada' : ''}</td></tr>`).join('')}
     </tbody></table></div>` : ''}` : '<p class="leve">Sem votações disputadas registradas para este parlamentar.</p>'}
   </section>`;
 
@@ -252,14 +257,16 @@ async function dossieEstado(uf) {
   document.title = 'Dossiê ' + nome;
   const banc = Object.entries(ind.p).filter(([k, p]) => p.uf === uf && (p.vd || p.np)).map(([k, p]) => Object.assign({ k }, p));
   const dep = banc.filter(p => p.c === 'C'), sen = banc.filter(p => p.c === 'S');
-  const nuc = banc.filter(p => p.cl === 'nucleo').length, ali = banc.filter(p => p.cl === 'alinhado').length, prox = banc.filter(p => p.cl === 'proximo').length;
-  const comI = banc.filter(p => p.i != null); const media = comI.length ? comI.reduce((a, p) => a + p.i, 0) / comI.length : null;
+  const nucE = banc.filter(p => p.cl === 'extrema').length, nucD = banc.filter(p => p.cl === 'direita').length, ali = banc.filter(p => p.cl === 'alinhado').length, prox = banc.filter(p => p.cl === 'proximo').length;
+  const media = campo => { const l = banc.filter(p => p[campo] != null); return l.length ? l.reduce((a, p) => a + p[campo], 0) / l.length : null; };
+  const mediaE = media('ie'), mediaD = media('id');
+  const fmtM = m => m == null ? '—' : m.toLocaleString('pt-BR', { maximumFractionDigits: 0 }) + '%';
   const chaves = new Set(banc.map(p => p.k));
   const props = prop.itens.filter(it => (it.a || []).some(a => chaves.has(a)));
   const ext = props.filter(it => it.x.g === 'extrema').length;
   const pp = {}; props.forEach(it => (it.x.p || []).forEach(p => pp[p] = (pp[p] || 0) + 1));
   const E = em && em.estados ? em.estados[uf] : null;
-  const ordem = [...banc].sort((a, b) => (b.i ?? -1) - (a.i ?? -1) || b.nd - a.nd);
+  const ordem = [...banc].sort((a, b) => (b.ie ?? b.i ?? -1) - (a.ie ?? a.i ?? -1) || b.nd - a.nd);
   const lista = [...props].sort((a, b) => (b.x.g === 'extrema') - (a.x.g === 'extrema') || b.d.localeCompare(a.d)).slice(0, 15);
   const nomeDe = k => (ind.p[k] || {}).n || k;
 
@@ -269,9 +276,9 @@ async function dossieEstado(uf) {
   <section><h2>Resumo</h2>
     <div class="kpis num">
       <div class="kpi"><b>${fmt(dep.length)} e ${fmt(sen.length)}</b><span>deputados e senadores com atividade no período</span></div>
-      <div class="kpi"><b>${fmt(nuc)}</b><span>no núcleo da direita</span></div>
-      <div class="kpi"><b>${fmt(ali + prox)}</b><span>de outros partidos alinhados ou próximos à direita</span></div>
-      <div class="kpi"><b>${media == null ? '—' : media.toLocaleString('pt-BR', { maximumFractionDigits: 0 }) + '%'}</b><span>índice médio de alinhamento da bancada</span></div>
+      <div class="kpi"><b>${fmt(nucE)} e ${fmt(nucD)}</b><span>da extrema-direita e da direita</span></div>
+      <div class="kpi"><b>${fmt(ali + prox)}</b><span>de outros partidos alinhados ou próximos</span></div>
+      <div class="kpi"><b>${fmtM(mediaE)} e ${fmtM(mediaD)}</b><span>índices médios da bancada com a extrema-direita e com a direita</span></div>
     </div>
     <div class="kpis num">
       <div class="kpi"><b>${fmt(props.length)}</b><span>proposições com pauta da direita da bancada</span></div>
@@ -281,9 +288,9 @@ async function dossieEstado(uf) {
     </div>
   </section>
   <section><h2>Bancada</h2>
-    <p class="leve">Parlamentares do estado com votações ou proposições no período, ordenados pelo índice de alinhamento com a direita.</p>
-    <div class="tabela"><table><thead><tr><th>Parlamentar</th><th>Partido</th><th>Casa</th><th>Classificação</th><th class="d">Índice</th><th class="d">Proposições da direita</th><th class="d">Emendas</th></tr></thead><tbody>
-    ${ordem.map(p => { const e = em && em.parl ? em.parl[p.k] : null; return `<tr><td>${esc(p.n)}</td><td>${esc(partido(p))}</td><td>${p.c === 'S' ? 'Senado' : 'Câmara'}</td><td>${p.cl ? CLASSE[p.cl].replace('(a)', '') : '—'}</td><td class="d num">${p.i == null ? '—' : String(p.i).replace('.', ',') + '%'}</td><td class="d num">${fmt(p.nd)}${p.nx ? ` <span class="peq">(${fmt(p.nx)} extrema)</span>` : ''}</td><td class="d num">${e ? reais(e.emp) : '—'}</td></tr>`; }).join('')}
+    <p class="leve">Parlamentares do estado com votações ou proposições no período, ordenados pelo índice de alinhamento com a extrema-direita.</p>
+    <div class="tabela"><table><thead><tr><th>Parlamentar</th><th>Partido</th><th>Casa</th><th>Classificação</th><th class="d">Índice extrema-direita</th><th class="d">Índice direita</th><th class="d">Proposições da direita</th><th class="d">Emendas</th></tr></thead><tbody>
+    ${ordem.map(p => { const e = em && em.parl ? em.parl[p.k] : null; return `<tr><td>${esc(p.n)}</td><td>${esc(partido(p))}</td><td>${p.c === 'S' ? 'Senado' : 'Câmara'}</td><td>${p.cl ? CLASSE[p.cl].replace('(a)', '') : '—'}</td><td class="d num">${indTxt(p.ie ?? p.i)}</td><td class="d num">${indTxt(p.id)}</td><td class="d num">${fmt(p.nd)}${p.nx ? ` <span class="peq">(${fmt(p.nx)} extrema)</span>` : ''}</td><td class="d num">${e ? reais(e.emp) : '—'}</td></tr>`; }).join('')}
     </tbody></table></div>
   </section>`;
 
