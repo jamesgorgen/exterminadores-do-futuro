@@ -1,11 +1,11 @@
 {
- "gerado": "2026-11-02T19:35:05.457Z",
+ "gerado": "2026-11-03T17:09:10.047Z",
  "inicio": "2023-02-01",
  "totais": {
-  "proposicoes": 26244,
-  "direita": 2499,
-  "extrema": 1281,
-  "votacoes": 2425,
+  "proposicoes": 26287,
+  "direita": 2512,
+  "extrema": 1292,
+  "votacoes": 2426,
   "disputadas": 1174,
   "vitorias": 508,
   "derrotas": 118,
@@ -39,33 +39,33 @@
    "derrotas": 2
   },
   "punitivismo": {
-   "prop": 1243,
-   "extrema": 508,
-   "prop30": 8,
+   "prop": 1245,
+   "extrema": 509,
+   "prop30": 10,
    "vot": 20,
    "vitorias": 16,
    "derrotas": 1
   },
   "instituicoes": {
-   "prop": 250,
+   "prop": 251,
    "extrema": 201,
-   "prop30": 1,
+   "prop30": 2,
    "vot": 22,
    "vitorias": 20,
    "derrotas": 1
   },
   "costumes": {
-   "prop": 280,
-   "extrema": 239,
-   "prop30": 1,
+   "prop": 290,
+   "extrema": 249,
+   "prop30": 11,
    "vot": 12,
    "vitorias": 8,
    "derrotas": 3
   },
   "religiao": {
-   "prop": 119,
-   "extrema": 62,
-   "prop30": 0,
+   "prop": 129,
+   "extrema": 72,
+   "prop30": 10,
    "vot": 10,
    "vitorias": 7,
    "derrotas": 0
@@ -127,9 +127,9 @@
    "derrotas": 7
   },
   "plataformas": {
-   "prop": 94,
-   "extrema": 67,
-   "prop30": 0,
+   "prop": 105,
+   "extrema": 78,
+   "prop30": 11,
    "vot": 2,
    "vitorias": 1,
    "derrotas": 1
@@ -160,7 +160,7 @@
   }
  },
  "recentes": {
-  "proposicoes": 1,
-  "votacoes": 0
+  "proposicoes": 14,
+  "votacoes": 1
  }
 }

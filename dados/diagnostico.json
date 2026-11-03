@@ -1,5 +1,5 @@
 {
- "inicio": "2026-11-02T19:35:05.457Z",
+ "inicio": "2026-11-03T17:09:10.047Z",
  "modo": "diario",
  "amostras": {
   "camara_deputado": {
@@ -43,9 +43,9 @@
    "uriVotacao": "https://dadosabertos.camara.leg.br/api/v2/votacoes/2236186-60",
    "siglaOrgao": "PLEN",
    "descricao": "Rejeitada a Subemenda Substitutiva ao Projeto de Lei Complementar nº 281, de 2019, adotada pelo relator da Comissão Especial. Sim: 252; Não: 176; Total: 428.",
-   "siglaBancada": "Governo",
+   "siglaBancada": "Solidaried",
    "uriBancada": "",
-   "orientacao": "Não"
+   "orientacao": ""
   },
   "camara_arq_objeto": {
    "idVotacao": "2555417-29",
@@ -90,6 +90,32 @@
    "siglaUFParlamentar": "AC",
    "siglaVotoParlamentar": "Sim"
   },
+  "senado_comissao_votacao": {
+   "CodigoVotacao": "42140",
+   "SiglaCasaColegiado": "SF",
+   "CodigoReuniao": "14974",
+   "DataHoraInicioReuniao": "2026-11-03T09:39:00",
+   "NumeroReuniaoColegiado": "37",
+   "TipoReuniao": "Extraordinária",
+   "CodigoColegiado": "47",
+   "SiglaColegiado": "CE",
+   "NomeColegiado": "Comissão de Educação e Cultura",
+   "CodigoParlamentarPresidente": "6335",
+   "NomeParlamentarPresidente": "Damares Alves",
+   "DescricaoVotacao": "Itens 4, 5, 6 e 7, nos termos dos relatórios apresentados.",
+   "Votos": "{\"Voto\":[{\"CodigoParlamentar\":\"5748\",\"NomeParlamentar\":\"Veneziano Vital do Rêgo\",\"SiglaPartidoParlamentar\":\"MDB\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"5386\",\"NomeParlamentar\":\"Professora Dorinha Seabra\",\"SiglaPartidoParlamentar\":\"UNIÃO\",\"Sigl",
+   "TotalVotosSim": "15",
+   "TotalVotosNao": "0",
+   "TotalVotosAbstencao": "0"
+  },
+  "senado_comissao_voto": {
+   "CodigoParlamentar": "5748",
+   "NomeParlamentar": "Veneziano Vital do Rêgo",
+   "SiglaPartidoParlamentar": "MDB",
+   "SiglaCasaParlamentar": "SF",
+   "QualidadeVoto": "S",
+   "VotoPresidente": "false"
+  },
   "camara_proposicao": {
    "id": 2604173,
    "uri": "https://dadosabertos.camara.leg.br/api/v2/proposicoes/2604173",
@@ -101,23 +127,23 @@
    "dataApresentacao": "2026-02-24T15:48"
   },
   "senado_proposicao": {
-   "autoria": "Senadora Dra. Eudócia (PSDB/AL)",
+   "autoria": "Senadora Soraya Thronicke (PSB/MS)",
    "casaIdentificadora": "SF",
-   "codigoMateria": 175895,
-   "dataApresentacao": "2026-10-01",
-   "dataSituacaoAtual": "2026-10-01",
-   "dataUltimaAtualizacao": "2026-10-06T15:15:01.05",
-   "ementa": "Altera a Lei nº 8.080, de 19 de setembro de 1990 - Lei Orgânica da Saúde, para dispor sobre o requerimento administrativo para fornecimento de medicamento destinado ao tratamento de pessoa com câncer.",
+   "codigoMateria": 175821,
+   "dataApresentacao": "2026-09-21",
+   "dataSituacaoAtual": "2026-09-21",
+   "dataUltimaAtualizacao": "2026-09-25T15:00:01.215",
+   "ementa": "Estabelece normas gerais de transparência, rastreabilidade, planejamento, avaliação, controle e responsabilidade na gestão do Sistema Único de Saúde - SUS, e dá outras providências.",
    "enteIdentificador": "SF",
-   "id": 9111471,
-   "identificacao": "PL 5503/2026",
+   "id": 9109429,
+   "identificacao": "PL 5414/2026",
    "objetivo": "Iniciadora",
    "situacaoAtual": "AGUARDANDO DESPACHO",
    "tipoConteudo": "Norma Geral",
    "tipoDocumento": "Projeto de Lei Ordinária",
    "tramitando": "Sim",
    "ultimaInformacaoAtualizada": "PUBLICACAO_OFICIAL",
-   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/c870a6cc-8c8f-4fc6-bfc5-601e31410b00"
+   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/059ff086-61a3-48cc-9a22-bb18e938ef80"
   }
  },
  "contagens": {
@@ -129,38 +155,41 @@
   "votacoes_sem_sim_nao": 1,
   "senado_plenario_votacoes_achadas": 3,
   "votacoes_S_plenario": 3,
-  "senado_comissao_votacoes_achadas": 0,
-  "proposicoes_camara_registros": 8461,
+  "senado_comissao_votacoes_achadas": 1,
+  "votacoes_S_comissao": 1,
+  "proposicoes_camara_registros": 8512,
   "proposicoes_data_corrigida": 3,
-  "senado_processo_registros": 151,
+  "senado_processo_registros": 152,
   "proposicoes_senado": 49,
+  "classificados": 44,
+  "graduados": 14,
   "correcoes_aplicadas": 1185
  },
  "erros": [
-  "votações Senado 2026-09-18: http 400",
+  "votações Senado 2026-09-19: http 400",
   "votações Senado 2026-11-01: http 400"
  ],
  "brutos": {
   "senado_atual": {
    "url": "https://legis.senado.leg.br/dadosabertos/senador/lista/atual.json",
    "tamanho": 128888,
-   "inicio": "{\"ListaParlamentarEmExercicio\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/ListaParlamentarEmExerciciov4.xsd\",\"Metadados\":{\"Versao\":\"02/11/2026 16:31:02\",\"VersaoServico\":\"4\",\"DataVersaoServico\":\"2020-07-15\",\"DescricaoDataSet\":\"Lista dos Parlamentares que estão atualmente em Exercício. Informações atuais sobre o Parlamentar.\"},\"Parlamentares\":{\"Parlamentar\":[{\"IdentificacaoParlamentar\":{\"CodigoParlamentar\":\"5672\",\"CodigoPublicoNaLegAtual\":\"800\",\"NomeParlamentar\":\"Alan Rick\",\"NomeCompletoParlamentar\":\"Alan Rick Miranda\",\"SexoParlamentar\":\"Masculino\",\"FormaTratamento\":\"Senador \",\"UrlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg\",\"UrlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5672\",\"EmailParlamentar\":\"sen.alanrick@senado.leg.br\",\"Telefones\":{\"Telefone\":[{\"NumeroTelefone\":\"33036333\",\"OrdemPublicacao\":\"1\",\"IndicadorFax\":\"Não\"}]},\"SiglaPartidoParlamentar\":\"REPUBLICANOS\",\"UfParlamentar\":\"AC\",\"Bloco\":{\"CodigoBloco\":\"346\",\"NomeBloco\":\"Bloco Parlamentar Aliança\",\"NomeApelido\":\"BLALIANÇA\",\"DataCriacao\":\"2023-03-20\"},\"MembroMesa\":\"Não\",\"MembroLideranca\":\"Sim\"},\"Mandato\":{\"CodigoMandato\":\"596\",\"UfParlamentar\":\"AC\",\"PrimeiraLegislaturaDoMandato\":{\"NumeroLegislatura\":\"57\",\"DataInicio\":\"2023-02-01\",\"DataFim\":\"2027-01-31\"},\"SegundaLegislaturaDoMandato\":{\"NumeroLegislatura\":\"58\",\"DataInicio\":\"2027-02-01\",\"DataFim\":\"2031-01-31\"},\"DescricaoParticipacao\":\"Titular\",\"Suplentes\":{\"Suplente\":["
+   "inicio": "{\"ListaParlamentarEmExercicio\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/ListaParlamentarEmExerciciov4.xsd\",\"Metadados\":{\"Versao\":\"03/11/2026 13:54:48\",\"VersaoServico\":\"4\",\"DataVersaoServico\":\"2020-07-15\",\"DescricaoDataSet\":\"Lista dos Parlamentares que estão atualmente em Exercício. Informações atuais sobre o Parlamentar.\"},\"Parlamentares\":{\"Parlamentar\":[{\"IdentificacaoParlamentar\":{\"CodigoParlamentar\":\"5672\",\"CodigoPublicoNaLegAtual\":\"800\",\"NomeParlamentar\":\"Alan Rick\",\"NomeCompletoParlamentar\":\"Alan Rick Miranda\",\"SexoParlamentar\":\"Masculino\",\"FormaTratamento\":\"Senador \",\"UrlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg\",\"UrlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5672\",\"EmailParlamentar\":\"sen.alanrick@senado.leg.br\",\"Telefones\":{\"Telefone\":[{\"NumeroTelefone\":\"33036333\",\"OrdemPublicacao\":\"1\",\"IndicadorFax\":\"Não\"}]},\"SiglaPartidoParlamentar\":\"REPUBLICANOS\",\"UfParlamentar\":\"AC\",\"Bloco\":{\"CodigoBloco\":\"346\",\"NomeBloco\":\"Bloco Parlamentar Aliança\",\"NomeApelido\":\"BLALIANÇA\",\"DataCriacao\":\"2023-03-20\"},\"MembroMesa\":\"Não\",\"MembroLideranca\":\"Sim\"},\"Mandato\":{\"CodigoMandato\":\"596\",\"UfParlamentar\":\"AC\",\"PrimeiraLegislaturaDoMandato\":{\"NumeroLegislatura\":\"57\",\"DataInicio\":\"2023-02-01\",\"DataFim\":\"2027-01-31\"},\"SegundaLegislaturaDoMandato\":{\"NumeroLegislatura\":\"58\",\"DataInicio\":\"2027-02-01\",\"DataFim\":\"2031-01-31\"},\"DescricaoParticipacao\":\"Titular\",\"Suplentes\":{\"Suplente\":["
   },
   "senado_votacao_iso": {
-   "url": "https://legis.senado.leg.br/dadosabertos/votacao?dataInicio=2026-09-18&dataFim=2026-09-30",
+   "url": "https://legis.senado.leg.br/dadosabertos/votacao?dataInicio=2026-09-19&dataFim=2026-09-30",
    "tamanho": 2,
    "inicio": "[]"
   },
   "senado_comissao": {
-   "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20260918&dataFim=20261102",
+   "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20260919&dataFim=20261103",
    "tamanho": 220,
-   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"02/11/2026 16:35:15\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
+   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"03/11/2026 14:09:21\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
   },
   "senado_processo": {
-   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-09-18&dataFimApresentacao=2026-09-30",
-   "tamanho": 15473,
-   "inicio": "[{\"autoria\":\"Senador Jader Barbalho (MDB/PA)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175819,\"dataApresentacao\":\"2026-09-18\",\"dataSituacaoAtual\":\"2026-09-18\",\"dataUltimaAtualizacao\":\"2026-09-22T10:45:01.588\",\"ementa\":\"Institui o Marco Legal da Propriedade Intelectual e da Inovação Biotecnológica da Amazônia Legal; autoriza a instituição, no âmbito do Instituto Nacional da Propriedade Industrial (INPI), de exame prioritário de patentes de tecnologias sustentáveis de base biológica e do Sistema Nacional de Depósito de Material Biológico; estabelece mecanismo de recomposição do prazo de vigência da patente por atraso administrativo; cria a Política Nacional de Inovação da Bioeconomia Amazônica (Polinova-Amazônia); autoriza a criação de ambiente regulatório experimental para tecnologias sustentáveis; e altera a Lei nº 9.279, de 14 de maio de 1996, e a Lei nº 13.123, de 20 de maio de 2015.\",\"enteIdentificador\":\"SF\",\"id\":9109380,\"identificacao\":\"PL 5402/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/b7a6b79d-e9e7-4e42-a4fe-ffb5f7d00926\"},{\"autoria\":\"Senadora Soraya Thronicke (PSB/MS)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175821,\"dataApresentacao\":\"2026-09-21\",\"dataSituacaoAtual\":\"2026-09-21\",\"dataUltimaAtualizacao\":\"2026-09-25T15:00:01.2"
+   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-09-19&dataFimApresentacao=2026-09-30",
+   "tamanho": 14196,
+   "inicio": "[{\"autoria\":\"Senadora Soraya Thronicke (PSB/MS)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175821,\"dataApresentacao\":\"2026-09-21\",\"dataSituacaoAtual\":\"2026-09-21\",\"dataUltimaAtualizacao\":\"2026-09-25T15:00:01.215\",\"ementa\":\"Estabelece normas gerais de transparência, rastreabilidade, planejamento, avaliação, controle e responsabilidade na gestão do Sistema Único de Saúde - SUS, e dá outras providências.\",\"enteIdentificador\":\"SF\",\"id\":9109429,\"identificacao\":\"PL 5414/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/059ff086-61a3-48cc-9a22-bb18e938ef80\"},{\"autoria\":\"Senador Paulo Paim (PT/RS)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175826,\"dataApresentacao\":\"2026-09-21\",\"dataSituacaoAtual\":\"2026-09-21\",\"dataUltimaAtualizacao\":\"2026-09-25T15:00:01.752\",\"ementa\":\"Declara de interesse público, para os fins do art. 71 da Lei nº 9.279, de 14 de maio de 1996, as patentes e os pedidos de patente relativos a medicamentos cujo princípio ativo seja a tirzepatida, destinados ao tratamento do diabetes mellitus tipo 2 e da obesidade.\",\"enteIdentificador\":\"SF\",\"id\":9109514,\"identificacao\":\"PL 5427/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\""
   }
  },
- "fim": "2026-11-02T19:36:14.673Z"
+ "fim": "2026-11-03T17:10:31.018Z"
 }
