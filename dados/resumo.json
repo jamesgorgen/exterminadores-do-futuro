@@ -1,20 +1,20 @@
 {
- "gerado": "2026-11-04T17:21:10.520Z",
+ "gerado": "2026-11-05T17:28:17.152Z",
  "inicio": "2023-02-01",
  "totais": {
-  "proposicoes": 26325,
-  "direita": 2517,
-  "extrema": 1295,
-  "votacoes": 2431,
-  "disputadas": 1175,
+  "proposicoes": 26351,
+  "direita": 2518,
+  "extrema": 1296,
+  "votacoes": 2436,
+  "disputadas": 1178,
   "vitorias": 508,
-  "derrotas": 119,
-  "dispE": 1167,
+  "derrotas": 122,
+  "dispE": 1168,
   "vitoriasE": 360,
-  "derrotasE": 609,
-  "dispD": 448,
+  "derrotasE": 610,
+  "dispD": 451,
   "vitoriasD": 345,
-  "derrotasD": 26,
+  "derrotasD": 29,
   "grupos": {
    "extrema": 119,
    "direita": 249,
@@ -47,9 +47,9 @@
    "derrotas": 1
   },
   "instituicoes": {
-   "prop": 253,
-   "extrema": 203,
-   "prop30": 4,
+   "prop": 254,
+   "extrema": 204,
+   "prop30": 5,
    "vot": 22,
    "vitorias": 20,
    "derrotas": 1
@@ -127,9 +127,9 @@
    "derrotas": 7
   },
   "plataformas": {
-   "prop": 106,
-   "extrema": 79,
-   "prop30": 12,
+   "prop": 107,
+   "extrema": 80,
+   "prop30": 13,
    "vot": 2,
    "vitorias": 1,
    "derrotas": 1
@@ -161,6 +161,6 @@
  },
  "recentes": {
   "proposicoes": 19,
-  "votacoes": 6
+  "votacoes": 11
  }
 }
