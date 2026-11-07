@@ -1,8 +1,8 @@
 {
- "gerado": "2026-11-06T16:49:35.877Z",
+ "gerado": "2026-11-07T15:44:14.160Z",
  "inicio": "2023-02-01",
  "totais": {
-  "proposicoes": 26362,
+  "proposicoes": 26366,
   "direita": 2518,
   "extrema": 1296,
   "votacoes": 2436,
@@ -160,7 +160,7 @@
   }
  },
  "recentes": {
-  "proposicoes": 19,
+  "proposicoes": 17,
   "votacoes": 11
  }
 }

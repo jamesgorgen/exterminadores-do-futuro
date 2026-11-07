@@ -1,5 +1,5 @@
 {
- "inicio": "2026-11-06T16:49:35.877Z",
+ "inicio": "2026-11-07T15:44:14.160Z",
  "modo": "diario",
  "amostras": {
   "camara_deputado": {
@@ -127,23 +127,23 @@
    "dataApresentacao": "2026-02-24T15:48"
   },
   "senado_proposicao": {
-   "autoria": "Senador Carlos Viana (PSD/MG)",
+   "autoria": "Senadora Dra. Eudócia (PSDB/AL)",
    "casaIdentificadora": "SF",
-   "codigoMateria": 175837,
-   "dataApresentacao": "2026-09-22",
-   "dataSituacaoAtual": "2026-09-22",
-   "dataUltimaAtualizacao": "2026-09-25T15:00:02.6",
-   "ementa": "Acrescenta o inciso VII-A ao art. 20 da Lei nº 8.036, de 11 de maio de 1990, para permitir a movimentação da conta vinculada do trabalhador no Fundo de Garantia do Tempo de Serviço (FGTS) para aquisição de lote ou terreno e para liquidação ou amortização de financiamento destinado à respectiva aquisição.",
+   "codigoMateria": 175895,
+   "dataApresentacao": "2026-10-01",
+   "dataSituacaoAtual": "2026-10-01",
+   "dataUltimaAtualizacao": "2026-10-06T15:15:01.05",
+   "ementa": "Altera a Lei nº 8.080, de 19 de setembro de 1990 - Lei Orgânica da Saúde, para dispor sobre o requerimento administrativo para fornecimento de medicamento destinado ao tratamento de pessoa com câncer.",
    "enteIdentificador": "SF",
-   "id": 9109684,
-   "identificacao": "PL 5437/2026",
+   "id": 9111471,
+   "identificacao": "PL 5503/2026",
    "objetivo": "Iniciadora",
    "situacaoAtual": "AGUARDANDO DESPACHO",
    "tipoConteudo": "Norma Geral",
    "tipoDocumento": "Projeto de Lei Ordinária",
    "tramitando": "Sim",
    "ultimaInformacaoAtualizada": "PUBLICACAO_OFICIAL",
-   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/5b301a5e-144a-4bf4-a702-c11e19dd4d49"
+   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/c870a6cc-8c8f-4fc6-bfc5-601e31410b00"
   }
  },
  "contagens": {
@@ -159,35 +159,35 @@
   "votacoes_S_comissao": 3,
   "proposicoes_camara_registros": 8579,
   "proposicoes_data_corrigida": 3,
-  "senado_processo_registros": 163,
-  "proposicoes_senado": 59,
-  "classificados": 11,
+  "senado_processo_registros": 165,
+  "proposicoes_senado": 61,
+  "classificados": 4,
   "correcoes_aplicadas": 1185
  },
  "erros": [
-  "votações Senado 2026-09-22: http 400"
+  "votações Senado 2026-09-23: http 400"
  ],
  "brutos": {
   "senado_atual": {
    "url": "https://legis.senado.leg.br/dadosabertos/senador/lista/atual.json",
    "tamanho": 128888,
-   "inicio": "{\"ListaParlamentarEmExercicio\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/ListaParlamentarEmExerciciov4.xsd\",\"Metadados\":{\"Versao\":\"06/11/2026 13:48:24\",\"VersaoServico\":\"4\",\"DataVersaoServico\":\"2020-07-15\",\"DescricaoDataSet\":\"Lista dos Parlamentares que estão atualmente em Exercício. Informações atuais sobre o Parlamentar.\"},\"Parlamentares\":{\"Parlamentar\":[{\"IdentificacaoParlamentar\":{\"CodigoParlamentar\":\"5672\",\"CodigoPublicoNaLegAtual\":\"800\",\"NomeParlamentar\":\"Alan Rick\",\"NomeCompletoParlamentar\":\"Alan Rick Miranda\",\"SexoParlamentar\":\"Masculino\",\"FormaTratamento\":\"Senador \",\"UrlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg\",\"UrlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5672\",\"EmailParlamentar\":\"sen.alanrick@senado.leg.br\",\"Telefones\":{\"Telefone\":[{\"NumeroTelefone\":\"33036333\",\"OrdemPublicacao\":\"1\",\"IndicadorFax\":\"Não\"}]},\"SiglaPartidoParlamentar\":\"REPUBLICANOS\",\"UfParlamentar\":\"AC\",\"Bloco\":{\"CodigoBloco\":\"346\",\"NomeBloco\":\"Bloco Parlamentar Aliança\",\"NomeApelido\":\"BLALIANÇA\",\"DataCriacao\":\"2023-03-20\"},\"MembroMesa\":\"Não\",\"MembroLideranca\":\"Sim\"},\"Mandato\":{\"CodigoMandato\":\"596\",\"UfParlamentar\":\"AC\",\"PrimeiraLegislaturaDoMandato\":{\"NumeroLegislatura\":\"57\",\"DataInicio\":\"2023-02-01\",\"DataFim\":\"2027-01-31\"},\"SegundaLegislaturaDoMandato\":{\"NumeroLegislatura\":\"58\",\"DataInicio\":\"2027-02-01\",\"DataFim\":\"2031-01-31\"},\"DescricaoParticipacao\":\"Titular\",\"Suplentes\":{\"Suplente\":["
+   "inicio": "{\"ListaParlamentarEmExercicio\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/ListaParlamentarEmExerciciov4.xsd\",\"Metadados\":{\"Versao\":\"07/11/2026 12:36:03\",\"VersaoServico\":\"4\",\"DataVersaoServico\":\"2020-07-15\",\"DescricaoDataSet\":\"Lista dos Parlamentares que estão atualmente em Exercício. Informações atuais sobre o Parlamentar.\"},\"Parlamentares\":{\"Parlamentar\":[{\"IdentificacaoParlamentar\":{\"CodigoParlamentar\":\"5672\",\"CodigoPublicoNaLegAtual\":\"800\",\"NomeParlamentar\":\"Alan Rick\",\"NomeCompletoParlamentar\":\"Alan Rick Miranda\",\"SexoParlamentar\":\"Masculino\",\"FormaTratamento\":\"Senador \",\"UrlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg\",\"UrlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5672\",\"EmailParlamentar\":\"sen.alanrick@senado.leg.br\",\"Telefones\":{\"Telefone\":[{\"NumeroTelefone\":\"33036333\",\"OrdemPublicacao\":\"1\",\"IndicadorFax\":\"Não\"}]},\"SiglaPartidoParlamentar\":\"REPUBLICANOS\",\"UfParlamentar\":\"AC\",\"Bloco\":{\"CodigoBloco\":\"346\",\"NomeBloco\":\"Bloco Parlamentar Aliança\",\"NomeApelido\":\"BLALIANÇA\",\"DataCriacao\":\"2023-03-20\"},\"MembroMesa\":\"Não\",\"MembroLideranca\":\"Sim\"},\"Mandato\":{\"CodigoMandato\":\"596\",\"UfParlamentar\":\"AC\",\"PrimeiraLegislaturaDoMandato\":{\"NumeroLegislatura\":\"57\",\"DataInicio\":\"2023-02-01\",\"DataFim\":\"2027-01-31\"},\"SegundaLegislaturaDoMandato\":{\"NumeroLegislatura\":\"58\",\"DataInicio\":\"2027-02-01\",\"DataFim\":\"2031-01-31\"},\"DescricaoParticipacao\":\"Titular\",\"Suplentes\":{\"Suplente\":["
   },
   "senado_votacao_iso": {
-   "url": "https://legis.senado.leg.br/dadosabertos/votacao?dataInicio=2026-09-22&dataFim=2026-09-30",
+   "url": "https://legis.senado.leg.br/dadosabertos/votacao?dataInicio=2026-09-23&dataFim=2026-09-30",
    "tamanho": 2,
    "inicio": "[]"
   },
   "senado_comissao": {
-   "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAS?dataInicio=20260922&dataFim=20261106",
+   "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAS?dataInicio=20260923&dataFim=20261107",
    "tamanho": 220,
-   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"06/11/2026 13:51:10\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
+   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"07/11/2026 12:44:24\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
   },
   "senado_processo": {
-   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-10-16&dataFimApresentacao=2026-10-31",
-   "tamanho": 32843,
-   "inicio": "[{\"autoria\":\"Senador Dr. Hiran (PP/RR)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175985,\"dataApresentacao\":\"2026-10-19\",\"dataSituacaoAtual\":\"2026-10-19\",\"dataUltimaAtualizacao\":\"2026-10-21T15:30:01.3\",\"ementa\":\"Altera o art. 9º da Lei nº 15.211, de 17 de setembro de 2025 (Estatuto Digital da Criança e do Adolescente), para admitir a estimativa de idade por biometria facial como mecanismo de verificação de idade e para ampliar, de forma graduada, as categorias de serviços digitais de acesso restrito a maiores de 18 (dezoito) anos.\",\"enteIdentificador\":\"SF\",\"id\":9115144,\"identificacao\":\"PL 5593/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/3dc7461f-fa42-46e9-aa85-0ff9dd90f0a9\"},{\"autoria\":\"Câmara dos Deputados\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175994,\"dataApresentacao\":\"2026-10-19\",\"dataSituacaoAtual\":\"2026-10-20\",\"dataUltimaAtualizacao\":\"2026-10-23T18:30:01.076\",\"ementa\":\"Altera a Lei nº 8.080, de 19 de setembro de 1990 (Lei Orgânica da Saúde), para determinar a aceitação, pelas unidades do Sistema Único de Saúde (SUS), de exames realizados em serviços privados.\",\"enteIdentificador\":\"SF\",\"id\":9115232,\"identificacao\":\"PL 1123/2025\",\"objetivo\":\"Revisora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocum"
+   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-10-01&dataFimApresentacao=2026-10-15",
+   "tamanho": 18273,
+   "inicio": "[{\"autoria\":\"Senadora Dra. Eudócia (PSDB/AL)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175895,\"dataApresentacao\":\"2026-10-01\",\"dataSituacaoAtual\":\"2026-10-01\",\"dataUltimaAtualizacao\":\"2026-10-06T15:15:01.05\",\"ementa\":\"Altera a Lei nº 8.080, de 19 de setembro de 1990 - Lei Orgânica da Saúde, para dispor sobre o requerimento administrativo para fornecimento de medicamento destinado ao tratamento de pessoa com câncer.\",\"enteIdentificador\":\"SF\",\"id\":9111471,\"identificacao\":\"PL 5503/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/c870a6cc-8c8f-4fc6-bfc5-601e31410b00\"},{\"autoria\":\"Senadora Dra. Eudócia (PSDB/AL)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175896,\"dataApresentacao\":\"2026-10-01\",\"dataSituacaoAtual\":\"2026-10-01\",\"dataUltimaAtualizacao\":\"2026-10-06T15:15:01.211\",\"ementa\":\"Institui o Programa Nacional de Reaproveitamento de Medicamentos Oncológicos de Alto Custo, no âmbito do SUS.\",\"enteIdentificador\":\"SF\",\"id\":9111493,\"identificacao\":\"PL 5505/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/99138d"
   }
  },
- "fim": "2026-11-06T16:52:32.599Z"
+ "fim": "2026-11-07T15:45:24.138Z"
 }
