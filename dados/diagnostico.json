@@ -1,5 +1,5 @@
 {
- "inicio": "2026-11-08T16:03:26.239Z",
+ "inicio": "2026-11-09T19:54:19.954Z",
  "modo": "diario",
  "amostras": {
   "camara_deputado": {
@@ -127,23 +127,23 @@
    "dataApresentacao": "2026-02-24T15:48"
   },
   "senado_proposicao": {
-   "autoria": "Senadora Dra. Eudócia (PSDB/AL)",
+   "autoria": "Senador Jader Barbalho (MDB/PA)",
    "casaIdentificadora": "SF",
-   "codigoMateria": 175895,
-   "dataApresentacao": "2026-10-01",
-   "dataSituacaoAtual": "2026-10-01",
-   "dataUltimaAtualizacao": "2026-10-06T15:15:01.05",
-   "ementa": "Altera a Lei nº 8.080, de 19 de setembro de 1990 - Lei Orgânica da Saúde, para dispor sobre o requerimento administrativo para fornecimento de medicamento destinado ao tratamento de pessoa com câncer.",
+   "codigoMateria": 175867,
+   "dataApresentacao": "2026-09-25",
+   "dataSituacaoAtual": "2026-09-25",
+   "dataUltimaAtualizacao": "2026-09-30T12:15:02.35",
+   "ementa": "Institui a Política Nacional de Desenvolvimento Territorial e Inclusão Produtiva - PNDTIP, estabelece diretrizes para a modernização institucional das políticas de redução das desigualdades regionais e de fortalecimento da agricultura familiar em bases tecnológicas e sustentáveis, e dá outras providências.",
    "enteIdentificador": "SF",
-   "id": 9111471,
-   "identificacao": "PL 5503/2026",
+   "id": 9110608,
+   "identificacao": "PL 5473/2026",
    "objetivo": "Iniciadora",
    "situacaoAtual": "AGUARDANDO DESPACHO",
    "tipoConteudo": "Norma Geral",
    "tipoDocumento": "Projeto de Lei Ordinária",
    "tramitando": "Sim",
    "ultimaInformacaoAtualizada": "PUBLICACAO_OFICIAL",
-   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/c870a6cc-8c8f-4fc6-bfc5-601e31410b00"
+   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/270f781f-2543-4b66-a180-3b552c6085ef"
   }
  },
  "contagens": {
@@ -157,36 +157,37 @@
   "votacoes_S_plenario": 7,
   "senado_comissao_votacoes_achadas": 3,
   "votacoes_S_comissao": 3,
-  "proposicoes_camara_registros": 8579,
+  "proposicoes_camara_registros": 8583,
   "proposicoes_data_corrigida": 3,
-  "senado_processo_registros": 163,
-  "proposicoes_senado": 59,
+  "senado_processo_registros": 160,
+  "proposicoes_senado": 56,
+  "classificados": 4,
   "correcoes_aplicadas": 1185
  },
  "erros": [
-  "votações Senado 2026-09-24: http 400"
+  "votações Senado 2026-09-25: http 400"
  ],
  "brutos": {
   "senado_atual": {
    "url": "https://legis.senado.leg.br/dadosabertos/senador/lista/atual.json",
    "tamanho": 128888,
-   "inicio": "{\"ListaParlamentarEmExercicio\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/ListaParlamentarEmExerciciov4.xsd\",\"Metadados\":{\"Versao\":\"08/11/2026 12:53:12\",\"VersaoServico\":\"4\",\"DataVersaoServico\":\"2020-07-15\",\"DescricaoDataSet\":\"Lista dos Parlamentares que estão atualmente em Exercício. Informações atuais sobre o Parlamentar.\"},\"Parlamentares\":{\"Parlamentar\":[{\"IdentificacaoParlamentar\":{\"CodigoParlamentar\":\"5672\",\"CodigoPublicoNaLegAtual\":\"800\",\"NomeParlamentar\":\"Alan Rick\",\"NomeCompletoParlamentar\":\"Alan Rick Miranda\",\"SexoParlamentar\":\"Masculino\",\"FormaTratamento\":\"Senador \",\"UrlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg\",\"UrlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5672\",\"EmailParlamentar\":\"sen.alanrick@senado.leg.br\",\"Telefones\":{\"Telefone\":[{\"NumeroTelefone\":\"33036333\",\"OrdemPublicacao\":\"1\",\"IndicadorFax\":\"Não\"}]},\"SiglaPartidoParlamentar\":\"REPUBLICANOS\",\"UfParlamentar\":\"AC\",\"Bloco\":{\"CodigoBloco\":\"346\",\"NomeBloco\":\"Bloco Parlamentar Aliança\",\"NomeApelido\":\"BLALIANÇA\",\"DataCriacao\":\"2023-03-20\"},\"MembroMesa\":\"Não\",\"MembroLideranca\":\"Sim\"},\"Mandato\":{\"CodigoMandato\":\"596\",\"UfParlamentar\":\"AC\",\"PrimeiraLegislaturaDoMandato\":{\"NumeroLegislatura\":\"57\",\"DataInicio\":\"2023-02-01\",\"DataFim\":\"2027-01-31\"},\"SegundaLegislaturaDoMandato\":{\"NumeroLegislatura\":\"58\",\"DataInicio\":\"2027-02-01\",\"DataFim\":\"2031-01-31\"},\"DescricaoParticipacao\":\"Titular\",\"Suplentes\":{\"Suplente\":["
+   "inicio": "{\"ListaParlamentarEmExercicio\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/ListaParlamentarEmExerciciov4.xsd\",\"Metadados\":{\"Versao\":\"09/11/2026 16:53:37\",\"VersaoServico\":\"4\",\"DataVersaoServico\":\"2020-07-15\",\"DescricaoDataSet\":\"Lista dos Parlamentares que estão atualmente em Exercício. Informações atuais sobre o Parlamentar.\"},\"Parlamentares\":{\"Parlamentar\":[{\"IdentificacaoParlamentar\":{\"CodigoParlamentar\":\"5672\",\"CodigoPublicoNaLegAtual\":\"800\",\"NomeParlamentar\":\"Alan Rick\",\"NomeCompletoParlamentar\":\"Alan Rick Miranda\",\"SexoParlamentar\":\"Masculino\",\"FormaTratamento\":\"Senador \",\"UrlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg\",\"UrlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5672\",\"EmailParlamentar\":\"sen.alanrick@senado.leg.br\",\"Telefones\":{\"Telefone\":[{\"NumeroTelefone\":\"33036333\",\"OrdemPublicacao\":\"1\",\"IndicadorFax\":\"Não\"}]},\"SiglaPartidoParlamentar\":\"REPUBLICANOS\",\"UfParlamentar\":\"AC\",\"Bloco\":{\"CodigoBloco\":\"346\",\"NomeBloco\":\"Bloco Parlamentar Aliança\",\"NomeApelido\":\"BLALIANÇA\",\"DataCriacao\":\"2023-03-20\"},\"MembroMesa\":\"Não\",\"MembroLideranca\":\"Sim\"},\"Mandato\":{\"CodigoMandato\":\"596\",\"UfParlamentar\":\"AC\",\"PrimeiraLegislaturaDoMandato\":{\"NumeroLegislatura\":\"57\",\"DataInicio\":\"2023-02-01\",\"DataFim\":\"2027-01-31\"},\"SegundaLegislaturaDoMandato\":{\"NumeroLegislatura\":\"58\",\"DataInicio\":\"2027-02-01\",\"DataFim\":\"2031-01-31\"},\"DescricaoParticipacao\":\"Titular\",\"Suplentes\":{\"Suplente\":["
   },
   "senado_votacao_iso": {
-   "url": "https://legis.senado.leg.br/dadosabertos/votacao?dataInicio=2026-09-24&dataFim=2026-09-30",
+   "url": "https://legis.senado.leg.br/dadosabertos/votacao?dataInicio=2026-09-25&dataFim=2026-09-30",
    "tamanho": 2,
    "inicio": "[]"
   },
   "senado_comissao": {
-   "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAS?dataInicio=20260924&dataFim=20261108",
+   "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAS?dataInicio=20260925&dataFim=20261109",
    "tamanho": 220,
-   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"08/11/2026 13:03:46\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
+   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"09/11/2026 16:55:03\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
   },
   "senado_processo": {
-   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-10-01&dataFimApresentacao=2026-10-15",
-   "tamanho": 18273,
-   "inicio": "[{\"autoria\":\"Senadora Dra. Eudócia (PSDB/AL)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175895,\"dataApresentacao\":\"2026-10-01\",\"dataSituacaoAtual\":\"2026-10-01\",\"dataUltimaAtualizacao\":\"2026-10-06T15:15:01.05\",\"ementa\":\"Altera a Lei nº 8.080, de 19 de setembro de 1990 - Lei Orgânica da Saúde, para dispor sobre o requerimento administrativo para fornecimento de medicamento destinado ao tratamento de pessoa com câncer.\",\"enteIdentificador\":\"SF\",\"id\":9111471,\"identificacao\":\"PL 5503/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/c870a6cc-8c8f-4fc6-bfc5-601e31410b00\"},{\"autoria\":\"Senadora Dra. Eudócia (PSDB/AL)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175896,\"dataApresentacao\":\"2026-10-01\",\"dataSituacaoAtual\":\"2026-10-01\",\"dataUltimaAtualizacao\":\"2026-10-06T15:15:01.211\",\"ementa\":\"Institui o Programa Nacional de Reaproveitamento de Medicamentos Oncológicos de Alto Custo, no âmbito do SUS.\",\"enteIdentificador\":\"SF\",\"id\":9111493,\"identificacao\":\"PL 5505/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/99138d"
+   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-09-25&dataFimApresentacao=2026-09-30",
+   "tamanho": 6657,
+   "inicio": "[{\"autoria\":\"Senador Jader Barbalho (MDB/PA)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175867,\"dataApresentacao\":\"2026-09-25\",\"dataSituacaoAtual\":\"2026-09-25\",\"dataUltimaAtualizacao\":\"2026-09-30T12:15:02.35\",\"ementa\":\"Institui a Política Nacional de Desenvolvimento Territorial e Inclusão Produtiva - PNDTIP, estabelece diretrizes para a modernização institucional das políticas de redução das desigualdades regionais e de fortalecimento da agricultura familiar em bases tecnológicas e sustentáveis, e dá outras providências.\",\"enteIdentificador\":\"SF\",\"id\":9110608,\"identificacao\":\"PL 5473/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/270f781f-2543-4b66-a180-3b552c6085ef\"},{\"autoria\":\"Senador Wellington Fagundes (PL/MT)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175868,\"dataApresentacao\":\"2026-09-25\",\"dataSituacaoAtual\":\"2026-11-04\",\"dataUltimaAtualizacao\":\"2026-11-04T19:29:54.366\",\"ementa\":\"Altera a Lei nº 8.112, de 11 de dezembro de 1990, e a Lei nº 14.204, de 16 de setembro de 2021, para vedar a nomeação para cargo público federal de pessoa condenada definitivamente por crime cometido com violência doméstica e familiar contra a mulher.\",\"enteIdentificador\":\"SF\",\"id\":9110619,\"identificacao\":\"PL 5474/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtu"
   }
  },
- "fim": "2026-11-08T16:05:15.503Z"
+ "fim": "2026-11-09T19:56:31.552Z"
 }
