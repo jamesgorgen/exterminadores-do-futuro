@@ -1,5 +1,5 @@
 {
- "inicio": "2026-11-09T19:54:19.954Z",
+ "inicio": "2026-11-10T17:08:06.827Z",
  "modo": "diario",
  "amostras": {
   "camara_deputado": {
@@ -43,7 +43,7 @@
    "uriVotacao": "https://dadosabertos.camara.leg.br/api/v2/votacoes/2462126-22",
    "siglaOrgao": "CDHMIR",
    "descricao": "Rejeitado o Requerimento de Retirada de Pauta. Resultado: 1 voto 'Sim', 10 votos 'Não'. Quórum de votação: 11 votos.",
-   "siglaBancada": "Fdr PSOL-REDE",
+   "siglaBancada": "Governo",
    "uriBancada": "",
    "orientacao": "Não"
   },
@@ -127,23 +127,23 @@
    "dataApresentacao": "2026-02-24T15:48"
   },
   "senado_proposicao": {
-   "autoria": "Senador Jader Barbalho (MDB/PA)",
+   "autoria": "Senadora Soraya Thronicke (PSB/MS)",
    "casaIdentificadora": "SF",
-   "codigoMateria": 175867,
-   "dataApresentacao": "2026-09-25",
-   "dataSituacaoAtual": "2026-09-25",
-   "dataUltimaAtualizacao": "2026-09-30T12:15:02.35",
-   "ementa": "Institui a Política Nacional de Desenvolvimento Territorial e Inclusão Produtiva - PNDTIP, estabelece diretrizes para a modernização institucional das políticas de redução das desigualdades regionais e de fortalecimento da agricultura familiar em bases tecnológicas e sustentáveis, e dá outras providências.",
+   "codigoMateria": 175873,
+   "dataApresentacao": "2026-09-28",
+   "dataSituacaoAtual": "2026-11-03",
+   "dataUltimaAtualizacao": "2026-11-04T10:25:01.607",
+   "ementa": "Altera o Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal), o Decreto-Lei nº 3.688, de 3 de outubro de 1941 (Lei das Contravenções Penais), a Lei nº 8.072, de 25 de julho de 1990 (Lei dos Crimes Hediondos) e a Lei nº 7.716, de 5 de janeiro de 1989 (Lei Antirracismo), para tipificar como crime autônomo o LGBTIcídio, assim entendido o homicídio praticado por motivação discriminatória relacionada à orientação sexual, à identidade ou expressão de gênero ou às características sexuais da vítima, reais ou presumidas; tipificar os crimes de racismo e de injúria racial quando praticados pela mesma motivação; agravar a pena de outros delitos praticados pela mesma motivação; e estabelecer outras medidas de proteção penal à população LGBTQIAPN+.",
    "enteIdentificador": "SF",
-   "id": 9110608,
-   "identificacao": "PL 5473/2026",
+   "id": 9110822,
+   "identificacao": "PL 5481/2026",
    "objetivo": "Iniciadora",
-   "situacaoAtual": "AGUARDANDO DESPACHO",
+   "situacaoAtual": "AGUARDANDO RECEBIMENTO DE EMENDAS",
    "tipoConteudo": "Norma Geral",
    "tipoDocumento": "Projeto de Lei Ordinária",
    "tramitando": "Sim",
-   "ultimaInformacaoAtualizada": "PUBLICACAO_OFICIAL",
-   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/270f781f-2543-4b66-a180-3b552c6085ef"
+   "ultimaInformacaoAtualizada": "EVENTO_LEGISLATIVO",
+   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/0d4cda1b-23e8-4336-ba05-732f65b00835"
   }
  },
  "contagens": {
@@ -155,39 +155,40 @@
   "votacoes_sem_sim_nao": 1,
   "senado_plenario_votacoes_achadas": 7,
   "votacoes_S_plenario": 7,
-  "senado_comissao_votacoes_achadas": 3,
-  "votacoes_S_comissao": 3,
-  "proposicoes_camara_registros": 8583,
+  "senado_comissao_votacoes_achadas": 5,
+  "votacoes_S_comissao": 5,
+  "proposicoes_camara_registros": 8662,
   "proposicoes_data_corrigida": 3,
-  "senado_processo_registros": 160,
-  "proposicoes_senado": 56,
-  "classificados": 4,
+  "senado_processo_registros": 158,
+  "proposicoes_senado": 54,
+  "classificados": 18,
+  "graduados": 5,
   "correcoes_aplicadas": 1185
  },
  "erros": [
-  "votações Senado 2026-09-25: http 400"
+  "votações Senado 2026-09-26: http 400"
  ],
  "brutos": {
   "senado_atual": {
    "url": "https://legis.senado.leg.br/dadosabertos/senador/lista/atual.json",
    "tamanho": 128888,
-   "inicio": "{\"ListaParlamentarEmExercicio\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/ListaParlamentarEmExerciciov4.xsd\",\"Metadados\":{\"Versao\":\"09/11/2026 16:53:37\",\"VersaoServico\":\"4\",\"DataVersaoServico\":\"2020-07-15\",\"DescricaoDataSet\":\"Lista dos Parlamentares que estão atualmente em Exercício. Informações atuais sobre o Parlamentar.\"},\"Parlamentares\":{\"Parlamentar\":[{\"IdentificacaoParlamentar\":{\"CodigoParlamentar\":\"5672\",\"CodigoPublicoNaLegAtual\":\"800\",\"NomeParlamentar\":\"Alan Rick\",\"NomeCompletoParlamentar\":\"Alan Rick Miranda\",\"SexoParlamentar\":\"Masculino\",\"FormaTratamento\":\"Senador \",\"UrlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg\",\"UrlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5672\",\"EmailParlamentar\":\"sen.alanrick@senado.leg.br\",\"Telefones\":{\"Telefone\":[{\"NumeroTelefone\":\"33036333\",\"OrdemPublicacao\":\"1\",\"IndicadorFax\":\"Não\"}]},\"SiglaPartidoParlamentar\":\"REPUBLICANOS\",\"UfParlamentar\":\"AC\",\"Bloco\":{\"CodigoBloco\":\"346\",\"NomeBloco\":\"Bloco Parlamentar Aliança\",\"NomeApelido\":\"BLALIANÇA\",\"DataCriacao\":\"2023-03-20\"},\"MembroMesa\":\"Não\",\"MembroLideranca\":\"Sim\"},\"Mandato\":{\"CodigoMandato\":\"596\",\"UfParlamentar\":\"AC\",\"PrimeiraLegislaturaDoMandato\":{\"NumeroLegislatura\":\"57\",\"DataInicio\":\"2023-02-01\",\"DataFim\":\"2027-01-31\"},\"SegundaLegislaturaDoMandato\":{\"NumeroLegislatura\":\"58\",\"DataInicio\":\"2027-02-01\",\"DataFim\":\"2031-01-31\"},\"DescricaoParticipacao\":\"Titular\",\"Suplentes\":{\"Suplente\":["
+   "inicio": "{\"ListaParlamentarEmExercicio\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/ListaParlamentarEmExerciciov4.xsd\",\"Metadados\":{\"Versao\":\"10/11/2026 14:05:05\",\"VersaoServico\":\"4\",\"DataVersaoServico\":\"2020-07-15\",\"DescricaoDataSet\":\"Lista dos Parlamentares que estão atualmente em Exercício. Informações atuais sobre o Parlamentar.\"},\"Parlamentares\":{\"Parlamentar\":[{\"IdentificacaoParlamentar\":{\"CodigoParlamentar\":\"5672\",\"CodigoPublicoNaLegAtual\":\"800\",\"NomeParlamentar\":\"Alan Rick\",\"NomeCompletoParlamentar\":\"Alan Rick Miranda\",\"SexoParlamentar\":\"Masculino\",\"FormaTratamento\":\"Senador \",\"UrlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg\",\"UrlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5672\",\"EmailParlamentar\":\"sen.alanrick@senado.leg.br\",\"Telefones\":{\"Telefone\":[{\"NumeroTelefone\":\"33036333\",\"OrdemPublicacao\":\"1\",\"IndicadorFax\":\"Não\"}]},\"SiglaPartidoParlamentar\":\"REPUBLICANOS\",\"UfParlamentar\":\"AC\",\"Bloco\":{\"CodigoBloco\":\"346\",\"NomeBloco\":\"Bloco Parlamentar Aliança\",\"NomeApelido\":\"BLALIANÇA\",\"DataCriacao\":\"2023-03-20\"},\"MembroMesa\":\"Não\",\"MembroLideranca\":\"Sim\"},\"Mandato\":{\"CodigoMandato\":\"596\",\"UfParlamentar\":\"AC\",\"PrimeiraLegislaturaDoMandato\":{\"NumeroLegislatura\":\"57\",\"DataInicio\":\"2023-02-01\",\"DataFim\":\"2027-01-31\"},\"SegundaLegislaturaDoMandato\":{\"NumeroLegislatura\":\"58\",\"DataInicio\":\"2027-02-01\",\"DataFim\":\"2031-01-31\"},\"DescricaoParticipacao\":\"Titular\",\"Suplentes\":{\"Suplente\":["
   },
   "senado_votacao_iso": {
-   "url": "https://legis.senado.leg.br/dadosabertos/votacao?dataInicio=2026-09-25&dataFim=2026-09-30",
+   "url": "https://legis.senado.leg.br/dadosabertos/votacao?dataInicio=2026-09-26&dataFim=2026-09-30",
    "tamanho": 2,
    "inicio": "[]"
   },
   "senado_comissao": {
-   "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAS?dataInicio=20260925&dataFim=20261109",
+   "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAS?dataInicio=20260926&dataFim=20261110",
    "tamanho": 220,
-   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"09/11/2026 16:55:03\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
+   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"10/11/2026 14:08:25\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
   },
   "senado_processo": {
-   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-09-25&dataFimApresentacao=2026-09-30",
-   "tamanho": 6657,
-   "inicio": "[{\"autoria\":\"Senador Jader Barbalho (MDB/PA)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175867,\"dataApresentacao\":\"2026-09-25\",\"dataSituacaoAtual\":\"2026-09-25\",\"dataUltimaAtualizacao\":\"2026-09-30T12:15:02.35\",\"ementa\":\"Institui a Política Nacional de Desenvolvimento Territorial e Inclusão Produtiva - PNDTIP, estabelece diretrizes para a modernização institucional das políticas de redução das desigualdades regionais e de fortalecimento da agricultura familiar em bases tecnológicas e sustentáveis, e dá outras providências.\",\"enteIdentificador\":\"SF\",\"id\":9110608,\"identificacao\":\"PL 5473/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/270f781f-2543-4b66-a180-3b552c6085ef\"},{\"autoria\":\"Senador Wellington Fagundes (PL/MT)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175868,\"dataApresentacao\":\"2026-09-25\",\"dataSituacaoAtual\":\"2026-11-04\",\"dataUltimaAtualizacao\":\"2026-11-04T19:29:54.366\",\"ementa\":\"Altera a Lei nº 8.112, de 11 de dezembro de 1990, e a Lei nº 14.204, de 16 de setembro de 2021, para vedar a nomeação para cargo público federal de pessoa condenada definitivamente por crime cometido com violência doméstica e familiar contra a mulher.\",\"enteIdentificador\":\"SF\",\"id\":9110619,\"identificacao\":\"PL 5474/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtu"
+   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-09-26&dataFimApresentacao=2026-09-30",
+   "tamanho": 4867,
+   "inicio": "[{\"autoria\":\"Senadora Soraya Thronicke (PSB/MS)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175873,\"dataApresentacao\":\"2026-09-28\",\"dataSituacaoAtual\":\"2026-11-03\",\"dataUltimaAtualizacao\":\"2026-11-04T10:25:01.607\",\"ementa\":\"Altera o Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal), o Decreto-Lei nº 3.688, de 3 de outubro de 1941 (Lei das Contravenções Penais), a Lei nº 8.072, de 25 de julho de 1990 (Lei dos Crimes Hediondos) e a Lei nº 7.716, de 5 de janeiro de 1989 (Lei Antirracismo), para tipificar como crime autônomo o LGBTIcídio, assim entendido o homicídio praticado por motivação discriminatória relacionada à orientação sexual, à identidade ou expressão de gênero ou às características sexuais da vítima, reais ou presumidas; tipificar os crimes de racismo e de injúria racial quando praticados pela mesma motivação; agravar a pena de outros delitos praticados pela mesma motivação; e estabelecer outras medidas de proteção penal à população LGBTQIAPN+.\",\"enteIdentificador\":\"SF\",\"id\":9110822,\"identificacao\":\"PL 5481/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO RECEBIMENTO DE EMENDAS\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"EVENTO_LEGISLATIVO\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/0d4cda1b-23e8-4336-ba05-732f65b00835\"},{\"autoria\":\"Senador Sargento Reginauro (PSDB/CE)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175874,\"dataApresentaca"
   }
  },
- "fim": "2026-11-09T19:56:31.552Z"
+ "fim": "2026-11-10T17:12:39.231Z"
 }
