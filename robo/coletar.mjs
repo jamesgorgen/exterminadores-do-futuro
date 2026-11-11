@@ -46,8 +46,10 @@ const SEM_IA = process.env.SEM_IA === '1';
 const TIPOS = ['PL', 'PLP', 'PEC', 'PDL'];
 const MODELO = 'claude-haiku-5-5';
 const MODELO_REGRAS = 'claude-opus-5-5'; // deduz as regras a partir das correções da equipe
+const MODELO_GRAU = 'claude-opus-5-5';   // segunda leitura do grau; o item só sai da revisão humana quando as duas leituras concordam
+const PASSO_REGRAS = 100;                // a cada tantas correções novas, as regras são deduzidas de novo e o grau é refeito
 const VERSAO_CLASSIFICACAO = 'd3';   // mude para refazer todas as classificações
-const VERSAO_GRAU = 'g5';          // mude para refazer só o grau (direita ou extrema-direita)
+const VERSAO_GRAU = 'g6';          // mude para refazer só o grau (direita ou extrema-direita)
 
 const API_CAMARA = 'https://dadosabertos.camara.leg.br/api/v2';
 const ARQ_CAMARA = 'https://dadosabertos.camara.leg.br/arquivos';
@@ -680,13 +682,20 @@ Responda somente com JSON válido, neste formato.
 
 async function graduarLote(itens, sistema, versao) {
   const lista = itens.map((it, k) => `${k + 1}. ${it.chave}. ${String(it.texto).slice(0, 700)}`).join('\n');
-  const res = await chamarClaude(sistema, 'ITENS\n' + lista, Math.min(10000, 1500 + itens.length * 160));
+  const max = Math.min(10000, 1500 + itens.length * 160);
+  // Duas leituras independentes, a do modelo rápido e a do modelo mais forte. Vale a do mais forte.
+  // A certeza só é alta quando as duas chegam ao mesmo grau e ao menos uma se declara segura.
+  const [rapida, res] = await Promise.all([chamarClaude(sistema, 'ITENS\n' + lista, max), chamarClaude(sistema, 'ITENS\n' + lista, max, MODELO_GRAU)]);
   if (!res) return 0;
+  const grauDe = x => x.g === 'fora' ? 'fora' : x.g === 'extrema' ? 'extrema' : 'direita';
+  const outra = new Map((rapida || []).map(x => [+x.n, x]));
   let n = 0;
   for (const x of res) {
     const it = itens[(+x.n) - 1]; if (!it) continue;
     const c = classificacoes.c[it.chave]; if (!c || (c.s !== 'avanca' && !c.fora)) continue;
-    const cf = x.c === 'alta' ? 'alta' : 'baixa';
+    const y = outra.get(+x.n);
+    const cf = y && grauDe(y) === grauDe(x) && (x.c === 'alta' || y.c === 'alta') ? 'alta' : 'baixa';
+    contar(cf === 'alta' ? 'grau_consenso' : 'grau_para_revisao');
     if (x.g === 'fora') { if (!c.fora) c.fora = c.p; c.s = ''; c.p = []; c.g = ''; c.m = ''; c.cf = cf; c.vg = versao; n++; continue; }
     if (c.fora) { c.s = 'avanca'; c.p = c.fora; delete c.fora; }
     const pp = (Array.isArray(x.p) ? x.p : []).filter(id => IDS_PAUTAS.has(id)).slice(0, 3);
@@ -717,13 +726,19 @@ Responda somente com JSON válido, no formato {"r":["regra 1","regra 2"]}.`;
 }
 
 // Os casos corrigidos pela equipe entram como exemplos. A versão do grau inclui um contador que sobe a cada
-// 30 correções novas, o que faz o robô refazer o grau sozinho à medida que a equipe ensina a IA.
-async function graduarPendentes(itens, exemplos, nCorrecoes) {
-  const versao = `${VERSAO_GRAU}-${Math.floor(nCorrecoes / 30)}`;
+// PASSO_REGRAS correções novas, o que faz o robô refazer o grau sozinho à medida que a equipe ensina a IA.
+async function graduarPendentes(itens, exemplos, nCorrecoes, todosExemplos) {
+  const versao = `${VERSAO_GRAU}-${Math.floor(nCorrecoes / PASSO_REGRAS)}`;
   const pend = itens.filter(it => { const c = classificacoes.c[it.chave]; return c && (c.s === 'avanca' || c.fora) && c.vg !== versao; });
   log(`Grau, ${pend.length} itens a revisar (versão ${versao}, ${nCorrecoes} correções como exemplo)`);
   if (!pend.length || SEM_IA || !process.env.ANTHROPIC_API_KEY) return;
-  const sistema = instrucoesGrau(exemplos);
+  // Regras deduzidas das correções da equipe, guardadas em dados/regras-equipe.json e refeitas a cada PASSO_REGRAS correções.
+  let guardadas = {}; try { guardadas = JSON.parse(fs.readFileSync(path.join(DADOS, 'regras-equipe.json'), 'utf8')); } catch (e) {}
+  if (guardadas.versao !== versao || !guardadas.regras) {
+    let regras = ''; try { regras = todosExemplos ? await induzirRegras(todosExemplos) : ''; } catch (e) { erro('regras da equipe', e); if (/recusada/.test(e.message)) throw e; }
+    if (regras) { guardadas = { versao, correcoes: nCorrecoes, gerado: HOJE, regras }; gravarJson('regras-equipe.json', guardadas, true); log(`  regras da equipe deduzidas de ${nCorrecoes} correções`); }
+  }
+  const sistema = instrucoesGrau(exemplos, guardadas.regras || false);
   const lotes = [];
   for (let i = 0; i < pend.length; i += 25) lotes.push(pend.slice(i, i + 25));
   let feitos = 0;
@@ -831,10 +846,11 @@ export async function executar() {
     const pp = Array.isArray(c.p) ? c.p : ppIa;
     return `${g === 'extrema' ? 'extrema-direita' : 'direita'}${pp.length ? ', pautas ' + pp.join(', ') : ''}`;
   };
-  const exemplos = Object.entries(correcoes).filter(([k, c]) => c && typeof c === 'object' && ementaDe.get(k))
-    .slice(-300).map(([k, c]) => `- ${k}. ${String(ementaDe.get(k)).slice(0, 260)} => ${descreveCorrecao(k, c)}`).join('\n');
+  const linhasEx = Object.entries(correcoes).filter(([k, c]) => c && typeof c === 'object' && ementaDe.get(k))
+    .map(([k, c]) => `- ${k}. ${String(ementaDe.get(k)).slice(0, 260)} => ${descreveCorrecao(k, c)}`);
+  const exemplos = linhasEx.slice(-300).join('\n');
   await classificarPendentes(paraClassificar);
-  await graduarPendentes(paraClassificar, exemplos, Object.keys(correcoes).length);
+  await graduarPendentes(paraClassificar, exemplos, Object.keys(correcoes).length, linhasEx.slice(-700).join('\n'));
 
   const classificado = k => {
     const ia = classificacoes.c[k] || {};
