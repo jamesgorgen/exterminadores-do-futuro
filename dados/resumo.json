@@ -1,9 +1,9 @@
 {
- "gerado": "2026-11-11T23:43:54.764Z",
+ "gerado": "2026-11-11T23:57:56.725Z",
  "inicio": "2023-02-01",
  "totais": {
   "proposicoes": 26415,
-  "direita": 2642,
+  "direita": 2643,
   "extrema": 1709,
   "votacoes": 2446,
   "disputadas": 1178,
@@ -79,9 +79,9 @@
    "derrotas": 3
   },
   "ambiente": {
-   "prop": 171,
+   "prop": 172,
    "extrema": 118,
-   "prop30": 1,
+   "prop30": 2,
    "vot": 44,
    "vitorias": 22,
    "derrotas": 11
@@ -160,7 +160,7 @@
   }
  },
  "recentes": {
-  "proposicoes": 4,
+  "proposicoes": 5,
   "votacoes": 16
  }
 }
