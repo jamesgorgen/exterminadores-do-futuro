@@ -49,7 +49,7 @@ const MODELO_REGRAS = 'claude-opus-5-5'; // deduz as regras a partir das correç
 const MODELO_GRAU = 'claude-opus-5-5';   // segunda leitura do grau; o item só sai da revisão humana quando as duas leituras concordam
 const PASSO_REGRAS = 100;                // a cada tantas correções novas, as regras são deduzidas de novo e o grau é refeito
 const VERSAO_CLASSIFICACAO = 'd3';   // mude para refazer todas as classificações
-const VERSAO_GRAU = 'g7';          // mude para refazer só o grau (direita ou extrema-direita)
+const VERSAO_GRAU = 'g8';          // mude para refazer só o grau (direita ou extrema-direita)
 
 const API_CAMARA = 'https://dadosabertos.camara.leg.br/api/v2';
 const ARQ_CAMARA = 'https://dadosabertos.camara.leg.br/arquivos';
@@ -691,27 +691,35 @@ Responda somente com JSON válido, neste formato.
 }
 
 async function graduarLote(itens, sistema, versao) {
-  const lista = itens.map((it, k) => `${k + 1}. ${it.chave}. ${String(it.texto).slice(0, 700)}`).join('\n');
-  const max = Math.min(10000, 1500 + itens.length * 160);
-  // Duas leituras independentes, a do modelo rápido e a do modelo mais forte. Vale a do mais forte.
-  // A certeza só é alta quando as duas chegam ao mesmo grau e ao menos uma se declara segura.
   if (semCredito) return 0;
-  const [rapida, res] = await Promise.all([chamarClaude(sistema, 'ITENS\n' + lista, max), chamarClaude(sistema, 'ITENS\n' + lista, max, MODELO_GRAU)]);
-  if (!res) return 0;
+  const linha = (it, k) => `${k + 1}. ${it.chave}. ${String(it.texto).slice(0, 700)}`;
+  const max = n => Math.min(10000, 1500 + n * 160);
   const grauDe = x => x.g === 'fora' ? 'fora' : x.g === 'extrema' ? 'extrema' : 'direita';
-  const outra = new Map((rapida || []).map(x => [+x.n, x]));
+  // Primeira leitura, do modelo rápido, para todos os itens.
+  const rapida = await chamarClaude(sistema, 'ITENS\n' + itens.map(linha).join('\n'), max(itens.length));
+  if (!rapida) return 0;
+  const lidas = new Map();
+  for (const x of rapida) { const it = itens[(+x.n) - 1]; if (it) lidas.set(it, x); }
+  // Segunda leitura, do modelo mais forte, só para os itens em que o rápido hesitou.
+  const duvidosos = itens.filter(it => lidas.has(it) && lidas.get(it).c !== 'alta');
+  const fortes = new Map();
+  if (duvidosos.length) {
+    contar('grau_segunda_leitura', duvidosos.length);
+    const res = await chamarClaude(sistema, 'ITENS\n' + duvidosos.map(linha).join('\n'), max(duvidosos.length), MODELO_GRAU);
+    for (const y of res || []) { const it = duvidosos[(+y.n) - 1]; if (it) fortes.set(it, y); }
+  }
   let n = 0;
-  for (const x of res) {
-    const it = itens[(+x.n) - 1]; if (!it) continue;
+  for (const [it, r] of lidas) {
     const c = classificacoes.c[it.chave]; if (!c || (c.s !== 'avanca' && !c.fora)) continue;
-    const y = outra.get(+x.n);
-    // Três níveis. "alta" quando as leituras coincidem e ao menos uma se declara segura. "grau" quando as duas
-    // veem pauta da direita e a dúvida é só entre direita e extrema-direita. "baixa", que pede revisão humana,
-    // quando há dúvida sobre ser ou não pauta da direita, ou quando falta a segunda leitura.
-    const cf = !y ? 'baixa' : grauDe(y) === grauDe(x) && (x.c === 'alta' || y.c === 'alta') ? 'alta'
-      : grauDe(y) !== 'fora' && grauDe(x) !== 'fora' ? 'grau' : 'baixa';
-    contar(cf === 'alta' ? 'grau_consenso' : cf === 'grau' ? 'grau_duvida_so_de_grau' : 'grau_para_revisao');
-    c.lr = grauDe(x)[0] + (x.c === 'alta' ? 'a' : 'b') + (y ? grauDe(y)[0] + (y.c === 'alta' ? 'a' : 'b') : '');
+    const y = fortes.get(it);
+    const x = y || r; // vale a leitura do mais forte quando ela existe
+    // Três níveis. "alta" quando o modelo rápido está seguro, ou quando o mais forte confirma o grau e está seguro.
+    // "grau" quando as duas leituras veem pauta da direita e a dúvida é só entre direita e extrema-direita.
+    // "baixa", que pede revisão humana, quando há dúvida sobre ser ou não pauta da direita ou falta a segunda leitura.
+    const cf = r.c === 'alta' ? 'alta' : !y ? 'baixa' : grauDe(y) === grauDe(r) && y.c === 'alta' ? 'alta'
+      : grauDe(y) !== 'fora' && grauDe(r) !== 'fora' ? 'grau' : 'baixa';
+    contar(cf === 'alta' ? 'grau_certeza_alta' : cf === 'grau' ? 'grau_duvida_so_de_grau' : 'grau_para_revisao');
+    c.lr = grauDe(r)[0] + (r.c === 'alta' ? 'a' : 'b') + (y ? grauDe(y)[0] + (y.c === 'alta' ? 'a' : 'b') : '');
     if (x.g === 'fora') { if (!c.fora) c.fora = c.p; c.s = ''; c.p = []; c.g = ''; c.m = ''; c.cf = cf; c.vg = versao; n++; continue; }
     if (c.fora) { c.s = 'avanca'; c.p = c.fora; delete c.fora; }
     const pp = (Array.isArray(x.p) ? x.p : []).filter(id => IDS_PAUTAS.has(id)).slice(0, 3);
