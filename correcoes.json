@@ -67,15 +67,71 @@
       "g": "extrema",
       "m": ""
     },
+    "PDL 1013/2026": {
+      "s": "avanca",
+      "p": [
+        "instituicoes",
+        "religiao"
+      ],
+      "g": "extrema"
+    },
     "PDL 1015/2025": {
       "s": "",
       "m": ""
+    },
+    "PDL 1015/2026": {
+      "s": "avanca",
+      "p": [
+        "instituicoes",
+        "religiao"
+      ],
+      "g": "extrema"
+    },
+    "PDL 1016/2026": {
+      "s": "avanca",
+      "p": [
+        "instituicoes",
+        "religiao"
+      ],
+      "g": "extrema"
+    },
+    "PDL 1017/2026": {
+      "s": "avanca",
+      "p": [
+        "instituicoes",
+        "religiao"
+      ],
+      "g": "extrema"
+    },
+    "PDL 1018/2026": {
+      "s": "avanca",
+      "p": [
+        "instituicoes",
+        "religiao"
+      ],
+      "g": "extrema"
     },
     "PDL 1019/2025": {
       "s": "avanca",
       "p": [
         "instituicoes",
         "costumes"
+      ],
+      "g": "extrema"
+    },
+    "PDL 1019/2026": {
+      "s": "avanca",
+      "p": [
+        "instituicoes",
+        "religiao"
+      ],
+      "g": "extrema"
+    },
+    "PDL 1020/2026": {
+      "s": "avanca",
+      "p": [
+        "instituicoes",
+        "religiao"
       ],
       "g": "extrema"
     },
@@ -87,6 +143,38 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PDL 1021/2026": {
+      "s": "avanca",
+      "p": [
+        "instituicoes",
+        "religiao"
+      ],
+      "g": "extrema"
+    },
+    "PDL 1022/2026": {
+      "s": "avanca",
+      "p": [
+        "instituicoes",
+        "religiao"
+      ],
+      "g": "extrema"
+    },
+    "PDL 1023/2026": {
+      "s": "avanca",
+      "p": [
+        "instituicoes",
+        "religiao"
+      ],
+      "g": "extrema"
+    },
+    "PDL 1029/2026": {
+      "s": "avanca",
+      "p": [
+        "instituicoes",
+        "religiao"
+      ],
+      "g": "extrema"
     },
     "PDL 1122/2025": {
       "s": "avanca",
@@ -225,6 +313,13 @@
       "s": "avanca",
       "p": [
         "plataformas"
+      ],
+      "g": "extrema"
+    },
+    "PDL 383/2026": {
+      "s": "avanca",
+      "p": [
+        "ambiente"
       ],
       "g": "extrema"
     },
@@ -572,6 +667,13 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 1088/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "extrema"
+    },
     "PL 1090/2026": {
       "s": "avanca",
       "p": [
@@ -699,6 +801,14 @@
       ],
       "g": "direita",
       "m": ""
+    },
+    "PL 1234/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo",
+        "costumes"
+      ],
+      "g": "extrema"
     },
     "PL 1279/2026": {
       "s": "avanca",
