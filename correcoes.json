@@ -463,6 +463,14 @@
       ],
       "g": "direita"
     },
+    "PDL 702/2025": {
+      "s": "avanca",
+      "p": [
+        "estado",
+        "soberania"
+      ],
+      "g": "extrema"
+    },
     "PDL 759/2025": {
       "s": "avanca",
       "p": [
@@ -479,6 +487,15 @@
       ],
       "g": "direita"
     },
+    "PDL 814/2025": {
+      "s": "avanca",
+      "p": [
+        "instituicoes",
+        "estado"
+      ],
+      "g": "direita",
+      "m": ""
+    },
     "PDL 818/2025": {
       "s": "avanca",
       "p": [
@@ -493,6 +510,24 @@
         "instituicoes"
       ],
       "g": "extrema"
+    },
+    "PDL 824/2025": {
+      "s": "avanca",
+      "p": [
+        "instituicoes",
+        "estado"
+      ],
+      "g": "direita",
+      "m": ""
+    },
+    "PDL 825/2025": {
+      "s": "avanca",
+      "p": [
+        "instituicoes",
+        "estado"
+      ],
+      "g": "direita",
+      "m": ""
     },
     "PDL 845/2025": {
       "s": "barra",
@@ -831,6 +866,15 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 1283/2025": {
+      "s": "avanca",
+      "p": [
+        "punitivismo",
+        "movimentos",
+        "soberania"
+      ],
+      "g": "extrema"
+    },
     "PL 1316/2026": {
       "s": "avanca",
       "p": [
@@ -876,6 +920,14 @@
       ],
       "g": "extrema"
     },
+    "PL 1485/2025": {
+      "s": "avanca",
+      "p": [
+        "povos",
+        "movimentos"
+      ],
+      "g": "extrema"
+    },
     "PL 1496/2026": {
       "s": "barra",
       "p": [
@@ -883,6 +935,21 @@
         "plataformas"
       ],
       "m": ""
+    },
+    "PL 1505/2025": {
+      "s": "avanca",
+      "p": [
+        "costumes"
+      ],
+      "g": "extrema"
+    },
+    "PL 1506/2025": {
+      "s": "avanca",
+      "p": [
+        "costumes",
+        "plataformas"
+      ],
+      "g": "extrema"
     },
     "PL 1568/2026": {
       "s": "avanca",
@@ -954,6 +1021,14 @@
       "s": "avanca",
       "p": [
         "armas"
+      ],
+      "g": "extrema"
+    },
+    "PL 1740/2025": {
+      "s": "avanca",
+      "p": [
+        "punitivismo",
+        "plataformas"
       ],
       "g": "extrema"
     },
@@ -3850,6 +3925,14 @@
       "p": [
         "costumes",
         "religiao"
+      ],
+      "g": "extrema"
+    },
+    "PL 835/2025": {
+      "s": "avanca",
+      "p": [
+        "punitivismo",
+        "plataformas"
       ],
       "g": "extrema"
     },
