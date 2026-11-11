@@ -1,10 +1,10 @@
 {
- "gerado": "2026-11-11T18:11:16.442Z",
+ "gerado": "2026-11-11T20:06:17.189Z",
  "inicio": "2023-02-01",
  "totais": {
-  "proposicoes": 26405,
-  "direita": 2583,
-  "extrema": 1548,
+  "proposicoes": 26410,
+  "direita": 2586,
+  "extrema": 1553,
   "votacoes": 2445,
   "disputadas": 1178,
   "vitorias": 508,
@@ -40,14 +40,14 @@
   },
   "punitivismo": {
    "prop": 1272,
-   "extrema": 691,
+   "extrema": 694,
    "prop30": 14,
    "vot": 21,
    "vitorias": 17,
    "derrotas": 1
   },
   "instituicoes": {
-   "prop": 246,
+   "prop": 249,
    "extrema": 224,
    "prop30": 13,
    "vot": 10,
@@ -79,7 +79,7 @@
    "derrotas": 0
   },
   "ambiente": {
-   "prop": 169,
+   "prop": 168,
    "extrema": 110,
    "prop30": 1,
    "vot": 30,
@@ -87,8 +87,8 @@
    "derrotas": 10
   },
   "povos": {
-   "prop": 104,
-   "extrema": 97,
+   "prop": 105,
+   "extrema": 98,
    "prop30": 1,
    "vot": 26,
    "vitorias": 17,
@@ -96,7 +96,7 @@
   },
   "movimentos": {
    "prop": 161,
-   "extrema": 142,
+   "extrema": 144,
    "prop30": 1,
    "vot": 1,
    "vitorias": 1,
@@ -111,8 +111,8 @@
    "derrotas": 5
   },
   "estado": {
-   "prop": 120,
-   "extrema": 41,
+   "prop": 123,
+   "extrema": 42,
    "prop30": 6,
    "vot": 11,
    "vitorias": 6,
@@ -128,7 +128,7 @@
   },
   "plataformas": {
    "prop": 87,
-   "extrema": 64,
+   "extrema": 66,
    "prop30": 1,
    "vot": 2,
    "vitorias": 1,
@@ -151,8 +151,8 @@
    "derrotas": 0
   },
   "soberania": {
-   "prop": 68,
-   "extrema": 45,
+   "prop": 70,
+   "extrema": 47,
    "prop30": 0,
    "vot": 6,
    "vitorias": 4,
