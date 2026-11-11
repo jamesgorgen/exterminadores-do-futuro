@@ -584,8 +584,8 @@ Responda somente com JSON válido, sem texto antes ou depois, neste formato.
 {"r":[{"n":1,"s":"avanca","p":["armas"],"g":"direita","m":"Amplia o porte de armas para vigilantes de empresas privadas"},{"n":2,"s":"","p":[],"g":"","m":""}]}`;
 
 // Chamada à API da Anthropic que devolve a lista "r" da resposta em JSON, ou null.
-async function chamarClaude(sistema, texto, maxTokens) {
-  const corpo = { model: MODELO, max_tokens: maxTokens, thinking: { type: 'disabled' },
+export async function chamarClaude(sistema, texto, maxTokens, modelo = MODELO) {
+  const corpo = { model: modelo, max_tokens: maxTokens, thinking: { type: 'disabled' },
     system: [{ type: 'text', text: sistema, cache_control: { type: 'ephemeral' } }], messages: [{ role: 'user', content: texto }] };
   let atraso = 3000;
   for (let i = 0; i < 7; i++) {
@@ -627,7 +627,7 @@ async function classificarLote(itens) {
 // Segunda etapa, só para o que faz avançar a pauta da direita. Decide o grau com uma instrução dedicada,
 // porque na primeira etapa a cautela ("na dúvida, deixe vazio") puxava tudo para o grau direita.
 const LISTA_GRAUS = PAUTAS.lista.map(p => `- ${p.id} (${p.nome}). ${p.descricao} Extrema-direita quando: ${p.extrema}`).join('\n');
-function instrucoesGrau(exemplos) {
+export function instrucoesGrau(exemplos, regrasNovas = false) {
   return `Você é analista de um observatório da direita e da extrema-direita no Congresso Nacional brasileiro. Todos os itens abaixo já foram identificados como projetos ou votações que fazem avançar a pauta da direita. Para cada um, decida o grau, revise as pautas e diga quanta certeza você tem.
 
 PAUTAS E O QUE CARACTERIZA A EXTREMA-DIREITA EM CADA UMA
@@ -648,7 +648,13 @@ CRITÉRIOS DA EQUIPE POR TEMA (seguem a régua do observatório e prevalecem sob
 - Educação. É extrema-direita a escola cívico-militar, o ensino domiciliar, a punição de pais ou alunos por indisciplina, a censura a professores e o ensino religioso ou confessional imposto.
 - Drogas. É extrema-direita o endurecimento penal; é direita o financiamento ou a regulação de comunidades terapêuticas e sanções administrativas ao consumo.
 - Economia, trabalho e Estado. Privilégios fiscais, flexibilizações trabalhistas, privatizações e desregulação econômica são em geral direita. São extrema-direita só quando retiram direitos de forma ampla (por exemplo, fim da Justiça do Trabalho ou do combate ao trabalho escravo).
-
+${regrasNovas ? `- Estado. É extrema-direita extinguir órgãos, conselhos, fundações ou empresas públicas (por exemplo CONAB, FUNASA, Codevasf, Iphan, conselhos de políticas públicas).
+- Decretos legislativos (PDL) que sustam atos do governo federal são sempre pauta da direita, nunca "fora", salvo quando o ato sustado é ele próprio uma medida da direita. São extrema-direita quando derrubam proteção ambiental (embargos, atos do MMA, Ibama ou ICMBio), direitos trabalhistas, políticas de igualdade, a estrutura da Presidência ou medidas de defesa da soberania e de reciprocidade econômica. São direita quando tratam de tributos, tarifas, preços, regulação setorial ou burocracia.
+- Vigilância e poder policial. É extrema-direita ampliar a vigilância em massa (reconhecimento facial em espaços públicos), dar poder de busca ou de polícia a guardas municipais, facilitar quebra de sigilo, prisão preventiva ou temporária, restringir direitos de presos (saúde, trabalho externo, visitas) e ampliar a internação de adolescentes.
+- Religião. É extrema-direita dar estatuto legal, proteção especial, reconhecimento oficial ou recursos públicos a igrejas, líderes e ritos religiosos.
+- Policiais e militares. Vantagens, isenções e prerrogativas para policiais e militares são pauta da direita, nunca "fora".
+- Na dúvida entre "fora" e "direita", prefira "direita" quando o projeto reduz tributo, regulação ou fiscalização sobre empresas, ou endurece regra penal ou de trânsito.
+` : ''}
 PAUTAS
 - Liste todas as pautas que se aplicam, até três, pelos identificadores acima. Exemplos frequentes de combinação são armas com punitivismo, educação com religião, punitivismo com movimentos, drogas com punitivismo.
 

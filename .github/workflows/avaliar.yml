@@ -1,0 +1,32 @@
+# Mede a concordância da IA com as correções da equipe. Disparo manual, não altera dados do site.
+name: Avaliar a triagem
+
+on:
+  workflow_dispatch:
+    inputs:
+      configs:
+        description: 'Configurações a comparar'
+        required: false
+        default: 'haiku-antigas,haiku-novas,sonnet-novas,opus-novas'
+
+permissions:
+  contents: read
+
+jobs:
+  avaliar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Avaliar
+        run: node robo/avaliar.mjs
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CONFIGS: ${{ inputs.configs }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: avaliacao
+          path: avaliacao.json
