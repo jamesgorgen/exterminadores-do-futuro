@@ -115,7 +115,7 @@ kbd{font:12px/1 ui-monospace,monospace;border:1px solid var(--line);border-botto
   <select id="fPauta" aria-label="Pauta"><option value="">Todas as pautas</option></select>
   <select id="fCasa" aria-label="Casa"><option value="">Câmara e Senado</option><option value="C">Câmara</option><option value="S">Senado</option></select>
   <input type="search" id="fBusca" placeholder="Número (PL 1234/2025) ou palavra da ementa" aria-label="Buscar">
-  <select id="fCerteza" aria-label="Certeza da IA"><option value="baixa">Só os de certeza baixa</option><option value="">Certeza alta e baixa</option></select>
+  <select id="fCerteza" aria-label="Certeza da IA"><option value="baixa">Só os que exigem revisão</option><option value="grau">Inclui dúvida só de grau</option><option value="">Todos, até os de certeza alta</option></select>
   <label class="chk"><input type="checkbox" id="fEsconder" checked> Esconder conferidos</label>
 </div></div>
 
@@ -249,7 +249,7 @@ function itensDaLista() {
     if (lista === 'corrigidos' && !conferido && !Object.prototype.hasOwnProperty.call(pend, b.chave)) continue;
     if (lista === 'todos' && !busca) continue;
     if (esconder && lista !== 'corrigidos' && conferido && !Object.prototype.hasOwnProperty.call(pend, b.chave)) continue;
-    if ($('#fCerteza').value === 'baixa' && ['direita', 'extrema', 'fora'].includes(lista) && a.cf === 'alta') continue;
+    if ($('#fCerteza').value && ['direita', 'extrema', 'fora'].includes(lista) && (a.cf === 'alta' || (a.cf === 'grau' && $('#fCerteza').value === 'baixa'))) continue;
     if (casa && !(b.tipo === 'p' ? (b.it.k || []).includes(casa) : b.it.k === casa)) continue;
     if (pauta) { const x = efetiva(b.chave); const pp = [...(x.p || []), ...(a.p || []), ...(a.fora || [])]; if (!pp.includes(pauta)) continue; }
     if (busca) { const txt = norm(b.chave + ' ' + (b.tipo === 'p' ? b.it.e : (b.it.me || '') + ' ' + (b.it.desc || ''))); if (!busca.split(/\s+/).every(t => txt.includes(t))) continue; }
@@ -298,7 +298,7 @@ function cartao(b) {
     <p class="ementa">${esc(texto)}</p>
     ${b.tipo === 'v' && it.me && it.desc ? `<p class="autores">${esc(it.desc)}</p>` : ''}
     ${b.tipo === 'p' ? autores(it.a) : ''}
-    <p class="ia"><b>IA.</b> ${iaTxt}${certeza ? ` <span class="meta">(certeza ${certeza})</span>` : ''}</p>
+    <p class="ia"><b>IA.</b> ${iaTxt}${certeza ? ` <span class="meta">(${certeza === 'grau' ? 'dúvida só de grau' : 'certeza ' + certeza})</span>` : ''}</p>
     <div class="linha"><span class="rot">Sentido</span><span class="seg">
       <button type="button" class="avanca" data-s="avanca" aria-pressed="${s === 'avanca'}">Faz avançar a pauta</button>
       <button type="button" class="contra" data-s="barra" aria-pressed="${s === 'barra'}">Contra a pauta</button>
@@ -448,12 +448,15 @@ function desenharSituacao() {
   const lote = vg ? +String(vg[0]).split('-').pop() : null;
   const usadas = lote == null ? null : lote * 100;
   const proxima = lote == null ? null : (lote + 1) * 100;
-  const fila = Object.entries(D.ia).filter(([k, c]) => c.s === 'avanca' && c.cf !== 'alta' && salvas[k] === undefined).length;
+  const semConferir = Object.entries(D.ia).filter(([k, c]) => c.s === 'avanca' && salvas[k] === undefined);
+  const fila = semConferir.filter(([k, c]) => c.cf !== 'alta' && c.cf !== 'grau').length;
+  const soGrau = semConferir.filter(([k, c]) => c.cf === 'grau').length;
   $('#situacao').innerHTML = `<div><b class="num">${n.toLocaleString('pt-BR')}</b>correções salvas pela equipe</div>
     <div><b class="num">${usadas == null ? '—' : usadas + ' a ' + (proxima - 1)}</b>correções existiam na última reclassificação geral</div>
     <div><b class="num">${proxima == null ? '—' : n >= proxima ? 'em curso' : proxima}</b>${proxima != null && n >= proxima ? 'reclassificação geral (o robô está refazendo)' : 'correções disparam a próxima reclassificação geral'}</div>
-    <div><b class="num">${fila.toLocaleString('pt-BR')}</b>itens em que as duas leituras da IA divergem, ainda não conferidos</div>
-    <p class="nota-s">Cada correção salva vale no site na hora. Cada projeto é lido por dois modelos de IA, e só vem para esta fila quando eles discordam ou nenhum dos dois tem segurança. A cada 100 correções, a IA deduz de novo as regras que a equipe aplica e refaz o grau de todos os projetos da direita. Os números mudam alguns minutos depois de salvar.</p>`;
+    <div><b class="num">${fila.toLocaleString('pt-BR')}</b>itens que exigem revisão, por dúvida sobre ser ou não pauta da direita</div>
+    <div><b class="num">${soGrau.toLocaleString('pt-BR')}</b>itens com dúvida só de grau, de revisão opcional</div>
+    <p class="nota-s">Cada correção salva vale no site na hora. Cada projeto é lido por dois modelos de IA. Só exige revisão o projeto em que eles divergem sobre ser ou não pauta da direita. Quando os dois veem pauta da direita e a dúvida é apenas entre direita e extrema-direita, vale a leitura do modelo mais forte e o item fica na lista opcional, que aparece ao escolher "Inclui dúvida só de grau". A cada 100 correções, a IA deduz de novo as regras que a equipe aplica e refaz o grau de todos os projetos da direita. Os números mudam alguns minutos depois de salvar.</p>`;
 }
 carregar().then(() => { desenharSituacao(); desenhar(); }).catch(e => { $('#lista').innerHTML = `<p class="carregando">Não foi possível carregar os dados (${esc(e.message)}).</p>`; });
 </script>

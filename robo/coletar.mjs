@@ -49,7 +49,7 @@ const MODELO_REGRAS = 'claude-opus-5-5'; // deduz as regras a partir das correç
 const MODELO_GRAU = 'claude-opus-5-5';   // segunda leitura do grau; o item só sai da revisão humana quando as duas leituras concordam
 const PASSO_REGRAS = 100;                // a cada tantas correções novas, as regras são deduzidas de novo e o grau é refeito
 const VERSAO_CLASSIFICACAO = 'd3';   // mude para refazer todas as classificações
-const VERSAO_GRAU = 'g6';          // mude para refazer só o grau (direita ou extrema-direita)
+const VERSAO_GRAU = 'g7';          // mude para refazer só o grau (direita ou extrema-direita)
 
 const API_CAMARA = 'https://dadosabertos.camara.leg.br/api/v2';
 const ARQ_CAMARA = 'https://dadosabertos.camara.leg.br/arquivos';
@@ -587,6 +587,8 @@ Responda somente com JSON válido, sem texto antes ou depois, neste formato.
 {"r":[{"n":1,"s":"avanca","p":["armas"],"g":"direita","m":"Amplia o porte de armas para vigilantes de empresas privadas"},{"n":2,"s":"","p":[],"g":"","m":""}]}`;
 
 // Chamada à API da Anthropic que devolve a lista "r" da resposta em JSON, ou null.
+let avisou400 = false;
+export let semCredito = false;
 export async function chamarClaude(sistema, texto, maxTokens, modelo = MODELO) {
   const corpo = { model: modelo, max_tokens: maxTokens, thinking: { type: 'disabled' },
     system: [{ type: 'text', text: sistema, cache_control: { type: 'ephemeral' } }], messages: [{ role: 'user', content: texto }] };
@@ -598,6 +600,14 @@ export async function chamarClaude(sistema, texto, maxTokens, modelo = MODELO) {
         headers: { 'content-type': 'application/json', 'x-api-key': process.env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' }, body: JSON.stringify(corpo) });
     } catch (e) { await espera(atraso); atraso *= 2; continue; }
     if (r.status === 400 && corpo.thinking) { delete corpo.thinking; continue; }
+    // Um 400 não se resolve repetindo. O caso mais comum é o saldo de créditos da API ter acabado.
+    if (r.status === 400) {
+      contar('ia_http_400');
+      let msg = ''; try { msg = String(((await r.json()).error || {}).message || '').slice(0, 200); } catch (e) {}
+      if (!avisou400) { avisou400 = true; log('ERRO da API da Anthropic (400):', msg || 'sem mensagem'); }
+      if (/credit|billing|balance/i.test(msg)) semCredito = true;
+      contar('ia_lotes_falharam'); return null;
+    }
     if (r.status === 401 || r.status === 403) throw new Error('chave da Anthropic recusada');
     if (!r.ok) { contar('ia_http_' + r.status); const ra = +r.headers.get('retry-after'); await espera(ra ? ra * 1000 + 500 : atraso); atraso = Math.min(atraso * 2, 60000); continue; }
     const j = await r.json();
@@ -685,6 +695,7 @@ async function graduarLote(itens, sistema, versao) {
   const max = Math.min(10000, 1500 + itens.length * 160);
   // Duas leituras independentes, a do modelo rápido e a do modelo mais forte. Vale a do mais forte.
   // A certeza só é alta quando as duas chegam ao mesmo grau e ao menos uma se declara segura.
+  if (semCredito) return 0;
   const [rapida, res] = await Promise.all([chamarClaude(sistema, 'ITENS\n' + lista, max), chamarClaude(sistema, 'ITENS\n' + lista, max, MODELO_GRAU)]);
   if (!res) return 0;
   const grauDe = x => x.g === 'fora' ? 'fora' : x.g === 'extrema' ? 'extrema' : 'direita';
@@ -694,8 +705,13 @@ async function graduarLote(itens, sistema, versao) {
     const it = itens[(+x.n) - 1]; if (!it) continue;
     const c = classificacoes.c[it.chave]; if (!c || (c.s !== 'avanca' && !c.fora)) continue;
     const y = outra.get(+x.n);
-    const cf = y && grauDe(y) === grauDe(x) && (x.c === 'alta' || y.c === 'alta') ? 'alta' : 'baixa';
-    contar(cf === 'alta' ? 'grau_consenso' : 'grau_para_revisao');
+    // Três níveis. "alta" quando as leituras coincidem e ao menos uma se declara segura. "grau" quando as duas
+    // veem pauta da direita e a dúvida é só entre direita e extrema-direita. "baixa", que pede revisão humana,
+    // quando há dúvida sobre ser ou não pauta da direita, ou quando falta a segunda leitura.
+    const cf = !y ? 'baixa' : grauDe(y) === grauDe(x) && (x.c === 'alta' || y.c === 'alta') ? 'alta'
+      : grauDe(y) !== 'fora' && grauDe(x) !== 'fora' ? 'grau' : 'baixa';
+    contar(cf === 'alta' ? 'grau_consenso' : cf === 'grau' ? 'grau_duvida_so_de_grau' : 'grau_para_revisao');
+    c.lr = grauDe(x)[0] + (x.c === 'alta' ? 'a' : 'b') + (y ? grauDe(y)[0] + (y.c === 'alta' ? 'a' : 'b') : '');
     if (x.g === 'fora') { if (!c.fora) c.fora = c.p; c.s = ''; c.p = []; c.g = ''; c.m = ''; c.cf = cf; c.vg = versao; n++; continue; }
     if (c.fora) { c.s = 'avanca'; c.p = c.fora; delete c.fora; }
     const pp = (Array.isArray(x.p) ? x.p : []).filter(id => IDS_PAUTAS.has(id)).slice(0, 3);
