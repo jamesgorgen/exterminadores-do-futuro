@@ -4,7 +4,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { chamarClaude, instrucoesGrau } from './coletar.mjs';
+import { chamarClaude, instrucoesGrau, induzirRegras } from './coletar.mjs';
 
 const RAIZ = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const ler = f => JSON.parse(fs.readFileSync(path.join(RAIZ, f), 'utf8'));
@@ -32,12 +32,18 @@ console.log(`Casos com gabarito: ${casos.length}`, JSON.stringify(casos.reduce((
 
 const CONFIGS = (process.env.CONFIGS || 'haiku-antigas,haiku-novas,sonnet-novas,opus-novas').split(',');
 const MODELOS = { haiku: 'claude-haiku-5-5', sonnet: 'claude-sonnet-5-5', opus: 'claude-opus-5-5' };
-const saida = {};
+const saida = {}; const induzidas = {}; let mostrou = false;
 for (const cfg of CONFIGS) {
   const [m, r] = cfg.split('-'); const res = saida[cfg] = {};
   for (const dobra of [0, 1]) {
     const exemplos = casos.filter(x => x.dobra !== dobra).map(x => `- ${x.k}. ${String(ementa.get(x.k)).slice(0, 260)} => ${descreve(x.k, x.c)}`).join('\n');
-    const sistema = instrucoesGrau(exemplos, r === 'novas');
+    let regras = r === 'novas';
+    if (r === 'induzidas' || r === 'so') {
+      induzidas[dobra] = induzidas[dobra] || await induzirRegras(exemplos);
+      regras = induzidas[dobra];
+      if (dobra === 0 && !mostrou) { mostrou = true; console.log('\nREGRAS DEDUZIDAS (dobra 0)\n' + regras + '\n'); }
+    }
+    const sistema = instrucoesGrau(r === 'so' ? '' : exemplos, regras);
     const prova = casos.filter(x => x.dobra === dobra);
     const lotes = []; for (let i = 0; i < prova.length; i += 25) lotes.push(prova.slice(i, i + 25));
     for (let i = 0; i < lotes.length; i += 3) await Promise.all(lotes.slice(i, i + 3).map(async l => {

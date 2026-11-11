@@ -45,6 +45,7 @@ const MAX_CLASSIFICACOES = +(process.env.MAX_CLASSIFICACOES || 60000);
 const SEM_IA = process.env.SEM_IA === '1';
 const TIPOS = ['PL', 'PLP', 'PEC', 'PDL'];
 const MODELO = 'claude-haiku-5-5';
+const MODELO_REGRAS = 'claude-opus-5-5'; // deduz as regras a partir das correções da equipe
 const VERSAO_CLASSIFICACAO = 'd3';   // mude para refazer todas as classificações
 const VERSAO_GRAU = 'g5';          // mude para refazer só o grau (direita ou extrema-direita)
 
@@ -648,12 +649,15 @@ CRITÉRIOS DA EQUIPE POR TEMA (seguem a régua do observatório e prevalecem sob
 - Educação. É extrema-direita a escola cívico-militar, o ensino domiciliar, a punição de pais ou alunos por indisciplina, a censura a professores e o ensino religioso ou confessional imposto.
 - Drogas. É extrema-direita o endurecimento penal; é direita o financiamento ou a regulação de comunidades terapêuticas e sanções administrativas ao consumo.
 - Economia, trabalho e Estado. Privilégios fiscais, flexibilizações trabalhistas, privatizações e desregulação econômica são em geral direita. São extrema-direita só quando retiram direitos de forma ampla (por exemplo, fim da Justiça do Trabalho ou do combate ao trabalho escravo).
-${regrasNovas ? `- Estado. É extrema-direita extinguir órgãos, conselhos, fundações ou empresas públicas (por exemplo CONAB, FUNASA, Codevasf, Iphan, conselhos de políticas públicas).
+${regrasNovas === true ? `- Estado. É extrema-direita extinguir órgãos, conselhos, fundações ou empresas públicas (por exemplo CONAB, FUNASA, Codevasf, Iphan, conselhos de políticas públicas).
 - Decretos legislativos (PDL) que sustam atos do governo federal são sempre pauta da direita, nunca "fora", salvo quando o ato sustado é ele próprio uma medida da direita. São extrema-direita quando derrubam proteção ambiental (embargos, atos do MMA, Ibama ou ICMBio), direitos trabalhistas, políticas de igualdade, a estrutura da Presidência ou medidas de defesa da soberania e de reciprocidade econômica. São direita quando tratam de tributos, tarifas, preços, regulação setorial ou burocracia.
 - Vigilância e poder policial. É extrema-direita ampliar a vigilância em massa (reconhecimento facial em espaços públicos), dar poder de busca ou de polícia a guardas municipais, facilitar quebra de sigilo, prisão preventiva ou temporária, restringir direitos de presos (saúde, trabalho externo, visitas) e ampliar a internação de adolescentes.
 - Religião. É extrema-direita dar estatuto legal, proteção especial, reconhecimento oficial ou recursos públicos a igrejas, líderes e ritos religiosos.
 - Policiais e militares. Vantagens, isenções e prerrogativas para policiais e militares são pauta da direita, nunca "fora".
 - Na dúvida entre "fora" e "direita", prefira "direita" quando o projeto reduz tributo, regulação ou fiscalização sobre empresas, ou endurece regra penal ou de trânsito.
+` : ''}${typeof regrasNovas === 'string' && regrasNovas ? `
+CRITÉRIOS APRENDIDOS COM AS DECISÕES DA EQUIPE (prevalecem sobre todos os critérios anteriores quando houver conflito)
+${regrasNovas}
 ` : ''}
 PAUTAS
 - Liste todas as pautas que se aplicam, até três, pelos identificadores acima. Exemplos frequentes de combinação são armas com punitivismo, educação com religião, punitivismo com movimentos, drogas com punitivismo.
@@ -692,6 +696,24 @@ async function graduarLote(itens, sistema, versao) {
     c.cf = cf; c.vg = versao; n++;
   }
   return n;
+}
+
+// Pede a um modelo mais forte que deduza, das decisões da equipe, as regras que ela aplica.
+export async function induzirRegras(exemplos, modelo = MODELO_REGRAS) {
+  const sistema = `Você ajuda um observatório da direita e da extrema-direita no Congresso brasileiro. A equipe do observatório revisou à mão a classificação de centenas de projetos. Cada linha abaixo traz a ementa e a decisão da equipe, que pode ser "extrema-direita", "direita", "não é pauta da direita" ou "contra a pauta da direita".
+
+Sua tarefa é deduzir a régua que a equipe aplica e escrevê-la como regras de decisão para outro classificador, que só verá a ementa. As regras antigas do classificador erram sobretudo por marcar como direita o que a equipe considera extrema-direita, e por deixar de fora projetos que a equipe considera pauta da direita.
+
+COMO ESCREVER
+- Até 45 regras, cada uma com no máximo 60 palavras, agrupadas por tema (punitivismo, armas, costumes, religião, educação, ambiente, povos, trabalho, Estado, privilégios fiscais, instituições, plataformas, soberania, decretos legislativos que sustam atos do governo e outros que os casos mostrarem).
+- Cada regra diz o que é extrema-direita, o que é direita e o que fica de fora naquele tema, com os sinais concretos da ementa que decidem (verbos, objetos, leis alteradas) e exemplos curtos.
+- Inclua regras de desempate, dizendo para que lado a equipe pende em cada tema quando a ementa é ambígua.
+- Descreva o padrão geral, não casos isolados. Quando as decisões da equipe forem contraditórias entre si, siga a maioria.
+- Sem dois-pontos como transição entre frases.
+
+Responda somente com JSON válido, no formato {"r":["regra 1","regra 2"]}.`;
+  const res = await chamarClaude(sistema, 'DECISÕES DA EQUIPE\n' + exemplos, 9000, modelo);
+  return res ? res.filter(x => typeof x === 'string').map(x => '- ' + x.trim()).join('\n') : '';
 }
 
 // Os casos corrigidos pela equipe entram como exemplos. A versão do grau inclui um contador que sobe a cada
