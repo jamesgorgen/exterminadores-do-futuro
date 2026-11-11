@@ -58,6 +58,15 @@
       ],
       "g": "direita"
     },
+    "PDL 1012/2026": {
+      "s": "avanca",
+      "p": [
+        "instituicoes",
+        "costumes"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
     "PDL 1015/2025": {
       "s": "",
       "m": ""
@@ -231,6 +240,14 @@
       "g": "extrema",
       "m": ""
     },
+    "PDL 43/2026": {
+      "s": "",
+      "m": ""
+    },
+    "PDL 45/2026": {
+      "s": "",
+      "m": ""
+    },
     "PDL 464/2026": {
       "s": "avanca",
       "p": [
@@ -253,6 +270,10 @@
         "drogas"
       ],
       "g": "direita"
+    },
+    "PDL 48/2026": {
+      "s": "",
+      "m": ""
     },
     "PDL 506/2025": {
       "s": "avanca",
@@ -417,6 +438,14 @@
       ],
       "g": "direita"
     },
+    "PEC 12/2026": {
+      "s": "avanca",
+      "p": [
+        "trabalho"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
     "PEC 15/2026": {
       "s": "avanca",
       "p": [
@@ -455,6 +484,29 @@
         "punitivismo"
       ],
       "g": "extrema"
+    },
+    "PL 1090/2026": {
+      "s": "avanca",
+      "p": [
+        "religiao"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
+    "PL 1093/2026": {
+      "s": "barra",
+      "p": [
+        "religiao"
+      ],
+      "m": ""
+    },
+    "PL 1095/2026": {
+      "s": "avanca",
+      "p": [
+        "armas"
+      ],
+      "g": "extrema",
+      "m": ""
     },
     "PL 1110/2026": {
       "s": "barra",
@@ -648,6 +700,24 @@
       ],
       "g": "extrema"
     },
+    "PL 1687/2026": {
+      "s": "avanca",
+      "p": [
+        "armas",
+        "punitivismo"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
+    "PL 1688/2026": {
+      "s": "avanca",
+      "p": [
+        "armas",
+        "punitivismo"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
     "PL 1696/2025": {
       "s": "avanca",
       "p": [
@@ -670,6 +740,14 @@
         "privilegios"
       ],
       "g": "direita"
+    },
+    "PL 1825/2026": {
+      "s": "avanca",
+      "p": [
+        "plataformas"
+      ],
+      "g": "extrema",
+      "m": ""
     },
     "PL 1827/2026": {
       "s": "barra",
@@ -767,6 +845,14 @@
       ],
       "g": "extrema"
     },
+    "PL 1972/2026": {
+      "s": "avanca",
+      "p": [
+        "religiao"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
     "PL 1976/2026": {
       "s": "avanca",
       "p": [
@@ -823,6 +909,13 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 2084/2026": {
+      "s": "avanca",
+      "p": [
+        "educacao"
+      ],
+      "g": "direita"
     },
     "PL 2091/2026": {
       "s": "barra",
@@ -912,6 +1005,14 @@
       ],
       "g": "direita"
     },
+    "PL 2259/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo",
+        "drogas"
+      ],
+      "g": "direita"
+    },
     "PL 2261/2026": {
       "s": "avanca",
       "p": [
@@ -983,6 +1084,13 @@
         "punitivismo"
       ],
       "g": "extrema"
+    },
+    "PL 2424/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "direita"
     },
     "PL 2427/2025": {
       "s": "avanca",
@@ -1337,6 +1445,14 @@
       "s": "avanca",
       "p": [
         "punitivismo"
+      ],
+      "g": "direita"
+    },
+    "PL 3233/2026": {
+      "s": "avanca",
+      "p": [
+        "ambiente",
+        "privilegios"
       ],
       "g": "direita"
     },
@@ -2990,6 +3106,14 @@
       ],
       "g": "extrema"
     },
+    "PL 778/2026": {
+      "s": "avanca",
+      "p": [
+        "instituicoes"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
     "PL 790/2025": {
       "s": "barra",
       "p": [
@@ -3035,6 +3159,14 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 876/2026": {
+      "s": "avanca",
+      "p": [
+        "trabalho",
+        "privilegios"
+      ],
+      "g": "direita"
     },
     "PL 953/2026": {
       "s": "avanca",
