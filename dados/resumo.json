@@ -1,10 +1,10 @@
 {
- "gerado": "2026-11-11T22:49:43.098Z",
+ "gerado": "2026-11-11T23:26:54.973Z",
  "inicio": "2023-02-01",
  "totais": {
   "proposicoes": 26415,
-  "direita": 2638,
-  "extrema": 1757,
+  "direita": 2637,
+  "extrema": 1753,
   "votacoes": 2446,
   "disputadas": 1178,
   "vitorias": 508,
@@ -31,7 +31,7 @@
  },
  "porPauta": {
   "armas": {
-   "prop": 295,
+   "prop": 296,
    "extrema": 265,
    "prop30": 1,
    "vot": 6,
@@ -39,24 +39,24 @@
    "derrotas": 2
   },
   "punitivismo": {
-   "prop": 1287,
-   "extrema": 853,
+   "prop": 1286,
+   "extrema": 851,
    "prop30": 14,
    "vot": 23,
    "vitorias": 18,
    "derrotas": 1
   },
   "instituicoes": {
-   "prop": 224,
-   "extrema": 204,
+   "prop": 223,
+   "extrema": 203,
    "prop30": 13,
    "vot": 30,
    "vitorias": 26,
    "derrotas": 3
   },
   "costumes": {
-   "prop": 308,
-   "extrema": 288,
+   "prop": 307,
+   "extrema": 287,
    "prop30": 3,
    "vot": 9,
    "vitorias": 5,
@@ -95,8 +95,8 @@
    "derrotas": 1
   },
   "movimentos": {
-   "prop": 147,
-   "extrema": 136,
+   "prop": 148,
+   "extrema": 137,
    "prop30": 1,
    "vot": 5,
    "vitorias": 5,
@@ -104,15 +104,15 @@
   },
   "trabalho": {
    "prop": 108,
-   "extrema": 29,
+   "extrema": 28,
    "prop30": 2,
    "vot": 21,
    "vitorias": 16,
    "derrotas": 5
   },
   "estado": {
-   "prop": 120,
-   "extrema": 44,
+   "prop": 122,
+   "extrema": 46,
    "prop30": 5,
    "vot": 15,
    "vitorias": 8,
@@ -120,7 +120,7 @@
   },
   "privilegios": {
    "prop": 340,
-   "extrema": 67,
+   "extrema": 65,
    "prop30": 4,
    "vot": 34,
    "vitorias": 23,
@@ -151,8 +151,8 @@
    "derrotas": 0
   },
   "soberania": {
-   "prop": 75,
-   "extrema": 58,
+   "prop": 73,
+   "extrema": 55,
    "prop30": 0,
    "vot": 4,
    "vitorias": 2,
