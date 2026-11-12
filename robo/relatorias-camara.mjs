@@ -15,6 +15,7 @@ import { fileURLToPath } from 'node:url';
 const RAIZ = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const DADOS = process.env.DADOS || path.join(RAIZ, 'dados');
 const ARQ = path.join(DADOS, 'relatorias-camara.json');
+const PASTA = path.join(DADOS, 'relatorias-camara');
 const API = 'https://dadosabertos.camara.leg.br/api/v2';
 const INICIO = process.env.INICIO_REL || '2023-02-01';
 const TIPOS = ['PL', 'PLP', 'PEC', 'PDL', 'MPV'];
@@ -95,7 +96,13 @@ async function emParalelo(itens, fn, n) {
 
 function gravar(porId, ate) {
   const itens = [...porId.values()].flat().filter(r => r.r).sort((a, b) => (b.di || '').localeCompare(a.di || ''));
-  fs.writeFileSync(ARQ, JSON.stringify({ gerado: new Date().toISOString(), fonte: 'Câmara dos Deputados, Dados Abertos, tramitações das proposições', ate, itens }));
+  const gerado = new Date().toISOString(), fonte = 'Câmara dos Deputados, Dados Abertos, tramitações das proposições';
+  fs.writeFileSync(ARQ, JSON.stringify({ gerado, fonte, ate, itens }));
+  // Um arquivo pequeno por deputado, lido pelo site quando o perfil é aberto.
+  const porDep = new Map();
+  for (const r of itens) { const l = porDep.get(r.r) || []; l.push(r); porDep.set(r.r, l); }
+  fs.rmSync(PASTA, { recursive: true, force: true }); fs.mkdirSync(PASTA, { recursive: true });
+  for (const [k, l] of porDep) fs.writeFileSync(path.join(PASTA, k + '.json'), JSON.stringify({ gerado, fonte, itens: l }));
   return itens.length;
 }
 

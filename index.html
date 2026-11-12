@@ -298,18 +298,17 @@ async function carregar(){
   aplicarEndereco();
   desenhar();
 }
-// Relatorias, carregadas só quando um perfil é aberto (um arquivo por Casa).
+// Relatorias, carregadas só quando um perfil é aberto (Senado num arquivo, Câmara um arquivo por deputado).
 const relatoriasCache = {};
-async function relatorias(casa){
-  const arq = casa === 'C' ? 'relatorias-camara.json' : 'relatorias.json';
+async function relatorias(casa, k){
+  const arq = casa === 'C' ? `relatorias-camara/${k}.json` : 'relatorias.json';
   if (!relatoriasCache[arq]) relatoriasCache[arq] = lerJson(arq).then(j => j.itens || []).catch(() => []);
   return relatoriasCache[arq];
 }
 const COMISSAO_TXT = c => c === 'PLEN' ? 'Plenário' : c;
 async function desenharRelatorias(k, p){
   const caixa = $('#perfil-rel'); if (!caixa) return;
-  const base = await relatorias(p.c);
-  if (!base.length) { caixa.innerHTML = '<p class="meta">As relatorias desta Casa ainda estão sendo carregadas.</p>'; return; }
+  const base = await relatorias(p.c, k);
   const todas = base.filter(r => r.r === k);
   if (!todas.length) { caixa.innerHTML = '<p class="meta">Nenhuma relatoria registrada desde 2023.</p>'; return; }
   const direita = new Map(D.prop.map(it => [it.c, it]));
@@ -323,7 +322,7 @@ async function desenharRelatorias(k, p){
       : (r.df ? `encerrada em ${dataBR(r.df)}${r.mo ? `, ${esc(r.mo.toLowerCase())}` : ''}` : 'em andamento');
     return `<div class="rel"><span class="meta">${dataBR(r.di)}</span><b>${url ? `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(r.c)}</a>` : esc(r.c)}</b><span>${esc(COMISSAO_TXT(r.cm))}${r.tr && !/^relator$/i.test(r.tr) ? `, ${esc(r.tr.toLowerCase())}` : ''}</span><span class="meta">${situacao}</span>${x ? `<span class="selo ${x.g === 'extrema' ? 's-ext' : 's-dir'}">Pauta da ${x.g === 'extrema' ? 'extrema-direita' : 'direita'}</span>` : ''}${r.e ? `<span class="rel-e">${esc(r.e)}${r.au ? ` <span class="meta">Autoria: ${esc(r.au)}.</span>` : ''}</span>` : ''}</div>`; };
   caixa.innerHTML = `<p class="meta">${fmt(todas.length)} relatorias desde 2023, ${fmt(ativas)} em andamento. ${daDireita.length ? `${fmt(daDireita.length)} sobre projetos com pauta da direita.` : ''}</p>
-    <div class="lista-votos">${todas.slice(0, 20).map(linha).join('')}</div>${todas.length > 20 ? `<p class="meta">Mostrando as 20 designações mais recentes.</p>` : ''}`;
+    <div class="lista-votos">${[...daDireita, ...todas.filter(r => !direita.has(r.c))].slice(0, 20).map(linha).join('')}</div>${todas.length > 20 ? `<p class="meta">Mostrando 20 designações, primeiro as de projetos com pauta da direita e depois as mais recentes.</p>` : ''}`;
 }
 async function votosDoAno(ano){
   if (!D.votosAno[ano]) D.votosAno[ano] = lerJson(`votacoes-${ano}.json`).then(j => new Map(((j && j.itens) || []).map(v => [v.id, v])));
