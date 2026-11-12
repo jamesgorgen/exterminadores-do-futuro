@@ -58,6 +58,7 @@ Na página de revisão, as filas mostram por padrão só os itens que exigem rev
 | `robo/motor.js` | Funções de busca e de classificação por tema, usadas pelo robô |
 | `taxonomia.js` | Temas dos Cadernos do Futuro, usados para marcar os temas das ementas |
 | `robo/coletar.mjs` | O robô de coleta |
+| `robo/pdfs.mjs` e `.github/workflows/dossies.yml` | Geram todo dia 1º os dossiês dos 27 estados em PDF e publicam em Releases do repositório; a página de dossiês aponta para o último mês |
 | `.github/workflows/atualizar.yml` | O agendamento do robô no GitHub Actions |
 | `compartilhar.jpg` | Imagem da prévia do link |
 | `CNAME` | Domínio exterminadores.com.br |
@@ -72,10 +73,11 @@ Na pasta `dados`
 | `proposicoes-direita.json` | Projetos que fazem avançar alguma pauta |
 | `votacoes-resumo.json` | Todas as votações nominais, sem os votos individuais |
 | `votacoes-AAAA.json` | Votações do ano com o voto de cada parlamentar |
+| `votos-disputadas.json` | Voto de cada parlamentar nas votações disputadas, uma letra por votação, usado pelo dossiê parlamentar |
 | `proposicoes-AAAA.json` | Todos os projetos do ano |
 | `classificacoes.json` | Classificações já feitas pela IA |
 | `parlamentares.json` | Cadastro de deputados e senadores |
-| `diagnostico.json` | Amostras dos dados brutos, contagens e erros da última execução |
+| `diagnostico.json` | Amostras dos dados brutos, contagens e erros da última execução. Em `numeracao`, as lacunas na numeração das proposições das últimas duas semanas; muitas de uma vez viram erro, sinal de falha na coleta |
 | `estado.json` | Controle interno do robô |
 | `verificados.json` | Opcional. Casos conferidos pela equipe, mantidos à mão |
 

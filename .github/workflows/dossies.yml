@@ -1,0 +1,48 @@
+# Gera todo mês os dossiês dos 27 estados em PDF e publica como uma versão (release) do repositório.
+# Os arquivos ficam em https://github.com/jamesgorgen/exterminadores-do-futuro/releases
+# e o último mês sempre em .../releases/latest/download/Dossie-UF.pdf, endereço usado na página de dossiês.
+# Também pode ser disparada à mão em Actions > Dossiês estaduais em PDF > Run workflow.
+name: Dossiês estaduais em PDF
+
+on:
+  schedule:
+    - cron: '31 12 1 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  pdfs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Baixar o repositório
+        uses: actions/checkout@v4
+
+      - name: Preparar o Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Instalar o navegador
+        run: |
+          npm install --no-save --no-package-lock playwright@1.49.1
+          npx playwright install --with-deps chromium
+
+      - name: Gerar os PDFs
+        run: node robo/pdfs.mjs pdfs
+
+      - name: Publicar a versão do mês
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          MES=$(date -u +%Y-%m)
+          TAG="dossies-$MES"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" pdfs/*.pdf --clobber
+          else
+            gh release create "$TAG" pdfs/*.pdf --latest \
+              --title "Dossiês estaduais de $MES" \
+              --notes "Dossiês dos 27 estados gerados automaticamente em $(date -u +%d/%m/%Y) a partir dos dados do observatório. As classificações por IA são triagem e podem conter erros."
+          fi

@@ -844,6 +844,27 @@ function calcularAlinhamento(todasVotacoes) {
   return conta;
 }
 
+// A numeração das proposições é única para as duas Casas. Lacunas nos números das últimas duas semanas
+// indicam proposições que o robô não trouxe. Algumas são esperadas (Executivo, comissões, outros órgãos);
+// muitas de uma vez indicam falha na coleta e aparecem como erro no diagnóstico.
+export function verificarNumeracao(itens, dias = 14) {
+  const desde = new Date(AGORA - dias * 86400000).toISOString().slice(0, 10);
+  const saida = {};
+  for (const tipo of TIPOS) {
+    const nums = itens.filter(it => it.d >= desde && it.c.startsWith(tipo + ' ') && it.c.endsWith('/' + ano(HOJE)))
+      .map(it => +it.c.slice(tipo.length + 1).split('/')[0]).filter(Number.isFinite).sort((a, b) => a - b);
+    if (nums.length < 2) continue;
+    const tem = new Set(nums); const faltam = [];
+    for (let n = nums[0]; n <= nums[nums.length - 1]; n++) if (!tem.has(n)) faltam.push(n);
+    const total = nums[nums.length - 1] - nums[0] + 1;
+    saida[tipo] = { de: nums[0], ate: nums[nums.length - 1], faltam: faltam.length, numeros: faltam.slice(0, 30) };
+    contar('numeracao_lacunas_' + tipo, faltam.length);
+    if (faltam.length >= 10 && faltam.length / total > 0.15) erro(`numeração ${tipo}: faltam ${faltam.length} de ${total} números desde ${desde}`, new Error('possível falha na coleta de proposições'));
+  }
+  diag.numeracao = saida;
+  return saida;
+}
+
 // ------------------------------------------------------------------ execução
 export async function executar() {
   const completo = MODO === 'completo' || !estado.ultimaColeta;
@@ -875,6 +896,7 @@ export async function executar() {
   for (const a of anosDoPeriodo(INICIO, HOJE)) { arquivoVotacoes(a); arquivoProposicoes(a); }
   const todasVot = Object.values(votacoesPorAno).flatMap(m => [...m.values()]);
   const todasPropFinal = Object.values(proposicoesPorAno).flatMap(m => [...m.values()]);
+  verificarNumeracao(todasPropFinal);
   // Temas da taxonomia, pelas ementas.
   for (const it of todasPropFinal) if (!it.m) it.m = Motor.classificar(it.e || '', TC).map(t => t.id);
 
@@ -983,6 +1005,21 @@ export async function executar() {
     t: Object.fromEntries(Object.entries(vt.v || {}).map(([c, l]) => [c, l.length])) }))
     .sort((x, y) => (y.d || '').localeCompare(x.d || ''));
   gravarJson('votacoes-resumo.json', { gerado: AGORA.toISOString(), itens: resumoVot }, true);
+  // Votos de cada parlamentar nas votações disputadas, para o dossiê não precisar baixar todas as votações.
+  // Para cada Casa, a lista de votações e, por parlamentar, uma letra por votação na mesma ordem (. = sem registro).
+  const votosDisp = { gerado: AGORA.toISOString(), C: { ids: [], v: {} }, S: { ids: [], v: {} } };
+  const dispOrdem = todasVot.filter(vt => vt.dispE || vt.dispD || vt.disp).sort((x, y) => (x.d || '').localeCompare(y.d || '') || String(x.id).localeCompare(String(y.id)));
+  const letras = { C: {}, S: {} };
+  for (const vt of dispOrdem) {
+    const casa = votosDisp[vt.k]; if (!casa) continue;
+    const pos = casa.ids.push(vt.id) - 1;
+    for (const [c, l] of Object.entries(vt.v || {})) for (const num of l) {
+      const arr = letras[vt.k][num] || (letras[vt.k][num] = []);
+      arr[pos] = ['S', 'N', 'A', 'O'].includes(c) ? c : '-';
+    }
+  }
+  for (const k of ['C', 'S']) for (const [num, arr] of Object.entries(letras[k])) votosDisp[k].v[num] = Array.from(arr, x => x || '.').join('');
+  gravarJson('votos-disputadas.json', votosDisp, true);
 
   const desde = d => new Date(AGORA - d * 86400000).toISOString().slice(0, 10);
   const porPauta = {};

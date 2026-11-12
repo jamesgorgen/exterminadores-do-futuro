@@ -252,7 +252,8 @@ const est = {
 // ---------------------------------------------------------------- dados
 async function lerJson(nome){ try { const r = await fetch('dados/' + nome, { cache: 'no-cache' }); return r.ok ? await r.json() : null; } catch (e) { return null; } }
 async function carregar(){
-  const [resumo, indice, prop, vot, ver] = await Promise.all(['resumo.json', 'indice.json', 'proposicoes-direita.json', 'votacoes-resumo.json', 'verificados.json'].map(lerJson));
+  const [resumo, indice, prop, vot] = await Promise.all(['resumo.json', 'indice.json', 'proposicoes-direita.json', 'votacoes-resumo.json'].map(lerJson));
+  const ver = null;
   D.resumo = resumo; D.indice = (indice && indice.p) || {}; D.regras = indice && indice.regras;
   D.prop = (prop && prop.itens) || []; D.vot = (vot && vot.itens) || []; D.ver = (ver && ver.casos) || {};
   desenharFaixa();
@@ -344,7 +345,8 @@ function desenharMovimentos(){
   let votRec = D.vot.filter(v => v.d >= desde(janela) && (v.disp || (v.x && v.x.s)));
   let propRec = D.prop.filter(it => it.d >= desde(janela) && it.x && it.x.s === 'avanca');
   if (!votRec.length && !propRec.length) { janela = 30; votRec = D.vot.filter(v => v.d >= desde(janela) && (v.disp || (v.x && v.x.s))); propRec = D.prop.filter(it => it.d >= desde(janela) && it.x && it.x.s === 'avanca'); }
-  const casos = Object.values(D.ver).filter(c => c && c.chave);
+  // Casos conferidos pela equipe, os mais recentes primeiro.
+  const casos = D.prop.filter(it => it.x && it.x.eq && it.x.s === 'avanca').sort((a, b) => (b.d || '').localeCompare(a.d || ''));
   const t = r.totais;
   el.innerHTML = `
     <div class="secao">
@@ -358,7 +360,7 @@ function desenharMovimentos(){
         <div class="kpi"><b>${fmt(votRec.filter(v => v.dispD && v.vD === true).length)}</b><span>vencidas pela direita</span></div>
       </div>
     </div>
-    ${casos.length ? `<div class="secao"><h2 class="titulo">Casos verificados</h2><p class="sub">Conferidos pela equipe.</p><div class="grade">${casos.slice(0, 6).map(c => cartaoProp(Object.assign({ c: c.chave, k: c.casa, d: c.data, e: c.ementa, a: c.autores, i: c.i, x: c.x || {} }))).join('')}</div></div>` : ''}
+    ${casos.length ? `<div class="secao"><h2 class="titulo">Casos verificados</h2><p class="sub">Os projetos mais recentes cuja classificação foi conferida pela equipe do observatório, entre ${fmt(casos.length)} já conferidos.</p><div class="grade">${casos.slice(0, 6).map(cartaoProp).join('')}</div></div>` : ''}
     <div class="secao">
       <h2 class="titulo">Votações</h2>
       ${votRec.length ? `<div class="grade">${votRec.slice(0, 12).map(cartaoVot).join('')}</div>${votRec.length > 12 ? `<p><button type="button" class="btn" data-ir="votacoes">Ver todas as votações</button></p>` : ''}` : `<div class="vazio"><p>Nenhuma votação disputada ou com pauta da direita no período.</p></div>`}

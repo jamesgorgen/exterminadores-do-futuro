@@ -113,6 +113,10 @@ td.d,th.d{text-align:right;white-space:nowrap}
   a{color:var(--ink);text-decoration:none}
   h2{break-after:avoid}
   .quebra{break-before:page}
+  .tabela{overflow:visible}
+  table{table-layout:auto;width:100%}
+  th{letter-spacing:0;white-space:normal}
+  th.d{white-space:normal}
 }
 </style>
 </head>
@@ -178,10 +182,17 @@ async function dossieParlamentar(k) {
   const casa = k[0], num = +k.slice(1);
   // Votos nas votações disputadas
   const disp = vr.itens.filter(v => (v.dispE || v.dispD || v.disp) && v.k === casa);
-  const anos = [...new Set(disp.map(v => v.d.slice(0, 4)))];
-  const arqs = await Promise.all(anos.map(a => json(`dados/votacoes-${a}.json`).catch(() => ({ itens: [] }))));
   const votos = new Map();
-  arqs.forEach(a => a.itens.forEach(v => { for (const [c, l] of Object.entries(v.v || {})) if (l.includes(num)) { votos.set(v.id, c); break; } }));
+  // Arquivo leve com os votos de cada parlamentar nas votações disputadas. Se faltar, cai nos arquivos anuais.
+  const vd = await json('dados/votos-disputadas.json').catch(() => null);
+  if (vd && vd[casa]) {
+    const seq = vd[casa].v[num] || '';
+    vd[casa].ids.forEach((id, i) => { const c = seq[i]; if (c && c !== '.') votos.set(id, c); });
+  } else {
+    const anos = [...new Set(disp.map(v => v.d.slice(0, 4)))];
+    const arqs = await Promise.all(anos.map(a => json(`dados/votacoes-${a}.json`).catch(() => ({ itens: [] }))));
+    arqs.forEach(a => a.itens.forEach(v => { for (const [c, l] of Object.entries(v.v || {})) if (l.includes(num)) { votos.set(v.id, c); break; } }));
+  }
   // Placar com cada bloco, nas votações em que aquele bloco e a esquerda se opuseram.
   const placar = chave => { const r = { com: 0, contra: 0, fora: 0, total: 0 }; disp.filter(v => v['disp' + chave]).forEach(v => { const c = votos.get(v.id); r.total++; if (!c || !['S', 'N'].includes(c)) r.fora++; else if (c === v['b' + chave.toLowerCase()]) r.com++; else r.contra++; }); return r; };
   const pE = placar('E'), pD = placar('D');
@@ -355,8 +366,11 @@ async function escolher() {
         <button type="submit">Gerar dossiê</button><p class="peq" id="avisoParl"></p></form>
       <form class="cartao" id="fUf"><h2>Dossiê estadual</h2><p class="leve">Bancada e alinhamento, proposições da bancada e emendas destinadas ao estado e aos municípios.</p>
         <label for="selUf" class="peq">Estado</label><select id="selUf">${Object.entries(UFNOME).sort((a, b) => a[1].localeCompare(b[1])).map(([u, n]) => `<option value="${u}">${n}</option>`).join('')}</select>
-        <button type="submit">Gerar dossiê</button></form>
+        <button type="submit">Gerar dossiê</button>
+        <p class="peq">Ou baixe o <a id="pdfUf" href="#" target="_blank" rel="noopener">PDF do mês</a>, gerado automaticamente no dia 1º.</p></form>
     </div>`;
+  const linkPdf = () => { $('#pdfUf').href = `https://github.com/jamesgorgen/exterminadores-do-futuro/releases/latest/download/Dossie-${$('#selUf').value}.pdf`; };
+  $('#selUf').addEventListener('change', linkPdf); linkPdf();
   const porRotulo = new Map(ps.map(([k, p]) => [`${p.n} (${partido(p)}-${p.uf || ''})`, k]));
   $('#fParl').addEventListener('submit', e => { e.preventDefault(); const v = $('#nomeParl').value.trim(); const k = porRotulo.get(v) || (ps.find(([, p]) => p.n.toLowerCase() === v.toLowerCase()) || [])[0]; if (!k) { $('#avisoParl').textContent = 'Escolha um nome da lista.'; return; } location.search = '?tipo=parlamentar&id=' + encodeURIComponent(k); });
   $('#fUf').addEventListener('submit', e => { e.preventDefault(); location.search = '?tipo=estado&uf=' + $('#selUf').value; });
