@@ -1,0 +1,21 @@
+name: Diagnóstico de DNS (temporário)
+on:
+  push:
+    branches: [diag-dns]
+permissions:
+  contents: read
+jobs:
+  dns:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          sudo apt-get install -y -qq bind9-dnsutils >/dev/null 2>&1 || true
+          echo "== NS no registro .br (a.dns.br)"; dig +norec NS exterminadores.com.br @a.dns.br | sed -n '/AUTHORITY SECTION/,/^$/p'
+          echo "== DS no registro .br"; dig +short DS exterminadores.com.br @a.dns.br
+          echo "== NS via 8.8.8.8"; dig +short NS exterminadores.com.br @8.8.8.8
+          echo "== DS via 8.8.8.8"; dig +short DS exterminadores.com.br @8.8.8.8
+          echo "== A via 8.8.8.8"; dig A exterminadores.com.br @8.8.8.8 | grep -E "status|^exterminadores"
+          echo "== A www via 8.8.8.8"; dig A www.exterminadores.com.br @8.8.8.8 | grep -E "status|^www|CNAME"
+          echo "== Cloudflare responde pela zona?"; dig +norec SOA exterminadores.com.br @jose.ns.cloudflare.com | grep -E "status|SOA"; dig +short A exterminadores.com.br @jose.ns.cloudflare.com; dig +short CNAME www.exterminadores.com.br @macy.ns.cloudflare.com
+          echo "== DNSKEY na Cloudflare"; dig +short DNSKEY exterminadores.com.br @jose.ns.cloudflare.com | head -3
+          echo "== Site"; curl -sS -o /dev/null -w "%{http_code} %{ssl_verify_result}\n" https://exterminadores.com.br/ ; curl -sS -o /dev/null -w "%{http_code}\n" https://www.exterminadores.com.br/
