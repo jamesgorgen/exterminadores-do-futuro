@@ -74,6 +74,7 @@ Na pasta `dados`
 | `votacoes-resumo.json` | Todas as votações nominais, sem os votos individuais |
 | `votacoes-AAAA.json` | Votações do ano com o voto de cada parlamentar |
 | `relatorias.json` | Relatorias do Senado desde 2023: matéria, relator, comissão e datas de designação e de saída. Os relatores em exercício também vão para `rl` em `proposicoes-direita.json` |
+| `relatorias-camara.json` | Relatorias da Câmara desde 2023, lidas das tramitações pelo script `robo/relatorias-camara.mjs` (workflow "Relatorias da Câmara", diário): proposição, deputado, órgão, data da designação, data do parecer e se a relatoria está em andamento |
 | `votos-disputadas.json` | Voto de cada parlamentar nas votações disputadas, uma letra por votação, usado pelo dossiê parlamentar |
 | `proposicoes-AAAA.json` | Todos os projetos do ano |
 | `classificacoes.json` | Classificações já feitas pela IA |

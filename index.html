@@ -298,23 +298,30 @@ async function carregar(){
   aplicarEndereco();
   desenhar();
 }
-// Relatorias (Senado), carregadas só quando um perfil é aberto.
-let relatoriasCache = null;
-async function relatorias(){
-  if (!relatoriasCache) relatoriasCache = lerJson('relatorias.json').then(j => j.itens || []).catch(() => []);
-  return relatoriasCache;
+// Relatorias, carregadas só quando um perfil é aberto (um arquivo por Casa).
+const relatoriasCache = {};
+async function relatorias(casa){
+  const arq = casa === 'C' ? 'relatorias-camara.json' : 'relatorias.json';
+  if (!relatoriasCache[arq]) relatoriasCache[arq] = lerJson(arq).then(j => j.itens || []).catch(() => []);
+  return relatoriasCache[arq];
 }
 const COMISSAO_TXT = c => c === 'PLEN' ? 'Plenário' : c;
 async function desenharRelatorias(k, p){
   const caixa = $('#perfil-rel'); if (!caixa) return;
-  const todas = (await relatorias()).filter(r => r.r === k);
+  const base = await relatorias(p.c);
+  if (!base.length) { caixa.innerHTML = '<p class="meta">As relatorias desta Casa ainda estão sendo carregadas.</p>'; return; }
+  const todas = base.filter(r => r.r === k);
   if (!todas.length) { caixa.innerHTML = '<p class="meta">Nenhuma relatoria registrada desde 2023.</p>'; return; }
   const direita = new Map(D.prop.map(it => [it.c, it]));
-  const ativas = todas.filter(r => !r.df).length;
+  const ativa = r => r.k === 'C' ? r.at === 1 : !r.df;
+  const ativas = todas.filter(ativa).length;
   const daDireita = todas.filter(r => direita.has(r.c));
   const linha = r => { const it = direita.get(r.c); const x = it ? it.x || {} : null;
-    const url = r.i ? `https://www25.senado.leg.br/web/atividade/materias/-/materia/${encodeURIComponent(r.i)}` : '';
-    return `<div class="rel"><span class="meta">${dataBR(r.di)}</span><b>${url ? `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(r.c)}</a>` : esc(r.c)}</b><span>${esc(COMISSAO_TXT(r.cm))}${r.tr && !/^relator$/i.test(r.tr) ? `, ${esc(r.tr.toLowerCase())}` : ''}</span><span class="meta">${r.df ? `encerrada em ${dataBR(r.df)}${r.mo ? `, ${esc(r.mo.toLowerCase())}` : ''}` : 'em andamento'}</span>${x ? `<span class="selo ${x.g === 'extrema' ? 's-ext' : 's-dir'}">Pauta da ${x.g === 'extrema' ? 'extrema-direita' : 'direita'}</span>` : ''}${r.e ? `<span class="rel-e">${esc(r.e)}${r.au ? ` <span class="meta">Autoria: ${esc(r.au)}.</span>` : ''}</span>` : ''}</div>`; };
+    const url = !r.i ? '' : r.k === 'C' ? `https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=${encodeURIComponent(r.i)}` : `https://www25.senado.leg.br/web/atividade/materias/-/materia/${encodeURIComponent(r.i)}`;
+    const situacao = r.k === 'C'
+      ? (r.pa ? `parecer apresentado em ${dataBR(r.pa)}` : r.at ? 'em andamento' : r.sb ? 'substituído por outro relator' : 'encerrada')
+      : (r.df ? `encerrada em ${dataBR(r.df)}${r.mo ? `, ${esc(r.mo.toLowerCase())}` : ''}` : 'em andamento');
+    return `<div class="rel"><span class="meta">${dataBR(r.di)}</span><b>${url ? `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(r.c)}</a>` : esc(r.c)}</b><span>${esc(COMISSAO_TXT(r.cm))}${r.tr && !/^relator$/i.test(r.tr) ? `, ${esc(r.tr.toLowerCase())}` : ''}</span><span class="meta">${situacao}</span>${x ? `<span class="selo ${x.g === 'extrema' ? 's-ext' : 's-dir'}">Pauta da ${x.g === 'extrema' ? 'extrema-direita' : 'direita'}</span>` : ''}${r.e ? `<span class="rel-e">${esc(r.e)}${r.au ? ` <span class="meta">Autoria: ${esc(r.au)}.</span>` : ''}</span>` : ''}</div>`; };
   caixa.innerHTML = `<p class="meta">${fmt(todas.length)} relatorias desde 2023, ${fmt(ativas)} em andamento. ${daDireita.length ? `${fmt(daDireita.length)} sobre projetos com pauta da direita.` : ''}</p>
     <div class="lista-votos">${todas.slice(0, 20).map(linha).join('')}</div>${todas.length > 20 ? `<p class="meta">Mostrando as 20 designações mais recentes.</p>` : ''}`;
 }
@@ -645,10 +652,10 @@ async function desenharPerfil(k){
     <div class="topo">${pautas.map(([id, n]) => `<span class="selo s-pauta">${esc(PAUTA[id] ? PAUTA[id].nome : id)} ${n}</span>`).join(' ')}</div>
     <h4>Projetos com pauta da direita (${fmt(props.length)})</h4>
     ${props.length ? `<div class="grade">${props.slice(0, 6).map(cartaoProp).join('')}</div>${props.length > 6 ? `<p><button type="button" class="btn" data-ver-props="${esc(k)}">Ver todos os ${props.length}</button></p>` : ''}` : '<p class="meta">Nenhum projeto com pauta da direita.</p>'}
-    ${p.c === 'S' ? `<h4>O que relata</h4><div id="perfil-rel">Carregando.</div>` : ''}
+    <h4>O que relata</h4><div id="perfil-rel">Carregando.</div>
     <h4>Votos recentes em votações disputadas</h4><div class="lista-votos" id="perfil-votos">Carregando.</div>
   </div>`;
-  if (p.c === 'S') desenharRelatorias(k, p);
+  desenharRelatorias(k, p);
   el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   const recentes = D.vot.filter(v => v.disp && v.k === p.c).slice(0, 60);
   const anos = [...new Set(recentes.map(v => String(v.d).slice(0, 4)))];
@@ -678,7 +685,7 @@ function desenharMetodo(){
     <p>Uma inteligência artificial lê a ementa de cada projeto e de cada votação e indica se o item faz avançar alguma das pautas abaixo, se vai contra ela ou se não trata de nenhuma. Quando faz avançar, indica o grau, direita ou extrema-direita. O grau vale para o projeto ou para a votação, e não para a pessoa. A classificação é automática e serve como triagem. Os casos conferidos pela equipe recebem o selo "Conferido pela equipe".</p>
     <div class="pautas-met">${P.lista.map(p => `<div><b>${esc(p.nome)}</b>${esc(p.descricao)}<small>Extrema-direita quando ${esc(p.extrema.charAt(0).toLowerCase() + p.extrema.slice(1))}</small></div>`).join('')}</div>
     <h3>Relatorias</h3>
-    <p>O relator é o parlamentar que estuda um projeto numa comissão ou no plenário e escreve o parecer, muitas vezes com um texto novo, que vai a voto. Por isso a relatoria costuma pesar tanto quanto a autoria. Os dados do Senado vêm da base de relatorias do próprio Senado, com cada designação desde 2023, a comissão, a data em que o senador assumiu e a data e o motivo de quando deixou a relatoria. O perfil de cada senador mostra o que ele relata, e a ficha dos projetos da direita mostra quem os relata no momento. Os dados da Câmara estão em preparação.</p>
+    <p>O relator é o parlamentar que estuda um projeto numa comissão ou no plenário e escreve o parecer, muitas vezes com um texto novo, que vai a voto. Por isso a relatoria costuma pesar tanto quanto a autoria. Os dados do Senado vêm da base de relatorias do próprio Senado, com cada designação desde 2023, a comissão, a data em que o senador assumiu e a data e o motivo de quando deixou a relatoria. Na Câmara, que não publica uma base própria de relatorias, as designações são lidas das tramitações de cada proposição, que trazem o deputado designado e a comissão, e o parecer é identificado pela tramitação seguinte do mesmo relator. O perfil de cada parlamentar mostra o que ele relata, e a ficha dos projetos da direita mostra quem os relata no momento.</p>
     <h3>Emendas parlamentares</h3>
     <p>O módulo de emendas mostra para onde deputados e senadores mandam o dinheiro das emendas individuais ao Orçamento. Os dados vêm do Portal da Transparência, do governo federal, que publica as emendas, os pagamentos a cada favorecido e os convênios. O robô baixa esses arquivos toda segunda-feira. Entram as emendas individuais de 2023 a 2026, com 2026 ainda em execução. As emendas de bancada, de comissão e de relator ficam de fora, porque não têm um autor individual.</p>
     <p>Cada emenda é ligada ao parlamentar autor pelo nome e somada ao grupo do partido dele, com a mesma divisão usada no resto do site. Os totais usam o valor empenhado, que é o compromisso de gasto, e o perfil de cada parlamentar mostra também o valor efetivamente pago. As áreas seguem a função orçamentária da emenda. As transferências especiais, conhecidas como emendas Pix, aparecem separadas, porque o dinheiro chega ao município sem finalidade definida. O mapa liga cada pagamento ao município que o recebeu, e o valor por habitante usa a população do Censo 2022 do IBGE. Os detalhes estão em <a href="emendas.html#metodo">Como foi feito</a>, no próprio módulo.</p>

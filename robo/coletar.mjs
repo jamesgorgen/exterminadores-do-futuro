@@ -1063,6 +1063,8 @@ export async function executar() {
   // Relatores em exercício de cada matéria (sem data de fim), para mostrar na ficha do projeto.
   const relAtual = new Map();
   for (const r of relatorias) if (!r.df) { const l = relAtual.get(r.c) || []; l.push({ r: r.r, n: r.n, s: r.s, uf: r.uf, cm: r.cm }); relAtual.set(r.c, l); }
+  // Câmara: arquivo gerado pelo script de relatorias da Câmara (robo/relatorias-camara.mjs).
+  for (const r of (lerJson('relatorias-camara.json', { itens: [] }).itens || [])) if (r.at) { const l = relAtual.get(r.c) || []; l.push({ r: r.r, n: r.n, s: r.s, uf: r.uf, cm: r.cm }); relAtual.set(r.c, l); }
   const direita = todasPropFinal.filter(it => cl(it.c).s === 'avanca')
     .map(it => ({ c: it.c, k: it.k, d: it.d, e: it.e, a: it.a, p: it.p, m: it.m, i: it.i, ss: it.ss, x: cl(it.c), rl: relAtual.get(it.c) }))
     .sort((x, y) => (y.d || '').localeCompare(x.d || ''));

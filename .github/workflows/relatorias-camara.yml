@@ -1,0 +1,58 @@
+# Relatorias da Câmara dos Deputados, lidas das tramitações de cada proposição.
+# Roda todo dia depois do robô principal. A primeira execução faz a carga desde 2023 e pode levar horas.
+# À mão: Actions > Relatorias da Câmara > Run workflow (marque "completo" para refazer a carga inteira).
+name: Relatorias da Câmara
+
+on:
+  schedule:
+    - cron: '41 11 * * *'
+  workflow_dispatch:
+    inputs:
+      completo:
+        description: 'Refazer a carga completa desde 2023'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+concurrency:
+  group: relatorias-camara
+  cancel-in-progress: false
+
+jobs:
+  relatorias:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - name: Baixar o repositório
+        uses: actions/checkout@v4
+
+      - name: Preparar o Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Ler as relatorias
+        run: node robo/relatorias-camara.mjs
+        env:
+          COMPLETO: ${{ inputs.completo && 'sim' || '' }}
+
+      - name: Gravar os dados no repositório
+        if: always()
+        run: |
+          git config user.name "robo-exterminadores"
+          git config user.email "robo-exterminadores@users.noreply.github.com"
+          git add dados/relatorias-camara.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "Nada mudou."
+          else
+            git commit -m "Atualiza as relatorias da Câmara ($(date -u +%Y-%m-%d))"
+            for i in 1 2 3 4 5; do
+              if git pull --rebase -X theirs && git push; then exit 0; fi
+              git rebase --abort 2>/dev/null || true
+              sleep $((i * 10))
+            done
+            exit 1
+          fi
