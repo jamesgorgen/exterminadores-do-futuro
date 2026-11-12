@@ -771,7 +771,7 @@ Responda somente com JSON válido, no formato {"r":["regra 1","regra 2"]}.`;
 
 // Os casos corrigidos pela equipe entram como exemplos. A versão do grau inclui um contador que sobe a cada
 // PASSO_REGRAS correções novas, o que faz o robô refazer o grau sozinho à medida que a equipe ensina a IA.
-async function graduarPendentes(itens, exemplos, nCorrecoes, todosExemplos) {
+async function graduarPendentes(itens, exemplos, nCorrecoes, todosExemplos, corrigidos = {}) {
   let versao = `${VERSAO_GRAU}-${Math.floor(nCorrecoes / PASSO_REGRAS)}`;
   let guardadas = {}; try { guardadas = JSON.parse(fs.readFileSync(path.join(DADOS, 'regras-equipe.json'), 'utf8')); } catch (e) {}
   // A reclassificação geral só acontece na execução diária ou disparada à mão. As execuções disparadas por
@@ -781,7 +781,13 @@ async function graduarPendentes(itens, exemplos, nCorrecoes, todosExemplos) {
     log(`  reclassificação geral (${versao}) adiada para a execução diária; esta só gradua itens novos`);
     versao = guardadas.versao;
   }
-  const pend = itens.filter(it => { const c = classificacoes.c[it.chave]; return c && (c.s === 'avanca' || c.fora) && c.vg !== versao; });
+  // Só vão para a IA os itens que a equipe ainda não corrigiu (a correção prevalece de qualquer forma) e que
+  // ainda não têm grau, ou que têm grau antigo sem certeza alta. Os de certeza alta não são refeitos a cada nova versão das regras.
+  const pend = itens.filter(it => {
+    if (Object.prototype.hasOwnProperty.call(corrigidos, it.chave)) return false;
+    const c = classificacoes.c[it.chave];
+    return c && (c.s === 'avanca' || c.fora) && (!c.vg || (c.vg !== versao && c.cf !== 'alta'));
+  });
   log(`Grau, ${pend.length} itens a revisar (versão ${versao}, ${nCorrecoes} correções como exemplo)`);
   if (!pend.length || SEM_IA || !process.env.ANTHROPIC_API_KEY) return;
   // Regras deduzidas das correções da equipe, guardadas em dados/regras-equipe.json e refeitas a cada PASSO_REGRAS correções.
@@ -929,7 +935,7 @@ export async function executar() {
     .map(([k, c]) => `- ${k}. ${String(ementaDe.get(k)).slice(0, 260)} => ${descreveCorrecao(k, c)}`);
   const exemplos = linhasEx.slice(-300).join('\n');
   await classificarPendentes(paraClassificar);
-  await graduarPendentes(paraClassificar, exemplos, Object.keys(correcoes).length, linhasEx.slice(-700).join('\n'));
+  await graduarPendentes(paraClassificar, exemplos, Object.keys(correcoes).length, linhasEx.slice(-700).join('\n'), correcoes);
 
   const classificado = k => {
     const ia = classificacoes.c[k] || {};
