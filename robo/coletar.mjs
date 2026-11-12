@@ -452,7 +452,8 @@ async function coletarVotacoesCamaraApi(ini, fim) {
       await Motor.emParalelo(lista.map(r => async () => {
         const id = pega(r, 'id');
         try {
-          const vj = registros(await baixar(`${API_CAMARA}/votacoes/${id}/votos`));
+          // A Câmara responde 404 quando a votação foi simbólica e não tem votos nominais.
+          const vj = registros(await baixar(`${API_CAMARA}/votacoes/${id}/votos`).catch(e => { if (/http 404/.test(e.message)) return []; throw e; }));
           if (!vj.length) { contar('camara_api_votacao_sem_votos'); return; }
           amostra('camara_api_voto', vj[0]);
           const v = {}, ps = {};
