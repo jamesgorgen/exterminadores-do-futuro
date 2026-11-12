@@ -467,7 +467,7 @@ async function coletarVotacoesCamaraApi(ini, fim) {
           const orgao = String(pega(r, 'siglaOrgao') || '');
           guardarVotacao({ id: 'C:' + id, k: 'C', o: orgao, pl: orgao.toUpperCase() === 'PLEN', d: String(pega(r, 'dataHoraRegistro', 'data') || '').slice(0, 10),
             desc: String(pega(r, 'descricao') || '').slice(0, 600), mat: '', me: '', res: String(pega(r, 'aprovacao')) === '1' ? 'A' : String(pega(r, 'aprovacao')) === '0' ? 'R' : '', v, ps, ori });
-        } catch (e) { contar('camara_api_votacao_erro'); }
+        } catch (e) { contar('camara_api_votacao_erro'); if ((diag.contagens.camara_api_votacao_erro || 0) <= 3) erro(`votos da votação ${id} da Câmara`, e); }
       }), 4);
       pagina++;
     }
