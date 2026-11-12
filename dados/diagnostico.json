@@ -1,5 +1,5 @@
 {
- "inicio": "2026-11-12T16:58:45.105Z",
+ "inicio": "2026-11-12T17:38:37.183Z",
  "modo": "diario",
  "amostras": {
   "camara_deputado": {
@@ -132,14 +132,14 @@
    "VotoPresidente": "false"
   },
   "camara_proposicao": {
-   "id": 2604173,
-   "uri": "https://dadosabertos.camara.leg.br/api/v2/proposicoes/2604173",
-   "siglaTipo": "PEC",
-   "codTipo": 136,
-   "numero": 3,
+   "id": 2610267,
+   "uri": "https://dadosabertos.camara.leg.br/api/v2/proposicoes/2610267",
+   "siglaTipo": "PL",
+   "codTipo": 139,
+   "numero": 1252,
    "ano": 2026,
-   "ementa": "Altera o art. 155 da Constituição Federal para estabelecer alíquota máxima e base de cálculo exclusiva do Imposto sobre a Propriedade de Veículos Automotores – IPVA, e acrescenta dispositivos ao Ato das Disposições Constitucionais Transitórias para limitar despesas com publicidade institucional e com o Poder Legislativo.",
-   "dataApresentacao": "2026-02-24T15:48"
+   "ementa": "Institui, no âmbito da União, o Dia Nacional do Povo Cigano, inscreve essa efeméride no calendário oficial da República Federativa do Brasil e dá outras providências.",
+   "dataApresentacao": "2026-03-18T14:01"
   },
   "senado_proposicao": {
    "autoria": "Senadora Soraya Thronicke (PSB/MS)",
@@ -161,37 +161,37 @@
    "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/0d4cda1b-23e8-4336-ba05-732f65b00835"
   },
   "senado_relatoria": {
-   "autoriaProcesso": "Presidência da República",
+   "autoriaProcesso": "Câmara dos Deputados",
    "casaRelator": "SF",
-   "codigoColegiado": 1998,
-   "codigoMateria": 154768,
-   "codigoParlamentar": 5998,
-   "codigoTipoColegiado": 128,
-   "dataApresentacaoProcesso": "2022-09-22 09:28:28",
-   "dataDesignacao": "2023-02-23 15:48:00",
-   "dataDestituicao": "2023-02-28 18:37:30",
+   "codigoColegiado": 34,
+   "codigoMateria": 156475,
+   "codigoParlamentar": 5748,
+   "codigoTipoColegiado": 21,
+   "dataApresentacaoProcesso": "2023-03-23 16:47:01",
+   "dataDesignacao": "2023-04-04 12:13:42",
+   "dataDestituicao": "2023-04-26 15:33:01",
    "dataFimColegiado": null,
    "descricaoTipoEncerramento": "Deliberação da matéria",
    "descricaoTipoRelator": "Relator",
-   "emailParlamentar": "sen.daniellaribeiro@senado.leg.br",
-   "ementaProcesso": "Altera a Lei nº 12.249, de 11 de junho de 2010, para dispor sobre a alíquota do imposto sobre a renda retido na fonte incidente sobre as operações a que se refere.",
-   "formaTratamentoParlamentar": "Senadora",
-   "id": 9261491,
-   "idProcesso": 8306238,
+   "emailParlamentar": "sen.venezianovitaldorego@senado.leg.br",
+   "ementaProcesso": "Dispõe sobre a transformação de cargos de Analista do Ministério Público da União em cargos de Procurador da Justiça Militar, em cargos de Promotor da Justiça Militar e em cargos em comissão que especifica, no âmbito do Ministério Público Militar; e altera a Lei nº 13.316, de 20 de julho de 2016.",
+   "formaTratamentoParlamentar": "Senador",
+   "id": 9309396,
+   "idProcesso": 8396007,
    "idTipoRelator": 1,
-   "identificacaoProcesso": "MPV 1138/2022",
-   "nomeColegiado": "Plenário do Senado Federal",
-   "nomeCompleto": "Daniella Velloso Borges Ribeiro",
-   "nomeParlamentar": "Daniella Ribeiro",
+   "identificacaoProcesso": "PL 2969/2022",
+   "nomeColegiado": "Comissão de Constituição, Justiça e Cidadania",
+   "nomeCompleto": "Veneziano Vital do Rêgo Segundo Neto",
+   "nomeParlamentar": "Veneziano Vital do Rêgo",
    "numeroAutuacao": "1",
-   "sexoParlamentar": "F",
+   "sexoParlamentar": "M",
    "siglaCasa": "SF",
-   "siglaColegiado": "PLEN",
-   "siglaPartidoParlamentar": "PSD",
+   "siglaColegiado": "CCJ",
+   "siglaPartidoParlamentar": "MDB",
    "tramitando": "N",
    "ufParlamentar": "PB",
-   "urlFotoParlamentar": "http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5998.jpg",
-   "urlPaginaParlamentar": "http://www25.senado.leg.br/web/senadores/senador/-/perfil/5998"
+   "urlFotoParlamentar": "http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5748.jpg",
+   "urlPaginaParlamentar": "http://www25.senado.leg.br/web/senadores/senador/-/perfil/5748"
   }
  },
  "contagens": {
@@ -226,7 +226,7 @@
   "senado_atual": {
    "url": "https://legis.senado.leg.br/dadosabertos/senador/lista/atual.json",
    "tamanho": 128888,
-   "inicio": "{\"ListaParlamentarEmExercicio\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/ListaParlamentarEmExerciciov4.xsd\",\"Metadados\":{\"Versao\":\"12/11/2026 13:55:24\",\"VersaoServico\":\"4\",\"DataVersaoServico\":\"2020-07-15\",\"DescricaoDataSet\":\"Lista dos Parlamentares que estão atualmente em Exercício. Informações atuais sobre o Parlamentar.\"},\"Parlamentares\":{\"Parlamentar\":[{\"IdentificacaoParlamentar\":{\"CodigoParlamentar\":\"5672\",\"CodigoPublicoNaLegAtual\":\"800\",\"NomeParlamentar\":\"Alan Rick\",\"NomeCompletoParlamentar\":\"Alan Rick Miranda\",\"SexoParlamentar\":\"Masculino\",\"FormaTratamento\":\"Senador \",\"UrlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg\",\"UrlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5672\",\"EmailParlamentar\":\"sen.alanrick@senado.leg.br\",\"Telefones\":{\"Telefone\":[{\"NumeroTelefone\":\"33036333\",\"OrdemPublicacao\":\"1\",\"IndicadorFax\":\"Não\"}]},\"SiglaPartidoParlamentar\":\"REPUBLICANOS\",\"UfParlamentar\":\"AC\",\"Bloco\":{\"CodigoBloco\":\"346\",\"NomeBloco\":\"Bloco Parlamentar Aliança\",\"NomeApelido\":\"BLALIANÇA\",\"DataCriacao\":\"2023-03-20\"},\"MembroMesa\":\"Não\",\"MembroLideranca\":\"Sim\"},\"Mandato\":{\"CodigoMandato\":\"596\",\"UfParlamentar\":\"AC\",\"PrimeiraLegislaturaDoMandato\":{\"NumeroLegislatura\":\"57\",\"DataInicio\":\"2023-02-01\",\"DataFim\":\"2027-01-31\"},\"SegundaLegislaturaDoMandato\":{\"NumeroLegislatura\":\"58\",\"DataInicio\":\"2027-02-01\",\"DataFim\":\"2031-01-31\"},\"DescricaoParticipacao\":\"Titular\",\"Suplentes\":{\"Suplente\":["
+   "inicio": "{\"ListaParlamentarEmExercicio\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/ListaParlamentarEmExerciciov4.xsd\",\"Metadados\":{\"Versao\":\"12/11/2026 14:25:26\",\"VersaoServico\":\"4\",\"DataVersaoServico\":\"2020-07-15\",\"DescricaoDataSet\":\"Lista dos Parlamentares que estão atualmente em Exercício. Informações atuais sobre o Parlamentar.\"},\"Parlamentares\":{\"Parlamentar\":[{\"IdentificacaoParlamentar\":{\"CodigoParlamentar\":\"5672\",\"CodigoPublicoNaLegAtual\":\"800\",\"NomeParlamentar\":\"Alan Rick\",\"NomeCompletoParlamentar\":\"Alan Rick Miranda\",\"SexoParlamentar\":\"Masculino\",\"FormaTratamento\":\"Senador \",\"UrlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg\",\"UrlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5672\",\"EmailParlamentar\":\"sen.alanrick@senado.leg.br\",\"Telefones\":{\"Telefone\":[{\"NumeroTelefone\":\"33036333\",\"OrdemPublicacao\":\"1\",\"IndicadorFax\":\"Não\"}]},\"SiglaPartidoParlamentar\":\"REPUBLICANOS\",\"UfParlamentar\":\"AC\",\"Bloco\":{\"CodigoBloco\":\"346\",\"NomeBloco\":\"Bloco Parlamentar Aliança\",\"NomeApelido\":\"BLALIANÇA\",\"DataCriacao\":\"2023-03-20\"},\"MembroMesa\":\"Não\",\"MembroLideranca\":\"Sim\"},\"Mandato\":{\"CodigoMandato\":\"596\",\"UfParlamentar\":\"AC\",\"PrimeiraLegislaturaDoMandato\":{\"NumeroLegislatura\":\"57\",\"DataInicio\":\"2023-02-01\",\"DataFim\":\"2027-01-31\"},\"SegundaLegislaturaDoMandato\":{\"NumeroLegislatura\":\"58\",\"DataInicio\":\"2027-02-01\",\"DataFim\":\"2031-01-31\"},\"DescricaoParticipacao\":\"Titular\",\"Suplentes\":{\"Suplente\":["
   },
   "senado_votacao_iso": {
    "url": "https://legis.senado.leg.br/dadosabertos/votacao?dataInicio=2026-09-28&dataFim=2026-09-30",
@@ -234,9 +234,9 @@
    "inicio": "[]"
   },
   "senado_comissao": {
-   "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20260928&dataFim=20261112",
-   "tamanho": 220,
-   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"12/11/2026 13:53:18\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
+   "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAS?dataInicio=20260928&dataFim=20261112",
+   "tamanho": 8260,
+   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"12/11/2026 13:59:59\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"},\"Votacoes\":{\"Votacao\":[{\"CodigoVotacao\":\"42027\",\"SiglaCasaColegiado\":\"SF\",\"CodigoReuniao\":\"14969\",\"DataHoraInicioReuniao\":\"2026-11-11T09:26:00\",\"NumeroReuniaoColegiado\":\"52\",\"TipoReuniao\":\"Extraordinária\",\"CodigoColegiado\":\"40\",\"SiglaColegiado\":\"CAS\",\"NomeColegiado\":\"Comissão de Assuntos Sociais\",\"CodigoParlamentarPresidente\":\"742\",\"NomeParlamentarPresidente\":\"Marcelo Castro\",\"IdentificacaoMateria\":\"PL 4366/2024\",\"DescricaoIdentificacaoMateria\":\"Projeto de Lei n° 4366, de 2024\",\"DescricaoVotacao\":\"PL 4366/2024 e emenda, nos termos do relatório apresentado\",\"Votos\":{\"Voto\":[{\"CodigoParlamentar\":\"4531\",\"NomeParlamentar\":\"Jayme Campos\",\"SiglaPartidoParlamentar\":\"UNIÃO\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"5386\",\"NomeParlamentar\":\"Professora Dorinha Seabra\",\"SiglaPartidoParlamentar\":\"UNIÃO\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"5982\",\"NomeParlamentar\":\"Alessandro Vieira\",\"SiglaPartidoParlamentar\":\"MDB\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"5376\",\"NomeParlamentar\":\"Mara Gabrilli\",\"SiglaPartidoParlamentar\":\"PSD\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoPa"
   },
   "senado_processo": {
    "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-09-28&dataFimApresentacao=2026-09-30",
@@ -244,9 +244,9 @@
    "inicio": "[{\"autoria\":\"Senadora Soraya Thronicke (PSB/MS)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175873,\"dataApresentacao\":\"2026-09-28\",\"dataSituacaoAtual\":\"2026-11-11\",\"dataUltimaAtualizacao\":\"2026-11-12T11:26:05.615\",\"ementa\":\"Altera o Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal), o Decreto-Lei nº 3.688, de 3 de outubro de 1941 (Lei das Contravenções Penais), a Lei nº 8.072, de 25 de julho de 1990 (Lei dos Crimes Hediondos) e a Lei nº 7.716, de 5 de janeiro de 1989 (Lei Antirracismo), para tipificar como crime autônomo o LGBTIcídio, assim entendido o homicídio praticado por motivação discriminatória relacionada à orientação sexual, à identidade ou expressão de gênero ou às características sexuais da vítima, reais ou presumidas; tipificar os crimes de racismo e de injúria racial quando praticados pela mesma motivação; agravar a pena de outros delitos praticados pela mesma motivação; e estabelecer outras medidas de proteção penal à população LGBTQIAPN+.\",\"enteIdentificador\":\"SF\",\"id\":9110822,\"identificacao\":\"PL 5481/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESIGNAÇÃO DO RELATOR\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"EVENTO_LEGISLATIVO\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/0d4cda1b-23e8-4336-ba05-732f65b00835\"},{\"autoria\":\"Senador Sargento Reginauro (PSDB/CE)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175874,\"dataApresentacao"
   },
   "senado_relatoria": {
-   "url": "https://legis.senado.leg.br/dadosabertos/processo/relatoria?dataInicio=2023-02-01&dataFim=2023-02-28",
-   "tamanho": 1238,
-   "inicio": "[{\"autoriaProcesso\":\"Presidência da República\",\"casaRelator\":\"SF\",\"codigoColegiado\":1998,\"codigoMateria\":154768,\"codigoParlamentar\":5998,\"codigoTipoColegiado\":128,\"dataApresentacaoProcesso\":\"2022-09-22 09:28:28\",\"dataDesignacao\":\"2023-02-23 15:48:00\",\"dataDestituicao\":\"2023-02-28 18:37:30\",\"dataFimColegiado\":null,\"descricaoTipoEncerramento\":\"Deliberação da matéria\",\"descricaoTipoRelator\":\"Relator\",\"emailParlamentar\":\"sen.daniellaribeiro@senado.leg.br\",\"ementaProcesso\":\"Altera a Lei nº 12.249, de 11 de junho de 2010, para dispor sobre a alíquota do imposto sobre a renda retido na fonte incidente sobre as operações a que se refere.\",\"formaTratamentoParlamentar\":\"Senadora\",\"id\":9261491,\"idProcesso\":8306238,\"idTipoRelator\":1,\"identificacaoProcesso\":\"MPV 1138/2022\",\"nomeColegiado\":\"Plenário do Senado Federal\",\"nomeCompleto\":\"Daniella Velloso Borges Ribeiro\",\"nomeParlamentar\":\"Daniella Ribeiro\",\"numeroAutuacao\":\"1\",\"sexoParlamentar\":\"F\",\"siglaCasa\":\"SF\",\"siglaColegiado\":\"PLEN\",\"siglaPartidoParlamentar\":\"PSD\",\"tramitando\":\"N\",\"ufParlamentar\":\"PB\",\"urlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5998.jpg\",\"urlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5998\"}]"
+   "url": "https://legis.senado.leg.br/dadosabertos/processo/relatoria?dataInicio=2023-04-01&dataFim=2023-04-30",
+   "tamanho": 69614,
+   "inicio": "[{\"autoriaProcesso\":\"Câmara dos Deputados\",\"casaRelator\":\"SF\",\"codigoColegiado\":34,\"codigoMateria\":156475,\"codigoParlamentar\":5748,\"codigoTipoColegiado\":21,\"dataApresentacaoProcesso\":\"2023-03-23 16:47:01\",\"dataDesignacao\":\"2023-04-04 12:13:42\",\"dataDestituicao\":\"2023-04-26 15:33:01\",\"dataFimColegiado\":null,\"descricaoTipoEncerramento\":\"Deliberação da matéria\",\"descricaoTipoRelator\":\"Relator\",\"emailParlamentar\":\"sen.venezianovitaldorego@senado.leg.br\",\"ementaProcesso\":\"Dispõe sobre a transformação de cargos de Analista do Ministério Público da União em cargos de Procurador da Justiça Militar, em cargos de Promotor da Justiça Militar e em cargos em comissão que especifica, no âmbito do Ministério Público Militar; e altera a Lei nº 13.316, de 20 de julho de 2016.\",\"formaTratamentoParlamentar\":\"Senador\",\"id\":9309396,\"idProcesso\":8396007,\"idTipoRelator\":1,\"identificacaoProcesso\":\"PL 2969/2022\",\"nomeColegiado\":\"Comissão de Constituição, Justiça e Cidadania\",\"nomeCompleto\":\"Veneziano Vital do Rêgo Segundo Neto\",\"nomeParlamentar\":\"Veneziano Vital do Rêgo\",\"numeroAutuacao\":\"1\",\"sexoParlamentar\":\"M\",\"siglaCasa\":\"SF\",\"siglaColegiado\":\"CCJ\",\"siglaPartidoParlamentar\":\"MDB\",\"tramitando\":\"N\",\"ufParlamentar\":\"PB\",\"urlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5748.jpg\",\"urlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5748\"},{\"autoriaProcesso\":\"Senador Rodrigo Cunha (PSDB/AL)\",\"casaRelator\":\"SF\",\"codigoColegiado\":40,\"codigoMa"
   }
  },
  "numeracao": {
@@ -283,5 +283,5 @@
    "numeros": []
   }
  },
- "fim": "2026-11-12T17:01:06.458Z"
+ "fim": "2026-11-12T17:41:15.378Z"
 }
