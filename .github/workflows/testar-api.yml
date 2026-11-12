@@ -1,0 +1,31 @@
+# Testes manuais de consultas às APIs do Congresso, sem alterar os dados do site.
+# Actions > Testar APIs > Run workflow.
+name: Testar APIs
+
+on:
+  workflow_dispatch:
+    inputs:
+      alvos:
+        description: 'Proposições da Câmara, separadas por vírgula (ex.: PL 2898/2025, PEC 66/2023)'
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+
+jobs:
+  relatores-camara:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Relatores na API da Câmara
+        env:
+          ALVOS: ${{ inputs.alvos }}
+        run: |
+          IFS=',' read -ra L <<< "$ALVOS"
+          ARGS=(); for x in "${L[@]}"; do x="$(echo "$x" | xargs)"; [ -n "$x" ] && ARGS+=("$x"); done
+          node robo/testar-relatores-camara.mjs "${ARGS[@]}"

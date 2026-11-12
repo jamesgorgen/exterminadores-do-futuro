@@ -344,6 +344,58 @@ async function coletarProposicoesSenado(ini, fim) {
   }), 3);
 }
 
+// ------------------------------------------------------------------ 2b. relatorias do Senado
+// O Senado publica cada designação de relator (matéria, relator, comissão, datas de início e de fim).
+// Baixa tudo desde o início do período, mês a mês, porque designações antigas mudam quando o relator sai.
+export function chaveProcesso(ident) {
+  const m = /^\s*(\S+)\s+(\d+)\/(\d{4})/.exec(String(ident || ''));
+  return m ? `${m[1].toUpperCase()} ${parseInt(m[2], 10)}/${m[3]}` : '';
+}
+export function lerRelatoria(d) {
+  const cod = pega(d, 'codigoParlamentar', 'CodigoParlamentar', 'codigoRelator', 'parlamentar.codigo', 'relator.codigo');
+  const c = chaveProcesso(pega(d, 'identificacaoProcesso', 'processo', 'identificacao', 'siglaNumeroAno', 'materia'));
+  if (!cod || !c) return null;
+  const sig = String(pega(d, 'siglaPartidoParlamentar', 'siglaPartido', 'partido', 'partidoParlamentar') || '');
+  const dt = x => String(x || '').slice(0, 10) || undefined;
+  return {
+    c, k: 'S', r: 'S' + cod,
+    n: String(pega(d, 'nomeParlamentar', 'nomeRelator', 'relator', 'NomeParlamentar') || ''),
+    s: sig, p: idPartido(sig), uf: String(pega(d, 'siglaUfParlamentar', 'ufParlamentar', 'uf', 'siglaUf') || ''),
+    cm: String(pega(d, 'siglaColegiado', 'siglaComissao', 'comissao', 'colegiado') || ''),
+    cn: String(pega(d, 'nomeColegiado', 'nomeComissao') || ''),
+    tr: String(pega(d, 'descricaoTipoRelator', 'tipoRelator', 'descricaoTipoRelatoria') || ''),
+    di: dt(pega(d, 'dataDesignacao', 'dataInicio')), df: dt(pega(d, 'dataDestituicao', 'dataFim')),
+    mo: String(pega(d, 'descricaoMotivoDestituicao', 'motivoEncerramento', 'descricaoMotivoEncerramento', 'motivoDestituicao') || '') || undefined,
+    i: pega(d, 'codigoMateria')
+  };
+}
+async function coletarRelatoriasSenado() {
+  const janelas = Motor.janelasMensais(INICIO, HOJE);
+  log(`Senado, relatorias em ${janelas.length} meses`);
+  const todas = new Map(); let falhas = 0;
+  await Motor.emParalelo(janelas.map(([a, b]) => async () => {
+    for (const fmt of [x => x, x => x.replace(/-/g, '')]) {
+      try {
+        const lista = registros(await baixarSenado(`${API_SENADO}/processo/relatoria?dataInicio=${fmt(a)}&dataFim=${fmt(b)}`, 'senado_relatoria'));
+        amostra('senado_relatoria', lista[0]);
+        for (const d of lista) {
+          const r = lerRelatoria(d); if (!r) { contar('relatorias_ilegiveis'); continue; }
+          todas.set([r.c, r.r, r.cm, r.di].join('|'), r);
+          if (!parlamentares.p[r.r]) registrarParlamentar(r.r, { n: r.n, s: r.s, p: r.p, uf: r.uf, c: 'S' });
+        }
+        return;
+      } catch (e) { if (fmt(a) !== a) { falhas++; erro(`relatorias Senado ${a}`, e); } }
+    }
+  }), 3);
+  contar('relatorias_senado', todas.size);
+  // Só substitui o arquivo se a coleta veio razoavelmente completa.
+  const antes = lerJson('relatorias.json', { itens: [] }).itens || [];
+  if (falhas > janelas.length / 4 || todas.size < antes.length * 0.8) { log('  relatorias incompletas, mantendo o arquivo anterior'); return antes; }
+  const itens = [...todas.values()].sort((x, y) => (y.di || '').localeCompare(x.di || ''));
+  gravarJson('relatorias.json', { gerado: AGORA.toISOString(), fonte: 'Senado Federal, Dados Abertos, processo/relatoria', itens }, true);
+  return itens;
+}
+
 // ------------------------------------------------------------------ 3. votações
 const votacoesPorAno = {};
 function arquivoVotacoes(a) {
@@ -775,9 +827,9 @@ async function graduarPendentes(itens, exemplos, nCorrecoes, todosExemplos, corr
   let versao = `${VERSAO_GRAU}-${Math.floor(nCorrecoes / PASSO_REGRAS)}`;
   let guardadas = {}; try { guardadas = JSON.parse(fs.readFileSync(path.join(DADOS, 'regras-equipe.json'), 'utf8')); } catch (e) {}
   // A reclassificação com regras novas só acontece uma vez por semana, na execução agendada de segunda-feira,
-  // ou quando disparada à mão. Nas outras execuções o robô só gradua os itens novos, com as regras já guardadas.
+  // ou quando disparada à mão com a opção "reclassificar" marcada. Nas outras execuções o robô só gradua os itens novos, com as regras já guardadas.
   const evento = process.env.GITHUB_EVENT_NAME || '';
-  const diaDeReclassificar = evento === 'workflow_dispatch' || (evento === 'schedule' && AGORA.getUTCDay() === 1) || !evento;
+  const diaDeReclassificar = (evento === 'workflow_dispatch' && process.env.RECLASSIFICAR === 'sim') || (evento === 'schedule' && AGORA.getUTCDay() === 1) || !evento;
   if (!diaDeReclassificar && guardadas.versao && guardadas.regras && guardadas.versao !== versao && String(guardadas.versao).startsWith(VERSAO_GRAU + '-')) {
     log(`  reclassificação (${versao}) adiada para a execução de segunda-feira; esta só gradua itens novos`);
     versao = guardadas.versao;
@@ -899,6 +951,8 @@ export async function executar() {
 
   await coletarProposicoesCamara(anos);
   await coletarProposicoesSenado(ini, HOJE);
+  let relatorias = [];
+  try { relatorias = await coletarRelatoriasSenado(); } catch (e) { erro('relatorias Senado', e); relatorias = lerJson('relatorias.json', { itens: [] }).itens || []; }
 
   // Carrega os anos que não foram tocados nesta execução, para que os arquivos gravados fiquem completos.
   for (const a of anosDoPeriodo(INICIO, HOJE)) { arquivoVotacoes(a); arquivoProposicoes(a); }
@@ -1004,8 +1058,11 @@ export async function executar() {
 
   // Arquivos leves para a página.
   const cl = classificado;
+  // Relatores em exercício de cada matéria (sem data de fim), para mostrar na ficha do projeto.
+  const relAtual = new Map();
+  for (const r of relatorias) if (!r.df) { const l = relAtual.get(r.c) || []; l.push({ r: r.r, n: r.n, s: r.s, uf: r.uf, cm: r.cm }); relAtual.set(r.c, l); }
   const direita = todasPropFinal.filter(it => cl(it.c).s === 'avanca')
-    .map(it => ({ c: it.c, k: it.k, d: it.d, e: it.e, a: it.a, p: it.p, m: it.m, i: it.i, ss: it.ss, x: cl(it.c) }))
+    .map(it => ({ c: it.c, k: it.k, d: it.d, e: it.e, a: it.a, p: it.p, m: it.m, i: it.i, ss: it.ss, x: cl(it.c), rl: relAtual.get(it.c) }))
     .sort((x, y) => (y.d || '').localeCompare(x.d || ''));
   gravarJson('proposicoes-direita.json', { gerado: AGORA.toISOString(), itens: direita }, true);
   const resumoVot = todasVot.map(vt => ({ id: vt.id, k: vt.k, o: vt.o, pl: vt.pl, d: vt.d, desc: vt.desc, mat: vt.mat, me: vt.me, res: vt.res,
