@@ -181,6 +181,8 @@ table.parl tr.linha:hover td{background:var(--paper)}
 .perfil h4{margin:16px 0 8px;font-size:14px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3)}
 .lista-votos{display:grid;gap:6px}
 .lista-votos div{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;font-size:14px;border-bottom:1px solid var(--line);padding:5px 0}
+.lista-votos .rel-e{flex-basis:100%;font-size:14.5px;line-height:1.45;color:var(--ink-2)}
+.cartao .relator{margin:0}
 
 /* votos de uma votação */
 .votos-det{margin-top:6px;border-top:1px dashed var(--line);padding-top:8px;font-size:13.5px}
@@ -287,6 +289,26 @@ async function carregar(){
   aplicarEndereco();
   desenhar();
 }
+// Relatorias (Senado), carregadas só quando um perfil é aberto.
+let relatoriasCache = null;
+async function relatorias(){
+  if (!relatoriasCache) relatoriasCache = lerJson('relatorias.json').then(j => j.itens || []).catch(() => []);
+  return relatoriasCache;
+}
+const COMISSAO_TXT = c => c === 'PLEN' ? 'Plenário' : c;
+async function desenharRelatorias(k, p){
+  const caixa = $('#perfil-rel'); if (!caixa) return;
+  const todas = (await relatorias()).filter(r => r.r === k);
+  if (!todas.length) { caixa.innerHTML = '<p class="meta">Nenhuma relatoria registrada desde 2023.</p>'; return; }
+  const direita = new Map(D.prop.map(it => [it.c, it]));
+  const ativas = todas.filter(r => !r.df).length;
+  const daDireita = todas.filter(r => direita.has(r.c));
+  const linha = r => { const it = direita.get(r.c); const x = it ? it.x || {} : null;
+    const url = r.i ? `https://www25.senado.leg.br/web/atividade/materias/-/materia/${encodeURIComponent(r.i)}` : '';
+    return `<div class="rel"><span class="meta">${dataBR(r.di)}</span><b>${url ? `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(r.c)}</a>` : esc(r.c)}</b><span>${esc(COMISSAO_TXT(r.cm))}${r.tr && !/^relator$/i.test(r.tr) ? `, ${esc(r.tr.toLowerCase())}` : ''}</span><span class="meta">${r.df ? `encerrada em ${dataBR(r.df)}${r.mo ? `, ${esc(r.mo.toLowerCase())}` : ''}` : 'em andamento'}</span>${x ? `<span class="selo ${x.g === 'extrema' ? 's-ext' : 's-dir'}">Pauta da ${x.g === 'extrema' ? 'extrema-direita' : 'direita'}</span>` : ''}${r.e ? `<span class="rel-e">${esc(r.e)}${r.au ? ` <span class="meta">Autoria: ${esc(r.au)}.</span>` : ''}</span>` : ''}</div>`; };
+  caixa.innerHTML = `<p class="meta">${fmt(todas.length)} relatorias desde 2023, ${fmt(ativas)} em andamento. ${daDireita.length ? `${fmt(daDireita.length)} sobre projetos com pauta da direita.` : ''}</p>
+    <div class="lista-votos">${todas.slice(0, 20).map(linha).join('')}</div>${todas.length > 20 ? `<p class="meta">Mostrando as 20 designações mais recentes.</p>` : ''}`;
+}
 async function votosDoAno(ano){
   if (!D.votosAno[ano]) D.votosAno[ano] = lerJson(`votacoes-${ano}.json`).then(j => new Map(((j && j.itens) || []).map(v => [v.id, v])));
   return D.votosAno[ano];
@@ -354,6 +376,7 @@ function cartaoProp(it){
     <p class="ementa">${esc(it.e)}</p>
     ${ver && ver.nota ? `<p class="motivo"><b>Checagem da equipe.</b> ${esc(ver.nota)}</p>` : x.m ? `<p class="motivo"><b>${x.eq ? 'Checagem da equipe.' : 'Triagem automática.'}</b> ${esc(x.m)}</p>` : ''}
     ${autoresHTML(it.a)}
+    ${(it.rl || []).length ? `<p class="meta relator">Relatoria: ${it.rl.map(r => `${esc(r.n)} (${esc(r.s)}-${esc(r.uf)})${r.cm ? `, ${esc(r.cm)}` : ''}`).join('; ')}</p>` : ''}
     <div class="acoes">${linkProp(it) ? `<a class="btn" href="${esc(linkProp(it))}" target="_blank" rel="noopener">Ficha oficial</a>` : ''}
       <button type="button" class="btn forte" data-comp="p:${esc(it.c)}">Compartilhar</button><button type="button" class="btn" data-copiar="p:${esc(it.c)}">Copiar</button></div>
   </article>`;
@@ -613,8 +636,10 @@ async function desenharPerfil(k){
     <div class="topo">${pautas.map(([id, n]) => `<span class="selo s-pauta">${esc(PAUTA[id] ? PAUTA[id].nome : id)} ${n}</span>`).join(' ')}</div>
     <h4>Projetos com pauta da direita (${fmt(props.length)})</h4>
     ${props.length ? `<div class="grade">${props.slice(0, 6).map(cartaoProp).join('')}</div>${props.length > 6 ? `<p><button type="button" class="btn" data-ver-props="${esc(k)}">Ver todos os ${props.length}</button></p>` : ''}` : '<p class="meta">Nenhum projeto com pauta da direita.</p>'}
+    ${p.c === 'S' ? `<h4>O que relata</h4><div id="perfil-rel">Carregando.</div>` : ''}
     <h4>Votos recentes em votações disputadas</h4><div class="lista-votos" id="perfil-votos">Carregando.</div>
   </div>`;
+  if (p.c === 'S') desenharRelatorias(k, p);
   el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   const recentes = D.vot.filter(v => v.disp && v.k === p.c).slice(0, 60);
   const anos = [...new Set(recentes.map(v => String(v.d).slice(0, 4)))];

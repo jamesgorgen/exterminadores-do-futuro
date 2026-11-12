@@ -365,8 +365,10 @@ export function lerRelatoria(d) {
     cn: String(pega(d, 'nomeColegiado', 'nomeComissao') || ''),
     tr: String(pega(d, 'descricaoTipoRelator', 'tipoRelator', 'descricaoTipoRelatoria') || ''),
     di: dt(pega(d, 'dataDesignacao', 'dataInicio')), df: dt(pega(d, 'dataDestituicao', 'dataFim')),
-    mo: String(pega(d, 'descricaoMotivoDestituicao', 'motivoEncerramento', 'descricaoMotivoEncerramento', 'motivoDestituicao') || '') || undefined,
-    i: pega(d, 'codigoMateria')
+    mo: String(pega(d, 'descricaoTipoEncerramento', 'descricaoMotivoDestituicao', 'motivoEncerramento', 'descricaoMotivoEncerramento', 'motivoDestituicao') || '') || undefined,
+    i: pega(d, 'codigoMateria'),
+    e: String(pega(d, 'ementaProcesso', 'ementa') || '').slice(0, 400) || undefined,
+    au: String(pega(d, 'autoriaProcesso', 'autoria') || '').slice(0, 160) || undefined
   };
 }
 async function coletarRelatoriasSenado() {
