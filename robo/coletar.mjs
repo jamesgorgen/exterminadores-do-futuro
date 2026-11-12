@@ -381,6 +381,7 @@ function* votosDe(vt) { for (const [c, lista] of Object.entries(vt.v || {})) for
 const chaveMateria = (sigla, numero, anoM) => (sigla && numero && anoM) ? `${String(sigla).trim()} ${parseInt(numero, 10)}/${anoM}` : '';
 
 // Câmara: arquivos anuais completos.
+const ultimaVotacaoArquivo = {};
 async function coletarVotacoesCamaraArquivos(a) {
   const base = n => `${ARQ_CAMARA}/${n}/json/${n}-${a}.json`;
   log(`Câmara, arquivos anuais de votações de ${a}`);
@@ -419,6 +420,7 @@ async function coletarVotacoesCamaraArquivos(a) {
     if (!ja || (!ja.principal && item.principal)) objetos.set(id, item);
   }
   let n = 0;
+  ultimaVotacaoArquivo[a] = '';
   for (const r of vot) {
     const id = pega(r, 'id'); const x = porVotacao.get(id);
     if (!x) continue;   // votação simbólica, sem votos nominais
@@ -428,6 +430,8 @@ async function coletarVotacoesCamaraArquivos(a) {
       d: String(pega(r, 'dataHoraRegistro', 'data') || '').slice(0, 10), desc: String(pega(r, 'descricao') || '').slice(0, 600),
       mat: ob.c || '', me: String(ob.e || '').slice(0, 700), res: String(pega(r, 'aprovacao')) === '1' ? 'A' : String(pega(r, 'aprovacao')) === '0' ? 'R' : '',
       v: x.v, ps: x.ps, ori: orient.get(id) || undefined });
+    const dv = String(pega(r, 'dataHoraRegistro', 'data') || '').slice(0, 10);
+    if (dv > ultimaVotacaoArquivo[a]) ultimaVotacaoArquivo[a] = dv;
     n++;
   }
   log(`  ${n} votações nominais da Câmara em ${a}`);
@@ -522,13 +526,28 @@ function votacaoSenado({ votacao: o, votos }, plenario, comissao) {
 
 async function coletarVotacoesSenado(ini, fim) {
   log('Senado, votações de plenário');
-  for (const [a, b] of Motor.janelasMensais(ini, fim)) {
-    let achadas = [];
+  const buscar = async (a, b) => {
+    let achadas = [], falhou = null;
     for (const fmt of [s => s, s => s.replace(/-/g, '')]) {
       try {
         achadas = acharVotacoes(await baixarSenado(`${API_SENADO}/votacao?dataInicio=${fmt(a)}&dataFim=${fmt(b)}`, 'senado_votacao_' + (fmt(a) === a ? 'iso' : 'compacta')));
+        falhou = null;
         if (achadas.length) break;
-      } catch (e) { if (fmt(a) !== a) erro(`votações Senado ${a}`, e); }
+      } catch (e) { falhou = e; }
+    }
+    return { achadas, falhou };
+  };
+  for (const [a, b] of Motor.janelasMensais(ini, fim)) {
+    let { achadas, falhou } = await buscar(a, b);
+    // Quando a janela do mês é recusada, tenta de semana em semana.
+    if (falhou) {
+      achadas = [];
+      for (let t = Date.parse(a); t <= Date.parse(b); t += 7 * 86400000) {
+        const x = new Date(t).toISOString().slice(0, 10), y = new Date(Math.min(t + 6 * 86400000, Date.parse(b))).toISOString().slice(0, 10);
+        const r = await buscar(x, y);
+        if (r.falhou) { erro(`votações Senado ${x} a ${y}`, r.falhou); } else achadas = achadas.concat(r.achadas);
+      }
+      contar('senado_janelas_divididas');
     }
     contar('senado_plenario_votacoes_achadas', achadas.length);
     if (achadas[0]) { amostra('senado_votacao', achadas[0].votacao); amostra('senado_voto', achadas[0].votos[0]); }
@@ -752,12 +771,19 @@ Responda somente com JSON válido, no formato {"r":["regra 1","regra 2"]}.`;
 // Os casos corrigidos pela equipe entram como exemplos. A versão do grau inclui um contador que sobe a cada
 // PASSO_REGRAS correções novas, o que faz o robô refazer o grau sozinho à medida que a equipe ensina a IA.
 async function graduarPendentes(itens, exemplos, nCorrecoes, todosExemplos) {
-  const versao = `${VERSAO_GRAU}-${Math.floor(nCorrecoes / PASSO_REGRAS)}`;
+  let versao = `${VERSAO_GRAU}-${Math.floor(nCorrecoes / PASSO_REGRAS)}`;
+  let guardadas = {}; try { guardadas = JSON.parse(fs.readFileSync(path.join(DADOS, 'regras-equipe.json'), 'utf8')); } catch (e) {}
+  // A reclassificação geral só acontece na execução diária ou disparada à mão. As execuções disparadas por
+  // correções da equipe só graduam os itens novos, com as regras já guardadas, para não gastar créditos várias vezes por dia.
+  const porCorrecao = process.env.GITHUB_EVENT_NAME === 'push';
+  if (porCorrecao && guardadas.versao && guardadas.regras && guardadas.versao !== versao && String(guardadas.versao).startsWith(VERSAO_GRAU + '-')) {
+    log(`  reclassificação geral (${versao}) adiada para a execução diária; esta só gradua itens novos`);
+    versao = guardadas.versao;
+  }
   const pend = itens.filter(it => { const c = classificacoes.c[it.chave]; return c && (c.s === 'avanca' || c.fora) && c.vg !== versao; });
   log(`Grau, ${pend.length} itens a revisar (versão ${versao}, ${nCorrecoes} correções como exemplo)`);
   if (!pend.length || SEM_IA || !process.env.ANTHROPIC_API_KEY) return;
   // Regras deduzidas das correções da equipe, guardadas em dados/regras-equipe.json e refeitas a cada PASSO_REGRAS correções.
-  let guardadas = {}; try { guardadas = JSON.parse(fs.readFileSync(path.join(DADOS, 'regras-equipe.json'), 'utf8')); } catch (e) {}
   if (guardadas.versao !== versao || !guardadas.regras) {
     let regras = ''; try { regras = todosExemplos ? await induzirRegras(todosExemplos) : ''; } catch (e) { erro('regras da equipe', e); if (/recusada/.test(e.message)) throw e; }
     if (regras) { guardadas = { versao, correcoes: nCorrecoes, gerado: HOJE, regras }; gravarJson('regras-equipe.json', guardadas, true); log(`  regras da equipe deduzidas de ${nCorrecoes} correções`); }
@@ -832,8 +858,14 @@ export async function executar() {
   for (const a of anos) {
     const ok = await coletarVotacoesCamaraArquivos(a);
     if (!ok) await coletarVotacoesCamaraApi(a === anos[0] ? ini : `${a}-01-01`, a === ano(HOJE) ? HOJE : `${a}-12-31`);
+    // O arquivo anual da Câmara costuma chegar com dias de atraso. Os dias seguintes à última votação dele vêm pela API.
+    else if (a === ano(HOJE) && ultimaVotacaoArquivo[a] && ultimaVotacaoArquivo[a] < HOJE) {
+      const desde = new Date(Date.parse(ultimaVotacaoArquivo[a]) + 86400000).toISOString().slice(0, 10);
+      log(`  arquivo da Câmara vai até ${ultimaVotacaoArquivo[a]}, completando de ${desde} a ${HOJE} pela API`);
+      contar('camara_dias_completados_pela_api', Math.round((Date.parse(HOJE) - Date.parse(desde)) / 86400000) + 1);
+      if (desde <= HOJE) await coletarVotacoesCamaraApi(desde, HOJE);
+    }
   }
-  // Se o arquivo do ano corrente não trouxe nada recente, completa os últimos dias pela API.
   await coletarVotacoesSenado(ini, HOJE);
 
   await coletarProposicoesCamara(anos);
