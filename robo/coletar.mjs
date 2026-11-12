@@ -774,11 +774,12 @@ Responda somente com JSON válido, no formato {"r":["regra 1","regra 2"]}.`;
 async function graduarPendentes(itens, exemplos, nCorrecoes, todosExemplos, corrigidos = {}) {
   let versao = `${VERSAO_GRAU}-${Math.floor(nCorrecoes / PASSO_REGRAS)}`;
   let guardadas = {}; try { guardadas = JSON.parse(fs.readFileSync(path.join(DADOS, 'regras-equipe.json'), 'utf8')); } catch (e) {}
-  // A reclassificação geral só acontece na execução diária ou disparada à mão. As execuções disparadas por
-  // correções da equipe só graduam os itens novos, com as regras já guardadas, para não gastar créditos várias vezes por dia.
-  const porCorrecao = process.env.GITHUB_EVENT_NAME === 'push';
-  if (porCorrecao && guardadas.versao && guardadas.regras && guardadas.versao !== versao && String(guardadas.versao).startsWith(VERSAO_GRAU + '-')) {
-    log(`  reclassificação geral (${versao}) adiada para a execução diária; esta só gradua itens novos`);
+  // A reclassificação com regras novas só acontece uma vez por semana, na execução agendada de segunda-feira,
+  // ou quando disparada à mão. Nas outras execuções o robô só gradua os itens novos, com as regras já guardadas.
+  const evento = process.env.GITHUB_EVENT_NAME || '';
+  const diaDeReclassificar = evento === 'workflow_dispatch' || (evento === 'schedule' && AGORA.getUTCDay() === 1) || !evento;
+  if (!diaDeReclassificar && guardadas.versao && guardadas.regras && guardadas.versao !== versao && String(guardadas.versao).startsWith(VERSAO_GRAU + '-')) {
+    log(`  reclassificação (${versao}) adiada para a execução de segunda-feira; esta só gradua itens novos`);
     versao = guardadas.versao;
   }
   // Só vão para a IA os itens que a equipe ainda não corrigiu (a correção prevalece de qualquer forma) e que
