@@ -1,11 +1,11 @@
-# Atualização mensal do módulo de emendas parlamentares.
+# Atualização semanal do módulo de emendas parlamentares (toda segunda-feira).
 # Baixa o arquivo do Portal da Transparência, gera dados/emendas.json e grava no repositório.
 # Também pode ser disparada à mão em Actions > Atualizar emendas > Run workflow.
 name: Atualizar emendas
 
 on:
   schedule:
-    - cron: '43 11 7 * *'
+    - cron: '43 11 * * 1'
   workflow_dispatch:
     inputs:
       url:
