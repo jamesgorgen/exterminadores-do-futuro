@@ -19,7 +19,7 @@
    Fica sempre no tema claro, porque é feito para ser impresso. */
 :root{
   --ink:#1c2026; --ink-2:#4b525c; --ink-3:#757c87; --line:#d9dce1; --soft:#f3f4f6; --paper:#ffffff; --desk:#e7e9ec;
-  --accent:#7d1d1d; --accent-soft:#f6eaea; --g-extrema:#7d1d1d; --g-direita:#b8524a; --g-centro:#b88a3e; --g-esquerda:#3d6b85; --g-sp:#9aa0a8;
+  --accent:#123B40; --accent-soft:#E6EEEC; --g-extrema:#9A3424; --g-direita:#C9822B; --g-centro:#8F8C80; --g-esquerda:#2F7F84; --g-sp:#B5BCB9;
   --serif:"Source Serif 4",Georgia,"Times New Roman",serif; --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   color-scheme:light;
 }
@@ -32,10 +32,10 @@ button,input,select{font:inherit;color:inherit}
 :focus-visible{outline:3px solid #f2c94c;outline-offset:2px}
 .num{font-variant-numeric:tabular-nums}
 
-.barra{position:sticky;top:0;z-index:5;background:var(--ink);color:#fff}
+.barra{position:sticky;top:0;z-index:5;background:#123B40;color:#fff}
 .barra .in{max-width:210mm;margin:0 auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:10px 16px}
 .barra b{font-family:var(--serif);font-size:15pt;font-weight:600;margin-right:auto}
-.barra button,.barra a{border:1px solid #59616c;background:transparent;color:#fff;border-radius:5px;padding:7px 12px;font-weight:600;font-size:10pt;cursor:pointer;text-decoration:none}
+.barra button,.barra a{border:1px solid #4F7479;background:transparent;color:#fff;border-radius:5px;padding:7px 12px;font-weight:600;font-size:10pt;cursor:pointer;text-decoration:none}
 .barra .forte{background:#fff;color:var(--ink);border-color:#fff}
 
 .folha{background:var(--paper);max-width:210mm;margin:18px auto 40px;padding:16mm 15mm 18mm;box-shadow:0 2px 14px rgba(0,0,0,.12)}
@@ -339,7 +339,7 @@ function desenharMunicipios(uf, mun, topo) {
   const ix = Object.fromEntries(mun.campos.map((c, i) => [c, i]));
   const tot = c => { const x = mun.m[c]; if (!x) return 0; return Object.values(x.a).reduce((s, v) => s + v[ix.total], 0); };
   const linhas = feats.map(f => { const c = f.properties.id, t = tot(c), p = (mun.m[c] || {}).p || 0; return { c, n: f.properties.name, t, p, h: p ? t / p : null }; });
-  const CORES = ['#f3eded', '#e7d3d1', '#d9b5b1', '#c8928c', '#b46f68', '#9b4a44', '#7d1d1d'];
+  const CORES = ['#e8f2ef', '#c9e0db', '#a3cbc4', '#76b0a9', '#4b928d', '#2a7472', '#123B40'];
   const vals = linhas.map(l => l.h).filter(v => v != null).sort((a, b) => a - b);
   const q = CORES.slice(1).map((_, i) => vals[Math.floor(vals.length * (i + 1) / CORES.length)]);
   const cls = v => { if (v == null) return -1; let i = 0; while (i < q.length && v > q[i]) i++; return i; };

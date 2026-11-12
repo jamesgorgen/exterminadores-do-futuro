@@ -20,18 +20,18 @@
 /* Mesma identidade do observatório: faixa noturna, vermelho de alerta, tipografia condensada nos títulos.
    Layout: três seções empilhadas (perfil de gasto, pautas, parlamentar), cada uma com resumo antes do detalhe. */
 :root{
-  --night:#151a2e; --night-2:#222944; --red:#d42a2f; --paper:#edeff2; --sheet:#ffffff; --ink:#151a2e; --ink-2:#4a5068; --ink-3:#6f758a;
-  --line:#d6d9e0; --mark:#ffe24a;
-  --g-extrema:#8c1015; --g-direita:#d42a2f; --g-centro:#c98a1b; --g-esquerda:#1f6b8c; --g-sp:#8a90a3;
+  --night:#123B40; --night-2:#1E4B51; --red:#0B6E73; --paper:#F2F4F1; --sheet:#ffffff; --ink:#1B2523; --ink-2:#4C5A57; --ink-3:#5F6B68;
+  --line:#D5DCD9; --mark:#E3B75B;
+  --g-extrema:#9A3424; --g-direita:#C9822B; --g-centro:#8F8C80; --g-esquerda:#2F7F84; --g-sp:#B5BCB9;
   --display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
   --text:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
 }
 @media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){ --night:#0f1324; --night-2:#1c2240; --red:#e8454a; --paper:#171b2c; --sheet:#1f2438; --ink:#eef0f6; --ink-2:#b7bccd; --ink-3:#959bb0; --line:#2f3550;
-    --g-extrema:#ff5a60; --g-direita:#f08a8d; --g-centro:#e8b25a; --g-esquerda:#6cb8d8; --g-sp:#9aa0b5; color-scheme:dark; }
+  :root:not([data-theme="light"]){ --night:#0E2C30; --night-2:#1A3E43; --red:#6FB3B8; --paper:#141B1A; --sheet:#1C2523; --ink:#EEF2F0; --ink-2:#B6C2BF; --ink-3:#97A3A0; --line:#2C3836;
+    --g-extrema:#F08A74; --g-direita:#E3B75B; --g-centro:#B8B2A3; --g-esquerda:#6FB3B8; --g-sp:#7E8A87; color-scheme:dark; }
 }
-:root[data-theme="dark"]{ --night:#0f1324; --night-2:#1c2240; --red:#e8454a; --paper:#171b2c; --sheet:#1f2438; --ink:#eef0f6; --ink-2:#b7bccd; --ink-3:#959bb0; --line:#2f3550;
-  --g-extrema:#ff5a60; --g-direita:#f08a8d; --g-centro:#e8b25a; --g-esquerda:#6cb8d8; --g-sp:#9aa0b5; color-scheme:dark; }
+:root[data-theme="dark"]{ --night:#0E2C30; --night-2:#1A3E43; --red:#6FB3B8; --paper:#141B1A; --sheet:#1C2523; --ink:#EEF2F0; --ink-2:#B6C2BF; --ink-3:#97A3A0; --line:#2C3836;
+  --g-extrema:#F08A74; --g-direita:#E3B75B; --g-centro:#B8B2A3; --g-esquerda:#6FB3B8; --g-sp:#7E8A87; color-scheme:dark; }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 var(--text);-webkit-font-smoothing:antialiased}
@@ -46,20 +46,19 @@ button,input,select{font:inherit;color:inherit}
 .topo .wrap{padding-block:20px 30px}
 .marca{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:20px;letter-spacing:.02em;color:#fff;text-decoration:none}
 .topo h1{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(40px,7vw,88px);line-height:.9;margin:14px 0 0;text-wrap:balance}
-.topo h1 span{color:var(--mark)}
-.topo .lede{font-size:clamp(16px,1.8vw,20px);line-height:1.45;max-width:60ch;margin:16px 0 0;color:#dfe2ee}
-.secoes{background:var(--red);color:#fff}
+.topo .lede{font-size:clamp(16px,1.8vw,20px);line-height:1.45;max-width:60ch;margin:16px 0 0;color:#C5D3D0}
+.secoes{background:var(--night-2);color:#fff}
 .secoes .wrap{display:flex;gap:6px 22px;flex-wrap:wrap;padding-block:11px}
 .secoes a{color:#fff;font-weight:700;font-size:15px;text-decoration:none;border-bottom:2px solid transparent}
 .secoes a:hover{border-color:#fff}
 .secoes .wrap{align-items:center}
-.secoes a.inicio{background:#fff;color:var(--red);border-radius:4px;padding:3px 10px;border-bottom:0}
+.secoes a.inicio{background:#fff;color:var(--night);border-radius:4px;padding:3px 10px;border-bottom:0}
 .secoes a.inicio:hover{background:var(--night);color:#fff}
 .secoes{position:sticky;top:0;z-index:10}
 .topo .voltar{display:inline-flex;align-items:center;gap:6px;color:#fff;font-weight:700;font-size:14px;text-decoration:none;border:1px solid rgba(255,255,255,.45);border-radius:4px;padding:6px 12px;margin-bottom:14px}
 .topo .voltar:hover{background:#fff;color:var(--night)}
 .topo .marca{display:block}
-.rodape{background:var(--night);color:#b5bacd;font-size:13.5px}
+.rodape{background:var(--night);color:#C5D3D0;font-size:13.5px}
 .rodape .wrap{padding-top:22px;padding-bottom:30px}
 .rodape p{max-width:90ch;margin:0 0 6px}
 .rodape a{color:#fff}
@@ -68,12 +67,12 @@ main section[id]{scroll-margin-top:64px}
   .secoes .wrap{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
   .secoes .wrap::-webkit-scrollbar{display:none}
   .secoes a{white-space:nowrap;flex:none}
-  .secoes a.inicio{position:sticky;left:0;z-index:1;box-shadow:-16px 0 0 var(--red),10px 0 10px -2px var(--red)}
+  .secoes a.inicio{position:sticky;left:0;z-index:1;box-shadow:-16px 0 0 var(--night-2),10px 0 10px -2px var(--night-2)}
 }
 
 section{padding-block:40px 10px}
-h2{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(30px,4.4vw,48px);line-height:.95;margin:0 0 8px;text-wrap:balance}
-h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:24px;line-height:1;margin:0;letter-spacing:.01em}
+h2{font-family:var(--display);font-weight:800;font-size:clamp(32px,4vw,44px);line-height:1;margin:0 0 8px;text-wrap:balance}
+h3{font-family:var(--display);font-weight:800;font-size:26px;line-height:1.05;margin:0}
 .intro{max-width:70ch;color:var(--ink-2);margin:0 0 18px}
 .rot{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3)}
 
@@ -137,7 +136,7 @@ h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size
 .ranking .pt{width:9px;height:9px;border-radius:50%;background:var(--cor)}
 .ranking small{display:block;color:var(--ink-3);font-size:12px}
 .perfil{background:var(--sheet);border:1px solid var(--line);border-top:6px solid var(--cor);border-radius:8px;padding:18px;min-width:0}
-.perfil .nome{font-family:var(--display);font-weight:900;font-size:clamp(30px,4vw,42px);line-height:1;text-transform:uppercase;margin:0}
+.perfil .nome{font-family:var(--display);font-weight:800;font-size:clamp(30px,4vw,42px);line-height:1;margin:0}
 .perfil .meta{color:var(--ink-2);margin:6px 0 0;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .selo{font-size:12px;font-weight:700;border-radius:4px;padding:2px 8px;background:var(--cor);color:#fff}
 .kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:16px 0}
@@ -170,10 +169,10 @@ h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size
 .uf small{font-weight:500;font-size:11px;opacity:.9}
 .uf[aria-pressed="true"]{outline:3px solid var(--ink);outline-offset:2px}
 .escala{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-3);margin-top:10px;max-width:520px}
-.escala i{flex:1;height:10px;border-radius:3px;background:linear-gradient(90deg,color-mix(in srgb,var(--red) 12%,var(--sheet)),var(--red))}
+.escala i{flex:1;height:10px;border-radius:3px;background:linear-gradient(90deg,color-mix(in srgb,var(--night) 12%,var(--sheet)),var(--night))}
 .estado{background:var(--sheet);border:1px solid var(--line);border-radius:8px;padding:18px;min-width:0}
 .estado .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
-.nome-uf{font-family:var(--display);font-weight:900;font-size:clamp(28px,3.6vw,40px);text-transform:uppercase;margin:0;line-height:1}
+.nome-uf{font-family:var(--display);font-weight:800;font-size:clamp(28px,3.6vw,40px);margin:0;line-height:1}
 .seletor-uf{position:relative}
 .lista-uf{position:absolute;z-index:6;top:calc(100% + 6px);left:0;width:min(560px,calc(100vw - 40px));background:var(--sheet);border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.18);padding:8px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px}
 @media (max-width:560px){.lista-uf{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -196,7 +195,7 @@ h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size
 <header class="topo"><div class="wrap">
   <a class="voltar" href="./"><span aria-hidden="true">←</span> Voltar à página inicial</a>
   <a class="marca" href="./">Os exterminadores do futuro</a>
-  <h1>Emendas <span>parlamentares</span></h1>
+  <h1>Emendas parlamentares</h1>
   <p class="lede">Para onde deputados e senadores da direita e da extrema-direita mandam o dinheiro das emendas individuais ao Orçamento. Valores empenhados de 2023 a 2026, com os dados do Portal da Transparência.</p>
 </div></header>
 <nav class="secoes" aria-label="Seções"><div class="wrap">
@@ -374,7 +373,7 @@ const UFCOD = { 11: 'RO', 12: 'AC', 13: 'AM', 14: 'RR', 15: 'PA', 16: 'AP', 17: 
 const ufDe = c => UFCOD[String(c).slice(0, 2)];
 const METRICAS_M = [['hab', 'Por habitante'], ['total', 'Valor recebido'], ['ext', 'Fatia da extrema-direita'], ['dir', 'Fatia da direita e da extrema-direita'], ['esq', 'Fatia da esquerda'], ['cen', 'Fatia da centro-direita']];
 // Escala sequencial em várias cores (do amarelo-claro ao vinho escuro), com nove faixas bem distintas entre si.
-const CORES = ['#fff3b0', '#fed976', '#feb24c', '#fd8d3c', '#f45b2f', '#de2a1f', '#b30d22', '#7a0026', '#3d0a2b'];
+const CORES = ['#e8f2ef', '#cfe4df', '#b0d3cc', '#8cbfb7', '#66a8a1', '#43908b', '#287674', '#165c5d', '#0c4044'];
 // Valores do município no ano escolhido (ano da emenda), ou a soma de todos os anos.
 function reg(c) {
   const x = MUN.m[c]; if (!x || !x.a) return null;
