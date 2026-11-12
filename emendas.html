@@ -59,6 +59,10 @@ button,input,select{font:inherit;color:inherit}
 .topo .voltar{display:inline-flex;align-items:center;gap:6px;color:#fff;font-weight:700;font-size:14px;text-decoration:none;border:1px solid rgba(255,255,255,.45);border-radius:4px;padding:6px 12px;margin-bottom:14px}
 .topo .voltar:hover{background:#fff;color:var(--night)}
 .topo .marca{display:block}
+.rodape{background:var(--night);color:#b5bacd;font-size:13.5px}
+.rodape .wrap{padding-top:22px;padding-bottom:30px}
+.rodape p{max-width:90ch;margin:0 0 6px}
+.rodape a{color:#fff}
 main section[id]{scroll-margin-top:64px}
 @media (max-width:700px){
   .secoes .wrap{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
@@ -274,6 +278,11 @@ h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size
   </ul>
 </div></section>
 </main>
+<footer class="rodape"><div class="wrap">
+  <p>Dados do Portal da Transparência, atualizados toda semana. Os dados completos, em formato aberto, estão na <a href="https://github.com/jamesgorgen/exterminadores-do-futuro/tree/main/dados">pasta de dados do projeto no GitHub</a>.</p>
+  <p><b>Contato.</b> Sugestões, correções e pedidos de imprensa podem ser enviados para <a href="mailto:contato@exterminadores.com.br">contato@exterminadores.com.br</a>.</p>
+  <p><a href="./">← Voltar à página inicial</a></p>
+</div></footer>
 
 <script src="lib/d3.min.js?v=7.9.0"></script>
 <script src="lib/topojson.min.js?v=3.0.2"></script>
