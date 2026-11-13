@@ -125,6 +125,15 @@ A chave é a do projeto (`PL 682/2024`) ou, para votações sem matéria, a da v
 
 Cuidado com as vírgulas e as aspas. Se o arquivo ficar com erro de formato, as correções deixam de valer e o erro aparece em `dados/diagnostico.json`.
 
+## Biografias
+
+O script `robo/biografias.mjs` (workflow "Biografias", toda segunda-feira e à mão) escreve a biografia de cada parlamentar do índice. Os fatos vêm da API da Câmara (dados pessoais, profissões, ocupações, mandatos externos, histórico de partidos), da API do Senado (dados, mandatos, formação, profissão, cargos, filiações) e do verbete da Wikipédia em português. O Haiku escreve o texto e o modelo forte refaz só quando o Haiku indica dúvida, em geral sobre a identidade do verbete ou um conflito sobre o mandato atual.
+
+- `dados/biografias.json` guarda, por parlamentar, o texto (`b`), as fontes (`f`), o modelo, a data e uma marca da versão dos dados e das instruções (`h`). Só refaz quando essa marca muda.
+- `dados/biografias-amostra.json` guarda a última amostra gerada com a opção "amostra".
+- `biografias-correcoes.json`, na raiz, guarda as versões revisadas pela equipe na página `revisao-biografias.html`. Elas prevalecem no site e nunca voltam para a IA.
+- O site não mostra fotos dos parlamentares. A ficha leva ao perfil oficial na Câmara ou no Senado.
+
 ## Casos verificados
 
 Para destacar casos conferidos pela equipe, crie `dados/verificados.json` neste formato. O robô não mexe nesse arquivo.

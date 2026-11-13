@@ -3,6 +3,9 @@
 name: Biografias
 
 on:
+  # Toda segunda-feira. Só refaz as biografias cujos dados de origem mudaram.
+  schedule:
+    - cron: '13 12 * * 1'
   workflow_dispatch:
     inputs:
       amostra:

@@ -186,6 +186,8 @@ table.parl tr.linha:hover td{background:var(--paper)}
 .barra b{font-variant-numeric:tabular-nums;min-width:44px;text-align:right}
 .perfil{background:var(--sheet);border:2px solid var(--ink);padding:16px 18px;margin:0 0 16px;scroll-margin-top:72px}
 .perfil h3{font-family:var(--display);font-weight:800;font-size:34px;line-height:1;margin:0 0 6px}
+.perfil .bio{max-width:72ch;font-size:16.5px;line-height:1.6;margin:4px 0 8px}
+.perfil .bio-fontes{font-size:13.5px;color:var(--ink-2);margin:0 0 14px}
 .perfil .linha-perfil{display:flex;gap:6px 14px;flex-wrap:wrap;align-items:baseline;font-size:14px;color:var(--ink-2);margin-bottom:10px}
 .perfil h4{margin:16px 0 8px;font-size:14px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3)}
 .lista-votos{display:grid;gap:6px}
@@ -304,6 +306,25 @@ async function relatorias(casa, k){
   const arq = casa === 'C' ? `relatorias-camara/${k}.json` : 'relatorias.json';
   if (!relatoriasCache[arq]) relatoriasCache[arq] = lerJson(arq).then(j => j.itens || []).catch(() => []);
   return relatoriasCache[arq];
+}
+// Biografias, escritas pelo robô a partir das APIs da Câmara e do Senado e da Wikipédia. A versão corrigida pela equipe prevalece.
+let biografiasCache = null;
+function biografias(){
+  if (!biografiasCache) biografiasCache = Promise.all([
+    lerJson('biografias.json').then(j => (j && j.itens) || {}),
+    fetch('biografias-correcoes.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : null).catch(() => null).then(j => (j && j.correcoes) || {})
+  ]).then(([b, c]) => ({ b, c }));
+  return biografiasCache;
+}
+async function desenharBio(k, p){
+  const caixa = $('#perfil-bio'); if (!caixa) return;
+  const { b, c } = await biografias();
+  const bio = b[k] || {}, corr = c[k];
+  const texto = corr && corr.b ? corr.b : bio.b;
+  const id = k.slice(1);
+  const oficial = p.c === 'S' ? { t: 'Senado Federal', u: `https://www25.senado.leg.br/web/senadores/senador/-/perfil/${id}` } : { t: 'Câmara dos Deputados', u: `https://www.camara.leg.br/deputados/${id}` };
+  const fontes = (bio.f && bio.f.length ? bio.f : [oficial]).filter(f => f && f.u);
+  caixa.innerHTML = `${texto ? `<p class="bio">${esc(texto)}</p>` : ''}<p class="bio-fontes">${texto ? `Escrita com base em dados ${fontes.map(f => `${f.t === 'Senado Federal' ? 'do' : 'da'} <a href="${esc(f.u)}" target="_blank" rel="noopener">${esc(f.t)}</a>`).join(' e ')}${corr ? ' e revisada pela equipe' : ''}. ` : ''}<a href="${esc(oficial.u)}" target="_blank" rel="noopener">Perfil oficial no site ${p.c === 'S' ? 'do Senado' : 'da Câmara'}</a>.</p>`;
 }
 const COMISSAO_TXT = c => c === 'PLEN' ? 'Plenário' : c;
 async function desenharRelatorias(k, p){
@@ -648,6 +669,7 @@ async function desenharPerfil(k){
       ${p.ie != null || p.id != null ? `<span>Índice com a extrema-direita <b>${indiceTxt(p.ie)}</b>${p.vde ? ` em ${fmt(p.vde)} votações` : ''}; com a direita <b>${indiceTxt(p.id)}</b>${p.vdd ? ` em ${fmt(p.vdd)}` : ''}</span>` : p.i != null ? `<span>Índice de alinhamento <b>${indiceTxt(p.i)}</b>, em ${fmt(p.vd)} votações disputadas</span>` : ''}
       <a class="btn" href="dossie.html?tipo=parlamentar&id=${encodeURIComponent(k)}" style="text-decoration:none">Gerar dossiê</a>
       <button type="button" class="btn" data-fechar-perfil>Fechar</button></div>
+    <div id="perfil-bio"></div>
     <div class="topo">${pautas.map(([id, n]) => `<span class="selo s-pauta">${esc(PAUTA[id] ? PAUTA[id].nome : id)} ${n}</span>`).join(' ')}</div>
     <h4>Projetos com pauta da direita (${fmt(props.length)})</h4>
     ${props.length ? `<div class="grade">${props.slice(0, 6).map(cartaoProp).join('')}</div>${props.length > 6 ? `<p><button type="button" class="btn" data-ver-props="${esc(k)}">Ver todos os ${props.length}</button></p>` : ''}` : '<p class="meta">Nenhum projeto com pauta da direita.</p>'}
@@ -655,6 +677,7 @@ async function desenharPerfil(k){
     <h4>Votos recentes em votações disputadas</h4><div class="lista-votos" id="perfil-votos">Carregando.</div>
   </div>`;
   desenharRelatorias(k, p);
+  desenharBio(k, p);
   el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   const recentes = D.vot.filter(v => v.disp && v.k === p.c).slice(0, 60);
   const anos = [...new Set(recentes.map(v => String(v.d).slice(0, 4)))];
@@ -685,6 +708,8 @@ function desenharMetodo(){
     <div class="pautas-met">${P.lista.map(p => `<div><b>${esc(p.nome)}</b>${esc(p.descricao)}<small>Extrema-direita quando ${esc(p.extrema.charAt(0).toLowerCase() + p.extrema.slice(1))}</small></div>`).join('')}</div>
     <h3>Relatorias</h3>
     <p>O relator é o parlamentar que estuda um projeto numa comissão ou no plenário e escreve o parecer, muitas vezes com um texto novo, que vai a voto. Por isso a relatoria costuma pesar tanto quanto a autoria. Os dados do Senado vêm da base de relatorias do próprio Senado, com cada designação desde 2023, a comissão, a data em que o senador assumiu e a data e o motivo de quando deixou a relatoria. Na Câmara, que não publica uma base própria de relatorias, as designações são lidas das tramitações de cada proposição, que trazem o deputado designado e a comissão, e o parecer é identificado pela tramitação seguinte do mesmo relator. O perfil de cada parlamentar mostra o que ele relata, e a ficha dos projetos da direita mostra quem os relata no momento.</p>
+    <h3>Biografias</h3>
+    <p>A biografia de cada parlamentar é escrita por um modelo de IA a partir de duas fontes públicas, os dados oficiais da Câmara dos Deputados ou do Senado Federal e o verbete da Wikipédia em português. O modelo é instruído a não acrescentar nenhum fato que não esteja nessas fontes e a manter um tom descritivo, sem juízos. Partido e situação do mandato vêm sempre dos dados oficiais, porque o verbete pode estar desatualizado. A equipe revisa os textos, e a versão revisada prevalece sobre a da IA. Cada ficha traz os links das fontes usadas e do perfil oficial do parlamentar.</p>
     <h3>Emendas parlamentares</h3>
     <p>O módulo de emendas mostra para onde deputados e senadores mandam o dinheiro das emendas individuais ao Orçamento. Os dados vêm do Portal da Transparência, do governo federal, que publica as emendas, os pagamentos a cada favorecido e os convênios. O robô baixa esses arquivos toda segunda-feira. Entram as emendas individuais de 2023 a 2026, com 2026 ainda em execução. As emendas de bancada, de comissão e de relator ficam de fora, porque não têm um autor individual.</p>
     <p>Cada emenda é ligada ao parlamentar autor pelo nome e somada ao grupo do partido dele, com a mesma divisão usada no resto do site. Os totais usam o valor empenhado, que é o compromisso de gasto, e o perfil de cada parlamentar mostra também o valor efetivamente pago. As áreas seguem a função orçamentária da emenda. As transferências especiais, conhecidas como emendas Pix, aparecem separadas, porque o dinheiro chega ao município sem finalidade definida. O mapa liga cada pagamento ao município que o recebeu, e o valor por habitante usa a população do Censo 2022 do IBGE. Os detalhes estão em <a href="emendas.html#metodo">Como foi feito</a>, no próprio módulo.</p>

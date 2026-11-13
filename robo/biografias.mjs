@@ -158,10 +158,12 @@ async function principal() {
   log(`Biografias: ${lista.length} parlamentares${AMOSTRA ? ' (amostra)' : ''}`);
 
   const itens = { ...(antes.itens || {}) };
+  // Biografias corrigidas pela equipe (página revisao-biografias.html) não voltam para a IA.
+  let corrigidas = {}; try { corrigidas = JSON.parse(fs.readFileSync(path.join(RAIZ, 'biografias-correcoes.json'), 'utf8')).correcoes || {}; } catch (e) {}
   let feitas = 0, mantidas = 0;
   for (const [k, p] of lista) {
     const atual = itens[k];
-    if (atual && atual.eq) { mantidas++; continue; }
+    if ((atual && atual.eq) || (corrigidas[k] && corrigidas[k].b)) { mantidas++; continue; }
     const id = k.slice(1);
     const dados = p.c === 'S' ? await dadosSenado(id) : await dadosCamara(id);
     if (!dados) { conta.falhas++; log(`  ${k} ${p.n}: dados oficiais indisponíveis`); continue; }
