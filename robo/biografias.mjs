@@ -105,8 +105,8 @@ const INSTRUCOES = `Você escreve biografias curtas de parlamentares brasileiros
 Regras
 1. Use somente os fatos presentes nos DADOS OFICIAIS e no VERBETE DA WIKIPÉDIA. Não acrescente nada que você saiba por conta própria.
 2. Primeiro confira se o verbete é da mesma pessoa, comparando data ou local de nascimento, estado, partido e cargos com os dados oficiais. Se for, use os fatos dele livremente. É normal o verbete trazer cargos, profissão e carreira que os dados oficiais não registram, e isso não é motivo de dúvida.
-3. Quando as duas fontes divergirem num mesmo fato, fique com os dados oficiais.
-4. Escreva de 60 a 110 palavras, em três a cinco frases, em português, em terceira pessoa, nesta ordem: origem (data e cidade de nascimento) e formação; profissão e carreira antes da política; cargos eletivos ou públicos anteriores; o mandato atual; trocas de partido, se houver. Pule o que não constar.
+3. Quando as duas fontes divergirem num mesmo fato, fique com os dados oficiais. O verbete pode estar desatualizado, então partido atual, liderança, cargo atual e situação do mandato vêm só dos dados oficiais. Use o verbete para o passado.
+4. Escreva de 60 a 110 palavras, em três a cinco frases, em português, em terceira pessoa, nesta ordem: origem (data e cidade de nascimento) e formação; profissão e carreira antes da política; cargos eletivos ou públicos anteriores; o mandato atual; trocas de partido, se houver. Pule o que não constar. Não repita a mesma informação em duas frases. Revise a concordância ("eleito por Goiás", "pelo Rio de Janeiro").
 5. Tom descritivo e neutro. Nada de adjetivos, elogios, críticas ou juízos. Não fale de votos, projetos, polêmicas, processos ou investigações.
 6. Nunca mencione as fontes, a Wikipédia, os "dados oficiais" nem a falta de alguma informação. O texto é só a biografia.
 7. Não use dois pontos para ligar frases. Partidos pela sigla. Estados por extenso ("pelo PL de Mato Grosso", nunca "PL/MT"). Comece pelo nome parlamentar.
