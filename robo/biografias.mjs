@@ -136,7 +136,7 @@ async function escrever(p, dados, wiki, modelo) {
   return null;
 }
 
-const hash = x => crypto.createHash('sha1').update(JSON.stringify(x)).digest('hex').slice(0, 12);
+const hash = x => crypto.createHash('sha1').update(INSTRUCOES + JSON.stringify(x)).digest('hex').slice(0, 12);
 
 function escolherAmostra(lista) {
   // Mistura de Casas e grupos, com parlamentares conhecidos e pouco conhecidos.
