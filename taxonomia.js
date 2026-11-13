@@ -1,5 +1,5 @@
 // Taxonomia temática do Monitor Legislativo
-// Base: Cadernos do Futuro do Brasil (versão 20261005), capítulos 3 a 9.
+// Temas e áreas usados para marcar os assuntos das ementas.
 // Cada tema reúne termos que aparecem nas ementas das proposições, incluindo
 // o vocabulário usado pelos próprios partidos monitorados.
 //

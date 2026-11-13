@@ -29,6 +29,7 @@ html,body{margin:0}
 body{background:var(--desk);color:var(--ink);font:10.5pt/1.5 var(--sans);-webkit-font-smoothing:antialiased}
 a{color:var(--accent)}
 button,input,select{font:inherit;color:inherit}
+select,select option{background-color:#fff;color:#1B2523}
 :focus-visible{outline:3px solid #f2c94c;outline-offset:2px}
 .num{font-variant-numeric:tabular-nums}
 
@@ -406,19 +407,19 @@ async function dossieBalanco(casa) {
 
   if (temas.length) {
     h += `<section class="quebra"><h2>Os blocos em cada tema</h2>
-      <p class="leve">Parte de cada grupo nos projetos de cada tema dos Cadernos do Futuro, pelo primeiro autor. Um projeto pode tratar de mais de um tema. Entram os ${fmt(temas.length)} temas com pelo menos 20 projetos.</p>
+      <p class="leve">Parte de cada grupo nos projetos de cada tema, pelo primeiro autor. Um projeto pode tratar de mais de um tema. Entram os ${fmt(temas.length)} temas com pelo menos 20 projetos.</p>
       <div class="duas"><div><h3>Onde a extrema-direita mais pesa</h3>${barras(top(l => l.sh.extrema, 8).map(l => [l.t.n, l.sh.extrema]), v => pct(v), 'var(--g-extrema)')}</div>
         <div><h3>Onde a esquerda mais pesa</h3>${barras(top(l => l.sh.esquerda, 8).map(l => [l.t.n, l.sh.esquerda]), v => pct(v), 'var(--g-esquerda)')}</div></div>
       <div class="duas"><div><h3>Onde direita e extrema-direita somadas mais pesam</h3>${barras(top(l => l.sh.extrema + l.sh.direita, 8).map(l => [l.t.n, l.sh.extrema + l.sh.direita]), v => pct(v), 'var(--g-direita)')}</div>
         ${temSit ? `<div><h3>Temas com mais aprovações</h3>${barras(top(l => l.x.ap, 8).map(l => [l.t.n, l.x.ap]), fmt)}</div>` : ''}</div>
       ${((r.temas || {}).cadernos || []).map(c => { const ls = temas.filter(l => l.t.c === c.id).sort((a, d) => d.x.n - a.x.n); if (!ls.length) return ''; return `
-      <h3>${esc(c.nome)}. ${esc(c.sub)}</h3>
+      <h3>${esc(c.sub)}</h3>
       <div class="tabela"><table class="tab-temas"><thead><tr><th>Tema</th><th class="d">Projetos</th><th style="width:22%">Divisão</th><th class="d">Extrema-direita</th><th class="d">Direita</th><th class="d">Centro-direita</th><th class="d">Esquerda</th>${temSit ? '<th class="d">Aprovados</th><th class="d">Da direita e extrema-direita</th>' : ''}</tr></thead><tbody>
       ${ls.map(l => `<tr><td>${esc(l.t.n)}</td><td class="d num">${fmt(l.x.n)}</td><td><div class="pilha">${G.map(k => `<span style="--cor:var(--g-${k});width:${100 * l.sh[k]}%"></span>`).join('')}</div></td>${G.map(k => `<td class="d num">${pct(l.sh[k])}</td>`).join('')}${temSit ? `<td class="d num">${fmt(l.x.ap)}</td><td class="d num">${l.apG ? pct(q(l.apDir, l.apG)) : '—'}</td>` : ''}</tr>`).join('')}
       </tbody></table></div>`; }).join('')}
     </section>`;
   }
-  h += METODO.replace('</dl>', `<dt>Balanço</dt><dd>Cada projeto conta para o grupo do primeiro autor, e os de parlamentares sem partido ficam de fora. Um projeto é considerado aprovado quando passou pelo plenário de uma Casa, ou pela comissão em caráter terminativo, e seguiu para a outra Casa, para a sanção ou virou lei. A situação de cada projeto é lida nos dados abertos da Câmara e do Senado. Nas votações, o grupo fica do lado vencedor quando a maioria dos seus integrantes que votaram sim ou não acompanhou o resultado final. Votações sem resultado registrado e empates dentro do grupo ficam fora da conta. Os temas são os dos Cadernos do Futuro, identificados nas ementas.</dd></dl>`)
+  h += METODO.replace('</dl>', `<dt>Balanço</dt><dd>Cada projeto conta para o grupo do primeiro autor, e os de parlamentares sem partido ficam de fora. Um projeto é considerado aprovado quando passou pelo plenário de uma Casa, ou pela comissão em caráter terminativo, e seguiu para a outra Casa, para a sanção ou virou lei. A situação de cada projeto é lida nos dados abertos da Câmara e do Senado. Nas votações, o grupo fica do lado vencedor quando a maioria dos seus integrantes que votaram sim ou não acompanhou o resultado final. Votações sem resultado registrado e empates dentro do grupo ficam fora da conta. Os temas são identificados nas ementas.</dd></dl>`)
     + `<div class="rodape">Dossiê gerado automaticamente a partir de dados públicos em ${hoje}. As classificações por IA são triagem e podem conter erros.</div>`;
   $('#folha').innerHTML = h;
 }

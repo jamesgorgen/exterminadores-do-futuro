@@ -56,7 +56,7 @@ Na página de revisão, as filas mostram por padrão só os itens que exigem rev
 | `emendas.html` | Módulo de emendas parlamentares |
 | `robo/emendas.py` | Gera os dados do módulo de emendas |
 | `robo/motor.js` | Funções de busca e de classificação por tema, usadas pelo robô |
-| `taxonomia.js` | Temas dos Cadernos do Futuro, usados para marcar os temas das ementas |
+| `taxonomia.js` | Temas e áreas usados para marcar os assuntos das ementas |
 | `robo/coletar.mjs` | O robô de coleta |
 | `robo/pdfs.mjs` e `.github/workflows/dossies.yml` | Geram todo dia 1º os dossiês dos 27 estados em PDF e publicam em Releases do repositório; a página de dossiês aponta para o último mês |
 | `.github/workflows/atualizar.yml` | O agendamento do robô no GitHub Actions |
@@ -127,7 +127,7 @@ Cuidado com as vírgulas e as aspas. Se o arquivo ficar com erro de formato, as 
 
 ## Balanço
 
-`resumo.json` traz o campo `blocos`, calculado por `calcularBlocos` em `robo/coletar.mjs`, com os totais por Casa (`C`, `S`) e somados (`T`). Para cada grupo (extrema, direita, centro, esquerda): projetos pelo primeiro autor (`prop`), projetos com pauta da direita (`pauta`), parlamentares que passaram pelo grupo (`membros`), votações em que o grupo teve maioria definida (`vot`) e em quantas essa maioria ficou do lado vencedor (`venceu`). Também traz, por grupo, os projetos com situação conhecida (`comSit`), aprovados em ao menos uma Casa ou transformados em lei (`aprovada`), transformados em lei (`lei`) e arquivados (`arquivada`), e por tema dos Cadernos do Futuro (`temas`) o total, os aprovados e, por grupo, projetos, aprovados e projetos com pauta da direita. `resumo.json` também leva os nomes dos temas e cadernos (`temas`). A aba Balanço do site lê esses números.
+`resumo.json` traz o campo `blocos`, calculado por `calcularBlocos` em `robo/coletar.mjs`, com os totais por Casa (`C`, `S`) e somados (`T`). Para cada grupo (extrema, direita, centro, esquerda): projetos pelo primeiro autor (`prop`), projetos com pauta da direita (`pauta`), parlamentares que passaram pelo grupo (`membros`), votações em que o grupo teve maioria definida (`vot`) e em quantas essa maioria ficou do lado vencedor (`venceu`). Também traz, por grupo, os projetos com situação conhecida (`comSit`), aprovados em ao menos uma Casa ou transformados em lei (`aprovada`), transformados em lei (`lei`) e arquivados (`arquivada`), e por tema (`temas`) o total, os aprovados e, por grupo, projetos, aprovados e projetos com pauta da direita. `resumo.json` também leva os nomes dos temas e cadernos (`temas`). A aba Balanço do site lê esses números.
 
 ## Situações das proposições
 

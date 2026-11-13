@@ -917,7 +917,7 @@ export function calcularBlocos(props, votos, indice, cl, sit = {}) {
   const casas = { T: {}, C: {}, S: {} };
   const novoTot = () => ({ prop: 0, pauta: 0, pautaExtrema: 0, vot: 0, comSit: 0, aprovada: 0, lei: 0, arquivada: 0 });
   const tot = { T: novoTot(), C: novoTot(), S: novoTot() };
-  // Por tema (taxonomia dos Cadernos do Futuro): projetos e aprovados de cada grupo.
+  // Por tema: projetos e aprovados de cada grupo.
   const temas = { T: {}, C: {}, S: {} };
   for (const c of Object.keys(casas)) for (const g of G) casas[c][g] = vazio();
   for (const [k, p] of Object.entries(indice)) {
