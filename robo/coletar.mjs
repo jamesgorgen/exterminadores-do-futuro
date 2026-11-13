@@ -911,11 +911,14 @@ function calcularAlinhamento(todasVotacoes) {
 // muitas de uma vez indicam falha na coleta e aparecem como erro no diagnóstico.
 // Peso de cada bloco na produção legislativa e nas votações, por Casa e no total.
 // Autoria pelo primeiro autor; sucesso em votação quando a maioria do grupo votou no lado vencedor.
-export function calcularBlocos(props, votos, indice, cl) {
+export function calcularBlocos(props, votos, indice, cl, sit = {}) {
   const G = ['extrema', 'direita', 'centro', 'esquerda'];
-  const vazio = () => ({ prop: 0, pauta: 0, membros: 0, emExercicio: 0, vot: 0, venceu: 0 });
+  const vazio = () => ({ prop: 0, pauta: 0, membros: 0, emExercicio: 0, vot: 0, venceu: 0, comSit: 0, aprovada: 0, lei: 0, arquivada: 0 });
   const casas = { T: {}, C: {}, S: {} };
-  const tot = { T: { prop: 0, pauta: 0, pautaExtrema: 0, vot: 0 }, C: { prop: 0, pauta: 0, pautaExtrema: 0, vot: 0 }, S: { prop: 0, pauta: 0, pautaExtrema: 0, vot: 0 } };
+  const novoTot = () => ({ prop: 0, pauta: 0, pautaExtrema: 0, vot: 0, comSit: 0, aprovada: 0, lei: 0, arquivada: 0 });
+  const tot = { T: novoTot(), C: novoTot(), S: novoTot() };
+  // Por tema (taxonomia dos Cadernos do Futuro): projetos e aprovados de cada grupo.
+  const temas = { T: {}, C: {}, S: {} };
   for (const c of Object.keys(casas)) for (const g of G) casas[c][g] = vazio();
   for (const [k, p] of Object.entries(indice)) {
     if (!G.includes(p.cl)) continue;
@@ -925,9 +928,20 @@ export function calcularBlocos(props, votos, indice, cl) {
     const a = (it.a || [])[0]; const casa = a ? a[0] : (it.k || [])[0];
     if (!['C', 'S'].includes(casa)) continue;
     const x = cl(it.c) || {}, avanca = x.s === 'avanca', g = a && indice[a] && indice[a].cl;
+    const st = (sit[it.c] || [])[0] || '';
+    const aprov = st === 'p' || st === 'l';
     for (const c of ['T', casa]) {
       tot[c].prop++; if (avanca) { tot[c].pauta++; if (x.g === 'extrema') tot[c].pautaExtrema++; }
-      if (G.includes(g)) { casas[c][g].prop++; if (avanca) casas[c][g].pauta++; }
+      if (st) { tot[c].comSit++; if (aprov) tot[c].aprovada++; if (st === 'l') tot[c].lei++; if (st === 'a') tot[c].arquivada++; }
+      if (G.includes(g)) {
+        const o = casas[c][g]; o.prop++; if (avanca) o.pauta++;
+        if (st) { o.comSit++; if (aprov) o.aprovada++; if (st === 'l') o.lei++; if (st === 'a') o.arquivada++; }
+      }
+      for (const m of it.m || []) {
+        const t = temas[c][m] || (temas[c][m] = { n: 0, ap: 0, g: {} });
+        t.n++; if (aprov) t.ap++;
+        if (G.includes(g)) { const tg = t.g[g] || (t.g[g] = [0, 0, 0]); tg[0]++; if (aprov) tg[1]++; if (avanca) tg[2]++; }
+      }
     }
   }
   for (const vt of votos) {
@@ -944,7 +958,7 @@ export function calcularBlocos(props, votos, indice, cl) {
       for (const casa of ['T', vt.k]) { casas[casa][g].vot++; if (lado === vence) casas[casa][g].venceu++; }
     }
   }
-  return Object.fromEntries(Object.keys(casas).map(c => [c, { ...tot[c], grupos: casas[c] }]));
+  return Object.fromEntries(Object.keys(casas).map(c => [c, { ...tot[c], grupos: casas[c], temas: temas[c] }]));
 }
 
 export function verificarNumeracao(itens, dias = 14) {
@@ -1145,7 +1159,8 @@ export async function executar() {
       nucleo: emExercicio.filter(p => p.cl === 'extrema' || p.cl === 'direita').length, alinhados: emExercicio.filter(p => p.al === 'alinhado').length,
       emExercicio: { C: emExercicio.filter(p => p.c === 'C').length, S: emExercicio.filter(p => p.c === 'S').length } },
     porPauta,
-    blocos: calcularBlocos(todasPropFinal, todasVot, indice, cl),
+    temas: { cadernos: TAX.cadernos.map(c => ({ id: c.id, nome: c.nome, sub: c.subtitulo })), lista: TAX.temas.map(t => ({ id: t.id, c: t.caderno, n: t.tema })) },
+    blocos: calcularBlocos(todasPropFinal, todasVot, indice, cl, lerJson('situacoes.json', { itens: {} }).itens || {}),
     recentes: { proposicoes: direita.filter(it => it.x.s === 'avanca' && it.d >= desde(7)).length, votacoes: resumoVot.filter(v => v.d >= desde(7)).length }
   });
 

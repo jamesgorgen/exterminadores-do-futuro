@@ -127,7 +127,11 @@ Cuidado com as vírgulas e as aspas. Se o arquivo ficar com erro de formato, as 
 
 ## Balanço
 
-`resumo.json` traz o campo `blocos`, calculado por `calcularBlocos` em `robo/coletar.mjs`, com os totais por Casa (`C`, `S`) e somados (`T`). Para cada grupo (extrema, direita, centro, esquerda): projetos pelo primeiro autor (`prop`), projetos com pauta da direita (`pauta`), parlamentares que passaram pelo grupo (`membros`), votações em que o grupo teve maioria definida (`vot`) e em quantas essa maioria ficou do lado vencedor (`venceu`). A aba Balanço do site lê esses números.
+`resumo.json` traz o campo `blocos`, calculado por `calcularBlocos` em `robo/coletar.mjs`, com os totais por Casa (`C`, `S`) e somados (`T`). Para cada grupo (extrema, direita, centro, esquerda): projetos pelo primeiro autor (`prop`), projetos com pauta da direita (`pauta`), parlamentares que passaram pelo grupo (`membros`), votações em que o grupo teve maioria definida (`vot`) e em quantas essa maioria ficou do lado vencedor (`venceu`). Também traz, por grupo, os projetos com situação conhecida (`comSit`), aprovados em ao menos uma Casa ou transformados em lei (`aprovada`), transformados em lei (`lei`) e arquivados (`arquivada`), e por tema dos Cadernos do Futuro (`temas`) o total, os aprovados e, por grupo, projetos, aprovados e projetos com pauta da direita. `resumo.json` também leva os nomes dos temas e cadernos (`temas`). A aba Balanço do site lê esses números.
+
+## Situações das proposições
+
+`robo/situacoes.mjs` (workflow "Situações das proposições", todo dia, sem IA) lê a situação atual de cada proposição nos arquivos anuais de proposições da Câmara e na lista de processos do Senado e grava `dados/situacoes.json`. Cada item traz a categoria (`t` em tramitação, `p` aprovada em ao menos uma Casa, `l` virou lei, `a` arquivada, retirada ou prejudicada), o índice do texto da situação em `descricoes` e a data. A regra que converte o texto em categoria está na função `categoria`.
 
 ## Biografias
 

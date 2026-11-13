@@ -112,6 +112,19 @@ p.sub{color:var(--ink-2);max-width:70ch;margin:0 0 18px}
 .bal-linha .val small{display:block;white-space:nowrap;color:var(--ink-3);font-size:12.5px}
 .bal-nota{font-size:13.5px;color:var(--ink-3);margin:10px 0 0;line-height:1.5}
 @media (max-width:600px){.bal-linha{grid-template-columns:96px minmax(0,1fr) 112px}.bal-linha .nome{font-size:13.5px}.bal-lede b{font-size:36px}}
+.bal-temas-ctrl{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 14px}
+.bal-temas-ctrl select,.bal-filtro select{max-width:100%}
+.bal-legenda{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--ink-2);margin:0 0 12px}
+.bal-legenda span{display:inline-flex;align-items:center;gap:7px}
+.bal-legenda i{width:12px;height:12px;border-radius:2px;display:inline-block}
+.bal-tema{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:6px 20px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.bal-tema .t{font-size:15px;line-height:1.35}
+.bal-tema .t small{display:block;color:var(--ink-3);font-size:13px}
+.bal-pilha{display:flex;gap:2px;height:16px}
+.bal-pilha span{display:block;height:16px;min-width:2px}
+.bal-pilha span:last-child{border-radius:0 4px 4px 0}
+.bal-tema .p{grid-column:2;font-size:13px;color:var(--ink-3);margin-top:-2px}
+@media (max-width:700px){.bal-tema{grid-template-columns:1fr}.bal-tema .p{grid-column:1}}
 .kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,170px),1fr));gap:16px 0;margin:0 0 30px}
 .kpi{background:transparent;border-left:1px solid var(--line);padding:2px 18px}
 .kpi b{display:block;font-family:var(--display);font-weight:900;font-size:40px;line-height:1}
@@ -732,7 +745,7 @@ function desenharMetodo(){
     <h3>Relatorias</h3>
     <p>O relator é o parlamentar que estuda um projeto numa comissão ou no plenário e escreve o parecer, muitas vezes com um texto novo, que vai a voto. Por isso a relatoria costuma pesar tanto quanto a autoria. Os dados do Senado vêm da base de relatorias do próprio Senado, com cada designação desde 2023, a comissão, a data em que o senador assumiu e a data e o motivo de quando deixou a relatoria. Na Câmara, que não publica uma base própria de relatorias, as designações são lidas das tramitações de cada proposição, que trazem o deputado designado e a comissão, e o parecer é identificado pela tramitação seguinte do mesmo relator. O perfil de cada parlamentar mostra o que ele relata, e a ficha dos projetos da direita mostra quem os relata no momento.</p>
     <h3>Balanço</h3>
-    <p>A aba Balanço mede o peso de cada grupo político no Congresso desde fevereiro de 2023, com todos os projetos apresentados por parlamentares e todas as votações nominais coletadas. Cada projeto é atribuído ao grupo do primeiro autor. A média por parlamentar divide os projetos do grupo por todos que passaram por ele no período, inclusive suplentes e quem deixou o mandato. A pauta da direita segue a mesma classificação usada no resto do site. Nas votações, o grupo fica do lado vencedor quando a maioria dos seus integrantes que votaram sim ou não acompanhou o resultado final. Votações sem resultado de aprovação ou rejeição registrado e empates dentro do grupo ficam fora da conta. Os números são recalculados todos os dias pelo robô.</p>
+    <p>A aba Balanço mede o peso de cada grupo político no Congresso desde fevereiro de 2023, com todos os projetos apresentados por parlamentares e todas as votações nominais coletadas. Cada projeto é atribuído ao grupo do primeiro autor. A média por parlamentar divide os projetos do grupo por todos que passaram por ele no período, inclusive suplentes e quem deixou o mandato. A pauta da direita segue a mesma classificação usada no resto do site. Nas votações, o grupo fica do lado vencedor quando a maioria dos seus integrantes que votaram sim ou não acompanhou o resultado final. Votações sem resultado de aprovação ou rejeição registrado e empates dentro do grupo ficam fora da conta. A situação de cada projeto (em tramitação, aprovado em ao menos uma Casa, transformado em lei ou arquivado) é lida todos os dias nos arquivos de dados abertos da Câmara e na API do Senado. Um projeto conta como aprovado quando já passou pelo plenário de uma Casa, ou pela comissão quando ela decide em caráter terminativo, e seguiu para a outra Casa, para a sanção ou virou lei. Na análise por tema, valem os temas dos Cadernos do Futuro identificados nas ementas, e um mesmo projeto pode contar em mais de um tema. Os números são recalculados todos os dias pelo robô.</p>
     <h3>Biografias</h3>
     <p>A biografia de cada parlamentar é escrita por um modelo de IA a partir de duas fontes públicas, os dados oficiais da Câmara dos Deputados ou do Senado Federal e o verbete da Wikipédia em português. O modelo é instruído a não acrescentar nenhum fato que não esteja nessas fontes e a manter um tom descritivo, sem juízos. Partido e situação do mandato vêm sempre dos dados oficiais, porque o verbete pode estar desatualizado. A equipe revisa os textos, e a versão revisada prevalece sobre a da IA. Cada ficha traz os links das fontes usadas e do perfil oficial do parlamentar.</p>
     <h3>Emendas parlamentares</h3>
@@ -812,6 +825,7 @@ function desenharBalanco(){
       <div class="bal-lede">
         <p><b>${fmtPct(pct(blocoProp, b.prop))}</b>dos ${fmt(b.prop)} projetos apresentados por parlamentares saíram da direita e da extrema-direita</p>
         <p><b>${fmtPct(pct(b.pauta, b.prop))}</b>de todos os projetos fazem avançar alguma pauta da direita, ${fmtPct(pct(b.pautaExtrema, b.prop))} com grau de extrema-direita</p>
+        ${b.comSit ? `<p><b>${fmtPct(pct(g.extrema.aprovada + g.direita.aprovada, b.aprovada))}</b>dos ${fmt(b.aprovada)} projetos aprovados em ao menos uma Casa são da direita e da extrema-direita, que apresentaram ${fmtPct(pct(blocoProp, b.prop))} do total</p>` : ''}
         <p><b>${fmtPct(pct(g.extrema.venceu, g.extrema.vot))}</b>das votações nominais tiveram a maioria da extrema-direita do lado vencedor, contra ${fmtPct(pct(g.direita.venceu, g.direita.vot))} da direita</p>
       </div>
       <div class="bal-graficos">
@@ -824,12 +838,58 @@ function desenharBalanco(){
         ${graficoBlocos('Pauta da direita na produção de cada grupo', 'Parte dos projetos do próprio grupo que faz avançar alguma pauta da direita.',
           G.map(x => ({ g: x, v: pct(g[x].pauta, g[x].prop), txt: fmtPct(pct(g[x].pauta, g[x].prop)), det: `${fmt(g[x].pauta)} projetos`, dica: `${NOME_GRUPO[x]}: ${fmt(g[x].pauta)} de ${fmt(g[x].prop)} projetos com pauta da direita` })), 100,
           `A classificação das pautas é feita por IA e conferida pela equipe. Veja a aba Como funciona.`)}
+        ${b.comSit ? graficoBlocos('Projetos aprovados', 'Parte dos projetos de cada grupo aprovada em ao menos uma Casa ou transformada em lei.',
+          G.map(x => ({ g: x, v: pct(g[x].aprovada, g[x].comSit), txt: fmtPct(pct(g[x].aprovada, g[x].comSit)), det: `${fmt(g[x].aprovada)}, ${fmt(g[x].lei)} viraram lei`, dica: `${NOME_GRUPO[x]}: ${fmt(g[x].aprovada)} aprovados e ${fmt(g[x].lei)} transformados em lei, de ${fmt(g[x].comSit)} projetos com situação conhecida` })),
+          Math.max(...G.map(x => pct(g[x].aprovada, g[x].comSit))) * 1.15,
+          `Situação atual de ${fmt(b.comSit)} projetos, lida todos os dias nas APIs da Câmara e do Senado. Muitos projetos ainda estão em tramitação, então a taxa tende a crescer com o tempo, sobretudo para os mais recentes.`) : ''}
+        ${b.comSit ? graficoBlocos('Peso nas aprovações', 'Parte de cada grupo no total de projetos aprovados.',
+          G.map(x => ({ g: x, v: pct(g[x].aprovada, b.aprovada), txt: fmtPct(pct(g[x].aprovada, b.aprovada)), det: `${fmt(g[x].aprovada)} de ${fmt(b.aprovada)}`, dica: `${NOME_GRUPO[x]}: ${fmt(g[x].aprovada)} dos ${fmt(b.aprovada)} projetos aprovados` })), 50,
+          `Compare com o gráfico de projetos apresentados. Quando a parte nas aprovações é maior que a parte nos projetos apresentados, o grupo aprova proporcionalmente mais do que propõe.`) : ''}
         ${graficoBlocos('Do lado vencedor nas votações', 'Votações nominais em que a maioria do grupo votou como o resultado final.',
           G.map(x => ({ g: x, v: pct(g[x].venceu, g[x].vot), txt: fmtPct(pct(g[x].venceu, g[x].vot)), det: `${fmt(g[x].venceu)} de ${fmt(g[x].vot)}`, dica: `${NOME_GRUPO[x]}: maioria do lado vencedor em ${fmt(g[x].venceu)} de ${fmt(g[x].vot)} votações` })), 100,
           `Base de ${fmt(b.vot)} votações nominais com resultado registrado de aprovação ou rejeição, em plenário e nas comissões. Empates dentro do grupo não entram na conta.`)}
       </div>
-    </div>`;
+    </div>
+    ${b.temas && r.temas ? `<div class="secao" id="bal-temas"></div>` : ''}`;
   $('#bal-casa').addEventListener('change', e => { est.bal.casa = e.target.value; desenharBalanco(); });
+  if (b.temas && r.temas) desenharTemasBalanco(b, r.temas);
+}
+
+// Peso de cada grupo em cada tema dos Cadernos do Futuro.
+function desenharTemasBalanco(b, tax){
+  const caixa = $('#bal-temas'); if (!caixa) return;
+  est.bal.cad = est.bal.cad || ''; est.bal.ord = est.bal.ord || 'ext'; est.bal.todos = !!est.bal.todos;
+  const G = ['extrema', 'direita', 'centro', 'esquerda'];
+  const cads = Object.fromEntries(tax.cadernos.map(c => [c.id, c]));
+  const linhas = tax.lista.filter(t => b.temas[t.id] && b.temas[t.id].n >= 20 && (!est.bal.cad || t.c === est.bal.cad)).map(t => {
+    const x = b.temas[t.id], soma = G.reduce((a, g) => a + ((x.g[g] || [0])[0]), 0) || 1;
+    const sh = Object.fromEntries(G.map(g => [g, 100 * ((x.g[g] || [0])[0]) / soma]));
+    const apG = G.reduce((a, g) => a + ((x.g[g] || [0, 0])[1]), 0);
+    const apDir = ((x.g.extrema || [0, 0])[1]) + ((x.g.direita || [0, 0])[1]);
+    return { t, x, sh, apG, apDir };
+  });
+  const ord = { ext: (a, c) => c.sh.extrema - a.sh.extrema, blo: (a, c) => (c.sh.extrema + c.sh.direita) - (a.sh.extrema + a.sh.direita),
+    esq: (a, c) => c.sh.esquerda - a.sh.esquerda, n: (a, c) => c.x.n - a.x.n, ap: (a, c) => c.x.ap - a.x.ap }[est.bal.ord];
+  linhas.sort(ord);
+  const vis = est.bal.todos ? linhas : linhas.slice(0, 20);
+  const opc = (v, t, a) => `<option value="${v}" ${a === v ? 'selected' : ''}>${esc(t)}</option>`;
+  caixa.innerHTML = `
+    <h2 class="titulo">Os blocos em cada tema</h2>
+    <p class="sub">Parte de cada grupo nos projetos de cada tema dos Cadernos do Futuro, pelo primeiro autor. Um projeto pode tratar de mais de um tema. Só entram temas com pelo menos 20 projetos.</p>
+    <div class="bal-temas-ctrl">
+      <select id="bal-cad" aria-label="Caderno">${opc('', 'Todos os cadernos', est.bal.cad)}${tax.cadernos.map(c => opc(c.id, `${c.nome}, ${c.sub.charAt(0).toLowerCase() + c.sub.slice(1)}`, est.bal.cad)).join('')}</select>
+      <select id="bal-ord" aria-label="Ordem">${opc('ext', 'Onde a extrema-direita mais pesa', est.bal.ord)}${opc('blo', 'Onde direita e extrema-direita mais pesam', est.bal.ord)}${opc('esq', 'Onde a esquerda mais pesa', est.bal.ord)}${opc('n', 'Temas com mais projetos', est.bal.ord)}${opc('ap', 'Temas com mais aprovações', est.bal.ord)}</select>
+    </div>
+    <div class="bal-legenda">${G.map(g => `<span><i style="background:${COR_GRUPO[g]}"></i>${NOME_GRUPO[g]}</span>`).join('')}</div>
+    ${vis.map(l => `<div class="bal-tema">
+      <span class="t">${esc(l.t.n)}<small>${esc((cads[l.t.c] || {}).nome || '')}</small></span>
+      <span class="bal-pilha" role="img" aria-label="${G.map(g => `${NOME_GRUPO[g]} ${fmtPct(l.sh[g])}`).join(', ')}">${G.filter(g => l.sh[g] > 0).map(g => `<span style="width:${l.sh[g].toFixed(2)}%;background:${COR_GRUPO[g]}" title="${NOME_GRUPO[g]}: ${fmtPct(l.sh[g])} dos projetos do tema (${fmt((l.x.g[g] || [0])[0])})"></span>`).join('')}</span>
+      <span class="p">${fmt(l.x.n)} projetos. Extrema-direita ${fmtPct(l.sh.extrema)}, direita ${fmtPct(l.sh.direita)}, centro-direita ${fmtPct(l.sh.centro)}, esquerda ${fmtPct(l.sh.esquerda)}.${b.comSit ? ` ${fmt(l.x.ap)} ${l.x.ap === 1 ? 'aprovado' : 'aprovados'}${l.apG ? `, ${fmtPct(pct(l.apDir, l.apG))} deles da direita e da extrema-direita` : ''}.` : ''}</span>
+    </div>`).join('')}
+    ${linhas.length > 20 ? `<p><button type="button" class="btn" id="bal-todos">${est.bal.todos ? 'Mostrar só os 20 primeiros' : `Mostrar os ${linhas.length} temas`}</button></p>` : ''}`;
+  $('#bal-cad').addEventListener('change', e => { est.bal.cad = e.target.value; desenharTemasBalanco(b, tax); });
+  $('#bal-ord').addEventListener('change', e => { est.bal.ord = e.target.value; desenharTemasBalanco(b, tax); });
+  const bt = $('#bal-todos'); if (bt) bt.addEventListener('click', () => { est.bal.todos = !est.bal.todos; desenharTemasBalanco(b, tax); });
 }
 
 // ---------------------------------------------------------------- navegação

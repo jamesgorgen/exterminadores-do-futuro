@@ -37,7 +37,7 @@ export function categoria(desc) {
   if (!d.trim()) return '';
   if (/norma juridica|transformad[ao] em (lei|norma)|lei n/.test(d)) return 'lei';
   if (/arquivad|retirad|prejudicad|rejeitad|devolvid|perda de eficacia|vigencia encerrada|tramitacao encerrada|nao conhecid|inadmitid/.test(d)) return 'arquivada';
-  if (/remetid[ao] a|aguardando apreciacao pelo senado|aguardando apreciacao pela camara|aguardando sancao|enviad[ao] a sancao|remessa a sancao|a sancao|aprovad|aguardando promulgacao|promulgad|vetad|veto|transformad[ao] no|recebid[ao] do senado|retorno a camara|enviad[ao] ao senado|encaminhad[ao] ao senado|camara revisora/.test(d)) return 'aprovada';
+  if (/remetid[ao] a|aguardando apreciacao pelo senado|aguardando apreciacao pela camara|aguardando sancao|enviad[ao] a sancao|remessa a sancao|a sancao|aprovad|aguardando promulgacao|promulgad|vetad|veto|transformad[ao] no|recebid[ao] do senado|retorno a camara|enviad[ao] ao senado|encaminhad[ao] ao senado|camara revisora|autografos|redacao final/.test(d)) return 'aprovada';
   return 'tramitando';
 }
 
