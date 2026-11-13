@@ -184,7 +184,13 @@ table.parl tr.linha:hover td{background:var(--paper)}
 .barra .fundo{flex:1;height:8px;background:var(--paper);border-radius:4px;overflow:hidden}
 .barra .fundo span{display:block;height:100%;background:var(--ext)}
 .barra b{font-variant-numeric:tabular-nums;min-width:44px;text-align:right}
-.perfil{background:var(--sheet);border:2px solid var(--ink);padding:16px 18px;margin:0 0 16px;scroll-margin-top:72px}
+#perfil-dlg{border:0;padding:0;margin:0 0 0 auto;width:min(860px,100%);max-width:100%;height:100%;max-height:100%;background:var(--sheet);color:var(--ink);box-shadow:-8px 0 30px rgba(0,0,0,.25);overscroll-behavior:contain}
+#perfil{min-height:100%}
+#perfil-dlg::backdrop{background:rgba(18,59,64,.45)}
+.perfil{padding:0 22px 28px}
+.perfil .perfil-topo{position:sticky;top:0;z-index:2;background:var(--sheet);display:flex;align-items:center;gap:12px;padding:16px 0 10px;margin-bottom:6px;border-bottom:1px solid var(--line)}
+.perfil .perfil-topo h3{margin:0;flex:1}
+@media (max-width:600px){.perfil{padding:0 16px 24px}.perfil h3{font-size:28px}}
 .perfil h3{font-family:var(--display);font-weight:800;font-size:34px;line-height:1;margin:0 0 6px}
 .perfil .bio{max-width:72ch;font-size:16.5px;line-height:1.6;margin:4px 0 8px}
 .perfil .bio-fontes{font-size:13.5px;color:var(--ink-2);margin:0 0 14px}
@@ -217,6 +223,7 @@ footer a{color:#fff}
 </style>
 </head>
 <body>
+<dialog id="perfil-dlg" aria-label="Ficha do parlamentar"><div id="perfil"></div></dialog>
 
 <header class="hero">
   <div class="wrap">
@@ -634,7 +641,6 @@ function desenharParlamentares(){
   $('#aba-parlamentares').innerHTML = `
     <h2 class="titulo">Parlamentares</h2>
     <p class="sub">Grupos pelo partido. Extrema-direita reúne ${esc(GRUPO_TXT('extrema'))}; direita, ${esc(GRUPO_TXT('direita'))}; centro-direita, ${esc(GRUPO_TXT('centro'))}; esquerda, ${esc(GRUPO_TXT('esquerda'))}. Cada parlamentar tem dois índices, a porcentagem das votações em que a extrema-direita e a esquerda se opuseram em que votou como a extrema-direita, e o mesmo para a direita. Quem é de outro grupo e tem o maior dos dois índices em ${Math.round(r.alinhado * 100)}% ou mais aparece como "vota com a direita", e de ${Math.round(r.proximo * 100)}% a ${Math.round(r.alinhado * 100)}%, como "vota próximo da direita". O índice só aparece a partir de ${r.votacoesMinimas} votações disputadas. A lista mostra quem está em exercício hoje; suplentes que já saíram, licenciados e ex-parlamentares aparecem ao escolher "Também quem já deixou o mandato".</p>
-    <div id="perfil"></div>
     <div class="filtros">
       <label class="sr" for="fa-texto">Procurar parlamentar</label><input type="search" id="fa-texto" placeholder="Procurar parlamentar" value="${esc(f.texto)}">
       <select id="fa-classe" aria-label="Grupo">${opcoes([['direita', 'Extrema-direita, direita e quem vota com elas'], ['extrema', 'Extrema-direita'], ['direita_b', 'Direita'], ['centro', 'Centro-direita'], ['esquerda', 'Esquerda'], ['sp', 'Sem partido'], ['al', 'De outros grupos que votam com a direita']], f.classe, 'Todos os parlamentares')}</select>
@@ -657,18 +663,18 @@ function desenharParlamentares(){
   if (f.ordem === 'ie') $('#fa-ordem').value = '';
   ligarFiltros('fa', est.parl, desenharParlamentares);
   $('#fa-ordem').addEventListener('change', e => { est.parl.ordem = e.target.value || 'ie'; desenharParlamentares(); });
-  if (f.sel) desenharPerfil(f.sel);
+  if (f.sel && !$('#perfil-dlg').open) desenharPerfil(f.sel);
 }
 async function desenharPerfil(k){
   const p = D.indice[k]; const el = $('#perfil'); if (!p || !el) return;
   const props = D.prop.filter(it => (it.a || []).includes(k));
   const pautas = Object.entries(p.pp || {}).sort((a, b) => b[1] - a[1]);
   el.innerHTML = `<div class="perfil" id="perfil-caixa">
-    <h3>${esc(p.n)}</h3>
+    <div class="perfil-topo"><h3>${esc(p.n)}</h3><button type="button" class="btn" data-fechar-perfil>Fechar</button></div>
     <div class="linha-perfil"><span>${esc(nomePartido(p.p, p.s))}/${esc(p.uf || '')}, ${CASA[p.c] || ''}</span>${seloGrupo(p)}
       ${p.ie != null || p.id != null ? `<span>Índice com a extrema-direita <b>${indiceTxt(p.ie)}</b>${p.vde ? ` em ${fmt(p.vde)} votações` : ''}; com a direita <b>${indiceTxt(p.id)}</b>${p.vdd ? ` em ${fmt(p.vdd)}` : ''}</span>` : p.i != null ? `<span>Índice de alinhamento <b>${indiceTxt(p.i)}</b>, em ${fmt(p.vd)} votações disputadas</span>` : ''}
       <a class="btn" href="dossie.html?tipo=parlamentar&id=${encodeURIComponent(k)}" style="text-decoration:none">Gerar dossiê</a>
-      <button type="button" class="btn" data-fechar-perfil>Fechar</button></div>
+</div>
     <div id="perfil-bio"></div>
     <div class="topo">${pautas.map(([id, n]) => `<span class="selo s-pauta">${esc(PAUTA[id] ? PAUTA[id].nome : id)} ${n}</span>`).join(' ')}</div>
     <h4>Projetos com pauta da direita (${fmt(props.length)})</h4>
@@ -678,7 +684,7 @@ async function desenharPerfil(k){
   </div>`;
   desenharRelatorias(k, p);
   desenharBio(k, p);
-  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const dlg = $('#perfil-dlg'); if (!dlg.open) dlg.showModal(); dlg.scrollTop = 0;
   const recentes = D.vot.filter(v => v.disp && v.k === p.c).slice(0, 60);
   const anos = [...new Set(recentes.map(v => String(v.d).slice(0, 4)))];
   const mapas = await Promise.all(anos.map(votosDoAno));
@@ -777,6 +783,9 @@ function aplicarEndereco(){
 }
 function limparEndereco(){ history.replaceState(null, '', location.pathname); }
 
+// A ficha abre numa janela sobre a lista. Fecha pelo botão, pela tecla Esc ou clicando fora dela, e a lista fica onde estava.
+$('#perfil-dlg').addEventListener('close', () => { est.parl.sel = ''; limparEndereco(); $('#perfil').innerHTML = ''; });
+$('#perfil-dlg').addEventListener('click', e => { if (e.target === e.currentTarget) e.currentTarget.close(); });
 document.addEventListener('click', e => {
   const b = e.target.closest('button, tr.linha'); if (!b) return;
   if (b.dataset.aba) { limparEndereco(); irPara(b.dataset.aba); window.scrollTo({ top: document.querySelector('.abas').offsetTop, behavior: 'smooth' }); }
@@ -788,8 +797,8 @@ document.addEventListener('click', e => {
   if (b.dataset.pg) { const [alvo, d] = b.dataset.pg.split(':'); est[alvo].pagina += +d; desenhar(); document.querySelector('.abas').scrollIntoView(); }
   if (b.dataset.limparFoco) { est[b.dataset.limparFoco].foco = ''; limparEndereco(); desenhar(); }
   if (b.dataset.parl) { est.parl.sel = b.dataset.parl; history.replaceState(null, '', '?parlamentar=' + encodeURIComponent(b.dataset.parl)); desenharPerfil(b.dataset.parl); }
-  if (b.hasAttribute && b.hasAttribute('data-fechar-perfil')) { est.parl.sel = ''; limparEndereco(); $('#perfil').innerHTML = ''; }
-  if (b.dataset.verProps) { est.prop = Object.assign(est.prop, { texto: nomeParl(b.dataset.verProps), pauta: '', grau: '', pagina: 1, foco: '' }); irPara('proposicoes'); }
+  if (b.hasAttribute && b.hasAttribute('data-fechar-perfil')) $('#perfil-dlg').close();
+  if (b.dataset.verProps) { $('#perfil-dlg').close(); est.prop = Object.assign(est.prop, { texto: nomeParl(b.dataset.verProps), pauta: '', grau: '', pagina: 1, foco: '' }); irPara('proposicoes'); }
 });
 document.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('tr.linha')) { e.preventDefault(); e.target.click(); } });
 
