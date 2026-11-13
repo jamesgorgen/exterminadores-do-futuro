@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Posição pelas votações (teste)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#123B40; --paper:#F2F4F1; --sheet:#ffffff; --ink:#1B2523; --ink-2:#4C5A57; --ink-3:#5F6B68; --line:#D5DCD9; --accent:#0B6E73;
+  --extrema:#9A3424; --direita:#C9822B; --centro:#9C9A90; --esquerda:#2F7F84;
+  --display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif; --text:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font:16px/1.55 var(--text)}
+a{color:var(--accent)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+.barra{background:var(--night);color:#F2F4F1}
+.barra .wrap{display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}
+.barra a{color:#F2F4F1;text-decoration:none;font-weight:600;font-size:15px}
+.barra b{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:.01em}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(34px,4.4vw,52px);line-height:1;margin:34px 0 10px}
+h2{font-family:var(--display);font-weight:800;font-size:30px;line-height:1.05;margin:44px 0 8px}
+.lede{max-width:74ch;color:var(--ink-2);margin:0 0 10px}
+.aviso{max-width:74ch;background:#fbf1dc;border:1px solid #e3c98f;color:#5c3d00;padding:10px 14px;border-radius:4px;font-size:15px;margin:14px 0 0}
+.ctrl{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:22px 0}
+select{font:inherit;font-size:15px;padding:6px 8px;border:1px solid var(--line);border-radius:4px;background:#fff;max-width:100%}
+.numeros{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:16px 28px;margin:6px 0 10px}
+.numeros p{margin:0;color:var(--ink-2);font-size:15px;line-height:1.4}
+.numeros b{display:block;font-family:var(--display);font-weight:800;font-size:40px;line-height:1;color:var(--ink);margin-bottom:4px}
+.sub{color:var(--ink-2);max-width:74ch;margin:0 0 14px;font-size:15.5px}
+.painel{background:var(--sheet);border:1px solid var(--line);padding:14px 14px 8px}
+svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{font-family:var(--text)}
+.legenda{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--ink-2);margin:0 0 8px}
+.legenda span{display:inline-flex;align-items:center;gap:7px}
+.legenda i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.dica{position:fixed;pointer-events:none;background:var(--ink);color:#fff;font-size:13.5px;line-height:1.4;padding:7px 10px;border-radius:4px;max-width:280px;z-index:20;display:none}
+table{border-collapse:collapse;width:100%;background:var(--sheet);font-size:14.5px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-weight:600;color:var(--ink-2);font-size:13.5px}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+td.forte{font-weight:700}
+.tabela{overflow-x:auto;border:1px solid var(--line)}
+.selo{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.selo i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.nota{font-size:13.5px;color:var(--ink-3);max-width:80ch;margin:10px 0 0}
+footer{margin:56px 0 0;padding:24px 0 40px;border-top:1px solid var(--line);color:var(--ink-3);font-size:14px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+circle.pt{cursor:pointer}
+circle.pt:hover,circle.pt:focus{stroke:var(--ink);stroke-width:1.5}
+</style>
+</head>
+<body>
+<div class="barra"><div class="wrap"><a href="./"><span aria-hidden="true">←</span> Página inicial</a><b>Posição pelas votações</b></div></div>
+<main class="wrap">
+  <h1>Onde cada parlamentar está, pelos próprios votos</h1>
+  <p class="lede">Hoje o observatório classifica cada parlamentar pelo partido. Esta página testa outra forma, a partir de como cada um votou nas votações nominais desde 2023. Um modelo estatístico coloca todos numa mesma escala, da esquerda para a direita, de modo que quem vota parecido fica perto. Depois a escala é dividida nos quatro grupos onde os votos se concentram.</p>
+  <p class="aviso">Página de teste, ainda fora do menu do site. Os números servem para a equipe avaliar se vale mudar a classificação.</p>
+  <div class="ctrl"><select id="casa" aria-label="Casa"><option value="C">Câmara dos Deputados</option><option value="S">Senado Federal</option></select></div>
+  <div id="conteudo"><p>Carregando…</p></div>
+  <footer>Método. Modelo de pontos ideais em duas dimensões, ajustado por máxima verossimilhança com penalização, separadamente em cada Casa, sobre as votações nominais de plenário e comissões em que a minoria teve pelo menos 2,5% dos votos. Entram parlamentares com pelo menos 25 votos sim ou não. A primeira dimensão foi orientada com o PL à direita e normalizada para que 95% dos parlamentares fiquem entre -1 e 1. Os cortes entre os quatro grupos ficam no meio do caminho entre os centros das quatro concentrações de parlamentares em exercício, calculadas por agrupamento (k-médias). Referências: Zucco e Lauderdale (2011), sobre a estimação de posições a partir de votações no Congresso brasileiro.</footer>
+</main>
+<div class="dica" id="dica" role="tooltip"></div>
+<script>
+'use strict';
+const $ = s => document.querySelector(s);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const fmt = n => Number(n || 0).toLocaleString('pt-BR');
+const num = (v, d = 2) => (v >= 0 ? '+' : '') + v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d });
+const G = ['esquerda', 'centro', 'direita', 'extrema'];
+const NOME = { esquerda: 'Esquerda', centro: 'Centro-direita', direita: 'Direita', extrema: 'Extrema-direita' };
+const COR = { esquerda: 'var(--esquerda)', centro: 'var(--centro)', direita: 'var(--direita)', extrema: 'var(--extrema)' };
+let IND, POS;
+
+const grupoVoto = (x, c) => x < c[0] ? 'esquerda' : x < c[1] ? 'centro' : x < c[2] ? 'direita' : 'extrema';
+const selo = g => `<span class="selo"><i style="background:${COR[g]}"></i>${NOME[g]}</span>`;
+function hash(s) { let h = 2166136261; for (const ch of s) { h ^= ch.charCodeAt(0); h = Math.imul(h, 16777619); } return ((h >>> 0) % 1000) / 1000; }
+
+// Dica ao passar o mouse ou focar um ponto.
+const dica = $('#dica');
+function mostrar(e, html) { dica.innerHTML = html; dica.style.display = 'block'; const r = e.target.getBoundingClientRect(); const x = Math.min(window.innerWidth - dica.offsetWidth - 8, r.left + 12); dica.style.left = x + 'px'; dica.style.top = (r.top - dica.offsetHeight - 8 < 0 ? r.bottom + 8 : r.top - dica.offsetHeight - 8) + 'px'; }
+function esconder() { dica.style.display = 'none'; }
+
+function desenhar() {
+  const casa = $('#casa').value, D = POS[casa], c = D.cortes;
+  const lista = Object.entries(D.p).map(([k, v]) => ({ k, x: v[0], y: v[1], n: v[2], p: IND[k] || {} }))
+    .filter(o => o.p.ex && G.includes(o.p.cl));
+  lista.forEach(o => { o.gv = grupoVoto(o.x, c); });
+  const iguais = lista.filter(o => o.gv === o.p.cl).length;
+  const tab = Object.fromEntries(G.map(a => [a, Object.fromEntries(G.map(b => [b, 0]))]));
+  lista.forEach(o => tab[o.p.cl][o.gv]++);
+
+  // Escala horizontal comum.
+  const xs = lista.map(o => o.x), lo = Math.min(-1.2, ...xs) - 0.05, hi = Math.max(1.2, ...xs) + 0.05;
+  const W = 1000, M = { l: 132, r: 16 }, X = v => M.l + (W - M.l - M.r) * (v - lo) / (hi - lo);
+
+  // Gráfico 1: faixas pelo grupo do partido, posição pelos votos.
+  const RH = 74, top = 34, H1 = top + RH * 4 + 26;
+  let s1 = `<svg viewBox="0 0 ${W} ${H1}" role="img" aria-label="Posição de cada parlamentar pelas votações, em linhas pelo grupo do partido">`;
+  const bordas = [lo, ...c, hi];
+  G.forEach((g, i) => { s1 += `<rect x="${X(bordas[i])}" y="${top - 6}" width="${X(bordas[i + 1]) - X(bordas[i])}" height="${RH * 4 + 6}" fill="${COR[g]}" opacity="0.07"/>`;
+    s1 += `<text x="${(X(bordas[i]) + X(bordas[i + 1])) / 2}" y="${top - 14}" text-anchor="middle" font-size="13" font-weight="600" fill="#4C5A57">${NOME[g]}</text>`; });
+  c.forEach(v => { s1 += `<line x1="${X(v)}" x2="${X(v)}" y1="${top - 6}" y2="${top + RH * 4}" stroke="#5F6B68" stroke-dasharray="3 3"/>`; });
+  [...G].reverse().forEach((g, r) => {
+    const y0 = top + r * RH;
+    s1 += `<line x1="${M.l}" x2="${W - M.r}" y1="${y0 + RH}" y2="${y0 + RH}" stroke="#D5DCD9"/>`;
+    s1 += `<text x="${M.l - 10}" y="${y0 + RH / 2 + 5}" text-anchor="end" font-size="13.5" fill="#1B2523">${NOME[g]}</text>`;
+    lista.filter(o => o.p.cl === g).forEach(o => {
+      const yy = y0 + 10 + hash(o.k) * (RH - 20);
+      s1 += `<circle class="pt" tabindex="0" data-k="${o.k}" cx="${X(o.x).toFixed(1)}" cy="${yy.toFixed(1)}" r="4.6" fill="${COR[g]}" stroke="#fff" stroke-width="1"/>`;
+    });
+  });
+  [-1, -0.5, 0, 0.5, 1].forEach(v => { s1 += `<text x="${X(v)}" y="${H1 - 6}" text-anchor="middle" font-size="12" fill="#5F6B68">${num(v, 1)}</text>`; });
+  s1 += `</svg>`;
+
+  // Gráfico 2: mediana de cada partido, com a faixa onde estão 80% dos seus parlamentares.
+  const porPartido = {};
+  lista.forEach(o => { const s = o.p.s || '?'; (porPartido[s] = porPartido[s] || []).push(o); });
+  const partidos = Object.entries(porPartido).filter(([, l]) => l.length >= 3).map(([s, l]) => {
+    const v = l.map(o => o.x).sort((a, b) => a - b), q = f => v[Math.min(v.length - 1, Math.floor(f * v.length))];
+    const cl = Object.entries(l.reduce((a, o) => (a[o.p.cl] = (a[o.p.cl] || 0) + 1, a), {})).sort((a, b) => b[1] - a[1])[0][0];
+    return { s, n: l.length, med: q(0.5), p10: q(0.1), p90: q(0.9), cl };
+  }).sort((a, b) => a.med - b.med);
+  const PH = 24, H2 = 20 + partidos.length * PH + 24;
+  let s2 = `<svg viewBox="0 0 ${W} ${H2}" role="img" aria-label="Posição mediana de cada partido">`;
+  c.forEach(v => { s2 += `<line x1="${X(v)}" x2="${X(v)}" y1="8" y2="${H2 - 24}" stroke="#5F6B68" stroke-dasharray="3 3"/>`; });
+  partidos.forEach((p, i) => {
+    const y = 20 + i * PH;
+    s2 += `<text x="${M.l - 10}" y="${y + 4}" text-anchor="end" font-size="13.5" fill="#1B2523">${esc(p.s)} <tspan fill="#5F6B68" font-size="12">${p.n}</tspan></text>`;
+    s2 += `<line x1="${X(p.p10)}" x2="${X(p.p90)}" y1="${y}" y2="${y}" stroke="${COR[p.cl]}" stroke-width="2" stroke-linecap="round" opacity="0.55"/>`;
+    s2 += `<circle class="pt" tabindex="0" data-partido="${esc(p.s)}" cx="${X(p.med)}" cy="${y}" r="6" fill="${COR[p.cl]}" stroke="#fff" stroke-width="2"/>`;
+  });
+  [-1, -0.5, 0, 0.5, 1].forEach(v => { s2 += `<text x="${X(v)}" y="${H2 - 6}" text-anchor="middle" font-size="12" fill="#5F6B68">${num(v, 1)}</text>`; });
+  s2 += `</svg>`;
+
+  // Gráfico 3: as duas dimensões.
+  const ys = lista.map(o => o.y), ylo = Math.min(...ys) - 0.1, yhi = Math.max(...ys) + 0.1, H3 = 440, Y = v => 16 + (H3 - 46) * (1 - (v - ylo) / (yhi - ylo));
+  let s3 = `<svg viewBox="0 0 ${W} ${H3}" role="img" aria-label="Parlamentares nas duas dimensões do modelo">`;
+  s3 += `<line x1="${M.l}" x2="${W - M.r}" y1="${Y(0)}" y2="${Y(0)}" stroke="#D5DCD9"/><line x1="${X(0)}" x2="${X(0)}" y1="10" y2="${H3 - 30}" stroke="#D5DCD9"/>`;
+  c.forEach(v => { s3 += `<line x1="${X(v)}" x2="${X(v)}" y1="10" y2="${H3 - 30}" stroke="#5F6B68" stroke-dasharray="3 3"/>`; });
+  lista.forEach(o => { s3 += `<circle class="pt" tabindex="0" data-k="${o.k}" cx="${X(o.x).toFixed(1)}" cy="${Y(o.y).toFixed(1)}" r="4.2" fill="${COR[o.p.cl]}" stroke="#fff" stroke-width="1"/>`; });
+  [-1, -0.5, 0, 0.5, 1].forEach(v => { s3 += `<text x="${X(v)}" y="${H3 - 8}" text-anchor="middle" font-size="12" fill="#5F6B68">${num(v, 1)}</text>`; });
+  s3 += `<text x="${M.l - 10}" y="${Y(yhi) + 10}" text-anchor="end" font-size="12" fill="#5F6B68">2ª dimensão</text>`;
+  s3 += `</svg>`;
+
+  const mudam = lista.filter(o => o.gv !== o.p.cl).sort((a, b) => G.indexOf(b.gv) - G.indexOf(b.p.cl) - (G.indexOf(a.gv) - G.indexOf(a.p.cl)) || b.x - a.x);
+  const ordemMuda = (a) => Math.abs(G.indexOf(a.gv) - G.indexOf(a.p.cl));
+  mudam.sort((a, b) => ordemMuda(b) - ordemMuda(a) || Math.abs(b.x) - Math.abs(a.x));
+
+  $('#conteudo').innerHTML = `
+    <div class="numeros">
+      <p><b>${fmt(D.votacoes)}</b>votações nominais contestadas usadas no cálculo</p>
+      <p><b>${fmt(lista.length)}</b>parlamentares em exercício posicionados</p>
+      <p><b>${Math.round(100 * D.acerto)}%</b>dos votos individuais o modelo acerta a partir das posições</p>
+      <p><b>${Math.round(100 * iguais / lista.length)}%</b>caem no mesmo grupo pelo partido e pelos votos</p>
+    </div>
+
+    <h2>Cada parlamentar, pelo partido e pelos votos</h2>
+    <p class="sub">Cada ponto é um parlamentar. A linha em que ele está é o grupo do partido, usado hoje no site. A posição na horizontal vem dos votos. As faixas de fundo são os grupos pelos votos. Passe o mouse num ponto para ver o nome e clique para abrir a ficha.</p>
+    <div class="painel">${s1}</div>
+
+    <h2>Quanto as duas classificações coincidem</h2>
+    <p class="sub">Nas linhas, o grupo pelo partido. Nas colunas, o grupo pelos votos.</p>
+    <div class="tabela"><table><thead><tr><th>Pelo partido</th>${G.map(g => `<th class="n">${NOME[g]} pelos votos</th>`).join('')}<th class="n">Total</th></tr></thead><tbody>
+      ${G.map(a => `<tr><td>${selo(a)}</td>${G.map(b => `<td class="n ${a === b ? 'forte' : ''}">${fmt(tab[a][b])}</td>`).join('')}<td class="n">${fmt(G.reduce((s, b) => s + tab[a][b], 0))}</td></tr>`).join('')}
+    </tbody></table></div>
+
+    <h2>Os partidos na escala</h2>
+    <p class="sub">O ponto é a posição mediana de cada partido, e a linha vai de onde estão os 10% mais à esquerda até os 10% mais à direita da bancada. A cor é o grupo em que o site coloca o partido hoje. Só aparecem partidos com pelo menos três parlamentares posicionados.</p>
+    <div class="painel">${s2}</div>
+
+    <h2>A segunda dimensão</h2>
+    <p class="sub">O modelo também estima uma segunda dimensão, na vertical. Ela capta divisões que não seguem a linha esquerda e direita, como votar com ou contra a maioria do plenário. Os grupos acima usam só a primeira dimensão.</p>
+    <div class="painel"><div class="legenda">${G.map(g => `<span><i style="background:${COR[g]}"></i>${NOME[g]} pelo partido</span>`).join('')}</div>${s3}</div>
+
+    <h2>Quem muda de grupo</h2>
+    <p class="sub">${fmt(mudam.length)} parlamentares em exercício ficam num grupo pelo partido e em outro pelos votos. Os primeiros da lista são os que mudam mais.</p>
+    <div class="tabela"><table><thead><tr><th>Parlamentar</th><th>Partido</th><th>Pelo partido</th><th>Pelos votos</th><th class="n">Posição</th><th class="n">Votos usados</th></tr></thead><tbody>
+      ${mudam.map(o => `<tr><td><a href="./?parlamentar=${encodeURIComponent(o.k)}">${esc(o.p.n)}</a></td><td>${esc(o.p.s || '')}-${esc(o.p.uf || '')}</td><td>${selo(o.p.cl)}</td><td>${selo(o.gv)}</td><td class="n">${num(o.x)}</td><td class="n">${fmt(o.n)}</td></tr>`).join('')}
+    </tbody></table></div>
+    ${casa === 'S' ? '<p class="nota">No Senado há bem menos votações contestadas que na Câmara, então as posições são menos precisas.</p>' : ''}`;
+
+  const porK = Object.fromEntries(lista.map(o => [o.k, o])), porP = Object.fromEntries(partidos.map(p => [p.s, p]));
+  document.querySelectorAll('circle.pt').forEach(el => {
+    const html = () => {
+      if (el.dataset.k) { const o = porK[el.dataset.k]; return `<b>${esc(o.p.n)}</b> ${esc(o.p.s || '')}-${esc(o.p.uf || '')}<br>Posição ${num(o.x)}, em ${fmt(o.n)} votos<br>Pelo partido ${NOME[o.p.cl]}, pelos votos ${NOME[o.gv]}`; }
+      const p = porP[el.dataset.partido]; return `<b>${esc(p.s)}</b>, ${p.n} parlamentares<br>Mediana ${num(p.med)}<br>80% entre ${num(p.p10)} e ${num(p.p90)}`;
+    };
+    el.addEventListener('mouseenter', e => mostrar(e, html())); el.addEventListener('focus', e => mostrar(e, html()));
+    el.addEventListener('mouseleave', esconder); el.addEventListener('blur', esconder);
+    if (el.dataset.k) { el.addEventListener('click', () => { location.href = './?parlamentar=' + encodeURIComponent(el.dataset.k); }); el.addEventListener('keydown', e => { if (e.key === 'Enter') location.href = './?parlamentar=' + encodeURIComponent(el.dataset.k); }); }
+  });
+}
+
+Promise.all([fetch('dados/indice.json').then(r => r.json()), fetch('dados/posicoes.json', { cache: 'no-cache' }).then(r => r.json())])
+  .then(([i, p]) => { IND = i.p; POS = p; desenhar(); $('#casa').addEventListener('change', desenhar); })
+  .catch(e => { $('#conteudo').innerHTML = `<p>Não foi possível carregar os dados (${esc(e.message)}).</p>`; });
+</script>
+</body>
+</html>
