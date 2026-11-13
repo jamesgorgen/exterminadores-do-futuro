@@ -12,6 +12,11 @@ on:
         description: 'Quantas biografias de amostra (deixe vazio para gerar todas)'
         required: false
         default: ''
+      so_haiku:
+        description: 'Usar só o modelo leve (as dúvidas vão para a revisão da equipe)'
+        required: false
+        default: false
+        type: boolean
       ids:
         description: 'Só estes parlamentares, separados por vírgula (ex.: C220654,S5672)'
         required: false
@@ -39,6 +44,7 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           AMOSTRA: ${{ inputs.amostra }}
           IDS: ${{ inputs.ids }}
+          SO_HAIKU: ${{ inputs.so_haiku && 'sim' || '' }}
       - name: Gravar os dados no repositório
         if: always()
         run: |

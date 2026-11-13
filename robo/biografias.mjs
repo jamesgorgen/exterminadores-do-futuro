@@ -20,6 +20,7 @@ const API_SENADO = 'https://legis.senado.leg.br/dadosabertos';
 const WIKI = 'https://pt.wikipedia.org/w/api.php';
 const MODELO = 'claude-haiku-5-5';
 const MODELO_FORTE = 'claude-opus-5-5';
+const SO_HAIKU = process.env.SO_HAIKU === 'sim'; // dúvidas vão direto para a revisão da equipe, sem o modelo forte
 const AMOSTRA = +(process.env.AMOSTRA || 0);
 const IDS = String(process.env.IDS || '').split(',').map(s => s.trim()).filter(Boolean);
 const ARQ = path.join(DADOS, AMOSTRA ? 'biografias-amostra.json' : 'biografias.json');
@@ -180,7 +181,7 @@ async function principal() {
     if (atual && atual.h === h) { mantidas++; continue; }
     let o = await escrever(p, dados, wiki, MODELO); conta.haiku++;
     let modelo = MODELO;
-    if (o && o.c !== 'alta') { const f = await escrever(p, dados, wiki, MODELO_FORTE); conta.forte++; if (f) { log(`  ${k} ${p.n}: releitura pelo modelo forte (${o.duvida || 'sem motivo'})`); o = f; modelo = MODELO_FORTE; } }
+    if (o && o.c !== 'alta' && !SO_HAIKU) { const f = await escrever(p, dados, wiki, MODELO_FORTE); conta.forte++; if (f) { log(`  ${k} ${p.n}: releitura pelo modelo forte (${o.duvida || 'sem motivo'})`); o = f; modelo = MODELO_FORTE; } }
     if (!o) { conta.falhas++; continue; }
     const fontes = [p.c === 'S'
       ? { t: 'Senado Federal', u: `https://www25.senado.leg.br/web/senadores/senador/-/perfil/${id}` }
