@@ -1,0 +1,44 @@
+# Posição de cada parlamentar estimada pelas votações nominais. Na Câmara, define o grupo de cada deputado.
+# Roda toda segunda-feira, antes do robô principal. Não usa IA.
+# À mão: Actions > Posições pelas votações > Run workflow.
+name: Posições pelas votações
+
+on:
+  schedule:
+    - cron: '47 8 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: posicoes
+  cancel-in-progress: false
+
+jobs:
+  posicoes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Instalar o NumPy
+        run: pip install numpy
+      - name: Estimar as posições
+        run: python robo/posicoes.py
+      - name: Gravar os dados no repositório
+        if: always()
+        run: |
+          git config user.name "robo-exterminadores"
+          git config user.email "robo-exterminadores@users.noreply.github.com"
+          if [ -f dados/posicoes.json ]; then git add dados/posicoes.json; fi
+          if git diff --cached --quiet; then echo "Nada mudou."; exit 0; fi
+          git commit -m "Atualiza as posições pelas votações ($(date -u +%Y-%m-%d))"
+          for i in 1 2 3 4 5; do
+            if git pull --rebase -X theirs && git push; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((i * 10))
+          done
+          exit 1

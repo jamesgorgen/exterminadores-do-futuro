@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Posição pelas votações (teste)</title>
+<title>Posição pelas votações</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -59,8 +59,7 @@ circle.pt:hover,circle.pt:focus{stroke:var(--ink);stroke-width:1.5}
 <div class="barra"><div class="wrap"><a href="./"><span aria-hidden="true">←</span> Página inicial</a><b>Posição pelas votações</b></div></div>
 <main class="wrap">
   <h1>Onde cada parlamentar está, pelos próprios votos</h1>
-  <p class="lede">Hoje o observatório classifica cada parlamentar pelo partido. Esta página testa outra forma, a partir de como cada um votou nas votações nominais desde 2023. Um modelo estatístico coloca todos numa mesma escala, da esquerda para a direita, de modo que quem vota parecido fica perto. Depois a escala é dividida nos quatro grupos onde os votos se concentram.</p>
-  <p class="aviso">Página de teste, ainda fora do menu do site. Os números servem para a equipe avaliar se vale mudar a classificação.</p>
+  <p class="lede">Na Câmara dos Deputados, o observatório classifica cada deputado pelos próprios votos, não pelo partido. Um modelo estatístico coloca todos numa mesma escala, da esquerda para a direita, a partir das votações nominais desde 2023, de modo que quem vota parecido fica perto. A escala é dividida nos quatro grupos onde os votos se concentram, e o cálculo é refeito toda segunda-feira. No Senado, o site usa o grupo do partido, e a escala aparece aqui só como comparação.</p>
   <div class="ctrl"><select id="casa" aria-label="Casa"><option value="C">Câmara dos Deputados</option><option value="S">Senado Federal</option></select></div>
   <div id="conteudo"><p>Carregando…</p></div>
   <footer>Método. Modelo de pontos ideais em duas dimensões, ajustado por máxima verossimilhança com penalização, separadamente em cada Casa, sobre as votações nominais de plenário e comissões em que a minoria teve pelo menos 2,5% dos votos. Entram parlamentares com pelo menos 25 votos sim ou não. A primeira dimensão foi orientada com o PL à direita e normalizada para que 95% dos parlamentares fiquem entre -1 e 1. Os cortes entre os quatro grupos ficam no meio do caminho entre os centros das quatro concentrações de parlamentares em exercício, calculadas por agrupamento (k-médias). Referências: Zucco e Lauderdale (2011), sobre a estimação de posições a partir de votações no Congresso brasileiro.</footer>
@@ -89,7 +88,8 @@ function esconder() { dica.style.display = 'none'; }
 function desenhar() {
   const casa = $('#casa').value, D = POS[casa], c = D.cortes;
   const lista = Object.entries(D.p).map(([k, v]) => ({ k, x: v[0], y: v[1], n: v[2], p: IND[k] || {} }))
-    .filter(o => o.p.ex && G.includes(o.p.cl));
+    .filter(o => o.p.ex && G.includes(o.p.clp || o.p.cl));
+  lista.forEach(o => { o.p = Object.assign({}, o.p, { cl: o.p.clp || o.p.cl }); });
   lista.forEach(o => { o.gv = grupoVoto(o.x, c); });
   const iguais = lista.filter(o => o.gv === o.p.cl).length;
   const tab = Object.fromEntries(G.map(a => [a, Object.fromEntries(G.map(b => [b, 0]))]));

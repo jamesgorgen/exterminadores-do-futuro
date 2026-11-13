@@ -22,6 +22,8 @@ for k,v in par.items():
     if not v.get('n') or k.startswith('SN:'): continue
     pornome.setdefault(n(v['n']),k)
 def grupo(k):
+    # Mesmo grupo do índice do site (na Câmara, pelas votações); sem índice, pelo partido.
+    if (ind.get(k) or {}).get('cl'): return ind[k]['cl']
     v=par[k]; sig=n(v.get('s','')).replace(' ','')
     return PART.get(v.get('p','')) or PART.get(sig) or 'sp'
 e=pd.read_csv(arq('EmendasParlamentares.csv'),sep=';',encoding='latin1',dtype=str)

@@ -1075,6 +1075,11 @@ export async function executar() {
       if (cl && cl.s === 'avanca') { c.d++; if (cl.g === 'extrema') c.x++; cl.p.forEach(p => c.pp[p] = (c.pp[p] || 0) + 1); }
     }
   }
+  // Câmara: o grupo de cada deputado vem da posição estimada pelas votações (robo/posicoes.py), quando há votos suficientes.
+  // Senado e deputados sem votos suficientes: grupo pelo partido.
+  const POS = lerJson('posicoes.json', {});
+  const posC = (POS.C && POS.C.p) || {}, cortesC = (POS.C && POS.C.cortes) || null;
+  const grupoPelosVotos = x => x < cortesC[0] ? 'esquerda' : x < cortesC[1] ? 'centro' : x < cortesC[2] ? 'direita' : 'extrema';
   const indice = {};
   for (const [k, p] of Object.entries(parlamentares.p)) {
     const c = conta[k] || { vd: 0, va: 0, vde: 0, vae: 0, vdd: 0, vad: 0 };
@@ -1084,11 +1089,14 @@ export async function executar() {
     // Alinhados e próximos: parlamentares de outros partidos, pelo maior dos dois índices.
     const m = Math.max(ie ?? -1, id ?? -1);
     // Grupo pelo partido; para quem está fora dos dois blocos, marca também se vota com a direita (alinhado ou próximo).
-    const classe = grupoDoPartido(p.p);
+    const classePartido = grupoDoPartido(p.p);
+    const pv = k[0] === 'C' && cortesC && posC[k] ? posC[k] : null;
+    const classe = pv ? grupoPelosVotos(pv[0]) : classePartido;
+    if (pv && classe !== classePartido) contar('grupo_pelos_votos_diferente');
     const al = classe === 'extrema' || classe === 'direita' ? '' : m >= PAUTAS.indice.alinhado * 100 ? 'alinhado' : m >= PAUTAS.indice.proximo * 100 ? 'proximo' : '';
     if (!c.vd && !pr.n && !p.ex) continue;
     indice[k] = { n: p.n, c: p.c, p: p.p, s: p.s, uf: p.uf, i, vd: c.vd, va: c.va, ie, vde: c.vde, vae: c.vae, id, vdd: c.vdd, vad: c.vad,
-      cl: classe, al, ex: p.ex ? 1 : 0, np: pr.n, nd: pr.d, nx: pr.x, pp: pr.pp };
+      cl: classe, ...(pv ? { cv: 1, po: Math.round(pv[0] * 100) / 100, clp: classePartido } : {}), al, ex: p.ex ? 1 : 0, np: pr.n, nd: pr.d, nx: pr.x, pp: pr.pp };
   }
 
   // Gravação. Apaga arquivos de anos anteriores à legislatura, criados por datas erradas da fonte.
