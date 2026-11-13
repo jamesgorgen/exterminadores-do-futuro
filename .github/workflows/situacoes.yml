@@ -1,0 +1,41 @@
+# Situação atual das proposições (em tramitação, aprovada, virou lei, arquivada). Não usa IA.
+# Roda todo dia. À mão: Actions > Situações das proposições > Run workflow.
+name: Situações das proposições
+
+on:
+  schedule:
+    - cron: '51 11 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: situacoes
+  cancel-in-progress: false
+
+jobs:
+  situacoes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Ler as situações
+        run: node robo/situacoes.mjs
+      - name: Gravar os dados no repositório
+        if: always()
+        run: |
+          git config user.name "robo-exterminadores"
+          git config user.email "robo-exterminadores@users.noreply.github.com"
+          if [ -f dados/situacoes.json ]; then git add dados/situacoes.json; fi
+          if git diff --cached --quiet; then echo "Nada mudou."; exit 0; fi
+          git commit -m "Atualiza as situações das proposições ($(date -u +%Y-%m-%d))"
+          for i in 1 2 3 4 5; do
+            if git pull --rebase -X theirs && git push; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((i * 10))
+          done
+          exit 1
