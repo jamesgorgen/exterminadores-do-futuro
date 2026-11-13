@@ -27,7 +27,7 @@
   --line:#D5DCD9; --mark:#E3B75B; --mark-ink:#1B2523; --warn:#7a4f00; --warn-soft:#fbf1dc;
   --ext:#9A3424; --dir:#C9822B; --dir-soft:#F4E2C2; --dir-ink:#6E430A; --contra:#2F7F84; --ver:#2F6B3A; --wa:#1F7A4D;
   --nao:#B4442F; --sim:#2F6B3A;
-  --g-esq:#6FB3B8; --g-cen:#9C9A90; --g-dir:#E3B75B; --g-ext:#E57A63;
+  --g-esq:#6FB3B8; --g-cen:#9C9A90; --g-sp:#DCE3E0; --g-dir:#E3B75B; --g-ext:#E57A63;
   --display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
   --text:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
 }
@@ -410,7 +410,7 @@ function desenharFaixa(){
 // Hemiciclo com os parlamentares em exercício, da esquerda para a direita do plenário.
 function desenharHemiciclo(gr, ex){
   if (!gr) return;
-  const ordem = [['esquerda', 'Esquerda', '--g-esq'], ['sp', 'Sem partido', '--g-cen'], ['centro', 'Centro-direita', '--g-cen'], ['direita', 'Direita', '--g-dir'], ['extrema', 'Extrema-direita', '--g-ext']];
+  const ordem = [['esquerda', 'Esquerda', '--g-esq'], ['sp', 'Sem partido', '--g-sp'], ['centro', 'Centro-direita', '--g-cen'], ['direita', 'Direita', '--g-dir'], ['extrema', 'Extrema-direita', '--g-ext']];
   const N = ordem.reduce((a, o) => a + (gr[o[0]] || 0), 0); if (!N) return;
   const F = 12, R = 255, cx = 260, cy = 266, rIn = 0.4;
   const raios = Array.from({ length: F }, (_, i) => rIn + (1 - rIn) * i / (F - 1));
@@ -423,7 +423,7 @@ function desenharHemiciclo(gr, ex){
   const pts = lugares.map((l, k) => `<circle cx="${(cx + l.r * R * Math.cos(l.a)).toFixed(1)}" cy="${(cy - l.r * R * Math.sin(l.a)).toFixed(1)}" r="4.6" style="fill:${cores[k]}"/>`).join('');
   const total = ex ? (ex.C || 0) + (ex.S || 0) : N;
   $('#hemiciclo').innerHTML = `<svg viewBox="0 0 520 276" role="img" aria-label="Hemiciclo com os ${fmt(total)} parlamentares em exercício, por grupo político">${pts}</svg>
-    <figcaption><b>Os ${fmt(total)} parlamentares em exercício</b><span class="leg">${ordem.filter(o => o[0] !== 'sp' && gr[o[0]]).map(o => `<span><i style="background:var(${o[2]})"></i>${o[1]} ${fmt(gr[o[0]])}</span>`).join('')}</span></figcaption>`;
+    <figcaption><b>Os ${fmt(total)} parlamentares em exercício</b><span class="leg">${ordem.filter(o => gr[o[0]]).map(o => `<span><i style="background:var(${o[2]})"></i>${o[1]} ${fmt(gr[o[0]])}</span>`).join('')}</span></figcaption>`;
   $('#hemiciclo').hidden = false;
 }
 
