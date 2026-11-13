@@ -116,19 +116,22 @@ Marque c como "baixa" quando os dados forem contraditórios, quando o verbete ta
 
 async function escrever(p, dados, wiki, modelo) {
   const texto = `PARLAMENTAR\n${p.n}, ${p.c === 'S' ? 'senador(a)' : 'deputado(a) federal'}, ${p.s || p.p}/${p.uf}\n\nDADOS OFICIAIS (${p.c === 'S' ? 'Senado Federal' : 'Câmara dos Deputados'})\n${JSON.stringify(dados).slice(0, 16000)}\n\nVERBETE DA WIKIPÉDIA\n${wiki ? `${wiki.titulo}\n${wiki.texto}` : '(não encontrado)'}`;
-  const corpo = { model: modelo, max_tokens: 900, system: INSTRUCOES, messages: [{ role: 'user', content: texto }] };
+  const corpo = { model: modelo, max_tokens: 1500, thinking: { type: 'disabled' }, system: INSTRUCOES, messages: [{ role: 'user', content: texto }] };
   for (let i = 0; i < 5; i++) {
     let r;
     try {
       r = await fetch('https://api.anthropic.com/v1/messages', { method: 'POST', signal: AbortSignal.timeout(120000),
         headers: { 'content-type': 'application/json', 'x-api-key': process.env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' }, body: JSON.stringify(corpo) });
     } catch (e) { await espera(3000 * (i + 1)); continue; }
+    if (r.status === 400 && corpo.thinking) { delete corpo.thinking; continue; }
     if (r.status === 400 || r.status === 401 || r.status === 403) { log('  API recusou:', r.status, (await r.text()).slice(0, 200)); return null; }
     if (!r.ok) { await espera(3000 * (i + 1)); continue; }
     const j = await r.json();
     conta.tokens_in += (j.usage && j.usage.input_tokens) || 0; conta.tokens_out += (j.usage && j.usage.output_tokens) || 0;
     const t = (j.content || []).filter(b => b.type === 'text').map(b => b.text).join('');
     try { const o = JSON.parse(t.slice(t.indexOf('{'), t.lastIndexOf('}') + 1)); if (o.bio) return o; } catch (e) {}
+    log(`  resposta inválida (${j.stop_reason}): ${t.slice(0, 160).replace(/\s+/g, ' ')}`);
+    if (j.stop_reason === 'max_tokens') corpo.max_tokens = 3000;
   }
   return null;
 }
