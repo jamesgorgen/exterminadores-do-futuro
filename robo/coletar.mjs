@@ -909,6 +909,44 @@ function calcularAlinhamento(todasVotacoes) {
 // A numeração das proposições é única para as duas Casas. Lacunas nos números das últimas duas semanas
 // indicam proposições que o robô não trouxe. Algumas são esperadas (Executivo, comissões, outros órgãos);
 // muitas de uma vez indicam falha na coleta e aparecem como erro no diagnóstico.
+// Peso de cada bloco na produção legislativa e nas votações, por Casa e no total.
+// Autoria pelo primeiro autor; sucesso em votação quando a maioria do grupo votou no lado vencedor.
+export function calcularBlocos(props, votos, indice, cl) {
+  const G = ['extrema', 'direita', 'centro', 'esquerda'];
+  const vazio = () => ({ prop: 0, pauta: 0, membros: 0, emExercicio: 0, vot: 0, venceu: 0 });
+  const casas = { T: {}, C: {}, S: {} };
+  const tot = { T: { prop: 0, pauta: 0, pautaExtrema: 0, vot: 0 }, C: { prop: 0, pauta: 0, pautaExtrema: 0, vot: 0 }, S: { prop: 0, pauta: 0, pautaExtrema: 0, vot: 0 } };
+  for (const c of Object.keys(casas)) for (const g of G) casas[c][g] = vazio();
+  for (const [k, p] of Object.entries(indice)) {
+    if (!G.includes(p.cl)) continue;
+    for (const c of ['T', p.c]) { casas[c][p.cl].membros++; if (p.ex) casas[c][p.cl].emExercicio++; }
+  }
+  for (const it of props) {
+    const a = (it.a || [])[0]; const casa = a ? a[0] : (it.k || [])[0];
+    if (!['C', 'S'].includes(casa)) continue;
+    const x = cl(it.c) || {}, avanca = x.s === 'avanca', g = a && indice[a] && indice[a].cl;
+    for (const c of ['T', casa]) {
+      tot[c].prop++; if (avanca) { tot[c].pauta++; if (x.g === 'extrema') tot[c].pautaExtrema++; }
+      if (G.includes(g)) { casas[c][g].prop++; if (avanca) casas[c][g].pauta++; }
+    }
+  }
+  for (const vt of votos) {
+    const vence = { A: 'S', R: 'N' }[vt.res]; if (!vence || !['C', 'S'].includes(vt.k)) continue;
+    for (const c of ['T', vt.k]) tot[c].vot++;
+    const n = {};
+    for (const [op, ids] of Object.entries(vt.v || {})) {
+      if (op !== 'S' && op !== 'N') continue;
+      for (const id of ids) { const p = indice[vt.k + id]; if (!p || !G.includes(p.cl)) continue; (n[p.cl] = n[p.cl] || { S: 0, N: 0 })[op]++; }
+    }
+    for (const [g, c] of Object.entries(n)) {
+      if (c.S === c.N) continue;
+      const lado = c.S > c.N ? 'S' : 'N';
+      for (const casa of ['T', vt.k]) { casas[casa][g].vot++; if (lado === vence) casas[casa][g].venceu++; }
+    }
+  }
+  return Object.fromEntries(Object.keys(casas).map(c => [c, { ...tot[c], grupos: casas[c] }]));
+}
+
 export function verificarNumeracao(itens, dias = 14) {
   const desde = new Date(AGORA - dias * 86400000).toISOString().slice(0, 10);
   const saida = {};
@@ -1107,6 +1145,7 @@ export async function executar() {
       nucleo: emExercicio.filter(p => p.cl === 'extrema' || p.cl === 'direita').length, alinhados: emExercicio.filter(p => p.al === 'alinhado').length,
       emExercicio: { C: emExercicio.filter(p => p.c === 'C').length, S: emExercicio.filter(p => p.c === 'S').length } },
     porPauta,
+    blocos: calcularBlocos(todasPropFinal, todasVot, indice, cl),
     recentes: { proposicoes: direita.filter(it => it.x.s === 'avanca' && it.d >= desde(7)).length, votacoes: resumoVot.filter(v => v.d >= desde(7)).length }
   });
 

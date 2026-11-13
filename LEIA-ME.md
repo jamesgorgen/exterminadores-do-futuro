@@ -125,6 +125,10 @@ A chave é a do projeto (`PL 682/2024`) ou, para votações sem matéria, a da v
 
 Cuidado com as vírgulas e as aspas. Se o arquivo ficar com erro de formato, as correções deixam de valer e o erro aparece em `dados/diagnostico.json`.
 
+## Balanço
+
+`resumo.json` traz o campo `blocos`, calculado por `calcularBlocos` em `robo/coletar.mjs`, com os totais por Casa (`C`, `S`) e somados (`T`). Para cada grupo (extrema, direita, centro, esquerda): projetos pelo primeiro autor (`prop`), projetos com pauta da direita (`pauta`), parlamentares que passaram pelo grupo (`membros`), votações em que o grupo teve maioria definida (`vot`) e em quantas essa maioria ficou do lado vencedor (`venceu`). A aba Balanço do site lê esses números.
+
 ## Biografias
 
 O script `robo/biografias.mjs` (workflow "Biografias", toda segunda-feira e à mão) escreve a biografia de cada parlamentar do índice. Os fatos vêm da API da Câmara (dados pessoais, profissões, ocupações, mandatos externos, histórico de partidos), da API do Senado (dados, mandatos, formação, profissão, cargos, filiações) e do verbete da Wikipédia em português. O Haiku escreve o texto e o modelo forte refaz só quando o Haiku indica dúvida, em geral sobre a identidade do verbete ou um conflito sobre o mandato atual.

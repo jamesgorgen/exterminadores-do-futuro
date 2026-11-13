@@ -97,6 +97,21 @@ p.sub{color:var(--ink-2);max-width:70ch;margin:0 0 18px}
 .secao{margin-bottom:52px}
 
 /* números */
+.bal-filtro{margin:0 0 22px}
+.bal-lede{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:18px 28px;margin:0 0 34px}
+.bal-lede p{margin:0;font-size:16px;line-height:1.45;color:var(--ink-2)}
+.bal-lede b{display:block;font-family:var(--display);font-weight:800;font-size:44px;line-height:1;color:var(--ink);margin-bottom:4px}
+.bal-graficos{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:30px 44px}
+.bal-g h3{font-size:18px;margin:0 0 4px}
+.bal-g .sub{margin:0 0 12px;font-size:14.5px}
+.bal-linha{display:grid;grid-template-columns:128px minmax(0,1fr) 128px;align-items:center;gap:10px;padding:5px 0}
+.bal-linha .nome{font-size:14.5px;color:var(--ink)}
+.bal-linha .trilho{height:14px}
+.bal-linha .barra{display:block;height:14px;border-radius:0 4px 4px 0;min-width:2px}
+.bal-linha .val{font-size:14.5px;font-variant-numeric:tabular-nums;color:var(--ink);text-align:right}
+.bal-linha .val small{display:block;white-space:nowrap;color:var(--ink-3);font-size:12.5px}
+.bal-nota{font-size:13.5px;color:var(--ink-3);margin:10px 0 0;line-height:1.5}
+@media (max-width:600px){.bal-linha{grid-template-columns:96px minmax(0,1fr) 112px}.bal-linha .nome{font-size:13.5px}.bal-lede b{font-size:36px}}
 .kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,170px),1fr));gap:16px 0;margin:0 0 30px}
 .kpi{background:transparent;border-left:1px solid var(--line);padding:2px 18px}
 .kpi b{display:block;font-family:var(--display);font-weight:900;font-size:40px;line-height:1}
@@ -241,6 +256,7 @@ footer a{color:#fff}
   <button role="tab" data-aba="parlamentares" aria-selected="false">Parlamentares</button>
   <button role="tab" data-aba="proposicoes" aria-selected="false">Proposições</button>
   <button role="tab" data-aba="votacoes" aria-selected="false">Votações</button>
+  <button role="tab" data-aba="balanco" aria-selected="false">Balanço</button>
   <a class="aba-link" href="emendas.html">Emendas</a>
   <a class="aba-link" href="dossie.html">Dossiês</a>
   <button role="tab" data-aba="metodo" aria-selected="false">Como funciona</button>
@@ -251,6 +267,7 @@ footer a{color:#fff}
   <section id="aba-parlamentares" hidden></section>
   <section id="aba-proposicoes" hidden></section>
   <section id="aba-votacoes" hidden></section>
+  <section id="aba-balanco" hidden></section>
   <section id="aba-metodo" hidden></section>
 </div></main>
 
@@ -714,6 +731,8 @@ function desenharMetodo(){
     <div class="pautas-met">${P.lista.map(p => `<div><b>${esc(p.nome)}</b>${esc(p.descricao)}<small>Extrema-direita quando ${esc(p.extrema.charAt(0).toLowerCase() + p.extrema.slice(1))}</small></div>`).join('')}</div>
     <h3>Relatorias</h3>
     <p>O relator é o parlamentar que estuda um projeto numa comissão ou no plenário e escreve o parecer, muitas vezes com um texto novo, que vai a voto. Por isso a relatoria costuma pesar tanto quanto a autoria. Os dados do Senado vêm da base de relatorias do próprio Senado, com cada designação desde 2023, a comissão, a data em que o senador assumiu e a data e o motivo de quando deixou a relatoria. Na Câmara, que não publica uma base própria de relatorias, as designações são lidas das tramitações de cada proposição, que trazem o deputado designado e a comissão, e o parecer é identificado pela tramitação seguinte do mesmo relator. O perfil de cada parlamentar mostra o que ele relata, e a ficha dos projetos da direita mostra quem os relata no momento.</p>
+    <h3>Balanço</h3>
+    <p>A aba Balanço mede o peso de cada grupo político no Congresso desde fevereiro de 2023, com todos os projetos apresentados por parlamentares e todas as votações nominais coletadas. Cada projeto é atribuído ao grupo do primeiro autor. A média por parlamentar divide os projetos do grupo por todos que passaram por ele no período, inclusive suplentes e quem deixou o mandato. A pauta da direita segue a mesma classificação usada no resto do site. Nas votações, o grupo fica do lado vencedor quando a maioria dos seus integrantes que votaram sim ou não acompanhou o resultado final. Votações sem resultado de aprovação ou rejeição registrado e empates dentro do grupo ficam fora da conta. Os números são recalculados todos os dias pelo robô.</p>
     <h3>Biografias</h3>
     <p>A biografia de cada parlamentar é escrita por um modelo de IA a partir de duas fontes públicas, os dados oficiais da Câmara dos Deputados ou do Senado Federal e o verbete da Wikipédia em português. O modelo é instruído a não acrescentar nenhum fato que não esteja nessas fontes e a manter um tom descritivo, sem juízos. Partido e situação do mandato vêm sempre dos dados oficiais, porque o verbete pode estar desatualizado. A equipe revisa os textos, e a versão revisada prevalece sobre a da IA. Cada ficha traz os links das fontes usadas e do perfil oficial do parlamentar.</p>
     <h3>Emendas parlamentares</h3>
@@ -763,6 +782,56 @@ async function copiar(ref, b){
   const antes = b.textContent; b.textContent = ok ? 'Copiado' : 'Não foi possível copiar'; setTimeout(() => { b.textContent = antes; }, 2000);
 }
 
+// ---------------------------------------------------------------- balanço
+// Peso de cada grupo na produção de projetos e nas votações (resumo.blocos, calculado pelo robô).
+const COR_GRUPO = { extrema: 'var(--ext)', direita: 'var(--dir)', centro: 'var(--g-cen)', esquerda: 'var(--contra)' };
+const NOME_GRUPO = { extrema: 'Extrema-direita', direita: 'Direita', centro: 'Centro-direita', esquerda: 'Esquerda' };
+const pct = (a, b) => b ? (100 * a / b) : 0;
+const fmtPct = x => x.toLocaleString('pt-BR', { maximumFractionDigits: 1, minimumFractionDigits: x < 10 && x % 1 ? 1 : 0 }) + '%';
+function graficoBlocos(titulo, sub, linhas, maximo, nota){
+  return `<div class="bal-g"><h3>${esc(titulo)}</h3><p class="sub">${esc(sub)}</p>
+    ${linhas.map(l => `<div class="bal-linha" title="${esc(l.dica)}"><span class="nome">${NOME_GRUPO[l.g]}</span>
+      <span class="trilho"><span class="barra" style="width:${Math.max(0, Math.min(100, 100 * l.v / (maximo || 1))).toFixed(1)}%;background:${COR_GRUPO[l.g]}"></span></span>
+      <span class="val">${l.txt}${l.det ? `<small>${l.det}</small>` : ''}</span></div>`).join('')}
+    ${nota ? `<p class="bal-nota">${nota}</p>` : ''}</div>`;
+}
+function desenharBalanco(){
+  const el = $('#aba-balanco');
+  const r = D.resumo, B = r && r.blocos;
+  if (!B) { el.innerHTML = `<div class="vazio"><p>O balanço é calculado pelo robô do observatório e aparece depois da próxima atualização diária.</p></div>`; return; }
+  est.bal = est.bal || { casa: 'T' };
+  const b = B[est.bal.casa] || B.T, G = ['extrema', 'direita', 'centro', 'esquerda'], g = b.grupos;
+  const casaTxt = { T: 'na Câmara dos Deputados e no Senado Federal', C: 'na Câmara dos Deputados', S: 'no Senado Federal' }[est.bal.casa];
+  const blocoProp = g.extrema.prop + g.direita.prop;
+  const maxPC = Math.max(...G.map(x => g[x].prop / (g[x].membros || 1)));
+  el.innerHTML = `
+    <div class="secao">
+      <h2 class="titulo">O peso de cada bloco no Congresso</h2>
+      <p class="sub">Quanto cada grupo político produz e com que frequência fica do lado vencedor ${casaTxt}, desde ${dataBR(r.inicio)}.</p>
+      <div class="bal-filtro"><select id="bal-casa" aria-label="Casa">${[['T', 'Câmara e Senado'], ['C', 'Câmara dos Deputados'], ['S', 'Senado Federal']].map(([v, t]) => `<option value="${v}" ${est.bal.casa === v ? 'selected' : ''}>${t}</option>`).join('')}</select></div>
+      <div class="bal-lede">
+        <p><b>${fmtPct(pct(blocoProp, b.prop))}</b>dos ${fmt(b.prop)} projetos apresentados por parlamentares saíram da direita e da extrema-direita</p>
+        <p><b>${fmtPct(pct(b.pauta, b.prop))}</b>de todos os projetos fazem avançar alguma pauta da direita, ${fmtPct(pct(b.pautaExtrema, b.prop))} com grau de extrema-direita</p>
+        <p><b>${fmtPct(pct(g.extrema.venceu, g.extrema.vot))}</b>das votações nominais tiveram a maioria da extrema-direita do lado vencedor, contra ${fmtPct(pct(g.direita.venceu, g.direita.vot))} da direita</p>
+      </div>
+      <div class="bal-graficos">
+        ${graficoBlocos('Projetos apresentados', 'Parte de cada grupo no total de projetos, pelo primeiro autor.',
+          G.map(x => ({ g: x, v: pct(g[x].prop, b.prop), txt: fmtPct(pct(g[x].prop, b.prop)), det: `${fmt(g[x].prop)} projetos`, dica: `${NOME_GRUPO[x]}: ${fmt(g[x].prop)} de ${fmt(b.prop)} projetos` })), 50,
+          `A centro-direita reúne partidos que oscilam entre o governo e a oposição. Projetos de parlamentares sem partido ficam de fora.`)}
+        ${graficoBlocos('Projetos por parlamentar', 'Média de projetos apresentados por integrante do grupo.',
+          G.map(x => ({ g: x, v: g[x].prop / (g[x].membros || 1), txt: fmt(Math.round(g[x].prop / (g[x].membros || 1))), det: `${fmt(g[x].membros)} parlamentares`, dica: `${NOME_GRUPO[x]}: ${fmt(g[x].prop)} projetos de ${fmt(g[x].membros)} parlamentares` })), maxPC,
+          `Conta todos que passaram pelo grupo desde ${dataBR(r.inicio)}, inclusive suplentes e quem deixou o mandato.`)}
+        ${graficoBlocos('Pauta da direita na produção de cada grupo', 'Parte dos projetos do próprio grupo que faz avançar alguma pauta da direita.',
+          G.map(x => ({ g: x, v: pct(g[x].pauta, g[x].prop), txt: fmtPct(pct(g[x].pauta, g[x].prop)), det: `${fmt(g[x].pauta)} projetos`, dica: `${NOME_GRUPO[x]}: ${fmt(g[x].pauta)} de ${fmt(g[x].prop)} projetos com pauta da direita` })), 100,
+          `A classificação das pautas é feita por IA e conferida pela equipe. Veja a aba Como funciona.`)}
+        ${graficoBlocos('Do lado vencedor nas votações', 'Votações nominais em que a maioria do grupo votou como o resultado final.',
+          G.map(x => ({ g: x, v: pct(g[x].venceu, g[x].vot), txt: fmtPct(pct(g[x].venceu, g[x].vot)), det: `${fmt(g[x].venceu)} de ${fmt(g[x].vot)}`, dica: `${NOME_GRUPO[x]}: maioria do lado vencedor em ${fmt(g[x].venceu)} de ${fmt(g[x].vot)} votações` })), 100,
+          `Base de ${fmt(b.vot)} votações nominais com resultado registrado de aprovação ou rejeição, em plenário e nas comissões. Empates dentro do grupo não entram na conta.`)}
+      </div>
+    </div>`;
+  $('#bal-casa').addEventListener('change', e => { est.bal.casa = e.target.value; desenharBalanco(); });
+}
+
 // ---------------------------------------------------------------- navegação
 function irPara(aba){
   est.aba = aba;
@@ -771,7 +840,7 @@ function irPara(aba){
   desenhar();
 }
 function desenhar(){
-  ({ movimentos: desenharMovimentos, parlamentares: desenharParlamentares, proposicoes: desenharProposicoes, votacoes: desenharVotacoes, metodo: desenharMetodo })[est.aba]();
+  ({ movimentos: desenharMovimentos, parlamentares: desenharParlamentares, proposicoes: desenharProposicoes, votacoes: desenharVotacoes, balanco: desenharBalanco, metodo: desenharMetodo })[est.aba]();
 }
 function aplicarEndereco(){
   const q = new URLSearchParams(location.search);
