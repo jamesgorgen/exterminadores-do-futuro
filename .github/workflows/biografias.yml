@@ -1,0 +1,52 @@
+# Biografias dos parlamentares, escritas a partir das APIs da Câmara e do Senado e da Wikipédia.
+# À mão: Actions > Biografias > Run workflow. "amostra" gera só alguns textos para avaliação.
+name: Biografias
+
+on:
+  workflow_dispatch:
+    inputs:
+      amostra:
+        description: 'Quantas biografias de amostra (deixe vazio para gerar todas)'
+        required: false
+        default: ''
+      ids:
+        description: 'Só estes parlamentares, separados por vírgula (ex.: C220654,S5672)'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+concurrency:
+  group: biografias
+  cancel-in-progress: false
+
+jobs:
+  biografias:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Escrever as biografias
+        run: node robo/biografias.mjs
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          AMOSTRA: ${{ inputs.amostra }}
+          IDS: ${{ inputs.ids }}
+      - name: Gravar os dados no repositório
+        if: always()
+        run: |
+          git config user.name "robo-exterminadores"
+          git config user.email "robo-exterminadores@users.noreply.github.com"
+          for f in dados/biografias.json dados/biografias-amostra.json; do if [ -f "$f" ]; then git add "$f"; fi; done
+          if git diff --cached --quiet; then echo "Nada mudou."; exit 0; fi
+          git commit -m "Atualiza as biografias ($(date -u +%Y-%m-%d))"
+          for i in 1 2 3 4 5; do
+            if git pull --rebase -X theirs && git push; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((i * 10))
+          done
+          exit 1
