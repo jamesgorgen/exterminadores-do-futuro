@@ -107,11 +107,13 @@ kbd{font:12px/1 ui-monospace,monospace;border:1px solid var(--line);border-botto
 
 <div class="filtros"><div class="wrap">
   <select id="fLista" aria-label="Lista">
-    <option value="duvida">Com dúvida da IA</option>
+    <option value="revisar">A conferir (as com dúvida da IA primeiro)</option>
+    <option value="duvida">Só as com dúvida da IA</option>
+    <option value="revisadas">Já conferidas pela equipe</option>
     <option value="todas">Todas</option>
-    <option value="revisadas">Já revisadas pela equipe</option>
     <option value="sem">Sem biografia</option>
   </select>
+  <select id="fMandato" aria-label="Mandato"><option value="">Em exercício hoje</option><option value="todos">Também quem já deixou o mandato</option></select>
   <select id="fCasa" aria-label="Casa"><option value="">Câmara e Senado</option><option value="C">Câmara</option><option value="S">Senado</option></select>
   <input type="search" id="fBusca" placeholder="Nome do parlamentar, partido ou estado" aria-label="Buscar">
 </div></div>
@@ -121,7 +123,7 @@ kbd{font:12px/1 ui-monospace,monospace;border:1px solid var(--line);border-botto
   <p class="contagem" id="contagem"></p>
   <div id="lista"><p class="carregando">Carregando as biografias…</p></div>
   <button class="btn mais" type="button" id="mais" hidden>Mostrar mais</button>
-  <p class="dica">Edite o texto e clique em Salvar no site. A versão da equipe substitui a da IA na ficha do parlamentar e nunca é reescrita pelo robô. Para devolver uma biografia ao robô, use Voltar ao texto da IA.</p>
+  <p class="dica">Se o texto da IA estiver certo, clique em Aprovar. Se precisar de ajuste, edite o texto na caixa. Depois clique em Salvar no site. Um texto editado pela equipe nunca é reescrito pelo robô. Um texto aprovado volta para conferência se o robô reescrevê-lo porque as fontes mudaram, por exemplo numa troca de partido. Para desfazer, use Desfazer conferência.</p>
 </main>
 
 <div class="rodape"><div class="wrap">
@@ -167,29 +169,37 @@ async function carregar() {
   desenhar(); atualizarBarra();
 }
 
-const textoAtual = k => k in pend ? (pend[k] === null ? (bios[k] || {}).b || '' : pend[k].b) : salvas[k] ? salvas[k].b : (bios[k] || {}).b || '';
+// Uma correção pode ser um texto editado (b) ou a aprovação do texto da IA (ok, com a marca da versão aprovada).
+const aprovadaValida = (c, k) => !!(c && c.ok && bios[k] && c.ok === bios[k].h);
+const conferida = k => { const c = k in pend ? pend[k] : salvas[k]; return !!(c && (c.b || aprovadaValida(c, k))); };
+const textoAtual = k => { const c = k in pend ? pend[k] : salvas[k]; return c && c.b ? c.b : (bios[k] || {}).b || ''; };
 function filtrados() {
-  const lista = $('#fLista').value, casa = $('#fCasa').value, q = norm($('#fBusca').value);
+  const lista = $('#fLista').value, casa = $('#fCasa').value, q = norm($('#fBusca').value), todos = $('#fMandato').value === 'todos';
   return Object.entries(indice).filter(([k, p]) => {
     if (casa && p.c !== casa) return false;
+    if (!todos && p.ex === 0) return false;
     if (q && !norm(`${p.n} ${p.s} ${p.p} ${p.uf}`).includes(q)) return false;
     const b = bios[k];
-    if (lista === 'duvida') return b && b.cf === 'baixa' && !salvas[k];
-    if (lista === 'revisadas') return !!salvas[k];
-    if (lista === 'sem') return !b && !salvas[k];
+    const feita = !!(salvas[k] && (salvas[k].b || aprovadaValida(salvas[k], k)));
+    if (lista === 'revisar') return b && !feita;
+    if (lista === 'duvida') return b && b.cf === 'baixa' && !feita;
+    if (lista === 'revisadas') return feita;
+    if (lista === 'sem') return !b && !(salvas[k] && salvas[k].b);
     return true;
-  }).sort((a, b) => a[1].n.localeCompare(b[1].n, 'pt'));
+  }).sort((a, b) => (lista === 'revisar' ? ((bios[b[0]] || {}).cf === 'baixa') - ((bios[a[0]] || {}).cf === 'baixa') : 0) || a[1].n.localeCompare(b[1].n, 'pt'));
 }
 function cartao([k, p]) {
   const b = bios[k] || {}, id = k.slice(1);
   const oficial = p.c === 'S' ? `https://www25.senado.leg.br/web/senadores/senador/-/perfil/${id}` : `https://www.camara.leg.br/deputados/${id}`;
-  const estado = k in pend ? '<span class="selo s-pend">Não salva</span>' : salvas[k] ? '<span class="selo s-salvo">Revisada</span>' : '';
+  const c = k in pend ? pend[k] : salvas[k];
+  const rotulo = c && c.b ? 'Editada pela equipe' : aprovadaValida(c, k) ? 'Aprovada' : '';
+  const estado = (k in pend ? '<span class="selo s-pend">Não salva</span> ' : '') + (rotulo ? `<span class="selo s-salvo">${rotulo}</span>` : '');
   return `<div class="cartao ${b.cf === 'baixa' && !salvas[k] ? 'duvida' : ''} ${k in pend ? 'pendente' : ''}" data-k="${esc(k)}">
     <div class="topo"><span class="num">${esc(p.n)}</span><span class="meta">${esc(p.s || p.p)}/${esc(p.uf || '')}, ${CASA[p.c] || ''}</span><span class="lado">${estado}</span></div>
-    ${b.dv && !salvas[k] ? `<p class="ia"><b>Dúvida da IA.</b> ${esc(b.dv)}</p>` : ''}
+    ${b.dv && !conferida(k) ? `<p class="ia"><b>Dúvida da IA.</b> ${esc(b.dv)}</p>` : ''}
     <textarea class="bio-txt" aria-label="Biografia de ${esc(p.n)}">${esc(textoAtual(k))}</textarea>
     <p class="meta fontes">${(b.f || []).map(f => `<a href="${esc(f.u)}" target="_blank" rel="noopener">${esc(f.t)}</a>`).join('')}<a href="${esc(oficial)}" target="_blank" rel="noopener">Perfil oficial</a>${b.m ? ` Escrita por ${b.m.includes('haiku') ? 'modelo leve' : 'modelo forte'} em ${esc((b.d || '').split('-').reverse().join('/'))}.` : ' Ainda sem biografia da IA.'}</p>
-    ${salvas[k] || (k in pend && pend[k] !== null) ? `<div class="acoes"><button class="btn" type="button" data-voltar>Voltar ao texto da IA</button></div>` : ''}
+    <div class="acoes">${b.b && !conferida(k) ? '<button class="btn forte" type="button" data-aprovar>Aprovar</button>' : ''}${conferida(k) || (k in pend && pend[k] !== null) ? `<button class="btn" type="button" data-voltar>${c && c.b ? 'Voltar ao texto da IA' : 'Desfazer conferência'}</button>` : ''}</div>
   </div>`;
 }
 function desenhar() {
@@ -206,15 +216,18 @@ function atualizarBarra() {
 document.addEventListener('input', e => {
   const t = e.target.closest('.bio-txt'); if (!t) return;
   const k = t.closest('.cartao').dataset.k, v = t.value.trim();
-  const base = salvas[k] ? salvas[k].b : (bios[k] || {}).b || '';
+  const base = salvas[k] && salvas[k].b ? salvas[k].b : (bios[k] || {}).b || '';
   if (v === base) delete pend[k]; else pend[k] = { b: v, d: new Date().toISOString().slice(0, 10) };
   guardarPend(); atualizarBarra();
 });
 document.addEventListener('click', e => {
-  if (!e.target.closest('[data-voltar]')) return;
-  const k = e.target.closest('.cartao').dataset.k;
-  if (salvas[k]) pend[k] = null; else delete pend[k];
-  guardarPend(); atualizarBarra(); desenhar();
+  const ap = e.target.closest('[data-aprovar]'), vo = e.target.closest('[data-voltar]');
+  if (!ap && !vo) return;
+  const card = e.target.closest('.cartao'), k = card.dataset.k;
+  if (ap) pend[k] = { ok: bios[k].h, d: new Date().toISOString().slice(0, 10) };
+  else if (salvas[k]) pend[k] = null; else delete pend[k];
+  guardarPend(); atualizarBarra();
+  card.outerHTML = cartao([k, indice[k]]);
 });
 async function salvar() {
   if (!token()) { $('#avisoToken').hidden = false; $('#msg').textContent = 'Configure o acesso ao GitHub na página de revisão da triagem.'; return; }
@@ -224,8 +237,8 @@ async function salvar() {
     try {
       const { sha, dados } = await lerGitHub();
       const corr = Object.assign({}, dados.correcoes || {});
-      for (const [k, v] of Object.entries(pend)) { if (v === null || !v.b) delete corr[k]; else corr[k] = v; }
-      const novo = { _leia: 'Biografias revisadas pela equipe. Prevalecem sobre as escritas pelo robô e nunca são reescritas por ele.', correcoes: Object.fromEntries(Object.keys(corr).sort().map(k => [k, corr[k]])) };
+      for (const [k, v] of Object.entries(pend)) { if (v === null || (!v.b && !v.ok)) delete corr[k]; else corr[k] = v; }
+      const novo = { _leia: 'Biografias conferidas pela equipe. "b" é um texto editado, que prevalece e nunca é reescrito pelo robô. "ok" aprova o texto da IA e vale enquanto for igual à marca "h" da biografia em dados/biografias.json.', correcoes: Object.fromEntries(Object.keys(corr).sort().map(k => [k, corr[k]])) };
       const corpo = { message: `Biografias revisadas pela equipe (${n} ${n === 1 ? 'item' : 'itens'})`, content: b64enc(JSON.stringify(novo, null, 2) + '\n'), branch: 'main' };
       if (sha) corpo.sha = sha;
       const r = await fetch(`https://api.github.com/repos/${REPO}/contents/${ARQ}`, { method: 'PUT', headers: { Authorization: 'Bearer ' + token(), Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' }, body: JSON.stringify(corpo) });
@@ -242,7 +255,7 @@ async function salvar() {
 $('#salvar').addEventListener('click', salvar);
 $('#descartar').addEventListener('click', () => { if (!confirm('Descartar todas as alterações não salvas?')) return; pend = {}; guardarPend(); atualizarBarra(); desenhar(); });
 $('#mais').addEventListener('click', () => { limite += 30; desenhar(); });
-['#fLista', '#fCasa'].forEach(s => $(s).addEventListener('change', () => { limite = 30; desenhar(); }));
+['#fLista', '#fCasa', '#fMandato'].forEach(s => $(s).addEventListener('change', () => { limite = 30; desenhar(); }));
 let tB; $('#fBusca').addEventListener('input', () => { clearTimeout(tB); tB = setTimeout(() => { limite = 30; desenhar(); }, 250); });
 window.addEventListener('beforeunload', e => { if (Object.keys(pend).length) { e.preventDefault(); e.returnValue = ''; } });
 carregar().catch(e => { $('#lista').innerHTML = `<p class="carregando">Não foi possível carregar os dados (${esc(e.message)}).</p>`; });

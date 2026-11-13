@@ -331,7 +331,7 @@ async function desenharBio(k, p){
   const id = k.slice(1);
   const oficial = p.c === 'S' ? { t: 'Senado Federal', u: `https://www25.senado.leg.br/web/senadores/senador/-/perfil/${id}` } : { t: 'Câmara dos Deputados', u: `https://www.camara.leg.br/deputados/${id}` };
   const fontes = (bio.f && bio.f.length ? bio.f : [oficial]).filter(f => f && f.u);
-  caixa.innerHTML = `${texto ? `<p class="bio">${esc(texto)}</p>` : ''}<p class="bio-fontes">${texto ? `Escrita com base em dados ${fontes.map(f => `${f.t === 'Senado Federal' ? 'do' : 'da'} <a href="${esc(f.u)}" target="_blank" rel="noopener">${esc(f.t)}</a>`).join(' e ')}${corr ? ' e revisada pela equipe' : ''}. ` : ''}<a href="${esc(oficial.u)}" target="_blank" rel="noopener">Perfil oficial no site ${p.c === 'S' ? 'do Senado' : 'da Câmara'}</a>.</p>`;
+  caixa.innerHTML = `${texto ? `<p class="bio">${esc(texto)}</p>` : ''}<p class="bio-fontes">${texto ? `Escrita com base em dados ${fontes.map(f => `${f.t === 'Senado Federal' ? 'do' : 'da'} <a href="${esc(f.u)}" target="_blank" rel="noopener">${esc(f.t)}</a>`).join(' e ')}${corr && (corr.b || corr.ok === bio.h) ? ' e conferida pela equipe' : ''}. ` : ''}<a href="${esc(oficial.u)}" target="_blank" rel="noopener">Perfil oficial no site ${p.c === 'S' ? 'do Senado' : 'da Câmara'}</a>.</p>`;
 }
 const COMISSAO_TXT = c => c === 'PLEN' ? 'Plenário' : c;
 async function desenharRelatorias(k, p){
