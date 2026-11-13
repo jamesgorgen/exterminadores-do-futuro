@@ -25,7 +25,7 @@ const IDS = String(process.env.IDS || '').split(',').map(s => s.trim()).filter(B
 const ARQ = path.join(DADOS, AMOSTRA ? 'biografias-amostra.json' : 'biografias.json');
 const log = (...a) => console.log(new Date().toISOString().slice(11, 19), ...a);
 const espera = ms => new Promise(r => setTimeout(r, ms));
-const conta = { haiku: 0, forte: 0, tokens_in: 0, tokens_out: 0, sem_wiki: 0, falhas: 0 };
+const conta = { haiku: 0, forte: 0, tokens: {}, sem_wiki: 0, falhas: 0 };
 
 async function pegar(url, tipo = 'json') {
   for (let t = 1; t <= 4; t++) {
@@ -103,16 +103,16 @@ async function verbete(p) {
 const INSTRUCOES = `Você escreve biografias curtas de parlamentares brasileiros para um observatório do Congresso.
 
 Regras
-1. Use somente os fatos presentes nos DADOS. Não acrescente nada que você saiba por conta própria, nem datas, cargos, partidos ou parentescos.
-2. Os dados oficiais (Câmara ou Senado) prevalecem sobre a Wikipédia quando houver conflito.
-3. O verbete da Wikipédia pode ser de um homônimo. Use-o só se data ou local de nascimento, partido, estado ou cargos baterem com os dados oficiais. Se não tiver certeza de que é a mesma pessoa, ignore o verbete e marque c como "baixa".
-4. Escreva de três a cinco frases, em português, em terceira pessoa, nesta ordem: origem (nascimento e cidade) e formação; profissão e carreira antes da política; cargos eletivos ou públicos anteriores; o mandato atual (partido e estado); trocas de partido, se houver. Pule o que não constar nos dados.
-5. Tom descritivo e neutro. Nada de adjetivos, elogios, críticas ou juízos. Não fale de votos, projetos, polêmicas, processos ou investigações, mesmo que apareçam no verbete.
-6. Não use dois pontos para ligar frases. Escreva os nomes dos partidos pela sigla. Datas por extenso só com o ano, salvo a data de nascimento.
-7. Não comece com o nome completo seguido de vírgula e aposto longo. Comece pelo nome parlamentar.
+1. Use somente os fatos presentes nos DADOS OFICIAIS e no VERBETE DA WIKIPÉDIA. Não acrescente nada que você saiba por conta própria.
+2. Primeiro confira se o verbete é da mesma pessoa, comparando data ou local de nascimento, estado, partido e cargos com os dados oficiais. Se for, use os fatos dele livremente. É normal o verbete trazer cargos, profissão e carreira que os dados oficiais não registram, e isso não é motivo de dúvida.
+3. Quando as duas fontes divergirem num mesmo fato, fique com os dados oficiais.
+4. Escreva de 60 a 110 palavras, em três a cinco frases, em português, em terceira pessoa, nesta ordem: origem (data e cidade de nascimento) e formação; profissão e carreira antes da política; cargos eletivos ou públicos anteriores; o mandato atual; trocas de partido, se houver. Pule o que não constar.
+5. Tom descritivo e neutro. Nada de adjetivos, elogios, críticas ou juízos. Não fale de votos, projetos, polêmicas, processos ou investigações.
+6. Nunca mencione as fontes, a Wikipédia, os "dados oficiais" nem a falta de alguma informação. O texto é só a biografia.
+7. Não use dois pontos para ligar frases. Partidos pela sigla. Estados por extenso ("pelo PL de Mato Grosso", nunca "PL/MT"). Comece pelo nome parlamentar.
 
-Responda só com JSON, sem texto fora dele, no formato {"bio": "...", "usou_wikipedia": true ou false, "c": "alta" ou "baixa", "duvida": "motivo curto, vazio se c for alta"}.
-Marque c como "baixa" quando os dados forem contraditórios, quando o verbete talvez seja de outra pessoa ou quando houver dados de menos para três frases.`;
+Responda só com JSON, sem texto fora dele, no formato {"bio": "...", "usou_wikipedia": true ou false, "c": "alta" ou "baixa", "duvida": "até 20 palavras, vazio se c for alta"}.
+Marque c como "baixa" apenas se não der para saber se o verbete é da mesma pessoa, ou se as fontes divergirem sobre a data de nascimento ou o mandato atual. Em todos os outros casos, c é "alta".`;
 
 async function escrever(p, dados, wiki, modelo) {
   const texto = `PARLAMENTAR\n${p.n}, ${p.c === 'S' ? 'senador(a)' : 'deputado(a) federal'}, ${p.s || p.p}/${p.uf}\n\nDADOS OFICIAIS (${p.c === 'S' ? 'Senado Federal' : 'Câmara dos Deputados'})\n${JSON.stringify(dados).slice(0, 16000)}\n\nVERBETE DA WIKIPÉDIA\n${wiki ? `${wiki.titulo}\n${wiki.texto}` : '(não encontrado)'}`;
@@ -127,7 +127,7 @@ async function escrever(p, dados, wiki, modelo) {
     if (r.status === 400 || r.status === 401 || r.status === 403) { log('  API recusou:', r.status, (await r.text()).slice(0, 200)); return null; }
     if (!r.ok) { await espera(3000 * (i + 1)); continue; }
     const j = await r.json();
-    conta.tokens_in += (j.usage && j.usage.input_tokens) || 0; conta.tokens_out += (j.usage && j.usage.output_tokens) || 0;
+    const tk = conta.tokens[modelo] = conta.tokens[modelo] || [0, 0]; tk[0] += (j.usage && j.usage.input_tokens) || 0; tk[1] += (j.usage && j.usage.output_tokens) || 0;
     const t = (j.content || []).filter(b => b.type === 'text').map(b => b.text).join('');
     try { const o = JSON.parse(t.slice(t.indexOf('{'), t.lastIndexOf('}') + 1)); if (o.bio) return o; } catch (e) {}
     log(`  resposta inválida (${j.stop_reason}): ${t.slice(0, 160).replace(/\s+/g, ' ')}`);
@@ -183,9 +183,8 @@ async function principal() {
     if (feitas % 25 === 0) fs.writeFileSync(ARQ, JSON.stringify({ gerado: new Date().toISOString(), itens }));
   }
   fs.writeFileSync(ARQ, JSON.stringify({ gerado: new Date().toISOString(), itens }));
-  const custo = conta.tokens_in / 1e6 * 0.10 + conta.tokens_out / 1e6 * 0.50;
   log(`Concluído: ${feitas} escritas, ${mantidas} mantidas. Haiku ${conta.haiku}, modelo forte ${conta.forte}, sem verbete ${conta.sem_wiki}, falhas ${conta.falhas}.`);
-  log(`Tokens: ${conta.tokens_in} de entrada, ${conta.tokens_out} de saída (estimativa pelo preço do Haiku, US$ ${custo.toFixed(3)}; as releituras do modelo forte custam mais).`);
+  for (const [m, [i, o]] of Object.entries(conta.tokens)) log(`Tokens ${m}: ${i} de entrada, ${o} de saída.`);
 }
 
 principal().catch(e => { console.error(e); process.exit(1); });
