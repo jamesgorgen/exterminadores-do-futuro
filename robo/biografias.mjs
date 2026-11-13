@@ -136,7 +136,7 @@ async function escrever(p, dados, wiki, modelo) {
     const j = await r.json();
     const tk = conta.tokens[modelo] = conta.tokens[modelo] || [0, 0]; tk[0] += (j.usage && j.usage.input_tokens) || 0; tk[1] += (j.usage && j.usage.output_tokens) || 0;
     const t = (j.content || []).filter(b => b.type === 'text').map(b => b.text).join('');
-    try { const o = JSON.parse(t.slice(t.indexOf('{'), t.lastIndexOf('}') + 1)); if (o.bio) return o; } catch (e) {}
+    try { const o = JSON.parse(t.slice(t.indexOf('{'), t.lastIndexOf('}') + 1)); if (o.bio || wiki) return o; } catch (e) {}
     log(`  resposta inválida (${j.stop_reason}): ${t.slice(0, 160).replace(/\s+/g, ' ')}`);
     if (j.stop_reason === 'max_tokens') corpo.max_tokens = 3000;
   }
@@ -173,13 +173,17 @@ async function principal() {
     const atual = itens[k];
     if ((atual && atual.eq) || (corrigidas[k] && corrigidas[k].b)) { mantidas++; continue; }
     const id = k.slice(1);
+    if (!/^\d+$/.test(id)) continue; // parlamentar sem código oficial no índice
     const dados = p.c === 'S' ? await dadosSenado(id) : await dadosCamara(id);
     if (!dados) { conta.falhas++; log(`  ${k} ${p.n}: dados oficiais indisponíveis`); continue; }
-    const wiki = await verbete(p);
+    let wiki = await verbete(p);
     if (!wiki) conta.sem_wiki++;
     const h = hash([dados, wiki && wiki.texto]);
     if (atual && atual.h === h) { mantidas++; continue; }
     let o = await escrever(p, dados, wiki, MODELO); conta.haiku++;
+    // Texto vazio com verbete: em geral a busca trouxe um homônimo. Escreve de novo só com os dados oficiais.
+    if (o && !o.bio && wiki) { log(`  ${k} ${p.n}: verbete descartado (${o.duvida || 'sem motivo'})`); wiki = null; o = await escrever(p, dados, null, MODELO); conta.haiku++; }
+    if (o && !o.bio) o = null;
     let modelo = MODELO;
     if (o && o.c !== 'alta' && !SO_HAIKU) { const f = await escrever(p, dados, wiki, MODELO_FORTE); conta.forte++; if (f) { log(`  ${k} ${p.n}: releitura pelo modelo forte (${o.duvida || 'sem motivo'})`); o = f; modelo = MODELO_FORTE; } }
     if (!o) { conta.falhas++; continue; }
