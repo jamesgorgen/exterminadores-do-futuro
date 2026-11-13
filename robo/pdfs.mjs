@@ -26,12 +26,13 @@ const base = `http://127.0.0.1:${servidor.address().port}`;
 fs.mkdirSync(SAIDA, { recursive: true });
 const navegador = await chromium.launch();
 const falhas = [];
-for (const uf of UFS) {
+const ALVOS = [...UFS.map(uf => [uf, `tipo=estado&uf=${uf}`]), ['Congresso', 'tipo=balanco&casa=T']];
+for (const [uf, consulta] of ALVOS) {
   const pagina = await navegador.newPage({ viewport: { width: 1200, height: 1600 } });
   const erros = [];
   pagina.on('pageerror', e => erros.push(e.message));
   try {
-    await pagina.goto(`${base}/dossie.html?tipo=estado&uf=${uf}`, { waitUntil: 'networkidle', timeout: 180000 });
+    await pagina.goto(`${base}/dossie.html?${consulta}`, { waitUntil: 'networkidle', timeout: 180000 });
     await pagina.waitForSelector('#folha .cab h1', { timeout: 120000 });
     await pagina.waitForTimeout(1500);
     const texto = await pagina.$eval('#folha', el => el.textContent);

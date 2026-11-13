@@ -74,6 +74,10 @@ td.d,th.d{text-align:right;white-space:nowrap}
 .barras .b{height:9px;background:var(--cor,var(--accent));border-radius:2px;min-width:1px}
 .pilha{display:flex;height:14px;border-radius:2px;overflow:hidden;margin:4px 0}
 .pilha span{background:var(--cor)}
+td .pilha{margin:0;height:10px;min-width:90px}
+.grp{white-space:nowrap}
+.tab-temas td:first-child{min-width:48mm}
+.pt{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--cor);margin-right:6px}
 .leg{display:flex;flex-wrap:wrap;gap:2px 12px;font-size:8pt;color:var(--ink-2)}
 .leg i{display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--cor);margin-right:4px;vertical-align:-1px}
 
@@ -353,6 +357,72 @@ function desenharMunicipios(uf, mun, topo) {
       <div><h3>Maiores valores por habitante</h3><table><tbody>${topH.map(l => `<tr><td>${esc(l.n)} <span class="peq">${fmt(l.p)} hab.</span></td><td class="d num">R$ ${fmt(Math.round(l.h))}</td></tr>`).join('')}</tbody></table></div></div>`;
 }
 
+// --------------------------------------------------------------- dossiê do balanço do Congresso
+async function dossieBalanco(casa) {
+  const r = await json('dados/resumo.json');
+  if (!r.blocos) throw new Error('o balanço ainda não foi calculado');
+  casa = ['T', 'C', 'S'].includes(casa) ? casa : 'T';
+  const b = r.blocos[casa], g = b.grupos, G = ['extrema', 'direita', 'centro', 'esquerda'];
+  const nomeCasa = { T: 'Câmara dos Deputados e Senado Federal', C: 'Câmara dos Deputados', S: 'Senado Federal' }[casa];
+  document.title = 'Dossiê do balanço do Congresso' + (casa === 'T' ? '' : ', ' + nomeCasa);
+  const q = (a, d) => d ? a / d : 0;
+  const p1 = v => pct(v, v < 0.1 && v > 0 ? 1 : 1);
+  const bloco = g.extrema.prop + g.direita.prop, blocoAp = g.extrema.aprovada + g.direita.aprovada;
+  const temSit = b.comSit > 0;
+  const cads = Object.fromEntries(((r.temas || {}).cadernos || []).map(c => [c.id, c]));
+  const temas = ((r.temas || {}).lista || []).filter(t => b.temas && b.temas[t.id] && b.temas[t.id].n >= 20).map(t => {
+    const x = b.temas[t.id], soma = G.reduce((a, k) => a + ((x.g[k] || [0])[0]), 0) || 1;
+    const sh = Object.fromEntries(G.map(k => [k, ((x.g[k] || [0])[0]) / soma]));
+    const apG = G.reduce((a, k) => a + ((x.g[k] || [0, 0])[1]), 0), apDir = ((x.g.extrema || [0, 0])[1]) + ((x.g.direita || [0, 0])[1]);
+    return { t, x, sh, apG, apDir };
+  });
+  const top = (f, n) => [...temas].sort((a, c) => f(c) - f(a)).slice(0, n);
+
+  let h = `<header class="cab"><div class="tipo">Dossiê do Congresso</div><h1>O peso de cada bloco no Congresso</h1>
+    <p class="sub">Produção de projetos, aprovações e votações da direita, da extrema-direita e dos demais grupos, ${casa === 'T' ? 'na Câmara dos Deputados e no Senado Federal' : casa === 'C' ? 'na Câmara dos Deputados' : 'no Senado Federal'}</p>
+    <div class="meta">Gerado em ${hoje}. Período coberto de fevereiro de 2023 a ${hoje.replace(/^\d+ de /, '')}. Dados atualizados em ${dataBR(String(r.gerado || '').slice(0, 10))}.</div></header>
+  <section><h2>Resumo</h2>
+    <div class="kpis num">
+      <div class="kpi"><b>${p1(q(bloco, b.prop))}</b><span>dos ${fmt(b.prop)} projetos apresentados por parlamentares saíram da direita e da extrema-direita</span></div>
+      <div class="kpi"><b>${p1(q(b.pauta, b.prop))}</b><span>de todos os projetos fazem avançar alguma pauta da direita, ${p1(q(b.pautaExtrema, b.prop))} com grau de extrema-direita</span></div>
+      ${temSit ? `<div class="kpi"><b>${p1(q(blocoAp, b.aprovada))}</b><span>dos ${fmt(b.aprovada)} projetos aprovados em ao menos uma Casa são da direita e da extrema-direita</span></div>` : ''}
+      <div class="kpi"><b>${p1(q(g.extrema.venceu, g.extrema.vot))}</b><span>das votações nominais tiveram a maioria da extrema-direita do lado vencedor, contra ${p1(q(g.direita.venceu, g.direita.vot))} da direita</span></div>
+    </div>
+  </section>
+  <section><h2>Produção, aprovação e votações por grupo</h2>
+    <div class="tabela"><table><thead><tr><th>Grupo</th><th class="d">Parlamentares</th><th class="d">Projetos</th><th class="d">Parte do total</th><th class="d">Por parlamentar</th><th class="d">Com pauta da direita</th>${temSit ? '<th class="d">Aprovados</th><th class="d">Taxa de aprovação</th><th class="d">Parte das aprovações</th><th class="d">Viraram lei</th>' : ''}<th class="d">Do lado vencedor nas votações</th></tr></thead><tbody>
+    ${G.map(k => { const x = g[k]; return `<tr><td class="grp"><span class="pt" style="--cor:var(--g-${k})"></span>${GRUPOS[k]}</td><td class="d num">${fmt(x.membros)}</td><td class="d num">${fmt(x.prop)}</td><td class="d num">${p1(q(x.prop, b.prop))}</td><td class="d num">${fmt(Math.round(q(x.prop, x.membros)))}</td><td class="d num">${p1(q(x.pauta, x.prop))}</td>${temSit ? `<td class="d num">${fmt(x.aprovada)}</td><td class="d num">${p1(q(x.aprovada, x.comSit))}</td><td class="d num">${p1(q(x.aprovada, b.aprovada))}</td><td class="d num">${fmt(x.lei)}</td>` : ''}<td class="d num">${p1(q(x.venceu, x.vot))}</td></tr>`; }).join('')}
+    </tbody></table></div>
+    <div class="duas" style="margin-top:10px">
+      <div><h3>Parte nos projetos apresentados</h3>
+        <div class="pilha">${G.map(k => `<span style="--cor:var(--g-${k});width:${100 * q(g[k].prop, G.reduce((a, j) => a + g[j].prop, 0))}%"></span>`).join('')}</div>
+        <div class="leg">${G.map(k => `<span><i style="--cor:var(--g-${k})"></i>${GRUPOS[k]} ${p1(q(g[k].prop, b.prop))}</span>`).join('')}</div></div>
+      ${temSit ? `<div><h3>Parte nas aprovações</h3>
+        <div class="pilha">${G.map(k => `<span style="--cor:var(--g-${k});width:${100 * q(g[k].aprovada, G.reduce((a, j) => a + g[j].aprovada, 0))}%"></span>`).join('')}</div>
+        <div class="leg">${G.map(k => `<span><i style="--cor:var(--g-${k})"></i>${GRUPOS[k]} ${p1(q(g[k].aprovada, b.aprovada))}</span>`).join('')}</div></div>` : ''}
+    </div>
+    <p class="leve">A média por parlamentar divide os projetos do grupo por todos que passaram por ele desde fevereiro de 2023, inclusive suplentes e quem deixou o mandato. ${temSit ? `A taxa de aprovação considera ${fmt(b.comSit)} projetos com situação conhecida, a maior parte ainda em tramitação, e tende a crescer com o tempo.` : ''} Nas votações, entram ${fmt(b.vot)} votações nominais com resultado de aprovação ou rejeição.</p>
+  </section>`;
+
+  if (temas.length) {
+    h += `<section class="quebra"><h2>Os blocos em cada tema</h2>
+      <p class="leve">Parte de cada grupo nos projetos de cada tema dos Cadernos do Futuro, pelo primeiro autor. Um projeto pode tratar de mais de um tema. Entram os ${fmt(temas.length)} temas com pelo menos 20 projetos.</p>
+      <div class="duas"><div><h3>Onde a extrema-direita mais pesa</h3>${barras(top(l => l.sh.extrema, 8).map(l => [l.t.n, l.sh.extrema]), v => pct(v), 'var(--g-extrema)')}</div>
+        <div><h3>Onde a esquerda mais pesa</h3>${barras(top(l => l.sh.esquerda, 8).map(l => [l.t.n, l.sh.esquerda]), v => pct(v), 'var(--g-esquerda)')}</div></div>
+      <div class="duas"><div><h3>Onde direita e extrema-direita somadas mais pesam</h3>${barras(top(l => l.sh.extrema + l.sh.direita, 8).map(l => [l.t.n, l.sh.extrema + l.sh.direita]), v => pct(v), 'var(--g-direita)')}</div>
+        ${temSit ? `<div><h3>Temas com mais aprovações</h3>${barras(top(l => l.x.ap, 8).map(l => [l.t.n, l.x.ap]), fmt)}</div>` : ''}</div>
+      ${((r.temas || {}).cadernos || []).map(c => { const ls = temas.filter(l => l.t.c === c.id).sort((a, d) => d.x.n - a.x.n); if (!ls.length) return ''; return `
+      <h3>${esc(c.nome)}. ${esc(c.sub)}</h3>
+      <div class="tabela"><table class="tab-temas"><thead><tr><th>Tema</th><th class="d">Projetos</th><th style="width:22%">Divisão</th><th class="d">Extrema-direita</th><th class="d">Direita</th><th class="d">Centro-direita</th><th class="d">Esquerda</th>${temSit ? '<th class="d">Aprovados</th><th class="d">Da direita e extrema-direita</th>' : ''}</tr></thead><tbody>
+      ${ls.map(l => `<tr><td>${esc(l.t.n)}</td><td class="d num">${fmt(l.x.n)}</td><td><div class="pilha">${G.map(k => `<span style="--cor:var(--g-${k});width:${100 * l.sh[k]}%"></span>`).join('')}</div></td>${G.map(k => `<td class="d num">${pct(l.sh[k])}</td>`).join('')}${temSit ? `<td class="d num">${fmt(l.x.ap)}</td><td class="d num">${l.apG ? pct(q(l.apDir, l.apG)) : '—'}</td>` : ''}</tr>`).join('')}
+      </tbody></table></div>`; }).join('')}
+    </section>`;
+  }
+  h += METODO.replace('</dl>', `<dt>Balanço</dt><dd>Cada projeto conta para o grupo do primeiro autor, e os de parlamentares sem partido ficam de fora. Um projeto é considerado aprovado quando passou pelo plenário de uma Casa, ou pela comissão em caráter terminativo, e seguiu para a outra Casa, para a sanção ou virou lei. A situação de cada projeto é lida nos dados abertos da Câmara e do Senado. Nas votações, o grupo fica do lado vencedor quando a maioria dos seus integrantes que votaram sim ou não acompanhou o resultado final. Votações sem resultado registrado e empates dentro do grupo ficam fora da conta. Os temas são os dos Cadernos do Futuro, identificados nas ementas.</dd></dl>`)
+    + `<div class="rodape">Dossiê gerado automaticamente a partir de dados públicos em ${hoje}. As classificações por IA são triagem e podem conter erros.</div>`;
+  $('#folha').innerHTML = h;
+}
+
 // --------------------------------------------------------------- escolha
 async function escolher() {
   const ind = await json('dados/indice.json');
@@ -368,17 +438,22 @@ async function escolher() {
         <label for="selUf" class="peq">Estado</label><select id="selUf">${Object.entries(UFNOME).sort((a, b) => a[1].localeCompare(b[1])).map(([u, n]) => `<option value="${u}">${n}</option>`).join('')}</select>
         <button type="submit">Gerar dossiê</button>
         <p class="peq">Ou baixe o <a id="pdfUf" href="#" target="_blank" rel="noopener">PDF do mês</a>, gerado automaticamente no dia 1º.</p></form>
+      <form class="cartao" id="fBal"><h2>Dossiê do Congresso</h2><p class="leve">O peso de cada bloco no Congresso, com projetos apresentados e aprovados, votações e a divisão de cada tema entre os grupos.</p>
+        <label for="selCasa" class="peq">Casa</label><select id="selCasa"><option value="T">Câmara e Senado</option><option value="C">Câmara dos Deputados</option><option value="S">Senado Federal</option></select>
+        <button type="submit">Gerar dossiê</button>
+        <p class="peq">Ou baixe o <a href="https://github.com/jamesgorgen/exterminadores-do-futuro/releases/latest/download/Dossie-Congresso.pdf" target="_blank" rel="noopener">PDF do mês</a>, das duas Casas.</p></form>
     </div>`;
   const linkPdf = () => { $('#pdfUf').href = `https://github.com/jamesgorgen/exterminadores-do-futuro/releases/latest/download/Dossie-${$('#selUf').value}.pdf`; };
   $('#selUf').addEventListener('change', linkPdf); linkPdf();
   const porRotulo = new Map(ps.map(([k, p]) => [`${p.n} (${partido(p)}-${p.uf || ''})`, k]));
   $('#fParl').addEventListener('submit', e => { e.preventDefault(); const v = $('#nomeParl').value.trim(); const k = porRotulo.get(v) || (ps.find(([, p]) => p.n.toLowerCase() === v.toLowerCase()) || [])[0]; if (!k) { $('#avisoParl').textContent = 'Escolha um nome da lista.'; return; } location.search = '?tipo=parlamentar&id=' + encodeURIComponent(k); });
   $('#fUf').addEventListener('submit', e => { e.preventDefault(); location.search = '?tipo=estado&uf=' + $('#selUf').value; });
+  $('#fBal').addEventListener('submit', e => { e.preventDefault(); location.search = '?tipo=balanco&casa=' + $('#selCasa').value; });
 }
 
 $('#imprimir').addEventListener('click', () => window.print());
 const q = new URLSearchParams(location.search);
-(q.get('tipo') === 'parlamentar' ? dossieParlamentar(q.get('id')) : q.get('tipo') === 'estado' ? dossieEstado((q.get('uf') || '').toUpperCase()) : escolher())
+(q.get('tipo') === 'parlamentar' ? dossieParlamentar(q.get('id')) : q.get('tipo') === 'balanco' ? dossieBalanco((q.get('casa') || 'T').toUpperCase()) : q.get('tipo') === 'estado' ? dossieEstado((q.get('uf') || '').toUpperCase()) : escolher())
   .catch(e => { $('#folha').innerHTML = `<p class="carregando">Não foi possível gerar o dossiê (${esc(e.message)}). <a href="dossie.html">Escolher outro</a>.</p>`; });
 </script>
 </body>

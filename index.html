@@ -97,7 +97,8 @@ p.sub{color:var(--ink-2);max-width:70ch;margin:0 0 18px}
 .secao{margin-bottom:52px}
 
 /* números */
-.bal-filtro{margin:0 0 22px}
+.bal-filtro{margin:0 0 22px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.bal-filtro .btn{text-decoration:none}
 .bal-lede{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:18px 28px;margin:0 0 34px}
 .bal-lede p{margin:0;font-size:16px;line-height:1.45;color:var(--ink-2)}
 .bal-lede b{display:block;font-family:var(--display);font-weight:800;font-size:44px;line-height:1;color:var(--ink);margin-bottom:4px}
@@ -821,7 +822,8 @@ function desenharBalanco(){
     <div class="secao">
       <h2 class="titulo">O peso de cada bloco no Congresso</h2>
       <p class="sub">Quanto cada grupo político produz e com que frequência fica do lado vencedor ${casaTxt}, desde ${dataBR(r.inicio)}.</p>
-      <div class="bal-filtro"><select id="bal-casa" aria-label="Casa">${[['T', 'Câmara e Senado'], ['C', 'Câmara dos Deputados'], ['S', 'Senado Federal']].map(([v, t]) => `<option value="${v}" ${est.bal.casa === v ? 'selected' : ''}>${t}</option>`).join('')}</select></div>
+      <div class="bal-filtro"><select id="bal-casa" aria-label="Casa">${[['T', 'Câmara e Senado'], ['C', 'Câmara dos Deputados'], ['S', 'Senado Federal']].map(([v, t]) => `<option value="${v}" ${est.bal.casa === v ? 'selected' : ''}>${t}</option>`).join('')}</select>
+        <a class="btn" href="dossie.html?tipo=balanco&casa=${est.bal.casa}" target="_blank" rel="noopener">Gerar dossiê do balanço</a></div>
       <div class="bal-lede">
         <p><b>${fmtPct(pct(blocoProp, b.prop))}</b>dos ${fmt(b.prop)} projetos apresentados por parlamentares saíram da direita e da extrema-direita</p>
         <p><b>${fmtPct(pct(b.pauta, b.prop))}</b>de todos os projetos fazem avançar alguma pauta da direita, ${fmtPct(pct(b.pautaExtrema, b.prop))} com grau de extrema-direita</p>
