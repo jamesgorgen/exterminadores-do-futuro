@@ -25,6 +25,7 @@ const IDS = String(process.env.IDS || '').split(',').map(s => s.trim()).filter(B
 const ARQ = path.join(DADOS, AMOSTRA ? 'biografias-amostra.json' : 'biografias.json');
 const log = (...a) => console.log(new Date().toISOString().slice(11, 19), ...a);
 const espera = ms => new Promise(r => setTimeout(r, ms));
+let semCredito = false;
 const conta = { haiku: 0, forte: 0, tokens: {}, sem_wiki: 0, falhas: 0 };
 
 async function pegar(url, tipo = 'json') {
@@ -124,7 +125,12 @@ async function escrever(p, dados, wiki, modelo) {
         headers: { 'content-type': 'application/json', 'x-api-key': process.env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' }, body: JSON.stringify(corpo) });
     } catch (e) { await espera(3000 * (i + 1)); continue; }
     if (r.status === 400 && corpo.thinking) { delete corpo.thinking; continue; }
-    if (r.status === 400 || r.status === 401 || r.status === 403) { log('  API recusou:', r.status, (await r.text()).slice(0, 200)); return null; }
+    if (r.status === 400 || r.status === 401 || r.status === 403) {
+      const msg = (await r.text()).slice(0, 300);
+      log('  API recusou:', r.status, msg.slice(0, 200));
+      if (/credit balance|billing/i.test(msg)) semCredito = true;
+      return null;
+    }
     if (!r.ok) { await espera(3000 * (i + 1)); continue; }
     const j = await r.json();
     const tk = conta.tokens[modelo] = conta.tokens[modelo] || [0, 0]; tk[0] += (j.usage && j.usage.input_tokens) || 0; tk[1] += (j.usage && j.usage.output_tokens) || 0;
@@ -162,6 +168,7 @@ async function principal() {
   let corrigidas = {}; try { corrigidas = JSON.parse(fs.readFileSync(path.join(RAIZ, 'biografias-correcoes.json'), 'utf8')).correcoes || {}; } catch (e) {}
   let feitas = 0, mantidas = 0;
   for (const [k, p] of lista) {
+    if (semCredito) { log('Sem crédito na API da Anthropic. As biografias já escritas foram gravadas; as demais ficam para a próxima execução.'); break; }
     const atual = itens[k];
     if ((atual && atual.eq) || (corrigidas[k] && corrigidas[k].b)) { mantidas++; continue; }
     const id = k.slice(1);
