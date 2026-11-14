@@ -1,0 +1,26 @@
+# Confere se a chave da API da Anthropic guardada nos segredos do repositório funciona.
+# Faz uma única chamada mínima ao modelo leve (custo desprezível). À mão: Actions > Testar a chave da API > Run workflow.
+name: Testar a chave da API
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  testar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Chamar a API
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ]; then echo "O segredo ANTHROPIC_API_KEY está vazio."; exit 1; fi
+          echo "Chave terminada em ...${ANTHROPIC_API_KEY: -4}"
+          codigo=$(curl -s -o resposta.json -w "%{http_code}" https://api.anthropic.com/v1/messages \
+            -H "x-api-key: $ANTHROPIC_API_KEY" -H "anthropic-version: 2023-06-01" -H "content-type: application/json" \
+            -d '{"model":"claude-haiku-5-5","max_tokens":5,"messages":[{"role":"user","content":"Responda só: ok"}]}')
+          echo "HTTP $codigo"
+          if [ "$codigo" = "200" ]; then echo "A chave funciona."; else head -c 400 resposta.json; echo; exit 1; fi
