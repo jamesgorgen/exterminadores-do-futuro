@@ -1,8 +1,8 @@
 {
- "gerado": "2026-11-13T19:55:54.452Z",
+ "gerado": "2026-11-14T15:52:15.345Z",
  "inicio": "2023-02-01",
  "totais": {
-  "proposicoes": 26441,
+  "proposicoes": 26447,
   "direita": 2651,
   "extrema": 1695,
   "votacoes": 2448,
@@ -33,7 +33,7 @@
   "armas": {
    "prop": 302,
    "extrema": 258,
-   "prop30": 1,
+   "prop30": 0,
    "vot": 7,
    "vitorias": 4,
    "derrotas": 3
@@ -57,7 +57,7 @@
   "costumes": {
    "prop": 291,
    "extrema": 267,
-   "prop30": 3,
+   "prop30": 2,
    "vot": 9,
    "vitorias": 5,
    "derrotas": 3
@@ -73,7 +73,7 @@
   "educacao": {
    "prop": 151,
    "extrema": 131,
-   "prop30": 2,
+   "prop30": 1,
    "vot": 5,
    "vitorias": 2,
    "derrotas": 2
@@ -81,7 +81,7 @@
   "ambiente": {
    "prop": 173,
    "extrema": 116,
-   "prop30": 2,
+   "prop30": 1,
    "vot": 43,
    "vitorias": 21,
    "derrotas": 11
@@ -105,7 +105,7 @@
   "trabalho": {
    "prop": 112,
    "extrema": 32,
-   "prop30": 2,
+   "prop30": 1,
    "vot": 21,
    "vitorias": 16,
    "derrotas": 5
@@ -113,7 +113,7 @@
   "estado": {
    "prop": 114,
    "extrema": 43,
-   "prop30": 4,
+   "prop30": 3,
    "vot": 16,
    "vitorias": 8,
    "derrotas": 8
@@ -121,7 +121,7 @@
   "privilegios": {
    "prop": 321,
    "extrema": 53,
-   "prop30": 4,
+   "prop30": 3,
    "vot": 40,
    "vitorias": 26,
    "derrotas": 6
@@ -137,7 +137,7 @@
   "igualdade": {
    "prop": 39,
    "extrema": 36,
-   "prop30": 1,
+   "prop30": 0,
    "vot": 6,
    "vitorias": 3,
    "derrotas": 3
@@ -572,7 +572,7 @@
  },
  "blocos": {
   "T": {
-   "prop": 26441,
+   "prop": 26447,
    "pauta": 2651,
    "pautaExtrema": 1695,
    "vot": 1606,
@@ -594,7 +594,7 @@
      "arquivada": 481
     },
     "direita": {
-     "prop": 9277,
+     "prop": 9278,
      "pauta": 894,
      "membros": 291,
      "emExercicio": 227,
@@ -606,7 +606,7 @@
      "arquivada": 650
     },
     "centro": {
-     "prop": 7115,
+     "prop": 7116,
      "pauta": 327,
      "membros": 155,
      "emExercicio": 126,
@@ -618,7 +618,7 @@
      "arquivada": 374
     },
     "esquerda": {
-     "prop": 4002,
+     "prop": 4006,
      "pauta": 116,
      "membros": 146,
      "emExercicio": 120,
@@ -762,7 +762,7 @@
      }
     },
     "fiscal-orcamento": {
-     "n": 1229,
+     "n": 1234,
      "ap": 25,
      "g": {
       "direita": [
@@ -771,7 +771,7 @@
        45
       ],
       "centro": [
-       301,
+       302,
        7,
        19
       ],
@@ -781,7 +781,7 @@
        41
       ],
       "esquerda": [
-       137,
+       141,
        8,
        2
       ]
@@ -866,7 +866,7 @@
      }
     },
     "violencia-mulher": {
-     "n": 1139,
+     "n": 1140,
      "ap": 60,
      "g": {
       "centro": [
@@ -880,7 +880,7 @@
        32
       ],
       "direita": [
-       390,
+       391,
        21,
        30
       ],
@@ -1568,11 +1568,11 @@
      }
     },
     "esporte": {
-     "n": 554,
+     "n": 555,
      "ap": 21,
      "g": {
       "direita": [
-       185,
+       186,
        1,
        14
       ],
@@ -2558,7 +2558,7 @@
    }
   },
   "C": {
-   "prop": 23333,
+   "prop": 23339,
    "pauta": 2284,
    "pautaExtrema": 1448,
    "vot": 1412,
@@ -2580,7 +2580,7 @@
      "arquivada": 445
     },
     "direita": {
-     "prop": 8033,
+     "prop": 8034,
      "pauta": 755,
      "membros": 247,
      "emExercicio": 193,
@@ -2592,7 +2592,7 @@
      "arquivada": 582
     },
     "centro": {
-     "prop": 6680,
+     "prop": 6681,
      "pauta": 298,
      "membros": 139,
      "emExercicio": 112,
@@ -2604,7 +2604,7 @@
      "arquivada": 364
     },
     "esquerda": {
-     "prop": 3302,
+     "prop": 3306,
      "pauta": 66,
      "membros": 122,
      "emExercicio": 103,
@@ -2748,7 +2748,7 @@
      }
     },
     "fiscal-orcamento": {
-     "n": 1059,
+     "n": 1064,
      "ap": 18,
      "g": {
       "direita": [
@@ -2757,7 +2757,7 @@
        35
       ],
       "centro": [
-       275,
+       276,
        7,
        18
       ],
@@ -2767,7 +2767,7 @@
        37
       ],
       "esquerda": [
-       115,
+       119,
        6,
        1
       ]
@@ -2852,7 +2852,7 @@
      }
     },
     "violencia-mulher": {
-     "n": 997,
+     "n": 998,
      "ap": 47,
      "g": {
       "centro": [
@@ -2866,7 +2866,7 @@
        24
       ],
       "direita": [
-       340,
+       341,
        14,
        28
       ],
@@ -3528,11 +3528,11 @@
      }
     },
     "esporte": {
-     "n": 495,
+     "n": 496,
      "ap": 10,
      "g": {
       "direita": [
-       168,
+       169,
        0,
        13
       ],

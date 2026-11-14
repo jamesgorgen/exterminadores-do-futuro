@@ -1,5 +1,5 @@
 {
- "inicio": "2026-11-13T19:55:54.452Z",
+ "inicio": "2026-11-14T15:52:15.345Z",
  "modo": "diario",
  "amostras": {
   "camara_deputado": {
@@ -43,9 +43,9 @@
    "uriVotacao": "https://dadosabertos.camara.leg.br/api/v2/votacoes/2462126-22",
    "siglaOrgao": "CDHMIR",
    "descricao": "Rejeitado o Requerimento de Retirada de Pauta. Resultado: 1 voto 'Sim', 10 votos 'Não'. Quórum de votação: 11 votos.",
-   "siglaBancada": "Fdr PT-PCdoB-PV",
+   "siglaBancada": "Minoria",
    "uriBancada": "",
-   "orientacao": "Não"
+   "orientacao": "Obstrução"
   },
   "camara_arq_objeto": {
    "idVotacao": "2555417-29",
@@ -142,23 +142,23 @@
    "dataApresentacao": "2026-02-24T15:48"
   },
   "senado_proposicao": {
-   "autoria": "Senador Sargento Reginauro (PSDB/CE)",
+   "autoria": "Senadora Dra. Eudócia (PSDB/AL)",
    "casaIdentificadora": "SF",
-   "codigoMateria": 175874,
-   "dataApresentacao": "2026-09-29",
-   "dataSituacaoAtual": "2026-11-10",
-   "dataUltimaAtualizacao": "2026-11-13T15:24:05.424",
-   "ementa": "Altera a Lei nº 14.597, de 14 de junho de 2023 (Lei Geral do Esporte), para instituir o Auxílio Representação Esportiva, destinado a atletas oficialmente convocados para competições nacionais ou internacionais.",
+   "codigoMateria": 175895,
+   "dataApresentacao": "2026-10-01",
+   "dataSituacaoAtual": "2026-10-01",
+   "dataUltimaAtualizacao": "2026-10-06T15:15:01.05",
+   "ementa": "Altera a Lei nº 8.080, de 19 de setembro de 1990 - Lei Orgânica da Saúde, para dispor sobre o requerimento administrativo para fornecimento de medicamento destinado ao tratamento de pessoa com câncer.",
    "enteIdentificador": "SF",
-   "id": 9110855,
-   "identificacao": "PL 5485/2026",
+   "id": 9111471,
+   "identificacao": "PL 5503/2026",
    "objetivo": "Iniciadora",
-   "situacaoAtual": "AGUARDANDO RECEBIMENTO DE EMENDAS",
+   "situacaoAtual": "AGUARDANDO DESPACHO",
    "tipoConteudo": "Norma Geral",
    "tipoDocumento": "Projeto de Lei Ordinária",
    "tramitando": "Sim",
-   "ultimaInformacaoAtualizada": "PRAZOS",
-   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/be29d589-5d02-4657-95b9-711528d12b92"
+   "ultimaInformacaoAtualizada": "PUBLICACAO_OFICIAL",
+   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/c870a6cc-8c8f-4fc6-bfc5-601e31410b00"
   },
   "senado_relatoria": {
    "autoriaProcesso": "Presidência da República",
@@ -201,49 +201,49 @@
   "votacoes_C_plenario": 125,
   "votacoes_C_comissao": 33,
   "votacoes_sem_sim_nao": 1,
-  "camara_dias_completados_pela_api": 9,
+  "camara_dias_completados_pela_api": 10,
   "camara_api_votacao_sem_votos": 641,
   "senado_janelas_divididas": 1,
   "senado_plenario_votacoes_achadas": 11,
   "votacoes_S_plenario": 11,
   "senado_comissao_votacoes_achadas": 11,
   "votacoes_S_comissao": 11,
-  "proposicoes_camara_registros": 8708,
+  "proposicoes_camara_registros": 9047,
   "proposicoes_data_corrigida": 3,
-  "senado_processo_registros": 175,
-  "proposicoes_senado": 63,
+  "senado_processo_registros": 171,
+  "proposicoes_senado": 59,
   "relatorias_senado": 2489,
   "numeracao_lacunas_PL": 3,
   "numeracao_lacunas_PLP": 1,
   "numeracao_lacunas_PEC": 1,
   "numeracao_lacunas_PDL": 0,
-  "classificados": 1,
+  "classificados": 6,
   "correcoes_aplicadas": 2507,
   "grupo_pelos_votos_diferente": 216
  },
  "erros": [
-  "votações Senado 2026-09-29 a 2026-09-30: http 400"
+  "votações Senado 2026-09-30 a 2026-09-30: http 400"
  ],
  "brutos": {
   "senado_atual": {
    "url": "https://legis.senado.leg.br/dadosabertos/senador/lista/atual.json",
    "tamanho": 128888,
-   "inicio": "{\"ListaParlamentarEmExercicio\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/ListaParlamentarEmExerciciov4.xsd\",\"Metadados\":{\"Versao\":\"13/11/2026 16:46:49\",\"VersaoServico\":\"4\",\"DataVersaoServico\":\"2020-07-15\",\"DescricaoDataSet\":\"Lista dos Parlamentares que estão atualmente em Exercício. Informações atuais sobre o Parlamentar.\"},\"Parlamentares\":{\"Parlamentar\":[{\"IdentificacaoParlamentar\":{\"CodigoParlamentar\":\"5672\",\"CodigoPublicoNaLegAtual\":\"800\",\"NomeParlamentar\":\"Alan Rick\",\"NomeCompletoParlamentar\":\"Alan Rick Miranda\",\"SexoParlamentar\":\"Masculino\",\"FormaTratamento\":\"Senador \",\"UrlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg\",\"UrlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5672\",\"EmailParlamentar\":\"sen.alanrick@senado.leg.br\",\"Telefones\":{\"Telefone\":[{\"NumeroTelefone\":\"33036333\",\"OrdemPublicacao\":\"1\",\"IndicadorFax\":\"Não\"}]},\"SiglaPartidoParlamentar\":\"REPUBLICANOS\",\"UfParlamentar\":\"AC\",\"Bloco\":{\"CodigoBloco\":\"346\",\"NomeBloco\":\"Bloco Parlamentar Aliança\",\"NomeApelido\":\"BLALIANÇA\",\"DataCriacao\":\"2023-03-20\"},\"MembroMesa\":\"Não\",\"MembroLideranca\":\"Sim\"},\"Mandato\":{\"CodigoMandato\":\"596\",\"UfParlamentar\":\"AC\",\"PrimeiraLegislaturaDoMandato\":{\"NumeroLegislatura\":\"57\",\"DataInicio\":\"2023-02-01\",\"DataFim\":\"2027-01-31\"},\"SegundaLegislaturaDoMandato\":{\"NumeroLegislatura\":\"58\",\"DataInicio\":\"2027-02-01\",\"DataFim\":\"2031-01-31\"},\"DescricaoParticipacao\":\"Titular\",\"Suplentes\":{\"Suplente\":["
+   "inicio": "{\"ListaParlamentarEmExercicio\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/ListaParlamentarEmExerciciov4.xsd\",\"Metadados\":{\"Versao\":\"14/11/2026 12:40:56\",\"VersaoServico\":\"4\",\"DataVersaoServico\":\"2020-07-15\",\"DescricaoDataSet\":\"Lista dos Parlamentares que estão atualmente em Exercício. Informações atuais sobre o Parlamentar.\"},\"Parlamentares\":{\"Parlamentar\":[{\"IdentificacaoParlamentar\":{\"CodigoParlamentar\":\"5672\",\"CodigoPublicoNaLegAtual\":\"800\",\"NomeParlamentar\":\"Alan Rick\",\"NomeCompletoParlamentar\":\"Alan Rick Miranda\",\"SexoParlamentar\":\"Masculino\",\"FormaTratamento\":\"Senador \",\"UrlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg\",\"UrlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5672\",\"EmailParlamentar\":\"sen.alanrick@senado.leg.br\",\"Telefones\":{\"Telefone\":[{\"NumeroTelefone\":\"33036333\",\"OrdemPublicacao\":\"1\",\"IndicadorFax\":\"Não\"}]},\"SiglaPartidoParlamentar\":\"REPUBLICANOS\",\"UfParlamentar\":\"AC\",\"Bloco\":{\"CodigoBloco\":\"346\",\"NomeBloco\":\"Bloco Parlamentar Aliança\",\"NomeApelido\":\"BLALIANÇA\",\"DataCriacao\":\"2023-03-20\"},\"MembroMesa\":\"Não\",\"MembroLideranca\":\"Sim\"},\"Mandato\":{\"CodigoMandato\":\"596\",\"UfParlamentar\":\"AC\",\"PrimeiraLegislaturaDoMandato\":{\"NumeroLegislatura\":\"57\",\"DataInicio\":\"2023-02-01\",\"DataFim\":\"2027-01-31\"},\"SegundaLegislaturaDoMandato\":{\"NumeroLegislatura\":\"58\",\"DataInicio\":\"2027-02-01\",\"DataFim\":\"2031-01-31\"},\"DescricaoParticipacao\":\"Titular\",\"Suplentes\":{\"Suplente\":["
   },
   "senado_votacao_iso": {
-   "url": "https://legis.senado.leg.br/dadosabertos/votacao?dataInicio=2026-09-29&dataFim=2026-09-30",
+   "url": "https://legis.senado.leg.br/dadosabertos/votacao?dataInicio=2026-09-30&dataFim=2026-09-30",
    "tamanho": 2,
    "inicio": "[]"
   },
   "senado_comissao": {
-   "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20260929&dataFim=20261113",
+   "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20260930&dataFim=20261114",
    "tamanho": 220,
-   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"13/11/2026 16:57:16\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
+   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"14/11/2026 12:53:31\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
   },
   "senado_processo": {
-   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-09-29&dataFimApresentacao=2026-09-30",
-   "tamanho": 3486,
-   "inicio": "[{\"autoria\":\"Senador Sargento Reginauro (PSDB/CE)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175874,\"dataApresentacao\":\"2026-09-29\",\"dataSituacaoAtual\":\"2026-11-10\",\"dataUltimaAtualizacao\":\"2026-11-13T15:24:05.424\",\"ementa\":\"Altera a Lei nº 14.597, de 14 de junho de 2023 (Lei Geral do Esporte), para instituir o Auxílio Representação Esportiva, destinado a atletas oficialmente convocados para competições nacionais ou internacionais.\",\"enteIdentificador\":\"SF\",\"id\":9110855,\"identificacao\":\"PL 5485/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO RECEBIMENTO DE EMENDAS\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PRAZOS\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/be29d589-5d02-4657-95b9-711528d12b92\"},{\"autoria\":\"Senadora Dra. Eudócia (PSDB/AL)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175877,\"dataApresentacao\":\"2026-09-29\",\"dataSituacaoAtual\":\"2026-09-29\",\"dataUltimaAtualizacao\":\"2026-10-02T10:30:02.216\",\"ementa\":\"Altera a Lei nº 11.664 de 29 de abril de 2008, que dispõe sobre a efetivação de ações de saúde que assegurem a prevenção, a detecção, o tratamento e o seguimento dos cânceres do colo uterino, de mama e colorretal no âmbito do Sistema Único de Saúde (SUS), para dispor sobre o acesso à assistência fisioterapêutica especializada às pessoas com câncer de mama, do colo do útero e colorretal e dá outras providências.\",\"enteIdentificador\":\"SF\",\"id\":91109"
+   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-09-30&dataFimApresentacao=2026-09-30",
+   "tamanho": 2,
+   "inicio": "[]"
   },
   "senado_relatoria": {
    "url": "https://legis.senado.leg.br/dadosabertos/processo/relatoria?dataInicio=2023-02-01&dataFim=2023-02-28",
@@ -253,8 +253,8 @@
  },
  "numeracao": {
   "PL": {
-   "de": 5705,
-   "ate": 5851,
+   "de": 5725,
+   "ate": 5856,
    "faltam": 3,
    "numeros": [
     5742,
@@ -263,8 +263,8 @@
    ]
   },
   "PLP": {
-   "de": 277,
-   "ate": 303,
+   "de": 280,
+   "ate": 304,
    "faltam": 1,
    "numeros": [
     290
@@ -279,11 +279,11 @@
    ]
   },
   "PDL": {
-   "de": 1011,
+   "de": 1012,
    "ate": 1032,
    "faltam": 0,
    "numeros": []
   }
  },
- "fim": "2026-11-13T19:58:24.534Z"
+ "fim": "2026-11-14T15:54:38.348Z"
 }
