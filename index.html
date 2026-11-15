@@ -195,6 +195,31 @@ p.sub{color:var(--ink-2);max-width:70ch;margin:0 0 18px}
 .pauta .nums .x b{color:var(--ext)}
 
 /* filtros */
+.quadro-grupos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:4px 0 8px}
+.qg{display:flex;flex-direction:column;gap:8px;text-align:left;background:var(--sheet);border:1px solid var(--line);border-top:5px solid var(--cor);padding:12px 14px 14px;cursor:pointer;color:var(--ink);font:inherit}
+.qg:hover{border-color:var(--cor)}
+.qg.ativo{outline:2px solid var(--cor);outline-offset:-1px}
+.qg-topo{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.qg-nome{font-weight:700;font-size:16px}
+.qg-topo b{font-family:var(--display);font-weight:800;font-size:38px;line-height:1}
+.qg-casa{font-size:13.5px;color:var(--ink-2)}
+.qg-partidos{display:flex;flex-direction:column;gap:4px}
+.qg-p{display:grid;grid-template-columns:96px minmax(0,1fr) 28px;align-items:center;gap:8px;font-size:13.5px}
+.qg-s{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qg-b{height:8px}
+.qg-b i{display:block;height:8px;background:var(--cor);border-radius:0 3px 3px 0;min-width:2px}
+.qg-n{text-align:right;font-variant-numeric:tabular-nums}
+.qg-outros{font-size:12.5px;color:var(--ink-3)}
+.como-grupo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 28px;margin:18px 0 6px}
+.como-grupo h3{font-size:16px;margin:0 0 4px}
+.como-grupo p{margin:0;font-size:15px;color:var(--ink-2);line-height:1.55}
+.ler-tabela{margin:14px 0 16px;background:var(--sheet);border:1px solid var(--line);padding:10px 14px}
+.ler-tabela summary{cursor:pointer;font-weight:600}
+.ler-tabela dl{margin:10px 0 2px;display:grid;grid-template-columns:200px minmax(0,1fr);gap:8px 16px;font-size:14.5px}
+.ler-tabela dt{font-weight:600}
+.ler-tabela dd{margin:0;color:var(--ink-2)}
+@media (max-width:900px){.quadro-grupos{grid-template-columns:repeat(2,minmax(0,1fr))}.como-grupo{grid-template-columns:1fr}}
+@media (max-width:520px){.quadro-grupos{grid-template-columns:1fr}.qg-p:nth-child(n+4){display:none}.qg{gap:6px;padding:10px 12px 12px}.qg-topo b{font-size:32px}.ler-tabela dl{grid-template-columns:1fr;gap:2px}.ler-tabela dd{margin-bottom:8px}}
 .filtros{display:flex;gap:8px 10px;flex-wrap:wrap;align-items:center;background:var(--sheet);border:1px solid var(--line);padding:12px 14px;margin:0 0 14px}
 .filtros select,.filtros input[type=search]{border:1.5px solid var(--line);background:var(--sheet);border-radius:4px;padding:7px 9px;min-width:0;max-width:100%}
 .filtros input[type=search]{flex:1 1 220px}
@@ -663,6 +688,23 @@ function filtrarParl(){
     : f.ordem === 'n' ? a.n.localeCompare(b.n) : f.ordem === 'id' ? (b.id ?? -1) - (a.id ?? -1) || (b.vdd || 0) - (a.vdd || 0)
     : (b.ie ?? b.i ?? -1) - (a.ie ?? a.i ?? -1) || (b.vde || b.vd || 0) - (a.vde || a.vd || 0));
 }
+// Quadro dos quatro grupos, com a composição por partido em cada Casa.
+function quadroGrupos(){
+  const ex = Object.values(D.indice).filter(p => p.ex);
+  const G = [['extrema', 'Extrema-direita', '--ext'], ['direita', 'Direita', '--dir'], ['centro', 'Centro-direita', '--g-cen'], ['esquerda', 'Esquerda', '--contra']];
+  const contar = l => Object.entries(l.reduce((a, p) => { const s = nomePartido(p.p, p.s) || '?'; a[s] = (a[s] || 0) + 1; return a; }, {})).sort((a, b) => b[1] - a[1]);
+  const sp = ex.filter(p => p.cl === 'sp');
+  return `<div class="quadro-grupos">${G.map(([g, nome, cor]) => {
+    const cam = ex.filter(p => p.cl === g && p.c === 'C'), sen = ex.filter(p => p.cl === g && p.c === 'S');
+    const pc = contar(cam), max = pc.length ? pc[0][1] : 1, top = pc.slice(0, 5), resto = pc.slice(5).reduce((a, x) => a + x[1], 0);
+    return `<button type="button" class="qg ${est.parl.classe === (g === 'direita' ? 'direita_b' : g) ? 'ativo' : ''}" data-grupo="${g}" style="--cor:var(${cor})">
+      <span class="qg-topo"><span class="qg-nome">${nome}</span><b>${fmt(cam.length + sen.length)}</b></span>
+      <span class="qg-casa">${fmt(cam.length)} deputados</span>
+      <span class="qg-partidos">${top.map(([s, n]) => `<span class="qg-p"><span class="qg-s">${esc(s)}</span><span class="qg-b"><i style="width:${(100 * n / max).toFixed(1)}%"></i></span><span class="qg-n">${n}</span></span>`).join('')}${resto ? `<span class="qg-outros">e mais ${resto} de outros partidos</span>` : ''}</span>
+      <span class="qg-casa">${fmt(sen.length)} senadores${sen.length ? `, de ${listaE(contar(sen).map(([s, n]) => `${s} (${n})`))}` : ''}</span>
+    </button>`;
+  }).join('')}</div>${sp.length ? `<p class="meta">Sem partido, e por isso fora dos quatro grupos: ${listaE(sp.map(p => `${p.n} (${CASA[p.c]})`))}.</p>` : ''}`;
+}
 function desenharParlamentares(){
   const f = est.parl;
   const lista = filtrarParl();
@@ -673,7 +715,21 @@ function desenharParlamentares(){
   const r = D.regras || P.indice;
   $('#aba-parlamentares').innerHTML = `
     <h2 class="titulo">Parlamentares</h2>
-    <p class="sub">Na Câmara, o grupo de cada deputado vem das votações (veja a <a href="posicoes.html">página das posições</a>). No Senado, vem do partido. Extrema-direita reúne ${esc(GRUPO_TXT('extrema'))}; direita, ${esc(GRUPO_TXT('direita'))}; centro-direita, ${esc(GRUPO_TXT('centro'))}; esquerda, ${esc(GRUPO_TXT('esquerda'))}. Cada parlamentar tem dois índices, a porcentagem das votações em que a extrema-direita e a esquerda se opuseram em que votou como a extrema-direita, e o mesmo para a direita. Quem é de outro grupo e tem o maior dos dois índices em ${Math.round(r.alinhado * 100)}% ou mais aparece como "vota com a direita", e de ${Math.round(r.proximo * 100)}% a ${Math.round(r.alinhado * 100)}%, como "vota próximo da direita". O índice só aparece a partir de ${r.votacoesMinimas} votações disputadas. A lista mostra quem está em exercício hoje; suplentes que já saíram, licenciados e ex-parlamentares aparecem ao escolher "Também quem já deixou o mandato".</p>
+    <p class="sub">Cada deputado e senador em exercício está em um de quatro grupos políticos. Clique num grupo para ver só os parlamentares dele na tabela.</p>
+    ${quadroGrupos()}
+    <div class="como-grupo">
+      <div><h3>Na Câmara, o grupo vem dos votos</h3><p>Um modelo estatístico coloca cada deputado numa escala da esquerda para a direita, de acordo com o jeito como votou desde 2023. Quem vota parecido fica perto. Por isso um deputado do MDB pode estar na extrema-direita e um do PL na direita. A <a href="posicoes.html">página das posições</a> mostra a escala completa.</p></div>
+      <div><h3>No Senado, o grupo vem do partido</h3><p>Há poucas votações disputadas no Senado para o modelo funcionar bem. Extrema-direita reúne ${esc(GRUPO_TXT('extrema'))}. Direita reúne ${esc(GRUPO_TXT('direita'))}. Centro-direita reúne ${esc(GRUPO_TXT('centro'))}. Esquerda reúne ${esc(GRUPO_TXT('esquerda'))}.</p></div>
+    </div>
+    <details class="ler-tabela"><summary>Como ler a tabela</summary>
+      <dl>
+        <dt>Índice com a extrema-direita</dt><dd>Nas votações em que a extrema-direita e a esquerda votaram em lados opostos, a parte em que o parlamentar votou como a extrema-direita. Só aparece para quem participou de pelo menos ${r.votacoesMinimas} dessas votações.</dd>
+        <dt>Índice com a direita</dt><dd>A mesma conta, comparando com a direita.</dd>
+        <dt>Vota com a direita</dt><dd>Selo dado a quem é da centro-direita ou da esquerda, mas tem um dos dois índices em ${Math.round(r.alinhado * 100)}% ou mais. De ${Math.round(r.proximo * 100)}% a ${Math.round(r.alinhado * 100)}%, o selo é "vota próximo da direita".</dd>
+        <dt>Projetos da direita</dt><dd>Projetos apresentados pelo parlamentar que fazem avançar alguma pauta da direita. A coluna ao lado conta quantos deles têm grau de extrema-direita.</dd>
+        <dt>Quem aparece</dt><dd>A lista mostra quem está em exercício hoje. Para ver suplentes que já saíram, licenciados e ex-parlamentares, escolha "Também quem já deixou o mandato".</dd>
+      </dl>
+    </details>
     <div class="filtros">
       <label class="sr" for="fa-texto">Procurar parlamentar</label><input type="search" id="fa-texto" placeholder="Procurar parlamentar" value="${esc(f.texto)}">
       <select id="fa-classe" aria-label="Grupo">${opcoes([['direita', 'Extrema-direita, direita e quem vota com elas'], ['extrema', 'Extrema-direita'], ['direita_b', 'Direita'], ['centro', 'Centro-direita'], ['esquerda', 'Esquerda'], ['sp', 'Sem partido'], ['al', 'De outros grupos que votam com a direita']], f.classe, 'Todos os parlamentares')}</select>
@@ -695,6 +751,11 @@ function desenharParlamentares(){
     ${paginador(f.pagina, paginas, 'parl')}`;
   if (f.ordem === 'ie') $('#fa-ordem').value = '';
   ligarFiltros('fa', est.parl, desenharParlamentares);
+  document.querySelectorAll('.quadro-grupos .qg').forEach(b => b.addEventListener('click', () => {
+    const v = b.dataset.grupo === 'direita' ? 'direita_b' : b.dataset.grupo;
+    est.parl.classe = est.parl.classe === v ? '' : v; est.parl.pagina = 1; desenharParlamentares();
+    const t = $('.contagem'); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }));
   $('#fa-ordem').addEventListener('change', e => { est.parl.ordem = e.target.value || 'ie'; desenharParlamentares(); });
   if (f.sel && !$('#perfil-dlg').open) desenharPerfil(f.sel);
 }
