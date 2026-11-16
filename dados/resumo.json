@@ -1,8 +1,8 @@
 {
- "gerado": "2026-11-15T16:26:31.620Z",
+ "gerado": "2026-11-16T19:41:13.268Z",
  "inicio": "2023-02-01",
  "totais": {
-  "proposicoes": 26447,
+  "proposicoes": 26457,
   "direita": 2651,
   "extrema": 1695,
   "votacoes": 2448,
@@ -572,7 +572,7 @@
  },
  "blocos": {
   "T": {
-   "prop": 26447,
+   "prop": 26457,
    "pauta": 2651,
    "pautaExtrema": 1695,
    "vot": 1606,
@@ -582,7 +582,7 @@
    "arquivada": 1766,
    "grupos": {
     "extrema": {
-     "prop": 5994,
+     "prop": 5995,
      "pauta": 1312,
      "membros": 158,
      "emExercicio": 120,
@@ -594,7 +594,7 @@
      "arquivada": 481
     },
     "direita": {
-     "prop": 9278,
+     "prop": 9279,
      "pauta": 894,
      "membros": 291,
      "emExercicio": 227,
@@ -606,7 +606,7 @@
      "arquivada": 650
     },
     "centro": {
-     "prop": 7116,
+     "prop": 7117,
      "pauta": 327,
      "membros": 155,
      "emExercicio": 126,
@@ -618,7 +618,7 @@
      "arquivada": 374
     },
     "esquerda": {
-     "prop": 4006,
+     "prop": 4013,
      "pauta": 116,
      "membros": 146,
      "emExercicio": 120,
@@ -840,7 +840,7 @@
      }
     },
     "criancas-adolescentes": {
-     "n": 1510,
+     "n": 1511,
      "ap": 57,
      "g": {
       "centro": [
@@ -859,7 +859,7 @@
        54
       ],
       "esquerda": [
-       217,
+       218,
        8,
        4
       ]
@@ -892,7 +892,7 @@
      }
     },
     "ia-dados": {
-     "n": 292,
+     "n": 293,
      "ap": 7,
      "g": {
       "centro": [
@@ -906,7 +906,7 @@
        4
       ],
       "esquerda": [
-       70,
+       71,
        2,
        0
       ],
@@ -944,7 +944,7 @@
      }
     },
     "jornada-emprego": {
-     "n": 972,
+     "n": 973,
      "ap": 26,
      "g": {
       "extrema": [
@@ -963,7 +963,7 @@
        9
       ],
       "esquerda": [
-       208,
+       209,
        7,
        4
       ]
@@ -1178,7 +1178,7 @@
      }
     },
     "sus-acesso": {
-     "n": 1138,
+     "n": 1140,
      "ap": 35,
      "g": {
       "extrema": [
@@ -1187,7 +1187,7 @@
        11
       ],
       "direita": [
-       426,
+       427,
        14,
        4
       ],
@@ -1197,7 +1197,7 @@
        0
       ],
       "esquerda": [
-       152,
+       153,
        2,
        1
       ]
@@ -1438,7 +1438,7 @@
      }
     },
     "integridade-corrupcao": {
-     "n": 276,
+     "n": 277,
      "ap": 6,
      "g": {
       "direita": [
@@ -1447,7 +1447,7 @@
        10
       ],
       "centro": [
-       54,
+       55,
        0,
        4
       ],
@@ -1594,7 +1594,7 @@
      }
     },
     "fome-alimentacao": {
-     "n": 226,
+     "n": 227,
      "ap": 8,
      "g": {
       "direita": [
@@ -1603,7 +1603,7 @@
        2
       ],
       "esquerda": [
-       48,
+       49,
        1,
        1
       ],
@@ -1958,16 +1958,16 @@
      }
     },
     "agronegocio": {
-     "n": 513,
+     "n": 515,
      "ap": 12,
      "g": {
       "centro": [
-       124,
+       125,
        3,
        7
       ],
       "esquerda": [
-       72,
+       73,
        2,
        0
       ],
@@ -2036,7 +2036,7 @@
      }
     },
     "plataformas-regulacao": {
-     "n": 782,
+     "n": 783,
      "ap": 5,
      "g": {
       "esquerda": [
@@ -2050,7 +2050,7 @@
        8
       ],
       "extrema": [
-       142,
+       143,
        0,
        30
       ],
@@ -2114,7 +2114,7 @@
      }
     },
     "dados-ciberseguranca": {
-     "n": 311,
+     "n": 312,
      "ap": 3,
      "g": {
       "centro": [
@@ -2133,7 +2133,7 @@
        17
       ],
       "esquerda": [
-       54,
+       55,
        1,
        3
       ]
@@ -2322,7 +2322,7 @@
      }
     },
     "cidades-habitacao": {
-     "n": 341,
+     "n": 342,
      "ap": 11,
      "g": {
       "centro": [
@@ -2336,7 +2336,7 @@
        2
       ],
       "esquerda": [
-       49,
+       50,
        2,
        3
       ],
@@ -2452,7 +2452,7 @@
      }
     },
     "minerais-criticos": {
-     "n": 92,
+     "n": 93,
      "ap": 2,
      "g": {
       "centro": [
@@ -2466,7 +2466,7 @@
        11
       ],
       "esquerda": [
-       27,
+       28,
        0,
        3
       ],
@@ -2558,7 +2558,7 @@
    }
   },
   "C": {
-   "prop": 23339,
+   "prop": 23349,
    "pauta": 2284,
    "pautaExtrema": 1448,
    "vot": 1412,
@@ -2568,7 +2568,7 @@
    "arquivada": 1616,
    "grupos": {
     "extrema": {
-     "prop": 5318,
+     "prop": 5319,
      "pauta": 1165,
      "membros": 137,
      "emExercicio": 105,
@@ -2580,7 +2580,7 @@
      "arquivada": 445
     },
     "direita": {
-     "prop": 8034,
+     "prop": 8035,
      "pauta": 755,
      "membros": 247,
      "emExercicio": 193,
@@ -2592,7 +2592,7 @@
      "arquivada": 582
     },
     "centro": {
-     "prop": 6681,
+     "prop": 6682,
      "pauta": 298,
      "membros": 139,
      "emExercicio": 112,
@@ -2604,7 +2604,7 @@
      "arquivada": 364
     },
     "esquerda": {
-     "prop": 3306,
+     "prop": 3313,
      "pauta": 66,
      "membros": 122,
      "emExercicio": 103,
@@ -2826,7 +2826,7 @@
      }
     },
     "criancas-adolescentes": {
-     "n": 1361,
+     "n": 1362,
      "ap": 43,
      "g": {
       "centro": [
@@ -2845,7 +2845,7 @@
        48
       ],
       "esquerda": [
-       181,
+       182,
        6,
        2
       ]
@@ -2878,7 +2878,7 @@
      }
     },
     "ia-dados": {
-     "n": 262,
+     "n": 263,
      "ap": 5,
      "g": {
       "centro": [
@@ -2892,7 +2892,7 @@
        4
       ],
       "esquerda": [
-       62,
+       63,
        1,
        0
       ],
@@ -2930,7 +2930,7 @@
      }
     },
     "jornada-emprego": {
-     "n": 823,
+     "n": 824,
      "ap": 15,
      "g": {
       "extrema": [
@@ -2949,7 +2949,7 @@
        7
       ],
       "esquerda": [
-       159,
+       160,
        5,
        1
       ]
@@ -3138,7 +3138,7 @@
      }
     },
     "sus-acesso": {
-     "n": 1031,
+     "n": 1033,
      "ap": 23,
      "g": {
       "extrema": [
@@ -3147,7 +3147,7 @@
        9
       ],
       "direita": [
-       385,
+       386,
        10,
        4
       ],
@@ -3157,7 +3157,7 @@
        0
       ],
       "esquerda": [
-       137,
+       138,
        1,
        1
       ]
@@ -3398,7 +3398,7 @@
      }
     },
     "integridade-corrupcao": {
-     "n": 229,
+     "n": 230,
      "ap": 3,
      "g": {
       "direita": [
@@ -3412,7 +3412,7 @@
        13
       ],
       "centro": [
-       47,
+       48,
        0,
        4
       ],
@@ -3554,7 +3554,7 @@
      }
     },
     "fome-alimentacao": {
-     "n": 197,
+     "n": 198,
      "ap": 2,
      "g": {
       "direita": [
@@ -3563,7 +3563,7 @@
        2
       ],
       "esquerda": [
-       40,
+       41,
        0,
        1
       ],
@@ -3840,11 +3840,11 @@
      }
     },
     "agronegocio": {
-     "n": 444,
+     "n": 446,
      "ap": 7,
      "g": {
       "centro": [
-       117,
+       118,
        2,
        6
       ],
@@ -3854,7 +3854,7 @@
        26
       ],
       "esquerda": [
-       63,
+       64,
        1,
        0
       ],
@@ -3944,7 +3944,7 @@
      }
     },
     "plataformas-regulacao": {
-     "n": 711,
+     "n": 712,
      "ap": 4,
      "g": {
       "esquerda": [
@@ -3958,7 +3958,7 @@
        8
       ],
       "extrema": [
-       127,
+       128,
        0,
        27
       ],
@@ -4022,7 +4022,7 @@
      }
     },
     "dados-ciberseguranca": {
-     "n": 274,
+     "n": 275,
      "ap": 2,
      "g": {
       "centro": [
@@ -4041,7 +4041,7 @@
        17
       ],
       "esquerda": [
-       46,
+       47,
        0,
        1
       ]
@@ -4282,7 +4282,7 @@
      }
     },
     "cidades-habitacao": {
-     "n": 312,
+     "n": 313,
      "ap": 10,
      "g": {
       "centro": [
@@ -4296,7 +4296,7 @@
        2
       ],
       "esquerda": [
-       43,
+       44,
        2,
        3
       ],
@@ -4386,7 +4386,7 @@
      }
     },
     "minerais-criticos": {
-     "n": 82,
+     "n": 83,
      "ap": 2,
      "g": {
       "centro": [
@@ -4400,7 +4400,7 @@
        11
       ],
       "esquerda": [
-       25,
+       26,
        0,
        3
       ],

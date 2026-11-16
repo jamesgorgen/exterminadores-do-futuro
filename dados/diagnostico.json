@@ -1,5 +1,5 @@
 {
- "inicio": "2026-11-15T16:26:31.620Z",
+ "inicio": "2026-11-16T19:41:13.268Z",
  "modo": "diario",
  "amostras": {
   "camara_deputado": {
@@ -104,29 +104,29 @@
    "siglaVotoParlamentar": "Sim"
   },
   "senado_comissao_votacao": {
-   "CodigoVotacao": "42082",
+   "CodigoVotacao": "42027",
    "SiglaCasaColegiado": "SF",
-   "CodigoReuniao": "14994",
-   "DataHoraInicioReuniao": "2026-11-11T09:13:00",
-   "NumeroReuniaoColegiado": "16",
+   "CodigoReuniao": "14969",
+   "DataHoraInicioReuniao": "2026-11-11T09:26:00",
+   "NumeroReuniaoColegiado": "52",
    "TipoReuniao": "Extraordinária",
-   "CodigoColegiado": "34",
-   "SiglaColegiado": "CCJ",
-   "NomeColegiado": "Comissão de Constituição, Justiça e Cidadania",
-   "CodigoParlamentarPresidente": "5523",
-   "NomeParlamentarPresidente": "Otto Alencar",
-   "IdentificacaoMateria": "PL 4668/2020",
-   "DescricaoIdentificacaoMateria": "Projeto de Lei n° 4668, de 2020",
-   "DescricaoVotacao": "Substitutivo ao PL 4668/2020 (nos termos do Parecer)",
-   "Votos": "{\"Voto\":[{\"CodigoParlamentar\":\"22\",\"NomeParlamentar\":\"Esperidião Amin\",\"SiglaPartidoParlamentar\":\"PP\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"5386\",\"NomeParlamentar\":\"Professora Dorinha Seabra\",\"SiglaPartidoParlamentar\":\"UNIÃO\",\"SiglaCasaParlam",
-   "TotalVotosSim": "14",
+   "CodigoColegiado": "40",
+   "SiglaColegiado": "CAS",
+   "NomeColegiado": "Comissão de Assuntos Sociais",
+   "CodigoParlamentarPresidente": "742",
+   "NomeParlamentarPresidente": "Marcelo Castro",
+   "IdentificacaoMateria": "PL 4366/2024",
+   "DescricaoIdentificacaoMateria": "Projeto de Lei n° 4366, de 2024",
+   "DescricaoVotacao": "PL 4366/2024 e emenda, nos termos do relatório apresentado",
+   "Votos": "{\"Voto\":[{\"CodigoParlamentar\":\"4531\",\"NomeParlamentar\":\"Jayme Campos\",\"SiglaPartidoParlamentar\":\"UNIÃO\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"5386\",\"NomeParlamentar\":\"Professora Dorinha Seabra\",\"SiglaPartidoParlamentar\":\"UNIÃO\",\"SiglaCasaParl",
+   "TotalVotosSim": "13",
    "TotalVotosNao": "0",
    "TotalVotosAbstencao": "0"
   },
   "senado_comissao_voto": {
-   "CodigoParlamentar": "22",
-   "NomeParlamentar": "Esperidião Amin",
-   "SiglaPartidoParlamentar": "PP",
+   "CodigoParlamentar": "4531",
+   "NomeParlamentar": "Jayme Campos",
+   "SiglaPartidoParlamentar": "UNIÃO",
    "SiglaCasaParlamentar": "SF",
    "QualidadeVoto": "S",
    "VotoPresidente": "false"
@@ -142,23 +142,23 @@
    "dataApresentacao": "2026-02-24T15:48"
   },
   "senado_proposicao": {
-   "autoria": "Senadora Dra. Eudócia (PSDB/AL)",
+   "autoria": "Senadora Lourdinha Pereira (PSB/MA)",
    "casaIdentificadora": "SF",
-   "codigoMateria": 175895,
-   "dataApresentacao": "2026-10-01",
-   "dataSituacaoAtual": "2026-10-01",
-   "dataUltimaAtualizacao": "2026-10-06T15:15:01.05",
-   "ementa": "Altera a Lei nº 8.080, de 19 de setembro de 1990 - Lei Orgânica da Saúde, para dispor sobre o requerimento administrativo para fornecimento de medicamento destinado ao tratamento de pessoa com câncer.",
+   "codigoMateria": 175907,
+   "dataApresentacao": "2026-10-05",
+   "dataSituacaoAtual": "2026-10-05",
+   "dataUltimaAtualizacao": "2026-10-09T16:45:00.822",
+   "ementa": "Altera a Lei nº 8.212, de 24 de julho de 1991, e a Lei nº 8.213, de 24 de julho de 1991, para conferir a condição de segurado especial da Previdência Social ao artesão, nas condições em que especifica.",
    "enteIdentificador": "SF",
-   "id": 9111471,
-   "identificacao": "PL 5503/2026",
+   "id": 9111975,
+   "identificacao": "PL 5522/2026",
    "objetivo": "Iniciadora",
    "situacaoAtual": "AGUARDANDO DESPACHO",
    "tipoConteudo": "Norma Geral",
    "tipoDocumento": "Projeto de Lei Ordinária",
    "tramitando": "Sim",
    "ultimaInformacaoAtualizada": "PUBLICACAO_OFICIAL",
-   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/c870a6cc-8c8f-4fc6-bfc5-601e31410b00"
+   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/d61481b9-62b9-4de7-b307-77a9617f71d0"
   },
   "senado_relatoria": {
    "autoriaProcesso": "Presidência da República",
@@ -201,21 +201,22 @@
   "votacoes_C_plenario": 125,
   "votacoes_C_comissao": 33,
   "votacoes_sem_sim_nao": 1,
-  "camara_dias_completados_pela_api": 11,
+  "camara_dias_completados_pela_api": 12,
   "camara_api_votacao_sem_votos": 641,
   "senado_plenario_votacoes_achadas": 11,
   "votacoes_S_plenario": 11,
   "senado_comissao_votacoes_achadas": 11,
   "votacoes_S_comissao": 11,
-  "proposicoes_camara_registros": 9047,
+  "proposicoes_camara_registros": 9058,
   "proposicoes_data_corrigida": 3,
-  "senado_processo_registros": 171,
-  "proposicoes_senado": 59,
-  "relatorias_senado": 2489,
+  "senado_processo_registros": 167,
+  "proposicoes_senado": 53,
+  "relatorias_senado": 2490,
   "numeracao_lacunas_PL": 3,
   "numeracao_lacunas_PLP": 1,
   "numeracao_lacunas_PEC": 1,
   "numeracao_lacunas_PDL": 0,
+  "classificados": 10,
   "correcoes_aplicadas": 2507,
   "grupo_pelos_votos_diferente": 216
  },
@@ -224,22 +225,22 @@
   "senado_atual": {
    "url": "https://legis.senado.leg.br/dadosabertos/senador/lista/atual.json",
    "tamanho": 128888,
-   "inicio": "{\"ListaParlamentarEmExercicio\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/ListaParlamentarEmExerciciov4.xsd\",\"Metadados\":{\"Versao\":\"15/11/2026 13:25:25\",\"VersaoServico\":\"4\",\"DataVersaoServico\":\"2020-07-15\",\"DescricaoDataSet\":\"Lista dos Parlamentares que estão atualmente em Exercício. Informações atuais sobre o Parlamentar.\"},\"Parlamentares\":{\"Parlamentar\":[{\"IdentificacaoParlamentar\":{\"CodigoParlamentar\":\"5672\",\"CodigoPublicoNaLegAtual\":\"800\",\"NomeParlamentar\":\"Alan Rick\",\"NomeCompletoParlamentar\":\"Alan Rick Miranda\",\"SexoParlamentar\":\"Masculino\",\"FormaTratamento\":\"Senador \",\"UrlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg\",\"UrlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5672\",\"EmailParlamentar\":\"sen.alanrick@senado.leg.br\",\"Telefones\":{\"Telefone\":[{\"NumeroTelefone\":\"33036333\",\"OrdemPublicacao\":\"1\",\"IndicadorFax\":\"Não\"}]},\"SiglaPartidoParlamentar\":\"REPUBLICANOS\",\"UfParlamentar\":\"AC\",\"Bloco\":{\"CodigoBloco\":\"346\",\"NomeBloco\":\"Bloco Parlamentar Aliança\",\"NomeApelido\":\"BLALIANÇA\",\"DataCriacao\":\"2023-03-20\"},\"MembroMesa\":\"Não\",\"MembroLideranca\":\"Sim\"},\"Mandato\":{\"CodigoMandato\":\"596\",\"UfParlamentar\":\"AC\",\"PrimeiraLegislaturaDoMandato\":{\"NumeroLegislatura\":\"57\",\"DataInicio\":\"2023-02-01\",\"DataFim\":\"2027-01-31\"},\"SegundaLegislaturaDoMandato\":{\"NumeroLegislatura\":\"58\",\"DataInicio\":\"2027-02-01\",\"DataFim\":\"2031-01-31\"},\"DescricaoParticipacao\":\"Titular\",\"Suplentes\":{\"Suplente\":["
+   "inicio": "{\"ListaParlamentarEmExercicio\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/ListaParlamentarEmExerciciov4.xsd\",\"Metadados\":{\"Versao\":\"16/11/2026 16:28:24\",\"VersaoServico\":\"4\",\"DataVersaoServico\":\"2020-07-15\",\"DescricaoDataSet\":\"Lista dos Parlamentares que estão atualmente em Exercício. Informações atuais sobre o Parlamentar.\"},\"Parlamentares\":{\"Parlamentar\":[{\"IdentificacaoParlamentar\":{\"CodigoParlamentar\":\"5672\",\"CodigoPublicoNaLegAtual\":\"800\",\"NomeParlamentar\":\"Alan Rick\",\"NomeCompletoParlamentar\":\"Alan Rick Miranda\",\"SexoParlamentar\":\"Masculino\",\"FormaTratamento\":\"Senador \",\"UrlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg\",\"UrlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5672\",\"EmailParlamentar\":\"sen.alanrick@senado.leg.br\",\"Telefones\":{\"Telefone\":[{\"NumeroTelefone\":\"33036333\",\"OrdemPublicacao\":\"1\",\"IndicadorFax\":\"Não\"}]},\"SiglaPartidoParlamentar\":\"REPUBLICANOS\",\"UfParlamentar\":\"AC\",\"Bloco\":{\"CodigoBloco\":\"346\",\"NomeBloco\":\"Bloco Parlamentar Aliança\",\"NomeApelido\":\"BLALIANÇA\",\"DataCriacao\":\"2023-03-20\"},\"MembroMesa\":\"Não\",\"MembroLideranca\":\"Sim\"},\"Mandato\":{\"CodigoMandato\":\"596\",\"UfParlamentar\":\"AC\",\"PrimeiraLegislaturaDoMandato\":{\"NumeroLegislatura\":\"57\",\"DataInicio\":\"2023-02-01\",\"DataFim\":\"2027-01-31\"},\"SegundaLegislaturaDoMandato\":{\"NumeroLegislatura\":\"58\",\"DataInicio\":\"2027-02-01\",\"DataFim\":\"2031-01-31\"},\"DescricaoParticipacao\":\"Titular\",\"Suplentes\":{\"Suplente\":["
   },
   "senado_votacao_iso": {
-   "url": "https://legis.senado.leg.br/dadosabertos/votacao?dataInicio=2026-10-01&dataFim=2026-10-31",
+   "url": "https://legis.senado.leg.br/dadosabertos/votacao?dataInicio=2026-10-02&dataFim=2026-10-31",
    "tamanho": 55340,
    "inicio": "[{\"ano\":2019,\"casaSessao\":\"SF\",\"codigoMateria\":174386,\"codigoSessao\":591267,\"codigoSessaoLegislativa\":874,\"codigoSessaoVotacao\":7106,\"dataApresentacao\":\"2026-05-28\",\"dataSessao\":\"2026-10-14\",\"descricaoVotacao\":\"Votação nominal da Proposta de Emenda à Constituição nº 221, de 2019, em primeiro turno.\",\"ementa\":\"Altera o art. 7º da Constituição Federal para reduzir a duração máxima semanal do trabalho e prever 2 (dois) dias de repouso semanal remunerado, sem qualquer redução salarial; e dá outras providências.\",\"idProcesso\":9056435,\"identificacao\":\"PEC 221/2019\",\"informeLegislativo\":{\"casaColegiado\":\"SF\",\"casaEnteAdm\":\"SF\",\"codigoColegiado\":1998,\"data\":\"2026-10-14\",\"id\":2319636,\"idEnteAdm\":13594,\"idEvento\":11392905,\"nomeColegiado\":\"Plenário do Senado Federal\",\"nomeEnteAdm\":\"Secretaria de Atas e Diários\",\"numeroAutuacao\":1,\"siglaColegiado\":\"PLEN\",\"siglaEnteAdm\":\"SEADI\",\"texto\":\"(Sessão Deliberativa Ordinária - semipresencial - de 14 de outubro de 2026) \\nQuinta e última sessão de discussão da matéria encerrada em 1º turno. \\nCalendário especial aprovado para a matéria (Requerimento nº 706/2026). \\nEmenda nº 37 encaminhada à publicação.  \\nParecer nº 207/2026-Plen/SF proferido pelo Senador Omar Aziz e encaminhado à publicação (contrário à emenda nº 37). \\nDestaque retirado pelo autor (Requerimento nº 710/2026 encaminhado à publicação). \\nProposta aprovada em 1º turno (Sim: 75; Não: 1; Presidente: 1; Total: 77). \\nDiscussão da matéria encerrada em 2º turno. \\nProposta aprovada em 2"
   },
   "senado_comissao": {
-   "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20261001&dataFim=20261115",
+   "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20261002&dataFim=20261116",
    "tamanho": 220,
-   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"15/11/2026 13:27:50\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
+   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"16/11/2026 16:42:28\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
   },
   "senado_processo": {
-   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-10-01&dataFimApresentacao=2026-10-15",
-   "tamanho": 18302,
-   "inicio": "[{\"autoria\":\"Senadora Dra. Eudócia (PSDB/AL)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175895,\"dataApresentacao\":\"2026-10-01\",\"dataSituacaoAtual\":\"2026-10-01\",\"dataUltimaAtualizacao\":\"2026-10-06T15:15:01.05\",\"ementa\":\"Altera a Lei nº 8.080, de 19 de setembro de 1990 - Lei Orgânica da Saúde, para dispor sobre o requerimento administrativo para fornecimento de medicamento destinado ao tratamento de pessoa com câncer.\",\"enteIdentificador\":\"SF\",\"id\":9111471,\"identificacao\":\"PL 5503/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/c870a6cc-8c8f-4fc6-bfc5-601e31410b00\"},{\"autoria\":\"Senadora Dra. Eudócia (PSDB/AL)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175896,\"dataApresentacao\":\"2026-10-01\",\"dataSituacaoAtual\":\"2026-10-01\",\"dataUltimaAtualizacao\":\"2026-10-06T15:15:01.211\",\"ementa\":\"Institui o Programa Nacional de Reaproveitamento de Medicamentos Oncológicos de Alto Custo, no âmbito do SUS.\",\"enteIdentificador\":\"SF\",\"id\":9111493,\"identificacao\":\"PL 5505/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/99138d"
+   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-10-02&dataFimApresentacao=2026-10-15",
+   "tamanho": 13498,
+   "inicio": "[{\"autoria\":\"Senadora Lourdinha Pereira (PSB/MA)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175907,\"dataApresentacao\":\"2026-10-05\",\"dataSituacaoAtual\":\"2026-10-05\",\"dataUltimaAtualizacao\":\"2026-10-09T16:45:00.822\",\"ementa\":\"Altera a Lei nº 8.212, de 24 de julho de 1991, e a Lei nº 8.213, de 24 de julho de 1991, para conferir a condição de segurado especial da Previdência Social ao artesão, nas condições em que especifica.\",\"enteIdentificador\":\"SF\",\"id\":9111975,\"identificacao\":\"PL 5522/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/d61481b9-62b9-4de7-b307-77a9617f71d0\"},{\"autoria\":\"Senadora Lourdinha Pereira (PSB/MA)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175908,\"dataApresentacao\":\"2026-10-05\",\"dataSituacaoAtual\":\"2026-10-05\",\"dataUltimaAtualizacao\":\"2026-10-09T16:45:00.972\",\"ementa\":\"Altera as Leis nº 8.080, de 19 de setembro de 1990, nº 11.107, de 6 de abril de 2005, nº 11.445, de 5 de janeiro de 2007, nº 12.305, de 2 de agosto de 2010, nº 12.587, de 3 de janeiro de 2012, e nº 12.608, de 10 de abril de 2012, para instituir a Política Nacional de Fomento e Fortalecimento dos Consórcios Públicos Intermunicipais e promover sua integração às políticas públicas setoriais.\",\"enteIdentificador\":\"SF\",\"id\":9111985,\"identificacao\":\"PL 5523/202"
   },
   "senado_relatoria": {
    "url": "https://legis.senado.leg.br/dadosabertos/processo/relatoria?dataInicio=2023-02-01&dataFim=2023-02-28",
@@ -250,7 +251,7 @@
  "numeracao": {
   "PL": {
    "de": 5725,
-   "ate": 5856,
+   "ate": 5865,
    "faltam": 3,
    "numeros": [
     5742,
@@ -260,7 +261,7 @@
   },
   "PLP": {
    "de": 280,
-   "ate": 304,
+   "ate": 305,
    "faltam": 1,
    "numeros": [
     290
@@ -281,5 +282,5 @@
    "numeros": []
   }
  },
- "fim": "2026-11-15T16:28:58.358Z"
+ "fim": "2026-11-16T19:43:42.184Z"
 }
