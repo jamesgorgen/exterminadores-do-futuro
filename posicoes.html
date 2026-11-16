@@ -204,5 +204,6 @@ Promise.all([fetch('dados/indice.json').then(r => r.json()), fetch('dados/posico
   .then(([i, p]) => { IND = i.p; POS = p; desenhar(); $('#casa').addEventListener('change', desenhar); })
   .catch(e => { $('#conteudo').innerHTML = `<p>Não foi possível carregar os dados (${esc(e.message)}).</p>`; });
 </script>
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0442ff160c604457a59372125331648a"}'></script>
 </body>
 </html>

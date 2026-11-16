@@ -459,5 +459,6 @@ const q = new URLSearchParams(location.search);
 (q.get('tipo') === 'parlamentar' ? dossieParlamentar(q.get('id')) : q.get('tipo') === 'balanco' ? dossieBalanco((q.get('casa') || 'T').toUpperCase()) : q.get('tipo') === 'estado' ? dossieEstado((q.get('uf') || '').toUpperCase()) : escolher())
   .catch(e => { $('#folha').innerHTML = `<p class="carregando">Não foi possível gerar o dossiê (${esc(e.message)}). <a href="dossie.html">Escolher outro</a>.</p>`; });
 </script>
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0442ff160c604457a59372125331648a"}'></script>
 </body>
 </html>
