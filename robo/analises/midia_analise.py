@@ -87,6 +87,7 @@ for b, ss in QSA.items():
         if s['tipo'] != '2': continue
         for k in COS.get((norm(s['nome']), s['doc'].strip('*')), []):
             if CHAVES.get((norm(s['nome']), s['doc'].strip('*'))) == k: continue
+            if k in EMPP.get(b, ()): continue   # a própria emissora é empresa do parlamentar: o vínculo já é direto
             add(k, 'sócio do parlamentar em outra empresa', 'forte', b, s['nome'])
 # 5. familiares por sobrenome raro na mesma UF
 PART = {'DA', 'DE', 'DO', 'DAS', 'DOS', 'E', 'JUNIOR', 'FILHO', 'NETO', 'SOBRINHO', 'JR'}
@@ -94,6 +95,8 @@ freq = collections.Counter()
 pf = [(b, s) for b, ss in QSA.items() for s in ss if s['tipo'] == '2']
 for b, s in pf: freq.update(set(norm(s['nome']).split()[1:]))
 comuns = {t for t, n in freq.most_common(300)}
+prim = collections.Counter(norm(s['nome']).split()[0] for b, s in pf if norm(s['nome']))
+comuns |= {t for t, n in prim.items() if n >= 20}   # descarta sobrenomes que também são prenomes comuns (Renan, Mauro, Donizette...)
 idx = collections.defaultdict(list)
 for b, s in pf:
     for t in set(norm(s['nome']).split()[1:]) - PART - comuns: idx[t].append((b, s))
@@ -125,10 +128,16 @@ for x in L('ceap_midia.json') or []:
     if k: add(k, 'cota parlamentar paga', 'indício', x['cnpj'][:8], f"{x['ano']} R$ {x['valor']} ({x.get('tipo')})")
 for x in L('campanha_despesas_midia.json') or []: add(x['parl'], 'gasto de campanha', 'indício', x['cnpj'][:8], f"{x['ano']} R$ {x['valor']}")
 for x in L('campanha_doacoes_socios_midia.json') or []:
+    if norm(x.get('doador')) == norm(PARL.get(x['parl'], {}).get('nomeCompleto')): continue   # doação a si mesmo
     if x.get('empresa_midia') in U: add(x['parl'], 'doação de sócio/empresa de mídia', 'indício', x['empresa_midia'], f"{x['ano']} {x['doador']} R$ {x['valor']}")
 # 8. gabinete
+vistos = set()
 for x in L('gabinetes_x_midia.json') or []:
-    for b in x['empresas']: add(x['parl'], 'funcionário do gabinete é sócio', 'forte', b, x['nome'])
+    uf = PARL.get(x['parl'], {}).get('uf')
+    for b in x['empresas']:
+        if b not in U or uf not in UF_EMP.get(b, set()) or len(x['nome'].split()) < 3 or (x['parl'], b, x['nome']) in vistos: continue
+        vistos.add((x['parl'], b, x['nome']))
+        add(x['parl'], 'funcionário do gabinete é sócio (homônimo possível)', 'indício', b, x['nome'])
 # 9. saídas
 sa = L('saidas.json') or {}
 for x in sa.get('saidas', []):
@@ -139,6 +148,12 @@ for f, pre in (('bens.json', 'S'), ('bens_deputados.json', 'C')):
     for x in L(f, d2) or []:
         if rx.search(x.get('desc') or '') and not re.search('RADIOLOG|APARTAMENTO|IMOVEL|SALA', x['desc'], re.I):
             V[pre + str(x['codigo'])].append({'tipo': f"declarou ao TSE ({x['ano']})", 'forca': 'direto', 'b': None, 'razao': x['desc'][:120], 'uf': None, 'ativa': None, 'det': 'R$ ' + x['valor']})
+# Pagamentos só contam como vínculo quando vão para empresa já ligada ao parlamentar por outro caminho
+for k, vs in V.items():
+    lig = {v['b'] for v in vs if v['forca'] != 'indício' and v['b']}
+    for v in vs:
+        if v['forca'] == 'indício' and v['tipo'] in ('cota parlamentar paga', 'gasto de campanha', 'doação de sócio/empresa de mídia') and v['b'] in lig:
+            v['forca'] = 'forte'; v['tipo'] += ' a empresa ligada a ele'
 ORD = {'direto': 0, 'forte': 1, 'sobrenome (2+)': 2, 'sobrenome raro': 3, 'indício': 4}
 res = {}
 for k, vs in V.items():
