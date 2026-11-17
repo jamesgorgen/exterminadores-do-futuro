@@ -26,6 +26,8 @@ jobs:
       - name: Rodar
         env:
           SCRIPT: ${{ inputs.script }}
+          TOKEN_GH: ${{ github.token }}
+          REPO: ${{ github.repository }}
         run: |
           mkdir -p saida
           case "$SCRIPT" in
