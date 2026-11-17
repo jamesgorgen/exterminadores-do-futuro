@@ -117,7 +117,7 @@ kbd{font:12px/1 ui-monospace,monospace;border:1px solid var(--line);border-botto
   <select id="fPauta" aria-label="Pauta"><option value="">Todas as pautas</option></select>
   <select id="fCasa" aria-label="Casa"><option value="">Câmara e Senado</option><option value="C">Câmara</option><option value="S">Senado</option></select>
   <input type="search" id="fBusca" placeholder="Número (PL 1234/2025) ou palavra da ementa" aria-label="Buscar">
-  <select id="fCerteza" aria-label="Certeza da IA"><option value="baixa">Só os que exigem revisão</option><option value="grau">Inclui dúvida só de grau</option><option value="">Todos, até os de certeza alta</option></select>
+  <select id="fCerteza" aria-label="Certeza da IA"><option value="baixa">Só os que exigem revisão</option><option value="grau">Inclui dúvida só de grau</option><option value="">Todos, até os de certeza alta</option><option value="amostra">Amostra do mês (50 de certeza alta)</option></select>
   <label class="chk"><input type="checkbox" id="fEsconder" checked> Esconder conferidos</label>
 </div></div>
 
@@ -231,9 +231,20 @@ function descreve(x) {
 
 // ------------------------------------------------------------ lista
 const chaveVot = v => v.mat || 'V:' + v.id;
+// Amostra do mês: sorteio fixo pelo mês corrente, igual para toda a equipe e estável ao recarregar.
+const TAM_AMOSTRA = 50;
+const mesAtual = () => new Date().toISOString().slice(0, 7);
+function sorteio(txt) { let h = 2166136261; for (let i = 0; i < txt.length; i++) { h ^= txt.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+function amostraDoMes(base) {
+  const mes = mesAtual();
+  return new Set(base.filter(b => { const a = D.ia[b.chave] || {}; return a.s === 'avanca' && a.cf === 'alta'; })
+    .map(b => [sorteio(b.chave + '|' + mes), b.chave]).sort((x, y) => x[0] - y[0]).slice(0, TAM_AMOSTRA).map(x => x[1]));
+}
 function itensDaLista() {
   const tipo = $('#fTipo').value, lista = $('#fLista').value, pauta = $('#fPauta').value, casa = $('#fCasa').value;
-  const busca = norm($('#fBusca').value.trim()), esconder = $('#fEsconder').checked;
+  const busca = norm($('#fBusca').value.trim());
+  const amostra = $('#fCerteza').value === 'amostra';
+  const esconder = $('#fEsconder').checked && !amostra;
   let base;
   if (tipo === 'p') base = [...D.props.values()].map(it => ({ tipo: 'p', chave: it.c, it }));
   else {
@@ -241,9 +252,16 @@ function itensDaLista() {
     for (const v of D.vots) { const k = chaveVot(v); if (vistos.has(k)) continue; vistos.add(k); base.push({ tipo: 'v', chave: k, it: v }); }
   }
   const out = [];
+  const sorteados = amostra ? amostraDoMes(base) : null;
   for (const b of base) {
     const a = D.ia[b.chave] || {};
     const conferido = correcao(b.chave) !== undefined && correcao(b.chave) !== null;
+    if (amostra) {
+      // A amostra junta direita e extrema-direita e mostra também os já conferidos, para acompanhar o andamento.
+      if (!sorteados.has(b.chave)) continue;
+      if (casa && !(b.tipo === 'p' ? (b.it.k || []).includes(casa) : b.it.k === casa)) continue;
+      out.push(b); continue;
+    }
     if (lista === 'direita' && !(a.s === 'avanca' && a.g !== 'extrema')) continue;
     if (lista === 'extrema' && !(a.s === 'avanca' && a.g === 'extrema')) continue;
     if (lista === 'barra' && a.s !== 'barra') continue;
@@ -265,7 +283,10 @@ const PASSO = 25;
 function desenhar() {
   atual = itensDaLista(); mostrados = 0;
   $('#lista').innerHTML = '';
-  $('#contagem').textContent = atual.length ? `${atual.length.toLocaleString('pt-BR')} itens nesta lista` : ($('#fLista').value === 'todos' && !$('#fBusca').value.trim() ? 'Digite um número ou uma palavra para buscar entre todos os itens.' : 'Nenhum item nesta lista.');
+  const conferidos = atual.filter(b => (correcao(b.chave) !== undefined && correcao(b.chave) !== null) || Object.prototype.hasOwnProperty.call(pend, b.chave)).length;
+  $('#contagem').textContent = $('#fCerteza').value === 'amostra' && atual.length
+    ? `Amostra de ${mesAtual().split('-').reverse().join('/')} (${$('#fTipo').value === 'p' ? 'projetos' : 'votações'}, direita e extrema-direita): ${atual.length} itens, ${conferidos} já conferidos. O sorteio é o mesmo para toda a equipe e muda no mês seguinte.`
+    : atual.length ? `${atual.length.toLocaleString('pt-BR')} itens nesta lista` : ($('#fLista').value === 'todos' && !$('#fBusca').value.trim() ? 'Digite um número ou uma palavra para buscar entre todos os itens.' : 'Nenhum item nesta lista.');
   mais();
 }
 function mais() {
