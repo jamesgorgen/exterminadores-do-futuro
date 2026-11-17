@@ -45,6 +45,8 @@ select,select option{background-color:#fff;color:#1B2523}
 @media (max-width:820px){.folha{margin:0;padding:22px 16px;box-shadow:none}}
 
 .cab{border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:14px}
+.cab .marca{float:right;height:12mm;width:auto;margin:0 0 4px 12px}
+@media (max-width:620px){.cab .marca{height:9mm}}
 .tipo{font-size:8.5pt;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
 h1{font-family:var(--serif);font-weight:700;font-size:26pt;line-height:1.05;margin:4px 0 4px;text-wrap:balance}
 .sub{color:var(--ink-2);font-size:11pt;margin:0}
@@ -217,7 +219,7 @@ async function dossieParlamentar(k) {
   const pp = Object.entries(p.pp || {}).sort((a, b) => b[1] - a[1]);
   const e = em && em.parl ? em.parl[k] : null;
 
-  let h = `<header class="cab"><div class="tipo">Dossiê parlamentar</div><h1>${esc(p.n)}</h1>
+  let h = `<header class="cab"><img class="marca" src="imagens/simbolo-dossie.svg" alt=""><div class="tipo">Dossiê parlamentar</div><h1>${esc(p.n)}</h1>
     <p class="sub">${CARGO[casa]} · ${esc(partido(p))}/${esc(p.uf || '')} · ${CASA[casa]}</p>
     <div class="meta">Gerado em ${hoje}. Período coberto de fevereiro de 2023 a ${hoje.replace(/^\d+ de /, '')}.</div></header>
   <section><h2>Resumo</h2>
@@ -291,7 +293,7 @@ async function dossieEstado(uf) {
   const lista = [...props].sort((a, b) => (b.x.g === 'extrema') - (a.x.g === 'extrema') || b.d.localeCompare(a.d)).slice(0, 15);
   const nomeDe = k => (ind.p[k] || {}).n || k;
 
-  let h = `<header class="cab"><div class="tipo">Dossiê estadual</div><h1>${esc(nome)}</h1>
+  let h = `<header class="cab"><img class="marca" src="imagens/simbolo-dossie.svg" alt=""><div class="tipo">Dossiê estadual</div><h1>${esc(nome)}</h1>
     <p class="sub">Bancada no Congresso Nacional, proposições e emendas parlamentares</p>
     <div class="meta">Gerado em ${hoje}. Período coberto de fevereiro de 2023 a ${hoje.replace(/^\d+ de /, '')}.</div></header>
   <section><h2>Resumo</h2>
@@ -383,7 +385,7 @@ async function dossieBalanco(casa) {
   });
   const top = (f, n) => [...temas].sort((a, c) => f(c) - f(a)).slice(0, n);
 
-  let h = `<header class="cab"><div class="tipo">Dossiê do Congresso</div><h1>O peso de cada bloco no Congresso</h1>
+  let h = `<header class="cab"><img class="marca" src="imagens/simbolo-dossie.svg" alt=""><div class="tipo">Dossiê do Congresso</div><h1>O peso de cada bloco no Congresso</h1>
     <p class="sub">Produção de projetos, aprovações e votações da direita, da extrema-direita e dos demais grupos, ${casa === 'T' ? 'na Câmara dos Deputados e no Senado Federal' : casa === 'C' ? 'na Câmara dos Deputados' : 'no Senado Federal'}</p>
     <div class="meta">Gerado em ${hoje}. Período coberto de fevereiro de 2023 a ${hoje.replace(/^\d+ de /, '')}. Dados atualizados em ${dataBR(String(r.gerado || '').slice(0, 10))}.</div></header>
   <section><h2>Resumo</h2>
@@ -439,7 +441,7 @@ const ESPECIAIS = [
 async function escolher() {
   const ind = await json('dados/indice.json');
   const ps = Object.entries(ind.p).filter(([, p]) => p.vd || p.np).sort((a, b) => a[1].n.localeCompare(b[1].n));
-  $('#folha').innerHTML = `<header class="cab"><div class="tipo">Dossiês</div><h1>Gerar um dossiê</h1>
+  $('#folha').innerHTML = `<header class="cab"><img class="marca" src="imagens/simbolo-dossie.svg" alt=""><div class="tipo">Dossiês</div><h1>Gerar um dossiê</h1>
     <p class="sub">Documentos prontos para imprimir ou salvar em PDF, com proposições, votações e emendas parlamentares.</p></header>
     <div class="escolha">
       <form class="cartao" id="fParl"><h2>Dossiê parlamentar</h2><p class="leve">Classificação, índice de alinhamento, proposições com pauta da direita, votações disputadas e emendas de um deputado ou senador.</p>
