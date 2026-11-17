@@ -1,5 +1,5 @@
 {
- "inicio": "2026-11-17T20:08:35.725Z",
+ "inicio": "2026-11-17T20:15:18.569Z",
  "modo": "diario",
  "amostras": {
   "camara_deputado": {
@@ -137,33 +137,33 @@
    "VotoPresidente": "false"
   },
   "camara_proposicao": {
-   "id": 2604173,
-   "uri": "https://dadosabertos.camara.leg.br/api/v2/proposicoes/2604173",
-   "siglaTipo": "PEC",
-   "codTipo": 136,
-   "numero": 3,
+   "id": 2610267,
+   "uri": "https://dadosabertos.camara.leg.br/api/v2/proposicoes/2610267",
+   "siglaTipo": "PL",
+   "codTipo": 139,
+   "numero": 1252,
    "ano": 2026,
-   "ementa": "Altera o art. 155 da Constituição Federal para estabelecer alíquota máxima e base de cálculo exclusiva do Imposto sobre a Propriedade de Veículos Automotores – IPVA, e acrescenta dispositivos ao Ato das Disposições Constitucionais Transitórias para limitar despesas com publicidade institucional e com o Poder Legislativo.",
-   "dataApresentacao": "2026-02-24T15:48"
+   "ementa": "Institui, no âmbito da União, o Dia Nacional do Povo Cigano, inscreve essa efeméride no calendário oficial da República Federativa do Brasil e dá outras providências.",
+   "dataApresentacao": "2026-03-18T14:01"
   },
   "senado_proposicao": {
-   "autoria": "Senador Dr. Hiran (PP/RR)",
+   "autoria": "Senadora Lourdinha Pereira (PSB/MA)",
    "casaIdentificadora": "SF",
-   "codigoMateria": 175985,
-   "dataApresentacao": "2026-10-19",
-   "dataSituacaoAtual": "2026-10-19",
-   "dataUltimaAtualizacao": "2026-10-21T15:30:01.3",
-   "ementa": "Altera o art. 9º da Lei nº 15.211, de 17 de setembro de 2025 (Estatuto Digital da Criança e do Adolescente), para admitir a estimativa de idade por biometria facial como mecanismo de verificação de idade e para ampliar, de forma graduada, as categorias de serviços digitais de acesso restrito a maiores de 18 (dezoito) anos.",
+   "codigoMateria": 175907,
+   "dataApresentacao": "2026-10-05",
+   "dataSituacaoAtual": "2026-10-05",
+   "dataUltimaAtualizacao": "2026-10-09T16:45:00.822",
+   "ementa": "Altera a Lei nº 8.212, de 24 de julho de 1991, e a Lei nº 8.213, de 24 de julho de 1991, para conferir a condição de segurado especial da Previdência Social ao artesão, nas condições em que especifica.",
    "enteIdentificador": "SF",
-   "id": 9115144,
-   "identificacao": "PL 5593/2026",
+   "id": 9111975,
+   "identificacao": "PL 5522/2026",
    "objetivo": "Iniciadora",
    "situacaoAtual": "AGUARDANDO DESPACHO",
    "tipoConteudo": "Norma Geral",
    "tipoDocumento": "Projeto de Lei Ordinária",
    "tramitando": "Sim",
    "ultimaInformacaoAtualizada": "PUBLICACAO_OFICIAL",
-   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/3dc7461f-fa42-46e9-aa85-0ff9dd90f0a9"
+   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/d61481b9-62b9-4de7-b307-77a9617f71d0"
   },
   "senado_relatoria": {
    "autoriaProcesso": "Câmara dos Deputados",
@@ -221,7 +221,7 @@
   "numeracao_lacunas_PLP": 1,
   "numeracao_lacunas_PEC": 1,
   "numeracao_lacunas_PDL": 0,
-  "correcoes_aplicadas": 2717,
+  "correcoes_aplicadas": 2735,
   "grupo_pelos_votos_diferente": 216
  },
  "erros": [],
@@ -239,7 +239,7 @@
   "senado_comissao": {
    "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20261003&dataFim=20261117",
    "tamanho": 220,
-   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"17/11/2026 17:06:05\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
+   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"17/11/2026 17:10:45\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
   },
   "senado_processo": {
    "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-10-16&dataFimApresentacao=2026-10-31",
@@ -289,5 +289,5 @@
    "numeros": []
   }
  },
- "fim": "2026-11-17T20:11:59.544Z"
+ "fim": "2026-11-17T20:17:48.345Z"
 }
