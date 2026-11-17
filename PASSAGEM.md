@@ -16,7 +16,7 @@ Esta seção resume a sessão de 30/10 a 17/11. O histórico anterior está no a
 - Retiradas as menções aos "Cadernos do Futuro" (usar temas ou assuntos). Seletores corrigidos no celular.
 - **Identidade visual** conceito D (Congresso com a linha pontilhada chegando). Arquivos em `imagens/`.
 - **Posts para o Instagram** (apresentação, posições, proposições, emendas). O card de emendas do primeiro post tem números antigos (R$ 52,5 bi, 62%, R$ 84,7 bi; atuais R$ 50,5 bi, 59%, R$ 85,4 bi).
-- **Cloudflare** Web Analytics ativo. Passo a passo de proteção entregue (proxy, SSL Full, Always Use HTTPS, Bot Fight Mode), a cargo do James.
+- **Cloudflare** Web Analytics ativo. Proteção conferida em 17/11: proxy ligado, SSL Full, Always Use HTTPS e Bot Fight Mode. Com o proxy, o "DNS check" do GitHub Pages falha sempre, o que é esperado. Não usar Full (strict), porque o GitHub não emite certificado próprio com o proxy ligado.
 
 ## PLP 299/2026 (ajuste fiscal), análise em andamento
 - Dois documentos para a equipe (Claude Docs):
@@ -28,7 +28,7 @@ Esta seção resume a sessão de 30/10 a 17/11. O histórico anterior está no a
 - **Próximo passo:** atualizar os dois documentos com o resultado dos destaques de 17/11, sobretudo o do Republicanos (Alan Rick) que retira a restrição às compensações. Depois, a votação na Câmara. Oferecida uma planilha com todas as empresas de cada parlamentar.
 
 ## Pendências do James
-- Proteção no Cloudflare, 2FA no GitHub, Cloudflare e Registro.br, revisar os tokens dos revisores, apagar o ramo `diag-dns`.
+- 2FA no GitHub, Cloudflare e Registro.br, revisar os tokens dos revisores, apagar o ramo `diag-dns` (esta sessão não consegue apagar ramos).
 
 ## Redes
 - Instagram da plataforma: @observatoriodadireita (confirmado em 17/11). O site ainda não traz link para o perfil.
