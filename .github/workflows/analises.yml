@@ -3,6 +3,10 @@
 name: Análises avulsas
 
 on:
+  # Também roda quando robo/analises/fila.txt muda no main: a primeira linha é o nome do script.
+  push:
+    branches: [main]
+    paths: ['robo/analises/fila.txt']
   workflow_dispatch:
     inputs:
       script:
@@ -23,9 +27,12 @@ jobs:
           python-version: '3.12'
       - name: Dependências
         run: pip install -q pandas pyarrow requests unidecode
+      - name: Qual script
+        env:
+          ENTRADA: ${{ inputs.script }}
+        run: echo "SCRIPT=${ENTRADA:-$(head -1 robo/analises/fila.txt | tr -d '[:space:]')}" >> "$GITHUB_ENV"
       - name: Rodar
         env:
-          SCRIPT: ${{ inputs.script }}
           TOKEN_GH: ${{ github.token }}
           REPO: ${{ github.repository }}
         run: |
@@ -48,4 +55,3 @@ jobs:
           cd saida && git init -q -b "analises-saida-${SCRIPT%.*}" && git add -A
           git -c user.name=robo-exterminadores -c user.email=robo-exterminadores@users.noreply.github.com commit -qm "Saída de $SCRIPT" || exit 0
           git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" "analises-saida-${SCRIPT%.*}"
-        env: {SCRIPT: '${{ inputs.script }}'}
