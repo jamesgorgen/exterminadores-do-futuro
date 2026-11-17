@@ -28,7 +28,7 @@ Esta seção resume a sessão de 30/10 a 17/11. O histórico anterior está no a
 - **Próximo passo:** atualizar os dois documentos com o resultado dos destaques de 17/11, sobretudo o do Republicanos (Alan Rick) que retira a restrição às compensações. Depois, a votação na Câmara. Oferecida uma planilha com todas as empresas de cada parlamentar.
 
 ## Pendências do James
-- 2FA no GitHub, Cloudflare e Registro.br, revisar os tokens dos revisores, apagar o ramo `diag-dns` (esta sessão não consegue apagar ramos).
+- 2FA no GitHub, Cloudflare e Registro.br e revisão dos tokens dos revisores encaminhadas pelo James em 17/11. Ramo `diag-dns` apagado em 17/11 (esta sessão não consegue apagar ramos; o James apaga pelo site).
 
 ## Redes
 - Instagram da plataforma: @observatoriodadireita (confirmado em 17/11). O site ainda não traz link para o perfil.
