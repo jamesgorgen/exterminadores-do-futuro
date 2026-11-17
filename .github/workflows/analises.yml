@@ -43,7 +43,7 @@ jobs:
       - name: Publicar resultados no ramo analises-saida
         if: always()
         run: |
-          cd saida && git init -q -b analises-saida && git add -A
+          cd saida && git init -q -b "analises-saida-${SCRIPT%.*}" && git add -A
           git -c user.name=robo-exterminadores -c user.email=robo-exterminadores@users.noreply.github.com commit -qm "Saída de $SCRIPT" || exit 0
-          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" analises-saida
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" "analises-saida-${SCRIPT%.*}"
         env: {SCRIPT: '${{ inputs.script }}'}
