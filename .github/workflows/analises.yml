@@ -1,0 +1,42 @@
+# Análises avulsas (não alteram o site). Roda um script de robo/analises e guarda os resultados como artefato da execução.
+# À mão: Actions > Análises avulsas > Run workflow, informando o nome do script.
+name: Análises avulsas
+
+on:
+  workflow_dispatch:
+    inputs:
+      script:
+        description: 'Script em robo/analises (ex.: sonda.sh)'
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  analise:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Dependências
+        run: pip install -q pandas pyarrow requests unidecode
+      - name: Rodar
+        env:
+          SCRIPT: ${{ inputs.script }}
+        run: |
+          mkdir -p saida
+          case "$SCRIPT" in
+            *.sh) bash "robo/analises/$SCRIPT" ;;
+            *.py) python "robo/analises/$SCRIPT" ;;
+            *) echo "Tipo de script não suportado"; exit 1 ;;
+          esac
+      - name: Guardar resultados
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: saida
+          path: saida/
+          retention-days: 14
