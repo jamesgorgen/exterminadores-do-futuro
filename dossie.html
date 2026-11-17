@@ -109,6 +109,8 @@ td .pilha{margin:0;height:10px;min-width:90px}
 .cartao input,.cartao select{width:100%;border:1px solid var(--line);border-radius:5px;padding:8px 10px;margin:6px 0 10px;background:#fff}
 .cartao button{border:0;background:var(--ink);color:#fff;border-radius:5px;padding:8px 14px;font-weight:600;cursor:pointer}
 .carregando{color:var(--ink-2);padding:30px 0}
+.btn-esp{display:inline-block;border:1px solid var(--ink);background:var(--ink);color:#fff;border-radius:5px;padding:7px 13px;font-weight:600;text-decoration:none;margin:2px 6px 2px 0}
+.btn-esp.claro{background:#fff;color:var(--ink)}
 
 @page{size:A4;margin:14mm 13mm 16mm;
   @bottom-left{content:"Dossiê. Fontes: Câmara dos Deputados, Senado Federal, Portal da Transparência e IBGE.";font:7.5pt "IBM Plex Sans",sans-serif;color:#757c87}
@@ -427,6 +429,13 @@ async function dossieBalanco(casa) {
 }
 
 // --------------------------------------------------------------- escolha
+// Dossiês especiais: páginas estáticas na pasta dossies/, com o PDF ao lado. O mais recente vem primeiro.
+const ESPECIAIS = [
+  { tema: 'Ajuste fiscal', titulo: 'PLP 299/2026: os 594 parlamentares que votam, suas empresas e os benefícios fiscais',
+    resumo: 'Votos no Senado, empresas de que cada senador e deputado em exercício é sócio e benefícios fiscais que elas declararam à Receita Federal.',
+    versao: 'Versão de 17/11/2026, anterior à votação dos destaques no Senado.',
+    pagina: 'dossies/plp-299-2026.html', pdf: 'dossies/plp-299-2026.pdf' },
+];
 async function escolher() {
   const ind = await json('dados/indice.json');
   const ps = Object.entries(ind.p).filter(([, p]) => p.vd || p.np).sort((a, b) => a[1].n.localeCompare(b[1].n));
@@ -445,7 +454,11 @@ async function escolher() {
         <label for="selCasa" class="peq">Casa</label><select id="selCasa"><option value="T">Câmara e Senado</option><option value="C">Câmara dos Deputados</option><option value="S">Senado Federal</option></select>
         <button type="submit">Gerar dossiê</button>
         <p class="peq">Ou baixe o <a href="https://github.com/jamesgorgen/exterminadores-do-futuro/releases/latest/download/Dossie-Congresso.pdf" target="_blank" rel="noopener">PDF do mês</a>, das duas Casas.</p></form>
-    </div>`;
+    </div>
+    <h2>Dossiês especiais</h2>
+    <p class="leve">Análises de votações e temas específicos, preparadas pela equipe.</p>
+    <div class="escolha">${ESPECIAIS.map(d => `<div class="cartao"><div class="tipo">${esc(d.tema)}</div><h2 style="margin-top:4px">${esc(d.titulo)}</h2><p class="leve">${esc(d.resumo)}</p>
+        <p class="peq">${esc(d.versao)}</p><p><a class="btn-esp" href="${d.pagina}">Ler o dossiê</a> <a class="btn-esp claro" href="${d.pdf}" download>Baixar PDF</a></p></div>`).join('')}</div>`;
   const linkPdf = () => { $('#pdfUf').href = `https://github.com/jamesgorgen/exterminadores-do-futuro/releases/latest/download/Dossie-${$('#selUf').value}.pdf`; };
   $('#selUf').addEventListener('change', linkPdf); linkPdf();
   const porRotulo = new Map(ps.map(([k, p]) => [`${p.n} (${partido(p)}-${p.uf || ''})`, k]));

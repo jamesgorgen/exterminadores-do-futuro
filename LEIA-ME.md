@@ -53,6 +53,7 @@ Na página de revisão, as filas mostram por padrão só os itens que exigem rev
 | `correcoes.json` | Correções da equipe à classificação da IA |
 | `revisao.html` | Página de revisão da triagem, para a equipe |
 | `dossie.html` | Dossiês para imprimir (parlamentar e estado) |
+| `dossies/` | Dossiês especiais (páginas estáticas com o PDF ao lado), listados na lista `ESPECIAIS` de `dossie.html` |
 | `emendas.html` | Módulo de emendas parlamentares |
 | `robo/emendas.py` | Gera os dados do módulo de emendas |
 | `robo/motor.js` | Funções de busca e de classificação por tema, usadas pelo robô |
