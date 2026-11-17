@@ -28,7 +28,17 @@ def norm(s):
     s = unicodedata.normalize('NFD', str(s or '')).encode('ascii', 'ignore').decode().upper()
     return re.sub(r'\s+', ' ', re.sub(r'[^A-Z ]', ' ', s)).strip()
 def dig(s): return re.sub(r'\D', '', str(s or ''))
-def salvar(nome, obj): json.dump(obj, open(f'{OUT}/{nome}', 'w'), ensure_ascii=False)
+def salvar(nome, obj):
+    # O GitHub recusa arquivos acima de 100 MB: grava compactado (.json.gz) quando passa de 20 MB
+    import gzip
+    txt = json.dumps(obj, ensure_ascii=False).encode()
+    for x in (f'{OUT}/{nome}', f'{OUT}/{nome}.gz'):
+        if os.path.exists(x): os.remove(x)
+    if len(txt) > 20e6:
+        with gzip.open(f'{OUT}/{nome}.gz', 'wb', 6) as f: f.write(txt)
+    else:
+        open(f'{OUT}/{nome}', 'wb').write(txt)
+    open(f'{OUT}/progresso.txt', 'a').write(f'{(time.time()-T0)/60:.0f} min salvo {nome} {len(txt)/1e6:.0f} MB\n')
 def publicar(etapa):
     log(etapa)
     if not os.environ.get('TOKEN_GH'): return
