@@ -1,5 +1,5 @@
 """PLP 299/2026, deputados federais: identificação no TSE, bens, empresas (CNPJ) e benefícios (DIRBI e ECF)."""
-import csv, io, json, os, re, sys, zipfile, unicodedata, collections
+import csv, io, json, os, re, sys, zipfile, unicodedata, collections, xml.etree.ElementTree as ET
 import requests
 AQUI = os.path.dirname(os.path.abspath(__file__))
 UA = {'user-agent': 'exterminadores-do-futuro (observatório; contato@exterminadores.com.br)'}
