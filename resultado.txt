@@ -1,0 +1,8 @@
+R2_ACCOUNT_ID presente (32 caracteres, sem espaços nas pontas: True)
+R2_ACCESS_KEY_ID presente (32 caracteres, sem espaços nas pontas: True)
+R2_SECRET_ACCESS_KEY presente (64 caracteres, sem espaços nas pontas: True)
+gravação: ok
+listagem: ['teste/ola.txt']
+leitura confere: True
+remoção: ok
+RESULTADO: R2 FUNCIONANDO
