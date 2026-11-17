@@ -1,0 +1,22 @@
+name: Diagnóstico de DNS (temporário)
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/diag-dns.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  dns:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          sudo apt-get install -y -qq bind9-dnsutils >/dev/null 2>&1 || true
+          echo "== NS no registro .br"; dig +norec NS exterminadores.com.br @a.dns.br | sed -n '/AUTHORITY SECTION/,/^$/p'
+          echo "== DS no registro .br"; dig +short DS exterminadores.com.br @a.dns.br
+          echo "== NS via 8.8.8.8"; dig +short NS exterminadores.com.br @8.8.8.8
+          for r in A AAAA CAA; do echo "== $r apex via 8.8.8.8"; dig $r exterminadores.com.br @8.8.8.8 | grep -E "status|^exterminadores"; done
+          echo "== www via 8.8.8.8"; dig A www.exterminadores.com.br @8.8.8.8 | grep -E "status|^www"
+          echo "== via 1.1.1.1"; dig +short A exterminadores.com.br @1.1.1.1; dig +short www.exterminadores.com.br @1.1.1.1
+          echo "== Site"; curl -sSI https://exterminadores.com.br/ | grep -iE "^HTTP|^server|^location|cf-ray"; curl -sSI http://exterminadores.com.br/ | grep -iE "^HTTP|^server|^location"; curl -sSI https://www.exterminadores.com.br/ | grep -iE "^HTTP|^server|^location"
+          echo "== Certificado"; echo | openssl s_client -connect exterminadores.com.br:443 -servername exterminadores.com.br 2>/dev/null | openssl x509 -noout -issuer -subject -dates -ext subjectAltName
