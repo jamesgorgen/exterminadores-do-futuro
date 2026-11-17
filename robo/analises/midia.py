@@ -112,11 +112,27 @@ def outorgas():
 def listar(caminho):
     r = requests.request('PROPFIND', f'{RFB}/{caminho}', headers={**UA, 'Depth': '1'}, auth=TOKEN, timeout=120)
     return [h.text for h in ET.fromstring(r.content).iter('{DAV:}href')]
-MESES = sorted(h.rstrip('/').split('/')[-1] for h in listar('Cadastros/CNPJ/') if re.search(r'\d{4}-\d{2}/?$', h))
-MES = MESES[-1]; log('meses disponíveis', MESES[0], '...', MES)
+# Cópia no Cloudflare R2 (robo/analises/receita_r2.py), muito mais rápida que o servidor da Receita
+S3 = None
+if os.environ.get('R2_ACCOUNT_ID'):
+    subprocess.run('pip install -q boto3', shell=True)
+    import boto3
+    S3 = boto3.client('s3', endpoint_url=f"https://{os.environ['R2_ACCOUNT_ID'].strip()}.r2.cloudflarestorage.com",
+                      aws_access_key_id=os.environ['R2_ACCESS_KEY_ID'].strip(), aws_secret_access_key=os.environ['R2_SECRET_ACCESS_KEY'].strip(), region_name='auto')
+    IDX = json.loads(S3.get_object(Bucket=os.environ['R2_BUCKET'], Key='receita/cnpj/indice.json')['Body'].read())
+    NO_R2 = {a[0] for a in IDX['arquivos'] if a[1]}
+    MESES = [IDX['mes_antigo'], IDX['mes_atual']]
+else:
+    NO_R2 = set()
+    MESES = sorted(h.rstrip('/').split('/')[-1] for h in listar('Cadastros/CNPJ/') if re.search(r'\d{4}-\d{2}/?$', h))
+MES = MESES[-1]; log('meses', MESES[0], '...', MES, '| arquivos no R2:', len(NO_R2))
+def do_r2(chave, destino):
+    if chave not in NO_R2: return None
+    if not os.path.exists(destino): S3.download_file(os.environ['R2_BUCKET'], chave, destino)
+    return destino
 os.makedirs('/tmp/rfb', exist_ok=True)
 def ler(mes, nome, tratar, guardar=False):
-    z = baixar(f'{RFB}/Cadastros/CNPJ/{mes}/{nome}', f'/tmp/rfb/{mes}_{nome}', TOKEN)
+    z = do_r2(f'receita/cnpj/{mes}/{nome}', f'/tmp/rfb/{mes}_{nome}') or baixar(f'{RFB}/Cadastros/CNPJ/{mes}/{nome}', f'/tmp/rfb/{mes}_{nome}', TOKEN)
     if not z: log('não baixou', mes, nome); return
     with zipfile.ZipFile(z) as zf:
         for n in zf.namelist():
@@ -190,6 +206,7 @@ def socios_atual():
             REPRES.append({'parl': CHAVES[(norm(r[8]), r[7].strip('*'))], 'cnpj': b, **reg})
     for i in range(10): ler(MES, f'Socios{i}.zip', t, guardar=True)
     log('sócios de empresas de mídia', sum(len(v) for v in QSA.values()))
+    salvar('universo.json', {b: {**u, 'cnaes': sorted(u['cnaes'])} for b, u in U.items()}); salvar('qsa.json', QSA); publicar('sócios nível 1')
     # holdings: segundo e terceiro nível
     for nivel in (2, 3):
         alvo = {s['doc'][:8] for b in list(QSA) for s in QSA[b] if s['tipo'] == '1'} - set(QSA)
@@ -254,7 +271,7 @@ def campanhas():
     socios_midia = {(norm(s['nome']), s['doc'].strip('*')): b for b, ss in QSA.items() for s in ss if s['tipo'] == '2'}
     desp, rec = [], []
     for ano in (2018, 2022):
-        z = baixar(f'{TSE}/prestacao_contas/prestacao_de_contas_eleitorais_candidatos_{ano}.zip', f'/tmp/pc{ano}.zip')
+        z = do_r2(f'tse/prestacao_de_contas_eleitorais_candidatos_{ano}.zip', f'/tmp/pc{ano}.zip') or baixar(f'{TSE}/prestacao_contas/prestacao_de_contas_eleitorais_candidatos_{ano}.zip', f'/tmp/pc{ano}.zip')
         if not z: continue
         with zipfile.ZipFile(z) as zf:
             nomes = zf.namelist(); log('arquivos de prestação de contas', ano, [n for n in nomes if 'BRASIL' in n])
