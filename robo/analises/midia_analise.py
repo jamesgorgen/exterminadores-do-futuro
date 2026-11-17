@@ -4,12 +4,35 @@ import json, sys, os, re, collections, unicodedata
 d, d2 = sys.argv[1] + '/', sys.argv[2] + '/'
 def L(n, base=None):
     p = (base or d) + n
-    return json.load(open(p)) if os.path.exists(p) else None
+    if os.path.exists(p): return json.load(open(p))
+    if os.path.exists(p + '.gz'):
+        import gzip; return json.load(gzip.open(p + '.gz'))
+    return None
 def norm(s):
     s = unicodedata.normalize('NFD', str(s or '')).encode('ascii', 'ignore').decode().upper()
     return re.sub(r'\s+', ' ', re.sub(r'[^A-Z ]', ' ', s)).strip()
 PARL = L('parlamentares.json'); U = L('universo.json') or {}; QSA = L('qsa.json') or {}
 ind = json.load(open('dados/indice.json'))['p']
+# Núcleo: outorga no MCom; ou rádio/TV como atividade principal ou secundária; ou jornal, revista e agência como atividade principal.
+# (Edição de jornal/revista como atividade secundária pega gráficas e microempresas demais.)
+RTV = {'6010100', '6021700', '6022501', '6022502'}
+IMPR = {'5812301', '5812302', '5822101', '5822102', '5813100', '5823900', '6391700'}
+NOMERTV = re.compile(r'\bRADIO|RADIODIFUS|RADIOFUS|TELEVIS|\bTV\b|\bFM\b|EMISSORA|\bJORNAL')
+def nucleo(u):
+    if u.get('mcom') or RTV & set(u.get('cnaes', [])): return True
+    if any(e.get('cnae') in IMPR for e in u.get('estab', [])): return True
+    return bool(u.get('so_nome') and NOMERTV.search(norm(u.get('razao'))) and any(e.get('cnae', '')[:2] in ('58', '59', '60', '63', '73') for e in u.get('estab', [])))
+U = {b: u for b, u in U.items() if nucleo(u)}
+def tipo_midia(u):
+    c = set(u.get('cnaes', [])) | {e.get('cnae') for e in u.get('estab', [])}
+    t = []
+    if u.get('mcom') or '6010100' in c or '6021700' in c or '6022501' in c or '6022502' in c:
+        t.append('rádio/TV' + (' (outorga MCom)' if u.get('mcom') else ''))
+    if c & {'5812301', '5812302', '5822101', '5822102'}: t.append('jornal')
+    if c & {'5813100', '5823900'}: t.append('revista')
+    if '6391700' in c: t.append('agência de notícias')
+    return ', '.join(t) or 'nome de emissora'
+print('universo núcleo', len(U))
 EX = {k for k, v in ind.items() if v.get('ex')}
 QUAL = {'05': 'administrador', '10': 'diretor', '16': 'presidente', '22': 'sócio', '49': 'sócio-administrador', '65': 'titular',
         '17': 'procurador', '08': 'conselheiro', '30': 'sócio comanditado', '31': 'sócio comanditário', '37': 'sócio PJ domiciliado no exterior'}
@@ -18,7 +41,7 @@ def emp(b):
     m = next((x for x in e if x.get('cnpj', '').endswith('0001') or True), {})
     ativa = any(x.get('sit') == '02' for x in e)
     tipo = ', '.join(sorted(set(u.get('cnaes', [])))) or ('outorga MCom' if u.get('mcom') else 'nome')
-    return {'b': b, 'razao': u.get('razao'), 'uf': m.get('uf'), 'ativa': ativa, 'mcom': u.get('mcom'), 'cnaes': u.get('cnaes'), 'natureza': u.get('natureza')}
+    return {'b': b, 'razao': u.get('razao'), 'uf': m.get('uf'), 'ativa': ativa, 'midia': tipo_midia(u), 'natureza': u.get('natureza')}
 UF_EMP = {b: {x.get('uf') for x in u.get('estab', [])} for b, u in U.items()}
 V = collections.defaultdict(list)   # parlamentar -> [vínculos]
 def add(k, tipo, forca, b, det):
@@ -129,4 +152,4 @@ for nivel, nome in ORD.items():
     print(' melhor vínculo', nivel, sum(1 for v in ex.values() if v['melhor'] == nome))
 for k, v in sorted(ex.items(), key=lambda x: (x[1]['melhor'], x[0][0], x[1]['nome'] or '')):
     print(f"\n{k} {v['nome']} ({v['partido']}/{v['uf']}, {v['grupo']})")
-    for x in v['vinculos'][:12]: print('   ', x['forca'], '|', x['tipo'], '|', x['razao'], x['uf'] or '', '' if x['ativa'] in (None, True) else '[inativa]', '|', x['det'])
+    for x in v['vinculos'][:12]: print('   ', x['forca'], '|', x['tipo'], '|', x['razao'], '[' + (x.get('midia') or '') + ']', x['uf'] or '', '' if x['ativa'] in (None, True) else '[inativa]', '|', x['det'])
