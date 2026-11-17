@@ -1,10 +1,10 @@
 {
- "gerado": "2026-11-17T20:03:49.127Z",
+ "gerado": "2026-11-17T20:08:35.725Z",
  "inicio": "2023-02-01",
  "totais": {
   "proposicoes": 26476,
   "direita": 2654,
-  "extrema": 1720,
+  "extrema": 1718,
   "votacoes": 2450,
   "disputadas": 1181,
   "vitorias": 508,
@@ -39,8 +39,8 @@
    "derrotas": 3
   },
   "punitivismo": {
-   "prop": 1284,
-   "extrema": 810,
+   "prop": 1285,
+   "extrema": 811,
    "prop30": 14,
    "vot": 22,
    "vitorias": 18,
@@ -80,7 +80,7 @@
   },
   "ambiente": {
    "prop": 174,
-   "extrema": 121,
+   "extrema": 119,
    "prop30": 1,
    "vot": 43,
    "vitorias": 21,
@@ -574,10 +574,10 @@
   "T": {
    "prop": 26476,
    "pauta": 2654,
-   "pautaExtrema": 1720,
+   "pautaExtrema": 1718,
    "vot": 1607,
-   "comSit": 26428,
-   "aprovada": 1030,
+   "comSit": 26452,
+   "aprovada": 1012,
    "lei": 252,
    "arquivada": 1766,
    "grupos": {
@@ -588,8 +588,8 @@
      "emExercicio": 120,
      "vot": 1576,
      "venceu": 877,
-     "comSit": 5990,
-     "aprovada": 169,
+     "comSit": 5993,
+     "aprovada": 168,
      "lei": 29,
      "arquivada": 481
     },
@@ -600,8 +600,8 @@
      "emExercicio": 227,
      "vot": 1560,
      "venceu": 1475,
-     "comSit": 9272,
-     "aprovada": 359,
+     "comSit": 9278,
+     "aprovada": 354,
      "lei": 83,
      "arquivada": 650
     },
@@ -612,8 +612,8 @@
      "emExercicio": 126,
      "vot": 1520,
      "venceu": 1383,
-     "comSit": 7116,
-     "aprovada": 258,
+     "comSit": 7121,
+     "aprovada": 250,
      "lei": 72,
      "arquivada": 374
     },
@@ -624,8 +624,8 @@
      "emExercicio": 120,
      "vot": 1583,
      "venceu": 1184,
-     "comSit": 3998,
-     "aprovada": 237,
+     "comSit": 4008,
+     "aprovada": 233,
      "lei": 67,
      "arquivada": 260
     }
@@ -659,7 +659,7 @@
     },
     "cuidado-envelhecimento": {
      "n": 768,
-     "ap": 21,
+     "ap": 20,
      "g": {
       "direita": [
        280,
@@ -678,7 +678,7 @@
       ],
       "centro": [
        255,
-       6,
+       5,
        4
       ]
      }
@@ -815,16 +815,16 @@
     },
     "cultura": {
      "n": 830,
-     "ap": 91,
+     "ap": 87,
      "g": {
       "centro": [
        211,
-       26,
+       24,
        5
       ],
       "esquerda": [
        177,
-       33,
+       31,
        2
       ],
       "extrema": [
@@ -945,7 +945,7 @@
     },
     "jornada-emprego": {
      "n": 974,
-     "ap": 26,
+     "ap": 25,
      "g": {
       "extrema": [
        145,
@@ -959,7 +959,7 @@
       ],
       "centro": [
        314,
-       7,
+       6,
        9
       ],
       "esquerda": [
@@ -971,11 +971,11 @@
     },
     "turismo": {
      "n": 300,
-     "ap": 36,
+     "ap": 34,
      "g": {
       "direita": [
        150,
-       24,
+       22,
        1
       ],
       "extrema": [
@@ -1127,7 +1127,7 @@
     },
     "infra-digital": {
      "n": 723,
-     "ap": 20,
+     "ap": 19,
      "g": {
       "extrema": [
        114,
@@ -1141,7 +1141,7 @@
       ],
       "centro": [
        253,
-       11,
+       10,
        4
       ],
       "esquerda": [
@@ -1387,11 +1387,11 @@
     },
     "florestas-licenciamento": {
      "n": 767,
-     "ap": 18,
+     "ap": 17,
      "g": {
       "direita": [
        255,
-       7,
+       6,
        57
       ],
       "centro": [
@@ -1491,7 +1491,7 @@
     },
     "pcd": {
      "n": 1608,
-     "ap": 54,
+     "ap": 51,
      "g": {
       "esquerda": [
        169,
@@ -1505,12 +1505,12 @@
       ],
       "centro": [
        637,
-       24,
+       22,
        2
       ],
       "extrema": [
        208,
-       9,
+       8,
        7
       ]
      }
@@ -1621,11 +1621,11 @@
     },
     "clima-desastres": {
      "n": 613,
-     "ap": 35,
+     "ap": 34,
      "g": {
       "direita": [
        182,
-       8,
+       7,
        12
       ],
       "esquerda": [
@@ -2505,11 +2505,11 @@
     },
     "autonomia-mulheres": {
      "n": 86,
-     "ap": 3,
+     "ap": 2,
      "g": {
       "centro": [
        22,
-       2,
+       1,
        0
       ],
       "esquerda": [
@@ -2560,10 +2560,10 @@
   "C": {
    "prop": 23363,
    "pauta": 2286,
-   "pautaExtrema": 1469,
+   "pautaExtrema": 1467,
    "vot": 1413,
-   "comSit": 23341,
-   "aprovada": 699,
+   "comSit": 23360,
+   "aprovada": 680,
    "lei": 179,
    "arquivada": 1616,
    "grupos": {
@@ -2574,8 +2574,8 @@
      "emExercicio": 105,
      "vot": 1382,
      "venceu": 740,
-     "comSit": 5318,
-     "aprovada": 106,
+     "comSit": 5321,
+     "aprovada": 105,
      "lei": 18,
      "arquivada": 445
     },
@@ -2586,8 +2586,8 @@
      "emExercicio": 193,
      "vot": 1366,
      "venceu": 1292,
-     "comSit": 8034,
-     "aprovada": 232,
+     "comSit": 8039,
+     "aprovada": 226,
      "lei": 53,
      "arquivada": 582
     },
@@ -2598,8 +2598,8 @@
      "emExercicio": 112,
      "vot": 1328,
      "venceu": 1198,
-     "comSit": 6681,
-     "aprovada": 216,
+     "comSit": 6684,
+     "aprovada": 208,
      "lei": 63,
      "arquivada": 364
     },
@@ -2610,8 +2610,8 @@
      "emExercicio": 103,
      "vot": 1391,
      "venceu": 1020,
-     "comSit": 3308,
-     "aprovada": 145,
+     "comSit": 3316,
+     "aprovada": 141,
      "lei": 45,
      "arquivada": 225
     }
@@ -2645,7 +2645,7 @@
     },
     "cuidado-envelhecimento": {
      "n": 693,
-     "ap": 11,
+     "ap": 10,
      "g": {
       "direita": [
        244,
@@ -2664,7 +2664,7 @@
       ],
       "centro": [
        246,
-       4,
+       3,
        4
       ]
      }
@@ -2801,16 +2801,16 @@
     },
     "cultura": {
      "n": 741,
-     "ap": 65,
+     "ap": 61,
      "g": {
       "centro": [
        198,
-       23,
+       21,
        5
       ],
       "esquerda": [
        147,
-       18,
+       16,
        2
       ],
       "extrema": [
@@ -2931,7 +2931,7 @@
     },
     "jornada-emprego": {
      "n": 825,
-     "ap": 15,
+     "ap": 14,
      "g": {
       "extrema": [
        120,
@@ -2945,7 +2945,7 @@
       ],
       "centro": [
        299,
-       5,
+       4,
        7
       ],
       "esquerda": [
@@ -2957,11 +2957,11 @@
     },
     "turismo": {
      "n": 275,
-     "ap": 26,
+     "ap": 24,
      "g": {
       "direita": [
        137,
-       20,
+       18,
        1
       ],
       "extrema": [
@@ -3087,7 +3087,7 @@
     },
     "infra-digital": {
      "n": 681,
-     "ap": 16,
+     "ap": 15,
      "g": {
       "extrema": [
        110,
@@ -3101,7 +3101,7 @@
       ],
       "centro": [
        245,
-       9,
+       8,
        3
       ],
       "esquerda": [
@@ -3347,11 +3347,11 @@
     },
     "florestas-licenciamento": {
      "n": 643,
-     "ap": 8,
+     "ap": 7,
      "g": {
       "direita": [
        198,
-       1,
+       0,
        41
       ],
       "centro": [
@@ -3451,7 +3451,7 @@
     },
     "pcd": {
      "n": 1497,
-     "ap": 42,
+     "ap": 39,
      "g": {
       "esquerda": [
        142,
@@ -3465,12 +3465,12 @@
       ],
       "centro": [
        622,
-       20,
+       18,
        2
       ],
       "extrema": [
        197,
-       9,
+       8,
        7
       ]
      }
@@ -3581,11 +3581,11 @@
     },
     "clima-desastres": {
      "n": 526,
-     "ap": 27,
+     "ap": 26,
      "g": {
       "direita": [
        145,
-       4,
+       3,
        7
       ],
       "esquerda": [
@@ -4439,11 +4439,11 @@
     },
     "autonomia-mulheres": {
      "n": 77,
-     "ap": 2,
+     "ap": 1,
      "g": {
       "centro": [
        22,
-       2,
+       1,
        0
       ],
       "esquerda": [
@@ -4548,8 +4548,8 @@
    "pauta": 368,
    "pautaExtrema": 251,
    "vot": 194,
-   "comSit": 3087,
-   "aprovada": 331,
+   "comSit": 3092,
+   "aprovada": 332,
    "lei": 73,
    "arquivada": 150,
    "grupos": {
@@ -4572,8 +4572,8 @@
      "emExercicio": 34,
      "vot": 194,
      "venceu": 183,
-     "comSit": 1238,
-     "aprovada": 127,
+     "comSit": 1239,
+     "aprovada": 128,
      "lei": 30,
      "arquivada": 68
     },
@@ -4584,7 +4584,7 @@
      "emExercicio": 14,
      "vot": 192,
      "venceu": 185,
-     "comSit": 435,
+     "comSit": 437,
      "aprovada": 42,
      "lei": 9,
      "arquivada": 10
@@ -4596,7 +4596,7 @@
      "emExercicio": 17,
      "vot": 192,
      "venceu": 164,
-     "comSit": 690,
+     "comSit": 692,
      "aprovada": 92,
      "lei": 22,
      "arquivada": 35
