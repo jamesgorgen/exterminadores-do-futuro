@@ -29,5 +29,7 @@ Esta seção resume a sessão de 30/10 a 17/11. O histórico anterior está no a
 
 ## Pendências do James
 - Proteção no Cloudflare, 2FA no GitHub, Cloudflare e Registro.br, revisar os tokens dos revisores, apagar o ramo `diag-dns`.
-- Confirmar o perfil do Instagram (@exterminadoresdofuturo, presumido).
+
+## Redes
+- Instagram da plataforma: @observatoriodadireita (confirmado em 17/11). O site ainda não traz link para o perfil.
 
