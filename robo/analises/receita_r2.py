@@ -77,4 +77,22 @@ indice = {'atualizado': time.strftime('%Y-%m-%d %H:%M'), 'mes_atual': atual, 'me
 s3.put_object(Bucket=B, Key='receita/cnpj/indice.json', Body=json.dumps(indice, ensure_ascii=False, indent=1).encode())
 json.dump(indice, open('saida/indice.json', 'w'), ensure_ascii=False, indent=1)
 falhas = [r for r in res if r[2] == 'falhou']
-log('fim', len(res), 'arquivos;', len(falhas), 'falhas', falhas)
+log('fim do espelho', len(res), 'arquivos;', len(falhas), 'falhas', falhas)
+
+# Limpeza: mantém só o mês atual completo e os Sócios do mês mais antigo, para ficar abaixo dos 10 GB gratuitos.
+# Só apaga quando o mês atual chegou inteiro, sem falhas.
+apagados = []
+if not [f for f in falhas if f[0].startswith(f'receita/cnpj/{atual}/')]:
+    manter = (f'receita/cnpj/{atual}/', f'receita/cnpj/{antigo}/Socios', 'receita/cnpj/indice.json')
+    pag = s3.get_paginator('list_objects_v2')
+    for pg in pag.paginate(Bucket=B, Prefix='receita/cnpj/'):
+        for o in pg.get('Contents', []):
+            if not o['Key'].startswith(manter):
+                s3.delete_object(Bucket=B, Key=o['Key']); apagados.append(o['Key'])
+else:
+    log('mês atual incompleto: nada foi apagado')
+total = sum(o['Size'] for pg in s3.get_paginator('list_objects_v2').paginate(Bucket=B) for o in pg.get('Contents', []))
+indice.update({'apagados': apagados, 'total_gb': round(total / 1e9, 2)})
+s3.put_object(Bucket=B, Key='receita/cnpj/indice.json', Body=json.dumps(indice, ensure_ascii=False, indent=1).encode())
+json.dump(indice, open('saida/indice.json', 'w'), ensure_ascii=False, indent=1)
+log('apagados', len(apagados), '| total no bucket', indice['total_gb'], 'GB')

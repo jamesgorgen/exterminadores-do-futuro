@@ -1,0 +1,42 @@
+# Espelho mensal da base do CNPJ (Receita) e das bases do TSE no Cloudflare R2 (bucket privado exterminadores-dados).
+# Roda nos dias 18 e 28 de cada mês: a Receita publica o mês novo em datas variáveis e o robô só envia o que falta.
+# Depois de copiar o mês novo inteiro, apaga o anterior (mantém os Sócios do mês mais antigo, usados para ver saídas de sócios).
+# À mão: Actions > Espelho no R2 > Run workflow.
+name: Espelho no R2
+
+on:
+  schedule:
+    - cron: '23 7 18,28 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: espelho-r2
+  cancel-in-progress: false
+
+jobs:
+  espelho:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Dependências
+        run: pip install -q requests boto3
+      - name: Copiar para o R2
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_BUCKET: exterminadores-dados
+        run: python robo/analises/receita_r2.py
+      - name: Publicar o índice no ramo espelho-r2
+        if: always()
+        run: |
+          cd saida && git init -q -b espelho-r2 && git add -A
+          git -c user.name=robo-exterminadores -c user.email=robo-exterminadores@users.noreply.github.com commit -qm "Espelho no R2" || exit 0
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" espelho-r2
