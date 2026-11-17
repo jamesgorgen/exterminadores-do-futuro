@@ -1,10 +1,10 @@
 {
- "gerado": "2026-11-17T20:15:18.569Z",
+ "gerado": "2026-11-17T23:36:47.032Z",
  "inicio": "2023-02-01",
  "totais": {
-  "proposicoes": 26476,
-  "direita": 2654,
-  "extrema": 1718,
+  "proposicoes": 26483,
+  "direita": 2690,
+  "extrema": 1742,
   "votacoes": 2450,
   "disputadas": 1181,
   "vitorias": 508,
@@ -31,56 +31,56 @@
  },
  "porPauta": {
   "armas": {
-   "prop": 304,
-   "extrema": 260,
+   "prop": 305,
+   "extrema": 261,
    "prop30": 1,
    "vot": 7,
    "vitorias": 4,
    "derrotas": 3
   },
   "punitivismo": {
-   "prop": 1285,
-   "extrema": 811,
+   "prop": 1302,
+   "extrema": 824,
    "prop30": 14,
    "vot": 22,
    "vitorias": 18,
    "derrotas": 1
   },
   "instituicoes": {
-   "prop": 232,
-   "extrema": 205,
+   "prop": 237,
+   "extrema": 208,
    "prop30": 12,
    "vot": 29,
    "vitorias": 25,
    "derrotas": 3
   },
   "costumes": {
-   "prop": 291,
-   "extrema": 269,
+   "prop": 296,
+   "extrema": 272,
    "prop30": 2,
    "vot": 9,
    "vitorias": 5,
    "derrotas": 3
   },
   "religiao": {
-   "prop": 123,
-   "extrema": 78,
+   "prop": 124,
+   "extrema": 79,
    "prop30": 12,
    "vot": 7,
    "vitorias": 4,
    "derrotas": 0
   },
   "educacao": {
-   "prop": 151,
-   "extrema": 132,
+   "prop": 154,
+   "extrema": 135,
    "prop30": 1,
    "vot": 5,
    "vitorias": 2,
    "derrotas": 2
   },
   "ambiente": {
-   "prop": 174,
-   "extrema": 119,
+   "prop": 176,
+   "extrema": 120,
    "prop30": 1,
    "vot": 43,
    "vitorias": 21,
@@ -95,8 +95,8 @@
    "derrotas": 1
   },
   "movimentos": {
-   "prop": 145,
-   "extrema": 134,
+   "prop": 150,
+   "extrema": 139,
    "prop30": 1,
    "vot": 5,
    "vitorias": 5,
@@ -111,24 +111,24 @@
    "derrotas": 5
   },
   "estado": {
-   "prop": 115,
-   "extrema": 48,
+   "prop": 121,
+   "extrema": 52,
    "prop30": 3,
-   "vot": 16,
-   "vitorias": 8,
+   "vot": 17,
+   "vitorias": 9,
    "derrotas": 8
   },
   "privilegios": {
-   "prop": 321,
-   "extrema": 58,
+   "prop": 328,
+   "extrema": 61,
    "prop30": 4,
    "vot": 40,
    "vitorias": 26,
    "derrotas": 6
   },
   "plataformas": {
-   "prop": 87,
-   "extrema": 75,
+   "prop": 95,
+   "extrema": 80,
    "prop30": 1,
    "vot": 2,
    "vitorias": 1,
@@ -143,8 +143,8 @@
    "derrotas": 3
   },
   "drogas": {
-   "prop": 93,
-   "extrema": 47,
+   "prop": 94,
+   "extrema": 48,
    "prop30": 1,
    "vot": 1,
    "vitorias": 1,
@@ -572,9 +572,9 @@
  },
  "blocos": {
   "T": {
-   "prop": 26476,
-   "pauta": 2654,
-   "pautaExtrema": 1718,
+   "prop": 26483,
+   "pauta": 2690,
+   "pautaExtrema": 1742,
    "vot": 1607,
    "comSit": 26452,
    "aprovada": 1012,
@@ -583,7 +583,7 @@
    "grupos": {
     "extrema": {
      "prop": 5999,
-     "pauta": 1315,
+     "pauta": 1329,
      "membros": 158,
      "emExercicio": 120,
      "vot": 1576,
@@ -594,8 +594,8 @@
      "arquivada": 481
     },
     "direita": {
-     "prop": 9284,
-     "pauta": 894,
+     "prop": 9285,
+     "pauta": 907,
      "membros": 291,
      "emExercicio": 227,
      "vot": 1560,
@@ -606,8 +606,8 @@
      "arquivada": 650
     },
     "centro": {
-     "prop": 7122,
-     "pauta": 327,
+     "prop": 7125,
+     "pauta": 332,
      "membros": 155,
      "emExercicio": 126,
      "vot": 1520,
@@ -618,8 +618,8 @@
      "arquivada": 374
     },
     "esquerda": {
-     "prop": 4018,
-     "pauta": 116,
+     "prop": 4021,
+     "pauta": 120,
      "membros": 146,
      "emExercicio": 120,
      "vot": 1583,
@@ -658,7 +658,7 @@
      }
     },
     "cuidado-envelhecimento": {
-     "n": 768,
+     "n": 769,
      "ap": 20,
      "g": {
       "direita": [
@@ -677,7 +677,7 @@
        0
       ],
       "centro": [
-       255,
+       256,
        5,
        4
       ]
@@ -716,7 +716,7 @@
       "direita": [
        549,
        21,
-       43
+       44
       ],
       "centro": [
        326,
@@ -736,23 +736,23 @@
      }
     },
     "penal-prisional": {
-     "n": 2014,
+     "n": 2015,
      "ap": 58,
      "g": {
       "direita": [
        693,
        23,
-       280
+       282
       ],
       "centro": [
-       400,
+       401,
        14,
-       113
+       115
       ],
       "extrema": [
        669,
        13,
-       317
+       320
       ],
       "esquerda": [
        251,
@@ -762,7 +762,7 @@
      }
     },
     "fiscal-orcamento": {
-     "n": 1236,
+     "n": 1237,
      "ap": 25,
      "g": {
       "direita": [
@@ -781,14 +781,14 @@
        41
       ],
       "esquerda": [
-       143,
+       144,
        8,
-       2
+       3
       ]
      }
     },
     "saude-mental-drogas": {
-     "n": 562,
+     "n": 563,
      "ap": 15,
      "g": {
       "esquerda": [
@@ -802,14 +802,14 @@
        49
       ],
       "centro": [
-       179,
+       180,
        4,
-       14
+       15
       ],
       "extrema": [
        145,
        3,
-       55
+       56
       ]
      }
     },
@@ -851,7 +851,7 @@
       "extrema": [
        321,
        9,
-       88
+       92
       ],
       "direita": [
        525,
@@ -877,7 +877,7 @@
       "extrema": [
        172,
        3,
-       32
+       33
       ],
       "direita": [
        391,
@@ -898,7 +898,7 @@
       "centro": [
        98,
        2,
-       2
+       3
       ],
       "direita": [
        75,
@@ -970,7 +970,7 @@
      }
     },
     "turismo": {
-     "n": 300,
+     "n": 301,
      "ap": 34,
      "g": {
       "direita": [
@@ -984,7 +984,7 @@
        7
       ],
       "centro": [
-       72,
+       73,
        1,
        0
       ],
@@ -1002,7 +1002,7 @@
       "direita": [
        313,
        5,
-       44
+       45
       ],
       "extrema": [
        246,
@@ -1043,7 +1043,7 @@
       "esquerda": [
        86,
        3,
-       0
+       1
       ]
      }
     },
@@ -1064,7 +1064,7 @@
       "direita": [
        97,
        3,
-       23
+       24
       ],
       "centro": [
        45,
@@ -1095,7 +1095,7 @@
       "centro": [
        74,
        3,
-       1
+       2
       ]
      }
     },
@@ -1137,7 +1137,7 @@
       "direita": [
        282,
        2,
-       3
+       4
       ],
       "centro": [
        253,
@@ -1210,7 +1210,7 @@
       "extrema": [
        175,
        5,
-       43
+       44
       ],
       "direita": [
        248,
@@ -1220,7 +1220,7 @@
       "centro": [
        241,
        5,
-       6
+       7
       ],
       "esquerda": [
        174,
@@ -1402,7 +1402,7 @@
       "extrema": [
        146,
        0,
-       40
+       41
       ],
       "esquerda": [
        154,
@@ -1444,7 +1444,7 @@
       "direita": [
        106,
        4,
-       9
+       10
       ],
       "centro": [
        55,
@@ -1454,7 +1454,7 @@
       "extrema": [
        75,
        1,
-       14
+       15
       ],
       "esquerda": [
        42,
@@ -1470,7 +1470,7 @@
       "extrema": [
        182,
        2,
-       146
+       147
       ],
       "direita": [
        77,
@@ -1652,7 +1652,7 @@
       "extrema": [
        424,
        11,
-       200
+       201
       ],
       "centro": [
        196,
@@ -1672,7 +1672,7 @@
      }
     },
     "reforma-politica": {
-     "n": 314,
+     "n": 315,
      "ap": 6,
      "g": {
       "extrema": [
@@ -1681,7 +1681,7 @@
        25
       ],
       "esquerda": [
-       70,
+       71,
        0,
        1
       ],
@@ -1870,7 +1870,7 @@
       "esquerda": [
        34,
        0,
-       3
+       4
       ],
       "centro": [
        21,
@@ -1938,7 +1938,7 @@
       "direita": [
        77,
        3,
-       34
+       35
       ],
       "esquerda": [
        22,
@@ -1948,7 +1948,7 @@
       "extrema": [
        117,
        1,
-       50
+       52
       ],
       "centro": [
        22,
@@ -1974,7 +1974,7 @@
       "direita": [
        200,
        6,
-       37
+       38
       ],
       "extrema": [
        117,
@@ -2042,27 +2042,27 @@
       "esquerda": [
        179,
        0,
-       2
+       3
       ],
       "centro": [
        220,
        4,
-       8
+       10
       ],
       "extrema": [
        144,
        0,
-       30
+       31
       ],
       "direita": [
        243,
        1,
-       17
+       18
       ]
      }
     },
     "assistencia-renda": {
-     "n": 535,
+     "n": 536,
      "ap": 10,
      "g": {
       "direita": [
@@ -2071,7 +2071,7 @@
        9
       ],
       "centro": [
-       164,
+       165,
        3,
        4
       ],
@@ -2364,7 +2364,7 @@
       "extrema": [
        87,
        2,
-       24
+       25
       ],
       "centro": [
        61,
@@ -2432,7 +2432,7 @@
       "direita": [
        35,
        1,
-       0
+       1
       ],
       "extrema": [
        16,
@@ -2468,7 +2468,7 @@
       "esquerda": [
        28,
        0,
-       3
+       4
       ],
       "direita": [
        16,
@@ -2558,9 +2558,9 @@
    }
   },
   "C": {
-   "prop": 23363,
-   "pauta": 2286,
-   "pautaExtrema": 1467,
+   "prop": 23367,
+   "pauta": 2316,
+   "pautaExtrema": 1488,
    "vot": 1413,
    "comSit": 23360,
    "aprovada": 680,
@@ -2569,7 +2569,7 @@
    "grupos": {
     "extrema": {
      "prop": 5323,
-     "pauta": 1168,
+     "pauta": 1180,
      "membros": 137,
      "emExercicio": 105,
      "vot": 1382,
@@ -2580,8 +2580,8 @@
      "arquivada": 445
     },
     "direita": {
-     "prop": 8039,
-     "pauta": 755,
+     "prop": 8040,
+     "pauta": 765,
      "membros": 247,
      "emExercicio": 193,
      "vot": 1366,
@@ -2592,8 +2592,8 @@
      "arquivada": 582
     },
     "centro": {
-     "prop": 6685,
-     "pauta": 297,
+     "prop": 6687,
+     "pauta": 302,
      "membros": 139,
      "emExercicio": 112,
      "vot": 1328,
@@ -2604,8 +2604,8 @@
      "arquivada": 364
     },
     "esquerda": {
-     "prop": 3316,
-     "pauta": 66,
+     "prop": 3317,
+     "pauta": 69,
      "membros": 122,
      "emExercicio": 103,
      "vot": 1391,
@@ -2644,7 +2644,7 @@
      }
     },
     "cuidado-envelhecimento": {
-     "n": 693,
+     "n": 694,
      "ap": 10,
      "g": {
       "direita": [
@@ -2663,7 +2663,7 @@
        0
       ],
       "centro": [
-       246,
+       247,
        3,
        4
       ]
@@ -2702,7 +2702,7 @@
       "direita": [
        482,
        10,
-       40
+       41
       ],
       "centro": [
        314,
@@ -2722,23 +2722,23 @@
      }
     },
     "penal-prisional": {
-     "n": 1714,
+     "n": 1715,
      "ap": 41,
      "g": {
       "direita": [
        598,
        14,
-       244
+       246
       ],
       "centro": [
-       359,
+       360,
        13,
-       101
+       103
       ],
       "extrema": [
        596,
        10,
-       280
+       283
       ],
       "esquerda": [
        161,
@@ -2748,7 +2748,7 @@
      }
     },
     "fiscal-orcamento": {
-     "n": 1065,
+     "n": 1066,
      "ap": 18,
      "g": {
       "direita": [
@@ -2767,14 +2767,14 @@
        37
       ],
       "esquerda": [
-       120,
+       121,
        6,
-       1
+       2
       ]
      }
     },
     "saude-mental-drogas": {
-     "n": 507,
+     "n": 508,
      "ap": 11,
      "g": {
       "esquerda": [
@@ -2788,14 +2788,14 @@
        43
       ],
       "centro": [
-       164,
+       165,
        4,
-       12
+       13
       ],
       "extrema": [
        133,
        3,
-       51
+       52
       ]
      }
     },
@@ -2837,7 +2837,7 @@
       "extrema": [
        283,
        7,
-       75
+       79
       ],
       "direita": [
        473,
@@ -2863,7 +2863,7 @@
       "extrema": [
        150,
        2,
-       24
+       25
       ],
       "direita": [
        341,
@@ -2884,7 +2884,7 @@
       "centro": [
        89,
        1,
-       2
+       3
       ],
       "direita": [
        66,
@@ -3003,7 +3003,7 @@
       "esquerda": [
        79,
        2,
-       0
+       1
       ]
      }
     },
@@ -3024,7 +3024,7 @@
       "direita": [
        74,
        2,
-       15
+       16
       ],
       "centro": [
        38,
@@ -3055,7 +3055,7 @@
       "centro": [
        71,
        2,
-       1
+       2
       ]
      }
     },
@@ -3097,7 +3097,7 @@
       "direita": [
        264,
        2,
-       3
+       4
       ],
       "centro": [
        245,
@@ -3170,7 +3170,7 @@
       "extrema": [
        156,
        2,
-       39
+       40
       ],
       "direita": [
        217,
@@ -3180,7 +3180,7 @@
       "centro": [
        233,
        4,
-       5
+       6
       ],
       "esquerda": [
        149,
@@ -3362,7 +3362,7 @@
       "extrema": [
        119,
        0,
-       33
+       34
       ],
       "esquerda": [
        129,
@@ -3404,12 +3404,12 @@
       "direita": [
        79,
        1,
-       9
+       10
       ],
       "extrema": [
        65,
        1,
-       13
+       14
       ],
       "centro": [
        48,
@@ -3430,7 +3430,7 @@
       "extrema": [
        165,
        1,
-       132
+       133
       ],
       "direita": [
        66,
@@ -3612,7 +3612,7 @@
       "extrema": [
        399,
        10,
-       184
+       185
       ],
       "centro": [
        175,
@@ -3638,7 +3638,7 @@
       "direita": [
        274,
        3,
-       40
+       41
       ],
       "extrema": [
        220,
@@ -3820,7 +3820,7 @@
       "direita": [
        63,
        2,
-       29
+       30
       ],
       "esquerda": [
        18,
@@ -3830,7 +3830,7 @@
       "extrema": [
        100,
        1,
-       41
+       42
       ],
       "centro": [
        18,
@@ -3851,7 +3851,7 @@
       "direita": [
        159,
        3,
-       26
+       27
       ],
       "esquerda": [
        64,
@@ -3892,7 +3892,7 @@
      }
     },
     "assistencia-renda": {
-     "n": 485,
+     "n": 486,
      "ap": 7,
      "g": {
       "direita": [
@@ -3901,7 +3901,7 @@
        9
       ],
       "centro": [
-       160,
+       161,
        3,
        4
       ],
@@ -3950,22 +3950,22 @@
       "esquerda": [
        149,
        0,
-       1
+       2
       ],
       "centro": [
        211,
        4,
-       8
+       10
       ],
       "extrema": [
        129,
        0,
-       27
+       28
       ],
       "direita": [
        225,
        0,
-       17
+       18
       ]
      }
     },
@@ -4324,7 +4324,7 @@
       "extrema": [
        73,
        2,
-       21
+       22
       ],
       "centro": [
        56,
@@ -4366,7 +4366,7 @@
       "direita": [
        31,
        0,
-       0
+       1
       ],
       "extrema": [
        15,
@@ -4402,7 +4402,7 @@
       "esquerda": [
        26,
        0,
-       3
+       4
       ],
       "direita": [
        14,
@@ -4544,9 +4544,9 @@
    }
   },
   "S": {
-   "prop": 3113,
-   "pauta": 368,
-   "pautaExtrema": 251,
+   "prop": 3116,
+   "pauta": 374,
+   "pautaExtrema": 254,
    "vot": 194,
    "comSit": 3092,
    "aprovada": 332,
@@ -4555,7 +4555,7 @@
    "grupos": {
     "extrema": {
      "prop": 676,
-     "pauta": 147,
+     "pauta": 149,
      "membros": 21,
      "emExercicio": 15,
      "vot": 194,
@@ -4567,7 +4567,7 @@
     },
     "direita": {
      "prop": 1245,
-     "pauta": 139,
+     "pauta": 142,
      "membros": 44,
      "emExercicio": 34,
      "vot": 194,
@@ -4578,7 +4578,7 @@
      "arquivada": 68
     },
     "centro": {
-     "prop": 437,
+     "prop": 438,
      "pauta": 30,
      "membros": 16,
      "emExercicio": 14,
@@ -4590,8 +4590,8 @@
      "arquivada": 10
     },
     "esquerda": {
-     "prop": 702,
-     "pauta": 50,
+     "prop": 704,
+     "pauta": 51,
      "membros": 24,
      "emExercicio": 17,
      "vot": 192,
@@ -5098,7 +5098,7 @@
      }
     },
     "reforma-politica": {
-     "n": 62,
+     "n": 63,
      "ap": 0,
      "g": {
       "extrema": [
@@ -5117,7 +5117,7 @@
        0
       ],
       "esquerda": [
-       13,
+       14,
        0,
        1
       ]
@@ -5140,7 +5140,7 @@
       "esquerda": [
        6,
        0,
-       1
+       2
       ],
       "centro": [
        3,
@@ -5463,7 +5463,7 @@
       "extrema": [
        17,
        0,
-       9
+       10
       ],
       "centro": [
        4,
@@ -5587,7 +5587,7 @@
      }
     },
     "turismo": {
-     "n": 25,
+     "n": 26,
      "ap": 10,
      "g": {
       "extrema": [
@@ -5603,6 +5603,11 @@
       "esquerda": [
        4,
        2,
+       0
+      ],
+      "centro": [
+       1,
+       0,
        0
       ]
      }
