@@ -28,6 +28,13 @@ Esta seção resume a sessão de 30/10 a 17/11. O histórico anterior está no a
 - **Dossiê especial no site** (17/11): `dossies/plp-299-2026.html` e `.pdf`, convertidos do documento principal sem a marca da plataforma, listados em "Dossiês especiais" na página de dossiês. Ao atualizar o documento, refazer a página e o PDF e trocar a linha de versão em `ESPECIAIS`.
 - **Próximo passo:** atualizar os dois documentos com o resultado dos destaques de 17/11, sobretudo o do Republicanos (Alan Rick) que retira a restrição às compensações. Depois, a votação na Câmara. Oferecida uma planilha com todas as empresas de cada parlamentar.
 
+## Mídia e parlamentares (17/11)
+- **Base da Receita e do TSE no Cloudflare R2** (bucket privado `exterminadores-dados`; segredos `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY` no GitHub). Espelho por `robo/analises/receita_r2.py` (CNPJ do mês atual completo, Sócios de mai/2023, TSE 2018/2022/2026; ~9,3 GB, 1h24). Falta agendar o espelho mensal e apagar o mês anterior para ficar abaixo de 10 GB.
+- **Análises avulsas** rodam também quando `robo/analises/fila.txt` muda no main (primeira linha = script), porque o token desta sessão não aciona workflows. Limite de 6 h. O GitHub recusa arquivos acima de 100 MB: saídas grandes vão compactadas (.json.gz).
+- `robo/analises/midia3.py` (versão final; midia.py e midia2.py são tentativas anteriores) gera o universo de emissoras e jornais e os cruzamentos; saída no ramo `analises-saida-midia3`. `robo/analises/midia_analise.py <saída> <saída do plp299_tudo>` calcula os vínculos por faixa. A planilha com os vínculos (indícios de parentesco e laranjas) foi entregue ao James na conversa e **não** deve ir para o repositório público.
+- Resultado: 50 parlamentares em exercício com vínculo direto, 54 com indireto forte, 28 por sobrenome. Os ramos `analises-saida-midia` e `analises-saida-midia2` são de execuções que travaram e podem ser apagados.
+- Gabinetes do Senado ainda não cruzados (adm.senado.gov.br não é acessível daqui; incluir no robô).
+
 ## Pendências do James
 - 2FA no GitHub, Cloudflare e Registro.br e revisão dos tokens dos revisores encaminhadas pelo James em 17/11. Ramo `diag-dns` apagado em 17/11 (esta sessão não consegue apagar ramos; o James apaga pelo site).
 
