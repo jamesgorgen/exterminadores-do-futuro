@@ -1,1 +1,1 @@
-r2_teste.py
+receita_r2.py
