@@ -140,6 +140,8 @@ def ler(mes, nome, tratar, guardar=False):
                 for r in csv.reader(io.TextIOWrapper(f, encoding='latin-1', errors='ignore'), delimiter=';'):
                     tratar(r)
     if not guardar: os.remove(z)
+    open(f'{OUT}/progresso.txt', 'a').write(f'{(time.time()-T0)/60:.0f} min {mes} {nome}\n')
+    if nome[-5] in '369': publicar(f'lido {mes} {nome}')
 
 CNAE_MIDIA = {'6010100': 'rádio', '6021700': 'TV aberta', '6022501': 'TV por assinatura (programadora)', '6022502': 'TV por assinatura',
               '5812301': 'jornal diário', '5812302': 'jornal não diário', '5822101': 'jornal diário (edição e impressão)',
@@ -160,10 +162,9 @@ def estabelecimentos():
         cnpj14 = b + r[1] + r[2]
         if b in mcom8 or cnaes or b in NOMES:
             u = U.setdefault(b, {'estab': [], 'cnaes': set(), 'mcom': False})
-            u['estab'].append({'cnpj': cnpj14, 'sit': r[5], 'cnae': cn, 'fantasia': r[4], 'uf': r[19], 'mun': r[20],
-                               'end': ' '.join(x for x in r[13:18] if x), 'tel': r[21] + r[22], 'email': r[27].lower()})
+            if len(u['estab']) < 5: u['estab'].append({'cnpj': cnpj14, 'sit': r[5], 'cnae': cn, 'uf': r[19], 'mun': r[20]})
             u['cnaes'] |= set(cnaes); u['mcom'] = u['mcom'] or cnpj14 in MCOM
-        if b in U or b in EMP_PARL:
+        if (b in U and r[5] == '02') or b in EMP_PARL:
             if len(r[22]) >= 8: CONTATO[('tel', r[21] + r[22])].add(b)
             if '@' in r[27]: CONTATO[('email', r[27].lower())].add(b)
             if r[14]: CONTATO[('end', norm(' '.join(r[14:16]) + ' ' + r[18]))].add(b)
