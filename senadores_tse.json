@@ -1,0 +1,1945 @@
+{
+ "senadores": {
+  "5672": {
+   "nomeCompleto": "Alan Rick Miranda",
+   "nasc": "1976-10-23",
+   "codigo": "5672",
+   "nome": "Alan Rick",
+   "partido": "REPUBLICANOS",
+   "uf": "AC",
+   "urgencia": "Não",
+   "substitutivo": "Não",
+   "tse": [
+    {
+     "ano": 2022,
+     "sq": "10001714547",
+     "cpf": "44726570234",
+     "cargo": "SENADOR",
+     "uf": "AC",
+     "nasc": "23/10/1976",
+     "urna": "ALAN RICK",
+     "sit": "ELEITO",
+     "ocup": "SENADOR, DEPUTADO E VEREADOR"
+    }
+   ]
+  },
+  "5982": {
+   "nomeCompleto": "Alessandro Vieira",
+   "nasc": "1975-04-03",
+   "codigo": "5982",
+   "nome": "Alessandro Vieira",
+   "partido": "MDB",
+   "uf": "SE",
+   "urgencia": "Não",
+   "substitutivo": "Não",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "260000601810",
+     "cpf": "71943790582",
+     "cargo": "SENADOR",
+     "uf": "SE",
+     "nasc": "03/04/1975",
+     "urna": "DELEGADO ALESSANDRO VIEIRA",
+     "sit": "ELEITO",
+     "ocup": "POLICIAL CIVIL"
+    }
+   ]
+  },
+  "6358": {
+   "nomeCompleto": "Ana Paula Dias Lobato Nova Alves",
+   "nasc": "1984-05-11",
+   "codigo": "6358",
+   "nome": "Ana Paula Lobato",
+   "partido": "PSB",
+   "uf": "MA",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2022,
+     "sq": "100001607044",
+     "cpf": "99036860300",
+     "cargo": "1º SUPLENTE",
+     "uf": "MA",
+     "nasc": "11/05/1984",
+     "urna": "ANA PAULA LOBATO",
+     "sit": "ELEITO",
+     "ocup": "ENFERMEIRA/ENFERMEIRO"
+    }
+   ]
+  },
+  "5967": {
+   "nomeCompleto": "Angelo Mario Coronel de Azevedo Martins",
+   "nasc": "1958-05-03",
+   "codigo": "5967",
+   "nome": "Angelo Coronel",
+   "partido": "REPUBLICANOS",
+   "uf": "BA",
+   "urgencia": "Ausente",
+   "substitutivo": "Não",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "50000607716",
+     "cpf": "77865111568",
+     "cargo": "SENADOR",
+     "uf": "BA",
+     "nasc": "03/05/1958",
+     "urna": "ANGELO CORONEL",
+     "sit": "ELEITO",
+     "ocup": "DEPUTADO"
+    }
+   ]
+  },
+  "6009": {
+   "nomeCompleto": "Marcos Cesar Pontes",
+   "nasc": "1963-03-11",
+   "codigo": "6009",
+   "nome": "Astronauta Marcos Pontes",
+   "partido": "PL",
+   "uf": "SP",
+   "urgencia": "Não",
+   "substitutivo": "Não",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "250000615468",
+     "cpf": "04097163833",
+     "cargo": "2º SUPLENTE",
+     "uf": "SP",
+     "nasc": "11/03/1963",
+     "urna": "ASTRONAUTA MARCOS PONTES",
+     "sit": "ELEITO",
+     "ocup": "OUTROS"
+    },
+    {
+     "ano": 2022,
+     "sq": "250001612472",
+     "cpf": "04097163833",
+     "cargo": "SENADOR",
+     "uf": "SP",
+     "nasc": "11/03/1963",
+     "urna": "ASTRONAUTA MARCOS PONTES",
+     "sit": "ELEITO",
+     "ocup": "OUTROS"
+    }
+   ]
+  },
+  "4639": {
+   "nomeCompleto": "José Roberto Oliveira Faro",
+   "nasc": "1969-06-20",
+   "codigo": "4639",
+   "nome": "Beto Faro",
+   "partido": "PT",
+   "uf": "PA",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2022,
+     "sq": "140001611661",
+     "cpf": "40070565287",
+     "cargo": "SENADOR",
+     "uf": "PA",
+     "nasc": "20/06/1969",
+     "urna": "BETO FARO",
+     "sit": "ELEITO",
+     "ocup": "DEPUTADA/DEPUTADO"
+    }
+   ]
+  },
+  "6336": {
+   "nomeCompleto": "Camilo Sobreira de Santana",
+   "nasc": "1968-06-03",
+   "codigo": "6336",
+   "nome": "Camilo Santana",
+   "partido": "PT",
+   "uf": "CE",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2022,
+     "sq": "60001633582",
+     "cpf": "28958527315",
+     "cargo": "SENADOR",
+     "uf": "CE",
+     "nasc": "03/06/1968",
+     "urna": "CAMILO",
+     "sit": "ELEITO",
+     "ocup": "AGRÔNOMA/AGRÔNOMO"
+    }
+   ]
+  },
+  "6295": {
+   "nomeCompleto": "Carlos Henrique Baqueta Fávaro",
+   "nasc": "1969-10-19",
+   "codigo": "6295",
+   "nome": "Carlos Fávaro",
+   "partido": "PSD",
+   "uf": "MT",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "110000631688",
+     "cpf": "-4",
+     "cargo": "SENADOR",
+     "uf": "MT",
+     "nasc": "",
+     "urna": "CARLOS FAVARO",
+     "sit": "#NULO#",
+     "ocup": "NÃO DIVULGÁVEL"
+    },
+    {
+     "ano": 2018,
+     "sq": "110000612717",
+     "cpf": "62918311987",
+     "cargo": "SENADOR",
+     "uf": "MT",
+     "nasc": "19/10/1969",
+     "urna": "FÁVARO",
+     "sit": "NÃO ELEITO",
+     "ocup": "PRODUTOR AGROPECUÁRIO"
+    },
+    {
+     "ano": 2018,
+     "sq": "280001027643",
+     "cpf": "62918311987",
+     "cargo": "SENADOR",
+     "uf": "MT",
+     "nasc": "19/10/1969",
+     "urna": "FÁVARO",
+     "sit": "ELEITO",
+     "ocup": "SENADOR"
+    }
+   ]
+  },
+  "5936": {
+   "nomeCompleto": "Carlos Francisco Portinho",
+   "nasc": "1973-07-02",
+   "codigo": "5936",
+   "nome": "Carlos Portinho",
+   "partido": "PL",
+   "uf": "RJ",
+   "urgencia": "Não",
+   "substitutivo": "Não",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "190000607914",
+     "cpf": "02522911740",
+     "cargo": "1º SUPLENTE",
+     "uf": "RJ",
+     "nasc": "02/07/1973",
+     "urna": "PORTINHO",
+     "sit": "ELEITO",
+     "ocup": "ADVOGADO"
+    }
+   ]
+  },
+  "5990": {
+   "nomeCompleto": "Carlos Alberto Dias Viana",
+   "nasc": "1963-03-22",
+   "codigo": "5990",
+   "nome": "Carlos Viana",
+   "partido": "PSD",
+   "uf": "MG",
+   "urgencia": "Não",
+   "substitutivo": "Não",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "130000612381",
+     "cpf": "40890708649",
+     "cargo": "SENADOR",
+     "uf": "MG",
+     "nasc": "22/03/1963",
+     "urna": "JORNALISTA CARLOS VIANA",
+     "sit": "ELEITO",
+     "ocup": "JORNALISTA E REDATOR"
+    }
+   ]
+  },
+  "470": {
+   "nomeCompleto": "Francisco de Assis Rodrigues",
+   "nasc": "1951-04-23",
+   "codigo": "470",
+   "nome": "Chico Rodrigues",
+   "partido": "PSB",
+   "uf": "RR",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "230000601673",
+     "cpf": "07654871449",
+     "cargo": "SENADOR",
+     "uf": "RR",
+     "nasc": "23/04/1951",
+     "urna": "CHICO RODRIGUES",
+     "sit": "ELEITO",
+     "ocup": "ENGENHEIRO"
+    }
+   ]
+  },
+  "5973": {
+   "nomeCompleto": "Cid Ferreira Gomes",
+   "nasc": "1963-04-27",
+   "codigo": "5973",
+   "nome": "Cid Gomes",
+   "partido": "PSB",
+   "uf": "CE",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "60000610981",
+     "cpf": "20912013320",
+     "cargo": "SENADOR",
+     "uf": "CE",
+     "nasc": "27/04/1963",
+     "urna": "CID GOMES",
+     "sit": "ELEITO",
+     "ocup": "ENGENHEIRO"
+    }
+   ]
+  },
+  "739": {
+   "nomeCompleto": "Ciro Nogueira Lima Filho",
+   "nasc": "1968-11-21",
+   "codigo": "739",
+   "nome": "Ciro Nogueira",
+   "partido": "PP",
+   "uf": "PI",
+   "urgencia": "Não",
+   "substitutivo": "Ausente",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "180000614004",
+     "cpf": "34190392391",
+     "cargo": "SENADOR",
+     "uf": "PI",
+     "nasc": "21/11/1968",
+     "urna": "CIRO NOGUEIRA",
+     "sit": "ELEITO",
+     "ocup": "SENADOR"
+    }
+   ]
+  },
+  "6337": {
+   "nomeCompleto": "Cleiton Gontijo de Azevedo",
+   "nasc": "1982-04-15",
+   "codigo": "6337",
+   "nome": "Cleitinho",
+   "partido": "REPUBLICANOS",
+   "uf": "MG",
+   "urgencia": "Não",
+   "substitutivo": "Não",
+   "tse": [
+    {
+     "ano": 2022,
+     "sq": "130001671677",
+     "cpf": "22060312809",
+     "cargo": "SENADOR",
+     "uf": "MG",
+     "nasc": "15/04/1982",
+     "urna": "CLEITINHO",
+     "sit": "ELEITO",
+     "ocup": "DEPUTADA/DEPUTADO"
+    }
+   ]
+  },
+  "475": {
+   "nomeCompleto": "Confúcio Aires Moura",
+   "nasc": "1948-05-16",
+   "codigo": "475",
+   "nome": "Confúcio Moura",
+   "partido": "MDB",
+   "uf": "RO",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "220000618467",
+     "cpf": "03733831187",
+     "cargo": "SENADOR",
+     "uf": "RO",
+     "nasc": "16/05/1948",
+     "urna": "CONFUCIO MOURA",
+     "sit": "ELEITO",
+     "ocup": "MÉDICO"
+    }
+   ]
+  },
+  "6335": {
+   "nomeCompleto": "Damares Regina Alves",
+   "nasc": "1964-03-11",
+   "codigo": "6335",
+   "nome": "Damares Alves",
+   "partido": "REPUBLICANOS",
+   "uf": "DF",
+   "urgencia": "Não",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2022,
+     "sq": "70001677309",
+     "cpf": "26630869591",
+     "cargo": "SENADOR",
+     "uf": "DF",
+     "nasc": "11/03/1964",
+     "urna": "DAMARES ALVES",
+     "sit": "ELEITO",
+     "ocup": "ADVOGADA/ADVOGADO"
+    }
+   ]
+  },
+  "5998": {
+   "nomeCompleto": "Daniella Velloso Borges Ribeiro",
+   "nasc": "1972-03-26",
+   "codigo": "5998",
+   "nome": "Daniella Ribeiro",
+   "partido": "PP",
+   "uf": "PB",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "150000615600",
+     "cpf": "82671400420",
+     "cargo": "SENADOR",
+     "uf": "PB",
+     "nasc": "26/03/1972",
+     "urna": "DANIELLA RIBEIRO",
+     "sit": "ELEITO",
+     "ocup": "PEDAGOGO"
+    }
+   ]
+  },
+  "3830": {
+   "nomeCompleto": "David Samuel Alcolumbre Tobelem",
+   "nasc": "1977-06-19",
+   "codigo": "3830",
+   "nome": "Davi Alcolumbre",
+   "partido": "UNIÃO",
+   "uf": "AP",
+   "urgencia": "Presidente",
+   "substitutivo": "Presidente",
+   "tse": [
+    {
+     "ano": 2022,
+     "sq": "30001607748",
+     "cpf": "50900226234",
+     "cargo": "SENADOR",
+     "uf": "AP",
+     "nasc": "19/06/1977",
+     "urna": "DAVI",
+     "sit": "ELEITO",
+     "ocup": "SENADORA/SENADOR"
+    }
+   ]
+  },
+  "5793": {
+   "nomeCompleto": "Hiran Manuel Gonçalves da Silva",
+   "nasc": "1957-06-19",
+   "codigo": "5793",
+   "nome": "Dr. Hiran",
+   "partido": "PP",
+   "uf": "RR",
+   "urgencia": "Não",
+   "substitutivo": "Não",
+   "tse": [
+    {
+     "ano": 2022,
+     "sq": "230001604259",
+     "cpf": "14997169234",
+     "cargo": "SENADOR",
+     "uf": "RR",
+     "nasc": "19/06/1957",
+     "urna": "DR. HIRAN",
+     "sit": "ELEITO",
+     "ocup": "MÉDICA/MÉDICO"
+    }
+   ]
+  },
+  "5906": {
+   "nomeCompleto": "Eudocia Maria Holanda de Araujo Caldas",
+   "nasc": "1964-08-28",
+   "codigo": "5906",
+   "nome": "Dra. Eudócia",
+   "partido": "PSDB",
+   "uf": "AL",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "20000616691",
+     "cpf": "36042960482",
+     "cargo": "1º SUPLENTE",
+     "uf": "AL",
+     "nasc": "28/08/1964",
+     "urna": "EUDÓCIA CALDAS",
+     "sit": "ELEITO",
+     "ocup": "SERVIDOR PÚBLICO ESTADUAL"
+    }
+   ]
+  },
+  "4994": {
+   "nomeCompleto": "Carlos Eduardo de Souza Braga",
+   "nasc": "1960-12-06",
+   "codigo": "4994",
+   "nome": "Eduardo Braga",
+   "partido": "MDB",
+   "uf": "AM",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "40000618261",
+     "cpf": "07810423215",
+     "cargo": "SENADOR",
+     "uf": "AM",
+     "nasc": "06/12/1960",
+     "urna": "EDUARDO BRAGA",
+     "sit": "ELEITO",
+     "ocup": "SENADOR"
+    }
+   ]
+  },
+  "3777": {
+   "nomeCompleto": "Carlos Eduardo Torres Gomes",
+   "nasc": "1966-04-28",
+   "codigo": "3777",
+   "nome": "Eduardo Gomes",
+   "partido": "PL",
+   "uf": "TO",
+   "urgencia": "Não",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "270000618819",
+     "cpf": "31340261120",
+     "cargo": "1º SUPLENTE",
+     "uf": "TO",
+     "nasc": "28/04/1966",
+     "urna": "EDUARDO GOMES",
+     "sit": "#NULO#",
+     "ocup": "OUTROS"
+    },
+    {
+     "ano": 2018,
+     "sq": "270000629454",
+     "cpf": "31340261120",
+     "cargo": "SENADOR",
+     "uf": "TO",
+     "nasc": "28/04/1966",
+     "urna": "EDUARDO GOMES",
+     "sit": "ELEITO",
+     "ocup": "OUTROS"
+    }
+   ]
+  },
+  "4642": {
+   "nomeCompleto": "Efraim de Araújo Morais Filho",
+   "nasc": "1979-03-18",
+   "codigo": "4642",
+   "nome": "Efraim Filho",
+   "partido": "PL",
+   "uf": "PB",
+   "urgencia": "Não",
+   "substitutivo": "Não",
+   "tse": [
+    {
+     "ano": 2022,
+     "sq": "150001621390",
+     "cpf": "00770338410",
+     "cargo": "SENADOR",
+     "uf": "PB",
+     "nasc": "18/03/1979",
+     "urna": "EFRAIM FILHO",
+     "sit": "ELEITO",
+     "ocup": "DEPUTADA/DEPUTADO"
+    }
+   ]
+  },
+  "5718": {
+   "nomeCompleto": "Eliziane Pereira Gama Melo",
+   "nasc": "1977-02-27",
+   "codigo": "5718",
+   "nome": "Eliziane Gama",
+   "partido": "PSD",
+   "uf": "MA",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "100000603923",
+     "cpf": "75242788372",
+     "cargo": "SENADOR",
+     "uf": "MA",
+     "nasc": "27/02/1977",
+     "urna": "ELIZIANE GAMA",
+     "sit": "ELEITO",
+     "ocup": "DEPUTADO"
+    }
+   ]
+  },
+  "22": {
+   "nomeCompleto": "Esperidião Amin Helou Filho",
+   "nasc": "1947-12-21",
+   "codigo": "22",
+   "nome": "Esperidião Amin",
+   "partido": "PP",
+   "uf": "SC",
+   "urgencia": "Não",
+   "substitutivo": "Não",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "240000621326",
+     "cpf": "11268786934",
+     "cargo": "SENADOR",
+     "uf": "SC",
+     "nasc": "21/12/1947",
+     "urna": "ESPERIDIÃO AMIN",
+     "sit": "ELEITO",
+     "ocup": "DEPUTADO"
+    }
+   ]
+  },
+  "5953": {
+   "nomeCompleto": "Fabiano Contarato",
+   "nasc": "1966-06-20",
+   "codigo": "5953",
+   "nome": "Fabiano Contarato",
+   "partido": "PT",
+   "uf": "ES",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "80000612948",
+     "cpf": "86364561772",
+     "cargo": "SENADOR",
+     "uf": "ES",
+     "nasc": "20/06/1966",
+     "urna": "FABIANO CONTARATO",
+     "sit": "ELEITO",
+     "ocup": "POLICIAL CIVIL"
+    }
+   ]
+  },
+  "5917": {
+   "nomeCompleto": "Fernando Antonio Caminha Dueire",
+   "nasc": "1959-04-14",
+   "codigo": "5917",
+   "nome": "Fernando Dueire",
+   "partido": "PSD",
+   "uf": "PE",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "170000604552",
+     "cpf": "19364369491",
+     "cargo": "1º SUPLENTE",
+     "uf": "PE",
+     "nasc": "14/04/1959",
+     "urna": "FERNANDO DUEIRE",
+     "sit": "ELEITO",
+     "ocup": "SERVIDOR PÚBLICO FEDERAL"
+    }
+   ]
+  },
+  "345": {
+   "nomeCompleto": "Flávio José Arns",
+   "nasc": "1950-11-09",
+   "codigo": "345",
+   "nome": "Flávio Arns",
+   "partido": "PSB",
+   "uf": "PR",
+   "urgencia": "Não",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "160000609967",
+     "cpf": "18516440915",
+     "cargo": "SENADOR",
+     "uf": "PR",
+     "nasc": "09/11/1950",
+     "urna": "FLAVIO ARNS",
+     "sit": "ELEITO",
+     "ocup": "PROFESSOR DE ENSINO SUPERIOR"
+    }
+   ]
+  },
+  "5894": {
+   "nomeCompleto": "Flávio Nantes Bolsonaro",
+   "nasc": "1981-04-30",
+   "codigo": "5894",
+   "nome": "Flávio Bolsonaro",
+   "partido": "PL",
+   "uf": "RJ",
+   "urgencia": "Não",
+   "substitutivo": "Não",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "190000614721",
+     "cpf": "08701122797",
+     "cargo": "SENADOR",
+     "uf": "RJ",
+     "nasc": "30/04/1981",
+     "urna": "FLÁVIO BOLSONARO",
+     "sit": "ELEITO",
+     "ocup": "DEPUTADO"
+    }
+   ]
+  },
+  "6008": {
+   "nomeCompleto": "Alexandre Luiz Giordano",
+   "nasc": "1973-06-26",
+   "codigo": "6008",
+   "nome": "Giordano",
+   "partido": "PODE",
+   "uf": "SP",
+   "urgencia": "Ausente",
+   "substitutivo": "Ausente",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "250000615467",
+     "cpf": "22401662820",
+     "cargo": "1º SUPLENTE",
+     "uf": "SP",
+     "nasc": "26/06/1973",
+     "urna": "GIORDANO",
+     "sit": "ELEITO",
+     "ocup": "EMPRESÁRIO"
+    }
+   ]
+  },
+  "6341": {
+   "nomeCompleto": "Antonio Hamilton Martins Mourão",
+   "nasc": "1953-08-15",
+   "codigo": "6341",
+   "nome": "Hamilton Mourão",
+   "partido": "REPUBLICANOS",
+   "uf": "RS",
+   "urgencia": "Não",
+   "substitutivo": "Não",
+   "tse": [
+    {
+     "ano": 2022,
+     "sq": "210001610438",
+     "cpf": "23306386049",
+     "cargo": "SENADOR",
+     "uf": "RS",
+     "nasc": "15/08/1953",
+     "urna": "HAMILTON MOURÃO",
+     "sit": "ELEITO",
+     "ocup": "MEMBRA/MEMBRO DAS FORÇAS ARMADAS"
+    }
+   ]
+  },
+  "5008": {
+   "nomeCompleto": "Humberto Sérgio Costa Lima",
+   "nasc": "1957-07-07",
+   "codigo": "5008",
+   "nome": "Humberto Costa",
+   "partido": "PT",
+   "uf": "PE",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "170000604548",
+     "cpf": "15288455449",
+     "cargo": "SENADOR",
+     "uf": "PE",
+     "nasc": "07/07/1957",
+     "urna": "HUMBERTO COSTA",
+     "sit": "ELEITO",
+     "ocup": "SENADOR"
+    }
+   ]
+  },
+  "5385": {
+   "nomeCompleto": "Irajá Silvestre Filho",
+   "nasc": "1983-02-03",
+   "codigo": "5385",
+   "nome": "Irajá",
+   "partido": "PSD",
+   "uf": "TO",
+   "urgencia": "Sim",
+   "substitutivo": "Não",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "270000626087",
+     "cpf": "60507306104",
+     "cargo": "SENADOR",
+     "uf": "TO",
+     "nasc": "03/02/1983",
+     "urna": "IRAJÁ",
+     "sit": "ELEITO",
+     "ocup": "EMPRESÁRIO"
+    }
+   ]
+  },
+  "6010": {
+   "nomeCompleto": "Ivete Marli Appel da Silveira",
+   "nasc": "1943-05-28",
+   "codigo": "6010",
+   "nome": "Ivete da Silveira",
+   "partido": "MDB",
+   "uf": "SC",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "240000609540",
+     "cpf": "78345324134",
+     "cargo": "1º SUPLENTE",
+     "uf": "SC",
+     "nasc": "28/05/1943",
+     "urna": "IVETE DA SILVEIRA",
+     "sit": "ELEITO",
+     "ocup": "DONA DE CASA"
+    }
+   ]
+  },
+  "4770": {
+   "nomeCompleto": "Izalci Lucas Ferreira",
+   "nasc": "1956-04-07",
+   "codigo": "4770",
+   "nome": "Izalci Lucas",
+   "partido": "PL",
+   "uf": "DF",
+   "urgencia": "Não",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "70000625515",
+     "cpf": "06801480197",
+     "cargo": "SENADOR",
+     "uf": "DF",
+     "nasc": "07/04/1956",
+     "urna": "IZALCI",
+     "sit": "ELEITO",
+     "ocup": "DEPUTADO"
+    }
+   ]
+  },
+  "35": {
+   "nomeCompleto": "Jader Fontenelle Barbalho",
+   "nasc": "1944-10-27",
+   "codigo": "35",
+   "nome": "Jader Barbalho",
+   "partido": "MDB",
+   "uf": "PA",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "140000621333",
+     "cpf": "00018031234",
+     "cargo": "SENADOR",
+     "uf": "PA",
+     "nasc": "27/10/1944",
+     "urna": "JADER BARBALHO",
+     "sit": "ELEITO",
+     "ocup": "SENADOR"
+    }
+   ]
+  },
+  "6340": {
+   "nomeCompleto": "Jaime Maximino Bagattoli",
+   "nasc": "1961-04-26",
+   "codigo": "6340",
+   "nome": "Jaime Bagattoli",
+   "partido": "PL",
+   "uf": "RO",
+   "urgencia": "Não",
+   "substitutivo": "Não",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "220000625840",
+     "cpf": "38380196953",
+     "cargo": "SENADOR",
+     "uf": "RO",
+     "nasc": "26/04/1961",
+     "urna": "JAIME BAGATTOLI",
+     "sit": "NÃO ELEITO",
+     "ocup": "EMPRESÁRIO"
+    },
+    {
+     "ano": 2022,
+     "sq": "220001713729",
+     "cpf": "38380196953",
+     "cargo": "SENADOR",
+     "uf": "RO",
+     "nasc": "26/04/1961",
+     "urna": "JAIME BAGATTOLI",
+     "sit": "ELEITO",
+     "ocup": "EMPRESÁRIA/EMPRESÁRIO"
+    }
+   ]
+  },
+  "581": {
+   "nomeCompleto": "Jaques Wagner",
+   "nasc": "1951-03-16",
+   "codigo": "581",
+   "nome": "Jaques Wagner",
+   "partido": "PT",
+   "uf": "BA",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "50000607712",
+     "cpf": "26471620772",
+     "cargo": "SENADOR",
+     "uf": "BA",
+     "nasc": "16/03/1951",
+     "urna": "JAQUES WAGNER",
+     "sit": "ELEITO",
+     "ocup": "INDUSTRIAL"
+    }
+   ]
+  },
+  "4531": {
+   "nomeCompleto": "Jayme Veríssimo de Campos",
+   "nasc": "1951-09-13",
+   "codigo": "4531",
+   "nome": "Jayme Campos",
+   "partido": "UNIÃO",
+   "uf": "MT",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "110000612714",
+     "cpf": "04881044168",
+     "cargo": "SENADOR",
+     "uf": "MT",
+     "nasc": "13/09/1951",
+     "urna": "JAYME CAMPOS",
+     "sit": "ELEITO",
+     "ocup": "EMPRESÁRIO"
+    }
+   ]
+  },
+  "5895": {
+   "nomeCompleto": "Jorge Kajuru Reis da Costa Nasser",
+   "nasc": "1961-01-20",
+   "codigo": "5895",
+   "nome": "Jorge Kajuru",
+   "partido": "PSB",
+   "uf": "GO",
+   "urgencia": "Sim",
+   "substitutivo": "Não",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "90000613472",
+     "cpf": "21840571187",
+     "cargo": "SENADOR",
+     "uf": "GO",
+     "nasc": "20/01/1961",
+     "urna": "JORGE KAJURU",
+     "sit": "ELEITO",
+     "ocup": "JORNALEIRO"
+    }
+   ]
+  },
+  "6342": {
+   "nomeCompleto": "Jorge Seif Júnior",
+   "nasc": "1977-05-10",
+   "codigo": "6342",
+   "nome": "Jorge Seif",
+   "partido": "PL",
+   "uf": "SC",
+   "urgencia": "Não",
+   "substitutivo": "Ausente",
+   "tse": [
+    {
+     "ano": 2022,
+     "sq": "240001611131",
+     "cpf": "07312971725",
+     "cargo": "SENADOR",
+     "uf": "SC",
+     "nasc": "10/05/1977",
+     "urna": "JORGE SEIF",
+     "sit": "ELEITO",
+     "ocup": "EMPRESÁRIA/EMPRESÁRIO"
+    }
+   ]
+  },
+  "6369": {
+   "nomeCompleto": "Antônia Jussara Gomes Alves Sousa Lima",
+   "nasc": "1960-12-05",
+   "codigo": "6369",
+   "nome": "Jussara Lima",
+   "partido": "PSD",
+   "uf": "PI",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2022,
+     "sq": "180001605664",
+     "cpf": "22983643387",
+     "cargo": "1º SUPLENTE",
+     "uf": "PI",
+     "nasc": "05/12/1960",
+     "urna": "JUSSARA LIMA",
+     "sit": "ELEITO",
+     "ocup": "SOCIÓLOGA/SOCIÓLOGO"
+    }
+   ]
+  },
+  "4811": {
+   "nomeCompleto": "Laércio José de Oliveira",
+   "nasc": "1959-04-15",
+   "codigo": "4811",
+   "nome": "Laércio Oliveira",
+   "partido": "PP",
+   "uf": "SE",
+   "urgencia": "Não",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2022,
+     "sq": "260001635426",
+     "cpf": "16853881400",
+     "cargo": "SENADOR",
+     "uf": "SE",
+     "nasc": "15/04/1959",
+     "urna": "LAÉRCIO",
+     "sit": "ELEITO",
+     "ocup": "DEPUTADA/DEPUTADO"
+    }
+   ]
+  },
+  "5977": {
+   "nomeCompleto": "Leany Barreiro de Sousa Lemos",
+   "nasc": "1970-04-06",
+   "codigo": "5977",
+   "nome": "Leany Lemos",
+   "partido": "PSB",
+   "uf": "DF",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "70000614411",
+     "cpf": "49064428115",
+     "cargo": "1º SUPLENTE",
+     "uf": "DF",
+     "nasc": "06/04/1970",
+     "urna": "LEANY LEMOS",
+     "sit": "ELEITO",
+     "ocup": "SERVIDOR PÚBLICO FEDERAL"
+    }
+   ]
+  },
+  "5926": {
+   "nomeCompleto": "Luiz Cantuária Barreto",
+   "nasc": "1964-11-10",
+   "codigo": "5926",
+   "nome": "Lucas Barreto",
+   "partido": "PSD",
+   "uf": "AP",
+   "urgencia": "Não",
+   "substitutivo": "Não",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "30000607892",
+     "cpf": "20912340282",
+     "cargo": "SENADOR",
+     "uf": "AP",
+     "nasc": "10/11/1964",
+     "urna": "LUCAS BARRETO",
+     "sit": "ELEITO",
+     "ocup": "TÉCNICO DE ELETRICIDADE, ELETRÔNICA E TELECOMUNICAÇÕES"
+    }
+   ]
+  },
+  "1186": {
+   "nomeCompleto": "Luis Carlos Heinze",
+   "nasc": "1950-09-14",
+   "codigo": "1186",
+   "nome": "Luis Carlos Heinze",
+   "partido": "PP",
+   "uf": "RS",
+   "urgencia": "Não",
+   "substitutivo": "Não",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "210000622364",
+     "cpf": "14272954091",
+     "cargo": "SENADOR",
+     "uf": "RS",
+     "nasc": "14/09/1950",
+     "urna": "LUIS CARLOS HEINZE",
+     "sit": "ELEITO",
+     "ocup": "DEPUTADO"
+    }
+   ]
+  },
+  "631": {
+   "nomeCompleto": "Magno Pereira Malta",
+   "nasc": "1957-10-16",
+   "codigo": "631",
+   "nome": "Magno Malta",
+   "partido": "PL",
+   "uf": "ES",
+   "urgencia": "Não",
+   "substitutivo": "Não",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "80000607499",
+     "cpf": "15272567404",
+     "cargo": "SENADOR",
+     "uf": "ES",
+     "nasc": "16/10/1957",
+     "urna": "MAGNO MALTA",
+     "sit": "NÃO ELEITO",
+     "ocup": "MÚSICO"
+    },
+    {
+     "ano": 2022,
+     "sq": "80001720164",
+     "cpf": "15272567404",
+     "cargo": "SENADOR",
+     "uf": "ES",
+     "nasc": "16/10/1957",
+     "urna": "MAGNO MALTA",
+     "sit": "ELEITO",
+     "ocup": "MÚSICA/MÚSICO"
+    }
+   ]
+  },
+  "5376": {
+   "nomeCompleto": "Mara Cristina Gabrilli",
+   "nasc": "1967-09-28",
+   "codigo": "5376",
+   "nome": "Mara Gabrilli",
+   "partido": "PSD",
+   "uf": "SP",
+   "urgencia": "Não",
+   "substitutivo": "Não",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "250000612593",
+     "cpf": "24731270855",
+     "cargo": "SENADOR",
+     "uf": "SP",
+     "nasc": "28/09/1967",
+     "urna": "MARA GABRILLI",
+     "sit": "ELEITO",
+     "ocup": "DEPUTADO"
+    }
+   ]
+  },
+  "742": {
+   "nomeCompleto": "Marcelo Costa e Castro",
+   "nasc": "1950-06-09",
+   "codigo": "742",
+   "nome": "Marcelo Castro",
+   "partido": "MDB",
+   "uf": "PI",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "180000614005",
+     "cpf": "02382091304",
+     "cargo": "SENADOR",
+     "uf": "PI",
+     "nasc": "09/06/1950",
+     "urna": "MARCELO CASTRO",
+     "sit": "ELEITO",
+     "ocup": "DEPUTADO"
+    }
+   ]
+  },
+  "285": {
+   "nomeCompleto": "Marcio Miguel Bittar",
+   "nasc": "1963-06-28",
+   "codigo": "285",
+   "nome": "Marcio Bittar",
+   "partido": "PL",
+   "uf": "AC",
+   "urgencia": "Não",
+   "substitutivo": "Não",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "10000603061",
+     "cpf": "23796332153",
+     "cargo": "SENADOR",
+     "uf": "AC",
+     "nasc": "28/06/1963",
+     "urna": "MÁRCIO BITTAR",
+     "sit": "ELEITO",
+     "ocup": "HISTORIADOR"
+    }
+   ]
+  },
+  "5422": {
+   "nomeCompleto": "Marcos Rogério da Silva Brito",
+   "nasc": "1978-07-07",
+   "codigo": "5422",
+   "nome": "Marcos Rogério",
+   "partido": "PL",
+   "uf": "RO",
+   "urgencia": "Não",
+   "substitutivo": "Não",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "220000609853",
+     "cpf": "60232064253",
+     "cargo": "SENADOR",
+     "uf": "RO",
+     "nasc": "07/07/1978",
+     "urna": "MARCOS ROGÉRIO",
+     "sit": "ELEITO",
+     "ocup": "JORNALISTA E REDATOR"
+    }
+   ]
+  },
+  "5942": {
+   "nomeCompleto": "Marcos Ribeiro do Val",
+   "nasc": "1971-06-15",
+   "codigo": "5942",
+   "nome": "Marcos do Val",
+   "partido": "AVANTE",
+   "uf": "ES",
+   "urgencia": "Não",
+   "substitutivo": "Não",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "80000625508",
+     "cpf": "01720486727",
+     "cargo": "SENADOR",
+     "uf": "ES",
+     "nasc": "15/06/1971",
+     "urna": "MARCOS DO VAL",
+     "sit": "ELEITO",
+     "ocup": "OUTROS"
+    }
+   ]
+  },
+  "5985": {
+   "nomeCompleto": "Nelson Trad Filho",
+   "nasc": "1961-09-05",
+   "codigo": "5985",
+   "nome": "Nelsinho Trad",
+   "partido": "PSD",
+   "uf": "MS",
+   "urgencia": "Não",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "120000606866",
+     "cpf": "40448118149",
+     "cargo": "SENADOR",
+     "uf": "MS",
+     "nasc": "05/09/1961",
+     "urna": "NELSINHO TRAD",
+     "sit": "ELEITO",
+     "ocup": "MÉDICO"
+    }
+   ]
+  },
+  "5525": {
+   "nomeCompleto": "Omar José Abdel Aziz",
+   "nasc": "1958-08-13",
+   "codigo": "5525",
+   "nome": "Omar Aziz",
+   "partido": "PSD",
+   "uf": "AM",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2022,
+     "sq": "40001618514",
+     "cpf": "07588615249",
+     "cargo": "SENADOR",
+     "uf": "AM",
+     "nasc": "13/08/1958",
+     "urna": "OMAR AZIZ",
+     "sit": "ELEITO",
+     "ocup": "SENADORA/SENADOR"
+    }
+   ]
+  },
+  "5924": {
+   "nomeCompleto": "Oriovisto Guimaraes",
+   "nasc": "1945-08-12",
+   "codigo": "5924",
+   "nome": "Oriovisto Guimarães",
+   "partido": "PSDB",
+   "uf": "PR",
+   "urgencia": "Não",
+   "substitutivo": "Não",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "160000609227",
+     "cpf": "31662625987",
+     "cargo": "SENADOR",
+     "uf": "PR",
+     "nasc": "12/08/1945",
+     "urna": "PROFESSOR ORIOVISTO GUIMARAES",
+     "sit": "ELEITO",
+     "ocup": "EMPRESÁRIO"
+    }
+   ]
+  },
+  "5523": {
+   "nomeCompleto": "Otto Roberto Mendonça de Alencar",
+   "nasc": "1947-08-28",
+   "codigo": "5523",
+   "nome": "Otto Alencar",
+   "partido": "PSD",
+   "uf": "BA",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2022,
+     "sq": "50001605790",
+     "cpf": "05985234568",
+     "cargo": "SENADOR",
+     "uf": "BA",
+     "nasc": "28/08/1947",
+     "urna": "OTTO ALENCAR",
+     "sit": "ELEITO",
+     "ocup": "SENADORA/SENADOR"
+    }
+   ]
+  },
+  "825": {
+   "nomeCompleto": "Paulo Renato Paim",
+   "nasc": "1950-03-15",
+   "codigo": "825",
+   "nome": "Paulo Paim",
+   "partido": "PT",
+   "uf": "RS",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "210000606445",
+     "cpf": "11062975049",
+     "cargo": "SENADOR",
+     "uf": "RS",
+     "nasc": "15/03/1950",
+     "urna": "PAULO PAIM",
+     "sit": "ELEITO",
+     "ocup": "SENADOR"
+    }
+   ]
+  },
+  "5502": {
+   "nomeCompleto": "Francisco Plínio Valério Tomaz",
+   "nasc": "1955-01-31",
+   "codigo": "5502",
+   "nome": "Plínio Valério",
+   "partido": "PSDB",
+   "uf": "AM",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "40000603706",
+     "cpf": "03537250215",
+     "cargo": "SENADOR",
+     "uf": "AM",
+     "nasc": "31/01/1955",
+     "urna": "PLINIO VALERIO",
+     "sit": "ELEITO",
+     "ocup": "VEREADOR"
+    }
+   ]
+  },
+  "5386": {
+   "nomeCompleto": "Maria Auxiliadora Seabra Rezende",
+   "nasc": "1964-10-01",
+   "codigo": "5386",
+   "nome": "Professora Dorinha Seabra",
+   "partido": "UNIÃO",
+   "uf": "TO",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2022,
+     "sq": "270001649254",
+     "cpf": "43196926168",
+     "cargo": "SENADOR",
+     "uf": "TO",
+     "nasc": "01/10/1964",
+     "urna": "PROFESSORA DORINHA",
+     "sit": "ELEITO",
+     "ocup": "DEPUTADA/DEPUTADO"
+    }
+   ]
+  },
+  "5012": {
+   "nomeCompleto": "Randolph Frederich Rodrigues Alves",
+   "nasc": "1972-11-06",
+   "codigo": "5012",
+   "nome": "Randolfe Rodrigues",
+   "partido": "PT",
+   "uf": "AP",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "30000620104",
+     "cpf": "43187943268",
+     "cargo": "SENADOR",
+     "uf": "AP",
+     "nasc": "06/11/1972",
+     "urna": "RANDOLFE ",
+     "sit": "ELEITO",
+     "ocup": "SENADOR"
+    }
+   ]
+  },
+  "70": {
+   "nomeCompleto": "José Renan Vasconcelos Calheiros",
+   "nasc": "1955-09-16",
+   "codigo": "70",
+   "nome": "Renan Calheiros",
+   "partido": "MDB",
+   "uf": "AL",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "20000621738",
+     "cpf": "11078685487",
+     "cargo": "SENADOR",
+     "uf": "AL",
+     "nasc": "16/09/1955",
+     "urna": "RENAN",
+     "sit": "ELEITO",
+     "ocup": "SENADOR"
+    }
+   ]
+  },
+  "5207": {
+   "nomeCompleto": "José Renan Vasconcelos Calheiros Filho",
+   "nasc": "1979-10-08",
+   "codigo": "5207",
+   "nome": "Renan Filho",
+   "partido": "MDB",
+   "uf": "AL",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2022,
+     "sq": "20001698127",
+     "cpf": "71014772168",
+     "cargo": "SENADOR",
+     "uf": "AL",
+     "nasc": "08/10/1979",
+     "urna": "RENAN FILHO",
+     "sit": "ELEITO",
+     "ocup": "ECONOMISTA"
+    }
+   ]
+  },
+  "5257": {
+   "nomeCompleto": "Renzo do Amaral Braz",
+   "nasc": "1980-04-11",
+   "codigo": "5257",
+   "nome": "Renzo Braz",
+   "partido": "PP",
+   "uf": "MG",
+   "urgencia": "Não",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "130000604558",
+     "cpf": "04524796657",
+     "cargo": "1º SUPLENTE",
+     "uf": "MG",
+     "nasc": "11/04/1980",
+     "urna": "RENZO BRAZ",
+     "sit": "ELEITO",
+     "ocup": "EMPRESÁRIO"
+    }
+   ]
+  },
+  "6025": {
+   "nomeCompleto": "Roberta Leontina Xisto Acioly",
+   "nasc": "1978-10-19",
+   "codigo": "6025",
+   "nome": "Roberta Acioly",
+   "partido": "REPUBLICANOS",
+   "uf": "RR",
+   "urgencia": "Não",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "230000609421",
+     "cpf": "02473413479",
+     "cargo": "1º SUPLENTE",
+     "uf": "RR",
+     "nasc": "19/10/1978",
+     "urna": "ENFERMEIRA ROBERTA",
+     "sit": "ELEITO",
+     "ocup": "SERVIDOR PÚBLICO ESTADUAL"
+    }
+   ]
+  },
+  "4694": {
+   "nomeCompleto": "Rogério Simonetti Marinho",
+   "nasc": "1963-11-26",
+   "codigo": "4694",
+   "nome": "Rogerio Marinho",
+   "partido": "PL",
+   "uf": "RN",
+   "urgencia": "Não",
+   "substitutivo": "Não",
+   "tse": [
+    {
+     "ano": 2022,
+     "sq": "200001603037",
+     "cpf": "41301129453",
+     "cargo": "SENADOR",
+     "uf": "RN",
+     "nasc": "26/11/1963",
+     "urna": "ROGÉRIO MARINHO",
+     "sit": "ELEITO",
+     "ocup": "MINISTRA/MINISTRO DE ESTADO"
+    }
+   ]
+  },
+  "5352": {
+   "nomeCompleto": "Rogério Carvalho Santos",
+   "nasc": "1968-08-02",
+   "codigo": "5352",
+   "nome": "Rogério Carvalho",
+   "partido": "PT",
+   "uf": "SE",
+   "urgencia": "Sim",
+   "substitutivo": "Ausente",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "260000623617",
+     "cpf": "41168720591",
+     "cargo": "SENADOR",
+     "uf": "SE",
+     "nasc": "02/08/1968",
+     "urna": "ROGERIO CARVALHO SANTOS",
+     "sit": "ELEITO",
+     "ocup": "PROFESSOR DE ENSINO SUPERIOR"
+    }
+   ]
+  },
+  "5322": {
+   "nomeCompleto": "Romario de Souza Faria",
+   "nasc": "1966-01-29",
+   "codigo": "5322",
+   "nome": "Romário",
+   "partido": "S/Partido",
+   "uf": "RJ",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2022,
+     "sq": "190001612455",
+     "cpf": "90671953753",
+     "cargo": "SENADOR",
+     "uf": "RJ",
+     "nasc": "29/01/1966",
+     "urna": "ROMÁRIO",
+     "sit": "ELEITO",
+     "ocup": "SENADORA/SENADOR"
+    }
+   ]
+  },
+  "5974": {
+   "nomeCompleto": "Reginauro Sousa Nascimento",
+   "nasc": "1973-04-02",
+   "codigo": "5974",
+   "nome": "Sargento Reginauro",
+   "partido": "PSDB",
+   "uf": "CE",
+   "urgencia": "Não",
+   "substitutivo": "Não",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "60000611601",
+     "cpf": "50648527387",
+     "cargo": "1º SUPLENTE",
+     "uf": "CE",
+     "nasc": "02/04/1973",
+     "urna": "SARGENTO REGINAURO",
+     "sit": "ELEITO",
+     "ocup": "BOMBEIRO MILITAR"
+    }
+   ]
+  },
+  "6331": {
+   "nomeCompleto": "Sergio Fernando Moro",
+   "nasc": "1972-08-01",
+   "codigo": "6331",
+   "nome": "Sergio Moro",
+   "partido": "PL",
+   "uf": "PR",
+   "urgencia": "Não",
+   "substitutivo": "Não",
+   "tse": [
+    {
+     "ano": 2022,
+     "sq": "160001621846",
+     "cpf": "86327062920",
+     "cargo": "SENADOR",
+     "uf": "PR",
+     "nasc": "01/08/1972",
+     "urna": "SERGIO MORO",
+     "sit": "ELEITO",
+     "ocup": "ADVOGADA/ADVOGADO"
+    }
+   ]
+  },
+  "5988": {
+   "nomeCompleto": "Soraya Vieira Thronicke",
+   "nasc": "1973-06-01",
+   "codigo": "5988",
+   "nome": "Soraya Thronicke",
+   "partido": "PSB",
+   "uf": "MS",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "120000623873",
+     "cpf": "60838965172",
+     "cargo": "SENADOR",
+     "uf": "MS",
+     "nasc": "01/06/1973",
+     "urna": "SORAYA THRONICKE",
+     "sit": "ELEITO",
+     "ocup": "ADVOGADO"
+    }
+   ]
+  },
+  "5959": {
+   "nomeCompleto": "Eann Styvenson Valentim Mendes",
+   "nasc": "1977-02-07",
+   "codigo": "5959",
+   "nome": "Styvenson Valentim",
+   "partido": "PODE",
+   "uf": "RN",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "200000626720",
+     "cpf": "01195796420",
+     "cargo": "SENADOR",
+     "uf": "RN",
+     "nasc": "07/02/1977",
+     "urna": "CAPITÃO STYVENSON",
+     "sit": "ELEITO",
+     "ocup": "POLICIAL MILITAR"
+    }
+   ]
+  },
+  "4560": {
+   "nomeCompleto": "Sérgio de Oliveira Cunha",
+   "nasc": "1960-04-20",
+   "codigo": "4560",
+   "nome": "Sérgio Petecão",
+   "partido": "PSD",
+   "uf": "AC",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "10000603058",
+     "cpf": "09604332287",
+     "cargo": "SENADOR",
+     "uf": "AC",
+     "nasc": "20/04/1960",
+     "urna": "PETECÃO",
+     "sit": "ELEITO",
+     "ocup": "SENADOR"
+    }
+   ]
+  },
+  "6338": {
+   "nomeCompleto": "Maria Teresa Leitão de Melo",
+   "nasc": "1951-10-07",
+   "codigo": "6338",
+   "nome": "Teresa Leitão",
+   "partido": "PT",
+   "uf": "PE",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2022,
+     "sq": "170001618130",
+     "cpf": "40960749420",
+     "cargo": "SENADOR",
+     "uf": "PE",
+     "nasc": "07/10/1951",
+     "urna": "TERESA LEITÃO",
+     "sit": "ELEITO",
+     "ocup": "DEPUTADA/DEPUTADO"
+    }
+   ]
+  },
+  "5736": {
+   "nomeCompleto": "Tereza Cristina Correa da Costa Dias",
+   "nasc": "1954-07-06",
+   "codigo": "5736",
+   "nome": "Tereza Cristina",
+   "partido": "PP",
+   "uf": "MS",
+   "urgencia": "Não",
+   "substitutivo": "Não",
+   "tse": [
+    {
+     "ano": 2022,
+     "sq": "120001651640",
+     "cpf": "20969430604",
+     "cargo": "SENADOR",
+     "uf": "MS",
+     "nasc": "06/07/1954",
+     "urna": "TEREZA CRISTINA",
+     "sit": "ELEITO",
+     "ocup": "ENGENHEIRA/ENGENHEIRO"
+    }
+   ]
+  },
+  "5899": {
+   "nomeCompleto": "Vanderlan Vieira Cardoso",
+   "nasc": "1962-11-15",
+   "codigo": "5899",
+   "nome": "Vanderlan Cardoso",
+   "partido": "PSD",
+   "uf": "GO",
+   "urgencia": "Não",
+   "substitutivo": "Não",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "90000609234",
+     "cpf": "14464969291",
+     "cargo": "SENADOR",
+     "uf": "GO",
+     "nasc": "15/11/1962",
+     "urna": "VANDERLAN",
+     "sit": "ELEITO",
+     "ocup": "EMPRESÁRIO"
+    }
+   ]
+  },
+  "5748": {
+   "nomeCompleto": "Veneziano Vital do Rêgo Segundo Neto",
+   "nasc": "1970-07-17",
+   "codigo": "5748",
+   "nome": "Veneziano Vital do Rêgo",
+   "partido": "MDB",
+   "uf": "PB",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "150000603510",
+     "cpf": "71346376468",
+     "cargo": "SENADOR",
+     "uf": "PB",
+     "nasc": "17/07/1970",
+     "urna": "VENEZIANO",
+     "sit": "ELEITO",
+     "ocup": "DEPUTADO"
+    }
+   ]
+  },
+  "1173": {
+   "nomeCompleto": "Wellington Antonio Fagundes",
+   "nasc": "1957-06-01",
+   "codigo": "1173",
+   "nome": "Wellington Fagundes",
+   "partido": "PL",
+   "uf": "MT",
+   "urgencia": "Não",
+   "substitutivo": "Não",
+   "tse": [
+    {
+     "ano": 2022,
+     "sq": "110001676176",
+     "cpf": "23019093104",
+     "cargo": "SENADOR",
+     "uf": "MT",
+     "nasc": "01/06/1957",
+     "urna": "WELLINGTON FAGUNDES",
+     "sit": "ELEITO",
+     "ocup": "SENADORA/SENADOR"
+    }
+   ]
+  },
+  "5411": {
+   "nomeCompleto": "Weverton Rocha Marques de Sousa",
+   "nasc": "1979-10-08",
+   "codigo": "5411",
+   "nome": "Weverton",
+   "partido": "PDT",
+   "uf": "MA",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "100000603920",
+     "cpf": "62929399368",
+     "cargo": "SENADOR",
+     "uf": "MA",
+     "nasc": "08/10/1979",
+     "urna": "WEVERTON",
+     "sit": "ELEITO",
+     "ocup": "DEPUTADO"
+    }
+   ]
+  },
+  "5070": {
+   "nomeCompleto": "Wilder Pedro de Morais",
+   "nasc": "1968-06-29",
+   "codigo": "5070",
+   "nome": "Wilder Morais",
+   "partido": "PL",
+   "uf": "GO",
+   "urgencia": "Não",
+   "substitutivo": "Não",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "90000613469",
+     "cpf": "45434581172",
+     "cargo": "SENADOR",
+     "uf": "GO",
+     "nasc": "29/06/1968",
+     "urna": "WILDER MORAIS",
+     "sit": "NÃO ELEITO",
+     "ocup": "SENADOR"
+    },
+    {
+     "ano": 2022,
+     "sq": "90001652051",
+     "cpf": "45434581172",
+     "cargo": "SENADOR",
+     "uf": "GO",
+     "nasc": "29/06/1968",
+     "urna": "WILDER MORAIS",
+     "sit": "ELEITO",
+     "ocup": "EMPRESÁRIA/EMPRESÁRIO"
+    }
+   ]
+  },
+  "5783": {
+   "nomeCompleto": "Zenaide Maia Calado Pereira dos Santos",
+   "nasc": "1954-11-27",
+   "codigo": "5783",
+   "nome": "Zenaide Maia",
+   "partido": "PSD",
+   "uf": "RN",
+   "urgencia": "Sim",
+   "substitutivo": "Sim",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "200000606729",
+     "cpf": "12352993415",
+     "cargo": "SENADOR",
+     "uf": "RN",
+     "nasc": "27/11/1954",
+     "urna": "DR. ZENAIDE MAIA",
+     "sit": "ELEITO",
+     "ocup": "DEPUTADO"
+    }
+   ]
+  },
+  "3806": {
+   "nomeCompleto": "José da Cruz Marinho",
+   "nasc": "1959-09-18",
+   "codigo": "3806",
+   "nome": "Zequinha Marinho",
+   "partido": "PODE",
+   "uf": "PA",
+   "urgencia": "Não",
+   "substitutivo": "Não",
+   "tse": [
+    {
+     "ano": 2018,
+     "sq": "140000621337",
+     "cpf": "06651127268",
+     "cargo": "SENADOR",
+     "uf": "PA",
+     "nasc": "18/09/1959",
+     "urna": "ZEQUINHA MARINHO",
+     "sit": "ELEITO",
+     "ocup": "PEDAGOGO"
+    }
+   ]
+  }
+ },
+ "faltam": []
+}
