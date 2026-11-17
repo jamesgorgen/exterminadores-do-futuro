@@ -1,10 +1,10 @@
 {
- "gerado": "2026-11-17T18:39:02.395Z",
+ "gerado": "2026-11-17T20:03:49.127Z",
  "inicio": "2023-02-01",
  "totais": {
-  "proposicoes": 26473,
+  "proposicoes": 26476,
   "direita": 2654,
-  "extrema": 1695,
+  "extrema": 1720,
   "votacoes": 2450,
   "disputadas": 1181,
   "vitorias": 508,
@@ -31,24 +31,24 @@
  },
  "porPauta": {
   "armas": {
-   "prop": 303,
-   "extrema": 258,
+   "prop": 304,
+   "extrema": 260,
    "prop30": 1,
    "vot": 7,
    "vitorias": 4,
    "derrotas": 3
   },
   "punitivismo": {
-   "prop": 1282,
-   "extrema": 801,
-   "prop30": 12,
+   "prop": 1284,
+   "extrema": 810,
+   "prop30": 14,
    "vot": 22,
    "vitorias": 18,
    "derrotas": 1
   },
   "instituicoes": {
    "prop": 232,
-   "extrema": 203,
+   "extrema": 205,
    "prop30": 12,
    "vot": 29,
    "vitorias": 25,
@@ -56,15 +56,15 @@
   },
   "costumes": {
    "prop": 291,
-   "extrema": 267,
+   "extrema": 269,
    "prop30": 2,
    "vot": 9,
    "vitorias": 5,
    "derrotas": 3
   },
   "religiao": {
-   "prop": 122,
-   "extrema": 77,
+   "prop": 123,
+   "extrema": 78,
    "prop30": 12,
    "vot": 7,
    "vitorias": 4,
@@ -72,15 +72,15 @@
   },
   "educacao": {
    "prop": 151,
-   "extrema": 131,
+   "extrema": 132,
    "prop30": 1,
    "vot": 5,
    "vitorias": 2,
    "derrotas": 2
   },
   "ambiente": {
-   "prop": 173,
-   "extrema": 116,
+   "prop": 174,
+   "extrema": 121,
    "prop30": 1,
    "vot": 43,
    "vitorias": 21,
@@ -88,7 +88,7 @@
   },
   "povos": {
    "prop": 116,
-   "extrema": 111,
+   "extrema": 112,
    "prop30": 1,
    "vot": 25,
    "vitorias": 16,
@@ -96,31 +96,31 @@
   },
   "movimentos": {
    "prop": 145,
-   "extrema": 132,
+   "extrema": 134,
    "prop30": 1,
    "vot": 5,
    "vitorias": 5,
    "derrotas": 0
   },
   "trabalho": {
-   "prop": 112,
-   "extrema": 32,
+   "prop": 113,
+   "extrema": 34,
    "prop30": 1,
    "vot": 21,
    "vitorias": 16,
    "derrotas": 5
   },
   "estado": {
-   "prop": 114,
-   "extrema": 43,
+   "prop": 115,
+   "extrema": 48,
    "prop30": 3,
    "vot": 16,
    "vitorias": 8,
    "derrotas": 8
   },
   "privilegios": {
-   "prop": 322,
-   "extrema": 53,
+   "prop": 321,
+   "extrema": 58,
    "prop30": 4,
    "vot": 40,
    "vitorias": 26,
@@ -128,7 +128,7 @@
   },
   "plataformas": {
    "prop": 87,
-   "extrema": 73,
+   "extrema": 75,
    "prop30": 1,
    "vot": 2,
    "vitorias": 1,
@@ -143,16 +143,16 @@
    "derrotas": 3
   },
   "drogas": {
-   "prop": 92,
-   "extrema": 45,
-   "prop30": 0,
+   "prop": 93,
+   "extrema": 47,
+   "prop30": 1,
    "vot": 1,
    "vitorias": 1,
    "derrotas": 0
   },
   "soberania": {
    "prop": 71,
-   "extrema": 49,
+   "extrema": 50,
    "prop30": 0,
    "vot": 4,
    "vitorias": 2,
@@ -572,9 +572,9 @@
  },
  "blocos": {
   "T": {
-   "prop": 26473,
+   "prop": 26476,
    "pauta": 2654,
-   "pautaExtrema": 1695,
+   "pautaExtrema": 1720,
    "vot": 1607,
    "comSit": 26428,
    "aprovada": 1030,
@@ -582,8 +582,8 @@
    "arquivada": 1766,
    "grupos": {
     "extrema": {
-     "prop": 5997,
-     "pauta": 1313,
+     "prop": 5999,
+     "pauta": 1315,
      "membros": 158,
      "emExercicio": 120,
      "vot": 1576,
@@ -595,7 +595,7 @@
     },
     "direita": {
      "prop": 9284,
-     "pauta": 895,
+     "pauta": 894,
      "membros": 291,
      "emExercicio": 227,
      "vot": 1560,
@@ -606,8 +606,8 @@
      "arquivada": 650
     },
     "centro": {
-     "prop": 7121,
-     "pauta": 328,
+     "prop": 7122,
+     "pauta": 327,
      "membros": 155,
      "emExercicio": 126,
      "vot": 1520,
@@ -788,7 +788,7 @@
      }
     },
     "saude-mental-drogas": {
-     "n": 561,
+     "n": 562,
      "ap": 15,
      "g": {
       "esquerda": [
@@ -807,9 +807,9 @@
        14
       ],
       "extrema": [
-       144,
+       145,
        3,
-       54
+       55
       ]
      }
     },
@@ -820,7 +820,7 @@
       "centro": [
        211,
        26,
-       6
+       5
       ],
       "esquerda": [
        177,
@@ -840,7 +840,7 @@
      }
     },
     "criancas-adolescentes": {
-     "n": 1511,
+     "n": 1512,
      "ap": 57,
      "g": {
       "centro": [
@@ -849,9 +849,9 @@
        21
       ],
       "extrema": [
-       320,
+       321,
        9,
-       87
+       88
       ],
       "direita": [
        525,
@@ -892,11 +892,11 @@
      }
     },
     "ia-dados": {
-     "n": 293,
+     "n": 294,
      "ap": 7,
      "g": {
       "centro": [
-       97,
+       98,
        2,
        2
       ],
@@ -1189,7 +1189,7 @@
       "direita": [
        428,
        14,
-       4
+       3
       ],
       "centro": [
        391,
@@ -1444,7 +1444,7 @@
       "direita": [
        106,
        4,
-       10
+       9
       ],
       "centro": [
        55,
@@ -1646,13 +1646,13 @@
      }
     },
     "crime-organizado": {
-     "n": 980,
+     "n": 981,
      "ap": 24,
      "g": {
       "extrema": [
-       423,
+       424,
        11,
-       199
+       200
       ],
       "centro": [
        196,
@@ -2036,7 +2036,7 @@
      }
     },
     "plataformas-regulacao": {
-     "n": 785,
+     "n": 786,
      "ap": 5,
      "g": {
       "esquerda": [
@@ -2045,7 +2045,7 @@
        2
       ],
       "centro": [
-       219,
+       220,
        4,
        8
       ],
@@ -2068,7 +2068,7 @@
       "direita": [
        186,
        2,
-       10
+       9
       ],
       "centro": [
        164,
@@ -2558,9 +2558,9 @@
    }
   },
   "C": {
-   "prop": 23360,
+   "prop": 23363,
    "pauta": 2286,
-   "pautaExtrema": 1448,
+   "pautaExtrema": 1469,
    "vot": 1413,
    "comSit": 23341,
    "aprovada": 699,
@@ -2568,8 +2568,8 @@
    "arquivada": 1616,
    "grupos": {
     "extrema": {
-     "prop": 5321,
-     "pauta": 1166,
+     "prop": 5323,
+     "pauta": 1168,
      "membros": 137,
      "emExercicio": 105,
      "vot": 1382,
@@ -2581,7 +2581,7 @@
     },
     "direita": {
      "prop": 8039,
-     "pauta": 756,
+     "pauta": 755,
      "membros": 247,
      "emExercicio": 193,
      "vot": 1366,
@@ -2592,8 +2592,8 @@
      "arquivada": 582
     },
     "centro": {
-     "prop": 6684,
-     "pauta": 298,
+     "prop": 6685,
+     "pauta": 297,
      "membros": 139,
      "emExercicio": 112,
      "vot": 1328,
@@ -2774,7 +2774,7 @@
      }
     },
     "saude-mental-drogas": {
-     "n": 506,
+     "n": 507,
      "ap": 11,
      "g": {
       "esquerda": [
@@ -2793,9 +2793,9 @@
        12
       ],
       "extrema": [
-       132,
+       133,
        3,
-       50
+       51
       ]
      }
     },
@@ -2806,7 +2806,7 @@
       "centro": [
        198,
        23,
-       6
+       5
       ],
       "esquerda": [
        147,
@@ -2826,7 +2826,7 @@
      }
     },
     "criancas-adolescentes": {
-     "n": 1362,
+     "n": 1363,
      "ap": 43,
      "g": {
       "centro": [
@@ -2835,9 +2835,9 @@
        21
       ],
       "extrema": [
-       282,
+       283,
        7,
-       74
+       75
       ],
       "direita": [
        473,
@@ -2878,11 +2878,11 @@
      }
     },
     "ia-dados": {
-     "n": 263,
+     "n": 264,
      "ap": 5,
      "g": {
       "centro": [
-       88,
+       89,
        1,
        2
       ],
@@ -3149,7 +3149,7 @@
       "direita": [
        387,
        10,
-       4
+       3
       ],
       "centro": [
        361,
@@ -3404,7 +3404,7 @@
       "direita": [
        79,
        1,
-       10
+       9
       ],
       "extrema": [
        65,
@@ -3606,13 +3606,13 @@
      }
     },
     "crime-organizado": {
-     "n": 885,
+     "n": 886,
      "ap": 17,
      "g": {
       "extrema": [
-       398,
+       399,
        10,
-       183
+       184
       ],
       "centro": [
        175,
@@ -3898,7 +3898,7 @@
       "direita": [
        164,
        1,
-       10
+       9
       ],
       "centro": [
        160,
@@ -3944,7 +3944,7 @@
      }
     },
     "plataformas-regulacao": {
-     "n": 713,
+     "n": 714,
      "ap": 4,
      "g": {
       "esquerda": [
@@ -3953,7 +3953,7 @@
        1
       ],
       "centro": [
-       210,
+       211,
        4,
        8
       ],
@@ -4546,7 +4546,7 @@
   "S": {
    "prop": 3113,
    "pauta": 368,
-   "pautaExtrema": 247,
+   "pautaExtrema": 251,
    "vot": 194,
    "comSit": 3087,
    "aprovada": 331,
@@ -6456,7 +6456,7 @@
   }
  },
  "recentes": {
-  "proposicoes": 7,
+  "proposicoes": 9,
   "votacoes": 14
  }
 }
