@@ -1,0 +1,5 @@
+{
+  "_leia": "Decisões da equipe na triagem das bancadas (revisao-bancadas.html). decisoes: chave \"parlamentar|bancada\", d = nucleo, aliado, fora ou incerto, m = nota. votacoes: por bancada, id da votação e o voto que favorece a pauta (S ou N); contam em dobro no robô robo/bancadas.py.",
+  "decisoes": {},
+  "votacoes": {}
+}

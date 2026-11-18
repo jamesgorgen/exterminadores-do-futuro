@@ -156,6 +156,16 @@ Para destacar casos conferidos pela equipe, crie `dados/verificados.json` neste 
 } }
 ```
 
+## Bancadas temáticas
+
+A página `revisao-bancadas.html` (fora do menu do site) é a triagem do enquadramento dos parlamentares em exercício em dez bancadas: agronegócio, pauta religiosa, segurança e armas, mídia, mineração, setor financeiro, saúde privada, educação privada, bets e apostas e plataformas digitais.
+
+- **Robô sem IA.** `robo/bancadas.py` soma, para cada parlamentar e bancada, sinais de vínculo (empresas do próprio parlamentar pela atividade principal, bens declarados ao TSE, ocupação declarada e nome de urna, e sociedade direta em emissoras pelo levantamento de mídia) e de atuação (projetos e votos classificados nas pautas da bancada, projetos e relatorias sobre o tema, frentes parlamentares da Câmara e emendas). Grava `dados/bancadas.json`. Roda no dia 3 de cada mês e sempre que mudam as regras, o robô ou as votações-chave (workflow "Bancadas").
+- **Regras** em `bancadas-regras.json`: atividades (CNAE), termos, ocupações, nomes de urna, pautas, frentes, pesos e limites de cada bancada. Os termos são expressões regulares sobre o texto em maiúsculas e sem acentos.
+- **Enquadramento.** Núcleo tem vínculo e atuação; aliado tem atuação específica sem vínculo; interesse sem atuação tem vínculo e pouca atuação; dúvida tem sinais fracos ou contraditórios. Votos e parcela de emendas por área acompanham a ideologia e não bastam sozinhos. Quem atua mais contra a pauta do que a favor, sem vínculo, fica de fora.
+- **Triagem.** A equipe decide (núcleo, aliado, não pertence, incerto) e marca as votações-chave de cada bancada, que passam a contar em dobro. Tudo fica em `bancadas-correcoes.json`, com a mesma chave de acesso do GitHub das outras páginas de revisão. A decisão da equipe prevalece sobre a regra.
+- **Só evidências públicas do próprio parlamentar.** O repositório é público, então familiares, sócios e indícios de laranjas não entram aqui.
+
 ## Custos
 
 O GitHub Actions é gratuito para repositório público. A IA custa cerca de 2 dólares na primeira execução completa e centavos por dia depois. Vale definir um limite mensal de gasto no console da Anthropic.

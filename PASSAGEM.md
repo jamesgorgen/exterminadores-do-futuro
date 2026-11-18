@@ -35,6 +35,10 @@ Esta seção resume a sessão de 30/10 a 17/11. O histórico anterior está no a
 - Resultado: 50 parlamentares em exercício com vínculo direto, 54 com indireto forte, 28 por sobrenome. Os ramos `analises-saida-midia` e `analises-saida-midia2` são de execuções que travaram e podem ser apagados.
 - Gabinetes do Senado: `robo/analises/midia_senado.py` (ramo `analises-saida-midia_senado`); copiar `gabinetes_senado_x_midia.json` para a pasta da saída antes de rodar `midia_analise.py`.
 
+## Bancadas temáticas (18/11)
+- Triagem em `revisao-bancadas.html`; robô `robo/bancadas.py` (sem IA), regras em `bancadas-regras.json`, decisões em `bancadas-correcoes.json`, resultado em `dados/bancadas.json`, workflow "Bancadas". Escopo definido pelo James: inclui aliados; triagem no GitHub, por isso só evidências públicas do próprio parlamentar. Descrição no LEIA-ME.
+- Fase 2 (bases novas): titulares de processos da ANM (mineração), lista da Secretaria de Prêmios e Apostas (bets; a MP 1.394/2026 proibiu as apostas de quota fixa), operadoras da ANS (saúde), instituições do Banco Central (financeiro), mantenedoras do e-MEC (educação), doações de campanha de sócios de empresas do setor. Depois, exibir o enquadramento aprovado na ficha do parlamentar.
+
 ## Pendências do James
 - 2FA no GitHub, Cloudflare e Registro.br e revisão dos tokens dos revisores encaminhadas pelo James em 17/11. Ramo `diag-dns` apagado em 17/11 (esta sessão não consegue apagar ramos; o James apaga pelo site).
 

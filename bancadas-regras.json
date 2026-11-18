@@ -1,0 +1,678 @@
+{
+  "_leia": "Regras do enquadramento dos parlamentares nas bancadas temáticas. O robô robo/bancadas.py lê este arquivo, calcula os sinais e grava dados/bancadas.json; a equipe confere as dúvidas em revisao-bancadas.html, que grava em bancadas-correcoes.json. Os textos de busca (termos, frentes, ocupação, urna, bens, favorecidos) são expressões regulares aplicadas ao texto em maiúsculas e sem acentos. cnae lista prefixos da atividade principal das empresas. pautas são as de pautas.js: votos e projetos classificados nelas contam como atuação alinhada (com termos_pauta, só quando a ementa também tiver um dos termos). Ao salvar este arquivo no GitHub, o robô roda de novo.",
+  "versao": "2026-11-18",
+  "pesos": {
+    "empresa": 3,
+    "empresa_max": 6,
+    "bem": 2,
+    "bem_max": 4,
+    "ocupacao": 2,
+    "urna": 2,
+    "autoria_alinhada": 1,
+    "autoria_alinhada_max": 4,
+    "autoria_tema_cada": 3,
+    "autoria_tema_max": 2,
+    "relatoria_cada": 5,
+    "relatoria_max": 1,
+    "votos_alto": 2,
+    "votos_medio": 1,
+    "votos_minimo": 3,
+    "votos_alto_limite": 0.8,
+    "votos_medio_limite": 0.6,
+    "votos_contra_limite": 0.3,
+    "votacao_chave_peso": 2,
+    "frente": 1,
+    "frente_max": 2,
+    "emenda_tema": 1,
+    "emenda_tema_parcela": 0.1,
+    "emenda_favorecido": 1,
+    "emenda_max": 2
+  },
+  "limites": {
+    "vinculo": 3,
+    "vinculo_minimo": 2,
+    "especifica_minima": 2,
+    "atuacao_nucleo": 3,
+    "especifica_aliado": 3,
+    "atuacao_aliado": 4,
+    "especifica_aliado_automatico": 5,
+    "_leia": "vinculo: pontos de vínculo para núcleo ou interesse. vinculo_minimo e especifica_minima: abaixo dos dois, o parlamentar não aparece na bancada. Atuação específica é a atuação sem votos e sem parcela de emendas por área, que acompanham a ideologia. Aliado exige atuação específica e total mínimas; acima de especifica_aliado_automatico entra sem triagem."
+  },
+  "bancadas": [
+    {
+      "id": "agro",
+      "nome": "Agronegócio",
+      "descricao": "Interesses da agropecuária empresarial: terra, crédito rural, agrotóxicos, licenciamento, marco temporal.",
+      "cnae": [
+        "01",
+        "02",
+        "03",
+        "1011",
+        "1012",
+        "1013",
+        "1041",
+        "1051",
+        "1061",
+        "1071",
+        "1072",
+        "2013",
+        "2051",
+        "4621",
+        "4622",
+        "4623",
+        "4683"
+      ],
+      "bens": [
+        "RURAL",
+        "FAZENDA",
+        "\\bSITIO\\b",
+        "GLEBA",
+        "TERRA NUA",
+        "\\bGADO\\b",
+        "BOVINO",
+        "SEMOVENTE",
+        "REBANHO",
+        "LAVOURA",
+        "COLHEITADEIRA",
+        "\\bTRATOR"
+      ],
+      "ocupacao": [
+        "AGRICULTOR",
+        "PECUARISTA",
+        "PRODUTOR AGROPECUARIO",
+        "AGROPECUARI",
+        "AGRONOMO",
+        "VETERINARI",
+        "ZOOTECNIST"
+      ],
+      "urna": [],
+      "pautas": [
+        "ambiente",
+        "povos",
+        "privilegios"
+      ],
+      "termos_pauta": [
+        "privilegios"
+      ],
+      "termos": [
+        "AGROPECU",
+        "AGRONEGOCIO",
+        "PRODUTOR(ES)? RURA",
+        "CREDITO RURAL",
+        "AGROTOXIC",
+        "DEFENSIVOS? AGRICOLA",
+        "PESTICID",
+        "MARCO TEMPORAL",
+        "DEMARCAC",
+        "REFORMA AGRARIA",
+        "INVASA(O|OES) DE (TERRA|PROPRIEDADE|IMOVE)",
+        "ESBULHO",
+        "CODIGO FLORESTAL",
+        "RESERVA LEGAL",
+        "CADASTRO AMBIENTAL RURAL",
+        "FUNRURAL",
+        "PLANO SAFRA",
+        "PECUARI",
+        "FERTILIZANT",
+        "SEGURO RURAL",
+        "LICENCIAMENTO AMBIENTAL"
+      ],
+      "frentes": [
+        "AGROPECU",
+        "AGRICULTURA",
+        "\\bAGRO",
+        "PRODUTOR(ES)? RURA",
+        "PECUARI",
+        "\\bCAFE\\b",
+        "CANA",
+        "BIOCOMBUSTI",
+        "ETANOL",
+        "SOJA",
+        "ALGODAO",
+        "LEITE",
+        "IRRIGAC",
+        "COOPERATIVISMO"
+      ],
+      "emendas_temas": [
+        "agricultura"
+      ],
+      "favorecidos": [
+        "SINDICATO RURAL",
+        "PRODUTORES RURAIS",
+        "COOPERATIVA AGR",
+        "AGROPECUARI"
+      ]
+    },
+    {
+      "id": "religiosa",
+      "nome": "Pauta religiosa",
+      "descricao": "Atuação a partir de valores religiosos: costumes, aborto, família, benefícios a igrejas.",
+      "cnae": [
+        "9491"
+      ],
+      "bens": [],
+      "ocupacao": [
+        "SACERDOTE",
+        "RELIGIOS",
+        "MINISTRO DE CULTO",
+        "TEOLOG"
+      ],
+      "urna": [
+        "^(PASTOR|PASTORA|PR|PRA|BISPO|BISPA|MISSIONARI[OA]|APOSTOLO|PADRE|FREI|IRMAO|IRMA|DIACONO|PRESBITERO|EVANGELISTA)\\b"
+      ],
+      "pautas": [
+        "religiao",
+        "costumes"
+      ],
+      "termos_pauta": [],
+      "termos": [
+        "RELIGI",
+        "IGREJA",
+        "TEMPLO",
+        "\\bCULTO",
+        "EVANGELI",
+        "BIBLIA",
+        "CAPELANIA",
+        "SACERDOT",
+        "CRENCA",
+        "CRISTA",
+        "NASCITURO",
+        "\\bABORTO"
+      ],
+      "frentes": [
+        "EVANGELIC",
+        "CATOLIC",
+        "CRISTA",
+        "DEFESA DA VIDA",
+        "FAMILIA",
+        "LIBERDADE RELIGIOSA",
+        "CAPELANIA"
+      ],
+      "emendas_temas": [],
+      "favorecidos": [
+        "IGREJA",
+        "PAROQUIA",
+        "MITRA",
+        "DIOCESE",
+        "ARQUIDIOCESE",
+        "ASSEMBLEIA DE DEUS",
+        "EVANGELIC",
+        "BATISTA",
+        "CONGREGACAO",
+        "MINISTERIO (APOSTOLICO|EVANGELICO|CRISTAO)",
+        "COMUNIDADE TERAPEUTICA"
+      ]
+    },
+    {
+      "id": "seguranca",
+      "nome": "Segurança e armas",
+      "descricao": "Armas, polícias, punição e militarização da segurança pública.",
+      "cnae": [
+        "8011",
+        "8012",
+        "8020",
+        "2550",
+        "4789009",
+        "3092"
+      ],
+      "bens": [
+        "\\bARMA\\b",
+        "PISTOLA",
+        "\\bFUZIL",
+        "RIFLE",
+        "CARABINA",
+        "REVOLVER",
+        "ESPINGARDA",
+        "\\bGLOCK",
+        "\\bTAURUS"
+      ],
+      "ocupacao": [
+        "POLICIAL",
+        "POLICIA",
+        "DELEGADO",
+        "MILITAR",
+        "BOMBEIRO",
+        "FORCAS ARMADAS",
+        "AGENTE PENITENCIARIO",
+        "GUARDA MUNICIPAL",
+        "VIGILANTE",
+        "PERITO CRIMINAL",
+        "INVESTIGADOR"
+      ],
+      "urna": [
+        "^(DELEGAD[OA]|CORONEL|CEL|CAPITAO|CAPITA|CAP|CABO|SARGENTO|SGT|MAJOR|GENERAL|GAL|TENENTE|TEN|SUBTENENTE|COMANDANTE|CMTE|POLICIAL|SOLDADO|INSPETOR[A]?|AGENTE|PERITO|GUARDA|BOMBEIRO|SUB TENENTE|SUBTEN)\\b"
+      ],
+      "pautas": [
+        "armas",
+        "punitivismo"
+      ],
+      "termos_pauta": [],
+      "termos": [
+        "ARMAS? DE FOGO",
+        "MUNICA",
+        "PORTE DE ARMA",
+        "POSSE DE ARMA",
+        "COLECIONADOR",
+        "ATIRADOR",
+        "CACADOR",
+        "CLUBE DE TIRO",
+        "POLICI",
+        "SEGURANCA PUBLICA",
+        "BOMBEIRO",
+        "GUARDA MUNICIPAL",
+        "SISTEMA PRISIONAL",
+        "MAIORIDADE PENAL",
+        "CRIME HEDIONDO",
+        "LEGITIMA DEFESA"
+      ],
+      "frentes": [
+        "SEGURANCA PUBLICA",
+        "\\bARMAS",
+        "LEGITIMA DEFESA",
+        "COLECIONADOR",
+        "ATIRADOR",
+        "POLICI",
+        "MILITAR",
+        "BOMBEIRO",
+        "GUARDA",
+        "SISTEMA PRISIONAL",
+        "PENAL"
+      ],
+      "emendas_temas": [
+        "seguranca"
+      ],
+      "favorecidos": [
+        "CLUBE DE TIRO",
+        "POLICIA",
+        "BOMBEIRO"
+      ],
+      "limites": {
+        "especifica_aliado": 4,
+        "especifica_aliado_automatico": 6
+      }
+    },
+    {
+      "id": "midia",
+      "nome": "Mídia",
+      "descricao": "Donos e interessados em rádio, TV e jornais, e atuação em radiodifusão e comunicação social.",
+      "cnae": [
+        "6010",
+        "6021",
+        "6022",
+        "5812",
+        "5822",
+        "5813",
+        "5823",
+        "6391"
+      ],
+      "bens": [
+        "\\bRADIO",
+        "TELEVIS",
+        "\\bTV\\b",
+        "JORNAL",
+        "EMISSORA",
+        "RADIODIFUS"
+      ],
+      "ocupacao": [
+        "RADIALISTA",
+        "LOCUTOR",
+        "APRESENTADOR",
+        "JORNALISTA",
+        "COMUNICADOR"
+      ],
+      "urna": [],
+      "pautas": [],
+      "termos_pauta": [],
+      "termos": [
+        "RADIODIFUS",
+        "EMISSORA",
+        "\\bRADIO",
+        "TELEVIS",
+        "COMUNICACAO SOCIAL",
+        "IMPRENSA",
+        "JORNALIS",
+        "RADIO COMUNITARI",
+        "SOM E IMAGENS"
+      ],
+      "frentes": [
+        "RADIODIFUS",
+        "COMUNICACAO",
+        "\\bRADIO",
+        "TELEVIS",
+        "IMPRENSA",
+        "JORNALIS"
+      ],
+      "emendas_temas": [],
+      "favorecidos": [
+        "\\bRADIO",
+        "\\bTV\\b",
+        "TELEVIS",
+        "COMUNICAC"
+      ]
+    },
+    {
+      "id": "mineracao",
+      "nome": "Mineração",
+      "descricao": "Mineração empresarial e garimpo: lavra, CFEM, áreas protegidas e terras indígenas.",
+      "cnae": [
+        "05",
+        "07",
+        "08",
+        "09",
+        "2391"
+      ],
+      "bens": [
+        "MINER",
+        "GARIMP",
+        "JAZIDA",
+        "\\bLAVRA",
+        "DIREITO MINERARIO"
+      ],
+      "ocupacao": [
+        "GARIMPEIRO",
+        "GEOLOGO",
+        "MINERADOR"
+      ],
+      "urna": [],
+      "pautas": [
+        "ambiente",
+        "povos"
+      ],
+      "termos_pauta": [
+        "ambiente",
+        "povos"
+      ],
+      "termos": [
+        "MINERA",
+        "MINERAL",
+        "MINERARI",
+        "GARIMP",
+        "\\bLAVRA",
+        "\\bCFEM\\b",
+        "JAZIDA",
+        "TERRAS RARAS",
+        "BARRAGE(M|NS) DE REJEITO"
+      ],
+      "frentes": [
+        "MINERA",
+        "GARIMP",
+        "MINERAL"
+      ],
+      "emendas_temas": [],
+      "favorecidos": [
+        "MINERA",
+        "GARIMP"
+      ]
+    },
+    {
+      "id": "financeiro",
+      "nome": "Setor financeiro",
+      "descricao": "Bancos, crédito, seguros, mercado de capitais e cripto.",
+      "cnae": [
+        "641",
+        "642",
+        "643",
+        "644",
+        "645",
+        "647",
+        "649",
+        "65",
+        "66"
+      ],
+      "bens": [],
+      "ocupacao": [
+        "BANCARIO",
+        "ECONOMIARIO",
+        "CORRETOR DE (IMOVEIS, )?SEGUROS"
+      ],
+      "urna": [],
+      "pautas": [
+        "privilegios"
+      ],
+      "termos_pauta": [
+        "privilegios"
+      ],
+      "termos": [
+        "\\bBANCOS?\\b",
+        "BANCARI",
+        "INSTITUICOES FINANCEIRAS",
+        "SISTEMA FINANCEIRO",
+        "\\bJUROS",
+        "OPERACOES DE CREDITO",
+        "CREDITO CONSIGNADO",
+        "CARTA(O|OES) DE CREDITO",
+        "MERCADO DE CAPITAIS",
+        "VALORES MOBILIARIOS",
+        "CRIPTO",
+        "ATIVOS VIRTUAIS",
+        "BANCO CENTRAL",
+        "COOPERATIVAS DE CREDITO",
+        "SEGURADORA",
+        "PREVIDENCIA COMPLEMENTAR",
+        "FUNDOS DE INVESTIMENTO",
+        "DIVIDENDOS"
+      ],
+      "frentes": [
+        "SISTEMA FINANCEIRO",
+        "MERCADO DE CAPITAIS",
+        "COOPERATIVAS DE CREDITO",
+        "SEGUROS",
+        "CRIPTO",
+        "ATIVOS DIGITAIS",
+        "FINTECH",
+        "BANCO"
+      ],
+      "emendas_temas": [],
+      "favorecidos": []
+    },
+    {
+      "id": "saude",
+      "nome": "Saúde privada",
+      "descricao": "Planos de saúde, hospitais e clínicas privadas, indústria farmacêutica e farmácias.",
+      "cnae": [
+        "86",
+        "8711",
+        "8712",
+        "8720",
+        "6550",
+        "2110",
+        "2121",
+        "2123",
+        "4644",
+        "4645",
+        "4771"
+      ],
+      "bens": [
+        "HOSPITAL",
+        "CLINICA",
+        "LABORATORI",
+        "FARMACIA"
+      ],
+      "ocupacao": [
+        "MEDICO",
+        "ODONTOLOG",
+        "DENTISTA",
+        "FARMACEUTIC",
+        "ENFERMEIR"
+      ],
+      "urna": [],
+      "pautas": [
+        "estado"
+      ],
+      "termos_pauta": [
+        "estado"
+      ],
+      "termos": [
+        "PLANOS? (PRIVADOS? )?DE (ASSISTENCIA A )?SAUDE",
+        "SAUDE SUPLEMENTAR",
+        "OPERADORAS? DE (PLANOS|SAUDE)",
+        "HOSPITA(L|IS) (PRIVAD|FILANTROPIC)",
+        "SANTAS? CASAS?",
+        "FILANTROPIC",
+        "MEDICAMENTO",
+        "FARMACIA",
+        "INDUSTRIA FARMACEUTICA",
+        "CLINICAS?\\b"
+      ],
+      "frentes": [
+        "SAUDE",
+        "HOSPITA",
+        "SANTAS CASAS",
+        "FILANTROP",
+        "MEDICAMENTO",
+        "FARMAC",
+        "MEDICINA"
+      ],
+      "emendas_temas": [],
+      "favorecidos": [
+        "HOSPITAL",
+        "SANTA CASA",
+        "CLINICA",
+        "MATERNIDADE"
+      ]
+    },
+    {
+      "id": "educacao",
+      "nome": "Educação privada",
+      "descricao": "Escolas e faculdades privadas, Fies e ProUni, ensino a distância e ensino domiciliar.",
+      "cnae": [
+        "85"
+      ],
+      "bens": [
+        "ESCOLA",
+        "COLEGIO",
+        "FACULDADE",
+        "EDUCACIONAL",
+        "ENSINO"
+      ],
+      "ocupacao": [],
+      "urna": [],
+      "pautas": [
+        "estado",
+        "educacao"
+      ],
+      "termos_pauta": [
+        "estado",
+        "educacao"
+      ],
+      "termos": [
+        "ENSINO SUPERIOR PRIVADO",
+        "INSTITUICO(ES|ES)? (PRIVADAS?|PARTICULARES?) DE ENSINO",
+        "\\bFIES\\b",
+        "PROUNI",
+        "MENSALIDADE",
+        "ESCOLAS? PARTICULAR",
+        "ENSINO DOMICILIAR",
+        "EDUCACAO DOMICILIAR",
+        "HOMESCHOOL",
+        "VOUCHER",
+        "EDUCACAO A DISTANCIA",
+        "\\bEAD\\b",
+        "MANTENEDORA"
+      ],
+      "frentes": [
+        "ENSINO PRIVADO",
+        "EDUCACAO PRIVADA",
+        "ENSINO SUPERIOR",
+        "EDUCACAO DOMICILIAR",
+        "ESCOLAS PARTICULARES",
+        "LIVRE INICIATIVA NA EDUCACAO",
+        "ENSINO A DISTANCIA"
+      ],
+      "emendas_temas": [],
+      "favorecidos": [
+        "ESCOLA",
+        "COLEGIO",
+        "FACULDADE",
+        "UNIVERSIDADE",
+        "INSTITUTO DE ENSINO",
+        "EDUCACIONAL"
+      ]
+    },
+    {
+      "id": "bets",
+      "nome": "Bets e apostas",
+      "descricao": "Apostas de quota fixa, cassinos, bingos e jogos de azar.",
+      "cnae": [
+        "9200"
+      ],
+      "bens": [
+        "APOSTA",
+        "\\bBET\\b",
+        "LOTERI",
+        "CASSINO",
+        "BINGO"
+      ],
+      "ocupacao": [],
+      "urna": [],
+      "pautas": [],
+      "termos_pauta": [],
+      "termos": [
+        "APOSTA",
+        "QUOTA FIXA",
+        "JOGOS? DE AZAR",
+        "CASSINO",
+        "BINGO",
+        "LOTERI",
+        "JOGO DO BICHO",
+        "\\bBETS?\\b"
+      ],
+      "frentes": [
+        "JOGOS",
+        "APOSTA",
+        "LOTERI",
+        "CASSINO",
+        "TURISMO INTEGRADO"
+      ],
+      "emendas_temas": [],
+      "favorecidos": []
+    },
+    {
+      "id": "plataformas",
+      "nome": "Plataformas digitais",
+      "descricao": "Interesses das plataformas digitais: oposição à regulação de redes sociais e de IA e à moderação de conteúdo.",
+      "cnae": [
+        "6311",
+        "6319",
+        "6201",
+        "6202",
+        "6203",
+        "6204",
+        "6209"
+      ],
+      "bens": [],
+      "ocupacao": [],
+      "urna": [],
+      "pautas": [
+        "plataformas"
+      ],
+      "termos_pauta": [],
+      "termos": [
+        "PLATAFORMAS? DIGITA",
+        "REDES? SOCIA",
+        "PROVEDORES? DE APLICAC",
+        "MARCO CIVIL DA INTERNET",
+        "DESINFORMAC",
+        "FAKE NEWS",
+        "NOTICIAS FALSAS",
+        "INTELIGENCIA ARTIFICIAL",
+        "MODERACAO DE CONTEUDO",
+        "BIG TECH",
+        "ALGORITM",
+        "INFLUENCIADOR"
+      ],
+      "frentes": [
+        "ECONOMIA DIGITAL",
+        "INTERNET",
+        "INTELIGENCIA ARTIFICIAL",
+        "LIBERDADE DE EXPRESSAO",
+        "TRANSFORMACAO DIGITAL",
+        "TECNOLOGIA DA INFORMACAO",
+        "STARTUP",
+        "INOVACAO"
+      ],
+      "emendas_temas": [],
+      "favorecidos": []
+    }
+  ]
+}
