@@ -138,6 +138,11 @@ for x in L('gabinetes_x_midia.json') or []:
         if b not in U or uf not in UF_EMP.get(b, set()) or len(x['nome'].split()) < 3 or (x['parl'], b, x['nome']) in vistos: continue
         vistos.add((x['parl'], b, x['nome']))
         add(x['parl'], 'funcionário do gabinete é sócio (homônimo possível)', 'indício', b, x['nome'])
+for x in L('gabinetes_senado_x_midia.json') or []:   # saída de midia_senado.py, copiada para a mesma pasta
+    b = x['cnpj']; uf = PARL.get(x['parl'], {}).get('uf')
+    if b not in U or uf not in UF_EMP.get(b, set()) or (x['parl'], b, norm(x['nome'])) in vistos: continue
+    vistos.add((x['parl'], b, norm(x['nome'])))
+    add(x['parl'], 'funcionário do gabinete é sócio (homônimo possível)', 'indício', b, f"{x['nome']} ({x.get('cargo')})")
 # 9. saídas
 sa = L('saidas.json') or {}
 for x in sa.get('saidas', []):
