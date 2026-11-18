@@ -1,4 +1,4 @@
-# Worker da triagem das bancadas: serve a página e guarda dados e decisões no R2 privado.
+# Worker da triagem das bancadas: serve a página e guarda dados e decisões no R2 privado (cloudflare/triagem).
 # Protegido pelo Cloudflare Access. Publicado pelo workflow "Publicar a triagem" (.github/workflows/triagem.yml).
 name = "triagem-exterminadores"
 main = "worker.js"
