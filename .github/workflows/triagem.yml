@@ -1,0 +1,30 @@
+# Publica o Worker da triagem das bancadas na Cloudflare (cloudflare/triagem).
+# Roda quando o código do Worker muda e à mão em Actions > Publicar a triagem > Run workflow.
+# Precisa do segredo CLOUDFLARE_API_TOKEN (permissão de editar Workers) e usa R2_ACCOUNT_ID como conta.
+name: Publicar a triagem
+
+on:
+  push:
+    branches: [main]
+    paths: ['cloudflare/triagem/**']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: triagem
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publicar o Worker
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.R2_ACCOUNT_ID }}
+          workingDirectory: cloudflare/triagem

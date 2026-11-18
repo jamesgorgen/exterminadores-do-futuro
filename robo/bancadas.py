@@ -7,7 +7,9 @@ Sem IA. Para cada parlamentar em exercício e cada bancada, soma sinais de duas 
   frentes parlamentares e emendas a entidades do setor.
 O enquadramento sai das regras de bancadas-regras.json. A equipe confere as dúvidas em revisao-bancadas.html.
 
-Só entram evidências públicas e do próprio parlamentar: nada de familiares, sócios ou terceiros, porque o repositório é público.
+O resultado inclui vínculos de familiares e terceiros (indícios), por isso vai só para o bucket privado do R2
+(bancadas/bancadas.json), lido pela página de triagem no Worker da Cloudflare (cloudflare/triagem), protegida pelo Access.
+Nada disso é gravado no repositório público.
 
 Fontes: dados/ do site; ramo analises-saida-plp299_tudo (empresas, bens e dados do TSE de cada parlamentar);
 ocupação declarada nas candidaturas de 2018, 2022 e 2026 (cópia do TSE no Cloudflare R2, se houver acesso);
@@ -67,16 +69,20 @@ for k, s in TSE.items():
     for t in s.get('tse', []):
         if t.get('urna'): URNA[k].add(norm(t['urna']))
         if t.get('ocup'): OCUP[k].add(norm(t['ocup']))
+S3 = None
+if os.environ.get('R2_ACCOUNT_ID'):
+    import boto3
+    S3 = boto3.client('s3', endpoint_url=f"https://{os.environ['R2_ACCOUNT_ID'].strip()}.r2.cloudflarestorage.com",
+                      aws_access_key_id=os.environ['R2_ACCESS_KEY_ID'].strip(), aws_secret_access_key=os.environ['R2_SECRET_ACCESS_KEY'].strip(), region_name='auto')
+BUCKET = os.environ.get('R2_BUCKET', 'exterminadores-dados')
 CPF = {}
 for k, s in TSE.items():
     for t in s.get('tse', []) + [s]:
         c = re.sub(r'\D', '', str(t.get('cpf') or ''))
         if len(c) == 11: CPF[c] = k
-if os.environ.get('R2_ACCOUNT_ID'):
+if S3:
     try:
-        import boto3
-        s3 = boto3.client('s3', endpoint_url=f"https://{os.environ['R2_ACCOUNT_ID'].strip()}.r2.cloudflarestorage.com",
-                          aws_access_key_id=os.environ['R2_ACCESS_KEY_ID'].strip(), aws_secret_access_key=os.environ['R2_SECRET_ACCESS_KEY'].strip(), region_name='auto')
+        s3 = S3
         for ano in (2018, 2022, 2026):
             try:
                 corpo = s3.get_object(Bucket=os.environ.get('R2_BUCKET', 'exterminadores-dados'), Key=f'tse/consulta_cand_{ano}.zip')['Body'].read()
@@ -118,7 +124,10 @@ RELS = (lj(P('dados', 'relatorias.json'), {}) or {}).get('itens', []) + (lj(P('d
 EMD = (lj(P('dados', 'emendas.json'), {}) or {}).get('parl', {})
 log('proposições', len(PROPS), 'votações', len(VOTS), 'relatorias', len(RELS), 'emendas', len(EMD))
 
-BC = (lj(P('bancadas-correcoes.json'), {}) or {})
+BC = {}
+if S3:
+    try: BC = json.loads(S3.get_object(Bucket=BUCKET, Key='bancadas/decisoes.json')['Body'].read())
+    except Exception as e: log('sem decisões da equipe no R2', e)
 CHAVE = BC.get('votacoes', {})      # bancada -> {id da votação: voto esperado 'S' ou 'N'}
 
 def da_bancada(b, pautas, texto):
@@ -160,13 +169,13 @@ except Exception as e: log('frentes indisponíveis', e)
 def nova(): return {'V': 0, 'A': 0, 'E': 0, 'contra': 0, 'ev': []}
 GENERICOS = {'Votos', 'Emendas', 'Frentes parlamentares'}   # sinais de atuação que acompanham a ideologia ou são assinados em massa e não bastam sozinhos
 S = {k: {b['id']: nova() for b in BAN} for k in EX}
-def ev(k, b, dim, pts, tipo, texto, url=''):
+def ev(k, b, dim, pts, tipo, texto, url='', privado=0):
     s = S[k][b]
     if dim == 'contra': s['contra'] += pts
     else:
         s[dim] += pts
         if dim == 'A' and tipo not in GENERICOS: s['E'] += pts
-    s['ev'].append([dim, round(pts, 2), tipo, texto, url])
+    s['ev'].append([dim, round(pts, 2), tipo, texto, url, privado])
 
 for k in EX:
     emp = (EMP.get(k) or {}).get('emp', [])
@@ -223,6 +232,37 @@ def midia_direta():
     log('mídia: sociedades diretas acrescentadas', n)
 try: midia_direta()
 except Exception as e: log('mídia direta falhou', e)
+
+# Mídia: vínculos indiretos do levantamento de mídia (familiares por sobrenome, sócios em comum, holdings, procuração,
+# saídas da sociedade, pagamentos a emissora ligada e funcionários de gabinete homônimos). São indícios: vão marcados como privados.
+def midia_indireta():
+    pm, pp = '/tmp/midia', '/tmp/plp299'
+    for pasta, ramo in ((pm, 'analises-saida-midia3'), (pm, 'analises-saida-midia_senado'), (pp, 'analises-saida-plp299_tudo')):
+        os.makedirs(pasta, exist_ok=True)
+        subprocess.run(f'git fetch -q --depth 1 origin {ramo} && git archive FETCH_HEAD | tar -x -C {pasta}', shell=True, cwd=RAIZ)
+    if not os.path.exists(f'{pp}/parl.json'):
+        subprocess.run([sys.executable, P('robo', 'analises', 'plp299_analise.py'), pp], cwd=RAIZ, capture_output=True)
+    r = subprocess.run([sys.executable, P('robo', 'analises', 'midia_analise.py'), pm, pp], cwd=RAIZ, capture_output=True, text=True)
+    v = lj(f'{pm}/vinculos.json')
+    if not v: log('análise de mídia falhou', r.stderr[-500:]); return
+    PTS = {'forte': 3, 'sobrenome (2+)': 2, 'sobrenome raro': 1, 'indício': 1}
+    n = 0
+    for k, x in v.items():
+        if k not in EX: continue
+        vist = set()
+        for y in x['vinculos']:
+            if y['forca'] == 'direto' or y['forca'] not in PTS: continue
+            if y['forca'] == 'indício' and not y['tipo'].startswith('funcion'): continue
+            chave = (y['tipo'], y.get('b'))
+            if chave in vist: continue
+            vist.add(chave)
+            pts = PTS[y['forca']] if y.get('ativa') else min(1, PTS[y['forca']])
+            ev(k, 'midia', 'V', pts, y['tipo'].capitalize(), f"{y.get('razao')} [{y.get('midia') or ''}{'' if y.get('ativa') else ', inativa'}]: {y.get('det')}"[:300],
+               f"https://casadosdados.com.br/solucao/cnpj?q={y['b']}" if y.get('b') else '', 1)
+            n += 1
+    log('mídia: vínculos indiretos', n)
+try: midia_indireta()
+except Exception as e: log('mídia indireta falhou', e)
 
 # autoria
 URLP = lambda it: (f"https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao={it['i']}" if (it.get('k') or ['C'])[0] == 'C' and it.get('i')
@@ -347,7 +387,14 @@ out = {'gerado': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()), 'versao_reg
        'fontes': {'empresas_e_bens': 'Receita (quadro de sócios, nov/2026) e TSE, via ramo analises-saida-plp299_tudo', 'frentes': len(FRENTES) > 0, 'ocupacao_r2': bool(os.environ.get('R2_ACCOUNT_ID'))},
        'resumo': {f'{b}|{c}|{"triagem" if t else "regra"}': n for (b, c, t), n in sorted(cont_cat.items())},
        'votacoes': cands, 'p': saida}
-json.dump(out, open(P('dados', 'bancadas.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
+corpo = json.dumps(out, ensure_ascii=False, separators=(',', ':')).encode()
+if S3:
+    S3.put_object(Bucket=BUCKET, Key='bancadas/bancadas.json', Body=corpo, ContentType='application/json')
+    log('gravado no R2: bancadas/bancadas.json', len(corpo) // 1000, 'kB')
+else:
+    # Sem acesso ao R2 (teste local): grava fora do repositório, porque tem vínculos de terceiros.
+    open(os.path.join(RAIZ, '..', 'bancadas-privado.json'), 'wb').write(corpo)
+    log('gravado em ../bancadas-privado.json (teste local)')
 log('parlamentares com alguma bancada', len(saida))
 for b in BAN:
     l = {c: sum(n for (bb, cc, t), n in cont_cat.items() if bb == b['id'] and cc == c) for c in ('nucleo', 'aliado', 'interesse', 'duvida')}

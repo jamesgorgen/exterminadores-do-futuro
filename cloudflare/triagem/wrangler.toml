@@ -1,0 +1,19 @@
+# Worker da triagem das bancadas: serve a página e guarda dados e decisões no R2 privado.
+# Protegido pelo Cloudflare Access. Publicado pelo workflow "Publicar a triagem" (.github/workflows/triagem.yml).
+name = "triagem-exterminadores"
+main = "worker.js"
+compatibility_date = "2026-11-01"
+workers_dev = true
+
+rules = [ { type = "Text", globs = ["**/*.html"], fallthrough = false } ]
+
+[[r2_buckets]]
+binding = "R2"
+bucket_name = "exterminadores-dados"
+
+# Preencher depois de ligar o Cloudflare Access no Worker (não são segredos):
+# ACCESS_TEAM é o nome da equipe do Zero Trust (o "xxx" de xxx.cloudflareaccess.com);
+# ACCESS_AUD é a "Application Audience (AUD) Tag" do aplicativo do Access.
+[vars]
+ACCESS_TEAM = ""
+ACCESS_AUD = ""

@@ -3,8 +3,6 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="robots" content="noindex, nofollow">
 <title>Triagem das bancadas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -67,6 +65,7 @@ header .estado{font-size:13px;color:#c7cbe0}
 @media (max-width:620px){.evs li{grid-template-columns:1fr;gap:0}}
 .evs .tp{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-3)}
 .evs .tp.V{color:var(--int)} .evs .tp.contra{color:var(--fora)}
+.priv{display:inline-block;font-size:11px;font-weight:700;border:1px solid var(--int);color:var(--int);border-radius:4px;padding:0 5px;margin-right:6px}
 .evs .pt{font-size:12px;color:var(--ink-3);margin-left:6px}
 .linha{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:10px 0 6px}
 .rot{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3)}
@@ -96,7 +95,7 @@ textarea{width:100%;border:1px solid var(--line);border-radius:6px;padding:8px 1
 <body>
 <header><div class="wrap">
   <h1>Os exterminadores do futuro<small>Triagem das bancadas</small></h1>
-  <div class="direita"><span class="estado" id="estadoToken"></span><a class="btn claro" href="revisao.html" style="text-decoration:none">Revisão da triagem</a><a class="btn claro" href="revisao-biografias.html" style="text-decoration:none">Biografias</a></div>
+  <div class="direita"><span class="estado" id="estadoToken"></span></div>
 </div></header>
 
 <div class="filtros"><div class="wrap">
@@ -113,7 +112,7 @@ textarea{width:100%;border:1px solid var(--line);border-radius:6px;padding:8px 1
 </div></div>
 
 <main class="wrap">
-  <div id="avisoToken" class="aviso" hidden>Para salvar, configure antes o acesso ao GitHub na <a href="revisao.html">página de revisão da triagem</a>. A mesma chave vale para todas as páginas de revisão.</div>
+  <div class="aviso">Material interno. Os vínculos de familiares e terceiros são indícios a verificar e não podem ser publicados sem checagem.</div>
   <p class="desc" id="descBancada"></p>
   <div class="situacao" id="situacao"></div>
   <div class="abas" role="tablist">
@@ -141,8 +140,6 @@ textarea{width:100%;border:1px solid var(--line);border-radius:6px;padding:8px 1
 
 <script>
 'use strict';
-const REPO = 'jamesgorgen/exterminadores-do-futuro';
-const ARQ = 'bancadas-correcoes.json';
 const CASA = { C: 'Câmara', S: 'Senado' };
 const CAT = { nucleo: 'Núcleo', aliado: 'Aliado', interesse: 'Interesse sem atuação', duvida: 'Dúvida', fora: 'Não pertence', incerto: 'Incerto' };
 const GRUPO = { extrema: 'extrema-direita', direita: 'direita', centro: 'centro', esquerda: 'esquerda' };
@@ -151,9 +148,6 @@ const $ = s => document.querySelector(s);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const norm = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 const ls = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
-const token = () => ls.get('revisao-token') || '';
-const b64dec = b => decodeURIComponent(escape(atob(b.replace(/\n/g, ''))));
-const b64enc = s => btoa(unescape(encodeURIComponent(s)));
 const hoje = () => new Date().toISOString().slice(0, 10);
 
 let dados = { bancadas: [], p: {}, votacoes: {} }, salvas = { decisoes: {}, votacoes: {} }, limite = 25;
@@ -163,23 +157,12 @@ const guardarPend = () => ls.set('bancadas-pendentes', JSON.stringify(pend));
 const nPend = () => Object.keys(pend.decisoes).length + Object.values(pend.votacoes).reduce((s, o) => s + Object.keys(o).length, 0);
 
 async function json(url) { const r = await fetch(url, { cache: 'no-store' }); if (!r.ok) throw new Error(url + ' ' + r.status); return r.json(); }
-async function lerGitHub() {
-  const r = await fetch(`https://api.github.com/repos/${REPO}/contents/${ARQ}?ref=main`, { headers: { Authorization: 'Bearer ' + token(), Accept: 'application/vnd.github+json' }, cache: 'no-store' });
-  if (r.status === 404) return { sha: null, dados: { decisoes: {}, votacoes: {} } };
-  if (!r.ok) throw new Error('o GitHub respondeu ' + r.status);
-  const j = await r.json();
-  return { sha: j.sha, dados: JSON.parse(b64dec(j.content)) };
-}
 async function carregar() {
-  dados = await json('dados/bancadas.json');
-  let c = null;
-  if (token()) { try { c = (await lerGitHub()).dados; } catch (e) {} }
-  if (!c) { try { c = await json(ARQ + '?t=' + Date.now()); } catch (e) { c = {}; } }
-  salvas = { decisoes: c.decisoes || {}, votacoes: c.votacoes || {} };
+  const [d, c, eu] = await Promise.all([json('/api/dados'), json('/api/decisoes'), json('/api/eu').catch(() => ({}))]);
+  dados = d; salvas = { decisoes: c.decisoes || {}, votacoes: c.votacoes || {} };
   $('#fBancada').innerHTML = dados.bancadas.map(b => `<option value="${esc(b.id)}">${esc(b.nome)}</option>`).join('');
   const ult = ls.get('bancadas-ultima'); if (ult && dados.bancadas.some(b => b.id === ult)) $('#fBancada').value = ult;
-  $('#avisoToken').hidden = !!token();
-  $('#estadoToken').textContent = token() ? 'Acesso configurado' : 'Sem acesso para salvar';
+  $('#estadoToken').textContent = eu.email ? 'Entrou como ' + eu.email : '';
   desenhar(); atualizarBarra();
 }
 
@@ -205,9 +188,9 @@ function cartao([k, p]) {
   const oficial = p.c === 'S' ? `https://www25.senado.leg.br/web/senadores/senador/-/perfil/${id}` : `https://www.camara.leg.br/deputados/${id}`;
   const final = d && d.d ? d.d : x.cat;
   const evs = ['V', 'A', 'contra'].flatMap(dim => x.ev.filter(e => e[0] === dim).map(e =>
-    `<li><span class="tp ${dim}">${esc(DIM[dim])}</span><span>${esc(e[2])}: ${e[4] ? `<a href="${esc(e[4])}" target="_blank" rel="noopener">${esc(e[3])}</a>` : esc(e[3])}${e[1] ? `<span class="pt">${e[1] > 0 ? '+' : ''}${e[1]}</span>` : ''}</span></li>`)).join('');
+    `<li><span class="tp ${dim}">${esc(DIM[dim])}</span><span>${e[5] ? '<span class="priv">Indício</span>' : ''}${esc(e[2])}: ${e[4] ? `<a href="${esc(e[4])}" target="_blank" rel="noopener noreferrer">${esc(e[3])}</a>` : esc(e[3])}${e[1] ? `<span class="pt">${e[1] > 0 ? '+' : ''}${e[1]}</span>` : ''}</span></li>`)).join('');
   const estado = (chave(k, b) in pend.decisoes ? '<span class="selo s-pend">Não salva</span> ' : '')
-    + (d && d.d ? `<span class="selo s-${esc(d.d)}">${esc(CAT[d.d])}</span> <span class="selo s-salvo">Equipe</span>` : `<span class="selo s-${esc(x.cat)}">${esc(CAT[x.cat])}</span>${x.t ? '' : ' <span class="selo s-regra">Por regra</span>'}`);
+    + (d && d.d ? `<span class="selo s-${esc(d.d)}">${esc(CAT[d.d])}</span> <span class="selo s-salvo" title="${esc(d.por || '')} ${esc(d.data || '')}">Equipe${d.por ? ': ' + esc(d.por.split('@')[0]) : ''}</span>` : `<span class="selo s-${esc(x.cat)}">${esc(CAT[x.cat])}</span>${x.t ? '' : ' <span class="selo s-regra">Por regra</span>'}`);
   const bt = v => `<button type="button" class="${v}" data-d="${v}" aria-pressed="${d && d.d === v}">${CAT[v]}</button>`;
   return `<div class="cartao ${esc(final)} ${chave(k, b) in pend.decisoes ? 'pendente' : ''}" data-k="${esc(k)}">
     <div class="topo"><span class="num">${esc(p.n)}</span><span class="meta">${esc(p.s)}/${esc(p.uf || '')}, ${CASA[p.c] || ''}${p.g ? ', ' + esc(GRUPO[p.g] || p.g) : ''} · <a href="${esc(oficial)}" target="_blank" rel="noopener">perfil oficial</a></span><span class="lado">${estado}</span></div>
@@ -279,30 +262,16 @@ document.addEventListener('input', e => {
   guardarPend(); atualizarBarra();
 });
 async function salvar() {
-  if (!token()) { $('#avisoToken').hidden = false; $('#msg').textContent = 'Configure o acesso ao GitHub na página de revisão da triagem.'; return; }
   const n = nPend(); if (!n) return;
   $('#salvar').disabled = true; $('#msg').textContent = 'Salvando…';
-  for (let tentativa = 0; tentativa < 2; tentativa++) {
-    try {
-      const { sha, dados: atual } = await lerGitHub();
-      const dec = Object.assign({}, atual.decisoes || {});
-      for (const [c, v] of Object.entries(pend.decisoes)) { if (v === null) delete dec[c]; else dec[c] = v; }
-      const vot = JSON.parse(JSON.stringify(atual.votacoes || {}));
-      for (const [b, o] of Object.entries(pend.votacoes)) { vot[b] = vot[b] || {}; for (const [id, v] of Object.entries(o)) { if (v) vot[b][id] = v; else delete vot[b][id]; } if (!Object.keys(vot[b]).length) delete vot[b]; }
-      const novo = { _leia: 'Decisões da equipe na triagem das bancadas (revisao-bancadas.html). decisoes: chave "parlamentar|bancada", d = nucleo, aliado, fora ou incerto, m = nota. votacoes: por bancada, id da votação e o voto que favorece a pauta (S ou N); contam em dobro no robô robo/bancadas.py.',
-        decisoes: Object.fromEntries(Object.keys(dec).sort().map(k => [k, dec[k]])), votacoes: vot };
-      const corpo = { message: `Triagem das bancadas pela equipe (${n} ${n === 1 ? 'item' : 'itens'})`, content: b64enc(JSON.stringify(novo, null, 2) + '\n'), branch: 'main' };
-      if (sha) corpo.sha = sha;
-      const r = await fetch(`https://api.github.com/repos/${REPO}/contents/${ARQ}`, { method: 'PUT', headers: { Authorization: 'Bearer ' + token(), Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' }, body: JSON.stringify(corpo) });
-      if (r.status === 409 || r.status === 422) continue;
-      if (r.status === 401 || r.status === 403) throw new Error('a chave de acesso foi recusada');
-      if (!r.ok) throw new Error('o GitHub respondeu ' + r.status);
-      salvas = { decisoes: novo.decisoes, votacoes: novo.votacoes }; pend = { decisoes: {}, votacoes: {} }; guardarPend(); atualizarBarra(); desenhar();
-      $('#msg').textContent = `${n} ${n === 1 ? 'alteração salva' : 'alterações salvas'}.`;
-      return;
-    } catch (e) { atualizarBarra(); $('#msg').textContent = 'Não foi possível salvar, porque ' + e.message + '.'; return; }
-  }
-  atualizarBarra(); $('#msg').textContent = 'Não foi possível salvar por conflito com outra gravação. Tente de novo.';
+  try {
+    const r = await fetch('/api/decisoes', { method: 'POST', headers: { 'content-type': 'application/json', 'x-triagem': '1' }, body: JSON.stringify(pend) });
+    const j = await r.json().catch(() => ({}));
+    if (r.status === 403) throw new Error('a sessão expirou; recarregue a página e entre de novo');
+    if (!r.ok) throw new Error(j.erro || 'o servidor respondeu ' + r.status);
+    salvas = { decisoes: j.decisoes || {}, votacoes: j.votacoes || {} }; pend = { decisoes: {}, votacoes: {} }; guardarPend(); atualizarBarra(); desenhar();
+    $('#msg').textContent = `${n} ${n === 1 ? 'alteração salva' : 'alterações salvas'}. Votações-chave passam a valer na próxima execução do robô.`;
+  } catch (e) { atualizarBarra(); $('#msg').textContent = 'Não foi possível salvar, porque ' + e.message + '.'; }
 }
 function aba(v) { $('#abaP').setAttribute('aria-selected', !v); $('#abaV').setAttribute('aria-selected', v); $('#secP').hidden = v; $('#secV').hidden = !v; }
 $('#abaP').addEventListener('click', () => aba(false));
