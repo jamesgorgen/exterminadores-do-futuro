@@ -158,7 +158,7 @@ except Exception as e: log('frentes indisponíveis', e)
 
 # ---------------------------------------------------------------- sinais
 def nova(): return {'V': 0, 'A': 0, 'E': 0, 'contra': 0, 'ev': []}
-GENERICOS = {'Votos', 'Emendas'}   # sinais de atuação que acompanham a ideologia e não bastam sozinhos
+GENERICOS = {'Votos', 'Emendas', 'Frentes parlamentares'}   # sinais de atuação que acompanham a ideologia ou são assinados em massa e não bastam sozinhos
 S = {k: {b['id']: nova() for b in BAN} for k in EX}
 def ev(k, b, dim, pts, tipo, texto, url=''):
     s = S[k][b]

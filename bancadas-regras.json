@@ -395,8 +395,7 @@
       ],
       "frentes": [
         "MINERA",
-        "GARIMP",
-        "MINERAL"
+        "GARIMP"
       ],
       "emendas_temas": [],
       "favorecidos": [
@@ -515,13 +514,13 @@
         "CLINICAS?\\b"
       ],
       "frentes": [
-        "SAUDE",
-        "HOSPITA",
         "SANTAS CASAS",
         "FILANTROP",
+        "HOSPITA",
         "MEDICAMENTO",
         "FARMAC",
-        "MEDICINA"
+        "PLANOS DE SAUDE",
+        "SAUDE SUPLEMENTAR"
       ],
       "emendas_temas": [],
       "favorecidos": [
@@ -618,11 +617,12 @@
         "\\bBETS?\\b"
       ],
       "frentes": [
-        "JOGOS",
+        "JOGOS DE AZAR",
         "APOSTA",
         "LOTERI",
         "CASSINO",
-        "TURISMO INTEGRADO"
+        "BINGO",
+        "RESORTS INTEGRADOS"
       ],
       "emendas_temas": [],
       "favorecidos": []
@@ -663,13 +663,9 @@
       ],
       "frentes": [
         "ECONOMIA DIGITAL",
-        "INTERNET",
-        "INTELIGENCIA ARTIFICIAL",
         "LIBERDADE DE EXPRESSAO",
-        "TRANSFORMACAO DIGITAL",
-        "TECNOLOGIA DA INFORMACAO",
-        "STARTUP",
-        "INOVACAO"
+        "INTELIGENCIA ARTIFICIAL",
+        "PLATAFORMAS DIGITAIS"
       ],
       "emendas_temas": [],
       "favorecidos": []
