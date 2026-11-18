@@ -8477,6 +8477,19 @@
       ],
       "g": "direita"
     },
+    "PL 5882/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 5883/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "extrema"
+    },
     "PL 5884/2025": {
       "s": "avanca",
       "p": [
@@ -8484,6 +8497,12 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 5887/2026": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
     },
     "PL 5889/2023": {
       "s": "barra",
