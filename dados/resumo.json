@@ -1,11 +1,11 @@
 {
- "gerado": "2026-11-18T12:03:19.798Z",
+ "gerado": "2026-11-18T18:10:43.550Z",
  "inicio": "2023-02-01",
  "totais": {
-  "proposicoes": 26483,
-  "direita": 2690,
-  "extrema": 1742,
-  "votacoes": 2450,
+  "proposicoes": 26492,
+  "direita": 2691,
+  "extrema": 1743,
+  "votacoes": 2455,
   "disputadas": 1181,
   "vitorias": 508,
   "derrotas": 124,
@@ -39,9 +39,9 @@
    "derrotas": 3
   },
   "punitivismo": {
-   "prop": 1302,
-   "extrema": 824,
-   "prop30": 14,
+   "prop": 1303,
+   "extrema": 825,
+   "prop30": 15,
    "vot": 22,
    "vitorias": 18,
    "derrotas": 1
@@ -572,9 +572,9 @@
  },
  "blocos": {
   "T": {
-   "prop": 26483,
-   "pauta": 2690,
-   "pautaExtrema": 1742,
+   "prop": 26492,
+   "pauta": 2691,
+   "pautaExtrema": 1743,
    "vot": 1607,
    "comSit": 26452,
    "aprovada": 1012,
@@ -582,7 +582,7 @@
    "arquivada": 1766,
    "grupos": {
     "extrema": {
-     "prop": 5999,
+     "prop": 6002,
      "pauta": 1329,
      "membros": 158,
      "emExercicio": 120,
@@ -594,7 +594,7 @@
      "arquivada": 481
     },
     "direita": {
-     "prop": 9285,
+     "prop": 9286,
      "pauta": 907,
      "membros": 291,
      "emExercicio": 227,
@@ -606,7 +606,7 @@
      "arquivada": 650
     },
     "centro": {
-     "prop": 7125,
+     "prop": 7126,
      "pauta": 332,
      "membros": 155,
      "emExercicio": 126,
@@ -618,8 +618,8 @@
      "arquivada": 374
     },
     "esquerda": {
-     "prop": 4021,
-     "pauta": 120,
+     "prop": 4025,
+     "pauta": 121,
      "membros": 146,
      "emExercicio": 120,
      "vot": 1583,
@@ -736,7 +736,7 @@
      }
     },
     "penal-prisional": {
-     "n": 2015,
+     "n": 2016,
      "ap": 58,
      "g": {
       "direita": [
@@ -755,9 +755,9 @@
        320
       ],
       "esquerda": [
-       251,
+       252,
        8,
-       51
+       52
       ]
      }
     },
@@ -788,11 +788,11 @@
      }
     },
     "saude-mental-drogas": {
-     "n": 563,
+     "n": 564,
      "ap": 15,
      "g": {
       "esquerda": [
-       62,
+       63,
        6,
        4
       ],
@@ -814,7 +814,7 @@
      }
     },
     "cultura": {
-     "n": 830,
+     "n": 831,
      "ap": 87,
      "g": {
       "centro": [
@@ -833,14 +833,14 @@
        23
       ],
       "direita": [
-       293,
+       294,
        25,
        8
       ]
      }
     },
     "criancas-adolescentes": {
-     "n": 1512,
+     "n": 1515,
      "ap": 57,
      "g": {
       "centro": [
@@ -859,14 +859,14 @@
        54
       ],
       "esquerda": [
-       218,
+       221,
        8,
        4
       ]
      }
     },
     "violencia-mulher": {
-     "n": 1140,
+     "n": 1142,
      "ap": 60,
      "g": {
       "centro": [
@@ -885,9 +885,9 @@
        30
       ],
       "esquerda": [
-       235,
+       237,
        19,
-       3
+       4
       ]
      }
     },
@@ -1048,7 +1048,7 @@
      }
     },
     "sistema-justica": {
-     "n": 279,
+     "n": 280,
      "ap": 7,
      "g": {
       "extrema": [
@@ -1057,7 +1057,7 @@
        45
       ],
       "esquerda": [
-       34,
+       35,
        1,
        2
       ],
@@ -1204,11 +1204,11 @@
      }
     },
     "educacao-basica": {
-     "n": 839,
+     "n": 840,
      "ap": 25,
      "g": {
       "extrema": [
-       175,
+       176,
        5,
        44
       ],
@@ -1672,11 +1672,11 @@
      }
     },
     "reforma-politica": {
-     "n": 315,
+     "n": 316,
      "ap": 6,
      "g": {
       "extrema": [
-       82,
+       83,
        1,
        25
       ],
@@ -1724,7 +1724,7 @@
      }
     },
     "juventude": {
-     "n": 197,
+     "n": 198,
      "ap": 9,
      "g": {
       "direita": [
@@ -1733,7 +1733,7 @@
        3
       ],
       "esquerda": [
-       32,
+       33,
        1,
        0
       ],
@@ -1750,7 +1750,7 @@
      }
     },
     "profissionais-seguranca": {
-     "n": 484,
+     "n": 485,
      "ap": 9,
      "g": {
       "direita": [
@@ -1769,7 +1769,7 @@
        24
       ],
       "esquerda": [
-       36,
+       37,
        1,
        0
       ]
@@ -2348,11 +2348,11 @@
      }
     },
     "politica-externa": {
-     "n": 327,
+     "n": 328,
      "ap": 3,
      "g": {
       "direita": [
-       117,
+       118,
        1,
        24
       ],
@@ -2558,9 +2558,9 @@
    }
   },
   "C": {
-   "prop": 23367,
-   "pauta": 2316,
-   "pautaExtrema": 1488,
+   "prop": 23376,
+   "pauta": 2317,
+   "pautaExtrema": 1489,
    "vot": 1413,
    "comSit": 23360,
    "aprovada": 680,
@@ -2568,7 +2568,7 @@
    "arquivada": 1616,
    "grupos": {
     "extrema": {
-     "prop": 5323,
+     "prop": 5326,
      "pauta": 1180,
      "membros": 137,
      "emExercicio": 105,
@@ -2580,7 +2580,7 @@
      "arquivada": 445
     },
     "direita": {
-     "prop": 8040,
+     "prop": 8041,
      "pauta": 765,
      "membros": 247,
      "emExercicio": 193,
@@ -2592,7 +2592,7 @@
      "arquivada": 582
     },
     "centro": {
-     "prop": 6687,
+     "prop": 6688,
      "pauta": 302,
      "membros": 139,
      "emExercicio": 112,
@@ -2604,8 +2604,8 @@
      "arquivada": 364
     },
     "esquerda": {
-     "prop": 3317,
-     "pauta": 69,
+     "prop": 3321,
+     "pauta": 70,
      "membros": 122,
      "emExercicio": 103,
      "vot": 1391,
@@ -2722,7 +2722,7 @@
      }
     },
     "penal-prisional": {
-     "n": 1715,
+     "n": 1716,
      "ap": 41,
      "g": {
       "direita": [
@@ -2741,9 +2741,9 @@
        283
       ],
       "esquerda": [
-       161,
+       162,
        4,
-       20
+       21
       ]
      }
     },
@@ -2774,11 +2774,11 @@
      }
     },
     "saude-mental-drogas": {
-     "n": 508,
+     "n": 509,
      "ap": 11,
      "g": {
       "esquerda": [
-       52,
+       53,
        3,
        1
       ],
@@ -2800,7 +2800,7 @@
      }
     },
     "cultura": {
-     "n": 741,
+     "n": 742,
      "ap": 61,
      "g": {
       "centro": [
@@ -2819,14 +2819,14 @@
        22
       ],
       "direita": [
-       268,
+       269,
        19,
        7
       ]
      }
     },
     "criancas-adolescentes": {
-     "n": 1363,
+     "n": 1366,
      "ap": 43,
      "g": {
       "centro": [
@@ -2845,14 +2845,14 @@
        48
       ],
       "esquerda": [
-       182,
+       185,
        6,
        2
       ]
      }
     },
     "violencia-mulher": {
-     "n": 998,
+     "n": 1000,
      "ap": 47,
      "g": {
       "centro": [
@@ -2871,9 +2871,9 @@
        28
       ],
       "esquerda": [
-       180,
+       182,
        15,
-       2
+       3
       ]
      }
     },
@@ -3008,7 +3008,7 @@
      }
     },
     "sistema-justica": {
-     "n": 227,
+     "n": 228,
      "ap": 5,
      "g": {
       "extrema": [
@@ -3017,7 +3017,7 @@
        41
       ],
       "esquerda": [
-       27,
+       28,
        1,
        1
       ],
@@ -3164,11 +3164,11 @@
      }
     },
     "educacao-basica": {
-     "n": 755,
+     "n": 756,
      "ap": 13,
      "g": {
       "extrema": [
-       156,
+       157,
        2,
        40
       ],
@@ -3658,11 +3658,11 @@
      }
     },
     "reforma-politica": {
-     "n": 252,
+     "n": 253,
      "ap": 6,
      "g": {
       "extrema": [
-       69,
+       70,
        1,
        18
       ],
@@ -3710,7 +3710,7 @@
      }
     },
     "juventude": {
-     "n": 182,
+     "n": 183,
      "ap": 5,
      "g": {
       "direita": [
@@ -3719,7 +3719,7 @@
        3
       ],
       "esquerda": [
-       31,
+       32,
        0,
        0
       ],
@@ -3788,7 +3788,7 @@
      }
     },
     "profissionais-seguranca": {
-     "n": 431,
+     "n": 432,
      "ap": 6,
      "g": {
       "direita": [
@@ -3807,7 +3807,7 @@
        22
       ],
       "esquerda": [
-       28,
+       29,
        0,
        0
       ]
@@ -4308,11 +4308,11 @@
      }
     },
     "politica-externa": {
-     "n": 287,
+     "n": 288,
      "ap": 3,
      "g": {
       "direita": [
-       102,
+       103,
        1,
        21
       ],
@@ -6461,7 +6461,7 @@
   }
  },
  "recentes": {
-  "proposicoes": 6,
-  "votacoes": 11
+  "proposicoes": 7,
+  "votacoes": 16
  }
 }
