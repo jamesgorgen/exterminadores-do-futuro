@@ -1,5 +1,5 @@
 {
- "inicio": "2026-11-18T11:56:59.135Z",
+ "inicio": "2026-11-18T12:00:25.321Z",
  "modo": "diario",
  "amostras": {
   "camara_deputado": {
@@ -215,7 +215,7 @@
   "numeracao_lacunas_PL": 5,
   "numeracao_lacunas_PLP": 1,
   "numeracao_lacunas_PEC": 1,
-  "correcoes_aplicadas": 5049,
+  "correcoes_aplicadas": 5059,
   "grupo_pelos_votos_diferente": 216
  },
  "erros": [],
@@ -236,9 +236,9 @@
    "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"18/11/2026 08:57:29\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
   },
   "senado_processo": {
-   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-11-01&dataFimApresentacao=2026-11-15",
-   "tamanho": 22600,
-   "inicio": "[{\"autoria\":\"Senadora Damares Alves (REPUBLICANOS/DF)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":176161,\"dataApresentacao\":\"2026-11-03\",\"dataSituacaoAtual\":\"2026-11-03\",\"dataUltimaAtualizacao\":\"2026-11-16T18:30:34.243\",\"ementa\":\"Acrescenta o art. 88-A à Lei nº 13.146, de 6 de julho de 2015 (Lei Brasileira de Inclusão da Pessoa com Deficiência – Estatuto da Pessoa com Deficiência), para tipificar a produção, a divulgação e a manutenção de conteúdo sexual degradante, gerado ou alterado por inteligência artificial ou outro meio de simulação, que retrate pessoa com deficiência.\",\"enteIdentificador\":\"SF\",\"id\":9119276,\"identificacao\":\"PL 5726/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/07c4a170-2679-4693-877b-b1c3a5cac385\"},{\"autoria\":\"Senador Jader Barbalho (MDB/PA)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":176164,\"dataApresentacao\":\"2026-11-03\",\"dataSituacaoAtual\":\"2026-11-03\",\"dataUltimaAtualizacao\":\"2026-11-16T18:30:34.551\",\"ementa\":\"Institui a Política Nacional de Coerência da Transição Ecológica e da Descarbonização (PNCTE); estabelece diretrizes para o alinhamento entre o Plano Nacional sobre Mudança do Clima e seus Planos Setoriais de Mitigação e de Adaptação, a Estratégia Nacional de Descarbonização Industrial e a política industri"
+   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-10-04&dataFimApresentacao=2026-10-15",
+   "tamanho": 13498,
+   "inicio": "[{\"autoria\":\"Senadora Lourdinha Pereira (PSB/MA)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175907,\"dataApresentacao\":\"2026-10-05\",\"dataSituacaoAtual\":\"2026-10-05\",\"dataUltimaAtualizacao\":\"2026-10-09T16:45:00.822\",\"ementa\":\"Altera a Lei nº 8.212, de 24 de julho de 1991, e a Lei nº 8.213, de 24 de julho de 1991, para conferir a condição de segurado especial da Previdência Social ao artesão, nas condições em que especifica.\",\"enteIdentificador\":\"SF\",\"id\":9111975,\"identificacao\":\"PL 5522/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/d61481b9-62b9-4de7-b307-77a9617f71d0\"},{\"autoria\":\"Senadora Lourdinha Pereira (PSB/MA)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175908,\"dataApresentacao\":\"2026-10-05\",\"dataSituacaoAtual\":\"2026-10-05\",\"dataUltimaAtualizacao\":\"2026-10-09T16:45:00.972\",\"ementa\":\"Altera as Leis nº 8.080, de 19 de setembro de 1990, nº 11.107, de 6 de abril de 2005, nº 11.445, de 5 de janeiro de 2007, nº 12.305, de 2 de agosto de 2010, nº 12.587, de 3 de janeiro de 2012, e nº 12.608, de 10 de abril de 2012, para instituir a Política Nacional de Fomento e Fortalecimento dos Consórcios Públicos Intermunicipais e promover sua integração às políticas públicas setoriais.\",\"enteIdentificador\":\"SF\",\"id\":9111985,\"identificacao\":\"PL 5523/202"
   },
   "senado_relatoria": {
    "url": "https://legis.senado.leg.br/dadosabertos/processo/relatoria?dataInicio=2023-02-01&dataFim=2023-02-28",
@@ -276,5 +276,5 @@
    ]
   }
  },
- "fim": "2026-11-18T11:58:33.086Z"
+ "fim": "2026-11-18T12:02:03.582Z"
 }
