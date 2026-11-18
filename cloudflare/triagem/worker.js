@@ -37,13 +37,15 @@ async function usuario(req, env) {
   const head = JSON.parse(txt(b64url(h))), pay = JSON.parse(txt(b64url(p)));
   const m = String(pay.iss || '').match(/^https:\/\/([a-z0-9-]+)\.cloudflareaccess\.com$/);
   const team = env.ACCESS_TEAM || (m && m[1]);
-  if (!team || (env.ACCESS_TEAM && (!m || m[1] !== env.ACCESS_TEAM))) return { erro: 'token' };
+  if (!team || (env.ACCESS_TEAM && (!m || m[1] !== env.ACCESS_TEAM))) return { erro: 'token', motivo: 'emissor' };
   const jwk = (await chaves(team)).find(k => k.kid === head.kid);
-  if (!jwk || head.alg !== 'RS256') return { erro: 'token' };
+  if (!jwk || head.alg !== 'RS256') return { erro: 'token', motivo: 'chave-desconhecida' };
   const chave = await crypto.subtle.importKey('jwk', jwk, { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' }, false, ['verify']);
   const ok = await crypto.subtle.verify('RSASSA-PKCS1-v1_5', chave, b64url(s), new TextEncoder().encode(h + '.' + p));
   const aud = Array.isArray(pay.aud) ? pay.aud : [pay.aud];
-  if (!ok || !aud.includes(env.ACCESS_AUD) || (pay.exp || 0) * 1000 < Date.now()) return { erro: 'token' };
+  if (!ok) return { erro: 'token', motivo: 'assinatura' };
+  if (!aud.includes(env.ACCESS_AUD)) return { erro: 'token', motivo: 'aud-diferente' };
+  if ((pay.exp || 0) * 1000 < Date.now()) return { erro: 'token', motivo: 'expirado' };
   return { email: pay.email || pay.common_name || 'desconhecido', team };
 }
 
@@ -84,9 +86,13 @@ export default {
   async fetch(req, env) {
     const url = new URL(req.url);
     let u;
-    try { u = await usuario(req, env); } catch (e) { u = { erro: 'token' }; }
+    try { u = await usuario(req, env); } catch (e) { u = { erro: 'token', motivo: String(e && e.message || e).slice(0, 120) }; }
     if (u.erro === 'configuracao') return new Response('A triagem ainda não está configurada: falta ACCESS_AUD no wrangler.toml.', { status: 503, headers: SEG });
-    if (u.erro) return new Response('Acesso restrito à equipe. Entre pelo endereço da triagem e use o seu e-mail cadastrado.', { status: 403, headers: SEG });
+    if (u.erro) {
+      // Diagnóstico sem dados sensíveis: sem-token = o Access não está na frente deste endereço; token = credencial recusada.
+      const diag = u.erro === 'sem-token' ? 'O pedido chegou sem a credencial do Cloudflare Access (código: sem-token).' : `A credencial do Access foi recusada (código: ${u.motivo || u.erro}).`;
+      return new Response('Acesso restrito à equipe. Entre pelo endereço da triagem e use o seu e-mail cadastrado.\n\n' + diag, { status: 403, headers: { ...SEG, 'content-type': 'text/plain; charset=utf-8' } });
+    }
 
     if (url.pathname === '/' || url.pathname === '/index.html') return new Response(PAGINA, { headers: { 'content-type': 'text/html; charset=utf-8', ...SEG } });
     if (url.pathname === '/api/eu') return json({ email: u.email, equipe: u.team });
