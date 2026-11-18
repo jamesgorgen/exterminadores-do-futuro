@@ -239,6 +239,19 @@
       ],
       "g": "extrema"
     },
+    "PDL 14/2026": {
+      "s": "barra",
+      "p": [
+        "drogas"
+      ]
+    },
+    "PDL 160/2023": {
+      "s": "barra",
+      "p": [
+        "ambiente",
+        "privilegios"
+      ]
+    },
     "PDL 160/2026": {
       "s": "avanca",
       "p": [
@@ -249,6 +262,12 @@
     "PDL 164/2026": {
       "s": "",
       "m": ""
+    },
+    "PDL 170/2023": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ]
     },
     "PDL 170/2025": {
       "s": "avanca",
@@ -279,6 +298,12 @@
         "educacao"
       ],
       "g": "extrema"
+    },
+    "PDL 207/2025": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
     },
     "PDL 222/2024": {
       "s": ""
@@ -326,6 +351,12 @@
       "s": "",
       "m": ""
     },
+    "PDL 269/2026": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
     "PDL 273/2026": {
       "s": "avanca",
       "p": [
@@ -356,6 +387,30 @@
       ],
       "g": "extrema"
     },
+    "PDL 329/2023": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
+    },
+    "PDL 330/2024": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
+    },
+    "PDL 334/2024": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
+    },
+    "PDL 337/2024": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PDL 337/2025": {
       "s": "avanca",
       "p": [
@@ -363,6 +418,12 @@
         "privilegios"
       ],
       "g": "extrema"
+    },
+    "PDL 338/2024": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PDL 343/2023": {
       "s": "avanca",
@@ -408,6 +469,12 @@
         "plataformas"
       ],
       "g": "extrema"
+    },
+    "PDL 357/2025": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ]
     },
     "PDL 373/2024": {
       "s": "avanca",
@@ -580,6 +647,12 @@
       ],
       "g": "extrema"
     },
+    "PDL 510/2025": {
+      "s": "barra",
+      "p": [
+        "soberania"
+      ]
+    },
     "PDL 512/2025": {
       "s": "avanca",
       "p": [
@@ -594,6 +667,12 @@
       ],
       "g": "extrema"
     },
+    "PDL 56/2023": {
+      "s": "barra",
+      "p": [
+        "educacao"
+      ]
+    },
     "PDL 563/2026": {
       "s": "avanca",
       "p": [
@@ -602,8 +681,20 @@
       ],
       "g": "direita"
     },
+    "PDL 578/2026": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
+    },
     "PDL 63/2023": {
       "s": ""
+    },
+    "PDL 642/2025": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PDL 69/2026": {
       "s": "avanca",
@@ -712,6 +803,13 @@
       ],
       "g": "direita"
     },
+    "PDL 87/2023": {
+      "s": "barra",
+      "p": [
+        "ambiente",
+        "povos"
+      ]
+    },
     "PDL 9/2026": {
       "s": "avanca",
       "p": [
@@ -735,6 +833,12 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PDL 921/2026": {
+      "s": "barra",
+      "p": [
+        "soberania"
+      ]
     },
     "PDL 922/2026": {
       "s": "avanca",
@@ -771,6 +875,18 @@
       "s": "",
       "m": ""
     },
+    "PDL 940/2025": {
+      "s": "barra",
+      "p": [
+        "povos"
+      ]
+    },
+    "PDL 942/2025": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
+    },
     "PDL 97/2026": {
       "s": "avanca",
       "p": [
@@ -785,6 +901,12 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PEC 15/2025": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
     },
     "PEC 15/2026": {
       "s": "avanca",
@@ -818,6 +940,12 @@
         "instituicoes"
       ],
       "g": "extrema"
+    },
+    "PEC 36/2025": {
+      "s": "barra",
+      "p": [
+        "educacao"
+      ]
     },
     "PEC 41/2023": {
       "s": "avanca",
@@ -858,6 +986,12 @@
       "g": "extrema",
       "m": ""
     },
+    "PEC 68/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PEC 69/2023": {
       "s": "avanca",
       "p": [
@@ -897,6 +1031,18 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 1010/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 1012/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
     "PL 1012/2025": {
       "s": "avanca",
       "p": [
@@ -930,6 +1076,12 @@
       ],
       "m": ""
     },
+    "PL 1045/2026": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
     "PL 1056/2025": {
       "s": "avanca",
       "p": [
@@ -938,8 +1090,45 @@
       ],
       "g": "direita"
     },
+    "PL 1058/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 1059/2026": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 1067/2026": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 1069/2025": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
     "PL 1073/2024": {
       "s": ""
+    },
+    "PL 1082/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 1087/2023": {
+      "s": "barra",
+      "p": [
+        "plataformas",
+        "igualdade"
+      ]
     },
     "PL 1088/2026": {
       "s": "avanca",
@@ -971,6 +1160,18 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 1098/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 1098/2024": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
     "PL 1098/2026": {
       "s": "barra",
       "p": [
@@ -997,6 +1198,36 @@
       ],
       "g": "extrema"
     },
+    "PL 1103/2024": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 1105/2024": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ]
+    },
+    "PL 1107/2026": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 1109/2026": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 111/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
     "PL 1110/2026": {
       "s": "barra",
       "p": [
@@ -1018,6 +1249,24 @@
         "punitivismo"
       ],
       "g": "extrema"
+    },
+    "PL 1119/2026": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
+    "PL 112/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 1131/2023": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
     },
     "PL 1132/2025": {
       "s": "barra",
@@ -1043,6 +1292,24 @@
       "s": "",
       "m": ""
     },
+    "PL 1138/2026": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 1144/2026": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 1145/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
     "PL 1146/2025": {
       "s": "avanca",
       "p": [
@@ -1054,6 +1321,42 @@
     "PL 1148/2023": {
       "s": ""
     },
+    "PL 1150/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 1154/2026": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 1155/2026": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 1157/2026": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 1161/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 1161/2026": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
     "PL 1173/2025": {
       "s": "avanca",
       "p": [
@@ -1061,6 +1364,18 @@
         "religiao"
       ],
       "g": "extrema"
+    },
+    "PL 118/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 1182/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
     },
     "PL 1182/2025": {
       "s": "avanca",
@@ -1077,6 +1392,24 @@
       ],
       "g": "extrema"
     },
+    "PL 119/2023": {
+      "s": "barra",
+      "p": [
+        "movimentos"
+      ]
+    },
+    "PL 1199/2025": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 120/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PL 120/2026": {
       "s": "avanca",
       "p": [
@@ -1085,6 +1418,12 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 1203/2026": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PL 1209/2026": {
       "s": "avanca",
@@ -1102,8 +1441,26 @@
       "g": "direita",
       "m": ""
     },
+    "PL 1213/2023": {
+      "s": "barra",
+      "p": [
+        "educacao"
+      ]
+    },
+    "PL 1217/2026": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
     "PL 1219/2026": {
       "s": ""
+    },
+    "PL 122/2023": {
+      "s": "barra",
+      "p": [
+        "soberania"
+      ]
     },
     "PL 1222/2025": {
       "s": "avanca",
@@ -1113,6 +1470,24 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 1223/2026": {
+      "s": "barra",
+      "p": [
+        "armas"
+      ]
+    },
+    "PL 1230/2024": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 1234/2024": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PL 1234/2026": {
       "s": "avanca",
       "p": [
@@ -1121,6 +1496,12 @@
       ],
       "g": "extrema"
     },
+    "PL 1246/2025": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PL 1247/2025": {
       "s": "avanca",
       "p": [
@@ -1128,6 +1509,12 @@
         "soberania"
       ],
       "g": "direita"
+    },
+    "PL 127/2025": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
     },
     "PL 1272/2023": {
       "s": "barra",
@@ -1153,6 +1540,24 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 128/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 1282/2026": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
+    },
+    "PL 1283/2024": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
     "PL 1283/2025": {
       "s": "avanca",
       "p": [
@@ -1162,12 +1567,30 @@
       ],
       "g": "extrema"
     },
+    "PL 1285/2024": {
+      "s": "barra",
+      "p": [
+        "instituicoes"
+      ]
+    },
     "PL 1287/2025": {
       "s": "barra",
       "p": [
         "religiao"
       ],
       "m": ""
+    },
+    "PL 129/2023": {
+      "s": "barra",
+      "p": [
+        "educacao"
+      ]
+    },
+    "PL 1294/2026": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
     },
     "PL 1299/2023": {
       "s": "barra",
@@ -1176,12 +1599,66 @@
       ],
       "m": ""
     },
+    "PL 130/2025": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 1302/2026": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 131/2025": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 1316/2024": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
     "PL 1316/2026": {
       "s": "avanca",
       "p": [
         "privilegios"
       ],
       "g": "direita"
+    },
+    "PL 1318/2025": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 132/2023": {
+      "s": "barra",
+      "p": [
+        "povos"
+      ]
+    },
+    "PL 1335/2025": {
+      "s": "barra",
+      "p": [
+        "instituicoes"
+      ]
+    },
+    "PL 1339/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 134/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PL 1341/2023": {
       "s": "avanca",
@@ -1191,6 +1668,12 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 1343/2026": {
+      "s": "barra",
+      "p": [
+        "povos"
+      ]
     },
     "PL 1345/2026": {
       "s": "avanca",
@@ -1208,6 +1691,18 @@
       ],
       "g": "direita"
     },
+    "PL 135/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 1352/2023": {
+      "s": "barra",
+      "p": [
+        "povos"
+      ]
+    },
     "PL 1356/2026": {
       "s": "barra",
       "p": [
@@ -1216,12 +1711,24 @@
       ],
       "m": ""
     },
+    "PL 137/2023": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
     "PL 1372/2023": {
       "s": "barra",
       "p": [
         "costumes"
       ],
       "m": "Revoga a Lei de Alienação Parental, demanda de movimentos de defesa de mulheres e crianças."
+    },
+    "PL 138/2023": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
     },
     "PL 1389/2024": {
       "s": "avanca",
@@ -1230,6 +1737,12 @@
         "privilegios"
       ],
       "g": "direita"
+    },
+    "PL 139/2023": {
+      "s": "barra",
+      "p": [
+        "educacao"
+      ]
     },
     "PL 14/2024": {
       "s": "avanca",
@@ -1240,12 +1753,48 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 140/2023": {
+      "s": "barra",
+      "p": [
+        "educacao"
+      ]
+    },
+    "PL 141/2023": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
+    },
+    "PL 142/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
     "PL 1420/2025": {
       "s": "avanca",
       "p": [
         "punitivismo"
       ],
       "g": "extrema"
+    },
+    "PL 1421/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 1423/2025": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
+    "PL 143/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PL 1436/2025": {
       "s": "avanca",
@@ -1262,12 +1811,42 @@
       ],
       "g": "direita"
     },
+    "PL 144/2023": {
+      "s": "barra",
+      "p": [
+        "educacao"
+      ]
+    },
+    "PL 1440/2026": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
     "PL 1459/2023": {
       "s": "avanca",
       "p": [
         "plataformas"
       ],
       "g": "extrema"
+    },
+    "PL 1461/2023": {
+      "s": "barra",
+      "p": [
+        "instituicoes"
+      ]
+    },
+    "PL 1464/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 1467/2025": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PL 1482/2024": {
       "s": "avanca",
@@ -1285,6 +1864,12 @@
       ],
       "g": "extrema"
     },
+    "PL 1493/2026": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PL 1496/2026": {
       "s": "barra",
       "p": [
@@ -1292,6 +1877,44 @@
         "plataformas"
       ],
       "m": ""
+    },
+    "PL 1497/2026": {
+      "s": "barra",
+      "p": [
+        "soberania"
+      ]
+    },
+    "PL 1498/2026": {
+      "s": "barra",
+      "p": [
+        "soberania"
+      ]
+    },
+    "PL 1500/2026": {
+      "s": "barra",
+      "p": [
+        "soberania"
+      ]
+    },
+    "PL 1501/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 1502/2026": {
+      "s": "barra",
+      "p": [
+        "ambiente",
+        "povos",
+        "igualdade"
+      ]
+    },
+    "PL 1504/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
     },
     "PL 1505/2025": {
       "s": "avanca",
@@ -1308,8 +1931,137 @@
       ],
       "g": "extrema"
     },
+    "PL 1508/2026": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 1509/2026": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 1510/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas",
+        "costumes"
+      ]
+    },
+    "PL 1511/2026": {
+      "s": "barra",
+      "p": [
+        "soberania"
+      ]
+    },
+    "PL 1513/2026": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
+    },
+    "PL 1514/2026": {
+      "s": "barra",
+      "p": [
+        "ambiente",
+        "soberania"
+      ]
+    },
+    "PL 1515/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 1516/2026": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
+    "PL 1517/2026": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 1520/2026": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ]
+    },
+    "PL 1523/2026": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 1524/2025": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
+    "PL 1525/2024": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 1527/2025": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 1527/2026": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
+    },
+    "PL 1528/2025": {
+      "s": "barra",
+      "p": [
+        "povos"
+      ]
+    },
+    "PL 1528/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 1529/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas",
+        "instituicoes"
+      ]
+    },
+    "PL 1530/2025": {
+      "s": "barra",
+      "p": [
+        "povos"
+      ]
+    },
     "PL 1535/2023": {
       "s": ""
+    },
+    "PL 1537/2026": {
+      "s": "barra",
+      "p": [
+        "povos"
+      ]
+    },
+    "PL 1540/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PL 1541/2023": {
       "s": "barra",
@@ -1318,6 +2070,18 @@
         "estado"
       ],
       "m": ""
+    },
+    "PL 1544/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 1556/2025": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
     },
     "PL 1568/2026": {
       "s": "avanca",
@@ -1345,12 +2109,30 @@
       ],
       "m": ""
     },
+    "PL 1579/2025": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 1589/2023": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
+    },
     "PL 1589/2026": {
       "s": "avanca",
       "p": [
         "armas"
       ],
       "g": "extrema"
+    },
+    "PL 1594/2024": {
+      "s": "barra",
+      "p": [
+        "povos"
+      ]
     },
     "PL 1613/2026": {
       "s": "avanca",
@@ -1360,6 +2142,36 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 1617/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 1634/2026": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 1636/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 1637/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 1638/2026": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
     },
     "PL 1651/2023": {
       "s": "avanca",
@@ -1376,6 +2188,12 @@
         "privilegios"
       ],
       "g": "direita"
+    },
+    "PL 1669/2025": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
     },
     "PL 1682/2026": {
       "s": "avanca",
@@ -1418,6 +2236,12 @@
       "g": "direita",
       "m": ""
     },
+    "PL 1707/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
     "PL 1721/2025": {
       "s": "avanca",
       "p": [
@@ -1427,6 +2251,12 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 1725/2025": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
     "PL 1732/2025": {
       "s": "avanca",
       "p": [
@@ -1434,6 +2264,12 @@
         "soberania"
       ],
       "g": "extrema"
+    },
+    "PL 1738/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PL 1740/2025": {
       "s": "avanca",
@@ -1446,12 +2282,37 @@
     "PL 1748/2025": {
       "s": ""
     },
+    "PL 1750/2026": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
+    "PL 1754/2026": {
+      "s": "barra",
+      "p": [
+        "soberania"
+      ]
+    },
     "PL 1759/2026": {
       "s": "avanca",
       "p": [
         "punitivismo"
       ],
       "g": "extrema"
+    },
+    "PL 1775/2024": {
+      "s": "barra",
+      "p": [
+        "igualdade",
+        "punitivismo"
+      ]
+    },
+    "PL 1776/2024": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
     },
     "PL 1776/2026": {
       "s": "avanca",
@@ -1493,8 +2354,32 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 1796/2024": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 1798/2025": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
     "PL 18/2024": {
       "s": ""
+    },
+    "PL 1800/2026": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
+    },
+    "PL 1808/2026": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ]
     },
     "PL 1809/2023": {
       "s": "barra",
@@ -1503,6 +2388,12 @@
         "plataformas"
       ],
       "m": ""
+    },
+    "PL 1815/2024": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PL 1818/2024": {
       "s": "avanca",
@@ -1544,12 +2435,37 @@
       ],
       "m": ""
     },
+    "PL 1831/2024": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 1832/2026": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 1838/2024": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PL 1840/2024": {
       "s": "avanca",
       "p": [
         "privilegios"
       ],
       "g": "direita"
+    },
+    "PL 1853/2026": {
+      "s": "barra",
+      "p": [
+        "soberania",
+        "estado"
+      ]
     },
     "PL 1863/2025": {
       "s": "avanca",
@@ -1586,12 +2502,24 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 1883/2026": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
     "PL 1886/2026": {
       "s": "avanca",
       "p": [
         "privilegios"
       ],
       "g": "direita"
+    },
+    "PL 1901/2024": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
     },
     "PL 1906/2026": {
       "s": "avanca",
@@ -1609,6 +2537,12 @@
         "privilegios"
       ],
       "g": "direita"
+    },
+    "PL 1912/2023": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
     },
     "PL 1912/2025": {
       "s": "avanca",
@@ -1699,6 +2633,12 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 1965/2025": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
     "PL 1971/2026": {
       "s": "avanca",
       "p": [
@@ -1773,6 +2713,12 @@
       ],
       "g": "direita"
     },
+    "PL 2/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
     "PL 2001/2024": {
       "s": "avanca",
       "p": [
@@ -1807,6 +2753,12 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 2014/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
     "PL 2015/2023": {
       "s": "barra",
       "p": [
@@ -1822,6 +2774,30 @@
         "privilegios"
       ],
       "m": ""
+    },
+    "PL 2017/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 2019/2026": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 2025/2026": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 2033/2026": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
     },
     "PL 2034/2024": {
       "s": "avanca",
@@ -1839,6 +2815,30 @@
       ],
       "m": ""
     },
+    "PL 2034/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 2035/2026": {
+      "s": "barra",
+      "p": [
+        "drogas"
+      ]
+    },
+    "PL 2036/2024": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 2036/2026": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
     "PL 2037/2025": {
       "s": "barra",
       "p": [
@@ -1846,6 +2846,12 @@
         "plataformas"
       ],
       "m": ""
+    },
+    "PL 2040/2025": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
     },
     "PL 2040/2026": {
       "s": "barra",
@@ -1863,6 +2869,12 @@
       ],
       "g": "direita"
     },
+    "PL 2045/2025": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
     "PL 205/2026": {
       "s": "avanca",
       "p": [
@@ -1870,6 +2882,18 @@
       ],
       "g": "direita",
       "m": ""
+    },
+    "PL 2050/2025": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 2074/2024": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PL 2077/2026": {
       "s": "avanca",
@@ -1879,12 +2903,30 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 2081/2024": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PL 2084/2026": {
       "s": "avanca",
       "p": [
         "educacao"
       ],
       "g": "direita"
+    },
+    "PL 2090/2023": {
+      "s": "barra",
+      "p": [
+        "armas"
+      ]
+    },
+    "PL 2090/2024": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PL 2091/2026": {
       "s": "barra",
@@ -1893,6 +2935,12 @@
       ],
       "m": ""
     },
+    "PL 2092/2024": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PL 2110/2026": {
       "s": "avanca",
       "p": [
@@ -1900,6 +2948,24 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 2117/2024": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 2123/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 2133/2025": {
+      "s": "barra",
+      "p": [
+        "soberania"
+      ]
     },
     "PL 2147/2026": {
       "s": "avanca",
@@ -1917,6 +2983,30 @@
       ],
       "g": "extrema"
     },
+    "PL 2153/2026": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 2156/2023": {
+      "s": "barra",
+      "p": [
+        "povos"
+      ]
+    },
+    "PL 2170/2025": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 2172/2026": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PL 2173/2025": {
       "s": "avanca",
       "p": [
@@ -1928,6 +3018,12 @@
     "PL 2177/2024": {
       "s": ""
     },
+    "PL 2179/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
     "PL 2183/2025": {
       "s": "avanca",
       "p": [
@@ -1935,6 +3031,18 @@
         "povos"
       ],
       "g": "extrema"
+    },
+    "PL 219/2025": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
+    "PL 2196/2025": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PL 2196/2026": {
       "s": "avanca",
@@ -1968,6 +3076,24 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 223/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 2230/2026": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 224/2024": {
+      "s": "barra",
+      "p": [
+        "instituicoes"
+      ]
+    },
     "PL 2244/2026": {
       "s": "avanca",
       "p": [
@@ -1976,6 +3102,24 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 2245/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 2246/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 2250/2024": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PL 2250/2025": {
       "s": "avanca",
@@ -1992,6 +3136,18 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 2251/2024": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 2253/2024": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
     },
     "PL 2253/2026": {
       "s": "avanca",
@@ -2026,6 +3182,25 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 2273/2026": {
+      "s": "barra",
+      "p": [
+        "costumes",
+        "plataformas"
+      ]
+    },
+    "PL 2274/2025": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
+    "PL 2278/2025": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
     "PL 2287/2026": {
       "s": "avanca",
       "p": [
@@ -2033,6 +3208,12 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 2293/2023": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
     },
     "PL 2297/2026": {
       "s": "barra",
@@ -2048,6 +3229,24 @@
       ],
       "g": "direita"
     },
+    "PL 2312/2025": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 2314/2025": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 2324/2024": {
+      "s": "barra",
+      "p": [
+        "educacao"
+      ]
+    },
     "PL 2324/2026": {
       "s": "avanca",
       "p": [
@@ -2055,6 +3254,42 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 2328/2026": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 2329/2026": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
+    "PL 2334/2024": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
+    "PL 2334/2025": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
+    "PL 2340/2026": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 2341/2024": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
     },
     "PL 2343/2026": {
       "s": "avanca",
@@ -2086,6 +3321,18 @@
       ],
       "g": "extrema"
     },
+    "PL 2353/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 236/2025": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PL 2362/2023": {
       "s": "barra",
       "p": [
@@ -2111,6 +3358,24 @@
       ],
       "g": "extrema"
     },
+    "PL 237/2025": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 2370/2024": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
+    },
+    "PL 2378/2026": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
     "PL 2391/2026": {
       "s": "",
       "m": ""
@@ -2131,6 +3396,18 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 2396/2026": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 2402/2025": {
+      "s": "barra",
+      "p": [
+        "soberania"
+      ]
+    },
     "PL 2404/2025": {
       "s": "avanca",
       "p": [
@@ -2145,6 +3422,30 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 2411/2026": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 2417/2024": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
+    "PL 2421/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 2421/2026": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PL 2424/2026": {
       "s": "avanca",
@@ -2179,6 +3480,30 @@
     "PL 2448/2023": {
       "s": ""
     },
+    "PL 2449/2024": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 2450/2024": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 2453/2024": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 2457/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
     "PL 247/2023": {
       "s": "avanca",
       "p": [
@@ -2186,6 +3511,12 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 2473/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PL 2480/2025": {
       "s": "avanca",
@@ -2207,6 +3538,24 @@
         "ambiente"
       ],
       "m": ""
+    },
+    "PL 2489/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 2497/2024": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 2505/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PL 2508/2023": {
       "s": "avanca",
@@ -2232,6 +3581,24 @@
       ],
       "g": "direita"
     },
+    "PL 2520/2024": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 2521/2024": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 2522/2024": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
     "PL 2527/2026": {
       "s": "avanca",
       "p": [
@@ -2240,12 +3607,24 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 253/2024": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
     "PL 2539/2026": {
       "s": "avanca",
       "p": [
         "plataformas"
       ],
       "g": "extrema"
+    },
+    "PL 2542/2026": {
+      "s": "barra",
+      "p": [
+        "povos"
+      ]
     },
     "PL 2546/2025": {
       "s": "avanca",
@@ -2263,6 +3642,12 @@
       ],
       "g": "extrema"
     },
+    "PL 2572/2026": {
+      "s": "barra",
+      "p": [
+        "povos"
+      ]
+    },
     "PL 2576/2025": {
       "s": "avanca",
       "p": [
@@ -2271,6 +3656,12 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 2585/2026": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
     "PL 2586/2023": {
       "s": "avanca",
       "p": [
@@ -2278,6 +3669,18 @@
         "punitivismo"
       ],
       "g": "extrema"
+    },
+    "PL 2586/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 2591/2023": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ]
     },
     "PL 2603/2026": {
       "s": "barra",
@@ -2295,6 +3698,12 @@
       ],
       "g": "extrema"
     },
+    "PL 2621/2024": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PL 2622/2023": {
       "s": "avanca",
       "p": [
@@ -2302,6 +3711,30 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 2622/2024": {
+      "s": "barra",
+      "p": [
+        "drogas"
+      ]
+    },
+    "PL 2630/2026": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
+    },
+    "PL 2633/2025": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 2634/2025": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
     },
     "PL 2641/2025": {
       "s": "avanca",
@@ -2327,6 +3760,18 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 2646/2026": {
+      "s": "barra",
+      "p": [
+        "povos"
+      ]
+    },
+    "PL 2648/2024": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
     "PL 2654/2024": {
       "s": "avanca",
       "p": [
@@ -2334,6 +3779,12 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 2660/2025": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PL 2664/2026": {
       "s": "avanca",
@@ -2343,6 +3794,18 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 2667/2024": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 2668/2024": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
     "PL 2668/2026": {
       "s": "avanca",
       "p": [
@@ -2350,6 +3813,18 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 2669/2024": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 2670/2025": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
     },
     "PL 2677/2025": {
       "s": "avanca",
@@ -2383,6 +3858,18 @@
       ],
       "g": "extrema"
     },
+    "PL 2681/2026": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
+    "PL 2683/2025": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
+    },
     "PL 2686/2025": {
       "s": "avanca",
       "p": [
@@ -2390,6 +3877,12 @@
         "soberania"
       ],
       "g": "extrema"
+    },
+    "PL 269/2026": {
+      "s": "barra",
+      "p": [
+        "armas"
+      ]
     },
     "PL 2694/2023": {
       "s": "avanca",
@@ -2408,6 +3901,12 @@
       ],
       "g": "direita"
     },
+    "PL 2714/2025": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
+    },
     "PL 2715/2025": {
       "s": "avanca",
       "p": [
@@ -2422,6 +3921,12 @@
         "punitivismo"
       ],
       "g": "extrema"
+    },
+    "PL 2727/2024": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
     },
     "PL 2729/2025": {
       "s": "barra",
@@ -2446,6 +3951,24 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 2740/2023": {
+      "s": "barra",
+      "p": [
+        "instituicoes"
+      ]
+    },
+    "PL 2741/2025": {
+      "s": "barra",
+      "p": [
+        "religiao"
+      ]
+    },
+    "PL 2757/2024": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
+    },
     "PL 2764/2026": {
       "s": "avanca",
       "p": [
@@ -2454,12 +3977,24 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 2766/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PL 2766/2026": {
       "s": "avanca",
       "p": [
         "punitivismo"
       ],
       "g": "direita"
+    },
+    "PL 2775/2024": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
     },
     "PL 2778/2024": {
       "s": ""
@@ -2555,12 +4090,78 @@
       "g": "direita",
       "m": ""
     },
+    "PL 2877/2026": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
     "PL 2880/2026": {
       "s": "avanca",
       "p": [
         "punitivismo"
       ],
       "g": "extrema"
+    },
+    "PL 2882/2026": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 2883/2026": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 2887/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 29/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 2908/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 2921/2024": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 2922/2025": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
+    "PL 2926/2026": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ]
+    },
+    "PL 2929/2026": {
+      "s": "barra",
+      "p": [
+        "soberania"
+      ]
+    },
+    "PL 2933/2023": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
     },
     "PL 2935/2026": {
       "s": "avanca",
@@ -2569,12 +4170,30 @@
       ],
       "g": "direita"
     },
+    "PL 2941/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 2942/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PL 2960/2025": {
       "s": "avanca",
       "p": [
         "armas"
       ],
       "g": "extrema"
+    },
+    "PL 2975/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
     },
     "PL 2979/2026": {
       "s": "avanca",
@@ -2584,6 +4203,12 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 298/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PL 2981/2026": {
       "s": "avanca",
@@ -2602,6 +4227,24 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 2989/2026": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ]
+    },
+    "PL 299/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 3003/2025": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PL 3007/2026": {
       "s": "avanca",
       "p": [
@@ -2617,6 +4260,30 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 3012/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 3013/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 3015/2025": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 3016/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
     },
     "PL 3033/2026": {
       "s": "avanca",
@@ -2640,12 +4307,30 @@
       ],
       "g": "direita"
     },
+    "PL 304/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 3044/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
     "PL 3046/2025": {
       "s": "avanca",
       "p": [
         "armas"
       ],
       "g": "extrema"
+    },
+    "PL 3048/2025": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
     },
     "PL 305/2026": {
       "s": "avanca",
@@ -2657,6 +4342,12 @@
     },
     "PL 3050/2023": {
       "s": ""
+    },
+    "PL 3056/2024": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
     },
     "PL 3065/2023": {
       "s": "avanca",
@@ -2683,6 +4374,24 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 3089/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 3092/2025": {
+      "s": "barra",
+      "p": [
+        "armas"
+      ]
+    },
+    "PL 3093/2025": {
+      "s": "barra",
+      "p": [
+        "armas"
+      ]
+    },
     "PL 3097/2024": {
       "s": "avanca",
       "p": [
@@ -2691,6 +4400,66 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 3097/2025": {
+      "s": "barra",
+      "p": [
+        "armas"
+      ]
+    },
+    "PL 3098/2025": {
+      "s": "barra",
+      "p": [
+        "armas"
+      ]
+    },
+    "PL 3099/2024": {
+      "s": "barra",
+      "p": [
+        "povos"
+      ]
+    },
+    "PL 3099/2025": {
+      "s": "barra",
+      "p": [
+        "armas"
+      ]
+    },
+    "PL 3100/2024": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 3103/2025": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 3106/2026": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 3108/2026": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ]
+    },
+    "PL 3109/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 3109/2025": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
     },
     "PL 3126/2025": {
       "s": "avanca",
@@ -2726,8 +4495,20 @@
       ],
       "g": "extrema"
     },
+    "PL 3140/2025": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
     "PL 3142/2023": {
       "s": ""
+    },
+    "PL 3144/2024": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
     },
     "PL 316/2023": {
       "s": "avanca",
@@ -2759,6 +4540,42 @@
       ],
       "g": "direita"
     },
+    "PL 3189/2025": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ]
+    },
+    "PL 3191/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 3192/2026": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
+    "PL 3197/2025": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 3200/2026": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ]
+    },
+    "PL 3201/2026": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ]
+    },
     "PL 3207/2026": {
       "s": "avanca",
       "p": [
@@ -2789,6 +4606,12 @@
       ],
       "g": "extrema"
     },
+    "PL 3231/2026": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ]
+    },
     "PL 3233/2026": {
       "s": "avanca",
       "p": [
@@ -2796,6 +4619,12 @@
         "privilegios"
       ],
       "g": "direita"
+    },
+    "PL 3234/2025": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
     },
     "PL 3236/2026": {
       "s": "avanca",
@@ -2837,6 +4666,12 @@
       ],
       "g": "direita"
     },
+    "PL 3262/2023": {
+      "s": "barra",
+      "p": [
+        "armas"
+      ]
+    },
     "PL 3271/2025": {
       "s": "avanca",
       "p": [
@@ -2867,6 +4702,12 @@
       ],
       "g": "direita"
     },
+    "PL 3295/2024": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
     "PL 3295/2026": {
       "s": "avanca",
       "p": [
@@ -2875,6 +4716,18 @@
       ],
       "g": "direita"
     },
+    "PL 3301/2025": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 3302/2026": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
     "PL 331/2026": {
       "s": "avanca",
       "p": [
@@ -2882,6 +4735,48 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 3316/2024": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
+    "PL 3318/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 3319/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 3319/2026": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
+    "PL 3320/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 3323/2026": {
+      "s": "barra",
+      "p": [
+        "drogas"
+      ]
+    },
+    "PL 3324/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
     },
     "PL 3328/2026": {
       "s": "avanca",
@@ -2898,6 +4793,12 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 3335/2025": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PL 3344/2026": {
       "s": "avanca",
       "p": [
@@ -2912,6 +4813,12 @@
         "plataformas"
       ],
       "g": "direita"
+    },
+    "PL 3351/2024": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PL 3358/2025": {
       "s": "avanca",
@@ -2929,6 +4836,12 @@
       ],
       "g": "direita"
     },
+    "PL 3375/2025": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
     "PL 3378/2026": {
       "s": "avanca",
       "p": [
@@ -2936,6 +4849,24 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 3384/2024": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ]
+    },
+    "PL 3384/2026": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
+    },
+    "PL 3387/2025": {
+      "s": "barra",
+      "p": [
+        "soberania"
+      ]
     },
     "PL 3391/2025": {
       "s": "avanca",
@@ -2948,6 +4879,12 @@
       "s": "",
       "m": ""
     },
+    "PL 3396/2024": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
     "PL 3396/2026": {
       "s": "avanca",
       "p": [
@@ -2955,6 +4892,54 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 3407/2025": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 3409/2025": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ]
+    },
+    "PL 3412/2024": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 3413/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 3416/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 3418/2024": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 3419/2024": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 3421/2024": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PL 3426/2026": {
       "s": "avanca",
@@ -2984,6 +4969,12 @@
       ],
       "g": "direita"
     },
+    "PL 3452/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
     "PL 3455/2026": {
       "s": "avanca",
       "p": [
@@ -3007,8 +4998,20 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 3461/2026": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
     "PL 3463/2026": {
       "s": ""
+    },
+    "PL 3466/2025": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
     },
     "PL 3466/2026": {
       "s": "avanca",
@@ -3027,6 +5030,12 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 3471/2026": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
     "PL 3479/2025": {
       "s": "avanca",
       "p": [
@@ -3034,6 +5043,18 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 3489/2026": {
+      "s": "barra",
+      "p": [
+        "povos"
+      ]
+    },
+    "PL 3508/2024": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
     },
     "PL 3517/2026": {
       "s": "avanca",
@@ -3052,6 +5073,18 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 3522/2026": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
+    },
+    "PL 3526/2026": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ]
+    },
     "PL 3527/2026": {
       "s": "avanca",
       "p": [
@@ -3068,6 +5101,18 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 3545/2024": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 355/2024": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
     "PL 3559/2025": {
       "s": "barra",
       "p": [
@@ -3075,6 +5120,30 @@
         "soberania"
       ],
       "m": ""
+    },
+    "PL 3563/2024": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 3564/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 3565/2024": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
+    "PL 3570/2026": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
     },
     "PL 3571/2026": {
       "s": "avanca",
@@ -3095,12 +5164,36 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 3588/2024": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 3589/2026": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
+    },
+    "PL 3592/2024": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
     "PL 3592/2026": {
       "s": "barra",
       "p": [
         "religiao"
       ],
       "m": ""
+    },
+    "PL 3597/2024": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PL 3603/2026": {
       "s": "avanca",
@@ -3125,6 +5218,24 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 3627/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 3628/2025": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 363/2026": {
+      "s": "barra",
+      "p": [
+        "armas"
+      ]
+    },
     "PL 3630/2025": {
       "s": "avanca",
       "p": [
@@ -3148,6 +5259,18 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 3635/2026": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 3636/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
     "PL 3636/2026": {
       "s": "avanca",
       "p": [
@@ -3156,6 +5279,12 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 3637/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
     },
     "PL 3643/2026": {
       "s": "avanca",
@@ -3172,6 +5301,24 @@
       ],
       "g": "extrema"
     },
+    "PL 3659/2025": {
+      "s": "barra",
+      "p": [
+        "soberania"
+      ]
+    },
+    "PL 3660/2024": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 3674/2025": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PL 3680/2026": {
       "s": "avanca",
       "p": [
@@ -3179,6 +5326,42 @@
         "drogas"
       ],
       "g": "direita"
+    },
+    "PL 3683/2026": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 3684/2023": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
+    "PL 3684/2025": {
+      "s": "barra",
+      "p": [
+        "drogas"
+      ]
+    },
+    "PL 3684/2026": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 3685/2026": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 3689/2025": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
     },
     "PL 3693/2025": {
       "s": "avanca",
@@ -3203,6 +5386,12 @@
       ],
       "g": "extrema"
     },
+    "PL 3699/2025": {
+      "s": "barra",
+      "p": [
+        "soberania"
+      ]
+    },
     "PL 3711/2026": {
       "s": "avanca",
       "p": [
@@ -3218,6 +5407,18 @@
       ],
       "m": ""
     },
+    "PL 3722/2025": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 3725/2026": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PL 3728/2025": {
       "s": "avanca",
       "p": [
@@ -3225,6 +5426,60 @@
       ],
       "g": "direita",
       "m": ""
+    },
+    "PL 3734/2024": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
+    "PL 3740/2024": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
+    "PL 3747/2023": {
+      "s": "barra",
+      "p": [
+        "educacao"
+      ]
+    },
+    "PL 3748/2023": {
+      "s": "barra",
+      "p": [
+        "educacao"
+      ]
+    },
+    "PL 3749/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 375/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 3754/2025": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ]
+    },
+    "PL 3755/2025": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
+    "PL 3756/2023": {
+      "s": "barra",
+      "p": [
+        "educacao"
+      ]
     },
     "PL 3764/2026": {
       "s": "avanca",
@@ -3247,6 +5502,12 @@
         "privilegios"
       ],
       "g": "direita"
+    },
+    "PL 3773/2025": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
     },
     "PL 3776/2024": {
       "s": "barra",
@@ -3277,6 +5538,31 @@
       ],
       "g": "direita"
     },
+    "PL 3781/2024": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 3785/2024": {
+      "s": "barra",
+      "p": [
+        "ambiente",
+        "povos"
+      ]
+    },
+    "PL 3789/2024": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 379/2026": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
     "PL 3797/2023": {
       "s": ""
     },
@@ -3286,6 +5572,24 @@
         "instituicoes"
       ],
       "g": "extrema"
+    },
+    "PL 3799/2024": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
+    "PL 380/2023": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
+    "PL 3800/2025": {
+      "s": "barra",
+      "p": [
+        "povos"
+      ]
     },
     "PL 3806/2024": {
       "s": "avanca",
@@ -3304,6 +5608,12 @@
       "g": "direita",
       "m": ""
     },
+    "PL 383/2023": {
+      "s": "barra",
+      "p": [
+        "instituicoes"
+      ]
+    },
     "PL 3831/2025": {
       "s": "barra",
       "p": [
@@ -3311,12 +5621,54 @@
       ],
       "m": ""
     },
+    "PL 384/2026": {
+      "s": "barra",
+      "p": [
+        "religiao"
+      ]
+    },
+    "PL 385/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 385/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 3867/2025": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 3868/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PL 3874/2025": {
       "s": "avanca",
       "p": [
         "punitivismo"
       ],
       "g": "extrema"
+    },
+    "PL 388/2025": {
+      "s": "barra",
+      "p": [
+        "povos"
+      ]
+    },
+    "PL 388/2026": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
     },
     "PL 3882/2026": {
       "s": "avanca",
@@ -3333,12 +5685,36 @@
       ],
       "m": ""
     },
+    "PL 3894/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
     "PL 3899/2023": {
       "s": "avanca",
       "p": [
         "punitivismo"
       ],
       "g": "extrema"
+    },
+    "PL 3903/2023": {
+      "s": "barra",
+      "p": [
+        "povos"
+      ]
+    },
+    "PL 3904/2023": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
+    "PL 3908/2023": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ]
     },
     "PL 3920/2025": {
       "s": "avanca",
@@ -3348,6 +5724,18 @@
         "movimentos"
       ],
       "g": "extrema"
+    },
+    "PL 3934/2025": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 3944/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
     },
     "PL 3950/2024": {
       "s": "barra",
@@ -3364,6 +5752,12 @@
       ],
       "g": "extrema"
     },
+    "PL 3968/2024": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
     "PL 397/2026": {
       "s": "avanca",
       "p": [
@@ -3371,6 +5765,66 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 3973/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 3974/2024": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 3977/2024": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 3983/2024": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 3990/2025": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 4002/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 4005/2024": {
+      "s": "barra",
+      "p": [
+        "povos"
+      ]
+    },
+    "PL 4006/2024": {
+      "s": "barra",
+      "p": [
+        "povos"
+      ]
+    },
+    "PL 4007/2024": {
+      "s": "barra",
+      "p": [
+        "povos"
+      ]
+    },
+    "PL 404/2026": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PL 4048/2026": {
       "s": "avanca",
@@ -3402,6 +5856,12 @@
       ],
       "g": "direita"
     },
+    "PL 4083/2025": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
     "PL 4103/2025": {
       "s": "avanca",
       "p": [
@@ -3416,8 +5876,32 @@
       ],
       "m": ""
     },
+    "PL 4125/2025": {
+      "s": "barra",
+      "p": [
+        "soberania"
+      ]
+    },
     "PL 4133/2023": {
       "s": ""
+    },
+    "PL 4144/2024": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 4156/2025": {
+      "s": "barra",
+      "p": [
+        "movimentos"
+      ]
+    },
+    "PL 416/2024": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
     },
     "PL 4164/2024": {
       "s": "avanca",
@@ -3425,6 +5909,36 @@
         "privilegios"
       ],
       "g": "direita"
+    },
+    "PL 4165/2025": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
+    "PL 4177/2025": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ]
+    },
+    "PL 4180/2023": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
+    "PL 4184/2025": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
+    "PL 419/2024": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
     },
     "PL 4195/2026": {
       "s": "avanca",
@@ -3451,12 +5965,54 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 4216/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 4218/2025": {
+      "s": "barra",
+      "p": [
+        "soberania"
+      ]
+    },
+    "PL 4219/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 4226/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 4229/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PL 4245/2026": {
       "s": "avanca",
       "p": [
         "punitivismo"
       ],
       "g": "direita"
+    },
+    "PL 4251/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 4252/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
     },
     "PL 4253/2025": {
       "s": "avanca",
@@ -3507,6 +6063,24 @@
       ],
       "g": "extrema"
     },
+    "PL 4277/2025": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
+    "PL 428/2024": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 4294/2024": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PL 4296/2023": {
       "s": ""
     },
@@ -3524,6 +6098,18 @@
       ],
       "g": "direita"
     },
+    "PL 4330/2023": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
+    "PL 4332/2024": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PL 4333/2025": {
       "s": "avanca",
       "p": [
@@ -3539,6 +6125,43 @@
       ],
       "g": "extrema"
     },
+    "PL 4340/2024": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 4367/2023": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
+    },
+    "PL 4368/2025": {
+      "s": "barra",
+      "p": [
+        "igualdade",
+        "educacao"
+      ]
+    },
+    "PL 4386/2024": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
+    "PL 4388/2025": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 4392/2025": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
     "PL 4393/2024": {
       "s": "avanca",
       "p": [
@@ -3546,6 +6169,12 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 4400/2025": {
+      "s": "barra",
+      "p": [
+        "povos"
+      ]
     },
     "PL 4405/2025": {
       "s": "barra",
@@ -3577,6 +6206,12 @@
       ],
       "g": "extrema"
     },
+    "PL 4445/2024": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
     "PL 4453/2025": {
       "s": "avanca",
       "p": [
@@ -3585,6 +6220,12 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 4457/2025": {
+      "s": "barra",
+      "p": [
+        "povos"
+      ]
     },
     "PL 4459/2025": {
       "s": "avanca",
@@ -3625,6 +6266,12 @@
       ],
       "g": "extrema"
     },
+    "PL 450/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
     "PL 451/2026": {
       "s": "avanca",
       "p": [
@@ -3632,6 +6279,18 @@
       ],
       "g": "direita",
       "m": ""
+    },
+    "PL 4518/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 4523/2024": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
     },
     "PL 4536/2024": {
       "s": "avanca",
@@ -3641,6 +6300,12 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 4543/2025": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
     },
     "PL 4559/2025": {
       "s": "avanca",
@@ -3657,8 +6322,20 @@
       ],
       "m": ""
     },
+    "PL 4566/2025": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
     "PL 4569/2024": {
       "s": ""
+    },
+    "PL 4592/2023": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
     },
     "PL 4597/2025": {
       "s": "avanca",
@@ -3677,6 +6354,19 @@
       ],
       "g": "direita"
     },
+    "PL 462/2025": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 4621/2025": {
+      "s": "barra",
+      "p": [
+        "soberania",
+        "ambiente"
+      ]
+    },
     "PL 4629/2025": {
       "s": "avanca",
       "p": [
@@ -3684,6 +6374,18 @@
         "plataformas"
       ],
       "g": "extrema"
+    },
+    "PL 4636/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 4637/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
     },
     "PL 4637/2025": {
       "s": "avanca",
@@ -3709,6 +6411,12 @@
       ],
       "g": "extrema"
     },
+    "PL 465/2025": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
     "PL 465/2026": {
       "s": "barra",
       "p": [
@@ -3732,6 +6440,12 @@
       "g": "direita",
       "m": ""
     },
+    "PL 466/2025": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
     "PL 4663/2026": {
       "s": "avanca",
       "p": [
@@ -3751,6 +6465,24 @@
         "ambiente"
       ],
       "g": "extrema"
+    },
+    "PL 4682/2025": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 4683/2025": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 4684/2025": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
     },
     "PL 4686/2024": {
       "s": "barra",
@@ -3818,6 +6550,13 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 4730/2025": {
+      "s": "barra",
+      "p": [
+        "povos",
+        "ambiente"
+      ]
+    },
     "PL 4734/2025": {
       "s": "avanca",
       "p": [
@@ -3825,6 +6564,18 @@
         "soberania"
       ],
       "g": "extrema"
+    },
+    "PL 475/2024": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 4761/2026": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ]
     },
     "PL 4768/2025": {
       "s": "avanca",
@@ -3893,6 +6644,12 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 4795/2026": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
     "PL 4796/2026": {
       "s": "avanca",
       "p": [
@@ -3933,12 +6690,24 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 481/2025": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
     "PL 4810/2024": {
       "s": "avanca",
       "p": [
         "privilegios"
       ],
       "g": "direita"
+    },
+    "PL 4813/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
     },
     "PL 4828/2026": {
       "s": "avanca",
@@ -3965,12 +6734,24 @@
       ],
       "g": "extrema"
     },
+    "PL 4840/2024": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ]
+    },
     "PL 4842/2025": {
       "s": "barra",
       "p": [
         "costumes"
       ],
       "m": ""
+    },
+    "PL 4844/2025": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
     },
     "PL 4850/2025": {
       "s": "avanca",
@@ -4010,6 +6791,12 @@
       ],
       "g": "direita"
     },
+    "PL 4878/2025": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
     "PL 4883/2026": {
       "s": "avanca",
       "p": [
@@ -4026,6 +6813,12 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 4887/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
     "PL 4900/2025": {
       "s": "avanca",
       "p": [
@@ -4033,6 +6826,12 @@
       ],
       "g": "direita",
       "m": ""
+    },
+    "PL 4902/2025": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
     },
     "PL 4902/2026": {
       "s": "avanca",
@@ -4067,6 +6866,12 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 492/2024": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
     "PL 492/2026": {
       "s": "avanca",
       "p": [
@@ -4083,6 +6888,12 @@
       ],
       "m": ""
     },
+    "PL 4935/2024": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
     "PL 4938/2025": {
       "s": "avanca",
       "p": [
@@ -4097,6 +6908,18 @@
         "punitivismo"
       ],
       "g": "direita"
+    },
+    "PL 4959/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 496/2023": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
     },
     "PL 4960/2023": {
       "s": "avanca",
@@ -4121,6 +6944,12 @@
       ],
       "g": "extrema"
     },
+    "PL 4976/2024": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
     "PL 4985/2026": {
       "s": "avanca",
       "p": [
@@ -4128,6 +6957,12 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 4986/2023": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
     },
     "PL 4988/2026": {
       "s": "avanca",
@@ -4137,6 +6972,12 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 4996/2025": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
     },
     "PL 5011/2023": {
       "s": "avanca",
@@ -4163,6 +7004,12 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 5019/2024": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
     "PL 502/2026": {
       "s": "barra",
       "p": [
@@ -4170,6 +7017,12 @@
         "costumes"
       ],
       "m": ""
+    },
+    "PL 5027/2026": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
     },
     "PL 5028/2023": {
       "s": "avanca",
@@ -4196,6 +7049,18 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 5033/2025": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 5034/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
     },
     "PL 5045/2026": {
       "s": "avanca",
@@ -4230,6 +7095,30 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 5061/2025": {
+      "s": "barra",
+      "p": [
+        "educacao"
+      ]
+    },
+    "PL 5068/2025": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
+    "PL 507/2024": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 507/2025": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
     "PL 5074/2026": {
       "s": "avanca",
       "p": [
@@ -4251,6 +7140,12 @@
         "punitivismo"
       ],
       "g": "direita"
+    },
+    "PL 5080/2023": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
     },
     "PL 509/2025": {
       "s": "avanca",
@@ -4274,6 +7169,24 @@
         "punitivismo"
       ],
       "m": ""
+    },
+    "PL 5103/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 5103/2025": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
+    "PL 5104/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PL 5107/2026": {
       "s": "avanca",
@@ -4370,6 +7283,12 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 5180/2023": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
     "PL 5184/2025": {
       "s": "avanca",
       "p": [
@@ -4404,6 +7323,12 @@
       "s": "",
       "m": ""
     },
+    "PL 5202/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
     "PL 5203/2026": {
       "s": "avanca",
       "p": [
@@ -4427,6 +7352,48 @@
       ],
       "g": "extrema"
     },
+    "PL 5218/2025": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ]
+    },
+    "PL 522/2023": {
+      "s": "barra",
+      "p": [
+        "povos"
+      ]
+    },
+    "PL 522/2024": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 5226/2023": {
+      "s": "barra",
+      "p": [
+        "povos"
+      ]
+    },
+    "PL 523/2024": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 5235/2023": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
+    "PL 5235/2026": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
     "PL 5247/2025": {
       "s": "avanca",
       "p": [
@@ -4441,6 +7408,12 @@
       ],
       "g": "direita"
     },
+    "PL 525/2025": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
     "PL 5255/2023": {
       "s": "barra",
       "p": [
@@ -4448,6 +7421,12 @@
         "instituicoes"
       ],
       "m": ""
+    },
+    "PL 5258/2025": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
     },
     "PL 5260/2026": {
       "s": "avanca",
@@ -4497,6 +7476,36 @@
       "g": "direita",
       "m": ""
     },
+    "PL 5280/2025": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 5281/2025": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 5282/2025": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 5286/2025": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 5295/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
     "PL 5297/2026": {
       "s": "avanca",
       "p": [
@@ -4519,6 +7528,12 @@
       ],
       "g": "direita"
     },
+    "PL 5301/2025": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
     "PL 5303/2026": {
       "s": "barra",
       "p": [
@@ -4527,12 +7542,66 @@
       ],
       "m": ""
     },
+    "PL 5304/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 5316/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
     "PL 5318/2026": {
       "s": "avanca",
       "p": [
         "ambiente"
       ],
       "g": "direita"
+    },
+    "PL 532/2024": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 5321/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 5324/2025": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 533/2026": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
+    },
+    "PL 5330/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 534/2026": {
+      "s": "barra",
+      "p": [
+        "soberania"
+      ]
+    },
+    "PL 5343/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
     },
     "PL 5350/2025": {
       "s": "avanca",
@@ -4549,6 +7618,12 @@
         "movimentos"
       ],
       "g": "extrema"
+    },
+    "PL 5373/2025": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
     },
     "PL 5375/2026": {
       "s": "avanca",
@@ -4581,6 +7656,36 @@
       ],
       "m": ""
     },
+    "PL 5409/2023": {
+      "s": "barra",
+      "p": [
+        "povos"
+      ]
+    },
+    "PL 541/2026": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 5416/2025": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 542/2026": {
+      "s": "barra",
+      "p": [
+        "soberania"
+      ]
+    },
+    "PL 5420/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PL 5424/2023": {
       "s": "avanca",
       "p": [
@@ -4597,12 +7702,25 @@
       ],
       "g": "extrema"
     },
+    "PL 543/2024": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
     "PL 5438/2026": {
       "s": "avanca",
       "p": [
         "ambiente"
       ],
       "g": "extrema"
+    },
+    "PL 5441/2025": {
+      "s": "barra",
+      "p": [
+        "plataformas",
+        "privilegios"
+      ]
     },
     "PL 5442/2026": {
       "s": "barra",
@@ -4629,6 +7747,12 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 5467/2023": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
     "PL 5476/2025": {
       "s": "avanca",
       "p": [
@@ -4636,6 +7760,12 @@
         "igualdade"
       ],
       "g": "extrema"
+    },
+    "PL 5487/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
     },
     "PL 5487/2025": {
       "s": "avanca",
@@ -4652,6 +7782,12 @@
       ],
       "g": "extrema"
     },
+    "PL 549/2024": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
     "PL 5494/2026": {
       "s": "avanca",
       "p": [
@@ -4659,6 +7795,12 @@
         "punitivismo"
       ],
       "g": "direita"
+    },
+    "PL 5496/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PL 5502/2023": {
       "s": "avanca",
@@ -4670,6 +7812,12 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 5504/2026": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
     "PL 5508/2025": {
       "s": "avanca",
       "p": [
@@ -4677,6 +7825,13 @@
         "punitivismo"
       ],
       "g": "extrema"
+    },
+    "PL 5514/2026": {
+      "s": "barra",
+      "p": [
+        "trabalho",
+        "igualdade"
+      ]
     },
     "PL 5516/2025": {
       "s": "barra",
@@ -4692,6 +7847,12 @@
         "punitivismo"
       ],
       "g": "extrema"
+    },
+    "PL 5537/2026": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PL 5545/2026": {
       "s": "avanca",
@@ -4743,6 +7904,12 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 5573/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PL 5573/2026": {
       "s": "avanca",
       "p": [
@@ -4768,6 +7935,12 @@
       ],
       "g": "direita"
     },
+    "PL 558/2023": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
     "PL 5580/2025": {
       "s": "avanca",
       "p": [
@@ -4789,12 +7962,60 @@
       ],
       "g": "direita"
     },
+    "PL 5588/2026": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 5589/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 5590/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 5591/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 5592/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 56/2024": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 560/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
     "PL 5606/2026": {
       "s": "avanca",
       "p": [
         "punitivismo"
       ],
       "g": "direita"
+    },
+    "PL 5607/2023": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
     },
     "PL 5612/2026": {
       "s": "avanca",
@@ -4829,6 +8050,12 @@
         "instituicoes"
       ],
       "g": "extrema"
+    },
+    "PL 5641/2023": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
     },
     "PL 5641/2025": {
       "s": "avanca",
@@ -4877,6 +8104,18 @@
       ],
       "m": ""
     },
+    "PL 5673/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 568/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
     "PL 5681/2026": {
       "s": "avanca",
       "p": [
@@ -4884,6 +8123,12 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 5687/2026": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
     },
     "PL 5689/2025": {
       "s": "avanca",
@@ -4893,6 +8138,18 @@
       "g": "direita",
       "m": ""
     },
+    "PL 569/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 569/2026": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ]
+    },
     "PL 5699/2023": {
       "s": "avanca",
       "p": [
@@ -4900,6 +8157,18 @@
         "costumes"
       ],
       "g": "extrema"
+    },
+    "PL 5701/2026": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 5703/2025": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PL 5708/2026": {
       "s": "barra",
@@ -4927,6 +8196,12 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 574/2025": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
     "PL 5745/2026": {
       "s": "barra",
       "p": [
@@ -4943,12 +8218,67 @@
       ],
       "g": "extrema"
     },
+    "PL 5761/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 5768/2025": {
+      "s": "barra",
+      "p": [
+        "religiao"
+      ]
+    },
+    "PL 577/2024": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 5776/2025": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
     "PL 5777/2026": {
       "s": "barra",
       "p": [
         "instituicoes"
       ],
       "m": ""
+    },
+    "PL 5783/2026": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 5797/2026": {
+      "s": "barra",
+      "p": [
+        "movimentos"
+      ]
+    },
+    "PL 5798/2026": {
+      "s": "barra",
+      "p": [
+        "trabalho",
+        "plataformas"
+      ]
+    },
+    "PL 58/2025": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 58/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
     },
     "PL 5800/2026": {
       "s": "avanca",
@@ -4965,6 +8295,30 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 5806/2026": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
+    "PL 5811/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 5812/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 5817/2025": {
+      "s": "barra",
+      "p": [
+        "drogas"
+      ]
     },
     "PL 5818/2023": {
       "s": "barra",
@@ -5028,6 +8382,18 @@
       ],
       "g": "extrema"
     },
+    "PL 585/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 585/2024": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
     "PL 5850/2025": {
       "s": "avanca",
       "p": [
@@ -5039,6 +8405,18 @@
     "PL 5852/2025": {
       "s": ""
     },
+    "PL 5852/2026": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ]
+    },
+    "PL 5862/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
     "PL 5864/2025": {
       "s": "avanca",
       "p": [
@@ -5046,6 +8424,12 @@
         "soberania"
       ],
       "g": "extrema"
+    },
+    "PL 5864/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
     },
     "PL 5866/2026": {
       "s": ""
@@ -5056,6 +8440,24 @@
         "armas"
       ],
       "g": "direita"
+    },
+    "PL 5868/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 5869/2025": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
+    },
+    "PL 5871/2025": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
     },
     "PL 588/2024": {
       "s": "avanca",
@@ -5083,6 +8485,12 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 5889/2023": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
     "PL 589/2026": {
       "s": "avanca",
       "p": [
@@ -5108,6 +8516,48 @@
       "g": "direita",
       "m": ""
     },
+    "PL 591/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 5929/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 5936/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 594/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 5943/2025": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 5948/2025": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
+    "PL 595/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PL 5950/2025": {
       "s": "avanca",
       "p": [
@@ -5117,12 +8567,42 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 5963/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 5968/2025": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PL 598/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 5989/2025": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PL 6/2023": {
       "s": "barra",
       "p": [
         "estado"
       ],
       "m": ""
+    },
+    "PL 60/2026": {
+      "s": "barra",
+      "p": [
+        "armas"
+      ]
     },
     "PL 6010/2025": {
       "s": "barra",
@@ -5137,6 +8617,12 @@
         "instituicoes"
       ],
       "g": "extrema"
+    },
+    "PL 6015/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PL 6016/2025": {
       "s": "avanca",
@@ -5169,6 +8655,24 @@
       ],
       "g": "extrema"
     },
+    "PL 6039/2025": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 6041/2023": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
+    "PL 6043/2025": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
     "PL 6044/2023": {
       "s": "avanca",
       "p": [
@@ -5176,12 +8680,30 @@
       ],
       "g": "direita"
     },
+    "PL 606/2024": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 6063/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
     "PL 6071/2025": {
       "s": "avanca",
       "p": [
         "privilegios"
       ],
       "g": "direita"
+    },
+    "PL 6075/2025": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
     },
     "PL 6076/2025": {
       "s": "avanca",
@@ -5197,6 +8719,18 @@
         "punitivismo"
       ],
       "g": "direita"
+    },
+    "PL 6147/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 6176/2025": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PL 6212/2025": {
       "s": "avanca",
@@ -5222,6 +8756,18 @@
       ],
       "g": "extrema"
     },
+    "PL 6227/2023": {
+      "s": "barra",
+      "p": [
+        "drogas"
+      ]
+    },
+    "PL 623/2026": {
+      "s": "barra",
+      "p": [
+        "povos"
+      ]
+    },
     "PL 6239/2025": {
       "s": "avanca",
       "p": [
@@ -5236,6 +8782,18 @@
         "armas"
       ],
       "m": ""
+    },
+    "PL 627/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 627/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
     },
     "PL 6273/2025": {
       "s": "avanca",
@@ -5253,6 +8811,12 @@
       ],
       "g": "extrema"
     },
+    "PL 628/2026": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
     "PL 6311/2025": {
       "s": "avanca",
       "p": [
@@ -5268,12 +8832,24 @@
       "g": "direita",
       "m": ""
     },
+    "PL 6352/2025": {
+      "s": "barra",
+      "p": [
+        "soberania"
+      ]
+    },
     "PL 6358/2025": {
       "s": "avanca",
       "p": [
         "punitivismo"
       ],
       "g": "extrema"
+    },
+    "PL 6363/2025": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
     },
     "PL 6366/2025": {
       "s": "avanca",
@@ -5288,6 +8864,12 @@
         "punitivismo"
       ],
       "g": "direita"
+    },
+    "PL 638/2026": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
     },
     "PL 6390/2025": {
       "s": "avanca",
@@ -5304,9 +8886,27 @@
       ],
       "m": ""
     },
+    "PL 6396/2025": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
     "PL 64/2025": {
       "s": "",
       "m": ""
+    },
+    "PL 6416/2025": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 6419/2025": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
     },
     "PL 6426/2025": {
       "s": "barra",
@@ -5367,6 +8967,26 @@
       ],
       "g": "extrema"
     },
+    "PL 654/2024": {
+      "s": "barra",
+      "p": [
+        "igualdade",
+        "educacao"
+      ]
+    },
+    "PL 6540/2025": {
+      "s": "barra",
+      "p": [
+        "instituicoes"
+      ]
+    },
+    "PL 6541/2025": {
+      "s": "barra",
+      "p": [
+        "povos",
+        "ambiente"
+      ]
+    },
     "PL 6549/2025": {
       "s": "avanca",
       "p": [
@@ -5392,12 +9012,48 @@
       ],
       "g": "extrema"
     },
+    "PL 661/2024": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
+    "PL 6615/2025": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
+    "PL 6616/2025": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
+    "PL 6618/2025": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ]
+    },
+    "PL 662/2024": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PL 6638/2025": {
       "s": "avanca",
       "p": [
         "punitivismo"
       ],
       "g": "direita"
+    },
+    "PL 665/2026": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
     },
     "PL 6670/2025": {
       "s": "avanca",
@@ -5452,6 +9108,18 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 699/2025": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 705/2024": {
+      "s": "barra",
+      "p": [
+        "soberania"
+      ]
+    },
     "PL 714/2025": {
       "s": "avanca",
       "p": [
@@ -5459,6 +9127,12 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 716/2026": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
     },
     "PL 7207/2025": {
       "s": "avanca",
@@ -5468,6 +9142,12 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 728/2026": {
+      "s": "barra",
+      "p": [
+        "soberania"
+      ]
+    },
     "PL 730/2025": {
       "s": "avanca",
       "p": [
@@ -5475,6 +9155,12 @@
         "instituicoes"
       ],
       "g": "extrema"
+    },
+    "PL 730/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
     },
     "PL 732/2026": {
       "s": ""
@@ -5512,6 +9198,12 @@
       ],
       "g": "extrema"
     },
+    "PL 754/2026": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
     "PL 769/2025": {
       "s": "avanca",
       "p": [
@@ -5519,6 +9211,18 @@
         "soberania"
       ],
       "g": "extrema"
+    },
+    "PL 776/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 777/2025": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
     },
     "PL 778/2025": {
       "s": "avanca",
@@ -5536,6 +9240,18 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 789/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 789/2026": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
     "PL 790/2025": {
       "s": "barra",
       "p": [
@@ -5544,6 +9260,18 @@
       ],
       "m": ""
     },
+    "PL 795/2025": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
+    "PL 807/2026": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PL 816/2026": {
       "s": "avanca",
       "p": [
@@ -5551,6 +9279,24 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 82/2026": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
+    "PL 821/2026": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
+    },
+    "PL 823/2026": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PL 824/2026": {
       "s": "avanca",
@@ -5568,6 +9314,12 @@
       "g": "direita",
       "m": ""
     },
+    "PL 83/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
     "PL 835/2025": {
       "s": "avanca",
       "p": [
@@ -5576,6 +9328,12 @@
       ],
       "g": "extrema"
     },
+    "PL 848/2025": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PL 849/2025": {
       "s": "avanca",
       "p": [
@@ -5583,12 +9341,24 @@
       ],
       "g": "extrema"
     },
+    "PL 852/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PL 854/2025": {
       "s": "avanca",
       "p": [
         "ambiente"
       ],
       "g": "extrema"
+    },
+    "PL 859/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PL 86/2026": {
       "s": "avanca",
@@ -5599,6 +9369,12 @@
     },
     "PL 865/2025": {
       "s": ""
+    },
+    "PL 872/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
     },
     "PL 872/2026": {
       "s": "avanca",
@@ -5617,6 +9393,30 @@
       ],
       "g": "direita"
     },
+    "PL 891/2025": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 893/2024": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 900/2023": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ]
+    },
+    "PL 904/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
     "PL 911/2023": {
       "s": "avanca",
       "p": [
@@ -5626,12 +9426,48 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 912/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 914/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 924/2024": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PL 93/2026": {
+      "s": "barra",
+      "p": [
+        "instituicoes"
+      ]
+    },
     "PL 936/2023": {
       "s": "barra",
       "p": [
         "ambiente"
       ],
       "m": ""
+    },
+    "PL 943/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PL 945/2023": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
     },
     "PL 951/2023": {
       "s": "avanca",
@@ -5657,6 +9493,12 @@
       ],
       "g": "extrema"
     },
+    "PL 960/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
     "PL 960/2026": {
       "s": "avanca",
       "p": [
@@ -5664,6 +9506,24 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 978/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 984/2026": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
+    },
+    "PL 99/2026": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
     },
     "PL 991/2024": {
       "s": "avanca",
@@ -5680,12 +9540,30 @@
       ],
       "g": "extrema"
     },
+    "PLP 103/2026": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PLP 109/2026": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PLP 120/2025": {
       "s": "avanca",
       "p": [
         "estado"
       ],
       "g": "direita"
+    },
+    "PLP 122/2026": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PLP 13/2023": {
       "s": "avanca",
@@ -5711,12 +9589,60 @@
       ],
       "g": "direita"
     },
+    "PLP 15/2025": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
+    },
+    "PLP 153/2025": {
+      "s": "barra",
+      "p": [
+        "soberania"
+      ]
+    },
+    "PLP 153/2026": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PLP 156/2023": {
+      "s": "barra",
+      "p": [
+        "igualdade"
+      ]
+    },
+    "PLP 156/2026": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
+    "PLP 157/2025": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PLP 163/2026": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PLP 171/2023": {
       "s": "avanca",
       "p": [
         "instituicoes"
       ],
       "g": "direita"
+    },
+    "PLP 171/2026": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
     },
     "PLP 182/2023": {
       "s": ""
@@ -5728,6 +9654,24 @@
       ],
       "g": "direita",
       "m": ""
+    },
+    "PLP 185/2025": {
+      "s": "barra",
+      "p": [
+        "instituicoes"
+      ]
+    },
+    "PLP 188/2024": {
+      "s": "barra",
+      "p": [
+        "instituicoes"
+      ]
+    },
+    "PLP 189/2026": {
+      "s": "barra",
+      "p": [
+        "soberania"
+      ]
     },
     "PLP 191/2023": {
       "s": "avanca",
@@ -5761,6 +9705,12 @@
       "g": "extrema",
       "m": ""
     },
+    "PLP 203/2024": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ]
+    },
     "PLP 21/2026": {
       "s": "avanca",
       "p": [
@@ -5793,6 +9743,12 @@
     "PLP 23/2026": {
       "s": ""
     },
+    "PLP 231/2023": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PLP 231/2025": {
       "s": "avanca",
       "p": [
@@ -5800,6 +9756,24 @@
         "drogas"
       ],
       "g": "extrema"
+    },
+    "PLP 233/2026": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
+    "PLP 240/2025": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PLP 242/2025": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
     },
     "PLP 245/2026": {
       "s": "avanca",
@@ -5830,6 +9804,12 @@
         "privilegios"
       ],
       "g": "direita"
+    },
+    "PLP 254/2026": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
     },
     "PLP 258/2026": {
       "s": "barra",
@@ -5862,6 +9842,12 @@
       ],
       "g": "direita"
     },
+    "PLP 277/2026": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
+    },
     "PLP 279/2025": {
       "s": "barra",
       "p": [
@@ -5869,6 +9855,12 @@
         "soberania"
       ],
       "m": ""
+    },
+    "PLP 28/2023": {
+      "s": "barra",
+      "p": [
+        "instituicoes"
+      ]
     },
     "PLP 28/2026": {
       "s": "avanca",
@@ -5888,6 +9880,12 @@
       "g": "extrema",
       "m": ""
     },
+    "PLP 291/2026": {
+      "s": "barra",
+      "p": [
+        "soberania"
+      ]
+    },
     "PLP 296/2026": {
       "s": "avanca",
       "p": [
@@ -5897,12 +9895,36 @@
       "g": "direita",
       "m": ""
     },
+    "PLP 297/2026": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ]
+    },
     "PLP 299/2026": {
       "s": "barra",
       "p": [
         "estado"
       ],
       "m": ""
+    },
+    "PLP 307/2026": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ]
+    },
+    "PLP 308/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ]
+    },
+    "PLP 309/2026": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
     },
     "PLP 33/2024": {
       "s": "avanca",
@@ -5937,12 +9959,24 @@
       "g": "direita",
       "m": ""
     },
+    "PLP 5/2026": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ]
+    },
     "PLP 56/2026": {
       "s": "avanca",
       "p": [
         "privilegios"
       ],
       "g": "direita"
+    },
+    "PLP 66/2025": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PLP 66/2026": {
       "s": "avanca",
@@ -5972,12 +10006,30 @@
       ],
       "g": "extrema"
     },
+    "PLP 75/2023": {
+      "s": "barra",
+      "p": [
+        "instituicoes"
+      ]
+    },
     "PLP 8/2024": {
       "s": "avanca",
       "p": [
         "privilegios"
       ],
       "g": "direita"
+    },
+    "PLP 87/2024": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ]
+    },
+    "PLP 9/2025": {
+      "s": "barra",
+      "p": [
+        "armas"
+      ]
     }
   }
 }
