@@ -1,5 +1,5 @@
 {
- "inicio": "2026-11-18T12:00:25.321Z",
+ "inicio": "2026-11-18T12:03:19.798Z",
  "modo": "diario",
  "amostras": {
   "camara_deputado": {
@@ -104,29 +104,29 @@
    "siglaVotoParlamentar": "Sim"
   },
   "senado_comissao_votacao": {
-   "CodigoVotacao": "42027",
+   "CodigoVotacao": "42082",
    "SiglaCasaColegiado": "SF",
-   "CodigoReuniao": "14969",
-   "DataHoraInicioReuniao": "2026-11-11T09:26:00",
-   "NumeroReuniaoColegiado": "52",
+   "CodigoReuniao": "14994",
+   "DataHoraInicioReuniao": "2026-11-11T09:13:00",
+   "NumeroReuniaoColegiado": "16",
    "TipoReuniao": "Extraordinária",
-   "CodigoColegiado": "40",
-   "SiglaColegiado": "CAS",
-   "NomeColegiado": "Comissão de Assuntos Sociais",
-   "CodigoParlamentarPresidente": "742",
-   "NomeParlamentarPresidente": "Marcelo Castro",
-   "IdentificacaoMateria": "PL 4366/2024",
-   "DescricaoIdentificacaoMateria": "Projeto de Lei n° 4366, de 2024",
-   "DescricaoVotacao": "PL 4366/2024 e emenda, nos termos do relatório apresentado",
-   "Votos": "{\"Voto\":[{\"CodigoParlamentar\":\"4531\",\"NomeParlamentar\":\"Jayme Campos\",\"SiglaPartidoParlamentar\":\"UNIÃO\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"5386\",\"NomeParlamentar\":\"Professora Dorinha Seabra\",\"SiglaPartidoParlamentar\":\"UNIÃO\",\"SiglaCasaParl",
-   "TotalVotosSim": "13",
+   "CodigoColegiado": "34",
+   "SiglaColegiado": "CCJ",
+   "NomeColegiado": "Comissão de Constituição, Justiça e Cidadania",
+   "CodigoParlamentarPresidente": "5523",
+   "NomeParlamentarPresidente": "Otto Alencar",
+   "IdentificacaoMateria": "PL 4668/2020",
+   "DescricaoIdentificacaoMateria": "Projeto de Lei n° 4668, de 2020",
+   "DescricaoVotacao": "Substitutivo ao PL 4668/2020 (nos termos do Parecer)",
+   "Votos": "{\"Voto\":[{\"CodigoParlamentar\":\"22\",\"NomeParlamentar\":\"Esperidião Amin\",\"SiglaPartidoParlamentar\":\"PP\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"5386\",\"NomeParlamentar\":\"Professora Dorinha Seabra\",\"SiglaPartidoParlamentar\":\"UNIÃO\",\"SiglaCasaParlam",
+   "TotalVotosSim": "14",
    "TotalVotosNao": "0",
    "TotalVotosAbstencao": "0"
   },
   "senado_comissao_voto": {
-   "CodigoParlamentar": "4531",
-   "NomeParlamentar": "Jayme Campos",
-   "SiglaPartidoParlamentar": "UNIÃO",
+   "CodigoParlamentar": "22",
+   "NomeParlamentar": "Esperidião Amin",
+   "SiglaPartidoParlamentar": "PP",
    "SiglaCasaParlamentar": "SF",
    "QualidadeVoto": "S",
    "VotoPresidente": "false"
@@ -142,56 +142,56 @@
    "dataApresentacao": "2026-02-24T15:48"
   },
   "senado_proposicao": {
-   "autoria": "Senadora Lourdinha Pereira (PSB/MA)",
+   "autoria": "Senador Dr. Hiran (PP/RR)",
    "casaIdentificadora": "SF",
-   "codigoMateria": 175907,
-   "dataApresentacao": "2026-10-05",
-   "dataSituacaoAtual": "2026-10-05",
-   "dataUltimaAtualizacao": "2026-10-09T16:45:00.822",
-   "ementa": "Altera a Lei nº 8.212, de 24 de julho de 1991, e a Lei nº 8.213, de 24 de julho de 1991, para conferir a condição de segurado especial da Previdência Social ao artesão, nas condições em que especifica.",
+   "codigoMateria": 175985,
+   "dataApresentacao": "2026-10-19",
+   "dataSituacaoAtual": "2026-10-19",
+   "dataUltimaAtualizacao": "2026-10-21T15:30:01.3",
+   "ementa": "Altera o art. 9º da Lei nº 15.211, de 17 de setembro de 2025 (Estatuto Digital da Criança e do Adolescente), para admitir a estimativa de idade por biometria facial como mecanismo de verificação de idade e para ampliar, de forma graduada, as categorias de serviços digitais de acesso restrito a maiores de 18 (dezoito) anos.",
    "enteIdentificador": "SF",
-   "id": 9111975,
-   "identificacao": "PL 5522/2026",
+   "id": 9115144,
+   "identificacao": "PL 5593/2026",
    "objetivo": "Iniciadora",
    "situacaoAtual": "AGUARDANDO DESPACHO",
    "tipoConteudo": "Norma Geral",
    "tipoDocumento": "Projeto de Lei Ordinária",
    "tramitando": "Sim",
    "ultimaInformacaoAtualizada": "PUBLICACAO_OFICIAL",
-   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/d61481b9-62b9-4de7-b307-77a9617f71d0"
+   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/3dc7461f-fa42-46e9-aa85-0ff9dd90f0a9"
   },
   "senado_relatoria": {
-   "autoriaProcesso": "Presidência da República",
+   "autoriaProcesso": "Câmara dos Deputados",
    "casaRelator": "SF",
-   "codigoColegiado": 1998,
-   "codigoMateria": 154768,
-   "codigoParlamentar": 5998,
-   "codigoTipoColegiado": 128,
-   "dataApresentacaoProcesso": "2022-09-22 09:28:28",
-   "dataDesignacao": "2023-02-23 15:48:00",
-   "dataDestituicao": "2023-02-28 18:37:30",
+   "codigoColegiado": 34,
+   "codigoMateria": 156475,
+   "codigoParlamentar": 5748,
+   "codigoTipoColegiado": 21,
+   "dataApresentacaoProcesso": "2023-03-23 16:47:01",
+   "dataDesignacao": "2023-04-04 12:13:42",
+   "dataDestituicao": "2023-04-26 15:33:01",
    "dataFimColegiado": null,
    "descricaoTipoEncerramento": "Deliberação da matéria",
    "descricaoTipoRelator": "Relator",
-   "emailParlamentar": "sen.daniellaribeiro@senado.leg.br",
-   "ementaProcesso": "Altera a Lei nº 12.249, de 11 de junho de 2010, para dispor sobre a alíquota do imposto sobre a renda retido na fonte incidente sobre as operações a que se refere.",
-   "formaTratamentoParlamentar": "Senadora",
-   "id": 9261491,
-   "idProcesso": 8306238,
+   "emailParlamentar": "sen.venezianovitaldorego@senado.leg.br",
+   "ementaProcesso": "Dispõe sobre a transformação de cargos de Analista do Ministério Público da União em cargos de Procurador da Justiça Militar, em cargos de Promotor da Justiça Militar e em cargos em comissão que especifica, no âmbito do Ministério Público Militar; e altera a Lei nº 13.316, de 20 de julho de 2016.",
+   "formaTratamentoParlamentar": "Senador",
+   "id": 9309396,
+   "idProcesso": 8396007,
    "idTipoRelator": 1,
-   "identificacaoProcesso": "MPV 1138/2022",
-   "nomeColegiado": "Plenário do Senado Federal",
-   "nomeCompleto": "Daniella Velloso Borges Ribeiro",
-   "nomeParlamentar": "Daniella Ribeiro",
+   "identificacaoProcesso": "PL 2969/2022",
+   "nomeColegiado": "Comissão de Constituição, Justiça e Cidadania",
+   "nomeCompleto": "Veneziano Vital do Rêgo Segundo Neto",
+   "nomeParlamentar": "Veneziano Vital do Rêgo",
    "numeroAutuacao": "1",
-   "sexoParlamentar": "F",
+   "sexoParlamentar": "M",
    "siglaCasa": "SF",
-   "siglaColegiado": "PLEN",
-   "siglaPartidoParlamentar": "PSD",
+   "siglaColegiado": "CCJ",
+   "siglaPartidoParlamentar": "MDB",
    "tramitando": "N",
    "ufParlamentar": "PB",
-   "urlFotoParlamentar": "http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5998.jpg",
-   "urlPaginaParlamentar": "http://www25.senado.leg.br/web/senadores/senador/-/perfil/5998"
+   "urlFotoParlamentar": "http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5748.jpg",
+   "urlPaginaParlamentar": "http://www25.senado.leg.br/web/senadores/senador/-/perfil/5748"
   }
  },
  "contagens": {
@@ -215,7 +215,8 @@
   "numeracao_lacunas_PL": 5,
   "numeracao_lacunas_PLP": 1,
   "numeracao_lacunas_PEC": 1,
-  "correcoes_aplicadas": 5059,
+  "confirmacoes_em_bloco": 2016,
+  "correcoes_aplicadas": 3043,
   "grupo_pelos_votos_diferente": 216
  },
  "erros": [],
@@ -233,17 +234,17 @@
   "senado_comissao": {
    "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20261004&dataFim=20261118",
    "tamanho": 220,
-   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"18/11/2026 08:57:29\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
+   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"18/11/2026 09:01:02\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
   },
   "senado_processo": {
-   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-10-04&dataFimApresentacao=2026-10-15",
-   "tamanho": 13498,
-   "inicio": "[{\"autoria\":\"Senadora Lourdinha Pereira (PSB/MA)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175907,\"dataApresentacao\":\"2026-10-05\",\"dataSituacaoAtual\":\"2026-10-05\",\"dataUltimaAtualizacao\":\"2026-10-09T16:45:00.822\",\"ementa\":\"Altera a Lei nº 8.212, de 24 de julho de 1991, e a Lei nº 8.213, de 24 de julho de 1991, para conferir a condição de segurado especial da Previdência Social ao artesão, nas condições em que especifica.\",\"enteIdentificador\":\"SF\",\"id\":9111975,\"identificacao\":\"PL 5522/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/d61481b9-62b9-4de7-b307-77a9617f71d0\"},{\"autoria\":\"Senadora Lourdinha Pereira (PSB/MA)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175908,\"dataApresentacao\":\"2026-10-05\",\"dataSituacaoAtual\":\"2026-10-05\",\"dataUltimaAtualizacao\":\"2026-10-09T16:45:00.972\",\"ementa\":\"Altera as Leis nº 8.080, de 19 de setembro de 1990, nº 11.107, de 6 de abril de 2005, nº 11.445, de 5 de janeiro de 2007, nº 12.305, de 2 de agosto de 2010, nº 12.587, de 3 de janeiro de 2012, e nº 12.608, de 10 de abril de 2012, para instituir a Política Nacional de Fomento e Fortalecimento dos Consórcios Públicos Intermunicipais e promover sua integração às políticas públicas setoriais.\",\"enteIdentificador\":\"SF\",\"id\":9111985,\"identificacao\":\"PL 5523/202"
+   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-10-16&dataFimApresentacao=2026-10-31",
+   "tamanho": 32886,
+   "inicio": "[{\"autoria\":\"Senador Dr. Hiran (PP/RR)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175985,\"dataApresentacao\":\"2026-10-19\",\"dataSituacaoAtual\":\"2026-10-19\",\"dataUltimaAtualizacao\":\"2026-10-21T15:30:01.3\",\"ementa\":\"Altera o art. 9º da Lei nº 15.211, de 17 de setembro de 2025 (Estatuto Digital da Criança e do Adolescente), para admitir a estimativa de idade por biometria facial como mecanismo de verificação de idade e para ampliar, de forma graduada, as categorias de serviços digitais de acesso restrito a maiores de 18 (dezoito) anos.\",\"enteIdentificador\":\"SF\",\"id\":9115144,\"identificacao\":\"PL 5593/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/3dc7461f-fa42-46e9-aa85-0ff9dd90f0a9\"},{\"autoria\":\"Câmara dos Deputados\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175994,\"dataApresentacao\":\"2026-10-19\",\"dataSituacaoAtual\":\"2026-10-20\",\"dataUltimaAtualizacao\":\"2026-10-23T18:30:01.076\",\"ementa\":\"Altera a Lei nº 8.080, de 19 de setembro de 1990 (Lei Orgânica da Saúde), para determinar a aceitação, pelas unidades do Sistema Único de Saúde (SUS), de exames realizados em serviços privados.\",\"enteIdentificador\":\"SF\",\"id\":9115232,\"identificacao\":\"PL 1123/2025\",\"objetivo\":\"Revisora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocum"
   },
   "senado_relatoria": {
-   "url": "https://legis.senado.leg.br/dadosabertos/processo/relatoria?dataInicio=2023-02-01&dataFim=2023-02-28",
-   "tamanho": 1238,
-   "inicio": "[{\"autoriaProcesso\":\"Presidência da República\",\"casaRelator\":\"SF\",\"codigoColegiado\":1998,\"codigoMateria\":154768,\"codigoParlamentar\":5998,\"codigoTipoColegiado\":128,\"dataApresentacaoProcesso\":\"2022-09-22 09:28:28\",\"dataDesignacao\":\"2023-02-23 15:48:00\",\"dataDestituicao\":\"2023-02-28 18:37:30\",\"dataFimColegiado\":null,\"descricaoTipoEncerramento\":\"Deliberação da matéria\",\"descricaoTipoRelator\":\"Relator\",\"emailParlamentar\":\"sen.daniellaribeiro@senado.leg.br\",\"ementaProcesso\":\"Altera a Lei nº 12.249, de 11 de junho de 2010, para dispor sobre a alíquota do imposto sobre a renda retido na fonte incidente sobre as operações a que se refere.\",\"formaTratamentoParlamentar\":\"Senadora\",\"id\":9261491,\"idProcesso\":8306238,\"idTipoRelator\":1,\"identificacaoProcesso\":\"MPV 1138/2022\",\"nomeColegiado\":\"Plenário do Senado Federal\",\"nomeCompleto\":\"Daniella Velloso Borges Ribeiro\",\"nomeParlamentar\":\"Daniella Ribeiro\",\"numeroAutuacao\":\"1\",\"sexoParlamentar\":\"F\",\"siglaCasa\":\"SF\",\"siglaColegiado\":\"PLEN\",\"siglaPartidoParlamentar\":\"PSD\",\"tramitando\":\"N\",\"ufParlamentar\":\"PB\",\"urlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5998.jpg\",\"urlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5998\"}]"
+   "url": "https://legis.senado.leg.br/dadosabertos/processo/relatoria?dataInicio=2023-04-01&dataFim=2023-04-30",
+   "tamanho": 69614,
+   "inicio": "[{\"autoriaProcesso\":\"Câmara dos Deputados\",\"casaRelator\":\"SF\",\"codigoColegiado\":34,\"codigoMateria\":156475,\"codigoParlamentar\":5748,\"codigoTipoColegiado\":21,\"dataApresentacaoProcesso\":\"2023-03-23 16:47:01\",\"dataDesignacao\":\"2023-04-04 12:13:42\",\"dataDestituicao\":\"2023-04-26 15:33:01\",\"dataFimColegiado\":null,\"descricaoTipoEncerramento\":\"Deliberação da matéria\",\"descricaoTipoRelator\":\"Relator\",\"emailParlamentar\":\"sen.venezianovitaldorego@senado.leg.br\",\"ementaProcesso\":\"Dispõe sobre a transformação de cargos de Analista do Ministério Público da União em cargos de Procurador da Justiça Militar, em cargos de Promotor da Justiça Militar e em cargos em comissão que especifica, no âmbito do Ministério Público Militar; e altera a Lei nº 13.316, de 20 de julho de 2016.\",\"formaTratamentoParlamentar\":\"Senador\",\"id\":9309396,\"idProcesso\":8396007,\"idTipoRelator\":1,\"identificacaoProcesso\":\"PL 2969/2022\",\"nomeColegiado\":\"Comissão de Constituição, Justiça e Cidadania\",\"nomeCompleto\":\"Veneziano Vital do Rêgo Segundo Neto\",\"nomeParlamentar\":\"Veneziano Vital do Rêgo\",\"numeroAutuacao\":\"1\",\"sexoParlamentar\":\"M\",\"siglaCasa\":\"SF\",\"siglaColegiado\":\"CCJ\",\"siglaPartidoParlamentar\":\"MDB\",\"tramitando\":\"N\",\"ufParlamentar\":\"PB\",\"urlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5748.jpg\",\"urlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5748\"},{\"autoriaProcesso\":\"Senador Rodrigo Cunha (PSDB/AL)\",\"casaRelator\":\"SF\",\"codigoColegiado\":40,\"codigoMa"
   }
  },
  "numeracao": {
@@ -276,5 +277,5 @@
    ]
   }
  },
- "fim": "2026-11-18T12:02:03.582Z"
+ "fim": "2026-11-18T12:04:59.559Z"
 }
