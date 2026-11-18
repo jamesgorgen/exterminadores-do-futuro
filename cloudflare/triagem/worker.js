@@ -15,11 +15,11 @@ let certs = null, certsEm = 0;
 const b64url = s => Uint8Array.from(atob(s.replace(/-/g, '+').replace(/_/g, '/') + '==='.slice((s.length + 3) % 4)), c => c.charCodeAt(0));
 const txt = u8 => new TextDecoder().decode(u8);
 async function chaves(team) {
-  if (certs && Date.now() - certsEm < 3600e3) return certs;
+  if (certs && certs.team === team && Date.now() - certsEm < 3600e3) return certs.keys;
   const r = await fetch(`https://${team}.cloudflareaccess.com/cdn-cgi/access/certs`);
   if (!r.ok) throw new Error('certificados do Access indisponíveis');
-  certs = (await r.json()).keys || []; certsEm = Date.now();
-  return certs;
+  certs = { team, keys: (await r.json()).keys || [] }; certsEm = Date.now();
+  return certs.keys;
 }
 function cookie(req, nome) {
   const c = req.headers.get('cookie') || '';
@@ -27,19 +27,24 @@ function cookie(req, nome) {
   return m ? m[1] : null;
 }
 async function usuario(req, env) {
-  if (!env.ACCESS_TEAM || !env.ACCESS_AUD) return { erro: 'configuracao' };
+  // A AUD é exclusiva do aplicativo do Access e não pode ser escolhida por terceiros. Se ACCESS_TEAM estiver vazio,
+  // a equipe sai do emissor do próprio token (com a assinatura conferida nos certificados dessa equipe).
+  if (!env.ACCESS_AUD) return { erro: 'configuracao' };
   const jwt = req.headers.get('cf-access-jwt-assertion') || cookie(req, 'CF_Authorization');
   if (!jwt) return { erro: 'sem-token' };
   const [h, p, s] = jwt.split('.');
   if (!h || !p || !s) return { erro: 'token' };
   const head = JSON.parse(txt(b64url(h))), pay = JSON.parse(txt(b64url(p)));
-  const jwk = (await chaves(env.ACCESS_TEAM)).find(k => k.kid === head.kid);
+  const m = String(pay.iss || '').match(/^https:\/\/([a-z0-9-]+)\.cloudflareaccess\.com$/);
+  const team = env.ACCESS_TEAM || (m && m[1]);
+  if (!team || (env.ACCESS_TEAM && (!m || m[1] !== env.ACCESS_TEAM))) return { erro: 'token' };
+  const jwk = (await chaves(team)).find(k => k.kid === head.kid);
   if (!jwk || head.alg !== 'RS256') return { erro: 'token' };
   const chave = await crypto.subtle.importKey('jwk', jwk, { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' }, false, ['verify']);
   const ok = await crypto.subtle.verify('RSASSA-PKCS1-v1_5', chave, b64url(s), new TextEncoder().encode(h + '.' + p));
   const aud = Array.isArray(pay.aud) ? pay.aud : [pay.aud];
-  if (!ok || !aud.includes(env.ACCESS_AUD) || pay.iss !== `https://${env.ACCESS_TEAM}.cloudflareaccess.com` || (pay.exp || 0) * 1000 < Date.now()) return { erro: 'token' };
-  return { email: pay.email || pay.common_name || 'desconhecido' };
+  if (!ok || !aud.includes(env.ACCESS_AUD) || (pay.exp || 0) * 1000 < Date.now()) return { erro: 'token' };
+  return { email: pay.email || pay.common_name || 'desconhecido', team };
 }
 
 // ---------- decisões: mescla no servidor, com gravação condicional para não perder alterações simultâneas
@@ -80,11 +85,11 @@ export default {
     const url = new URL(req.url);
     let u;
     try { u = await usuario(req, env); } catch (e) { u = { erro: 'token' }; }
-    if (u.erro === 'configuracao') return new Response('A triagem ainda não está configurada: faltam ACCESS_TEAM e ACCESS_AUD no wrangler.toml.', { status: 503, headers: SEG });
+    if (u.erro === 'configuracao') return new Response('A triagem ainda não está configurada: falta ACCESS_AUD no wrangler.toml.', { status: 503, headers: SEG });
     if (u.erro) return new Response('Acesso restrito à equipe. Entre pelo endereço da triagem e use o seu e-mail cadastrado.', { status: 403, headers: SEG });
 
     if (url.pathname === '/' || url.pathname === '/index.html') return new Response(PAGINA, { headers: { 'content-type': 'text/html; charset=utf-8', ...SEG } });
-    if (url.pathname === '/api/eu') return json({ email: u.email });
+    if (url.pathname === '/api/eu') return json({ email: u.email, equipe: u.team });
     if (url.pathname === '/api/dados') {
       const o = await env.R2.get(DADOS);
       if (!o) return json({ erro: 'Os dados ainda não foram gerados pelo robô.' }, 404);

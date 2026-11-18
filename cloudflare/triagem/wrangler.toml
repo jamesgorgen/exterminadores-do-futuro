@@ -12,8 +12,8 @@ binding = "R2"
 bucket_name = "exterminadores-dados"
 
 # Preencher depois de ligar o Cloudflare Access no Worker (não são segredos):
-# ACCESS_TEAM é o nome da equipe do Zero Trust (o "xxx" de xxx.cloudflareaccess.com);
+# ACCESS_TEAM é o nome da equipe do Zero Trust (o "xxx" de xxx.cloudflareaccess.com); vazio, vale a equipe do token, que /api/eu mostra;
 # ACCESS_AUD é a "Application Audience (AUD) Tag" do aplicativo do Access.
 [vars]
 ACCESS_TEAM = ""
-ACCESS_AUD = ""
+ACCESS_AUD = "ca13754a01e0f1aa306036e895c40a02e18c7939d445f66789511691cc406746"
