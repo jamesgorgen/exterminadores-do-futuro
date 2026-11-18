@@ -26,7 +26,7 @@ const descreve = (k, c) => {
   const pp = Array.isArray(c.p) ? c.p : [];
   return `${g === 'extrema' ? 'extrema-direita' : 'direita'}${pp.length ? ', pautas ' + pp.join(', ') : ''}`;
 };
-const casos = Object.entries(correcoes).filter(([k, c]) => c && typeof c === 'object' && ementa.get(k))
+const casos = Object.entries(correcoes).filter(([k, c]) => c && typeof c === 'object' && !c.lote && ementa.get(k))
   .map(([k, c], i) => ({ k, c, g: gabarito(k, c), dobra: i % 2 }));
 console.log(`Casos com gabarito: ${casos.length}`, JSON.stringify(casos.reduce((o, x) => (o[x.g] = (o[x.g] || 0) + 1, o), {})));
 

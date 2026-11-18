@@ -115,6 +115,7 @@ A chave é a do projeto (`PL 682/2024`) ou, para votações sem matéria, a da v
 - `p`, pautas, pelos identificadores de `pautas.js`, por exemplo `["armas"]`.
 - `g`, grau. `direita` ou `extrema`.
 - `m`, texto que aparece como "Checagem da equipe".
+- `lote`, `1` para confirmações em bloco, feitas sem leitura item a item (por exemplo, os 672 projetos contra a pauta de autoria do PT, PSOL e PV confirmados em 18/11/2026). Valem no site com o selo "Classificado por IA", e não "Conferido pela equipe", e ficam fora dos exemplos e da contagem de correções que orientam a IA e do gabarito de `robo/avaliar.mjs`. Quem revisar um desses itens na página de revisão grava uma correção comum, sem a marca.
 
 ```json
 { "correcoes": {

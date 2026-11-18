@@ -173,7 +173,7 @@ function etqGrau(x) {
   if (x.s === 'barra') return '<span class="etq contra">Contra a pauta da direita</span>';
   return x.g === 'extrema' ? '<span class="etq ext">Extrema-direita</span>' : '<span class="etq dir">Direita</span>';
 }
-const origem = x => x && x.eq ? '<span class="etq eq">Conferido pela equipe</span>' : '<span class="peq">Triagem por IA</span>';
+const origem = x => x && x.eq ? '<span class="etq eq">Conferido pela equipe</span>' : x && x.lt ? '<span class="peq">Classificado por IA</span>' : '<span class="peq">Triagem por IA</span>';
 const pautas = x => (x && x.p || []).map(p => PAUTA[p] || p).join(', ');
 const barras = (linhas, fmtv, cor) => { const m = Math.max(...linhas.map(l => l[1]), 1); return `<div class="barras">${linhas.map(([n, v]) => `<span>${esc(n)}</span><span class="b" style="${cor ? '--cor:' + cor : ''};width:${100 * v / m}%"></span><span class="num">${fmtv(v)}</span>`).join('')}</div>`; };
 

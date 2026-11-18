@@ -1,5 +1,5 @@
 {
-  "_leia": "Correções da equipe à classificação da IA. A chave é a do projeto (ex. PL 682/2024) ou a da votação sem matéria (ex. V:C:2585316-23). Campos, todos opcionais: s = avanca, barra ou vazio (vazio tira o item da lista); p = pautas de pautas.js; g = direita ou extrema; m = texto exibido como Checagem da equipe. Ao salvar este arquivo no GitHub, o robô roda sozinho e o site se atualiza em poucos minutos.",
+  "_leia": "Correções da equipe à classificação da IA. A chave é a do projeto (ex. PL 682/2024) ou a da votação sem matéria (ex. V:C:2585316-23). Campos, todos opcionais: s = avanca, barra ou vazio (vazio tira o item da lista); p = pautas de pautas.js; g = direita ou extrema; m = texto exibido como Checagem da equipe; lote = 1 marca confirmação em bloco, que vale no site com o selo Classificado por IA e fica fora dos exemplos da IA. Ao salvar este arquivo no GitHub, o robô roda sozinho e o site se atualiza em poucos minutos.",
   "correcoes": {
     "PDL 100/2026": {
       "s": "avanca",
@@ -243,14 +243,16 @@
       "s": "barra",
       "p": [
         "drogas"
-      ]
+      ],
+      "lote": 1
     },
     "PDL 160/2023": {
       "s": "barra",
       "p": [
         "ambiente",
         "privilegios"
-      ]
+      ],
+      "lote": 1
     },
     "PDL 160/2026": {
       "s": "avanca",
@@ -267,7 +269,8 @@
       "s": "barra",
       "p": [
         "privilegios"
-      ]
+      ],
+      "lote": 1
     },
     "PDL 170/2025": {
       "s": "avanca",
@@ -303,7 +306,8 @@
       "s": "barra",
       "p": [
         "estado"
-      ]
+      ],
+      "lote": 1
     },
     "PDL 222/2024": {
       "s": ""
@@ -355,7 +359,8 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PDL 273/2026": {
       "s": "avanca",
@@ -391,25 +396,29 @@
       "s": "barra",
       "p": [
         "estado"
-      ]
+      ],
+      "lote": 1
     },
     "PDL 330/2024": {
       "s": "barra",
       "p": [
         "estado"
-      ]
+      ],
+      "lote": 1
     },
     "PDL 334/2024": {
       "s": "barra",
       "p": [
         "estado"
-      ]
+      ],
+      "lote": 1
     },
     "PDL 337/2024": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PDL 337/2025": {
       "s": "avanca",
@@ -423,7 +432,8 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PDL 343/2023": {
       "s": "avanca",
@@ -474,7 +484,8 @@
       "s": "barra",
       "p": [
         "privilegios"
-      ]
+      ],
+      "lote": 1
     },
     "PDL 373/2024": {
       "s": "avanca",
@@ -651,7 +662,8 @@
       "s": "barra",
       "p": [
         "soberania"
-      ]
+      ],
+      "lote": 1
     },
     "PDL 512/2025": {
       "s": "avanca",
@@ -671,7 +683,8 @@
       "s": "barra",
       "p": [
         "educacao"
-      ]
+      ],
+      "lote": 1
     },
     "PDL 563/2026": {
       "s": "avanca",
@@ -685,7 +698,8 @@
       "s": "barra",
       "p": [
         "estado"
-      ]
+      ],
+      "lote": 1
     },
     "PDL 63/2023": {
       "s": ""
@@ -694,7 +708,8 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PDL 69/2026": {
       "s": "avanca",
@@ -808,7 +823,8 @@
       "p": [
         "ambiente",
         "povos"
-      ]
+      ],
+      "lote": 1
     },
     "PDL 9/2026": {
       "s": "avanca",
@@ -838,7 +854,8 @@
       "s": "barra",
       "p": [
         "soberania"
-      ]
+      ],
+      "lote": 1
     },
     "PDL 922/2026": {
       "s": "avanca",
@@ -879,13 +896,15 @@
       "s": "barra",
       "p": [
         "povos"
-      ]
+      ],
+      "lote": 1
     },
     "PDL 942/2025": {
       "s": "barra",
       "p": [
         "estado"
-      ]
+      ],
+      "lote": 1
     },
     "PDL 97/2026": {
       "s": "avanca",
@@ -906,7 +925,8 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PEC 15/2026": {
       "s": "avanca",
@@ -945,7 +965,8 @@
       "s": "barra",
       "p": [
         "educacao"
-      ]
+      ],
+      "lote": 1
     },
     "PEC 41/2023": {
       "s": "avanca",
@@ -990,7 +1011,8 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PEC 69/2023": {
       "s": "avanca",
@@ -1035,13 +1057,15 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1012/2023": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1012/2025": {
       "s": "avanca",
@@ -1080,7 +1104,8 @@
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1056/2025": {
       "s": "avanca",
@@ -1094,25 +1119,29 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1059/2026": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1067/2026": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1069/2025": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1073/2024": {
       "s": ""
@@ -1121,14 +1150,16 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1087/2023": {
       "s": "barra",
       "p": [
         "plataformas",
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1088/2026": {
       "s": "avanca",
@@ -1164,13 +1195,15 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1098/2024": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1098/2026": {
       "s": "barra",
@@ -1202,31 +1235,36 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1105/2024": {
       "s": "barra",
       "p": [
         "privilegios"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1107/2026": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1109/2026": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 111/2023": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1110/2026": {
       "s": "barra",
@@ -1254,19 +1292,22 @@
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 112/2023": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1131/2023": {
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1132/2025": {
       "s": "barra",
@@ -1296,19 +1337,22 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1144/2026": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1145/2026": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1146/2025": {
       "s": "avanca",
@@ -1325,37 +1369,43 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1154/2026": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1155/2026": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1157/2026": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1161/2023": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1161/2026": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1173/2025": {
       "s": "avanca",
@@ -1369,13 +1419,15 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1182/2023": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1182/2025": {
       "s": "avanca",
@@ -1396,19 +1448,22 @@
       "s": "barra",
       "p": [
         "movimentos"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1199/2025": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 120/2023": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 120/2026": {
       "s": "avanca",
@@ -1423,7 +1478,8 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1209/2026": {
       "s": "avanca",
@@ -1445,13 +1501,15 @@
       "s": "barra",
       "p": [
         "educacao"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1217/2026": {
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1219/2026": {
       "s": ""
@@ -1460,7 +1518,8 @@
       "s": "barra",
       "p": [
         "soberania"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1222/2025": {
       "s": "avanca",
@@ -1474,19 +1533,22 @@
       "s": "barra",
       "p": [
         "armas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1230/2024": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1234/2024": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1234/2026": {
       "s": "avanca",
@@ -1500,7 +1562,8 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1247/2025": {
       "s": "avanca",
@@ -1514,7 +1577,8 @@
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1272/2023": {
       "s": "barra",
@@ -1544,19 +1608,22 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1282/2026": {
       "s": "barra",
       "p": [
         "estado"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1283/2024": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1283/2025": {
       "s": "avanca",
@@ -1571,7 +1638,8 @@
       "s": "barra",
       "p": [
         "instituicoes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1287/2025": {
       "s": "barra",
@@ -1584,13 +1652,15 @@
       "s": "barra",
       "p": [
         "educacao"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1294/2026": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1299/2023": {
       "s": "barra",
@@ -1603,25 +1673,29 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1302/2026": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 131/2025": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1316/2024": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1316/2026": {
       "s": "avanca",
@@ -1634,31 +1708,36 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 132/2023": {
       "s": "barra",
       "p": [
         "povos"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1335/2025": {
       "s": "barra",
       "p": [
         "instituicoes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1339/2023": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 134/2023": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1341/2023": {
       "s": "avanca",
@@ -1673,7 +1752,8 @@
       "s": "barra",
       "p": [
         "povos"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1345/2026": {
       "s": "avanca",
@@ -1695,13 +1775,15 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1352/2023": {
       "s": "barra",
       "p": [
         "povos"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1356/2026": {
       "s": "barra",
@@ -1715,7 +1797,8 @@
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1372/2023": {
       "s": "barra",
@@ -1728,7 +1811,8 @@
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1389/2024": {
       "s": "avanca",
@@ -1742,7 +1826,8 @@
       "s": "barra",
       "p": [
         "educacao"
-      ]
+      ],
+      "lote": 1
     },
     "PL 14/2024": {
       "s": "avanca",
@@ -1757,19 +1842,22 @@
       "s": "barra",
       "p": [
         "educacao"
-      ]
+      ],
+      "lote": 1
     },
     "PL 141/2023": {
       "s": "barra",
       "p": [
         "estado"
-      ]
+      ],
+      "lote": 1
     },
     "PL 142/2023": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1420/2025": {
       "s": "avanca",
@@ -1782,19 +1870,22 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1423/2025": {
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 143/2023": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1436/2025": {
       "s": "avanca",
@@ -1815,13 +1906,15 @@
       "s": "barra",
       "p": [
         "educacao"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1440/2026": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1459/2023": {
       "s": "avanca",
@@ -1834,19 +1927,22 @@
       "s": "barra",
       "p": [
         "instituicoes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1464/2023": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1467/2025": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1482/2024": {
       "s": "avanca",
@@ -1868,7 +1964,8 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1496/2026": {
       "s": "barra",
@@ -1882,25 +1979,29 @@
       "s": "barra",
       "p": [
         "soberania"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1498/2026": {
       "s": "barra",
       "p": [
         "soberania"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1500/2026": {
       "s": "barra",
       "p": [
         "soberania"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1501/2026": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1502/2026": {
       "s": "barra",
@@ -1908,13 +2009,15 @@
         "ambiente",
         "povos",
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1504/2026": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1505/2025": {
       "s": "avanca",
@@ -1935,118 +2038,137 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1509/2026": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1510/2026": {
       "s": "barra",
       "p": [
         "plataformas",
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1511/2026": {
       "s": "barra",
       "p": [
         "soberania"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1513/2026": {
       "s": "barra",
       "p": [
         "estado"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1514/2026": {
       "s": "barra",
       "p": [
         "ambiente",
         "soberania"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1515/2026": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1516/2026": {
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1517/2026": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1520/2026": {
       "s": "barra",
       "p": [
         "privilegios"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1523/2026": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1524/2025": {
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1525/2024": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1527/2025": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1527/2026": {
       "s": "barra",
       "p": [
         "estado"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1528/2025": {
       "s": "barra",
       "p": [
         "povos"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1528/2026": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1529/2026": {
       "s": "barra",
       "p": [
         "plataformas",
         "instituicoes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1530/2025": {
       "s": "barra",
       "p": [
         "povos"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1535/2023": {
       "s": ""
@@ -2055,13 +2177,15 @@
       "s": "barra",
       "p": [
         "povos"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1540/2023": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1541/2023": {
       "s": "barra",
@@ -2075,13 +2199,15 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1556/2025": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1568/2026": {
       "s": "avanca",
@@ -2113,13 +2239,15 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1589/2023": {
       "s": "barra",
       "p": [
         "estado"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1589/2026": {
       "s": "avanca",
@@ -2132,7 +2260,8 @@
       "s": "barra",
       "p": [
         "povos"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1613/2026": {
       "s": "avanca",
@@ -2147,31 +2276,36 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1634/2026": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1636/2026": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1637/2026": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1638/2026": {
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1651/2023": {
       "s": "avanca",
@@ -2193,7 +2327,8 @@
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1682/2026": {
       "s": "avanca",
@@ -2240,7 +2375,8 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1721/2025": {
       "s": "avanca",
@@ -2255,7 +2391,8 @@
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1732/2025": {
       "s": "avanca",
@@ -2269,7 +2406,8 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1740/2025": {
       "s": "avanca",
@@ -2286,13 +2424,15 @@
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1754/2026": {
       "s": "barra",
       "p": [
         "soberania"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1759/2026": {
       "s": "avanca",
@@ -2306,13 +2446,15 @@
       "p": [
         "igualdade",
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1776/2024": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1776/2026": {
       "s": "avanca",
@@ -2358,13 +2500,15 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1798/2025": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 18/2024": {
       "s": ""
@@ -2373,13 +2517,15 @@
       "s": "barra",
       "p": [
         "estado"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1808/2026": {
       "s": "barra",
       "p": [
         "privilegios"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1809/2023": {
       "s": "barra",
@@ -2393,7 +2539,8 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1818/2024": {
       "s": "avanca",
@@ -2439,19 +2586,22 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1832/2026": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1838/2024": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1840/2024": {
       "s": "avanca",
@@ -2465,7 +2615,8 @@
       "p": [
         "soberania",
         "estado"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1863/2025": {
       "s": "avanca",
@@ -2506,7 +2657,8 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1886/2026": {
       "s": "avanca",
@@ -2519,7 +2671,8 @@
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1906/2026": {
       "s": "avanca",
@@ -2542,7 +2695,8 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1912/2025": {
       "s": "avanca",
@@ -2637,7 +2791,8 @@
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 1971/2026": {
       "s": "avanca",
@@ -2717,7 +2872,8 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2001/2024": {
       "s": "avanca",
@@ -2757,7 +2913,8 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2015/2023": {
       "s": "barra",
@@ -2779,25 +2936,29 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2019/2026": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2025/2026": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2033/2026": {
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2034/2024": {
       "s": "avanca",
@@ -2819,25 +2980,29 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2035/2026": {
       "s": "barra",
       "p": [
         "drogas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2036/2024": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2036/2026": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2037/2025": {
       "s": "barra",
@@ -2851,7 +3016,8 @@
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2040/2026": {
       "s": "barra",
@@ -2873,7 +3039,8 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 205/2026": {
       "s": "avanca",
@@ -2887,13 +3054,15 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2074/2024": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2077/2026": {
       "s": "avanca",
@@ -2907,7 +3076,8 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2084/2026": {
       "s": "avanca",
@@ -2920,13 +3090,15 @@
       "s": "barra",
       "p": [
         "armas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2090/2024": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2091/2026": {
       "s": "barra",
@@ -2939,7 +3111,8 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2110/2026": {
       "s": "avanca",
@@ -2953,19 +3126,22 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2123/2023": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2133/2025": {
       "s": "barra",
       "p": [
         "soberania"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2147/2026": {
       "s": "avanca",
@@ -2987,25 +3163,29 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2156/2023": {
       "s": "barra",
       "p": [
         "povos"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2170/2025": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2172/2026": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2173/2025": {
       "s": "avanca",
@@ -3022,7 +3202,8 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2183/2025": {
       "s": "avanca",
@@ -3036,13 +3217,15 @@
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2196/2025": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2196/2026": {
       "s": "avanca",
@@ -3080,19 +3263,22 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2230/2026": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 224/2024": {
       "s": "barra",
       "p": [
         "instituicoes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2244/2026": {
       "s": "avanca",
@@ -3107,19 +3293,22 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2246/2023": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2250/2024": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2250/2025": {
       "s": "avanca",
@@ -3141,13 +3330,15 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2253/2024": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2253/2026": {
       "s": "avanca",
@@ -3187,19 +3378,22 @@
       "p": [
         "costumes",
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2274/2025": {
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2278/2025": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2287/2026": {
       "s": "avanca",
@@ -3213,7 +3407,8 @@
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2297/2026": {
       "s": "barra",
@@ -3233,19 +3428,22 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2314/2025": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2324/2024": {
       "s": "barra",
       "p": [
         "educacao"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2324/2026": {
       "s": "avanca",
@@ -3259,37 +3457,43 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2329/2026": {
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2334/2024": {
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2334/2025": {
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2340/2026": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2341/2024": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2343/2026": {
       "s": "avanca",
@@ -3325,13 +3529,15 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 236/2025": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2362/2023": {
       "s": "barra",
@@ -3362,19 +3568,22 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2370/2024": {
       "s": "barra",
       "p": [
         "estado"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2378/2026": {
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2391/2026": {
       "s": "",
@@ -3400,13 +3609,15 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2402/2025": {
       "s": "barra",
       "p": [
         "soberania"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2404/2025": {
       "s": "avanca",
@@ -3427,25 +3638,29 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2417/2024": {
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2421/2023": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2421/2026": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2424/2026": {
       "s": "avanca",
@@ -3484,25 +3699,29 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2450/2024": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2453/2024": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2457/2023": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 247/2023": {
       "s": "avanca",
@@ -3516,7 +3735,8 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2480/2025": {
       "s": "avanca",
@@ -3543,19 +3763,22 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2497/2024": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2505/2023": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2508/2023": {
       "s": "avanca",
@@ -3585,19 +3808,22 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2521/2024": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2522/2024": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2527/2026": {
       "s": "avanca",
@@ -3611,7 +3837,8 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2539/2026": {
       "s": "avanca",
@@ -3624,7 +3851,8 @@
       "s": "barra",
       "p": [
         "povos"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2546/2025": {
       "s": "avanca",
@@ -3646,7 +3874,8 @@
       "s": "barra",
       "p": [
         "povos"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2576/2025": {
       "s": "avanca",
@@ -3660,7 +3889,8 @@
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2586/2023": {
       "s": "avanca",
@@ -3674,13 +3904,15 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2591/2023": {
       "s": "barra",
       "p": [
         "privilegios"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2603/2026": {
       "s": "barra",
@@ -3702,7 +3934,8 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2622/2023": {
       "s": "avanca",
@@ -3716,25 +3949,29 @@
       "s": "barra",
       "p": [
         "drogas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2630/2026": {
       "s": "barra",
       "p": [
         "estado"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2633/2025": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2634/2025": {
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2641/2025": {
       "s": "avanca",
@@ -3764,13 +4001,15 @@
       "s": "barra",
       "p": [
         "povos"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2648/2024": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2654/2024": {
       "s": "avanca",
@@ -3784,7 +4023,8 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2664/2026": {
       "s": "avanca",
@@ -3798,13 +4038,15 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2668/2024": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2668/2026": {
       "s": "avanca",
@@ -3818,13 +4060,15 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2670/2025": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2677/2025": {
       "s": "avanca",
@@ -3862,13 +4106,15 @@
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2683/2025": {
       "s": "barra",
       "p": [
         "estado"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2686/2025": {
       "s": "avanca",
@@ -3882,7 +4128,8 @@
       "s": "barra",
       "p": [
         "armas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2694/2023": {
       "s": "avanca",
@@ -3905,7 +4152,8 @@
       "s": "barra",
       "p": [
         "estado"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2715/2025": {
       "s": "avanca",
@@ -3926,7 +4174,8 @@
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2729/2025": {
       "s": "barra",
@@ -3955,19 +4204,22 @@
       "s": "barra",
       "p": [
         "instituicoes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2741/2025": {
       "s": "barra",
       "p": [
         "religiao"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2757/2024": {
       "s": "barra",
       "p": [
         "estado"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2764/2026": {
       "s": "avanca",
@@ -3981,7 +4233,8 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2766/2026": {
       "s": "avanca",
@@ -3994,7 +4247,8 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2778/2024": {
       "s": ""
@@ -4094,7 +4348,8 @@
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2880/2026": {
       "s": "avanca",
@@ -4107,61 +4362,71 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2883/2026": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2887/2023": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 29/2026": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2908/2023": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2921/2024": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2922/2025": {
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2926/2026": {
       "s": "barra",
       "p": [
         "privilegios"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2929/2026": {
       "s": "barra",
       "p": [
         "soberania"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2933/2023": {
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2935/2026": {
       "s": "avanca",
@@ -4174,13 +4439,15 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2942/2023": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2960/2025": {
       "s": "avanca",
@@ -4193,7 +4460,8 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2979/2026": {
       "s": "avanca",
@@ -4208,7 +4476,8 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 2981/2026": {
       "s": "avanca",
@@ -4231,19 +4500,22 @@
       "s": "barra",
       "p": [
         "privilegios"
-      ]
+      ],
+      "lote": 1
     },
     "PL 299/2023": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3003/2025": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3007/2026": {
       "s": "avanca",
@@ -4265,25 +4537,29 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3013/2023": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3015/2025": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3016/2023": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3033/2026": {
       "s": "avanca",
@@ -4311,13 +4587,15 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3044/2023": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3046/2025": {
       "s": "avanca",
@@ -4330,7 +4608,8 @@
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 305/2026": {
       "s": "avanca",
@@ -4347,7 +4626,8 @@
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3065/2023": {
       "s": "avanca",
@@ -4378,19 +4658,22 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3092/2025": {
       "s": "barra",
       "p": [
         "armas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3093/2025": {
       "s": "barra",
       "p": [
         "armas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3097/2024": {
       "s": "avanca",
@@ -4405,61 +4688,71 @@
       "s": "barra",
       "p": [
         "armas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3098/2025": {
       "s": "barra",
       "p": [
         "armas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3099/2024": {
       "s": "barra",
       "p": [
         "povos"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3099/2025": {
       "s": "barra",
       "p": [
         "armas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3100/2024": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3103/2025": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3106/2026": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3108/2026": {
       "s": "barra",
       "p": [
         "privilegios"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3109/2023": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3109/2025": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3126/2025": {
       "s": "avanca",
@@ -4499,7 +4792,8 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3142/2023": {
       "s": ""
@@ -4508,7 +4802,8 @@
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 316/2023": {
       "s": "avanca",
@@ -4544,37 +4839,43 @@
       "s": "barra",
       "p": [
         "privilegios"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3191/2026": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3192/2026": {
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3197/2025": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3200/2026": {
       "s": "barra",
       "p": [
         "privilegios"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3201/2026": {
       "s": "barra",
       "p": [
         "privilegios"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3207/2026": {
       "s": "avanca",
@@ -4610,7 +4911,8 @@
       "s": "barra",
       "p": [
         "privilegios"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3233/2026": {
       "s": "avanca",
@@ -4624,7 +4926,8 @@
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3236/2026": {
       "s": "avanca",
@@ -4670,7 +4973,8 @@
       "s": "barra",
       "p": [
         "armas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3271/2025": {
       "s": "avanca",
@@ -4706,7 +5010,8 @@
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3295/2026": {
       "s": "avanca",
@@ -4720,13 +5025,15 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3302/2026": {
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 331/2026": {
       "s": "avanca",
@@ -4740,43 +5047,50 @@
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3318/2023": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3319/2023": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3319/2026": {
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3320/2023": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3323/2026": {
       "s": "barra",
       "p": [
         "drogas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3324/2026": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3328/2026": {
       "s": "avanca",
@@ -4797,7 +5111,8 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3344/2026": {
       "s": "avanca",
@@ -4818,7 +5133,8 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3358/2025": {
       "s": "avanca",
@@ -4840,7 +5156,8 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3378/2026": {
       "s": "avanca",
@@ -4854,19 +5171,22 @@
       "s": "barra",
       "p": [
         "privilegios"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3384/2026": {
       "s": "barra",
       "p": [
         "estado"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3387/2025": {
       "s": "barra",
       "p": [
         "soberania"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3391/2025": {
       "s": "avanca",
@@ -4883,7 +5203,8 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3396/2026": {
       "s": "avanca",
@@ -4897,49 +5218,57 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3409/2025": {
       "s": "barra",
       "p": [
         "privilegios"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3412/2024": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3413/2023": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3416/2023": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3418/2024": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3419/2024": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3421/2024": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3426/2026": {
       "s": "avanca",
@@ -4973,7 +5302,8 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3455/2026": {
       "s": "avanca",
@@ -5002,7 +5332,8 @@
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3463/2026": {
       "s": ""
@@ -5011,7 +5342,8 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3466/2026": {
       "s": "avanca",
@@ -5034,7 +5366,8 @@
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3479/2025": {
       "s": "avanca",
@@ -5048,13 +5381,15 @@
       "s": "barra",
       "p": [
         "povos"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3508/2024": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3517/2026": {
       "s": "avanca",
@@ -5077,13 +5412,15 @@
       "s": "barra",
       "p": [
         "estado"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3526/2026": {
       "s": "barra",
       "p": [
         "privilegios"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3527/2026": {
       "s": "avanca",
@@ -5105,13 +5442,15 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 355/2024": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3559/2025": {
       "s": "barra",
@@ -5125,25 +5464,29 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3564/2023": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3565/2024": {
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3570/2026": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3571/2026": {
       "s": "avanca",
@@ -5168,19 +5511,22 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3589/2026": {
       "s": "barra",
       "p": [
         "estado"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3592/2024": {
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3592/2026": {
       "s": "barra",
@@ -5193,7 +5539,8 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3603/2026": {
       "s": "avanca",
@@ -5222,19 +5569,22 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3628/2025": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 363/2026": {
       "s": "barra",
       "p": [
         "armas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3630/2025": {
       "s": "avanca",
@@ -5263,13 +5613,15 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3636/2023": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3636/2026": {
       "s": "avanca",
@@ -5284,7 +5636,8 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3643/2026": {
       "s": "avanca",
@@ -5305,19 +5658,22 @@
       "s": "barra",
       "p": [
         "soberania"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3660/2024": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3674/2025": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3680/2026": {
       "s": "avanca",
@@ -5331,37 +5687,43 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3684/2023": {
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3684/2025": {
       "s": "barra",
       "p": [
         "drogas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3684/2026": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3685/2026": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3689/2025": {
       "s": "barra",
       "p": [
         "estado"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3693/2025": {
       "s": "avanca",
@@ -5390,7 +5752,8 @@
       "s": "barra",
       "p": [
         "soberania"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3711/2026": {
       "s": "avanca",
@@ -5411,13 +5774,15 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3725/2026": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3728/2025": {
       "s": "avanca",
@@ -5431,55 +5796,64 @@
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3740/2024": {
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3747/2023": {
       "s": "barra",
       "p": [
         "educacao"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3748/2023": {
       "s": "barra",
       "p": [
         "educacao"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3749/2023": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 375/2026": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3754/2025": {
       "s": "barra",
       "p": [
         "privilegios"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3755/2025": {
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3756/2023": {
       "s": "barra",
       "p": [
         "educacao"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3764/2026": {
       "s": "avanca",
@@ -5507,7 +5881,8 @@
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3776/2024": {
       "s": "barra",
@@ -5542,26 +5917,30 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3785/2024": {
       "s": "barra",
       "p": [
         "ambiente",
         "povos"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3789/2024": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 379/2026": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3797/2023": {
       "s": ""
@@ -5577,19 +5956,22 @@
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 380/2023": {
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3800/2025": {
       "s": "barra",
       "p": [
         "povos"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3806/2024": {
       "s": "avanca",
@@ -5612,7 +5994,8 @@
       "s": "barra",
       "p": [
         "instituicoes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3831/2025": {
       "s": "barra",
@@ -5625,31 +6008,36 @@
       "s": "barra",
       "p": [
         "religiao"
-      ]
+      ],
+      "lote": 1
     },
     "PL 385/2023": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 385/2026": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3867/2025": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3868/2023": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3874/2025": {
       "s": "avanca",
@@ -5662,13 +6050,15 @@
       "s": "barra",
       "p": [
         "povos"
-      ]
+      ],
+      "lote": 1
     },
     "PL 388/2026": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3882/2026": {
       "s": "avanca",
@@ -5689,7 +6079,8 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3899/2023": {
       "s": "avanca",
@@ -5702,19 +6093,22 @@
       "s": "barra",
       "p": [
         "povos"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3904/2023": {
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3908/2023": {
       "s": "barra",
       "p": [
         "privilegios"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3920/2025": {
       "s": "avanca",
@@ -5729,13 +6123,15 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3944/2023": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3950/2024": {
       "s": "barra",
@@ -5756,7 +6152,8 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 397/2026": {
       "s": "avanca",
@@ -5770,61 +6167,71 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3974/2024": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3977/2024": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3983/2024": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 3990/2025": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4002/2023": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4005/2024": {
       "s": "barra",
       "p": [
         "povos"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4006/2024": {
       "s": "barra",
       "p": [
         "povos"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4007/2024": {
       "s": "barra",
       "p": [
         "povos"
-      ]
+      ],
+      "lote": 1
     },
     "PL 404/2026": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4048/2026": {
       "s": "avanca",
@@ -5860,7 +6267,8 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4103/2025": {
       "s": "avanca",
@@ -5880,7 +6288,8 @@
       "s": "barra",
       "p": [
         "soberania"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4133/2023": {
       "s": ""
@@ -5889,19 +6298,22 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4156/2025": {
       "s": "barra",
       "p": [
         "movimentos"
-      ]
+      ],
+      "lote": 1
     },
     "PL 416/2024": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4164/2024": {
       "s": "avanca",
@@ -5914,31 +6326,36 @@
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4177/2025": {
       "s": "barra",
       "p": [
         "privilegios"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4180/2023": {
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4184/2025": {
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 419/2024": {
       "s": "barra",
       "p": [
         "estado"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4195/2026": {
       "s": "avanca",
@@ -5969,31 +6386,36 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4218/2025": {
       "s": "barra",
       "p": [
         "soberania"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4219/2023": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4226/2023": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4229/2023": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4245/2026": {
       "s": "avanca",
@@ -6006,13 +6428,15 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4252/2023": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4253/2025": {
       "s": "avanca",
@@ -6067,19 +6491,22 @@
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 428/2024": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4294/2024": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4296/2023": {
       "s": ""
@@ -6102,13 +6529,15 @@
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4332/2024": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4333/2025": {
       "s": "avanca",
@@ -6129,38 +6558,44 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4367/2023": {
       "s": "barra",
       "p": [
         "estado"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4368/2025": {
       "s": "barra",
       "p": [
         "igualdade",
         "educacao"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4386/2024": {
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4388/2025": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4392/2025": {
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4393/2024": {
       "s": "avanca",
@@ -6174,7 +6609,8 @@
       "s": "barra",
       "p": [
         "povos"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4405/2025": {
       "s": "barra",
@@ -6210,7 +6646,8 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4453/2025": {
       "s": "avanca",
@@ -6225,7 +6662,8 @@
       "s": "barra",
       "p": [
         "povos"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4459/2025": {
       "s": "avanca",
@@ -6270,7 +6708,8 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 451/2026": {
       "s": "avanca",
@@ -6284,13 +6723,15 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4523/2024": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4536/2024": {
       "s": "avanca",
@@ -6305,7 +6746,8 @@
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4559/2025": {
       "s": "avanca",
@@ -6326,7 +6768,8 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4569/2024": {
       "s": ""
@@ -6335,7 +6778,8 @@
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4597/2025": {
       "s": "avanca",
@@ -6358,14 +6802,16 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4621/2025": {
       "s": "barra",
       "p": [
         "soberania",
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4629/2025": {
       "s": "avanca",
@@ -6379,13 +6825,15 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4637/2023": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4637/2025": {
       "s": "avanca",
@@ -6415,7 +6863,8 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 465/2026": {
       "s": "barra",
@@ -6444,7 +6893,8 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4663/2026": {
       "s": "avanca",
@@ -6470,19 +6920,22 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4683/2025": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4684/2025": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4686/2024": {
       "s": "barra",
@@ -6555,7 +7008,8 @@
       "p": [
         "povos",
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4734/2025": {
       "s": "avanca",
@@ -6569,13 +7023,15 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4761/2026": {
       "s": "barra",
       "p": [
         "privilegios"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4768/2025": {
       "s": "avanca",
@@ -6648,7 +7104,8 @@
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4796/2026": {
       "s": "avanca",
@@ -6694,7 +7151,8 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4810/2024": {
       "s": "avanca",
@@ -6707,7 +7165,8 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4828/2026": {
       "s": "avanca",
@@ -6738,7 +7197,8 @@
       "s": "barra",
       "p": [
         "privilegios"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4842/2025": {
       "s": "barra",
@@ -6751,7 +7211,8 @@
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4850/2025": {
       "s": "avanca",
@@ -6795,7 +7256,8 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4883/2026": {
       "s": "avanca",
@@ -6817,7 +7279,8 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4900/2025": {
       "s": "avanca",
@@ -6831,7 +7294,8 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4902/2026": {
       "s": "avanca",
@@ -6870,7 +7334,8 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 492/2026": {
       "s": "avanca",
@@ -6892,7 +7357,8 @@
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4938/2025": {
       "s": "avanca",
@@ -6913,13 +7379,15 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 496/2023": {
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4960/2023": {
       "s": "avanca",
@@ -6948,7 +7416,8 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4985/2026": {
       "s": "avanca",
@@ -6962,7 +7431,8 @@
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 4988/2026": {
       "s": "avanca",
@@ -6977,7 +7447,8 @@
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5011/2023": {
       "s": "avanca",
@@ -7008,7 +7479,8 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 502/2026": {
       "s": "barra",
@@ -7022,7 +7494,8 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5028/2023": {
       "s": "avanca",
@@ -7054,13 +7527,15 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5034/2023": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5045/2026": {
       "s": "avanca",
@@ -7099,25 +7574,29 @@
       "s": "barra",
       "p": [
         "educacao"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5068/2025": {
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 507/2024": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 507/2025": {
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5074/2026": {
       "s": "avanca",
@@ -7145,7 +7624,8 @@
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 509/2025": {
       "s": "avanca",
@@ -7174,19 +7654,22 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5103/2025": {
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5104/2023": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5107/2026": {
       "s": "avanca",
@@ -7287,7 +7770,8 @@
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5184/2025": {
       "s": "avanca",
@@ -7327,7 +7811,8 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5203/2026": {
       "s": "avanca",
@@ -7356,43 +7841,50 @@
       "s": "barra",
       "p": [
         "privilegios"
-      ]
+      ],
+      "lote": 1
     },
     "PL 522/2023": {
       "s": "barra",
       "p": [
         "povos"
-      ]
+      ],
+      "lote": 1
     },
     "PL 522/2024": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5226/2023": {
       "s": "barra",
       "p": [
         "povos"
-      ]
+      ],
+      "lote": 1
     },
     "PL 523/2024": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5235/2023": {
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5235/2026": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5247/2025": {
       "s": "avanca",
@@ -7412,7 +7904,8 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5255/2023": {
       "s": "barra",
@@ -7426,7 +7919,8 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5260/2026": {
       "s": "avanca",
@@ -7480,31 +7974,36 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5281/2025": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5282/2025": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5286/2025": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5295/2023": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5297/2026": {
       "s": "avanca",
@@ -7532,7 +8031,8 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5303/2026": {
       "s": "barra",
@@ -7546,13 +8046,15 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5316/2023": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5318/2026": {
       "s": "avanca",
@@ -7565,43 +8067,50 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5321/2023": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5324/2025": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 533/2026": {
       "s": "barra",
       "p": [
         "estado"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5330/2026": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 534/2026": {
       "s": "barra",
       "p": [
         "soberania"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5343/2023": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5350/2025": {
       "s": "avanca",
@@ -7623,7 +8132,8 @@
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5375/2026": {
       "s": "avanca",
@@ -7660,31 +8170,36 @@
       "s": "barra",
       "p": [
         "povos"
-      ]
+      ],
+      "lote": 1
     },
     "PL 541/2026": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5416/2025": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 542/2026": {
       "s": "barra",
       "p": [
         "soberania"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5420/2023": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5424/2023": {
       "s": "avanca",
@@ -7706,7 +8221,8 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5438/2026": {
       "s": "avanca",
@@ -7720,7 +8236,8 @@
       "p": [
         "plataformas",
         "privilegios"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5442/2026": {
       "s": "barra",
@@ -7751,7 +8268,8 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5476/2025": {
       "s": "avanca",
@@ -7765,7 +8283,8 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5487/2025": {
       "s": "avanca",
@@ -7786,7 +8305,8 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5494/2026": {
       "s": "avanca",
@@ -7800,7 +8320,8 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5502/2023": {
       "s": "avanca",
@@ -7816,7 +8337,8 @@
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5508/2025": {
       "s": "avanca",
@@ -7831,7 +8353,8 @@
       "p": [
         "trabalho",
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5516/2025": {
       "s": "barra",
@@ -7852,7 +8375,8 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5545/2026": {
       "s": "avanca",
@@ -7908,7 +8432,8 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5573/2026": {
       "s": "avanca",
@@ -7939,7 +8464,8 @@
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5580/2025": {
       "s": "avanca",
@@ -7966,43 +8492,50 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5589/2023": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5590/2023": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5591/2023": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5592/2023": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 56/2024": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 560/2023": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5606/2026": {
       "s": "avanca",
@@ -8015,7 +8548,8 @@
       "s": "barra",
       "p": [
         "estado"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5612/2026": {
       "s": "avanca",
@@ -8055,7 +8589,8 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5641/2025": {
       "s": "avanca",
@@ -8108,13 +8643,15 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 568/2023": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5681/2026": {
       "s": "avanca",
@@ -8128,7 +8665,8 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5689/2025": {
       "s": "avanca",
@@ -8142,13 +8680,15 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 569/2026": {
       "s": "barra",
       "p": [
         "privilegios"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5699/2023": {
       "s": "avanca",
@@ -8162,13 +8702,15 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5703/2025": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5708/2026": {
       "s": "barra",
@@ -8200,7 +8742,8 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5745/2026": {
       "s": "barra",
@@ -8222,25 +8765,29 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5768/2025": {
       "s": "barra",
       "p": [
         "religiao"
-      ]
+      ],
+      "lote": 1
     },
     "PL 577/2024": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5776/2025": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5777/2026": {
       "s": "barra",
@@ -8253,32 +8800,37 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5797/2026": {
       "s": "barra",
       "p": [
         "movimentos"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5798/2026": {
       "s": "barra",
       "p": [
         "trabalho",
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 58/2025": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 58/2026": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5800/2026": {
       "s": "avanca",
@@ -8300,25 +8852,29 @@
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5811/2023": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5812/2023": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5817/2025": {
       "s": "barra",
       "p": [
         "drogas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5818/2023": {
       "s": "barra",
@@ -8386,13 +8942,15 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 585/2024": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5850/2025": {
       "s": "avanca",
@@ -8409,13 +8967,15 @@
       "s": "barra",
       "p": [
         "privilegios"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5862/2026": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5864/2025": {
       "s": "avanca",
@@ -8429,7 +8989,8 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5866/2026": {
       "s": ""
@@ -8445,19 +9006,22 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5869/2025": {
       "s": "barra",
       "p": [
         "estado"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5871/2025": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 588/2024": {
       "s": "avanca",
@@ -8508,7 +9072,8 @@
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 589/2026": {
       "s": "avanca",
@@ -8539,43 +9104,50 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5929/2023": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5936/2023": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 594/2023": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5943/2025": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5948/2025": {
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 595/2023": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5950/2025": {
       "s": "avanca",
@@ -8590,25 +9162,29 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5968/2025": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 598/2023": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 5989/2025": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 6/2023": {
       "s": "barra",
@@ -8621,7 +9197,8 @@
       "s": "barra",
       "p": [
         "armas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 6010/2025": {
       "s": "barra",
@@ -8641,7 +9218,8 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 6016/2025": {
       "s": "avanca",
@@ -8678,19 +9256,22 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 6041/2023": {
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 6043/2025": {
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 6044/2023": {
       "s": "avanca",
@@ -8703,13 +9284,15 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 6063/2023": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 6071/2025": {
       "s": "avanca",
@@ -8722,7 +9305,8 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 6076/2025": {
       "s": "avanca",
@@ -8743,13 +9327,15 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 6176/2025": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 6212/2025": {
       "s": "avanca",
@@ -8779,13 +9365,15 @@
       "s": "barra",
       "p": [
         "drogas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 623/2026": {
       "s": "barra",
       "p": [
         "povos"
-      ]
+      ],
+      "lote": 1
     },
     "PL 6239/2025": {
       "s": "avanca",
@@ -8806,13 +9394,15 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 627/2026": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 6273/2025": {
       "s": "avanca",
@@ -8834,7 +9424,8 @@
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 6311/2025": {
       "s": "avanca",
@@ -8855,7 +9446,8 @@
       "s": "barra",
       "p": [
         "soberania"
-      ]
+      ],
+      "lote": 1
     },
     "PL 6358/2025": {
       "s": "avanca",
@@ -8868,7 +9460,8 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 6366/2025": {
       "s": "avanca",
@@ -8888,7 +9481,8 @@
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 6390/2025": {
       "s": "avanca",
@@ -8909,7 +9503,8 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 64/2025": {
       "s": "",
@@ -8919,13 +9514,15 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 6419/2025": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 6426/2025": {
       "s": "barra",
@@ -8991,20 +9588,23 @@
       "p": [
         "igualdade",
         "educacao"
-      ]
+      ],
+      "lote": 1
     },
     "PL 6540/2025": {
       "s": "barra",
       "p": [
         "instituicoes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 6541/2025": {
       "s": "barra",
       "p": [
         "povos",
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 6549/2025": {
       "s": "avanca",
@@ -9035,31 +9635,36 @@
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 6615/2025": {
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 6616/2025": {
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PL 6618/2025": {
       "s": "barra",
       "p": [
         "privilegios"
-      ]
+      ],
+      "lote": 1
     },
     "PL 662/2024": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 6638/2025": {
       "s": "avanca",
@@ -9072,7 +9677,8 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 6670/2025": {
       "s": "avanca",
@@ -9131,13 +9737,15 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 705/2024": {
       "s": "barra",
       "p": [
         "soberania"
-      ]
+      ],
+      "lote": 1
     },
     "PL 714/2025": {
       "s": "avanca",
@@ -9151,7 +9759,8 @@
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 7207/2025": {
       "s": "avanca",
@@ -9165,7 +9774,8 @@
       "s": "barra",
       "p": [
         "soberania"
-      ]
+      ],
+      "lote": 1
     },
     "PL 730/2025": {
       "s": "avanca",
@@ -9179,7 +9789,8 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 732/2026": {
       "s": ""
@@ -9221,7 +9832,8 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 769/2025": {
       "s": "avanca",
@@ -9235,13 +9847,15 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 777/2025": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 778/2025": {
       "s": "avanca",
@@ -9263,13 +9877,15 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 789/2026": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 790/2025": {
       "s": "barra",
@@ -9283,13 +9899,15 @@
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 807/2026": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 816/2026": {
       "s": "avanca",
@@ -9303,19 +9921,22 @@
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 821/2026": {
       "s": "barra",
       "p": [
         "estado"
-      ]
+      ],
+      "lote": 1
     },
     "PL 823/2026": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 824/2026": {
       "s": "avanca",
@@ -9337,7 +9958,8 @@
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 835/2025": {
       "s": "avanca",
@@ -9351,7 +9973,8 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 849/2025": {
       "s": "avanca",
@@ -9364,7 +9987,8 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 854/2025": {
       "s": "avanca",
@@ -9377,7 +10001,8 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 86/2026": {
       "s": "avanca",
@@ -9393,7 +10018,8 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 872/2026": {
       "s": "avanca",
@@ -9416,25 +10042,29 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 893/2024": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 900/2023": {
       "s": "barra",
       "p": [
         "privilegios"
-      ]
+      ],
+      "lote": 1
     },
     "PL 904/2026": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PL 911/2023": {
       "s": "avanca",
@@ -9449,25 +10079,29 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 914/2023": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 924/2024": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 93/2026": {
       "s": "barra",
       "p": [
         "instituicoes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 936/2023": {
       "s": "barra",
@@ -9480,13 +10114,15 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 945/2023": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 951/2023": {
       "s": "avanca",
@@ -9516,7 +10152,8 @@
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PL 960/2026": {
       "s": "avanca",
@@ -9530,19 +10167,22 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PL 984/2026": {
       "s": "barra",
       "p": [
         "punitivismo"
-      ]
+      ],
+      "lote": 1
     },
     "PL 99/2026": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PL 991/2024": {
       "s": "avanca",
@@ -9563,13 +10203,15 @@
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PLP 109/2026": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PLP 120/2025": {
       "s": "avanca",
@@ -9582,7 +10224,8 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PLP 13/2023": {
       "s": "avanca",
@@ -9612,43 +10255,50 @@
       "s": "barra",
       "p": [
         "estado"
-      ]
+      ],
+      "lote": 1
     },
     "PLP 153/2025": {
       "s": "barra",
       "p": [
         "soberania"
-      ]
+      ],
+      "lote": 1
     },
     "PLP 153/2026": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PLP 156/2023": {
       "s": "barra",
       "p": [
         "igualdade"
-      ]
+      ],
+      "lote": 1
     },
     "PLP 156/2026": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PLP 157/2025": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PLP 163/2026": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PLP 171/2023": {
       "s": "avanca",
@@ -9661,7 +10311,8 @@
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PLP 182/2023": {
       "s": ""
@@ -9678,19 +10329,22 @@
       "s": "barra",
       "p": [
         "instituicoes"
-      ]
+      ],
+      "lote": 1
     },
     "PLP 188/2024": {
       "s": "barra",
       "p": [
         "instituicoes"
-      ]
+      ],
+      "lote": 1
     },
     "PLP 189/2026": {
       "s": "barra",
       "p": [
         "soberania"
-      ]
+      ],
+      "lote": 1
     },
     "PLP 191/2023": {
       "s": "avanca",
@@ -9728,7 +10382,8 @@
       "s": "barra",
       "p": [
         "privilegios"
-      ]
+      ],
+      "lote": 1
     },
     "PLP 21/2026": {
       "s": "avanca",
@@ -9766,7 +10421,8 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PLP 231/2025": {
       "s": "avanca",
@@ -9780,19 +10436,22 @@
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PLP 240/2025": {
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PLP 242/2025": {
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PLP 245/2026": {
       "s": "avanca",
@@ -9828,7 +10487,8 @@
       "s": "barra",
       "p": [
         "estado"
-      ]
+      ],
+      "lote": 1
     },
     "PLP 258/2026": {
       "s": "barra",
@@ -9865,7 +10525,8 @@
       "s": "barra",
       "p": [
         "estado"
-      ]
+      ],
+      "lote": 1
     },
     "PLP 279/2025": {
       "s": "barra",
@@ -9879,7 +10540,8 @@
       "s": "barra",
       "p": [
         "instituicoes"
-      ]
+      ],
+      "lote": 1
     },
     "PLP 28/2026": {
       "s": "avanca",
@@ -9903,7 +10565,8 @@
       "s": "barra",
       "p": [
         "soberania"
-      ]
+      ],
+      "lote": 1
     },
     "PLP 296/2026": {
       "s": "avanca",
@@ -9918,7 +10581,8 @@
       "s": "barra",
       "p": [
         "privilegios"
-      ]
+      ],
+      "lote": 1
     },
     "PLP 299/2026": {
       "s": "barra",
@@ -9931,19 +10595,22 @@
       "s": "barra",
       "p": [
         "privilegios"
-      ]
+      ],
+      "lote": 1
     },
     "PLP 308/2026": {
       "s": "barra",
       "p": [
         "plataformas"
-      ]
+      ],
+      "lote": 1
     },
     "PLP 309/2026": {
       "s": "barra",
       "p": [
         "costumes"
-      ]
+      ],
+      "lote": 1
     },
     "PLP 33/2024": {
       "s": "avanca",
@@ -9982,7 +10649,8 @@
       "s": "barra",
       "p": [
         "privilegios"
-      ]
+      ],
+      "lote": 1
     },
     "PLP 56/2026": {
       "s": "avanca",
@@ -9995,7 +10663,8 @@
       "s": "barra",
       "p": [
         "trabalho"
-      ]
+      ],
+      "lote": 1
     },
     "PLP 66/2026": {
       "s": "avanca",
@@ -10029,7 +10698,8 @@
       "s": "barra",
       "p": [
         "instituicoes"
-      ]
+      ],
+      "lote": 1
     },
     "PLP 8/2024": {
       "s": "avanca",
@@ -10042,13 +10712,15 @@
       "s": "barra",
       "p": [
         "ambiente"
-      ]
+      ],
+      "lote": 1
     },
     "PLP 9/2025": {
       "s": "barra",
       "p": [
         "armas"
-      ]
+      ],
+      "lote": 1
     }
   }
 }

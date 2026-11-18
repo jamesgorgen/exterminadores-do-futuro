@@ -463,6 +463,7 @@ function selosClass(x){
   const grau = x.s === 'barra' ? '<span class="selo s-contra">Contra a pauta da direita</span>'
     : x.g === 'extrema' ? '<span class="selo s-ext">Extrema-direita</span>' : '<span class="selo s-dir">Direita</span>';
   const origem = x.eq ? '<span class="selo s-ver" title="Classificação conferida pela equipe do observatório">Conferido pela equipe</span>'
+    : x.lt ? '<span class="selo s-ia" title="Classificação automática por inteligência artificial, a partir da ementa, confirmada pela equipe em bloco">Classificado por IA</span>'
     : '<span class="selo s-ia" title="Classificação automática por inteligência artificial, a partir da ementa">IA</span>';
   return origem + grau + pautas;
 }

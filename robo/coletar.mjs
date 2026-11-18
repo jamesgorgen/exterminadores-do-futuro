@@ -1040,11 +1040,12 @@ export async function executar() {
     const pp = Array.isArray(c.p) ? c.p : ppIa;
     return `${g === 'extrema' ? 'extrema-direita' : 'direita'}${pp.length ? ', pautas ' + pp.join(', ') : ''}`;
   };
-  const linhasEx = Object.entries(correcoes).filter(([k, c]) => c && typeof c === 'object' && ementaDe.get(k))
+  // As confirmações em bloco (lote: 1) não foram lidas uma a uma pela equipe e ficam fora dos exemplos e da contagem.
+  const linhasEx = Object.entries(correcoes).filter(([k, c]) => c && typeof c === 'object' && !c.lote && ementaDe.get(k))
     .map(([k, c]) => `- ${k}. ${String(ementaDe.get(k)).slice(0, 260)} => ${descreveCorrecao(k, c)}`);
   const exemplos = linhasEx.slice(-300).join('\n');
   await classificarPendentes(paraClassificar);
-  await graduarPendentes(paraClassificar, exemplos, Object.keys(correcoes).length, linhasEx.slice(-700).join('\n'), correcoes);
+  await graduarPendentes(paraClassificar, exemplos, Object.values(correcoes).filter(c => !(c && c.lote)).length, linhasEx.slice(-700).join('\n'), correcoes);
 
   const classificado = k => {
     const ia = classificacoes.c[k] || {};
@@ -1059,7 +1060,8 @@ export async function executar() {
       if (!x.s) { x.p = []; x.g = ''; if (c.m === undefined) x.m = ''; }
       else if (x.s === 'barra') x.g = '';
       else if (!x.g) x.g = 'direita';
-      x.eq = 1; contar('correcoes_aplicadas');
+      if (c.lote) { x.lt = 1; contar('confirmacoes_em_bloco'); }   // vale, mas com o selo de classificação por IA
+      else { x.eq = 1; contar('correcoes_aplicadas'); }
     }
     return x;
   };
