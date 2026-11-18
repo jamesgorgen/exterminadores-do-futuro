@@ -1,0 +1,87 @@
+0 min salvo parlamentares.json 0 MB
+6 min salvo mcom_amostras.json 0 MB
+7 min 2026-11 Empresas0.zip
+7 min 2026-11 Empresas1.zip
+8 min 2026-11 Empresas2.zip
+8 min 2026-11 Empresas3.zip
+8 min 2026-11 Empresas4.zip
+8 min 2026-11 Empresas5.zip
+8 min 2026-11 Empresas6.zip
+9 min 2026-11 Empresas7.zip
+9 min 2026-11 Empresas8.zip
+9 min 2026-11 Empresas9.zip
+9 min 2026-11 Municipios.zip
+11 min 2026-11 Estabelecimentos0.zip
+12 min 2026-11 Estabelecimentos1.zip
+12 min 2026-11 Estabelecimentos2.zip
+13 min 2026-11 Estabelecimentos3.zip
+13 min 2026-11 Estabelecimentos4.zip
+13 min 2026-11 Estabelecimentos5.zip
+14 min 2026-11 Estabelecimentos6.zip
+14 min 2026-11 Estabelecimentos7.zip
+15 min 2026-11 Estabelecimentos8.zip
+15 min 2026-11 Estabelecimentos9.zip
+16 min 2026-11 Empresas0.zip
+16 min 2026-11 Empresas1.zip
+16 min 2026-11 Empresas2.zip
+16 min 2026-11 Empresas3.zip
+16 min 2026-11 Empresas4.zip
+16 min 2026-11 Empresas5.zip
+16 min 2026-11 Empresas6.zip
+16 min 2026-11 Empresas7.zip
+17 min 2026-11 Empresas8.zip
+17 min 2026-11 Empresas9.zip
+17 min 2026-11 Socios0.zip
+17 min 2026-11 Socios1.zip
+17 min 2026-11 Socios2.zip
+17 min 2026-11 Socios3.zip
+17 min 2026-11 Socios4.zip
+18 min 2026-11 Socios5.zip
+18 min 2026-11 Socios6.zip
+18 min 2026-11 Socios7.zip
+18 min 2026-11 Socios8.zip
+18 min 2026-11 Socios9.zip
+18 min salvo universo.json 157 MB
+18 min salvo qsa.json 35 MB
+18 min 2026-11 Socios0.zip
+18 min 2026-11 Socios1.zip
+18 min 2026-11 Socios2.zip
+19 min 2026-11 Socios3.zip
+19 min 2026-11 Socios4.zip
+19 min 2026-11 Socios5.zip
+19 min 2026-11 Socios6.zip
+19 min 2026-11 Socios7.zip
+19 min 2026-11 Socios8.zip
+19 min 2026-11 Socios9.zip
+19 min 2026-11 Socios0.zip
+19 min 2026-11 Socios1.zip
+19 min 2026-11 Socios2.zip
+19 min 2026-11 Socios3.zip
+19 min 2026-11 Socios4.zip
+19 min 2026-11 Socios5.zip
+20 min 2026-11 Socios6.zip
+20 min 2026-11 Socios7.zip
+20 min 2026-11 Socios8.zip
+20 min 2026-11 Socios9.zip
+20 min salvo universo.json 157 MB
+20 min salvo qsa.json 36 MB
+20 min salvo doparl_pj.json 0 MB
+20 min salvo representacao.json 0 MB
+20 min salvo cosocios.json 0 MB
+69 min salvo contatos_compartilhados.json 1 MB
+70 min salvo ceap_midia.json 23 MB
+70 min salvo campanha_despesas_midia.json 3 MB
+70 min salvo campanha_doacoes_socios_midia.json 0 MB
+92 min salvo gabinetes_camara.json 1 MB
+92 min salvo gabinetes_x_midia.json 0 MB
+92 min 2023-05 Socios0.zip
+92 min 2023-05 Socios1.zip
+92 min 2023-05 Socios2.zip
+92 min 2023-05 Socios3.zip
+93 min 2023-05 Socios4.zip
+93 min 2023-05 Socios5.zip
+93 min 2023-05 Socios6.zip
+93 min 2023-05 Socios7.zip
+93 min 2023-05 Socios8.zip
+93 min 2023-05 Socios9.zip
+93 min salvo saidas.json 0 MB
