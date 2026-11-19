@@ -1,6 +1,6 @@
 {
   "_leia": "Regras do enquadramento dos parlamentares nas bancadas temáticas. O robô robo/bancadas.py lê este arquivo, calcula os sinais e grava dados/bancadas.json; a equipe confere as dúvidas em revisao-bancadas.html, que grava em bancadas-correcoes.json. Os textos de busca (termos, frentes, ocupação, urna, bens, favorecidos) são expressões regulares aplicadas ao texto em maiúsculas e sem acentos. cnae lista prefixos da atividade principal das empresas. pautas são as de pautas.js: votos e projetos classificados nelas contam como atuação alinhada (com termos_pauta, só quando a ementa também tiver um dos termos). Ao salvar este arquivo no GitHub, o robô roda de novo. Bancadas com \"publicar\": true aparecem no site (bancadas.html), só com núcleo e aliados conferidos e evidências públicas do próprio parlamentar. sinais_ignorados: tipos de sinal da Receita/TSE que não valem para a bancada (por exemplo, CNPJ de banco citado nos bens é conta ou aplicação, não interesse no setor). capital_minimo_familiares: capital social mínimo das empresas do setor no cruzamento de familiares e terceiros (robo/analises/bancadas_familiares.py), para não incluir microempresas.",
-  "versao": "2026-11-18d",
+  "versao": "2026-11-19",
   "pesos": {
     "empresa": 3,
     "empresa_max": 6,
@@ -434,6 +434,87 @@
         "MINAS E ENERGIA"
       ],
       "capital_minimo_familiares": 200000
+    },
+    {
+      "id": "madeira_garimpo",
+      "nome": "Madeireiros e garimpeiros",
+      "descricao": "Extração de madeira e garimpo, e a atuação contra a proteção ambiental que os favorece: desmatamento, licenciamento, fiscalização, unidades de conservação e terras indígenas.",
+      "cnae": [
+        "0220",
+        "1610",
+        "1621",
+        "4671",
+        "0724",
+        "0893"
+      ],
+      "bens": [
+        "GARIMP",
+        "\\bDRAGA",
+        "BALSA (DE )?GARIMP",
+        "LAVRA GARIMPEIRA",
+        "\\bPLG\\b",
+        "SERRARIA",
+        "MADEIREIRA",
+        "MADEIRA EM TORA",
+        "PLANO DE MANEJO"
+      ],
+      "ocupacao": [
+        "GARIMPEIRO",
+        "MADEIREIRO"
+      ],
+      "urna": [
+        "^GARIMPEIRO\\b"
+      ],
+      "pautas": [
+        "ambiente",
+        "povos"
+      ],
+      "termos_pauta": [
+        "ambiente",
+        "povos"
+      ],
+      "termos": [
+        "GARIMP",
+        "LAVRA GARIMPEIRA",
+        "PERMISSAO DE LAVRA",
+        "\\bOURO\\b",
+        "MERCURIO",
+        "MADEIR",
+        "MANEJO FLORESTAL",
+        "EXPLORACAO FLORESTAL",
+        "DESMATAMENTO",
+        "SUPRESSAO DE VEGETACAO",
+        "FLORESTAS? PUBLICAS?",
+        "UNIDADES? DE CONSERVACAO",
+        "\\bEMBARGO",
+        "\\bIBAMA\\b",
+        "\\bICMBIO\\b",
+        "INFRACO(ES|AO) AMBIENTA",
+        "CRIMES AMBIENTAIS",
+        "AMAZONIA LEGAL",
+        "CODIGO FLORESTAL",
+        "TERRAS? INDIGENA",
+        "LICENCIAMENTO AMBIENTAL"
+      ],
+      "frentes": [
+        "GARIMP",
+        "MADEIR",
+        "SETOR FLORESTAL",
+        "BASE FLORESTAL",
+        "FLORESTAS PLANTADAS",
+        "MINERACAO"
+      ],
+      "comissoes": [
+        "MEIO AMBIENTE",
+        "AMAZONIA"
+      ],
+      "emendas_temas": [],
+      "favorecidos": [
+        "GARIMP",
+        "MADEIR",
+        "COOPERATIVA (DE |DOS )?(GARIMPEIROS|MINERADORES)"
+      ],
+      "capital_minimo_familiares": 100000
     },
     {
       "id": "financeiro",
