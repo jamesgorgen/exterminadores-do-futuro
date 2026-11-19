@@ -518,11 +518,11 @@ def id_materia(casa, cod):
     if m:
         try:
             if casa == 'C':
-                r = requests.get('https://dadosabertos.camara.leg.br/api/v2/proposicoes', params={'siglaTipo': m.group(1), 'numero': m.group(2), 'ano': m.group(3)}, headers={**UA, 'accept': 'application/json'}, timeout=30)
+                r = requests.get('https://dadosabertos.camara.leg.br/api/v2/proposicoes', params={'siglaTipo': m.group(1), 'numero': m.group(2), 'ano': m.group(3)}, headers={**UA, 'accept': 'application/json'}, timeout=12)
                 d = r.json().get('dados') or []
                 if d: i = d[0]['id']
             else:
-                r = requests.get('https://legis.senado.leg.br/dadosabertos/processo', params={'sigla': m.group(1), 'numero': m.group(2), 'ano': m.group(3)}, headers={**UA, 'accept': 'application/json'}, timeout=30)
+                r = requests.get('https://legis.senado.leg.br/dadosabertos/processo', params={'sigla': m.group(1), 'numero': m.group(2), 'ano': m.group(3)}, headers={**UA, 'accept': 'application/json'}, timeout=12)
                 d = r.json() if r.ok else []
                 for x in (d if isinstance(d, list) else [d]):
                     if isinstance(x, dict) and x.get('codigoMateria'): i = x['codigoMateria']; break
@@ -544,6 +544,15 @@ def links_votacao(v):
         if i: out.append({'c': c, 'u': url_materia(ca, i)})
         if len(out) >= 4: break
     return out
+
+# resolve em paralelo os códigos que não estão nos arquivos de proposições (antes era um por um e atrasava a execução)
+from concurrent.futures import ThreadPoolExecutor
+_pend = {(v['k'], c.upper()) for b in BAN for v in CAND[b['id']] for c in ([v['mat']] + citadas(v.get('desc')) + citadas(v.get('me')))
+         if c and c.split(' ')[0].upper() in TIPOS_CHAVE}
+_pend = {x for x in _pend if x not in IDMAT}
+_pend |= {('S' if k == 'C' else 'C', c) for k, c in _pend}
+with ThreadPoolExecutor(12) as ex: list(ex.map(lambda x: id_materia(*x), sorted(_pend - set(IDMAT))))
+log('matérias consultadas nas APIs:', len(_pend))
 
 cands = {}
 for b in BAN:
