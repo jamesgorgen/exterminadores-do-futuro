@@ -482,11 +482,66 @@ for k, bs in S.items():
         cont_cat[(bid, cat, triar)] += 1
     if reg: saida[k] = {'n': p.get('n'), 'c': p.get('c'), 's': p.get('s') or p.get('p'), 'uf': p.get('uf'), 'g': p.get('cl'), 'b': reg}
 
+# links para as matérias das votações candidatas: a matéria votada e os projetos citados na ementa ou na descrição
+SIGLAS = [('PROJETO DE LEI COMPLEMENTAR', 'PLP'), ('PROJETO DE LEI DE CONVERSAO', 'PLV'), ('PROJETO DE LEI DO CONGRESSO', 'PLN'),
+          ('PROJETO DE DECRETO LEGISLATIVO', 'PDL'), ('PROJETO DE RESOLUCAO', 'PRC'), ('PROPOSTA DE EMENDA A CONSTITUICAO', 'PEC'),
+          ('PROPOSTA DE EMENDA CONSTITUCIONAL', 'PEC'), ('MEDIDA PROVISORIA', 'MPV'), ('PROJETO DE LEI', 'PL')]
+RX_EXT = re.compile(r'(' + '|'.join(re.escape(a) for a, _ in SIGLAS) + r')\s*(?:N[O°º.]*\s*)?(\d[\d.]*)\s*(?:/|,?\s*DE\s+)(\d{4})')
+RX_SIG = re.compile(r'\b(PLP|PLV|PLN|PDL|PRC|PEC|MPV|PL|REQ|RCP|PLS|PLC|PDS)\s*(?:N[O°º.]*\s*)?(\d[\d.]*)\s*/\s*(\d{4})')
+def citadas(txt):
+    t = unicodedata.normalize('NFD', str(txt or '')).encode('ascii', 'ignore').decode().upper(); achou = []
+    for m in RX_EXT.finditer(t): achou.append((m.start(), f"{dict(SIGLAS)[m.group(1)]} {int(m.group(2).replace('.', ''))}/{m.group(3)}"))
+    for m in RX_SIG.finditer(t): achou.append((m.start(), f"{m.group(1)} {int(m.group(2).replace('.', ''))}/{m.group(3)}"))
+    return [c for _, c in sorted(achou)]
+IDMAT = {}
+for f in glob.glob(P('dados', 'proposicoes-*.json')):
+    for it in lj(f, {}).get('itens', []):
+        if it.get('c') and it.get('i'): IDMAT.setdefault(((it.get('k') or ['C'])[0], it['c'].upper()), it['i'])
+CACHE_MAT = {}
+def id_materia(casa, cod):
+    ch = (casa, cod.upper())
+    if ch in IDMAT: return IDMAT[ch]
+    if ch in CACHE_MAT: return CACHE_MAT[ch]
+    m = re.match(r'(\S+) (\d+)/(\d{4})$', cod); i = None
+    if m:
+        try:
+            if casa == 'C':
+                r = requests.get('https://dadosabertos.camara.leg.br/api/v2/proposicoes', params={'siglaTipo': m.group(1), 'numero': m.group(2), 'ano': m.group(3)}, headers={**UA, 'accept': 'application/json'}, timeout=30)
+                d = r.json().get('dados') or []
+                if d: i = d[0]['id']
+            else:
+                r = requests.get('https://legis.senado.leg.br/dadosabertos/processo', params={'sigla': m.group(1), 'numero': m.group(2), 'ano': m.group(3)}, headers={**UA, 'accept': 'application/json'}, timeout=30)
+                d = r.json() if r.ok else []
+                for x in (d if isinstance(d, list) else [d]):
+                    if isinstance(x, dict) and x.get('codigoMateria'): i = x['codigoMateria']; break
+        except Exception as e: print('matéria', casa, cod, e)
+    CACHE_MAT[ch] = i
+    return i
+def url_materia(casa, i):
+    return (f'https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao={i}' if casa == 'C'
+            else f'https://www25.senado.leg.br/web/atividade/materias/-/materia/{i}')
+def links_votacao(v):
+    casa, out, vist = v['k'], [], set()
+    cods = ([v['mat']] if v.get('mat') else []) + citadas(v.get('me')) + citadas(v.get('desc'))
+    for c in cods:
+        c = c.upper()
+        if c in vist: continue
+        vist.add(c)
+        i = id_materia(casa, c); ca = casa
+        if not i and c.split()[0] not in ('REQ', 'RCP'):
+            ca = 'S' if casa == 'C' else 'C'; i = id_materia(ca, c)
+        if not i and casa == 'C' and c == (v.get('mat') or '').upper() and re.match(r'C:\d+-', v['id']):
+            ca, i = 'C', v['id'][2:].split('-')[0]
+        if i: out.append({'c': c, 'u': url_materia(ca, i)})
+        if len(out) >= 4: break
+    return sorted(out, key=lambda x: x['c'].split()[0] in ('REQ', 'RCP'))   # o projeto antes do requerimento
+
 cands = {}
 for b in BAN:
     vs = sorted(CAND[b['id']], key=lambda v: v.get('d') or '', reverse=True)
-    cands[b['id']] = [{'id': v['id'], 'd': v.get('d'), 'k': v['k'], 'mat': v.get('mat'), 'me': (v.get('me') or '')[:220], 'desc': (v.get('desc') or '')[:220],
-                       'bd': v.get('bd'), 'p': classe(v.get('ck') or '').get('p') or [], 's': classe(v.get('ck') or '').get('s') or ''} for v in vs[:60]]
+    cands[b['id']] = [{'id': v['id'], 'd': v.get('d'), 'k': v['k'], 'mat': v.get('mat'), 'me': (v.get('me') or '')[:400], 'desc': (v.get('desc') or '')[:220],
+                       'bd': v.get('bd'), 'p': classe(v.get('ck') or '').get('p') or [], 's': classe(v.get('ck') or '').get('s') or '', 'l': links_votacao(v)} for v in vs[:60]]
+print('links de matérias:', len(CACHE_MAT), 'consultas às APIs,', sum(1 for i in CACHE_MAT.values() if i), 'encontradas')
 
 out = {'gerado': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()), 'versao_regras': REG.get('versao'),
        'bancadas': [{k: b[k] for k in ('id', 'nome', 'descricao')} for b in BAN],

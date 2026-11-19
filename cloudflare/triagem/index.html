@@ -90,6 +90,8 @@ textarea{width:100%;border:1px solid var(--line);border-radius:6px;padding:8px 1
 .abas button{border:1px solid var(--line);background:var(--sheet);border-radius:6px 6px 0 0;padding:8px 14px;font-weight:700;cursor:pointer}
 .abas button[aria-selected=true]{background:var(--ink);color:var(--sheet);border-color:var(--ink)}
 .desc{font-size:14px;color:var(--ink-2);margin:10px 0 0}
+.links-mat { margin: .4rem 0 .6rem; font-size: .9rem; }
+.links-mat a { font-weight: 600; }
 </style>
 </head>
 <body>
@@ -231,10 +233,11 @@ function desenharVotacoes() {
   $('#listaV').innerHTML = vs.map(v => {
     const atual = votoChave(b, v.id) || '';
     const bt = (val, rot) => `<button type="button" class="${val || 'nao'}" data-v="${val}" aria-pressed="${atual === val}">${rot}</button>`;
-    const url = v.k === 'C' ? `https://www.camara.leg.br/busca-portal/proposicoes/pesquisa-simplificada?q=${encodeURIComponent(v.mat || '')}` : `https://www25.senado.leg.br/web/atividade/materias`;
+    const links = (v.l || []).filter(x => /^https:\/\/(www\.camara\.leg\.br|www25\.senado\.leg\.br)\//.test(x.u))
+      .map(x => `<a href="${esc(x.u)}" target="_blank" rel="noopener">${esc(x.c)}${/^(REQ|RCP)\b/.test(x.c) ? ' (requerimento)' : ''} ↗</a>`).join(' · ');
     return `<div class="cartao ${atual ? 'aliado' : ''}" data-vid="${esc(v.id)}">
       <div class="topo"><span class="num">${esc(v.mat || v.id)}</span><span class="meta">${CASA[v.k] || ''}, ${esc((v.d || '').split('-').reverse().join('/'))}${v.p && v.p.length ? ', pautas ' + esc(v.p.join(', ')) : ''} · voto da direita: ${v.bd === 'S' ? 'Sim' : v.bd === 'N' ? 'Não' : '—'}</span>${v.id in (pend.votacoes[b] || {}) ? '<span class="lado"><span class="selo s-pend">Não salva</span></span>' : ''}</div>
-      <p class="pontos">${esc(v.desc)}</p><p class="meta">${esc(v.me)}</p>
+      <p class="pontos">${esc(v.desc)}</p><p class="meta">${esc(v.me)}</p>${links ? `<p class="links-mat"><span class="rot">Abrir a matéria:</span> ${links}</p>` : ''}
       <div class="linha"><span class="rot">Votação-chave</span><div class="seg">${bt('S', 'Sim favorece a pauta')}${bt('N', 'Não favorece a pauta')}${bt('', 'Não é chave')}</div></div>
     </div>`;
   }).join('') || '<p class="carregando">Nenhuma votação candidata.</p>';
