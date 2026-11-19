@@ -335,13 +335,35 @@ def votos_de(vt):
 cont = collections.defaultdict(lambda: [0.0, 0.0])
 cont_chave = collections.defaultdict(lambda: [0, 0])
 CAND = collections.defaultdict(list)
+SIGLAS = [('PROJETO DE LEI COMPLEMENTAR', 'PLP'), ('PROJETO DE LEI DE CONVERSAO', 'PLV'), ('PROJETO DE LEI DO CONGRESSO', 'PLN'),
+          ('PROJETO DE DECRETO LEGISLATIVO', 'PDL'), ('PROJETO DE RESOLUCAO', 'PRC'), ('PROPOSTA DE EMENDA A CONSTITUICAO', 'PEC'),
+          ('PROPOSTA DE EMENDA CONSTITUCIONAL', 'PEC'), ('MEDIDA PROVISORIA', 'MPV'), ('PROJETO DE LEI', 'PL')]
+RX_EXT = re.compile(r'(' + '|'.join(re.escape(a) for a, _ in SIGLAS) + r')\s*(?:N[O°º.]*\s*)?(\d[\d.]*)\s*(?:/|,?\s*DE\s+)(\d{4})')
+RX_SIG = re.compile(r'\b(PLP|PLV|PLN|PDL|PRC|PEC|MPV|PL|REQ|RCP|PLS|PLC|PDS)\s*(?:N[O°º.]*\s*)?(\d[\d.]*)\s*/\s*(\d{4})')
+def citadas(txt):
+    t = unicodedata.normalize('NFD', str(txt or '')).encode('ascii', 'ignore').decode().upper(); achou = []
+    for m in RX_EXT.finditer(t): achou.append((m.start(), f"{dict(SIGLAS)[m.group(1)]} {int(m.group(2).replace('.', ''))}/{m.group(3)}"))
+    for m in RX_SIG.finditer(t): achou.append((m.start(), f"{m.group(1)} {int(m.group(2).replace('.', ''))}/{m.group(3)}"))
+    return [c for _, c in sorted(achou)]
+TIPOS_CHAVE = {'PEC', 'PDL', 'PL', 'PLP'}   # votações-chave: só projetos e propostas de emenda, nunca requerimentos
+RX_PROCED = re.compile(r'REQUERIMENTO|PREFERENCIA|RETIRADA DE (MATERIA DA )?PAUTA|ADIAMENTO|URGENCIA|ENCERRAMENTO DA DISCUSSAO|VOTACAO POR PARTES|QUEBRA DE INTERSTICIO|RECURSO')
+def projeto_de(vt):
+    """Código do projeto (PEC, PDL, PL ou PLP) cujo texto foi votado, ou None para votações de procedimento.
+    Na Câmara, o objeto registrado costuma ser o requerimento de urgência, então a descrição do resultado vem primeiro."""
+    if RX_PROCED.search(norm(vt.get('desc'))): return None
+    for c in citadas(vt.get('desc')) + ([vt['mat']] if vt.get('mat') else []) + citadas(vt.get('me')):
+        sig = c.split(' ')[0].upper()
+        if sig in TIPOS_CHAVE: return c.upper()
+        if sig not in ('REQ', 'RCP', 'RQS'): return None   # medida provisória, emenda, parecer: fora
+    return None
 for vt in VOTS:
     x = classe(vt.get('ck') or ''); texto = norm(f"{vt.get('desc')} {vt.get('me')}")
+    projeto = projeto_de(vt)
     for b in BAN:
-        chave = CHAVE.get(b['id'], {}).get(vt['id'])
+        chave = CHAVE.get(b['id'], {}).get(vt['id']) if projeto else None
         doban = da_bancada(b, x.get('p') or [], texto) and x.get('s') in ('avanca', 'barra') and vt.get('bd') in ('S', 'N')
         if doban or casa(b['_termos'], texto):
-            if vt.get('pl') and vt.get('disp'): CAND[b['id']].append(vt)
+            if vt.get('pl') and vt.get('disp') and projeto: CAND[b['id']].append({**vt, 'mat': projeto})
         if not (doban or chave): continue
         pro = chave or vt['bd']; peso = PES['votacao_chave_peso'] if chave else 1
         for k, v in votos_de(vt):
@@ -483,16 +505,6 @@ for k, bs in S.items():
     if reg: saida[k] = {'n': p.get('n'), 'c': p.get('c'), 's': p.get('s') or p.get('p'), 'uf': p.get('uf'), 'g': p.get('cl'), 'b': reg}
 
 # links para as matérias das votações candidatas: a matéria votada e os projetos citados na ementa ou na descrição
-SIGLAS = [('PROJETO DE LEI COMPLEMENTAR', 'PLP'), ('PROJETO DE LEI DE CONVERSAO', 'PLV'), ('PROJETO DE LEI DO CONGRESSO', 'PLN'),
-          ('PROJETO DE DECRETO LEGISLATIVO', 'PDL'), ('PROJETO DE RESOLUCAO', 'PRC'), ('PROPOSTA DE EMENDA A CONSTITUICAO', 'PEC'),
-          ('PROPOSTA DE EMENDA CONSTITUCIONAL', 'PEC'), ('MEDIDA PROVISORIA', 'MPV'), ('PROJETO DE LEI', 'PL')]
-RX_EXT = re.compile(r'(' + '|'.join(re.escape(a) for a, _ in SIGLAS) + r')\s*(?:N[O°º.]*\s*)?(\d[\d.]*)\s*(?:/|,?\s*DE\s+)(\d{4})')
-RX_SIG = re.compile(r'\b(PLP|PLV|PLN|PDL|PRC|PEC|MPV|PL|REQ|RCP|PLS|PLC|PDS)\s*(?:N[O°º.]*\s*)?(\d[\d.]*)\s*/\s*(\d{4})')
-def citadas(txt):
-    t = unicodedata.normalize('NFD', str(txt or '')).encode('ascii', 'ignore').decode().upper(); achou = []
-    for m in RX_EXT.finditer(t): achou.append((m.start(), f"{dict(SIGLAS)[m.group(1)]} {int(m.group(2).replace('.', ''))}/{m.group(3)}"))
-    for m in RX_SIG.finditer(t): achou.append((m.start(), f"{m.group(1)} {int(m.group(2).replace('.', ''))}/{m.group(3)}"))
-    return [c for _, c in sorted(achou)]
 IDMAT = {}
 for f in glob.glob(P('dados', 'proposicoes-*.json')):
     for it in lj(f, {}).get('itens', []):
@@ -522,19 +534,16 @@ def url_materia(casa, i):
             else f'https://www25.senado.leg.br/web/atividade/materias/-/materia/{i}')
 def links_votacao(v):
     casa, out, vist = v['k'], [], set()
-    cods = ([v['mat']] if v.get('mat') else []) + citadas(v.get('me')) + citadas(v.get('desc'))
+    cods = ([v['mat']] if v.get('mat') else []) + citadas(v.get('desc')) + citadas(v.get('me'))
     for c in cods:
         c = c.upper()
-        if c in vist: continue
+        if c in vist or c.split(' ')[0] not in TIPOS_CHAVE: continue
         vist.add(c)
         i = id_materia(casa, c); ca = casa
-        if not i and c.split()[0] not in ('REQ', 'RCP'):
-            ca = 'S' if casa == 'C' else 'C'; i = id_materia(ca, c)
-        if not i and casa == 'C' and c == (v.get('mat') or '').upper() and re.match(r'C:\d+-', v['id']):
-            ca, i = 'C', v['id'][2:].split('-')[0]
+        if not i: ca = 'S' if casa == 'C' else 'C'; i = id_materia(ca, c)
         if i: out.append({'c': c, 'u': url_materia(ca, i)})
         if len(out) >= 4: break
-    return sorted(out, key=lambda x: x['c'].split()[0] in ('REQ', 'RCP'))   # o projeto antes do requerimento
+    return out
 
 cands = {}
 for b in BAN:

@@ -229,7 +229,7 @@ function desenhar() {
 const votoChave = (b, id) => { const p = (pend.votacoes[b] || {}); return id in p ? p[id] : (salvas.votacoes[b] || {})[id]; };
 function desenharVotacoes() {
   const b = bancada(), vs = (dados.votacoes || {})[b] || [];
-  $('#contagemV').textContent = `${vs.length} votações em plenário, disputadas, ligadas à pauta ou ao tema da bancada (as mais recentes primeiro).`;
+  $('#contagemV').textContent = `${vs.length} votações em plenário de PECs, PDLs, PLs e PLPs, disputadas, ligadas à pauta ou ao tema da bancada (as mais recentes primeiro). Requerimentos não entram.`;
   $('#listaV').innerHTML = vs.map(v => {
     const atual = votoChave(b, v.id) || '';
     const bt = (val, rot) => `<button type="button" class="${val || 'nao'}" data-v="${val}" aria-pressed="${atual === val}">${rot}</button>`;
