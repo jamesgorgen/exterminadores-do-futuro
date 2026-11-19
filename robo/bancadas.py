@@ -387,13 +387,15 @@ SR = {}
 if S3:
     try: SR = json.loads(S3.get_object(Bucket=BUCKET, Key='bancadas/sinais_receita.json')['Body'].read()).get('sinais', {})
     except Exception as e: log('sem sinais da Receita no R2', e)
+BID_ = {b['id']: b for b in BAN}
 fmtv = lambda v: f"R$ {v:,.0f}".replace(',', '.')
 for k, bs in SR.items():
     if k not in EX: continue
     for bid, xs in bs.items():
         if bid not in S[k]: continue
-        vistos = set()
+        vistos = set(); ign = set(BID_[bid].get('sinais_ignorados', []))
         for x in xs:
+            if x['t'] in ign: continue
             u = f"https://casadosdados.com.br/solucao/cnpj?q={x['cnpj']}" if x.get('cnpj') else ''
             if x['t'] in ('empresa_secundaria', 'controlada', 'bem_cnpj'):
                 if x['cnpj'] in vistos: continue
@@ -404,6 +406,7 @@ for k, bs in SR.items():
             elif x['t'] == 'doacoes':
                 v, sh = x['valor'], x.get('parcela') or 0
                 if v < PES['doacao_minima']: continue
+                if not (v >= PES['doacao_media_valor'] or sh >= PES['doacao_media_parcela']) and not PES['doacao_baixa']: continue
                 pts = PES['doacao_alta'] if (v >= PES['doacao_alta_valor'] or sh >= PES['doacao_alta_parcela']) else PES['doacao_media'] if (v >= PES['doacao_media_valor'] or sh >= PES['doacao_media_parcela']) else PES['doacao_baixa']
                 top = '; '.join(f"{d['nome']} ({fmtv(d['valor'])}, sócio de {d['empresa']}, {'/'.join(map(str, d['anos']))})" for d in x['top'][:3])
                 ev(k, bid, 'V', pts, 'Doações de campanha de sócios de empresas do setor',
