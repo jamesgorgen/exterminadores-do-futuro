@@ -927,6 +927,21 @@ function desenharBalanco(){
   if (b.temas && r.temas) desenharTemasBalanco(b, r.temas);
 }
 
+// Texto de cada tema: projetos e aprovados de cada grupo lado a lado, e a soma da direita com a extrema-direita.
+function resumoTema(l, comSit){
+  const G = ['extrema', 'direita', 'centro', 'esquerda'];
+  const aprov = n => n === 0 ? 'nenhum aprovado' : `${fmt(n)} ${n === 1 ? 'aprovado' : 'aprovados'}`;
+  const proj = n => `${fmt(n)} ${n === 1 ? 'projeto' : 'projetos'}`;
+  let txt = `${proj(l.x.n)}${comSit ? `, ${aprov(l.x.ap)} em ao menos uma Casa (${fmtPct(pct(l.x.ap, l.x.n))})` : ''}. `;
+  txt += G.map(g => { const v = l.x.g[g] || [0, 0]; return `${NOME_GRUPO[g]}: ${proj(v[0])} (${fmtPct(l.sh[g])})${comSit ? `, ${aprov(v[1])}` : ''}`; }).join('; ') + '.';
+  const semN = l.x.n - l.nG, semAp = l.x.ap - l.apG;
+  if (semN > 0) txt += ` Sem grupo definido: ${proj(semN)}${comSit ? `, ${aprov(semAp)}` : ''}.`;
+  const nDir = ((l.x.g.extrema || [0])[0]) + ((l.x.g.direita || [0])[0]);
+  txt += ` Direita e extrema-direita somam ${fmtPct(pct(nDir, l.nG))} dos projetos`;
+  txt += comSit && l.apG ? ` e ${fmt(l.apDir)} ${l.apG === 1 ? 'do único aprovado' : `dos ${fmt(l.apG)} aprovados`}.` : '.';
+  return txt;
+}
+
 // Peso de cada grupo em cada tema, agrupados por grande área.
 function desenharTemasBalanco(b, tax){
   const caixa = $('#bal-temas'); if (!caixa) return;
@@ -938,7 +953,8 @@ function desenharTemasBalanco(b, tax){
     const sh = Object.fromEntries(G.map(g => [g, 100 * ((x.g[g] || [0])[0]) / soma]));
     const apG = G.reduce((a, g) => a + ((x.g[g] || [0, 0])[1]), 0);
     const apDir = ((x.g.extrema || [0, 0])[1]) + ((x.g.direita || [0, 0])[1]);
-    return { t, x, sh, apG, apDir };
+    const nG = G.reduce((a, g) => a + ((x.g[g] || [0])[0]), 0);
+    return { t, x, sh, apG, apDir, nG };
   });
   const ord = { ext: (a, c) => c.sh.extrema - a.sh.extrema, blo: (a, c) => (c.sh.extrema + c.sh.direita) - (a.sh.extrema + a.sh.direita),
     esq: (a, c) => c.sh.esquerda - a.sh.esquerda, n: (a, c) => c.x.n - a.x.n, ap: (a, c) => c.x.ap - a.x.ap }[est.bal.ord];
@@ -956,7 +972,7 @@ function desenharTemasBalanco(b, tax){
     ${vis.map(l => `<div class="bal-tema">
       <span class="t">${esc(l.t.n)}<small>${esc((cads[l.t.c] || {}).sub || '')}</small></span>
       <span class="bal-pilha" role="img" aria-label="${G.map(g => `${NOME_GRUPO[g]} ${fmtPct(l.sh[g])}`).join(', ')}">${G.filter(g => l.sh[g] > 0).map(g => `<span style="width:${l.sh[g].toFixed(2)}%;background:${COR_GRUPO[g]}" title="${NOME_GRUPO[g]}: ${fmtPct(l.sh[g])} dos projetos do tema (${fmt((l.x.g[g] || [0])[0])})"></span>`).join('')}</span>
-      <span class="p">${fmt(l.x.n)} projetos. Extrema-direita ${fmtPct(l.sh.extrema)}, direita ${fmtPct(l.sh.direita)}, centro-direita ${fmtPct(l.sh.centro)}, esquerda ${fmtPct(l.sh.esquerda)}.${b.comSit ? ` ${fmt(l.x.ap)} ${l.x.ap === 1 ? 'aprovado' : 'aprovados'}${l.apG ? `, ${fmtPct(pct(l.apDir, l.apG))} deles da direita e da extrema-direita` : ''}.` : ''}</span>
+      <span class="p">${resumoTema(l, !!b.comSit)}</span>
     </div>`).join('')}
     ${linhas.length > 20 ? `<p><button type="button" class="btn" id="bal-todos">${est.bal.todos ? 'Mostrar só os 20 primeiros' : `Mostrar os ${linhas.length} temas`}</button></p>` : ''}`;
   $('#bal-cad').addEventListener('change', e => { est.bal.cad = e.target.value; desenharTemasBalanco(b, tax); });
