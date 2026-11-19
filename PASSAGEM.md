@@ -40,6 +40,8 @@ Esta seção resume a sessão de 30/10 a 17/11. O histórico anterior está no a
 - Para ligar: o James cria o token de Workers e o segredo `CLOUDFLARE_API_TOKEN`, liga o Access no Worker com os e-mails da equipe e informa o nome da equipe do Zero Trust e a AUD, que vão em `cloudflare/triagem/wrangler.toml` (`ACCESS_TEAM`, `ACCESS_AUD`). Sem isso o Worker responde 503.
 - Familiares por enquanto só na mídia (vínculos indiretos do levantamento de mídia). Fase 2: o mesmo cruzamento por setor, e as bases novas: titulares da ANM, lista da Secretaria de Prêmios e Apostas (a MP 1.394/2026 proibiu as apostas de quota fixa), operadoras da ANS, instituições do Banco Central, mantenedoras do e-MEC e doações de campanha de sócios de empresas do setor. Depois, exibir o enquadramento aprovado na ficha do parlamentar.
 
+- Página pública das bancadas retirada do ar em 18/11 a pedido do James até todas estarem operacionais; como recolocar está no LEIA-ME (commit 7597a34).
+
 ## Pendências do James
 - 2FA no GitHub, Cloudflare e Registro.br e revisão dos tokens dos revisores encaminhadas pelo James em 17/11. Ramo `diag-dns` apagado em 17/11 (esta sessão não consegue apagar ramos; o James apaga pelo site).
 
