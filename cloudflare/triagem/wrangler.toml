@@ -15,5 +15,5 @@ bucket_name = "exterminadores-dados"
 # ACCESS_TEAM é o nome da equipe do Zero Trust (o "xxx" de xxx.cloudflareaccess.com); vazio, vale a equipe do token, que /api/eu mostra;
 # ACCESS_AUD é a "Application Audience (AUD) Tag" do aplicativo do Access.
 [vars]
-ACCESS_TEAM = ""
+ACCESS_TEAM = "damp-disk-c734"
 ACCESS_AUD = "ca13754a01e0f1aa306036e895c40a02e18c7939d445f66789511691cc406746"
