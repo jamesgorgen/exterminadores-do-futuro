@@ -1,6 +1,6 @@
 {
   "_leia": "Regras do enquadramento dos parlamentares nas bancadas temáticas. O robô robo/bancadas.py lê este arquivo, calcula os sinais e grava dados/bancadas.json; a equipe confere as dúvidas em revisao-bancadas.html, que grava em bancadas-correcoes.json. Os textos de busca (termos, frentes, ocupação, urna, bens, favorecidos) são expressões regulares aplicadas ao texto em maiúsculas e sem acentos. cnae lista prefixos da atividade principal das empresas. pautas são as de pautas.js: votos e projetos classificados nelas contam como atuação alinhada (com termos_pauta, só quando a ementa também tiver um dos termos). Ao salvar este arquivo no GitHub, o robô roda de novo. Bancadas com \"publicar\": true aparecem no site (bancadas.html), só com núcleo e aliados conferidos e evidências públicas do próprio parlamentar. sinais_ignorados: tipos de sinal da Receita/TSE que não valem para a bancada (por exemplo, CNPJ de banco citado nos bens é conta ou aplicação, não interesse no setor). capital_minimo_familiares: capital social mínimo das empresas do setor no cruzamento de familiares e terceiros (robo/analises/bancadas_familiares.py), para não incluir microempresas.",
-  "versao": "2026-11-19",
+  "versao": "2026-11-19b",
   "pesos": {
     "empresa": 3,
     "empresa_max": 6,
