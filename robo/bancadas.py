@@ -412,6 +412,27 @@ for k, bs in SR.items():
                 ev(k, bid, 'V', pts, 'Doações de campanha de sócios de empresas do setor',
                    f"{fmtv(v)} de {x['n']} doador(es){f', {round(100 * sh)}% das doações de pessoas físicas' if sh else ''}. Maiores: {top}"[:400], '', 1)
 
+# familiares e terceiros nos demais setores (robo/analises/bancadas_familiares.py, no R2): indícios, marcados como privados
+FAM = {}
+if S3:
+    try: FAM = json.loads(S3.get_object(Bucket=BUCKET, Key='bancadas/familiares.json')['Body'].read()).get('vinculos', {})
+    except Exception as e: log('sem familiares no R2', e)
+PTS_FAM = {'forte': 3, 'sobrenome (2+)': 2, 'sobrenome raro': 1}
+nfam = 0
+for k, bs in FAM.items():
+    if k not in EX: continue
+    for bid, xs in bs.items():
+        if bid not in S[k]: continue
+        vist = set()
+        for x in xs:
+            chave = (x['tipo'], x['cnpj'], x['det'][:40])
+            if chave in vist: continue
+            vist.add(chave)
+            ev(k, bid, 'V', PTS_FAM.get(x['forca'], 1), x['tipo'], f"{x['razao']} ({x['uf']}): {x['det']}"[:300],
+               f"https://casadosdados.com.br/solucao/cnpj?q={x['cnpj']}", 1)
+            nfam += 1
+log('familiares e terceiros nos demais setores:', nfam)
+
 # frentes
 for k, fs in FRENTES.items():
     if k not in EX: continue
