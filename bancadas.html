@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="description" content="Quem defende cada setor no Congresso: deputados e senadores em exercício com vínculo econômico ou atuação constante pelas pautas do agronegócio e de outras bancadas.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Os exterminadores do futuro">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://exterminadores.com.br/bancadas.html">
+<meta property="og:title" content="Bancadas | Os exterminadores do futuro">
+<meta property="og:description" content="Quem defende cada setor no Congresso, com as evidências de cada parlamentar.">
+<meta property="og:image" content="https://exterminadores.com.br/compartilhar.jpg?v=3">
+<meta name="twitter:card" content="summary_large_image">
+<title>Bancadas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* Mesma identidade do observatório e da página de emendas. Seções: composição, partidos e estados, parlamentares, método. */
+:root{
+  --night:#123B40; --night-2:#1E4B51; --red:#0B6E73; --paper:#F2F4F1; --sheet:#ffffff; --ink:#1B2523; --ink-2:#4C5A57; --ink-3:#5F6B68;
+  --line:#D5DCD9; --mark:#E3B75B;
+  --g-extrema:#9A3424; --g-direita:#C9822B; --g-centro:#8F8C80; --g-esquerda:#2F7F84; --g-sp:#B5BCB9;
+  --display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --text:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --night:#0E2C30; --night-2:#1A3E43; --red:#6FB3B8; --paper:#141B1A; --sheet:#1C2523; --ink:#EEF2F0; --ink-2:#B6C2BF; --ink-3:#97A3A0; --line:#2C3836;
+    --g-extrema:#F08A74; --g-direita:#E3B75B; --g-centro:#B8B2A3; --g-esquerda:#6FB3B8; --g-sp:#7E8A87; color-scheme:dark; }
+}
+:root[data-theme="dark"]{ --night:#0E2C30; --night-2:#1A3E43; --red:#6FB3B8; --paper:#141B1A; --sheet:#1C2523; --ink:#EEF2F0; --ink-2:#B6C2BF; --ink-3:#97A3A0; --line:#2C3836;
+  --g-extrema:#F08A74; --g-direita:#E3B75B; --g-centro:#B8B2A3; --g-esquerda:#6FB3B8; --g-sp:#7E8A87; color-scheme:dark; }
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 var(--text);-webkit-font-smoothing:antialiased}
+a{color:var(--red)}
+button,input,select{font:inherit;color:inherit}
+select,select option{background-color:var(--sheet);color:var(--ink)}
+:focus-visible{outline:3px solid var(--mark);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(20px, env(safe-area-inset-left, 0px));padding-right:max(20px, env(safe-area-inset-right, 0px))}
+@media (max-width:560px){.wrap{padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}}
+.num{font-variant-numeric:tabular-nums}
+
+.topo{background:var(--night);color:#fff}
+.topo .wrap{padding-block:20px 30px}
+.marca{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:20px;letter-spacing:.02em;color:#fff;text-decoration:none}
+.topo h1{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(40px,7vw,88px);line-height:.9;margin:14px 0 0;text-wrap:balance}
+.topo .lede{font-size:clamp(16px,1.8vw,20px);line-height:1.45;max-width:60ch;margin:16px 0 0;color:#C5D3D0}
+.secoes{background:var(--night-2);color:#fff}
+.secoes .wrap{display:flex;gap:6px 22px;flex-wrap:wrap;padding-block:11px}
+.secoes a{color:#fff;font-weight:700;font-size:15px;text-decoration:none;border-bottom:2px solid transparent}
+.secoes a:hover{border-color:#fff}
+.secoes .wrap{align-items:center}
+.secoes a.inicio{background:#fff;color:var(--night);border-radius:4px;padding:3px 10px;border-bottom:0}
+.secoes a.inicio:hover{background:var(--night);color:#fff}
+.secoes{position:sticky;top:0;z-index:10}
+.topo .voltar{display:inline-flex;align-items:center;gap:6px;color:#fff;font-weight:700;font-size:14px;text-decoration:none;border:1px solid rgba(255,255,255,.45);border-radius:4px;padding:6px 12px;margin-bottom:14px}
+.topo .voltar:hover{background:#fff;color:var(--night)}
+.topo .marca{display:block}
+.rodape{background:var(--night);color:#C5D3D0;font-size:13.5px}
+.rodape .wrap{padding-top:22px;padding-bottom:30px}
+.rodape p{max-width:90ch;margin:0 0 6px}
+.rodape a{color:#fff}
+main section[id]{scroll-margin-top:64px}
+@media (max-width:700px){
+  .secoes .wrap{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  .secoes .wrap::-webkit-scrollbar{display:none}
+  .secoes a{white-space:nowrap;flex:none}
+  .secoes a.inicio{position:sticky;left:0;z-index:1;box-shadow:-16px 0 0 var(--night-2),10px 0 10px -2px var(--night-2)}
+}
+
+section{padding-block:40px 10px}
+h2{font-family:var(--display);font-weight:800;font-size:clamp(32px,4vw,44px);line-height:1;margin:0 0 8px;text-wrap:balance}
+h3{font-family:var(--display);font-weight:800;font-size:26px;line-height:1.05;margin:0}
+.intro{max-width:70ch;color:var(--ink-2);margin:0 0 18px}
+.rot{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3)}
+
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 16px}
+.chip{border:1px solid var(--line);background:var(--sheet);border-radius:999px;padding:5px 13px;font-size:14px;font-weight:600;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--sheet);border-color:var(--ink)}
+
+.grupos{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:0 0 22px}
+@media (max-width:980px){.grupos{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:560px){.grupos{grid-template-columns:1fr}}
+.gt{background:var(--sheet);border:1px solid var(--line);border-top:5px solid var(--cor);border-radius:6px;padding:12px 14px;min-width:0}
+.gt b{display:block;font-size:15px}
+.gt .partidos{font-size:12px;color:var(--ink-3);min-height:18px}
+.gt .grande{font-family:var(--display);font-weight:900;font-size:30px;line-height:1.1;margin-top:6px}
+.gt dl{margin:6px 0 0;display:grid;grid-template-columns:auto auto;justify-content:space-between;gap:2px 10px;font-size:13px;color:var(--ink-2)}
+.gt dd{margin:0;text-align:right;font-weight:600;color:var(--ink)}
+
+.painel{background:var(--sheet);border:1px solid var(--line);border-radius:8px;padding:18px 18px 12px}
+.legenda{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--ink-2);margin:0 0 6px}
+.legenda span{display:inline-flex;align-items:center;gap:6px}
+.legenda i{width:11px;height:11px;border-radius:50%;background:var(--cor);display:inline-block}
+.grafico{overflow-x:auto}
+.grafico svg{display:block;width:100%;min-width:560px}
+.grafico text{fill:var(--ink-2);font:13px var(--text)}
+.grafico .eixo{stroke:var(--line)}
+.nota{font-size:13px;color:var(--ink-3);margin:10px 0 0;max-width:80ch}
+
+.temas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:860px){.temas{grid-template-columns:1fr}}
+.temas > .tema:last-child:nth-child(odd){grid-column:1/-1}
+#temasSaude{grid-template-columns:1fr}
+#temasSaude .barras{max-width:760px}
+.tema{background:var(--sheet);border:1px solid var(--line);border-radius:8px;padding:16px 18px;min-width:0;display:flex;flex-direction:column;gap:10px}
+.tema .cab{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.tema p{margin:0;font-size:14px;color:var(--ink-2)}
+.pauta{font-size:12px;font-weight:700;border-radius:4px;padding:2px 7px;background:var(--paper);color:var(--ink-2);white-space:nowrap}
+.barras{display:grid;grid-template-columns:minmax(0,9.5em) minmax(0,1fr) auto;gap:5px 10px;align-items:center;font-size:13px}
+.barras .b{height:14px;border-radius:3px;background:var(--cor);min-width:2px}
+.barras .v{font-weight:600;text-align:right}
+.barras.b4{grid-template-columns:minmax(0,9.5em) minmax(0,1fr) auto auto}
+.barras .a{text-align:right;color:var(--ink-3)}
+.sub{font-size:13px;color:var(--ink-3)}
+.lista{list-style:none;margin:0;padding:0;display:grid;gap:4px;font-size:14px}
+.lista li{display:flex;justify-content:space-between;gap:10px;min-width:0}
+.lista li span:first-child{min-width:0;overflow-wrap:anywhere}
+.lista li > .num{white-space:nowrap}
+.lista button{border:0;background:none;padding:0;color:var(--red);font-weight:600;cursor:pointer;text-align:left}
+.ex{border-top:1px solid var(--line);padding-top:8px;display:grid;gap:6px}
+.ex div{font-size:13px;color:var(--ink-2)}
+.ex b{color:var(--ink)}
+.divisor{margin:28px 0 12px}
+
+.busca{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 14px}
+.busca input,.busca select{border:1px solid var(--line);border-radius:6px;padding:9px 11px;background:var(--sheet);min-height:42px;max-width:100%}
+.busca input{flex:1 1 280px}
+.duas{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:860px){.duas{grid-template-columns:1fr}}
+.ranking{background:var(--sheet);border:1px solid var(--line);border-radius:8px;max-height:640px;overflow:auto}
+.ranking button{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:center;width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);background:none;padding:9px 12px;cursor:pointer;font-size:14px}
+.ranking button[aria-current="true"]{background:var(--paper)}
+.ranking .pt{width:9px;height:9px;border-radius:50%;background:var(--cor)}
+.ranking small{display:block;color:var(--ink-3);font-size:12px}
+.perfil{background:var(--sheet);border:1px solid var(--line);border-top:6px solid var(--cor);border-radius:8px;padding:18px;min-width:0}
+.perfil .nome{font-family:var(--display);font-weight:800;font-size:clamp(30px,4vw,42px);line-height:1;margin:0}
+.perfil .meta{color:var(--ink-2);margin:6px 0 0;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.selo{font-size:12px;font-weight:700;border-radius:4px;padding:2px 8px;background:var(--cor);color:#fff}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:16px 0}
+@media (max-width:560px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.kpi{border:1px solid var(--line);border-radius:6px;padding:9px 11px}
+.kpi b{display:block;font-family:var(--display);font-size:26px;line-height:1.1}
+.kpi span{font-size:12px;color:var(--ink-3)}
+.blocos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+@media (max-width:700px){.blocos{grid-template-columns:1fr}}
+.blocos > div{min-width:0}
+.blocos h4{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);margin:0 0 8px}
+.temas-p{display:flex;flex-wrap:wrap;gap:6px}
+.temas-p span{font-size:13px;border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+.temas-p span b{font-weight:700}
+.link-obs{display:inline-block;margin-top:16px;font-weight:700}
+.mapa-area{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:20px;align-items:start}
+.mapa-caixa{position:relative;min-width:0}
+.mapa-mun{background:var(--sheet);border:1px solid var(--line);border-radius:8px;padding:8px;min-height:300px}
+.mapa-mun svg{display:block;width:100%;height:auto}
+.mapa-mun path.m{cursor:pointer}
+.mapa-mun path.m:hover{stroke:var(--ink);stroke-width:1.2}
+.mapa-mun path.sel{stroke:var(--ink);stroke-width:2}
+.mapa-mun path.bordas{fill:none;stroke:#fff;stroke-opacity:.9;stroke-width:1;pointer-events:none}
+.dica-mapa{position:absolute;pointer-events:none;background:var(--ink);color:var(--sheet);font-size:13px;padding:6px 9px;border-radius:5px;max-width:240px;z-index:3}
+.escala .cx{display:flex;flex:1;height:12px;border-radius:3px;overflow:hidden}
+.escala .cx span{flex:1;background:var(--c)}
+@media (max-width:900px){.mapa-area{grid-template-columns:1fr}}
+.mapa{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;max-width:520px}
+.uf{aspect-ratio:1;max-width:100%;border:0;border-radius:6px;background:var(--fundo);color:var(--texto);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;font-weight:700;font-size:15px;line-height:1.1;padding:2px}
+.uf small{font-weight:500;font-size:11px;opacity:.9}
+.uf[aria-pressed="true"]{outline:3px solid var(--ink);outline-offset:2px}
+.escala{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-3);margin-top:10px;max-width:520px}
+.escala i{flex:1;height:10px;border-radius:3px;background:linear-gradient(90deg,color-mix(in srgb,var(--night) 12%,var(--sheet)),var(--night))}
+.estado{background:var(--sheet);border:1px solid var(--line);border-radius:8px;padding:18px;min-width:0}
+.estado .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+.nome-uf{font-family:var(--display);font-weight:800;font-size:clamp(28px,3.6vw,40px);margin:0;line-height:1}
+.seletor-uf{position:relative}
+.lista-uf{position:absolute;z-index:6;top:calc(100% + 6px);left:0;width:min(560px,calc(100vw - 40px));background:var(--sheet);border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.18);padding:8px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px}
+@media (max-width:560px){.lista-uf{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.lista-uf button{border:0;background:none;text-align:left;padding:7px 9px;border-radius:5px;cursor:pointer;font-size:14px}
+.lista-uf button:hover,.lista-uf button:focus-visible{background:var(--paper)}
+.btn-uf{margin-top:14px;border:1px solid var(--line);background:var(--sheet);border-radius:6px;padding:7px 12px;font-weight:700;cursor:pointer}
+.pilha{display:flex;height:22px;border-radius:4px;overflow:hidden;margin:6px 0 4px}
+.pilha span{background:var(--cor);min-width:2px}
+.leg-pilha{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--ink-2)}
+.leg-pilha span{display:inline-flex;align-items:center;gap:5px}
+.leg-pilha i{width:10px;height:10px;border-radius:2px;background:var(--cor)}
+.metodo{padding-block:30px 60px}
+.metodo ul{max-width:85ch;color:var(--ink-2);font-size:14px;padding-left:20px}
+.metodo li{margin:6px 0}
+.carregando{padding:30px 0;color:var(--ink-2)}
+@media (prefers-reduced-motion: no-preference){.barras .b{transition:width .3s ease}}
+
+.cat-nucleo{--cor:var(--night)} .cat-aliado{--cor:var(--g-centro)}
+.selo.nucleo{background:var(--night)} .selo.aliado{background:var(--paper);color:var(--ink);border:1px solid var(--line)}
+.selo.regra{background:transparent;color:var(--ink-3);border:1px solid var(--line);font-weight:600}
+.cartoes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:860px){.cartoes{grid-template-columns:1fr}}
+.cartao{background:var(--sheet);border:1px solid var(--line);border-left:5px solid var(--cor);border-radius:8px;padding:14px 16px;min-width:0}
+.cartao .nome{font-family:var(--display);font-weight:800;font-size:24px;line-height:1.05;margin:0}
+.cartao .nome a{color:var(--ink);text-decoration:none} .cartao .nome a:hover{text-decoration:underline}
+.cartao .meta{font-size:13.5px;color:var(--ink-2);margin:4px 0 8px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.evs{list-style:none;margin:0;padding:0;font-size:13.5px;color:var(--ink-2);display:grid;gap:5px}
+.evs li{border-top:1px dashed var(--line);padding-top:5px;overflow-wrap:anywhere}
+.evs b{color:var(--ink);font-weight:600}
+.evs .d{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);margin-right:6px}
+.mais-ev{border:0;background:none;color:var(--red);font-weight:600;padding:4px 0 0;cursor:pointer;font-size:13.5px}
+.preparo{font-size:14px;color:var(--ink-3);margin:6px 0 0}
+.andamento{background:var(--sheet);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px;color:var(--ink-2);margin:0 0 18px;max-width:80ch}
+.gt .partidos,.gt .grande{display:block}
+.desc-b{font-size:16px;color:var(--ink-2);max-width:75ch;margin:0 0 16px}
+</style>
+</head>
+<body>
+<header class="topo"><div class="wrap">
+  <a class="voltar" href="./"><span aria-hidden="true">←</span> Voltar à página inicial</a>
+  <a class="marca" href="./"><img src="imagens/simbolo.svg" alt="" width="28" height="28" style="vertical-align:-7px;margin-right:8px;border-radius:6px">Os exterminadores do futuro</a>
+  <h1>Bancadas</h1>
+  <p class="lede">Quem defende cada setor no Congresso. Deputados e senadores em exercício que têm interesse econômico no setor e atuam por ele, ou que atuam por ele de forma constante mesmo sem esse interesse.</p>
+</div></header>
+<nav class="secoes" aria-label="Seções"><div class="wrap">
+  <a class="inicio" href="./"><span aria-hidden="true">←</span> Início</a><a href="#composicao">Composição</a><a href="#partidos">Partidos e estados</a><a href="#parlamentares">Parlamentares</a><a href="#metodo">Como foi feito</a>
+</div></nav>
+
+<main>
+<section id="composicao"><div class="wrap">
+  <div class="chips" id="chips" role="group" aria-label="Bancada"></div>
+  <p class="preparo" id="preparo"></p>
+  <h2 id="titulo">Composição</h2>
+  <p class="desc-b" id="desc"></p>
+  <div class="andamento" id="andamento" hidden></div>
+  <div class="kpis" id="kpis"></div>
+  <h3 style="margin:22px 0 10px">Por grupo político</h3>
+  <div class="grupos" id="grupos"></div>
+</div></section>
+
+<section id="partidos"><div class="wrap">
+  <h2>Partidos e estados</h2>
+  <p class="intro">Quantos parlamentares de cada partido e de cada estado estão na bancada. A barra escura é o núcleo; a clara, os aliados.</p>
+  <div class="blocos">
+    <div class="painel"><h4 class="rot" style="margin:0 0 10px">Por partido</h4><div class="barras" id="porPartido"></div></div>
+    <div class="painel"><h4 class="rot" style="margin:0 0 10px">Por estado</h4><div class="barras" id="porUf"></div></div>
+  </div>
+</div></section>
+
+<section id="parlamentares"><div class="wrap">
+  <h2>Parlamentares</h2>
+  <p class="intro">Cada ficha traz as evidências que levaram ao enquadramento. O nome leva ao perfil completo do parlamentar no observatório.</p>
+  <div class="busca">
+    <input type="search" id="busca" placeholder="Buscar por nome, partido ou estado" aria-label="Buscar parlamentar">
+    <select id="fCat" aria-label="Situação"><option value="">Núcleo e aliados</option><option value="nucleo">Só o núcleo</option><option value="aliado">Só os aliados</option></select>
+    <select id="fCasa" aria-label="Casa"><option value="">Câmara e Senado</option><option value="C">Câmara</option><option value="S">Senado</option></select>
+    <select id="fGrupo" aria-label="Grupo político"><option value="">Todos os grupos</option><option value="extrema">Extrema-direita</option><option value="direita">Direita</option><option value="centro">Centro</option><option value="esquerda">Esquerda</option></select>
+  </div>
+  <p class="sub" id="contagem"></p>
+  <div class="cartoes" id="lista"><p class="carregando">Carregando…</p></div>
+</div></section>
+
+<section id="metodo" class="metodo"><div class="wrap">
+  <h2>Como foi feito</h2>
+  <ul>
+    <li><b>Duas dimensões.</b> Para cada parlamentar em exercício e cada bancada, o observatório soma sinais de <b>vínculo</b> com o setor (empresas do próprio parlamentar pela atividade principal registrada na Receita Federal, bens declarados ao TSE, ocupação declarada e nome de urna) e de <b>atuação</b> (projetos e votos classificados nas pautas da bancada, projetos e relatorias sobre o tema, frentes parlamentares e emendas a entidades do setor).</li>
+    <li><b>Núcleo</b> é quem tem vínculo e atuação. <b>Aliado</b> é quem atua de forma constante pela pauta sem ter vínculo econômico identificado. Votos, frentes parlamentares e a parcela de emendas por área acompanham a ideologia ou são assinados em massa, e por isso não bastam sozinhos.</li>
+    <li><b>Revisão humana.</b> As regras são aplicadas por um robô, sem inteligência artificial. Os casos claros entram pela regra; os casos de dúvida e as discrepâncias, como quem tem fazenda e não atua pelo setor, são conferidos um a um pela equipe, e a decisão da equipe prevalece. Cada ficha indica se o enquadramento veio da regra ou da equipe. Casos ainda não conferidos ficam de fora até a conferência.</li>
+    <li><b>Só fatos do próprio parlamentar.</b> As evidências mostradas são públicas e dizem respeito ao próprio parlamentar. Bens são os declarados ao TSE na última candidatura; empresas são as do quadro de sócios da Receita Federal.</li>
+    <li><b>Limites.</b> Participações por meio de terceiros, holdings ou parentes não entram nesta página. Estar numa bancada não indica irregularidade: indica de onde vêm os interesses e a atuação de cada parlamentar.</li>
+  </ul>
+</div></section>
+</main>
+
+<footer class="rodape"><div class="wrap">
+  <p>Dados da Câmara dos Deputados, do Senado Federal, do TSE e da Receita Federal. As regras do enquadramento estão em <a href="https://github.com/jamesgorgen/exterminadores-do-futuro/blob/main/bancadas-regras.json">bancadas-regras.json</a>, no GitHub do projeto.</p>
+  <p><b>Contato.</b> Sugestões, correções e pedidos de imprensa podem ser enviados para <a href="mailto:contato@exterminadores.com.br">contato@exterminadores.com.br</a>.</p>
+  <p><a href="./">← Voltar à página inicial</a></p>
+</div></footer>
+
+<script>
+'use strict';
+const $ = s => document.querySelector(s);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const norm = s => String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+const fmt = n => n.toLocaleString('pt-BR');
+const GRUPOS = [['extrema', 'Extrema-direita'], ['direita', 'Direita'], ['centro', 'Centro'], ['esquerda', 'Esquerda']];
+const CASA = { C: 'Câmara', S: 'Senado' };
+const CAT = { nucleo: 'Núcleo', aliado: 'Aliado' };
+const DIM = { V: 'Vínculo', A: 'Atuação' };
+let D = null, sel = null; const abertos = new Set();
+
+function membros() { return Object.entries(D.p).filter(([k, p]) => p.b[sel]).map(([k, p]) => ({ k, ...p, x: p.b[sel] })); }
+function desenharTopo() {
+  const b = D.bancadas.find(x => x.id === sel), ms = membros();
+  $('#chips').innerHTML = D.bancadas.map(x => `<button class="chip" type="button" data-b="${esc(x.id)}" aria-pressed="${x.id === sel}">${esc(x.nome)}</button>`).join('');
+  $('#preparo').textContent = D.em_preparo && D.em_preparo.length ? 'Em preparação: ' + D.em_preparo.join(', ') + '.' : '';
+  $('#titulo').textContent = 'Bancada ' + (b.nome === 'Agronegócio' ? 'do agronegócio' : b.nome.toLowerCase());
+  $('#desc').textContent = b.descricao;
+  $('#andamento').hidden = !b.pendentes;
+  $('#andamento').textContent = b.pendentes ? `Conferência em andamento: ${fmt(b.pendentes)} casos de dúvida ainda estão sendo examinados pela equipe e não aparecem aqui.` : '';
+  const n = c => ms.filter(m => m.x.cat === c).length, casa = c => ms.filter(m => m.c === c).length;
+  $('#kpis').innerHTML = [[ms.length, 'parlamentares'], [n('nucleo'), 'no núcleo'], [n('aliado'), 'aliados'], [`${casa('C')} | ${casa('S')}`, 'deputados | senadores']]
+    .map(([v, r]) => `<div class="kpi"><b class="num">${typeof v === 'number' ? fmt(v) : v}</b><span>${r}</span></div>`).join('');
+  $('#grupos').style.gridTemplateColumns = 'repeat(auto-fit,minmax(min(100%,200px),1fr))';
+  $('#grupos').innerHTML = GRUPOS.map(([g, nome]) => {
+    const gs = ms.filter(m => m.g === g), pct = ms.length ? Math.round(100 * gs.length / ms.length) : 0;
+    const part = {}; gs.forEach(m => part[m.s] = (part[m.s] || 0) + 1);
+    const top = Object.entries(part).sort((a, z) => z[1] - a[1]).slice(0, 4).map(([s, q]) => `${s} ${q}`).join(', ');
+    return `<div class="gt" style="--cor:var(--g-${g})"><b>${nome}</b><span class="partidos">${esc(top)}</span><span class="grande num">${fmt(gs.length)}</span>
+      <dl><dt>Do total</dt><dd class="num">${pct}%</dd><dt>Núcleo</dt><dd class="num">${gs.filter(m => m.x.cat === 'nucleo').length}</dd><dt>Aliados</dt><dd class="num">${gs.filter(m => m.x.cat === 'aliado').length}</dd></dl></div>`;
+  }).join('');
+  const barras = (alvo, chave) => {
+    const t = {}; ms.forEach(m => { const c = m[chave] || '—'; t[c] = t[c] || { nucleo: 0, aliado: 0 }; t[c][m.x.cat]++; });
+    const l = Object.entries(t).sort((a, z) => (z[1].nucleo + z[1].aliado) - (a[1].nucleo + a[1].aliado) || a[0].localeCompare(z[0]));
+    const max = Math.max(1, ...l.map(([, v]) => v.nucleo + v.aliado));
+    $(alvo).innerHTML = l.map(([c, v]) => `<span>${esc(c)}</span><span style="display:flex;gap:2px"><span class="b cat-nucleo" style="width:${100 * v.nucleo / max}%;${v.nucleo ? '' : 'min-width:0'}" title="Núcleo: ${v.nucleo}"></span><span class="b cat-aliado" style="width:${100 * v.aliado / max}%;${v.aliado ? '' : 'min-width:0'}" title="Aliados: ${v.aliado}"></span></span><span class="v num">${v.nucleo + v.aliado}</span>`).join('');
+  };
+  barras('#porPartido', 's'); barras('#porUf', 'uf');
+}
+function cartao(m) {
+  const ev = m.x.ev || [], ab = abertos.has(m.k), mostra = ab ? ev : ev.slice(0, 4);
+  const url = u => /^https:\/\//.test(u || '') ? u : '';
+  return `<article class="cartao" style="--cor:var(--g-${esc(m.g || 'sp')})">
+    <h3 class="nome"><a href="./?parlamentar=${encodeURIComponent(m.k)}">${esc(m.n)}</a></h3>
+    <p class="meta">${esc(m.s)}/${esc(m.uf)} · ${CASA[m.c] || ''} <span class="selo ${m.x.cat}">${CAT[m.x.cat]}</span>${m.x.por === 'equipe' ? '<span class="selo regra" title="Enquadramento conferido pela equipe">Conferido pela equipe</span>' : '<span class="selo regra" title="Enquadramento pelas regras, sem dúvida a conferir">Pela regra</span>'}</p>
+    <ul class="evs">${mostra.map(e => `<li><span class="d">${DIM[e[0]] || ''}</span><b>${esc(e[1])}:</b> ${url(e[3]) ? `<a href="${esc(url(e[3]))}" target="_blank" rel="noopener">${esc(e[2])}</a>` : esc(e[2])}</li>`).join('')}</ul>
+    ${ev.length > 4 ? `<button class="mais-ev" type="button" data-k="${esc(m.k)}">${ab ? 'Mostrar menos' : `Ver todas as ${ev.length} evidências`}</button>` : ''}
+  </article>`;
+}
+function desenharLista() {
+  const q = norm($('#busca').value), cat = $('#fCat').value, casa = $('#fCasa').value, g = $('#fGrupo').value;
+  const l = membros().filter(m => (!cat || m.x.cat === cat) && (!casa || m.c === casa) && (!g || m.g === g) && (!q || norm(`${m.n} ${m.s} ${m.uf}`).includes(q)))
+    .sort((a, z) => (a.x.cat === z.x.cat ? 0 : a.x.cat === 'nucleo' ? -1 : 1) || a.n.localeCompare(z.n, 'pt'));
+  $('#contagem').textContent = `${fmt(l.length)} ${l.length === 1 ? 'parlamentar' : 'parlamentares'}.`;
+  $('#lista').innerHTML = l.map(cartao).join('') || '<p class="carregando">Nenhum parlamentar com esses filtros.</p>';
+}
+function escolher(b) { sel = b; abertos.clear(); history.replaceState(null, '', '?bancada=' + encodeURIComponent(b)); desenharTopo(); desenharLista(); }
+document.addEventListener('click', e => {
+  const c = e.target.closest('[data-b]'); if (c) escolher(c.dataset.b);
+  const m = e.target.closest('.mais-ev'); if (m) { abertos.has(m.dataset.k) ? abertos.delete(m.dataset.k) : abertos.add(m.dataset.k); desenharLista(); }
+});
+let t; $('#busca').addEventListener('input', () => { clearTimeout(t); t = setTimeout(desenharLista, 200); });
+['#fCat', '#fCasa', '#fGrupo'].forEach(s => $(s).addEventListener('change', desenharLista));
+fetch('dados/bancadas.json', { cache: 'no-cache' }).then(r => r.json()).then(d => {
+  D = d; const q = new URLSearchParams(location.search).get('bancada');
+  escolher(D.bancadas.some(b => b.id === q) ? q : D.bancadas[0].id);
+}).catch(() => { $('#lista').innerHTML = '<p class="carregando">Não foi possível carregar os dados.</p>'; });
+</script>
+</body>
+</html>

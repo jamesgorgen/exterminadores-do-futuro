@@ -396,6 +396,34 @@ else:
     open(os.path.join(RAIZ, '..', 'bancadas-privado.json'), 'wb').write(corpo)
     log('gravado em ../bancadas-privado.json (teste local)')
 log('parlamentares com alguma bancada', len(saida))
+
+# ---------------------------------------------------------------- versão pública (site)
+# Só as bancadas marcadas com "publicar": true nas regras. Entra quem a equipe enquadrou como núcleo ou aliado e,
+# entre os casos que não foram para a triagem, quem a regra enquadrou assim. Casos ainda não conferidos ficam de fora.
+# Só evidências públicas do próprio parlamentar (nada de familiares e terceiros).
+DEC = BC.get('decisoes', {}) or {}
+pub = [b for b in BAN if b.get('publicar')]
+if pub:
+    pp, resumo = {}, {}
+    for b in pub:
+        bid = b['id']; pend = 0; equipe = 0
+        for k, p in saida.items():
+            x = p['b'].get(bid)
+            if not x: continue
+            d = DEC.get(f'{k}|{bid}')
+            if d: final, por = d.get('d'), 'equipe'; equipe += 1
+            elif not x['t']: final, por = x['cat'], 'regra'
+            else: final, por = None, None; pend += 1
+            if final not in ('nucleo', 'aliado'): continue
+            evs = [[e[0], e[2], e[3], e[4]] for e in x['ev'] if not (len(e) > 5 and e[5]) and e[1] and e[0] in ('V', 'A')]
+            evs.sort(key=lambda e: e[0] != 'V')
+            reg = pp.setdefault(k, {kk: p[kk] for kk in ('n', 'c', 's', 'uf', 'g')} | {'b': {}})
+            reg['b'][bid] = {'cat': final, 'por': por, 'ev': evs[:10]}
+        resumo[bid] = {'pendentes': pend, 'conferidos': equipe}
+    publico = {'gerado': out['gerado'], 'bancadas': [{k: b[k] for k in ('id', 'nome', 'descricao')} | resumo[b['id']] for b in pub],
+               'em_preparo': [b['nome'] for b in BAN if not b.get('publicar')], 'p': pp}
+    json.dump(publico, open(P('dados', 'bancadas.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
+    log('versão pública:', ', '.join(b['nome'] for b in pub), '|', len(pp), 'parlamentares')
 for b in BAN:
     l = {c: sum(n for (bb, cc, t), n in cont_cat.items() if bb == b['id'] and cc == c) for c in ('nucleo', 'aliado', 'interesse', 'duvida')}
     tr = sum(n for (bb, cc, t), n in cont_cat.items() if bb == b['id'] and t)
