@@ -108,6 +108,7 @@ textarea{width:100%;border:1px solid var(--line);border-radius:6px;padding:8px 1
   </select>
   <select id="fCat" aria-label="Situação"><option value="">Todas as situações</option><option value="nucleo">Núcleo</option><option value="aliado">Aliado</option><option value="interesse">Interesse sem atuação</option><option value="duvida">Dúvida</option></select>
   <select id="fCasa" aria-label="Casa"><option value="">Câmara e Senado</option><option value="C">Câmara</option><option value="S">Senado</option></select>
+  <select id="fTipo" aria-label="Tipo de evidência"><option value="">Qualquer evidência</option></select>
   <input type="search" id="fBusca" placeholder="Nome, partido ou estado" aria-label="Buscar">
 </div></div>
 
@@ -170,11 +171,12 @@ const bancada = () => $('#fBancada').value;
 const chave = (k, b) => `${k}|${b}`;
 const decisao = (k, b) => { const c = chave(k, b); return c in pend.decisoes ? pend.decisoes[c] : salvas.decisoes[c]; };
 function linhas() {
-  const b = bancada(), lista = $('#fLista').value, cat = $('#fCat').value, casa = $('#fCasa').value, q = norm($('#fBusca').value);
+  const b = bancada(), lista = $('#fLista').value, cat = $('#fCat').value, casa = $('#fCasa').value, q = norm($('#fBusca').value), tipo = $('#fTipo').value;
   return Object.entries(dados.p).filter(([k, p]) => {
     const x = p.b[b]; if (!x) return false;
     if (casa && p.c !== casa) return false;
     if (cat && x.cat !== cat) return false;
+    if (tipo && !x.ev.some(e => e[2] === tipo && (e[1] || e[0] === 'contra'))) return false;
     if (q && !norm(`${p.n} ${p.s} ${p.uf}`).includes(q)) return false;
     const d = salvas.decisoes[chave(k, b)];
     if (lista === 'triar') return x.t && !d;
@@ -207,7 +209,14 @@ function situacao() {
     + `<div class="nota-s">${feitos} já conferidos pela equipe. Dados gerados em ${esc((dados.gerado || '').slice(0, 10).split('-').reverse().join('/'))}.${dados.fontes && !dados.fontes.frentes ? ' Frentes parlamentares não foram lidas nesta execução.' : ''}</div>`;
   const ban = dados.bancadas.find(x => x.id === b); $('#descBancada').textContent = ban ? ban.descricao : '';
 }
+function tipos() {
+  const b = bancada(), cont = {}, atual = $('#fTipo').value;
+  for (const p of Object.values(dados.p)) { const x = p.b[b]; if (!x) continue; new Set(x.ev.filter(e => e[1] || e[0] === 'contra').map(e => e[2])).forEach(t => cont[t] = (cont[t] || 0) + 1); }
+  $('#fTipo').innerHTML = '<option value="">Qualquer evidência</option>' + Object.entries(cont).sort((a, z) => z[1] - a[1]).map(([t, n]) => `<option value="${esc(t)}">${esc(t)} (${n})</option>`).join('');
+  if (atual in cont) $('#fTipo').value = atual;
+}
 function desenhar() {
+  tipos();
   situacao();
   const l = linhas();
   $('#contagem').textContent = `${l.length} ${l.length === 1 ? 'parlamentar' : 'parlamentares'}.`;
@@ -280,7 +289,7 @@ $('#salvar').addEventListener('click', salvar);
 $('#descartar').addEventListener('click', () => { if (!confirm('Descartar todas as alterações não salvas?')) return; pend = { decisoes: {}, votacoes: {} }; guardarPend(); atualizarBarra(); desenhar(); });
 $('#mais').addEventListener('click', () => { limite += 25; desenhar(); });
 $('#fBancada').addEventListener('change', () => { ls.set('bancadas-ultima', bancada()); limite = 25; desenhar(); });
-['#fLista', '#fCat', '#fCasa'].forEach(s => $(s).addEventListener('change', () => { limite = 25; desenhar(); }));
+['#fLista', '#fCat', '#fCasa', '#fTipo'].forEach(s => $(s).addEventListener('change', () => { limite = 25; desenhar(); }));
 let tB; $('#fBusca').addEventListener('input', () => { clearTimeout(tB); tB = setTimeout(() => { limite = 25; desenhar(); }, 250); });
 window.addEventListener('beforeunload', e => { if (nPend()) { e.preventDefault(); e.returnValue = ''; } });
 carregar().catch(e => { $('#lista').innerHTML = `<p class="carregando">Não foi possível carregar os dados (${esc(e.message)}).</p>`; });

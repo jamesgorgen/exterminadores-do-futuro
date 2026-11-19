@@ -1,6 +1,6 @@
 {
   "_leia": "Regras do enquadramento dos parlamentares nas bancadas temáticas. O robô robo/bancadas.py lê este arquivo, calcula os sinais e grava dados/bancadas.json; a equipe confere as dúvidas em revisao-bancadas.html, que grava em bancadas-correcoes.json. Os textos de busca (termos, frentes, ocupação, urna, bens, favorecidos) são expressões regulares aplicadas ao texto em maiúsculas e sem acentos. cnae lista prefixos da atividade principal das empresas. pautas são as de pautas.js: votos e projetos classificados nelas contam como atuação alinhada (com termos_pauta, só quando a ementa também tiver um dos termos). Ao salvar este arquivo no GitHub, o robô roda de novo. Bancadas com \"publicar\": true aparecem no site (bancadas.html), só com núcleo e aliados conferidos e evidências públicas do próprio parlamentar.",
-  "versao": "2026-11-18",
+  "versao": "2026-11-18b",
   "pesos": {
     "empresa": 3,
     "empresa_max": 6,
@@ -26,7 +26,23 @@
     "emenda_tema": 1,
     "emenda_tema_parcela": 0.1,
     "emenda_favorecido": 1,
-    "emenda_max": 2
+    "emenda_max": 2,
+    "comissao_titular": 1,
+    "comissao_presidencia": 2,
+    "comissao_max": 2,
+    "chave_minimo": 3,
+    "chave_alto": 2,
+    "empresa_secundaria": 2,
+    "empresa_controlada": 2,
+    "bem_cnpj": 3,
+    "doacao_alta": 3,
+    "doacao_media": 2,
+    "doacao_baixa": 1,
+    "doacao_alta_valor": 100000,
+    "doacao_alta_parcela": 0.25,
+    "doacao_media_valor": 20000,
+    "doacao_media_parcela": 0.1,
+    "doacao_minima": 2000
   },
   "limites": {
     "vinculo": 3,
@@ -142,7 +158,10 @@
         "COOPERATIVA AGR",
         "AGROPECUARI"
       ],
-      "publicar": true
+      "publicar": true,
+      "comissoes": [
+        "AGRICULTURA"
+      ]
     },
     {
       "id": "religiosa",
@@ -202,7 +221,8 @@
         "CONGREGACAO",
         "MINISTERIO (APOSTOLICO|EVANGELICO|CRISTAO)",
         "COMUNIDADE TERAPEUTICA"
-      ]
+      ],
+      "comissoes": []
     },
     {
       "id": "seguranca",
@@ -290,7 +310,10 @@
       "limites": {
         "especifica_aliado": 4,
         "especifica_aliado_automatico": 6
-      }
+      },
+      "comissoes": [
+        "SEGURANCA PUBLICA"
+      ]
     },
     {
       "id": "midia",
@@ -349,6 +372,9 @@
         "\\bTV\\b",
         "TELEVIS",
         "COMUNICAC"
+      ],
+      "comissoes": [
+        "COMISSAO DE COMUNICACAO"
       ]
     },
     {
@@ -402,6 +428,9 @@
       "favorecidos": [
         "MINERA",
         "GARIMP"
+      ],
+      "comissoes": [
+        "MINAS E ENERGIA"
       ]
     },
     {
@@ -463,7 +492,11 @@
         "BANCO"
       ],
       "emendas_temas": [],
-      "favorecidos": []
+      "favorecidos": [],
+      "comissoes": [
+        "FINANCAS E TRIBUTACAO",
+        "ASSUNTOS ECONOMICOS"
+      ]
     },
     {
       "id": "saude",
@@ -529,6 +562,10 @@
         "SANTA CASA",
         "CLINICA",
         "MATERNIDADE"
+      ],
+      "comissoes": [
+        "COMISSAO DE SAUDE",
+        "ASSUNTOS SOCIAIS"
       ]
     },
     {
@@ -587,6 +624,9 @@
         "UNIVERSIDADE",
         "INSTITUTO DE ENSINO",
         "EDUCACIONAL"
+      ],
+      "comissoes": [
+        "COMISSAO DE EDUCACAO"
       ]
     },
     {
@@ -626,7 +666,8 @@
         "RESORTS INTEGRADOS"
       ],
       "emendas_temas": [],
-      "favorecidos": []
+      "favorecidos": [],
+      "comissoes": []
     },
     {
       "id": "plataformas",
@@ -669,7 +710,11 @@
         "PLATAFORMAS DIGITAIS"
       ],
       "emendas_temas": [],
-      "favorecidos": []
+      "favorecidos": [],
+      "comissoes": [
+        "COMUNICACAO E DIREITO DIGITAL",
+        "CIENCIA TECNOLOGIA E INOVACAO"
+      ]
     }
   ]
 }

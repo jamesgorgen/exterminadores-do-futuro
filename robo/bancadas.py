@@ -33,7 +33,7 @@ REG = lj(P('bancadas-regras.json'))
 PES, LIM = REG['pesos'], REG['limites']
 BAN = REG['bancadas']
 for b in BAN:
-    for campo in ('bens', 'ocupacao', 'urna', 'termos', 'frentes', 'favorecidos'):
+    for campo in ('bens', 'ocupacao', 'urna', 'termos', 'frentes', 'favorecidos', 'comissoes'):
         b['_' + campo] = [re.compile(x) for x in b.get(campo, [])]
 def casa(rx, texto): return next((r.pattern for r in rx if r.search(texto)), None)
 
@@ -164,6 +164,35 @@ def frentes():
     log('frentes de interesse', len(alvo), 'deputados com alguma', len(FRENTES))
 try: frentes()
 except Exception as e: log('frentes indisponíveis', e)
+
+# ---------------------------------------------------------------- comissões (titulares e presidências desde 2023)
+COMISSOES = collections.defaultdict(list)   # parlamentar -> [(nome do órgão, cargo)]
+def comissoes():
+    api = 'https://dadosabertos.camara.leg.br/api/v2'
+    for k in [k for k in EX if k[0] == 'C']:
+        for t in range(3):
+            try:
+                r = requests.get(f'{api}/deputados/{k[1:]}/orgaos', params={'dataInicio': '2023-02-01', 'itens': 100}, headers={**UA, 'accept': 'application/json'}, timeout=60)
+                r.raise_for_status()
+                for o in r.json().get('dados', []):
+                    COMISSOES[k].append((o.get('nomeOrgao') or o.get('nomePublicacao') or '', o.get('titulo') or ''))
+                break
+            except Exception: time.sleep(3)
+        time.sleep(0.1)
+    for k in [k for k in EX if k[0] == 'S']:
+        try:
+            r = requests.get(f'https://legis.senado.leg.br/dadosabertos/senador/{k[1:]}/comissoes.json', headers={**UA, 'accept': 'application/json'}, timeout=60)
+            r.raise_for_status()
+            ms = (((r.json().get('MembroComissaoParlamentar') or {}).get('Parlamentar') or {}).get('MembroComissoes') or {}).get('Comissao') or []
+            for m in (ms if isinstance(ms, list) else [ms]):
+                if (m.get('DataInicio') or '') < '2023-02-01' and (m.get('DataFim') or '9999') < '2023-02-01': continue
+                ic = m.get('IdentificacaoComissao') or {}
+                COMISSOES[k].append((ic.get('NomeComissao') or '', m.get('DescricaoParticipacao') or ''))
+        except Exception: pass
+        time.sleep(0.1)
+    log('comissões lidas para', len(COMISSOES), 'parlamentares')
+try: comissoes()
+except Exception as e: log('comissões indisponíveis', e)
 
 # ---------------------------------------------------------------- sinais
 def nova(): return {'V': 0, 'A': 0, 'E': 0, 'contra': 0, 'ev': []}
@@ -304,6 +333,7 @@ def votos_de(vt):
     for v, ids in (vt.get('v') or {}).items():
         for i in ids: yield vt['k'] + str(i), v
 cont = collections.defaultdict(lambda: [0.0, 0.0])
+cont_chave = collections.defaultdict(lambda: [0, 0])
 CAND = collections.defaultdict(list)
 for vt in VOTS:
     x = classe(vt.get('ck') or ''); texto = norm(f"{vt.get('desc')} {vt.get('me')}")
@@ -318,6 +348,9 @@ for vt in VOTS:
             if k not in EX or v not in ('S', 'N'): continue
             c = cont[(k, b['id'])]; c[1] += peso
             if v == pro: c[0] += peso
+            if chave:
+                cc = cont_chave[(k, b['id'])]; cc[1] += 1
+                if v == pro: cc[0] += 1
 for (k, bid), (a, n) in cont.items():
     if n < PES['votos_minimo']: continue
     sh = a / n
@@ -326,6 +359,55 @@ for (k, bid), (a, n) in cont.items():
     elif sh >= PES['votos_medio_limite']: ev(k, bid, 'A', PES['votos_medio'], 'Votos', txt)
     elif sh <= PES['votos_contra_limite']: ev(k, bid, 'contra', 2, 'Votos', txt)
     else: S[k][bid]['ev'].append(['A', 0, 'Votos', txt, ''])
+
+# votações-chave marcadas pela equipe: atuação específica
+for (k, bid), (a, n) in cont_chave.items():
+    if n < PES['chave_minimo']: continue
+    sh = a / n; txt = f"votou com a pauta em {round(100 * sh)}% de {n} votações-chave"
+    if sh >= PES['votos_alto_limite']: ev(k, bid, 'A', PES['chave_alto'], 'Votações-chave', txt)
+    elif sh <= PES['votos_contra_limite']: ev(k, bid, 'contra', 2, 'Votações-chave', txt)
+    else: S[k][bid]['ev'].append(['A', 0, 'Votações-chave', txt, '', 0])
+
+# comissões temáticas
+for k, cs in COMISSOES.items():
+    if k not in EX: continue
+    for b in BAN:
+        pts, vist = 0, []
+        for nome_o, cargo in cs:
+            if not casa(b['_comissoes'], norm(nome_o)) or nome_o in vist: continue
+            c = norm(cargo)
+            p = PES['comissao_presidencia'] if 'PRESIDENTE' in c else PES['comissao_titular'] if 'TITULAR' in c else 0
+            if not p: continue
+            vist.append(nome_o); pts += p
+        if pts:
+            ev(k, b['id'], 'A', min(PES['comissao_max'], pts), 'Comissões', '; '.join(vist)[:200])
+
+# sinais da Receita e do TSE (robo/analises/bancadas_receita.py, no R2)
+SR = {}
+if S3:
+    try: SR = json.loads(S3.get_object(Bucket=BUCKET, Key='bancadas/sinais_receita.json')['Body'].read()).get('sinais', {})
+    except Exception as e: log('sem sinais da Receita no R2', e)
+fmtv = lambda v: f"R$ {v:,.0f}".replace(',', '.')
+for k, bs in SR.items():
+    if k not in EX: continue
+    for bid, xs in bs.items():
+        if bid not in S[k]: continue
+        vistos = set()
+        for x in xs:
+            u = f"https://casadosdados.com.br/solucao/cnpj?q={x['cnpj']}" if x.get('cnpj') else ''
+            if x['t'] in ('empresa_secundaria', 'controlada', 'bem_cnpj'):
+                if x['cnpj'] in vistos: continue
+                vistos.add(x['cnpj'])
+            if x['t'] == 'empresa_secundaria': ev(k, bid, 'V', PES['empresa_secundaria'], 'Empresa (atividade secundária)', x['razao'], u)
+            elif x['t'] == 'controlada': ev(k, bid, 'V', PES['empresa_controlada'], 'Empresa com participação de empresa do parlamentar', f"{x['razao']} (por meio de {x.get('por')})", u)
+            elif x['t'] == 'bem_cnpj': ev(k, bid, 'V', PES['bem_cnpj'] if x.get('ativa') else 1, 'Empresa citada nos bens declarados ao TSE', x['razao'] + ('' if x.get('ativa') else ' (inativa)'), u)
+            elif x['t'] == 'doacoes':
+                v, sh = x['valor'], x.get('parcela') or 0
+                if v < PES['doacao_minima']: continue
+                pts = PES['doacao_alta'] if (v >= PES['doacao_alta_valor'] or sh >= PES['doacao_alta_parcela']) else PES['doacao_media'] if (v >= PES['doacao_media_valor'] or sh >= PES['doacao_media_parcela']) else PES['doacao_baixa']
+                top = '; '.join(f"{d['nome']} ({fmtv(d['valor'])}, sócio de {d['empresa']}, {'/'.join(map(str, d['anos']))})" for d in x['top'][:3])
+                ev(k, bid, 'V', pts, 'Doações de campanha de sócios de empresas do setor',
+                   f"{fmtv(v)} de {x['n']} doador(es){f', {round(100 * sh)}% das doações de pessoas físicas' if sh else ''}. Maiores: {top}"[:400], '', 1)
 
 # frentes
 for k, fs in FRENTES.items():
