@@ -1,0 +1,37 @@
+{
+ "gerado": "2026-11-19T11:18:46Z",
+ "universo": 85172,
+ "parlamentares_por_bancada": {
+  "plataformas": 19,
+  "mineracao": 12,
+  "agro": 60,
+  "madeira_garimpo": 12,
+  "saude": 57,
+  "financeiro": 29,
+  "seguranca": 10,
+  "educacao": 15,
+  "bets": 1
+ },
+ "vinculos": {
+  "agro|forte": 61,
+  "agro|sobrenome (2+)": 3,
+  "agro|sobrenome raro": 48,
+  "bets|forte": 1,
+  "bets|sobrenome raro": 1,
+  "educacao|forte": 30,
+  "educacao|sobrenome (2+)": 2,
+  "educacao|sobrenome raro": 12,
+  "financeiro|forte": 14,
+  "financeiro|sobrenome raro": 36,
+  "madeira_garimpo|forte": 6,
+  "madeira_garimpo|sobrenome raro": 8,
+  "mineracao|forte": 11,
+  "mineracao|sobrenome raro": 6,
+  "plataformas|forte": 14,
+  "plataformas|sobrenome raro": 16,
+  "saude|forte": 49,
+  "saude|sobrenome raro": 68,
+  "seguranca|forte": 12,
+  "seguranca|sobrenome raro": 7
+ }
+}
