@@ -1,5 +1,5 @@
 {
- "gerado": "2026-11-20T02:13:07.293Z",
+ "gerado": "2026-11-20T17:52:47.900Z",
  "inicio": "2023-02-01",
  "totais": {
   "proposicoes": 26513,
@@ -17,16 +17,16 @@
   "derrotasD": 29,
   "grupos": {
    "extrema": 120,
-   "direita": 227,
+   "direita": 226,
    "centro": 126,
    "esquerda": 121,
    "sp": 1
   },
-  "nucleo": 347,
+  "nucleo": 346,
   "alinhados": 38,
   "emExercicio": {
    "C": 513,
-   "S": 82
+   "S": 81
   }
  },
  "porPauta": {
@@ -597,7 +597,7 @@
      "prop": 9297,
      "pauta": 910,
      "membros": 291,
-     "emExercicio": 227,
+     "emExercicio": 226,
      "vot": 1564,
      "venceu": 1479,
      "comSit": 9289,
@@ -4569,7 +4569,7 @@
      "prop": 1245,
      "pauta": 142,
      "membros": 44,
-     "emExercicio": 34,
+     "emExercicio": 33,
      "vot": 198,
      "venceu": 187,
      "comSit": 1239,
