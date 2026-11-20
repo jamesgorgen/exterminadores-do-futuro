@@ -8803,6 +8803,14 @@
       ],
       "lote": 1
     },
+    "PL 5786/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
     "PL 5797/2026": {
       "s": "barra",
       "p": [
@@ -8841,6 +8849,14 @@
       "g": "extrema"
     },
     "PL 5803/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
+    "PL 5804/2026": {
       "s": "avanca",
       "p": [
         "punitivismo"
@@ -8916,6 +8932,12 @@
       "g": "extrema",
       "m": ""
     },
+    "PL 5828/2026": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PL 5829/2025": {
       "s": "avanca",
       "p": [
@@ -8923,12 +8945,30 @@
       ],
       "g": "extrema"
     },
+    "PL 5830/2026": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
     "PL 5836/2025": {
       "s": "avanca",
       "p": [
         "instituicoes"
       ],
       "g": "extrema"
+    },
+    "PL 5837/2026": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ]
+    },
+    "PL 5838/2026": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
     },
     "PL 5849/2025": {
       "s": "avanca",
@@ -8969,6 +9009,12 @@
         "privilegios"
       ],
       "lote": 1
+    },
+    "PL 5856/2026": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
     },
     "PL 5862/2026": {
       "s": "barra",
@@ -9091,6 +9137,12 @@
       ],
       "g": "extrema"
     },
+    "PL 5903/2026": {
+      "s": "barra",
+      "p": [
+        "educacao"
+      ]
+    },
     "PL 5905/2025": {
       "s": "avanca",
       "p": [
@@ -9099,6 +9151,12 @@
       ],
       "g": "direita",
       "m": ""
+    },
+    "PL 5906/2026": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
     },
     "PL 591/2023": {
       "s": "barra",
@@ -10561,6 +10619,12 @@
       "g": "extrema",
       "m": ""
     },
+    "PLP 289/2026": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ]
+    },
     "PLP 291/2026": {
       "s": "barra",
       "p": [
@@ -10590,6 +10654,12 @@
         "estado"
       ],
       "m": ""
+    },
+    "PLP 305/2026": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
     },
     "PLP 307/2026": {
       "s": "barra",
