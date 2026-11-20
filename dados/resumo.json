@@ -1,10 +1,10 @@
 {
- "gerado": "2026-11-20T01:54:19.991Z",
+ "gerado": "2026-11-20T02:13:07.293Z",
  "inicio": "2023-02-01",
  "totais": {
   "proposicoes": 26513,
-  "direita": 2695,
-  "extrema": 1747,
+  "direita": 2700,
+  "extrema": 1750,
   "votacoes": 2459,
   "disputadas": 1184,
   "vitorias": 508,
@@ -63,9 +63,9 @@
    "derrotas": 3
   },
   "religiao": {
-   "prop": 124,
-   "extrema": 79,
-   "prop30": 12,
+   "prop": 128,
+   "extrema": 82,
+   "prop30": 16,
    "vot": 7,
    "vitorias": 4,
    "derrotas": 0
@@ -151,9 +151,9 @@
    "derrotas": 0
   },
   "soberania": {
-   "prop": 71,
+   "prop": 72,
    "extrema": 50,
-   "prop30": 0,
+   "prop30": 1,
    "vot": 4,
    "vitorias": 2,
    "derrotas": 1
@@ -573,8 +573,8 @@
  "blocos": {
   "T": {
    "prop": 26513,
-   "pauta": 2695,
-   "pautaExtrema": 1747,
+   "pauta": 2700,
+   "pautaExtrema": 1750,
    "vot": 1611,
    "comSit": 26489,
    "aprovada": 1042,
@@ -583,7 +583,7 @@
    "grupos": {
     "extrema": {
      "prop": 6003,
-     "pauta": 1330,
+     "pauta": 1335,
      "membros": 158,
      "emExercicio": 120,
      "vot": 1580,
@@ -1132,7 +1132,7 @@
       "extrema": [
        114,
        3,
-       4
+       5
       ],
       "direita": [
        282,
@@ -1652,7 +1652,7 @@
       "extrema": [
        424,
        11,
-       201
+       203
       ],
       "centro": [
        196,
@@ -2559,8 +2559,8 @@
   },
   "C": {
    "prop": 23395,
-   "pauta": 2321,
-   "pautaExtrema": 1493,
+   "pauta": 2326,
+   "pautaExtrema": 1496,
    "vot": 1413,
    "comSit": 23392,
    "aprovada": 704,
@@ -2569,7 +2569,7 @@
    "grupos": {
     "extrema": {
      "prop": 5326,
-     "pauta": 1181,
+     "pauta": 1186,
      "membros": 137,
      "emExercicio": 105,
      "vot": 1382,
@@ -3092,7 +3092,7 @@
       "extrema": [
        110,
        3,
-       4
+       5
       ],
       "direita": [
        264,
@@ -3612,7 +3612,7 @@
       "extrema": [
        399,
        10,
-       185
+       187
       ],
       "centro": [
        175,
