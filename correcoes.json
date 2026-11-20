@@ -177,6 +177,30 @@
       ],
       "g": "extrema"
     },
+    "PDL 1024/2026": {
+      "s": "avanca",
+      "p": [
+        "religiao"
+      ],
+      "g": "direita",
+      "m": ""
+    },
+    "PDL 1027/2026": {
+      "s": "avanca",
+      "p": [
+        "soberania"
+      ],
+      "g": "direita",
+      "m": ""
+    },
+    "PDL 1028/2026": {
+      "s": "avanca",
+      "p": [
+        "religiao"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
     "PDL 1029/2026": {
       "s": "avanca",
       "p": [
@@ -184,6 +208,22 @@
         "religiao"
       ],
       "g": "extrema"
+    },
+    "PDL 1030/2026": {
+      "s": "avanca",
+      "p": [
+        "religiao"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
+    "PDL 1031/2026": {
+      "s": "avanca",
+      "p": [
+        "religiao"
+      ],
+      "g": "extrema",
+      "m": ""
     },
     "PDL 104/2024": {
       "s": "avanca",
@@ -10618,6 +10658,12 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PLP 283/2026": {
+      "s": "barra",
+      "p": [
+        "punitivismo"
+      ]
     },
     "PLP 289/2026": {
       "s": "barra",
