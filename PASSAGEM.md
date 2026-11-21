@@ -51,6 +51,7 @@ Esta seção resume a sessão de 30/10 a 17/11. O histórico anterior está no a
 - Correção de 21/11: projetos de senador que chegam à Câmara ("Senado Federal - Fulano") e autores "(S/Partido/AP)" no Senado eram tratados como sem autor parlamentar; 30 projetos voltaram para os senadores.
 - A primeira execução depois disso lê o Senado desde 2023 e os arquivos da Câmara de todos os anos; demora mais e classifica algumas centenas de itens novos com a IA.
 - Proposições de rotina sem autor parlamentar ficam fora da produção (decisão do James, 21/11): outorgas de rádio e TV (2.313, quase todas da Comissão de Comunicação) e pautas administrativas (33). Os acordos internacionais (118) contam na produção, por decisão do James, porque muitas vezes dividem os grupos. Campo `rt`. Possível uso: cruzar as outorgas com os vínculos de mídia.
+- Aba Proposições abre em "Todos os projetos" (`dados/proposicoes-todas.json`, versão leve); busca aceita "4.675". Projeto e votações ligados nos dois sentidos (botões nos cartões, endereços `?p=` e `?vm=`).
 - A Câmara adiou o PL 4675/2025 para 27/11. Quando o mérito for votado, entra sozinho na votação-chave.
 
 ## Pendências do James
