@@ -1,5 +1,5 @@
 {
- "inicio": "2026-11-21T19:20:19.048Z",
+ "inicio": "2026-11-21T20:12:46.984Z",
  "modo": "diario",
  "amostras": {
   "camara_deputado": {
@@ -142,32 +142,35 @@
    "dataApresentacao": "2026-02-24T15:48"
   },
   "senado_proposicao": {
-   "autoria": "Senador Paulo Paim (PT/RS)",
+   "autoria": "Senador Styvenson Valentim (PODE/RN)",
    "casaIdentificadora": "SF",
-   "codigoMateria": 155901,
-   "dataApresentacao": "2023-02-16",
-   "dataSituacaoAtual": "2023-04-11",
-   "ementa": "Permite que sejam excluídas do cálculo do limite de endividamento de entes subnacionais as operações de crédito com recursos do FGTS destinadas a investimentos em saneamento e habitação.",
+   "codigoMateria": 175925,
+   "dataApresentacao": "2026-10-07",
+   "dataSituacaoAtual": "2026-10-07",
+   "dataUltimaAtualizacao": "2026-10-14T15:15:01.467",
+   "ementa": "Estabelece a obrigatoriedade de disponibilização, nos telefones celulares comercializados no território nacional, de funcionalidade que permita ao usuário bloquear, rejeitar ou silenciar chamadas provenientes de números que não constem de sua lista de contatos.",
    "enteIdentificador": "SF",
-   "id": 8369951,
-   "identificacao": "PL 566/2023",
+   "id": 9112665,
+   "identificacao": "PL 5535/2026",
    "objetivo": "Iniciadora",
-   "situacaoAtual": "AGUARDANDO DESIGNAÇÃO DO RELATOR",
+   "situacaoAtual": "AGUARDANDO DESPACHO",
    "tipoConteudo": "Norma Geral",
    "tipoDocumento": "Projeto de Lei Ordinária",
    "tramitando": "Sim",
-   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/9c58b4b3-31cd-4b60-8b9b-e7a4a590e3d4"
+   "ultimaInformacaoAtualizada": "PUBLICACAO_OFICIAL",
+   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/b2ce3cf1-53ee-40a4-a310-4300991445dd"
   },
   "camara_arq_autor": {
-   "idProposicao": 2646601,
-   "uriProposicao": "https://dadosabertos.camara.leg.br/api/v2/proposicoes/2646601",
-   "uriAutor": "https://dadosabertos.camara.leg.br/api/v2/orgaos/78",
-   "codTipoAutor": 40000,
-   "tipoAutor": "Órgão do Poder Legislativo",
-   "nomeAutor": "Senado Federal - Carlos Viana",
-   "siglaPartidoAutor": "PSD",
-   "uriPartidoAutor": "",
-   "siglaUFAutor": "MG",
+   "idProposicao": 2655709,
+   "uriProposicao": "https://dadosabertos.camara.leg.br/api/v2/proposicoes/2655709",
+   "idDeputadoAutor": 160598,
+   "uriAutor": "https://dadosabertos.camara.leg.br/api/v2/deputados/160598",
+   "codTipoAutor": 10000,
+   "tipoAutor": "Deputado(a)",
+   "nomeAutor": "Flávia Morais",
+   "siglaPartidoAutor": "MDB",
+   "uriPartidoAutor": "https://dadosabertos.camara.leg.br/api/v2/partidos/36899",
+   "siglaUFAutor": "GO",
    "ordemAssinatura": "1",
    "proponente": "1"
   },
@@ -219,27 +222,21 @@
   "votacoes_S_plenario": 15,
   "senado_comissao_votacoes_achadas": 17,
   "votacoes_S_comissao": 17,
-  "proposicoes_camara_registros": 9281,
-  "proposicoes_data_corrigida": 33,
-  "senado_processo_registros": 6271,
-  "proposicoes_senado": 3118,
-  "proposicoes_senado_sem_autor_parlamentar": 81,
-  "proposicoes_parlamentar_recuperadas": 14,
-  "proposicoes_camara_sem_autor_parlamentar": 2657,
+  "proposicoes_camara_registros": 9282,
+  "proposicoes_data_corrigida": 4,
+  "senado_processo_registros": 260,
+  "proposicoes_senado": 58,
+  "proposicoes_devolvidas_ao_senador": 30,
   "relatorias_senado": 2558,
   "numeracao_lacunas_PL": 5,
   "numeracao_lacunas_PLP": 1,
   "numeracao_lacunas_PEC": 0,
   "numeracao_lacunas_PDL": 0,
+  "rotina_outorga": 2313,
+  "rotina_administrativa": 33,
   "votacoes_ligadas_a_materia_principal": 1266,
-  "classificados": 3037,
-  "grau_segunda_leitura": 16,
-  "grau_certeza_alta": 24,
-  "grau_para_revisao": 7,
-  "grau_duvida_so_de_grau": 7,
-  "graduados": 25,
-  "confirmacoes_em_bloco": 2023,
-  "correcoes_aplicadas": 3123,
+  "confirmacoes_em_bloco": 2695,
+  "correcoes_aplicadas": 3935,
   "grupo_pelos_votos_diferente": 216,
   "votacoes_chave": 2
  },
@@ -248,7 +245,7 @@
   "senado_atual": {
    "url": "https://legis.senado.leg.br/dadosabertos/senador/lista/atual.json",
    "tamanho": 128942,
-   "inicio": "{\"ListaParlamentarEmExercicio\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/ListaParlamentarEmExerciciov4.xsd\",\"Metadados\":{\"Versao\":\"21/11/2026 16:18:28\",\"VersaoServico\":\"4\",\"DataVersaoServico\":\"2020-07-15\",\"DescricaoDataSet\":\"Lista dos Parlamentares que estão atualmente em Exercício. Informações atuais sobre o Parlamentar.\"},\"Parlamentares\":{\"Parlamentar\":[{\"IdentificacaoParlamentar\":{\"CodigoParlamentar\":\"5672\",\"CodigoPublicoNaLegAtual\":\"800\",\"NomeParlamentar\":\"Alan Rick\",\"NomeCompletoParlamentar\":\"Alan Rick Miranda\",\"SexoParlamentar\":\"Masculino\",\"FormaTratamento\":\"Senador \",\"UrlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg\",\"UrlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5672\",\"EmailParlamentar\":\"sen.alanrick@senado.leg.br\",\"Telefones\":{\"Telefone\":[{\"NumeroTelefone\":\"33036333\",\"OrdemPublicacao\":\"1\",\"IndicadorFax\":\"Não\"}]},\"SiglaPartidoParlamentar\":\"REPUBLICANOS\",\"UfParlamentar\":\"AC\",\"Bloco\":{\"CodigoBloco\":\"346\",\"NomeBloco\":\"Bloco Parlamentar Aliança\",\"NomeApelido\":\"BLALIANÇA\",\"DataCriacao\":\"2023-03-20\"},\"MembroMesa\":\"Não\",\"MembroLideranca\":\"Sim\"},\"Mandato\":{\"CodigoMandato\":\"596\",\"UfParlamentar\":\"AC\",\"PrimeiraLegislaturaDoMandato\":{\"NumeroLegislatura\":\"57\",\"DataInicio\":\"2023-02-01\",\"DataFim\":\"2027-01-31\"},\"SegundaLegislaturaDoMandato\":{\"NumeroLegislatura\":\"58\",\"DataInicio\":\"2027-02-01\",\"DataFim\":\"2031-01-31\"},\"DescricaoParticipacao\":\"Titular\",\"Suplentes\":{\"Suplente\":["
+   "inicio": "{\"ListaParlamentarEmExercicio\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/ListaParlamentarEmExerciciov4.xsd\",\"Metadados\":{\"Versao\":\"21/11/2026 17:04:19\",\"VersaoServico\":\"4\",\"DataVersaoServico\":\"2020-07-15\",\"DescricaoDataSet\":\"Lista dos Parlamentares que estão atualmente em Exercício. Informações atuais sobre o Parlamentar.\"},\"Parlamentares\":{\"Parlamentar\":[{\"IdentificacaoParlamentar\":{\"CodigoParlamentar\":\"5672\",\"CodigoPublicoNaLegAtual\":\"800\",\"NomeParlamentar\":\"Alan Rick\",\"NomeCompletoParlamentar\":\"Alan Rick Miranda\",\"SexoParlamentar\":\"Masculino\",\"FormaTratamento\":\"Senador \",\"UrlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg\",\"UrlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5672\",\"EmailParlamentar\":\"sen.alanrick@senado.leg.br\",\"Telefones\":{\"Telefone\":[{\"NumeroTelefone\":\"33036333\",\"OrdemPublicacao\":\"1\",\"IndicadorFax\":\"Não\"}]},\"SiglaPartidoParlamentar\":\"REPUBLICANOS\",\"UfParlamentar\":\"AC\",\"Bloco\":{\"CodigoBloco\":\"346\",\"NomeBloco\":\"Bloco Parlamentar Aliança\",\"NomeApelido\":\"BLALIANÇA\",\"DataCriacao\":\"2023-03-20\"},\"MembroMesa\":\"Não\",\"MembroLideranca\":\"Sim\"},\"Mandato\":{\"CodigoMandato\":\"596\",\"UfParlamentar\":\"AC\",\"PrimeiraLegislaturaDoMandato\":{\"NumeroLegislatura\":\"57\",\"DataInicio\":\"2023-02-01\",\"DataFim\":\"2027-01-31\"},\"SegundaLegislaturaDoMandato\":{\"NumeroLegislatura\":\"58\",\"DataInicio\":\"2027-02-01\",\"DataFim\":\"2031-01-31\"},\"DescricaoParticipacao\":\"Titular\",\"Suplentes\":{\"Suplente\":["
   },
   "senado_votacao_iso": {
    "url": "https://legis.senado.leg.br/dadosabertos/votacao?dataInicio=2026-10-07&dataFim=2026-10-31",
@@ -258,12 +255,12 @@
   "senado_comissao": {
    "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20261007&dataFim=20261121",
    "tamanho": 220,
-   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"21/11/2026 16:21:37\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
+   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"21/11/2026 17:09:47\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
   },
   "senado_processo": {
-   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2023-03-01&dataFimApresentacao=2023-03-15",
-   "tamanho": 66650,
-   "inicio": "[{\"autoria\":\"Senador Paulo Paim (PT/RS)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":155964,\"dataApresentacao\":\"2023-03-01\",\"dataSituacaoAtual\":\"2023-04-17\",\"ementa\":\"Altera o Plano de Benefícios da Previdência Social, para suprimir a previsão de desconto de benefícios e de inscrição em dívida ativa no caso de cessação de benefício por revogação de decisão judicial.\",\"enteIdentificador\":\"SF\",\"id\":8373745,\"identificacao\":\"PL 744/2023\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESIGNAÇÃO DO RELATOR\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/d1241f35-80c6-42ec-811d-b58e8d2ba684\"},{\"autoria\":\"Senador Jorge Kajuru (PSB/GO)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":155968,\"dataApresentacao\":\"2023-03-01\",\"dataSituacaoAtual\":\"2023-04-17\",\"ementa\":\"Dispõe sobre a gratuidade de estacionamento em favor de pessoas idosas ou com deficiência de baixa renda.\",\"enteIdentificador\":\"SF\",\"id\":8374089,\"identificacao\":\"PL 762/2023\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESIGNAÇÃO DO RELATOR\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/8037e1b0-83d3-443f-b545-d7baf382b547\"},{\"autoria\":\"Senador Carlos Viana (PODEMOS/MG)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":155972,\"dataApresentacao\":\"2023-03-02\",\"dataDeliberacao\":\"2023-"
+   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-10-07&dataFimApresentacao=2026-10-15",
+   "tamanho": 8893,
+   "inicio": "[{\"autoria\":\"Senador Styvenson Valentim (PODE/RN)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175925,\"dataApresentacao\":\"2026-10-07\",\"dataSituacaoAtual\":\"2026-10-07\",\"dataUltimaAtualizacao\":\"2026-10-14T15:15:01.467\",\"ementa\":\"Estabelece a obrigatoriedade de disponibilização, nos telefones celulares comercializados no território nacional, de funcionalidade que permita ao usuário bloquear, rejeitar ou silenciar chamadas provenientes de números que não constem de sua lista de contatos.\",\"enteIdentificador\":\"SF\",\"id\":9112665,\"identificacao\":\"PL 5535/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/b2ce3cf1-53ee-40a4-a310-4300991445dd\"},{\"autoria\":\"Senador Jader Barbalho (MDB/PA)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175933,\"dataApresentacao\":\"2026-10-13\",\"dataSituacaoAtual\":\"2026-10-13\",\"dataUltimaAtualizacao\":\"2026-10-21T17:15:01.093\",\"ementa\":\"Institui a Política Nacional de Bioenergia Amazônica para Sistemas Isolados (PROBIO-SI), destinada a incentivar a substituição do óleo diesel fóssil por biocombustíveis e bioenergia produzidos a partir de biomassa local de origem sustentável, com prioridade para a Região Norte, e altera a Lei nº 12.111, de 9 de dezembro de 2009.\",\"enteIdentificador\":\"SF\",\"id\":9113033,\"identificacao\":\"PL 5540/2026\",\""
   },
   "senado_relatoria": {
    "url": "https://legis.senado.leg.br/dadosabertos/processo/relatoria?dataInicio=2023-02-01&dataFim=2023-02-28",
@@ -305,5 +302,5 @@
    "numeros": []
   }
  },
- "fim": "2026-11-21T19:25:03.318Z"
+ "fim": "2026-11-21T20:16:01.258Z"
 }
