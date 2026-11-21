@@ -73,6 +73,7 @@ Na pasta `dados`
 | `resumo.json` | Totais e números por pauta |
 | `indice.json` | Índice e contagens de cada parlamentar |
 | `proposicoes-direita.json` | Projetos que fazem avançar alguma pauta |
+| `proposicoes-todas.json` | Todos os projetos em versão leve (ementa resumida, autores, classificação), para a busca da aba Proposições, que abre em "Todos os projetos" e carrega o arquivo só quando a aba é aberta |
 | `votacoes-resumo.json` | Todas as votações nominais, sem os votos individuais |
 | `votacoes-AAAA.json` | Votações do ano com o voto de cada parlamentar |
 | `relatorias.json` | Relatorias do Senado desde 2023: matéria, relator, comissão e datas de designação e de saída. Os relatores em exercício também vão para `rl` em `proposicoes-direita.json` |

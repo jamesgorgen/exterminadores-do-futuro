@@ -366,7 +366,7 @@ const POR_PAGINA = 30;
 const D = { resumo: null, indice: {}, prop: [], vot: [], ver: {}, votosAno: {} };
 const est = {
   aba: 'movimentos',
-  prop: { pauta: '', grau: '', casa: '', partido: '', ano: '', texto: '', pagina: 1, foco: '' },
+  prop: { escopo: 'todos', pauta: '', grau: '', casa: '', partido: '', ano: '', texto: '', pagina: 1, foco: '' },
   vot: { casa: '', local: '', disp: true, pauta: '', resultado: '', ano: '', texto: '', pagina: 1, foco: '' },
   parl: { casa: '', mandato: '', classe: 'direita', partido: '', uf: '', texto: '', ordem: 'ie', pagina: 1, sel: '' }
 };
@@ -488,7 +488,8 @@ function autoresHTML(a, it){
   if ((!a || !a.length) && autoriaFora(it)) return `<p class="autores">Autoria: ${esc(autoriaFora(it))}</p>`;
   if (!a || !a.length) return '';
   const nomes = a.slice(0, 4).map(k => { const p = D.indice[k]; return p ? `${esc(p.n)} (${esc(nomePartido(p.p, p.s))}/${esc(p.uf || '')})` : ''; }).filter(Boolean);
-  return nomes.length ? `<p class="autores">${nomes.join('; ')}${a.length > 4 ? ` e mais ${a.length - 4}` : ''}</p>` : '';
+  const n = (it && it.na) || a.length;
+  return nomes.length ? `<p class="autores">${nomes.join('; ')}${n > 4 ? ` e mais ${n - 4}` : ''}</p>` : '';
 }
 function cartaoProp(it){
   const x = it.x || {};
@@ -579,36 +580,67 @@ function desenharMovimentos(){
 // ---------------------------------------------------------------- proposições
 function opcoes(lista, atual, rotuloVazio){ return `<option value="">${esc(rotuloVazio)}</option>` + lista.map(([v, r]) => `<option value="${esc(v)}" ${String(atual) === String(v) ? 'selected' : ''}>${esc(r)}</option>`).join(''); }
 const anosDe = lista => [...new Set(lista.map(x => String(x.d || '').slice(0, 4)).filter(Boolean))].sort().reverse();
+// Todos os projetos (dados/proposicoes-todas.json, versão leve gerada pelo robô), carregados só quando pedidos.
+// Os projetos com pauta da direita usam a versão completa (com relatoria), quando existe.
+let todasCarregando = null;
+function carregarTodas(){
+  if (!todasCarregando) todasCarregando = lerJson('proposicoes-todas.json').then(j => {
+    const direita = new Map(D.prop.map(it => [it.c, it]));
+    // Enquanto o arquivo não existir (antes da primeira execução do robô), fica a lista com pauta da direita.
+    D.todas = j && j.itens ? j.itens.map(it => direita.get(it.c) || it) : D.prop.slice();
+    D.semTodas = !(j && j.itens);
+    D.todasMap = new Map(D.todas.map(it => [it.c, it]));
+  });
+  return todasCarregando;
+}
+const textoBusca = it => it._b || (it._b = norm([it.c, it.e, ...(it.a || []).map(nomeParl), it.au || ''].join(' ')));
+// "4.675" e "PL 4.675/2025" acham o PL 4675/2025.
+const termoBusca = t => norm(t).replace(/(\d)\.(\d)/g, '$1$2').trim();
 function filtrarProp(){
-  const f = est.prop, txt = norm(f.texto);
-  return D.prop.filter(it => {
+  const f = est.prop, txt = termoBusca(f.texto);
+  const base = f.escopo === 'todos' && D.todas ? D.todas : D.prop;
+  return base.filter(it => {
     if (f.foco) return it.c === f.foco;
     const x = it.x || {};
     if (f.pauta && !(x.p || []).includes(f.pauta)) return false;
-    if (f.grau && x.g !== f.grau) return false;
+    if (f.grau === 'barra' ? x.s !== 'barra' : f.grau === 'fora' ? !!x.s : f.grau && !(x.s === 'avanca' && (x.g || 'direita') === f.grau)) return false;
     if (f.casa && !(it.k || []).includes(f.casa)) return false;
     if (f.partido && !(it.p || []).includes(f.partido)) return false;
     if (f.ano && !String(it.d).startsWith(f.ano)) return false;
-    if (txt && !norm(it.c + ' ' + it.e + ' ' + (it.a || []).map(nomeParl).join(' ')).includes(txt)) return false;
+    if (txt && !txt.split(/\s+/).every(t => textoBusca(it).includes(t))) return false;
     return true;
   });
 }
 function desenharProposicoes(){
   const f = est.prop;
+  const todos = f.escopo === 'todos';
+  if ((todos || f.foco) && !D.todas) {
+    $('#aba-proposicoes').innerHTML = '<p class="carregando">Carregando todos os projetos…</p>';
+    carregarTodas().then(() => { if (!f.foco || D.todasMap.has(f.foco)) desenharProposicoes(); else { f.escopo = 'direita'; desenharProposicoes(); } });
+    return;
+  }
+  if (f.foco && D.todasMap && D.todasMap.has(f.foco) && !D.prop.some(it => it.c === f.foco)) f.escopo = 'todos';
   const lista = filtrarProp();
   const paginas = Math.max(1, Math.ceil(lista.length / POR_PAGINA)); f.pagina = Math.min(f.pagina, paginas);
+  const base = f.escopo === 'todos' && D.todas ? D.todas : D.prop;
   const partidos = [...new Set(D.prop.flatMap(it => it.p || []))].sort().map(p => [p, nomePartido(p)]);
+  const graus = f.escopo === 'todos' ? [['extrema', 'Extrema-direita'], ['direita', 'Direita'], ['barra', 'Contra a pauta da direita'], ['fora', 'Sem pauta da direita']] : [['extrema', 'Extrema-direita'], ['direita', 'Direita']];
+  if (f.escopo !== 'todos' && ['barra', 'fora'].includes(f.grau)) f.grau = '';
   $('#aba-proposicoes').innerHTML = `
-    <h2 class="titulo">Projetos com pauta da direita</h2>
-    <p class="sub">Projetos de lei, de lei complementar, de emenda à Constituição e de decreto legislativo que fazem avançar alguma das pautas monitoradas, apresentados por parlamentares de qualquer partido.</p>
+    <h2 class="titulo">${f.escopo === 'todos' ? 'Projetos' : 'Projetos com pauta da direita'}</h2>
+    <p class="sub">${f.escopo === 'todos'
+      ? 'Todos os projetos de lei, de lei complementar, de emenda à Constituição e de decreto legislativo coletados desde 2023, de parlamentares, do Poder Executivo, de comissões e de outros órgãos, com a classificação das pautas.'
+      : 'Projetos de lei, de lei complementar, de emenda à Constituição e de decreto legislativo que fazem avançar alguma das pautas monitoradas, apresentados por parlamentares de qualquer partido.'}</p>
     <div class="filtros">
       <label class="sr" for="fp-texto">Procurar</label><input type="search" id="fp-texto" placeholder="Procurar por número, palavra ou autor" value="${esc(f.texto)}">
+      <select id="fp-escopo" aria-label="Quais projetos"><option value="todos" ${f.escopo === 'todos' ? 'selected' : ''}>Todos os projetos</option><option value="direita" ${f.escopo !== 'todos' ? 'selected' : ''}>Só com pauta da direita</option></select>
       <select id="fp-pauta" aria-label="Pauta">${opcoes(P.lista.map(p => [p.id, p.nome]), f.pauta, 'Todas as pautas')}</select>
-      <select id="fp-grau" aria-label="Grau">${opcoes([['extrema', 'Extrema-direita'], ['direita', 'Direita']], f.grau, 'Direita e extrema-direita')}</select>
+      <select id="fp-grau" aria-label="Grau">${opcoes(graus, f.grau, f.escopo === 'todos' ? 'Todas as classificações' : 'Direita e extrema-direita')}</select>
       <select id="fp-casa" aria-label="Casa">${opcoes([['C', 'Câmara'], ['S', 'Senado']], f.casa, 'Câmara e Senado')}</select>
       <select id="fp-partido" aria-label="Partido">${opcoes(partidos, f.partido, 'Todos os partidos')}</select>
-      <select id="fp-ano" aria-label="Ano">${opcoes(anosDe(D.prop).map(a => [a, a]), f.ano, 'Todos os anos')}</select>
+      <select id="fp-ano" aria-label="Ano">${opcoes(anosDe(base).map(a => [a, a]), f.ano, 'Todos os anos')}</select>
     </div>
+    ${f.escopo === 'todos' && D.semTodas ? '<p class="meta">A lista com todos os projetos fica disponível depois da próxima atualização dos dados. Por enquanto, aparecem só os projetos com pauta da direita.</p>' : ''}
     ${f.foco ? `<p class="contagem">Mostrando só o ${esc(f.foco)}. <button type="button" class="btn" data-limpar-foco="prop">Ver todos</button></p>` : `<p class="contagem">${fmt(lista.length)} ${lista.length === 1 ? 'projeto' : 'projetos'}</p>`}
     ${lista.length ? `<div class="grade">${lista.slice((f.pagina - 1) * POR_PAGINA, f.pagina * POR_PAGINA).map(cartaoProp).join('')}</div>` : '<div class="vazio"><p>Nenhum projeto com esses filtros.</p></div>'}
     ${paginador(f.pagina, paginas, 'prop')}`;
@@ -860,7 +892,7 @@ const base = () => location.origin + location.pathname.replace(/index\.html$/, '
 function textoComp(ref){
   const [tipo, id] = [ref.slice(0, 1), ref.slice(2)];
   if (tipo === 'p') {
-    const it = D.prop.find(x => x.c === id) || (D.ver[id] && { c: id, e: D.ver[id].ementa, a: D.ver[id].autores, k: D.ver[id].casa, i: D.ver[id].i, x: D.ver[id].x || {} });
+    const it = D.prop.find(x => x.c === id) || (D.todasMap && D.todasMap.get(id)) || (D.ver[id] && { c: id, e: D.ver[id].ementa, a: D.ver[id].autores, k: D.ver[id].casa, i: D.ver[id].i, x: D.ver[id].x || {} });
     if (!it) return '';
     const ver = D.ver[id];
     const autores = (it.a || []).slice(0, 3).map(k => { const p = D.indice[k]; return p ? `${p.n} (${nomePartido(p.p, p.s)}/${p.uf || ''})` : ''; }).filter(Boolean).join('; ') || autoriaFora(it);

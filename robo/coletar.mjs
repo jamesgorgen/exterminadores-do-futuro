@@ -1405,6 +1405,17 @@ export async function executar() {
     .map(it => ({ c: it.c, k: it.k, d: it.d, e: it.e, a: it.a, au: it.au, ta: it.ta, rt: it.rt, p: it.p, m: it.m, i: it.i, ss: it.ss, x: cl(it.c), rl: relAtual.get(it.c) }))
     .sort((x, y) => (y.d || '').localeCompare(x.d || ''));
   gravarJson('proposicoes-direita.json', { gerado: AGORA.toISOString(), itens: direita }, true);
+  // Todos os projetos, em versão leve, para a busca do site (aba Proposições, opção "Todos os projetos").
+  const leve = todasPropFinal.map(it => {
+    const x = cl(it.c) || {};
+    const e = String(it.e || ''), o = { c: it.c, k: it.k, d: it.d, e: e.length > 320 ? e.slice(0, 320).replace(/\s+\S*$/, '') + '…' : e, i: it.i };
+    if ((it.a || []).length) { o.a = it.a.slice(0, 4); if (it.a.length > 4) o.na = it.a.length; o.p = it.p; }
+    if (it.au) { o.au = it.au; o.ta = it.ta; }
+    if (it.rt) o.rt = it.rt;
+    if (x.s) { o.x = { s: x.s, p: x.p, g: x.g, m: x.m }; if (x.eq) o.x.eq = 1; if (x.lt) o.x.lt = 1; }
+    return o;
+  }).sort((x, y) => (y.d || '').localeCompare(x.d || ''));
+  gravarJson('proposicoes-todas.json', { gerado: AGORA.toISOString(), itens: leve }, true);
   const resumoVot = todasVot.map(vt => ({ id: vt.id, k: vt.k, o: vt.o, pl: vt.pl, d: vt.d, desc: vt.desc, mat: vt.mat, mp: vt.mp, ck: vt.ck, me: vt.me, res: vt.res,
     bl: vt.bl, blc: vt.blc, gv: vt.gv, disp: vt.disp, venceu: vt.venceu, be: vt.be, bec: vt.bec, bd: vt.bd, bdc: vt.bdc, dispE: vt.dispE, dispD: vt.dispD, vE: vt.vE, vD: vt.vD, ori: vt.ori, x: cl(vt.ck),
     t: Object.fromEntries(Object.entries(vt.v || {}).map(([c, l]) => [c, l.length])) }))
