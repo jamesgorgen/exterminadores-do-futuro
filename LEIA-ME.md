@@ -11,7 +11,7 @@ Um robô roda todo dia às 6h17 (horário de Brasília) no GitHub Actions, de gr
 1. Lista os deputados das legislaturas desde 2023 e reconhece os senadores pelos votos e pela autoria.
 2. Reúne os projetos de lei (PL, PLP, PEC e PDL) apresentados por deputados e senadores de todos os partidos. Na Câmara, a busca é feita pela autoria de cada deputado. No Senado, quinzena a quinzena, lendo os autores.
    Também reúne os projetos sem autor parlamentar (Poder Executivo, comissões, Mesas, Senado como Casa, tribunais e outros órgãos), que contam na produção legislativa total. Na Câmara, pelos arquivos anuais de proposições e de autores (`proposicoes-AAAA` e `proposicoesAutores-AAAA`), com a API de autores para o que faltar; o ano corrente todo dia e os anteriores uma vez por mês (controle em `estado.json`, campo `semAutor`). No Senado, os projetos sem senador entre os autores. Esses projetos ficam com `a` vazio, `au` (nome do autor) e `ta` (`executivo`, `comissao`, `senado`, `judiciario`, `mp` ou `outro`).
-3. Reúne as votações nominais dos plenários e das comissões. Na Câmara, pelos arquivos anuais completos de votações, votos, orientações e objetos, com a API como reserva. No Senado, pela API de votações de plenário e pela de votações em comissão. Requerimentos (urgência, retirada de pauta), destaques, emendas e pareceres são ligados ao projeto citado na ementa ou na descrição (campo `mp`, função `materiaPrincipal`), e a votação é classificada pela chave desse projeto. Assim a urgência, os destaques e o mérito de um projeto ficam juntos. As votações simbólicas do plenário da Câmara são guardadas à parte, com o resultado e a orientação das bancadas.
+3. Reúne as votações nominais dos plenários e das comissões. Na Câmara, pelos arquivos anuais completos de votações, votos, orientações e objetos, com a API como reserva. No Senado, pela API de votações de plenário e pela de votações em comissão. Requerimentos (urgência, retirada de pauta), destaques, emendas e pareceres são ligados ao projeto citado na ementa ou na descrição (campo `mp`, função `materiaPrincipal`), e a votação é classificada pela chave desse projeto. Assim a urgência, os destaques e o mérito de um projeto ficam juntos. As votações simbólicas do plenário da Câmara são guardadas à parte, com a matéria e o resultado (a Câmara não publica orientação de bancada para elas).
 4. Classifica cada projeto e cada votação pelas pautas de `pautas.js`, com o Claude Haiku. O que já foi classificado não é refeito.
 5. Calcula o índice de alinhamento de cada parlamentar e grava tudo na pasta `dados`.
 
@@ -79,7 +79,7 @@ Na pasta `dados`
 | `relatorias-camara.json` | Relatorias da Câmara desde 2023, lidas das tramitações pelo script `robo/relatorias-camara.mjs` (workflow "Relatorias da Câmara", diário): proposição, deputado, órgão, data da designação, data do parecer e se a relatoria está em andamento |
 | `votos-disputadas.json` | Voto de cada parlamentar nas votações disputadas, uma letra por votação, usado pelo dossiê parlamentar |
 | `proposicoes-AAAA.json` | Todos os projetos do ano, inclusive os do Poder Executivo, de comissões e de outros órgãos (`au`, `ta`) |
-| `votacoes-simbolicas-AAAA.json` | Votações simbólicas do plenário da Câmara no ano: resultado, matéria e orientação das bancadas |
+| `votacoes-simbolicas-AAAA.json` | Votações simbólicas do plenário da Câmara no ano: matéria e resultado |
 | `votacoes-chave.json` | Votações-chave escolhidas pela equipe: para cada matéria, todas as votações ligadas a ela, o placar de cada grupo, a orientação do governo e da oposição e, por parlamentar, uma letra por votação |
 | `classificacoes.json` | Classificações já feitas pela IA |
 | `parlamentares.json` | Cadastro de deputados e senadores |
@@ -180,7 +180,7 @@ O GitHub Actions é gratuito para repositório público. A IA custa cerca de 2 d
 ## Limites conhecidos
 
 - A classificação lê só a ementa e serve como triagem.
-- Votações simbólicas e secretas ficam de fora dos índices, porque não há registro do voto de cada parlamentar. As simbólicas do plenário da Câmara aparecem nas votações-chave com a orientação das bancadas; as do Senado não.
+- Votações simbólicas e secretas ficam de fora dos índices, porque não há registro do voto de cada parlamentar. As simbólicas do plenário da Câmara aparecem nas votações-chave só com o resultado; as do Senado não aparecem.
 - Nos projetos da Câmara, o partido do autor é o mais recente. Nas votações, é o da data do voto.
 - Votações secretas do Senado (autoridades, embaixadores) ficam de fora.
 - Se uma consulta ao Senado falhar numa execução completa, a execução diária só refaz os últimos 45 dias. Uma nova execução completa recupera o que faltou.

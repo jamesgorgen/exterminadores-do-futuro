@@ -326,8 +326,8 @@ async function coletarProposicoesSenado(ini, fim) {
     for (const d of lista) {
       if (pega(d, 'objetivo') === 'Revisora') continue;
       const autoria = String(pega(d, 'autoria') || '');
-      // "Senador Fulano (PL/SP), Senadora Beltrana (PT/BA)"
-      const autores = [...autoria.matchAll(/([^,(]+?)\s*\(([^()\/]+)\/([A-Z]{2})\)/g)];
+      // "Senador Fulano (PL/SP), Senadora Beltrana (PT/BA)"; sem partido vem como "(S/Partido/AP)" ou "(/AP)".
+      const autores = [...autoria.matchAll(/([^,(]+?)\s*\((S\/Partido|[^()\/]*)\/([A-Z]{2})\)/g)];
       const m = /^(\S+)\s+(\d+)\/(\d{4})/.exec(String(pega(d, 'identificacao') || ''));
       if (!m) continue;
       const chave = `${m[1]} ${parseInt(m[2], 10)}/${m[3]}`;
@@ -366,6 +366,17 @@ export function tipoAutoria(texto) {
   if (/ministerio publico|procurador|defensoria/.test(t)) return 'mp';
   return 'outro';
 }
+// "Senado Federal - Fulano", "Senado Federal - Senadora Fulana" ou "Senador Fulano (PT/BA)" -> senador.
+// Quem não está no cadastro recebe a chave SN:nome, como na coleta do Senado.
+export function senadorDoTexto(texto, porNomeSenador = new Map()) {
+  const t = String(texto || '').trim();
+  let m = /^senado federal\s*-\s*(?:senador[a]?\s+)?(.+)$/i.exec(t) || /^senador[a]?\s+([^(,]+?)\s*\(/i.exec(t);
+  if (!m) return null;
+  const nome = m[1].trim();
+  if (/comiss|mesa|cpi|cpmi|bancada|lideran|presid|conselho|subcomiss|frente/i.test(nome)) return null;
+  const cn = chaveNome(nome); if (!cn) return null;
+  return { k: porNomeSenador.get(cn) || 'SN:' + cn, nome };
+}
 // Autores de uma proposição (registros do arquivo anual ou da API) -> deputados, senadores ou órgão.
 export function lerAutores(lista, porNomeSenador = new Map()) {
   const deps = [], sens = [], orgaos = [];
@@ -378,6 +389,9 @@ export function lerAutores(lista, porNomeSenador = new Map()) {
     const idDep = pega(r, 'idDeputadoAutor') || (/\/deputados\/(\d+)/.exec(uri) || [])[1];
     if (idDep && (cod === '10000' || /deputad/i.test(tipo) || /\/deputados\//.test(uri))) { deps.push({ k: 'C' + idDep, nome }); continue; }
     if (/senador/i.test(tipo)) { const k = porNomeSenador.get(chaveNome(nome)); if (k) { sens.push({ k, nome }); continue; } }
+    // Projeto de senador que chegou à Câmara: "Senado Federal - Fulano". Comissões do Senado continuam como órgão.
+    const sen = senadorDoTexto(nome, porNomeSenador);
+    if (sen) { sens.push({ ...sen, s: String(pega(r, 'siglaPartidoAutor') || ''), uf: String(pega(r, 'siglaUFAutor', 'siglaUfAutor') || '') }); continue; }
     if (nome || tipo) orgaos.push({ nome: nome || tipo, tipo });
   }
   return { deps, sens, orgaos };
@@ -434,6 +448,7 @@ async function coletarSemAutorParlamentar(anos) {
       if (deps.length || sens.length) {
         // Parlamentar que a coleta por autor não trouxe.
         for (const x of deps) if (!parlamentares.p[x.k]) registrarParlamentar(x.k, { n: x.nome, c: 'C' });
+        for (const x of sens) if (!parlamentares.p[x.k]) { registrarParlamentar(x.k, { n: x.nome, s: x.s, p: x.s ? idPartido(x.s) : undefined, uf: x.uf, c: 'S' }); porNomeSen.set(chaveNome(x.nome), x.k); }
         const ks = [...deps, ...sens].map(x => x.k);
         guardarProposicao({ ...base, a: ks, p: [...new Set(ks.map(k => (parlamentares.p[k] || {}).p).filter(Boolean))] });
         contar('proposicoes_parlamentar_recuperadas');
@@ -628,7 +643,7 @@ async function coletarVotacoesCamaraArquivos(a) {
     const orgao = String(pega(r, 'siglaOrgao') || '');
     const ob = objetos.get(id) || {};
     if (!x) {
-      // Votação simbólica, sem votos nominais. No plenário, guarda a orientação das bancadas.
+      // Votação simbólica, sem votos nominais. No plenário, guarda a matéria e o resultado (e a orientação, se um dia vier).
       if (orgao.toUpperCase() === 'PLEN') guardarSimbolica({ id: 'C:' + id, k: 'C', d: String(pega(r, 'dataHoraRegistro', 'data') || '').slice(0, 10),
         desc: String(pega(r, 'descricao') || '').slice(0, 400), mat: ob.c || '', me: String(ob.e || '').slice(0, 400),
         res: String(pega(r, 'aprovacao')) === '1' ? 'A' : String(pega(r, 'aprovacao')) === '0' ? 'R' : '', ori: orient.get(id) });
@@ -1224,6 +1239,18 @@ export async function executar() {
   const mesAtras = new Date(AGORA - 30 * 86400000).toISOString().slice(0, 10);
   const anosSemAutor = anosDoPeriodo(INICIO, HOJE).filter(a => a === ano(HOJE) || anos.includes(a) || !(estado.semAutor || {})[a] || estado.semAutor[a] < mesAtras);
   try { await coletarSemAutorParlamentar(anosSemAutor); } catch (e) { erro('proposições sem autor parlamentar', e); }
+  // Projetos de senador gravados antes como "sem autor parlamentar" (Senado Federal - Fulano) voltam para o senador.
+  {
+    const porNomeSen = new Map(Object.entries(parlamentares.p).filter(([k]) => k[0] === 'S').map(([k, v]) => [chaveNome(v.n), k]));
+    for (const a of anosDoPeriodo(INICIO, HOJE)) for (const it of arquivoProposicoes(a).values()) {
+      if ((it.a || []).length || !it.au) continue;
+      const sen = senadorDoTexto(String(it.au).split(',')[0], porNomeSen); if (!sen) continue;
+      if (!parlamentares.p[sen.k]) { registrarParlamentar(sen.k, { n: sen.nome, c: 'S' }); porNomeSen.set(chaveNome(sen.nome), sen.k); }
+      it.a = [sen.k]; it.p = (parlamentares.p[sen.k] || {}).p ? [parlamentares.p[sen.k].p] : [];
+      delete it.au; delete it.ta;
+      contar('proposicoes_devolvidas_ao_senador');
+    }
+  }
   let relatorias = [];
   try { relatorias = await coletarRelatoriasSenado(); } catch (e) { erro('relatorias Senado', e); relatorias = lerJson('relatorias.json', { itens: [] }).itens || []; }
 

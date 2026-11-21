@@ -47,7 +47,8 @@ Esta seção resume a sessão de 30/10 a 17/11. O histórico anterior está no a
 - `robo/coletar.mjs` agora coleta os projetos sem autor parlamentar (Executivo, comissões, Senado como Casa, tribunais, outros órgãos) e eles **contam na produção legislativa** (decisão do James). Campos `au` e `ta`; no Balanço, linha "Executivo e outros" e campo `fora` em `resumo.blocos`.
 - Requerimentos, destaques e emendas ficam sob a matéria principal (`mp`, `materiaPrincipal`). 1.266 votações passaram a ficar ligadas a um projeto. A classificação da votação é a do projeto.
 - Votações-chave: campo `votacoesChave` em `correcoes.json` (já com PL 4675/2025 e PLP 299/2026), botão na revisão, saída `dados/votacoes-chave.json`, seção no Balanço e na ficha do parlamentar.
-- Votações simbólicas do plenário da Câmara em `dados/votacoes-simbolicas-AAAA.json`, com a orientação das bancadas.
+- Votações simbólicas do plenário da Câmara em `dados/votacoes-simbolicas-AAAA.json`, com matéria e resultado. Conferido com os dados reais em 21/11: a Câmara não publica orientação de bancada nas simbólicas.
+- Correção de 21/11: projetos de senador que chegam à Câmara ("Senado Federal - Fulano") e autores "(S/Partido/AP)" no Senado eram tratados como sem autor parlamentar; 30 projetos voltaram para os senadores.
 - A primeira execução depois disso lê o Senado desde 2023 e os arquivos da Câmara de todos os anos; demora mais e classifica algumas centenas de itens novos com a IA.
 - A Câmara adiou o PL 4675/2025 para 27/11. Quando o mérito for votado, entra sozinho na votação-chave.
 
