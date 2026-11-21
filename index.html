@@ -367,7 +367,7 @@ const D = { resumo: null, indice: {}, prop: [], vot: [], ver: {}, votosAno: {} }
 const est = {
   aba: 'movimentos',
   prop: { escopo: 'todos', pauta: '', grau: '', casa: '', partido: '', ano: '', texto: '', pagina: 1, foco: '' },
-  vot: { casa: '', local: '', disp: true, pauta: '', resultado: '', ano: '', texto: '', pagina: 1, foco: '' },
+  vot: { casa: '', local: '', disp: true, pauta: '', resultado: '', ano: '', texto: '', pagina: 1, foco: '', mat: '' },
   parl: { casa: '', mandato: '', classe: 'direita', partido: '', uf: '', texto: '', ordem: 'ie', pagina: 1, sel: '' }
 };
 
@@ -379,6 +379,8 @@ async function carregar(){
   const ver = null;
   D.resumo = resumo; D.indice = (indice && indice.p) || {}; D.regras = indice && indice.regras;
   D.prop = (prop && prop.itens) || []; D.vot = (vot && vot.itens) || []; D.ver = (ver && ver.casos) || {};
+  // Votações de cada projeto: urgência, destaques e mérito ficam sob a matéria principal (mp).
+  D.votPorMat = new Map(); for (const v of D.vot) { const m = materiaDaVot(v); if (m) D.votPorMat.set(m, (D.votPorMat.get(m) || 0) + 1); }
   desenharFaixa();
   aplicarEndereco();
   desenhar();
@@ -501,7 +503,7 @@ function cartaoProp(it){
     ${ver && ver.nota ? `<p class="motivo"><b>Checagem da equipe.</b> ${esc(ver.nota)}</p>` : x.m ? `<p class="motivo"><b>${x.eq ? 'Checagem da equipe.' : 'Triagem automática.'}</b> ${esc(x.m)}</p>` : ''}
     ${autoresHTML(it.a, it)}
     ${(it.rl || []).length ? `<p class="meta relator">Relatoria: ${it.rl.map(r => `${esc(r.n)} (${esc(r.s)}-${esc(r.uf)})${r.cm ? `, ${esc(r.cm)}` : ''}`).join('; ')}</p>` : ''}
-    <div class="acoes">${linkProp(it) ? `<a class="btn" href="${esc(linkProp(it))}" target="_blank" rel="noopener">Ficha oficial</a>` : ''}
+    <div class="acoes">${D.votPorMat && D.votPorMat.get(it.c) ? `<button type="button" class="btn" data-ir-vot="${esc(it.c)}">${D.votPorMat.get(it.c) === 1 ? 'Ver a votação' : `Ver as ${fmt(D.votPorMat.get(it.c))} votações`}</button>` : ''}${linkProp(it) ? `<a class="btn" href="${esc(linkProp(it))}" target="_blank" rel="noopener">Ficha oficial</a>` : ''}
       <button type="button" class="btn forte" data-comp="p:${esc(it.c)}">Compartilhar</button><button type="button" class="btn" data-copiar="p:${esc(it.c)}">Copiar</button></div>
   </article>`;
 }
@@ -527,7 +529,7 @@ function cartaoVot(v){
     <p class="bloco">${bloco}</p>
     ${placar(v.t || {})}
     <div class="votos-det" data-votos="${esc(v.id)}" hidden></div>
-    <div class="acoes"><button type="button" class="btn" data-ver-votos="${esc(v.id)}">Ver como votaram</button>
+    <div class="acoes"><button type="button" class="btn" data-ver-votos="${esc(v.id)}">Ver como votaram</button>${temFichaProjeto(materiaDaVot(v)) ? `<button type="button" class="btn" data-ir-prop="${esc(materiaDaVot(v))}">Ver o projeto</button>` : ''}${(D.votPorMat.get(materiaDaVot(v)) || 0) > 1 && est.vot.mat !== materiaDaVot(v) ? `<button type="button" class="btn" data-ir-vot="${esc(materiaDaVot(v))}">Todas as ${fmt(D.votPorMat.get(materiaDaVot(v)))} do projeto</button>` : ''}
       <button type="button" class="btn forte" data-comp="v:${esc(v.id)}">Compartilhar</button><button type="button" class="btn" data-copiar="v:${esc(v.id)}">Copiar</button></div>
   </article>`;
 }
@@ -662,10 +664,14 @@ function ligarFiltros(prefixo, f, redesenhar){
 }
 
 // ---------------------------------------------------------------- votações
+const materiaDaVot = v => v.mp || v.mat || '';
+// Só há ficha para os tipos coletados, desde 2023.
+const temFichaProjeto = c => /^(PL|PLP|PEC|PDL) \d+\/(\d{4})$/.test(c || '') && +c.split('/')[1] >= 2023;
 function filtrarVot(){
   const f = est.vot, txt = norm(f.texto);
   return D.vot.filter(v => {
     if (f.foco) return v.id === f.foco;
+    if (f.mat) return materiaDaVot(v) === f.mat;
     if (f.disp && !v.disp) return false;
     if (f.casa && v.k !== f.casa) return false;
     if (f.local === 'pl' && !v.pl) return false;
@@ -696,7 +702,7 @@ function desenharVotacoes(){
       <select id="fv-ano" aria-label="Ano">${opcoes(anosDe(D.vot).map(a => [a, a]), f.ano, 'Todos os anos')}</select>
       <label class="chk"><input type="checkbox" id="fv-disp" ${f.disp ? 'checked' : ''}> Só disputadas</label>
     </div>
-    ${f.foco ? `<p class="contagem">Mostrando uma votação. <button type="button" class="btn" data-limpar-foco="vot">Ver todas</button></p>` : `<p class="contagem">${fmt(lista.length)} ${lista.length === 1 ? 'votação' : 'votações'}</p>`}
+    ${f.mat ? `<p class="contagem">${fmt(lista.length)} ${lista.length === 1 ? 'votação' : 'votações'} do ${esc(f.mat)}, entre urgência, destaques e mérito. ${temFichaProjeto(f.mat) ? `<button type="button" class="btn" data-ir-prop="${esc(f.mat)}">Ver o projeto</button> ` : ''}<button type="button" class="btn" data-limpar-foco="vot">Ver todas</button></p>` : f.foco ? `<p class="contagem">Mostrando uma votação. <button type="button" class="btn" data-limpar-foco="vot">Ver todas</button></p>` : `<p class="contagem">${fmt(lista.length)} ${lista.length === 1 ? 'votação' : 'votações'}</p>`}
     ${lista.length ? `<div class="grade">${lista.slice((f.pagina - 1) * POR_PAGINA, f.pagina * POR_PAGINA).map(cartaoVot).join('')}</div>` : '<div class="vazio"><p>Nenhuma votação com esses filtros.</p></div>'}
     ${paginador(f.pagina, paginas, 'vot')}`;
   ligarFiltros('fv', est.vot, desenharVotacoes);
@@ -958,6 +964,7 @@ function secaoChave(casa){
       <p class="meta">${esc(it.c)}${autoriaFora(it) ? `, de autoria do ${esc(autoriaFora(it))}` : ''}</p>
       <p class="ementa">${esc(corta(it.e || '', 320))}</p>${it.nota ? `<p class="motivo"><b>Por que importa.</b> ${esc(it.nota)}</p>` : ''}
       ${tabelaChave(vot)}
+      <div class="acoes">${temFichaProjeto(it.c) ? `<button type="button" class="btn" data-ir-prop="${esc(it.c)}">Ver o projeto</button>` : ''}${D.votPorMat.get(it.c) ? `<button type="button" class="btn" data-ir-vot="${esc(it.c)}">Ver as votações nominais</button>` : ''}</div>
     </div>`).join('')}</div>`;
 }
 
@@ -1101,6 +1108,7 @@ function aplicarEndereco(){
   const q = new URLSearchParams(location.search);
   if (q.get('p')) { est.prop.foco = q.get('p'); est.aba = 'proposicoes'; }
   else if (q.get('v')) { est.vot.foco = q.get('v'); est.vot.disp = false; est.aba = 'votacoes'; }
+  else if (q.get('vm')) { est.vot.mat = q.get('vm'); est.aba = 'votacoes'; }
   else if (q.get('parlamentar')) { est.parl.sel = q.get('parlamentar'); est.aba = 'parlamentares'; }
   else if (q.get('aba')) est.aba = q.get('aba');
   irPara(est.aba);
@@ -1119,7 +1127,10 @@ document.addEventListener('click', e => {
   if (b.dataset.copiar) copiar(b.dataset.copiar, b);
   if (b.dataset.verVotos) mostrarVotos(b.dataset.verVotos, b);
   if (b.dataset.pg) { const [alvo, d] = b.dataset.pg.split(':'); est[alvo].pagina += +d; desenhar(); document.querySelector('.abas').scrollIntoView(); }
-  if (b.dataset.limparFoco) { est[b.dataset.limparFoco].foco = ''; limparEndereco(); desenhar(); }
+  if (b.dataset.limparFoco) { est[b.dataset.limparFoco].foco = ''; if (b.dataset.limparFoco === 'vot') est.vot.mat = ''; limparEndereco(); desenhar(); }
+  // Do projeto para as votações dele e de volta.
+  if (b.dataset.irVot) { est.vot.mat = b.dataset.irVot; est.vot.foco = ''; est.vot.pagina = 1; history.replaceState(null, '', '?vm=' + encodeURIComponent(b.dataset.irVot)); irPara('votacoes'); window.scrollTo({ top: document.querySelector('.abas').offsetTop, behavior: 'smooth' }); }
+  if (b.dataset.irProp) { est.prop.foco = b.dataset.irProp; est.prop.pagina = 1; history.replaceState(null, '', '?p=' + encodeURIComponent(b.dataset.irProp)); irPara('proposicoes'); window.scrollTo({ top: document.querySelector('.abas').offsetTop, behavior: 'smooth' }); }
   if (b.dataset.parl) { est.parl.sel = b.dataset.parl; history.replaceState(null, '', '?parlamentar=' + encodeURIComponent(b.dataset.parl)); desenharPerfil(b.dataset.parl); }
   if (b.hasAttribute && b.hasAttribute('data-fechar-perfil')) $('#perfil-dlg').close();
   if (b.dataset.verProps) { $('#perfil-dlg').close(); est.prop = Object.assign(est.prop, { texto: nomeParl(b.dataset.verProps), pauta: '', grau: '', pagina: 1, foco: '' }); irPara('proposicoes'); }

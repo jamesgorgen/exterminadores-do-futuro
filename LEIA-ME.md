@@ -137,7 +137,7 @@ Cuidado com as vírgulas e as aspas. Se o arquivo ficar com erro de formato, as 
 
 ## Votações-chave
 
-A equipe escolhe as votações-chave na página de revisão (botão "Marcar como votação-chave" em cada projeto ou votação) ou à mão no campo `votacoesChave` de `correcoes.json`, pela chave da matéria (`"PL 4675/2025": { "t": "título curto", "nota": "por que importa" }`). O robô junta todas as votações ligadas à matéria, nominais e simbólicas, e grava `dados/votacoes-chave.json`. O site mostra as votações-chave na aba Balanço (placar de cada grupo) e na ficha de cada parlamentar (o voto e se acompanhou o governo). Na Câmara, a referência é a orientação oficial do governo; no Senado, que não publica orientações nos dados abertos, é a posição da esquerda.
+A equipe escolhe as votações-chave na página de revisão (botão "Marcar como votação-chave" em cada projeto ou votação) ou à mão no campo `votacoesChave` de `correcoes.json`, pela chave da matéria (`"PL 4675/2025": { "t": "título curto", "nota": "por que importa" }`). O robô junta todas as votações ligadas à matéria, nominais e simbólicas, e grava `dados/votacoes-chave.json`. No site, o cartão de cada projeto tem o botão para as votações dele (urgência, destaques e mérito, pelo campo `mp`), e o de cada votação, o botão para o projeto; os endereços são `?p=PL 4675/2025` e `?vm=PL 4675/2025`. O site mostra as votações-chave na aba Balanço (placar de cada grupo) e na ficha de cada parlamentar (o voto e se acompanhou o governo). Na Câmara, a referência é a orientação oficial do governo; no Senado, que não publica orientações nos dados abertos, é a posição da esquerda.
 
 ## Situações das proposições
 
