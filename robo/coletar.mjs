@@ -378,9 +378,8 @@ export function senadorDoTexto(texto, porNomeSenador = new Map()) {
   return { k: porNomeSenador.get(cn) || 'SN:' + cn, nome };
 }
 // Proposições de rotina, sem autor parlamentar: ficam na base, na classificação e na revisão, mas fora da
-// produção legislativa do Balanço (decisão da equipe, 21/11/2026). Três tipos:
+// produção legislativa do Balanço (decisão da equipe, 21/11/2026). Dois tipos:
 //   outorga         atos de outorga e renovação de rádio e TV (PDL da Comissão de Comunicação)
-//   acordo          aprovação de tratados, acordos e convenções internacionais (PDL)
 //   administrativa  pautas administrativas das Casas, dos tribunais, do Ministério Público e da Defensoria:
 //                   cargos, funções, varas, carreiras e remuneração de servidores, escolha de ministro do TCU
 export function rotinaDe(it) {
@@ -390,7 +389,7 @@ export function rotinaDe(it) {
   if (sig === 'PDL' && /^aprova o ato que/.test(e) && /(outorga|renova|autoriza|permiss|concess|transfer|radiodifus|radio|televis|sons e imagens|retransmiss)/.test(e)) return 'outorga';
   // Atos do Ministério das Comunicações que tornam sem efeito ou anulam outorgas.
   if (sig === 'PDL' && /^aprova o ato constante d[ao]s? (portaria|decreto)/.test(e) && /(sem efeito|anula|revoga|outorga|permiss|concess|autoriza)/.test(e)) return 'outorga';
-  if (sig === 'PDL' && /^aprova(m)? (o|os|a|as) (texto|textos|acordo|tratado|convencao|protocolo|adesao|emendas|renovacao|declaracao|estatutos)/.test(e) && /(acordo|tratado|convencao|convenio|protocolo|governo d|republica|organizacao|troca de notas|internacional|estatutos da comunidade)/.test(e)) return 'acordo';
+  // Acordos internacionais contam na produção: muitas vezes dividem a direita e a esquerda (decisão da equipe, 21/11/2026).
   if (['judiciario', 'mp', 'comissao', 'outro'].includes(it.ta)) {
     if (/^escolhe o senhor|^escolhe a senhora/.test(e)) return 'administrativa';
     if (/(cria(cao de)?|transforma(cao de)?|reestrutura(cao de)?|composicao e criacao de).{0,40}(cargos|funcoes comissionadas|varas)|quadro (de pessoal|permanente)|carreiras? (dos|de) servidores|plano de carreiras?|carreira legislativa|vantagens pessoais|remuneracao dos servidores/.test(e)) return 'administrativa';

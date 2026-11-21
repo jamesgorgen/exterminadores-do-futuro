@@ -50,7 +50,7 @@ Esta seção resume a sessão de 30/10 a 17/11. O histórico anterior está no a
 - Votações simbólicas do plenário da Câmara em `dados/votacoes-simbolicas-AAAA.json`, com matéria e resultado. Conferido com os dados reais em 21/11: a Câmara não publica orientação de bancada nas simbólicas.
 - Correção de 21/11: projetos de senador que chegam à Câmara ("Senado Federal - Fulano") e autores "(S/Partido/AP)" no Senado eram tratados como sem autor parlamentar; 30 projetos voltaram para os senadores.
 - A primeira execução depois disso lê o Senado desde 2023 e os arquivos da Câmara de todos os anos; demora mais e classifica algumas centenas de itens novos com a IA.
-- Proposições de rotina sem autor parlamentar ficam fora da produção (decisão do James, 21/11): outorgas de rádio e TV (2.313, quase todas da Comissão de Comunicação), acordos internacionais (118) e pautas administrativas (33). Campo `rt`. Possível uso: cruzar as outorgas com os vínculos de mídia.
+- Proposições de rotina sem autor parlamentar ficam fora da produção (decisão do James, 21/11): outorgas de rádio e TV (2.313, quase todas da Comissão de Comunicação) e pautas administrativas (33). Os acordos internacionais (118) contam na produção, por decisão do James, porque muitas vezes dividem os grupos. Campo `rt`. Possível uso: cruzar as outorgas com os vínculos de mídia.
 - A Câmara adiou o PL 4675/2025 para 27/11. Quando o mérito for votado, entra sozinho na votação-chave.
 
 ## Pendências do James
