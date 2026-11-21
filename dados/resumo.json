@@ -1,5 +1,5 @@
 {
- "gerado": "2026-11-20T17:52:47.900Z",
+ "gerado": "2026-11-21T16:50:33.521Z",
  "inicio": "2023-02-01",
  "totais": {
   "proposicoes": 26513,
@@ -41,7 +41,7 @@
   "punitivismo": {
    "prop": 1307,
    "extrema": 829,
-   "prop30": 15,
+   "prop30": 14,
    "vot": 22,
    "vitorias": 18,
    "derrotas": 1
@@ -113,7 +113,7 @@
   "estado": {
    "prop": 121,
    "extrema": 52,
-   "prop30": 3,
+   "prop30": 1,
    "vot": 21,
    "vitorias": 10,
    "derrotas": 11
@@ -121,7 +121,7 @@
   "privilegios": {
    "prop": 328,
    "extrema": 61,
-   "prop30": 4,
+   "prop30": 3,
    "vot": 40,
    "vitorias": 26,
    "derrotas": 6
@@ -576,10 +576,10 @@
    "pauta": 2700,
    "pautaExtrema": 1750,
    "vot": 1611,
-   "comSit": 26489,
-   "aprovada": 1042,
+   "comSit": 26492,
+   "aprovada": 1037,
    "lei": 252,
-   "arquivada": 1768,
+   "arquivada": 1770,
    "grupos": {
     "extrema": {
      "prop": 6003,
@@ -591,7 +591,7 @@
      "comSit": 5999,
      "aprovada": 171,
      "lei": 29,
-     "arquivada": 481
+     "arquivada": 482
     },
     "direita": {
      "prop": 9297,
@@ -600,8 +600,8 @@
      "emExercicio": 226,
      "vot": 1564,
      "venceu": 1479,
-     "comSit": 9289,
-     "aprovada": 364,
+     "comSit": 9291,
+     "aprovada": 363,
      "lei": 83,
      "arquivada": 651
     },
@@ -613,9 +613,9 @@
      "vot": 1524,
      "venceu": 1387,
      "comSit": 7130,
-     "aprovada": 259,
+     "aprovada": 257,
      "lei": 72,
-     "arquivada": 374
+     "arquivada": 375
     },
     "esquerda": {
      "prop": 4030,
@@ -624,8 +624,8 @@
      "emExercicio": 121,
      "vot": 1587,
      "venceu": 1188,
-     "comSit": 4019,
-     "aprovada": 240,
+     "comSit": 4020,
+     "aprovada": 238,
      "lei": 67,
      "arquivada": 261
     }
@@ -815,11 +815,11 @@
     },
     "cultura": {
      "n": 832,
-     "ap": 96,
+     "ap": 95,
      "g": {
       "centro": [
        212,
-       29,
+       28,
        5
       ],
       "esquerda": [
@@ -867,7 +867,7 @@
     },
     "violencia-mulher": {
      "n": 1143,
-     "ap": 61,
+     "ap": 60,
      "g": {
       "centro": [
        341,
@@ -886,7 +886,7 @@
       ],
       "esquerda": [
        237,
-       20,
+       19,
        4
       ]
      }
@@ -2562,10 +2562,10 @@
    "pauta": 2326,
    "pautaExtrema": 1496,
    "vot": 1413,
-   "comSit": 23392,
-   "aprovada": 704,
+   "comSit": 23395,
+   "aprovada": 699,
    "lei": 179,
-   "arquivada": 1618,
+   "arquivada": 1620,
    "grupos": {
     "extrema": {
      "prop": 5326,
@@ -2577,7 +2577,7 @@
      "comSit": 5326,
      "aprovada": 108,
      "lei": 18,
-     "arquivada": 445
+     "arquivada": 446
     },
     "direita": {
      "prop": 8052,
@@ -2586,8 +2586,8 @@
      "emExercicio": 193,
      "vot": 1366,
      "venceu": 1292,
-     "comSit": 8050,
-     "aprovada": 235,
+     "comSit": 8052,
+     "aprovada": 234,
      "lei": 53,
      "arquivada": 583
     },
@@ -2599,9 +2599,9 @@
      "vot": 1328,
      "venceu": 1198,
      "comSit": 6692,
-     "aprovada": 215,
+     "aprovada": 213,
      "lei": 63,
-     "arquivada": 364
+     "arquivada": 365
     },
     "esquerda": {
      "prop": 3325,
@@ -2610,8 +2610,8 @@
      "emExercicio": 103,
      "vot": 1391,
      "venceu": 1020,
-     "comSit": 3324,
-     "aprovada": 146,
+     "comSit": 3325,
+     "aprovada": 144,
      "lei": 45,
      "arquivada": 226
     }
@@ -2801,11 +2801,11 @@
     },
     "cultura": {
      "n": 743,
-     "ap": 70,
+     "ap": 69,
      "g": {
       "centro": [
        199,
-       26,
+       25,
        5
       ],
       "esquerda": [
@@ -2853,7 +2853,7 @@
     },
     "violencia-mulher": {
      "n": 1001,
-     "ap": 47,
+     "ap": 46,
      "g": {
       "centro": [
        327,
@@ -2872,7 +2872,7 @@
       ],
       "esquerda": [
        182,
-       15,
+       14,
        3
       ]
      }

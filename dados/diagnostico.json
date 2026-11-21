@@ -1,5 +1,5 @@
 {
- "inicio": "2026-11-20T17:52:47.900Z",
+ "inicio": "2026-11-21T16:50:33.521Z",
  "modo": "diario",
  "amostras": {
   "camara_deputado": {
@@ -132,33 +132,33 @@
    "VotoPresidente": "false"
   },
   "camara_proposicao": {
-   "id": 2610267,
-   "uri": "https://dadosabertos.camara.leg.br/api/v2/proposicoes/2610267",
-   "siglaTipo": "PL",
-   "codTipo": 139,
-   "numero": 1252,
+   "id": 2604173,
+   "uri": "https://dadosabertos.camara.leg.br/api/v2/proposicoes/2604173",
+   "siglaTipo": "PEC",
+   "codTipo": 136,
+   "numero": 3,
    "ano": 2026,
-   "ementa": "Institui, no âmbito da União, o Dia Nacional do Povo Cigano, inscreve essa efeméride no calendário oficial da República Federativa do Brasil e dá outras providências.",
-   "dataApresentacao": "2026-03-18T14:01"
+   "ementa": "Altera o art. 155 da Constituição Federal para estabelecer alíquota máxima e base de cálculo exclusiva do Imposto sobre a Propriedade de Veículos Automotores – IPVA, e acrescenta dispositivos ao Ato das Disposições Constitucionais Transitórias para limitar despesas com publicidade institucional e com o Poder Legislativo.",
+   "dataApresentacao": "2026-02-24T15:48"
   },
   "senado_proposicao": {
-   "autoria": "Senador Dr. Hiran (PP/RR)",
+   "autoria": "Senador Styvenson Valentim (PODE/RN)",
    "casaIdentificadora": "SF",
-   "codigoMateria": 175985,
-   "dataApresentacao": "2026-10-19",
-   "dataSituacaoAtual": "2026-10-19",
-   "dataUltimaAtualizacao": "2026-10-21T15:30:01.3",
-   "ementa": "Altera o art. 9º da Lei nº 15.211, de 17 de setembro de 2025 (Estatuto Digital da Criança e do Adolescente), para admitir a estimativa de idade por biometria facial como mecanismo de verificação de idade e para ampliar, de forma graduada, as categorias de serviços digitais de acesso restrito a maiores de 18 (dezoito) anos.",
+   "codigoMateria": 175925,
+   "dataApresentacao": "2026-10-07",
+   "dataSituacaoAtual": "2026-10-07",
+   "dataUltimaAtualizacao": "2026-10-14T15:15:01.467",
+   "ementa": "Estabelece a obrigatoriedade de disponibilização, nos telefones celulares comercializados no território nacional, de funcionalidade que permita ao usuário bloquear, rejeitar ou silenciar chamadas provenientes de números que não constem de sua lista de contatos.",
    "enteIdentificador": "SF",
-   "id": 9115144,
-   "identificacao": "PL 5593/2026",
+   "id": 9112665,
+   "identificacao": "PL 5535/2026",
    "objetivo": "Iniciadora",
    "situacaoAtual": "AGUARDANDO DESPACHO",
    "tipoConteudo": "Norma Geral",
    "tipoDocumento": "Projeto de Lei Ordinária",
    "tramitando": "Sim",
    "ultimaInformacaoAtualizada": "PUBLICACAO_OFICIAL",
-   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/3dc7461f-fa42-46e9-aa85-0ff9dd90f0a9"
+   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/b2ce3cf1-53ee-40a4-a310-4300991445dd"
   },
   "senado_relatoria": {
    "autoriaProcesso": "Presidência da República",
@@ -201,7 +201,7 @@
   "votacoes_C_plenario": 125,
   "votacoes_C_comissao": 34,
   "votacoes_sem_sim_nao": 1,
-  "camara_dias_completados_pela_api": 9,
+  "camara_dias_completados_pela_api": 10,
   "camara_api_votacao_sem_votos": 537,
   "senado_plenario_votacoes_achadas": 15,
   "votacoes_S_plenario": 15,
@@ -209,8 +209,8 @@
   "votacoes_S_comissao": 17,
   "proposicoes_camara_registros": 9281,
   "proposicoes_data_corrigida": 3,
-  "senado_processo_registros": 261,
-  "proposicoes_senado": 59,
+  "senado_processo_registros": 260,
+  "proposicoes_senado": 58,
   "relatorias_senado": 2558,
   "numeracao_lacunas_PL": 6,
   "numeracao_lacunas_PLP": 1,
@@ -224,17 +224,17 @@
   "senado_atual": {
    "url": "https://legis.senado.leg.br/dadosabertos/senador/lista/atual.json",
    "tamanho": 128942,
-   "inicio": "{\"ListaParlamentarEmExercicio\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/ListaParlamentarEmExerciciov4.xsd\",\"Metadados\":{\"Versao\":\"20/11/2026 14:46:26\",\"VersaoServico\":\"4\",\"DataVersaoServico\":\"2020-07-15\",\"DescricaoDataSet\":\"Lista dos Parlamentares que estão atualmente em Exercício. Informações atuais sobre o Parlamentar.\"},\"Parlamentares\":{\"Parlamentar\":[{\"IdentificacaoParlamentar\":{\"CodigoParlamentar\":\"5672\",\"CodigoPublicoNaLegAtual\":\"800\",\"NomeParlamentar\":\"Alan Rick\",\"NomeCompletoParlamentar\":\"Alan Rick Miranda\",\"SexoParlamentar\":\"Masculino\",\"FormaTratamento\":\"Senador \",\"UrlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg\",\"UrlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5672\",\"EmailParlamentar\":\"sen.alanrick@senado.leg.br\",\"Telefones\":{\"Telefone\":[{\"NumeroTelefone\":\"33036333\",\"OrdemPublicacao\":\"1\",\"IndicadorFax\":\"Não\"}]},\"SiglaPartidoParlamentar\":\"REPUBLICANOS\",\"UfParlamentar\":\"AC\",\"Bloco\":{\"CodigoBloco\":\"346\",\"NomeBloco\":\"Bloco Parlamentar Aliança\",\"NomeApelido\":\"BLALIANÇA\",\"DataCriacao\":\"2023-03-20\"},\"MembroMesa\":\"Não\",\"MembroLideranca\":\"Sim\"},\"Mandato\":{\"CodigoMandato\":\"596\",\"UfParlamentar\":\"AC\",\"PrimeiraLegislaturaDoMandato\":{\"NumeroLegislatura\":\"57\",\"DataInicio\":\"2023-02-01\",\"DataFim\":\"2027-01-31\"},\"SegundaLegislaturaDoMandato\":{\"NumeroLegislatura\":\"58\",\"DataInicio\":\"2027-02-01\",\"DataFim\":\"2031-01-31\"},\"DescricaoParticipacao\":\"Titular\",\"Suplentes\":{\"Suplente\":["
+   "inicio": "{\"ListaParlamentarEmExercicio\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/ListaParlamentarEmExerciciov4.xsd\",\"Metadados\":{\"Versao\":\"21/11/2026 13:45:32\",\"VersaoServico\":\"4\",\"DataVersaoServico\":\"2020-07-15\",\"DescricaoDataSet\":\"Lista dos Parlamentares que estão atualmente em Exercício. Informações atuais sobre o Parlamentar.\"},\"Parlamentares\":{\"Parlamentar\":[{\"IdentificacaoParlamentar\":{\"CodigoParlamentar\":\"5672\",\"CodigoPublicoNaLegAtual\":\"800\",\"NomeParlamentar\":\"Alan Rick\",\"NomeCompletoParlamentar\":\"Alan Rick Miranda\",\"SexoParlamentar\":\"Masculino\",\"FormaTratamento\":\"Senador \",\"UrlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg\",\"UrlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5672\",\"EmailParlamentar\":\"sen.alanrick@senado.leg.br\",\"Telefones\":{\"Telefone\":[{\"NumeroTelefone\":\"33036333\",\"OrdemPublicacao\":\"1\",\"IndicadorFax\":\"Não\"}]},\"SiglaPartidoParlamentar\":\"REPUBLICANOS\",\"UfParlamentar\":\"AC\",\"Bloco\":{\"CodigoBloco\":\"346\",\"NomeBloco\":\"Bloco Parlamentar Aliança\",\"NomeApelido\":\"BLALIANÇA\",\"DataCriacao\":\"2023-03-20\"},\"MembroMesa\":\"Não\",\"MembroLideranca\":\"Sim\"},\"Mandato\":{\"CodigoMandato\":\"596\",\"UfParlamentar\":\"AC\",\"PrimeiraLegislaturaDoMandato\":{\"NumeroLegislatura\":\"57\",\"DataInicio\":\"2023-02-01\",\"DataFim\":\"2027-01-31\"},\"SegundaLegislaturaDoMandato\":{\"NumeroLegislatura\":\"58\",\"DataInicio\":\"2027-02-01\",\"DataFim\":\"2031-01-31\"},\"DescricaoParticipacao\":\"Titular\",\"Suplentes\":{\"Suplente\":["
   },
   "senado_votacao_iso": {
-   "url": "https://legis.senado.leg.br/dadosabertos/votacao?dataInicio=2026-10-06&dataFim=2026-10-31",
+   "url": "https://legis.senado.leg.br/dadosabertos/votacao?dataInicio=2026-10-07&dataFim=2026-10-31",
    "tamanho": 55340,
    "inicio": "[{\"ano\":2019,\"casaSessao\":\"SF\",\"codigoMateria\":174386,\"codigoSessao\":591267,\"codigoSessaoLegislativa\":874,\"codigoSessaoVotacao\":7106,\"dataApresentacao\":\"2026-05-28\",\"dataSessao\":\"2026-10-14\",\"descricaoVotacao\":\"Votação nominal da Proposta de Emenda à Constituição nº 221, de 2019, em primeiro turno.\",\"ementa\":\"Altera o art. 7º da Constituição Federal para reduzir a duração máxima semanal do trabalho e prever 2 (dois) dias de repouso semanal remunerado, sem qualquer redução salarial; e dá outras providências.\",\"idProcesso\":9056435,\"identificacao\":\"PEC 221/2019\",\"informeLegislativo\":{\"casaColegiado\":\"SF\",\"casaEnteAdm\":\"SF\",\"codigoColegiado\":1998,\"data\":\"2026-10-14\",\"id\":2319636,\"idEnteAdm\":13594,\"idEvento\":11392905,\"nomeColegiado\":\"Plenário do Senado Federal\",\"nomeEnteAdm\":\"Secretaria de Atas e Diários\",\"numeroAutuacao\":1,\"siglaColegiado\":\"PLEN\",\"siglaEnteAdm\":\"SEADI\",\"texto\":\"(Sessão Deliberativa Ordinária - semipresencial - de 14 de outubro de 2026) \\nQuinta e última sessão de discussão da matéria encerrada em 1º turno. \\nCalendário especial aprovado para a matéria (Requerimento nº 706/2026). \\nEmenda nº 37 encaminhada à publicação.  \\nParecer nº 207/2026-Plen/SF proferido pelo Senador Omar Aziz e encaminhado à publicação (contrário à emenda nº 37). \\nDestaque retirado pelo autor (Requerimento nº 710/2026 encaminhado à publicação). \\nProposta aprovada em 1º turno (Sim: 75; Não: 1; Presidente: 1; Total: 77). \\nDiscussão da matéria encerrada em 2º turno. \\nProposta aprovada em 2"
   },
   "senado_comissao": {
-   "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20261006&dataFim=20261120",
+   "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20261007&dataFim=20261121",
    "tamanho": 220,
-   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"20/11/2026 14:53:48\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
+   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"21/11/2026 13:51:39\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
   },
   "senado_processo": {
    "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-10-16&dataFimApresentacao=2026-10-31",
@@ -249,7 +249,7 @@
  },
  "numeracao": {
   "PL": {
-   "de": 5785,
+   "de": 5794,
    "ate": 5916,
    "faltam": 6,
    "numeros": [
@@ -276,5 +276,5 @@
    "numeros": []
   }
  },
- "fim": "2026-11-20T17:54:52.645Z"
+ "fim": "2026-11-21T16:52:47.840Z"
 }
