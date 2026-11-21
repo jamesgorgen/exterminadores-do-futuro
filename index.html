@@ -146,6 +146,18 @@ p.sub{color:var(--ink-2);max-width:70ch;margin:0 0 18px}
 .s-pauta{background:var(--paper);color:var(--ink);border:1px solid var(--line)}
 .s-ia{background:var(--paper);color:var(--ink-3);font-size:11px;letter-spacing:.04em}
 .s-ver{background:var(--ver);color:#fff}
+.s-chave{background:var(--ink);color:var(--sheet)}
+.vchave{background:var(--sheet);border:1px solid var(--line);padding:14px 16px;margin:0 0 14px}
+.vchave h3{margin:0 0 4px;font-size:18px}
+.vchave .ementa{font-size:14.5px;color:var(--ink-2);margin:0 0 8px}
+.vchave table{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums}
+.vchave th,.vchave td{text-align:right;padding:4px 6px;border-top:1px solid var(--line)}
+.vchave th:first-child,.vchave td:first-child{text-align:left;width:52%}
+.vchave td{white-space:nowrap}.vchave td:first-child{white-space:normal}
+@media (max-width:600px){.vchave td:first-child,.vchave th:first-child{min-width:210px}}
+.tabela-rolar{overflow-x:auto}
+.lista-chave div{display:grid;grid-template-columns:86px minmax(0,1fr) auto;gap:4px 10px;padding:6px 0;border-top:1px solid var(--line);font-size:14px}
+.lista-chave small{grid-column:2 / 4;color:var(--ink-3)}
 .s-venceu{background:var(--ink);color:var(--sheet)}
 .s-perdeu{background:transparent;color:var(--ink-2);border:1.5px solid var(--ink-3)}
 .s-partido{background:var(--night-2);color:#fff}
@@ -334,6 +346,7 @@ const nomePartido = (id, s) => NOME_PARTIDO[id] || s || id || '';
 const CLASSE = { extrema: 'Extrema-direita', direita: 'Direita', centro: 'Centro-direita', esquerda: 'Esquerda', sp: 'Sem partido', nucleo: 'Núcleo da direita', alinhado: 'Vota com a direita', proximo: 'Vota próximo da direita' };
 const seloGrupo = p => (p.cl ? `<span class="selo s-cl-${p.cl}">${CLASSE[p.cl] || p.cl}</span>` : '') + (p.al ? ` <span class="selo s-cl-${p.al}">${CLASSE[p.al]}</span>` : '') + (p.ex === 0 ? ' <span class="selo s-cl-sp">Fora do mandato</span>' : '');
 const listaE = l => l.length > 1 ? l.slice(0, -1).join(', ') + ' e ' + l[l.length - 1] : l.join('');
+const corta = (t, n) => { t = String(t || ''); return t.length > n ? t.slice(0, n - 1).replace(/\s+\S*$/, '') + '…' : t; };
 const GRUPO_TXT = g => listaE(((P.grupos || {})[g] || []).map(x => nomePartido(x)));
 const BLOCO_E = () => listaE(((P.blocos || {}).extrema || []).map(p => nomePartido(p)));
 const BLOCO_D = () => listaE(((P.blocos || {}).direita || []).map(p => nomePartido(p)));
@@ -361,7 +374,8 @@ const est = {
 // ---------------------------------------------------------------- dados
 async function lerJson(nome){ try { const r = await fetch('dados/' + nome, { cache: 'no-cache' }); return r.ok ? await r.json() : null; } catch (e) { return null; } }
 async function carregar(){
-  const [resumo, indice, prop, vot] = await Promise.all(['resumo.json', 'indice.json', 'proposicoes-direita.json', 'votacoes-resumo.json'].map(lerJson));
+  const [resumo, indice, prop, vot, chave] = await Promise.all(['resumo.json', 'indice.json', 'proposicoes-direita.json', 'votacoes-resumo.json', 'votacoes-chave.json'].map(lerJson));
+  D.chave = chave && chave.itens ? Object.assign(chave, { porMat: Object.fromEntries(chave.itens.map(it => [it.c, it])) }) : null;
   const ver = null;
   D.resumo = resumo; D.indice = (indice && indice.p) || {}; D.regras = indice && indice.regras;
   D.prop = (prop && prop.itens) || []; D.vot = (vot && vot.itens) || []; D.ver = (ver && ver.casos) || {};
@@ -468,7 +482,10 @@ function selosClass(x){
   return origem + grau + pautas;
 }
 const classeCartao = x => !x || !x.s ? '' : x.s === 'barra' ? 'contra' : x.g === 'extrema' ? 'ext' : 'dir';
-function autoresHTML(a){
+const TIPO_AUTORIA = { executivo: 'Poder Executivo', comissao: 'comissão ou Mesa', senado: 'Senado Federal', judiciario: 'Judiciário', mp: 'Ministério Público ou Defensoria', outro: 'outro órgão' };
+const autoriaFora = it => it && !(it.a || []).length && it.au ? (it.ta === 'executivo' ? 'Poder Executivo' : it.au) : '';
+function autoresHTML(a, it){
+  if ((!a || !a.length) && autoriaFora(it)) return `<p class="autores">Autoria: ${esc(autoriaFora(it))}</p>`;
   if (!a || !a.length) return '';
   const nomes = a.slice(0, 4).map(k => { const p = D.indice[k]; return p ? `${esc(p.n)} (${esc(nomePartido(p.p, p.s))}/${esc(p.uf || '')})` : ''; }).filter(Boolean);
   return nomes.length ? `<p class="autores">${nomes.join('; ')}${a.length > 4 ? ` e mais ${a.length - 4}` : ''}</p>` : '';
@@ -481,7 +498,7 @@ function cartaoProp(it){
     <div class="topo">${selosClass(x)}</div>
     <p class="ementa">${esc(it.e)}</p>
     ${ver && ver.nota ? `<p class="motivo"><b>Checagem da equipe.</b> ${esc(ver.nota)}</p>` : x.m ? `<p class="motivo"><b>${x.eq ? 'Checagem da equipe.' : 'Triagem automática.'}</b> ${esc(x.m)}</p>` : ''}
-    ${autoresHTML(it.a)}
+    ${autoresHTML(it.a, it)}
     ${(it.rl || []).length ? `<p class="meta relator">Relatoria: ${it.rl.map(r => `${esc(r.n)} (${esc(r.s)}-${esc(r.uf)})${r.cm ? `, ${esc(r.cm)}` : ''}`).join('; ')}</p>` : ''}
     <div class="acoes">${linkProp(it) ? `<a class="btn" href="${esc(linkProp(it))}" target="_blank" rel="noopener">Ficha oficial</a>` : ''}
       <button type="button" class="btn forte" data-comp="p:${esc(it.c)}">Compartilhar</button><button type="button" class="btn" data-copiar="p:${esc(it.c)}">Copiar</button></div>
@@ -501,7 +518,7 @@ function cartaoVot(v){
   const selVit = (disp, vit, rot) => disp && vit !== null && vit !== undefined ? (vit ? `<span class="selo s-venceu">${rot} venceu</span>` : `<span class="selo s-perdeu">${rot} perdeu</span>`) : '';
   const vitorias = v.be !== undefined ? selVit(v.dispE, v.vE, 'A extrema-direita') + selVit(v.dispD, v.vD, 'A direita') : selVit(v.disp, v.venceu, 'A direita');
   return `<article class="cartao ${classeCartao(x)}">
-    <div class="topo"><span class="num">${esc(v.mat || 'Votação')}</span><span class="meta">${esc(CASA[v.k])}, ${v.pl ? 'plenário' : esc(v.o || 'comissão')}</span><span class="data">${dataBR(v.d)}</span></div>
+    <div class="topo"><span class="num">${esc(v.mp || v.mat || 'Votação')}</span>${v.mp && v.mat ? `<span class="meta">${esc(v.mat)}</span>` : ''}<span class="meta">${esc(CASA[v.k])}, ${v.pl ? 'plenário' : esc(v.o || 'comissão')}</span><span class="data">${dataBR(v.d)}</span>${D.chave && D.chave.porMat[v.mp || v.mat] ? '<span class="selo s-chave">Votação-chave</span>' : ''}</div>
     <div class="topo">${res ? `<span class="selo s-pauta">${res}</span>` : ''}${vitorias}${selosClass(x)}</div>
     <p class="ementa">${esc(v.me || v.desc)}</p>
     ${v.me && v.desc ? `<p class="motivo">${esc(v.desc)}</p>` : ''}
@@ -780,6 +797,7 @@ async function desenharPerfil(k){
     <h4>Projetos com pauta da direita (${fmt(props.length)})</h4>
     ${props.length ? `<div class="grade">${props.slice(0, 6).map(cartaoProp).join('')}</div>${props.length > 6 ? `<p><button type="button" class="btn" data-ver-props="${esc(k)}">Ver todos os ${props.length}</button></p>` : ''}` : '<p class="meta">Nenhum projeto com pauta da direita.</p>'}
     <h4>O que relata</h4><div id="perfil-rel">Carregando.</div>
+    ${D.chave && D.chave.itens.some(it => it.vot.some(v => v.k === p.c && !v.simb)) ? `<h4>Votações-chave</h4><div class="lista-chave" id="perfil-chave">${votosChaveHTML(k, p)}</div>` : ''}
     <h4>Votos recentes em votações disputadas</h4><div class="lista-votos" id="perfil-votos">Carregando.</div>
   </div>`;
   desenharRelatorias(k, p);
@@ -805,7 +823,7 @@ function desenharMetodo(){
   const r = D.regras || P.indice;
   $('#aba-metodo').innerHTML = `<div class="metodo">
     <h2 class="titulo">Como funciona</h2>
-    <p>Todo dia, um robô consulta os dados abertos da Câmara dos Deputados e do Senado Federal e reúne os projetos de lei, de lei complementar, de emenda à Constituição e de decreto legislativo apresentados por deputados e senadores, e todas as votações nominais dos plenários e das comissões, com o voto de cada parlamentar.</p>
+    <p>Todo dia, um robô consulta os dados abertos da Câmara dos Deputados e do Senado Federal e reúne os projetos de lei, de lei complementar, de emenda à Constituição e de decreto legislativo apresentados por deputados e senadores, pelo Poder Executivo, por comissões e por outros órgãos, e todas as votações nominais dos plenários e das comissões, com o voto de cada parlamentar. Requerimentos de urgência, destaques e emendas são ligados ao projeto a que se referem, de modo que a urgência, os destaques e o mérito de um mesmo projeto aparecem juntos e com a mesma classificação.</p>
     <h3>Quem é a direita</h3>
     <p>Na Câmara dos Deputados, o grupo de cada deputado vem dos próprios votos. Um modelo estatístico estima a posição de cada um numa escala da esquerda para a direita a partir de todas as votações nominais disputadas desde 2023, de modo que quem vota parecido fica perto, e a escala é dividida nos quatro grupos onde os votos se concentram. O cálculo é refeito toda segunda-feira. Deputados com menos de 25 votos ficam no grupo do partido. A <a href="posicoes.html">página das posições</a> mostra a escala, os partidos e quem vota diferente da legenda. No Senado, onde há poucas votações disputadas para o modelo funcionar bem, vale o grupo do partido.</p>
     <p>Na divisão por partido, usada no Senado e nas votações, os partidos estão divididos em extrema-direita (${esc(GRUPO_TXT('extrema'))}), direita (${esc(GRUPO_TXT('direita'))}), centro-direita (${esc(GRUPO_TXT('centro'))}) e esquerda (${esc(GRUPO_TXT('esquerda'))}). Em cada votação nominal, a posição de cada bloco é a da maioria dos seus votos, desde que ao menos ${Math.round(r.coesaoMinima * 100)}% dele vote no mesmo sentido. A mesma regra define a posição da esquerda, usada como referência do campo do governo.</p>
@@ -816,7 +834,7 @@ function desenharMetodo(){
     <h3>Relatorias</h3>
     <p>O relator é o parlamentar que estuda um projeto numa comissão ou no plenário e escreve o parecer, muitas vezes com um texto novo, que vai a voto. Por isso a relatoria costuma pesar tanto quanto a autoria. Os dados do Senado vêm da base de relatorias do próprio Senado, com cada designação desde 2023, a comissão, a data em que o senador assumiu e a data e o motivo de quando deixou a relatoria. Na Câmara, que não publica uma base própria de relatorias, as designações são lidas das tramitações de cada proposição, que trazem o deputado designado e a comissão, e o parecer é identificado pela tramitação seguinte do mesmo relator. O perfil de cada parlamentar mostra o que ele relata, e a ficha dos projetos da direita mostra quem os relata no momento.</p>
     <h3>Balanço</h3>
-    <p>A aba Balanço mede o peso de cada grupo político no Congresso desde fevereiro de 2023, com todos os projetos apresentados por parlamentares e todas as votações nominais coletadas. Cada projeto é atribuído ao grupo do primeiro autor. A média por parlamentar divide os projetos do grupo por todos que passaram por ele no período, inclusive suplentes e quem deixou o mandato. A pauta da direita segue a mesma classificação usada no resto do site. Nas votações, o grupo fica do lado vencedor quando a maioria dos seus integrantes que votaram sim ou não acompanhou o resultado final. Votações sem resultado de aprovação ou rejeição registrado e empates dentro do grupo ficam fora da conta. A situação de cada projeto (em tramitação, aprovado em ao menos uma Casa, transformado em lei ou arquivado) é lida todos os dias nos arquivos de dados abertos da Câmara e na API do Senado. Um projeto conta como aprovado quando já passou pelo plenário de uma Casa, ou pela comissão quando ela decide em caráter terminativo, e seguiu para a outra Casa, para a sanção ou virou lei. Na análise por tema, valem os temas identificados nas ementas, e um mesmo projeto pode contar em mais de um tema. Os números são recalculados todos os dias pelo robô.</p>
+    <p>A aba Balanço mede o peso de cada grupo político no Congresso desde fevereiro de 2023, com todos os projetos apresentados e todas as votações nominais coletadas. Cada projeto de parlamentar é atribuído ao grupo do primeiro autor. Os projetos do Poder Executivo, de comissões, do Senado como Casa, de tribunais e de outros órgãos contam no total e aparecem numa linha própria, porque não têm autor de um grupo político. A média por parlamentar divide os projetos do grupo por todos que passaram por ele no período, inclusive suplentes e quem deixou o mandato. A pauta da direita segue a mesma classificação usada no resto do site. Nas votações, o grupo fica do lado vencedor quando a maioria dos seus integrantes que votaram sim ou não acompanhou o resultado final. Votações sem resultado de aprovação ou rejeição registrado e empates dentro do grupo ficam fora da conta. A situação de cada projeto (em tramitação, aprovado em ao menos uma Casa, transformado em lei ou arquivado) é lida todos os dias nos arquivos de dados abertos da Câmara e na API do Senado. Um projeto conta como aprovado quando já passou pelo plenário de uma Casa, ou pela comissão quando ela decide em caráter terminativo, e seguiu para a outra Casa, para a sanção ou virou lei. Na análise por tema, valem os temas identificados nas ementas, e um mesmo projeto pode contar em mais de um tema. Os números são recalculados todos os dias pelo robô.</p>
     <h3>Biografias</h3>
     <p>A biografia de cada parlamentar é escrita por um modelo de IA a partir de duas fontes públicas, os dados oficiais da Câmara dos Deputados ou do Senado Federal e o verbete da Wikipédia em português. O modelo é instruído a não acrescentar nenhum fato que não esteja nessas fontes e a manter um tom descritivo, sem juízos. Partido e situação do mandato vêm sempre dos dados oficiais, porque o verbete pode estar desatualizado. A equipe revisa os textos, e a versão revisada prevalece sobre a da IA. Cada ficha traz os links das fontes usadas e do perfil oficial do parlamentar.</p>
     <h3>Emendas parlamentares</h3>
@@ -825,7 +843,8 @@ function desenharMetodo(){
     <h3>Limites</h3>
     <ul>
       <li>A classificação lê só a ementa e não substitui a leitura do texto integral.</li>
-      <li>Votações simbólicas, em que não há registro do voto de cada parlamentar, e votações secretas ficam de fora.</li>
+      <li>Votações simbólicas, em que não há registro do voto de cada parlamentar, e votações secretas ficam de fora dos índices. Nas votações-chave, as simbólicas do plenário da Câmara aparecem com a orientação das bancadas.</li>
+      <li>As votações-chave são escolhidas pela equipe, por separar o governo da oposição. A lista fica na aba Balanço e na ficha de cada parlamentar.</li>
       <li>O partido de cada parlamentar nas votações é o da data do voto. Nos projetos, é o partido mais recente.</li>
       <li>Nas emendas, a ligação ao autor é feita pelo nome e cobre a maior parte do valor, mas não todo. A parcela que não pôde ser ligada a um parlamentar fica fora dos totais por grupo.</li>
     </ul>
@@ -844,7 +863,7 @@ function textoComp(ref){
     const it = D.prop.find(x => x.c === id) || (D.ver[id] && { c: id, e: D.ver[id].ementa, a: D.ver[id].autores, k: D.ver[id].casa, i: D.ver[id].i, x: D.ver[id].x || {} });
     if (!it) return '';
     const ver = D.ver[id];
-    const autores = (it.a || []).slice(0, 3).map(k => { const p = D.indice[k]; return p ? `${p.n} (${nomePartido(p.p, p.s)}/${p.uf || ''})` : ''; }).filter(Boolean).join('; ');
+    const autores = (it.a || []).slice(0, 3).map(k => { const p = D.indice[k]; return p ? `${p.n} (${nomePartido(p.p, p.s)}/${p.uf || ''})` : ''; }).filter(Boolean).join('; ') || autoriaFora(it);
     return [`*${it.c}*${autores ? '\nAutoria de ' + autores : ''}`, it.e, ver && ver.nota ? `✅ *Checagem da equipe.* ${ver.nota}` : '',
       linkProp(it) ? `Ficha oficial\n${linkProp(it)}` : '', `*Os exterminadores do futuro*, observatório da direita no Congresso\n${base()}?p=${encodeURIComponent(id)}`].filter(Boolean).join('\n\n');
   }
@@ -866,10 +885,62 @@ async function copiar(ref, b){
   const antes = b.textContent; b.textContent = ok ? 'Copiado' : 'Não foi possível copiar'; setTimeout(() => { b.textContent = antes; }, 2000);
 }
 
+// ---------------------------------------------------------------- votações-chave
+// Escolhidas pela equipe. Cada matéria reúne a urgência, os destaques e o mérito, nominais e simbólicos.
+const ORI_TXT = { S: 'sim', N: 'não', L: 'liberou', O: 'obstrução', A: 'abstenção' };
+const resTxt = r => r === 'A' ? 'aprovada' : r === 'R' ? 'rejeitada' : '';
+function votoChave(k, p, v){
+  const casa = D.chave.votos[p.c] || { ids: [], v: {} };
+  const i = casa.ids.indexOf(v.id); if (i < 0) return '';
+  return (casa.v[k.slice(1)] || '')[i] || '';
+}
+function votosChaveHTML(k, p){
+  const linhas = [];
+  for (const it of D.chave.itens) for (const v of it.vot) {
+    if (v.k !== p.c || v.simb) continue;
+    const voto = votoChave(k, p, v);
+    const ref = v.gov || v.gv, rotRef = v.gov ? 'o governo' : 'a esquerda';
+    const comGov = !voto || voto === '.' || !ref || !['S', 'N'].includes(ref) || !['S', 'N'].includes(voto) ? '' : voto === ref ? `com ${rotRef}` : `contra ${rotRef}`;
+    linhas.push(`<div><span class="meta">${dataBR(v.d)}</span><span><b>${esc(it.t || it.c)}</b> ${esc(it.c)}</span><span>${voto && voto !== '.' ? esc(VOTO[voto] || (voto === '-' ? 'presente, sem voto' : voto)) : '<span class="meta">sem registro</span>'}</span>
+      <small>${esc(corta(v.desc || '', 140))}${comGov ? ` · votou ${comGov}` : ''}</small></div>`);
+  }
+  return linhas.join('') || '<p class="meta">Sem votos registrados nas votações-chave.</p>';
+}
+const GRUPOS_CHAVE = ['extrema', 'direita', 'centro', 'esquerda'];
+// Uma linha por votação, uma coluna por grupo, com sim × não. Simbólicas trazem a orientação das bancadas.
+function tabelaChave(vot){
+  const cel = (v, g) => { const x = (v.gr || {})[g] || {}; const s = x.S || 0, n = x.N || 0;
+    return `<td title="${NOME_GRUPO[g]}: ${s} sim, ${n} não${(x.A || 0) + (x.O || 0) ? `, ${(x.A || 0) + (x.O || 0)} abstenção ou obstrução` : ''}">${fmt(s)} × ${fmt(n)}</td>`; };
+  return `<div class="tabela-rolar"><table><thead><tr><th>Votação</th>${GRUPOS_CHAVE.map(g => `<th>${NOME_GRUPO[g]}</th>`).join('')}</tr></thead><tbody>
+    ${vot.map(v => `<tr><td><b>${dataBR(v.d)}</b>, ${esc(CASA[v.k])}${v.pl ? '' : ', ' + esc(v.o)}. ${esc(corta(v.desc || '', 150))}${resTxt(v.res) ? ` <b>${resTxt(v.res)}</b>.` : ''}${v.gov ? ` Governo orientou ${ORI_TXT[v.gov] || v.gov}${v.op ? `, oposição ${ORI_TXT[v.op] || v.op}` : ''}.` : ''}</td>
+      ${v.simb ? `<td colspan="4" class="meta">Simbólica, sem voto de cada parlamentar${v.ori ? '. Orientações: ' + esc(Object.entries(v.ori).map(([b, o]) => `${b} ${String(o).toLowerCase()}`).join(', ')) : ''}</td>` : GRUPOS_CHAVE.map(g => cel(v, g)).join('')}</tr>`).join('')}
+  </tbody></table></div><p class="meta">Em cada grupo, votos sim × votos não.</p>`;
+}
+function secaoChave(casa){
+  if (!D.chave || !D.chave.itens.length) return '';
+  const itens = D.chave.itens.map(it => ({ it, vot: it.vot.filter(v => casa === 'T' || v.k === casa) })).filter(x => x.vot.length);
+  if (!itens.length) return '';
+  return `<div class="secao"><h2 class="titulo">Votações-chave</h2>
+    <p class="sub">Votações escolhidas pela equipe por separar o governo da oposição. Cada matéria reúne a urgência, os destaques e o mérito. O grupo de cada parlamentar é o usado no resto do site.</p>
+    ${itens.map(({ it, vot }) => `<div class="vchave"><h3>${esc(it.t || it.c)}</h3>
+      <p class="meta">${esc(it.c)}${autoriaFora(it) ? `, de autoria do ${esc(autoriaFora(it))}` : ''}</p>
+      <p class="ementa">${esc(corta(it.e || '', 320))}</p>${it.nota ? `<p class="motivo"><b>Por que importa.</b> ${esc(it.nota)}</p>` : ''}
+      ${tabelaChave(vot)}
+    </div>`).join('')}</div>`;
+}
+
 // ---------------------------------------------------------------- balanço
 // Peso de cada grupo na produção de projetos e nas votações (resumo.blocos, calculado pelo robô).
 const COR_GRUPO = { extrema: 'var(--ext)', direita: 'var(--dir)', centro: 'var(--g-cen)', esquerda: 'var(--contra)' };
-const NOME_GRUPO = { extrema: 'Extrema-direita', direita: 'Direita', centro: 'Centro-direita', esquerda: 'Esquerda' };
+const NOME_GRUPO = { extrema: 'Extrema-direita', direita: 'Direita', centro: 'Centro-direita', esquerda: 'Esquerda', fora: 'Executivo e outros' };
+COR_GRUPO.fora = 'var(--ink-3)';
+// Projetos sem autor parlamentar (resumo.blocos.X.fora): Poder Executivo, comissões, Senado como Casa, tribunais e outros órgãos.
+const TIPO_FORA = { executivo: ['projeto do Poder Executivo', 'projetos do Poder Executivo'], comissao: ['de comissão ou da Mesa', 'de comissões e das Mesas'], senado: ['do Senado como Casa', 'do Senado como Casa'], judiciario: ['do Judiciário', 'do Judiciário'], mp: ['do Ministério Público ou da Defensoria', 'do Ministério Público e da Defensoria'], outro: ['de outro órgão', 'de outros órgãos'] };
+const foraTxt = f => listaE(Object.entries(f.tipos || {}).sort((a, b) => b[1] - a[1]).map(([t, n]) => `${fmt(n)} ${t === 'executivo' ? TIPO_FORA[t][n === 1 ? 0 : 1] : (n === 1 ? 'projeto ' : 'projetos ') + (TIPO_FORA[t] || TIPO_FORA.outro)[n === 1 ? 0 : 1]}`));
+function linhaFora(campo, total, rot){
+  const f = (D.resumo && D.resumo.blocos && (D.resumo.blocos[(est.bal || {}).casa || 'T'] || {}).fora); if (!f) return [];
+  return [{ g: 'fora', v: pct(campo(f), total), txt: fmtPct(pct(campo(f), total)), det: `${fmt(campo(f))} ${rot}`, dica: `Executivo e outros órgãos: ${fmt(campo(f))} de ${fmt(total)} ${rot}` }];
+}
 const pct = (a, b) => b ? (100 * a / b) : 0;
 const fmtPct = x => x.toLocaleString('pt-BR', { maximumFractionDigits: 1, minimumFractionDigits: x < 10 && x % 1 ? 1 : 0 }) + '%';
 function graficoBlocos(titulo, sub, linhas, maximo, nota){
@@ -895,33 +966,35 @@ function desenharBalanco(){
       <div class="bal-filtro"><select id="bal-casa" aria-label="Casa">${[['T', 'Câmara e Senado'], ['C', 'Câmara dos Deputados'], ['S', 'Senado Federal']].map(([v, t]) => `<option value="${v}" ${est.bal.casa === v ? 'selected' : ''}>${t}</option>`).join('')}</select>
         <a class="btn" href="dossie.html?tipo=balanco&casa=${est.bal.casa}" target="_blank" rel="noopener">Gerar dossiê do balanço</a></div>
       <div class="bal-lede">
-        <p><b>${fmtPct(pct(blocoProp, b.prop))}</b>dos ${fmt(b.prop)} projetos apresentados por parlamentares saíram da direita e da extrema-direita</p>
+        <p><b>${fmtPct(pct(blocoProp, b.prop))}</b>dos ${fmt(b.prop)} projetos apresentados saíram da direita e da extrema-direita${b.fora ? `; ${fmtPct(pct(b.fora.prop, b.prop))} vieram do Poder Executivo e de outros órgãos` : ''}</p>
         <p><b>${fmtPct(pct(b.pauta, b.prop))}</b>de todos os projetos fazem avançar alguma pauta da direita, ${fmtPct(pct(b.pautaExtrema, b.prop))} com grau de extrema-direita</p>
         ${b.comSit ? `<p><b>${fmtPct(pct(g.extrema.aprovada + g.direita.aprovada, b.aprovada))}</b>dos ${fmt(b.aprovada)} projetos aprovados em ao menos uma Casa são da direita e da extrema-direita, que apresentaram ${fmtPct(pct(blocoProp, b.prop))} do total</p>` : ''}
         <p><b>${fmtPct(pct(g.extrema.venceu, g.extrema.vot))}</b>das votações nominais tiveram a maioria da extrema-direita do lado vencedor, contra ${fmtPct(pct(g.direita.venceu, g.direita.vot))} da direita</p>
       </div>
       <div class="bal-graficos">
         ${graficoBlocos('Projetos apresentados', 'Parte de cada grupo no total de projetos, pelo primeiro autor.',
-          G.map(x => ({ g: x, v: pct(g[x].prop, b.prop), txt: fmtPct(pct(g[x].prop, b.prop)), det: `${fmt(g[x].prop)} projetos`, dica: `${NOME_GRUPO[x]}: ${fmt(g[x].prop)} de ${fmt(b.prop)} projetos` })), 50,
-          `A centro-direita reúne partidos que oscilam entre o governo e a oposição. Projetos de parlamentares sem partido ficam de fora.`)}
+          [...G.map(x => ({ g: x, v: pct(g[x].prop, b.prop), txt: fmtPct(pct(g[x].prop, b.prop)), det: `${fmt(g[x].prop)} projetos`, dica: `${NOME_GRUPO[x]}: ${fmt(g[x].prop)} de ${fmt(b.prop)} projetos` })), ...linhaFora(f => f.prop, b.prop, 'projetos')], 50,
+          `A centro-direita reúne partidos que oscilam entre o governo e a oposição. ${b.fora ? `A linha do Executivo e outros órgãos reúne ${foraTxt(b.fora)}. ` : ''}Projetos de parlamentares sem partido contam no total, sem grupo.`)}
         ${graficoBlocos('Projetos por parlamentar', 'Média de projetos apresentados por integrante do grupo.',
           G.map(x => ({ g: x, v: g[x].prop / (g[x].membros || 1), txt: fmt(Math.round(g[x].prop / (g[x].membros || 1))), det: `${fmt(g[x].membros)} parlamentares`, dica: `${NOME_GRUPO[x]}: ${fmt(g[x].prop)} projetos de ${fmt(g[x].membros)} parlamentares` })), maxPC,
           `Conta todos que passaram pelo grupo desde ${dataBR(r.inicio)}, inclusive suplentes e quem deixou o mandato.`)}
         ${graficoBlocos('Pauta da direita na produção de cada grupo', 'Parte dos projetos do próprio grupo que faz avançar alguma pauta da direita.',
-          G.map(x => ({ g: x, v: pct(g[x].pauta, g[x].prop), txt: fmtPct(pct(g[x].pauta, g[x].prop)), det: `${fmt(g[x].pauta)} projetos`, dica: `${NOME_GRUPO[x]}: ${fmt(g[x].pauta)} de ${fmt(g[x].prop)} projetos com pauta da direita` })), 100,
+          [...G.map(x => ({ g: x, v: pct(g[x].pauta, g[x].prop), txt: fmtPct(pct(g[x].pauta, g[x].prop)), det: `${fmt(g[x].pauta)} projetos`, dica: `${NOME_GRUPO[x]}: ${fmt(g[x].pauta)} de ${fmt(g[x].prop)} projetos com pauta da direita` })), ...(b.fora ? [{ g: 'fora', v: pct(b.fora.pauta, b.fora.prop), txt: fmtPct(pct(b.fora.pauta, b.fora.prop)), det: `${fmt(b.fora.pauta)} projetos`, dica: `Executivo e outros órgãos: ${fmt(b.fora.pauta)} de ${fmt(b.fora.prop)} projetos com pauta da direita` }] : [])], 100,
           `A classificação das pautas é feita por IA e conferida pela equipe. Veja a aba Como funciona.`)}
         ${b.comSit ? graficoBlocos('Projetos aprovados', 'Parte dos projetos de cada grupo aprovada em ao menos uma Casa ou transformada em lei.',
-          G.map(x => ({ g: x, v: pct(g[x].aprovada, g[x].comSit), txt: fmtPct(pct(g[x].aprovada, g[x].comSit)), det: `${fmt(g[x].aprovada)}, ${fmt(g[x].lei)} viraram lei`, dica: `${NOME_GRUPO[x]}: ${fmt(g[x].aprovada)} aprovados e ${fmt(g[x].lei)} transformados em lei, de ${fmt(g[x].comSit)} projetos com situação conhecida` })),
-          Math.max(...G.map(x => pct(g[x].aprovada, g[x].comSit))) * 1.15,
+          [...G.map(x => ({ g: x, v: pct(g[x].aprovada, g[x].comSit), txt: fmtPct(pct(g[x].aprovada, g[x].comSit)), det: `${fmt(g[x].aprovada)}, ${fmt(g[x].lei)} viraram lei`, dica: `${NOME_GRUPO[x]}: ${fmt(g[x].aprovada)} aprovados e ${fmt(g[x].lei)} transformados em lei, de ${fmt(g[x].comSit)} projetos com situação conhecida` })),
+            ...(b.fora && b.fora.comSit ? [{ g: 'fora', v: pct(b.fora.aprovada, b.fora.comSit), txt: fmtPct(pct(b.fora.aprovada, b.fora.comSit)), det: `${fmt(b.fora.aprovada)}, ${fmt(b.fora.lei)} viraram lei`, dica: `Executivo e outros órgãos: ${fmt(b.fora.aprovada)} aprovados de ${fmt(b.fora.comSit)} com situação conhecida` }] : [])],
+          Math.max(...G.map(x => pct(g[x].aprovada, g[x].comSit)), b.fora && b.fora.comSit ? pct(b.fora.aprovada, b.fora.comSit) : 0) * 1.15,
           `Situação atual de ${fmt(b.comSit)} projetos, lida todos os dias nas APIs da Câmara e do Senado. Muitos projetos ainda estão em tramitação, então a taxa tende a crescer com o tempo, sobretudo para os mais recentes.`) : ''}
         ${b.comSit ? graficoBlocos('Peso nas aprovações', 'Parte de cada grupo no total de projetos aprovados.',
-          G.map(x => ({ g: x, v: pct(g[x].aprovada, b.aprovada), txt: fmtPct(pct(g[x].aprovada, b.aprovada)), det: `${fmt(g[x].aprovada)} de ${fmt(b.aprovada)}`, dica: `${NOME_GRUPO[x]}: ${fmt(g[x].aprovada)} dos ${fmt(b.aprovada)} projetos aprovados` })), 50,
+          [...G.map(x => ({ g: x, v: pct(g[x].aprovada, b.aprovada), txt: fmtPct(pct(g[x].aprovada, b.aprovada)), det: `${fmt(g[x].aprovada)} de ${fmt(b.aprovada)}`, dica: `${NOME_GRUPO[x]}: ${fmt(g[x].aprovada)} dos ${fmt(b.aprovada)} projetos aprovados` })), ...linhaFora(f => f.aprovada, b.aprovada, 'aprovados')], 50,
           `Compare com o gráfico de projetos apresentados. Quando a parte nas aprovações é maior que a parte nos projetos apresentados, o grupo aprova proporcionalmente mais do que propõe.`) : ''}
         ${graficoBlocos('Do lado vencedor nas votações', 'Votações nominais em que a maioria do grupo votou como o resultado final.',
           G.map(x => ({ g: x, v: pct(g[x].venceu, g[x].vot), txt: fmtPct(pct(g[x].venceu, g[x].vot)), det: `${fmt(g[x].venceu)} de ${fmt(g[x].vot)}`, dica: `${NOME_GRUPO[x]}: maioria do lado vencedor em ${fmt(g[x].venceu)} de ${fmt(g[x].vot)} votações` })), 100,
           `Base de ${fmt(b.vot)} votações nominais com resultado registrado de aprovação ou rejeição, em plenário e nas comissões. Empates dentro do grupo não entram na conta.`)}
       </div>
     </div>
+    ${secaoChave(est.bal.casa)}
     ${b.temas && r.temas ? `<div class="secao" id="bal-temas"></div>` : ''}`;
   $('#bal-casa').addEventListener('change', e => { est.bal.casa = e.target.value; desenharBalanco(); });
   if (b.temas && r.temas) desenharTemasBalanco(b, r.temas);

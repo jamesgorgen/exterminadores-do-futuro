@@ -7,8 +7,10 @@
 //    pelos votos e pela autoria das proposições.
 // 2. Proposições. Na Câmara, por autoria de cada deputado e por ano. No Senado, quinzena a quinzena,
 //    lendo os autores no texto de autoria. Tipos PL, PLP, PEC e PDL.
+//    Também os projetos sem autor parlamentar (Executivo, comissões, outros órgãos), que contam na produção.
 // 3. Votações nominais de plenário e de comissões.
 //    Câmara, pelos arquivos anuais completos (votações, votos, orientações e objetos), com a API como reserva.
+//    Requerimentos, destaques e emendas ficam sob a matéria principal. Simbólicas do plenário da Câmara à parte.
 //    Senado, plenário pela API de votações e comissões pela API de votações em comissão.
 // 4. Classificação por IA (Claude Haiku) de cada proposição e de cada votação sem proposição conhecida,
 //    pelas pautas de pautas.js. O que já foi classificado fica em dados/classificacoes.json e não é refeito.
@@ -275,7 +277,7 @@ function guardarProposicao(it) {
     ja.a = [...new Set([...(ja.a || []), ...(it.a || [])])];
     ja.p = [...new Set([...(ja.p || []), ...(it.p || [])])];
     if (!ja.k.includes(it.k[0])) ja.k = [...ja.k, ...it.k];
-    for (const f of ['i', 'l', 'e', 'd', 'u', 'ss']) if (!ja[f] && it[f]) ja[f] = it[f];
+    for (const f of ['i', 'l', 'e', 'd', 'u', 'ss', 'au', 'ta']) if (!ja[f] && it[f]) ja[f] = it[f];
   } else mapa.set(it.c, it);
 }
 
@@ -326,10 +328,17 @@ async function coletarProposicoesSenado(ini, fim) {
       const autoria = String(pega(d, 'autoria') || '');
       // "Senador Fulano (PL/SP), Senadora Beltrana (PT/BA)"
       const autores = [...autoria.matchAll(/([^,(]+?)\s*\(([^()\/]+)\/([A-Z]{2})\)/g)];
-      if (!autores.length) continue;
       const m = /^(\S+)\s+(\d+)\/(\d{4})/.exec(String(pega(d, 'identificacao') || ''));
       if (!m) continue;
       const chave = `${m[1]} ${parseInt(m[2], 10)}/${m[3]}`;
+      // Sem senador entre os autores: comissão, Mesa, Presidência da República ou outro órgão. Entra sem grupo político.
+      if (!autores.length) {
+        if (!autoria.trim() || /c[aâ]mara dos deputados/i.test(autoria)) continue;
+        guardarProposicao({ c: chave, k: ['S'], d: String(pega(d, 'dataApresentacao') || '').slice(0, 10), e: String(pega(d, 'ementa') || ''),
+          a: [], p: [], i: pega(d, 'codigoMateria'), ss: String(pega(d, 'situacaoAtual') || ''), au: autoria.slice(0, 160), ta: tipoAutoria(autoria) });
+        contar('proposicoes_senado_sem_autor_parlamentar');
+        continue;
+      }
       const ids = [], partidos = [];
       for (const [, nome, sigla, uf] of autores) {
         const cn = chaveNome(nome);
@@ -342,6 +351,102 @@ async function coletarProposicoesSenado(ini, fim) {
       contar('proposicoes_senado', 1);
     }
   }), 3);
+}
+
+// ------------------------------------------------------------------ 2c. proposições sem autor parlamentar
+// Projetos do Poder Executivo, de comissões, do Senado como Casa, de tribunais e de outros órgãos.
+// Contam na produção legislativa total, ficam sem grupo político e passam pela classificação e pela revisão.
+// Câmara: arquivos anuais de proposições e de autores. Quem não tiver autor no arquivo é conferido na API.
+export function tipoAutoria(texto) {
+  const t = Motor.normalizar(String(texto || ''));
+  if (/poder executivo|presidencia da republica|presidente da republica/.test(t)) return 'executivo';
+  if (/comissao|mesa diretora|mesa do senado|mesa da camara|\bcpi\b|\bcpmi\b|conselho de etica/.test(t)) return 'comissao';
+  if (/senado/.test(t)) return 'senado';
+  if (/tribunal|supremo|justica|judiciario/.test(t)) return 'judiciario';
+  if (/ministerio publico|procurador|defensoria/.test(t)) return 'mp';
+  return 'outro';
+}
+// Autores de uma proposição (registros do arquivo anual ou da API) -> deputados, senadores ou órgão.
+export function lerAutores(lista, porNomeSenador = new Map()) {
+  const deps = [], sens = [], orgaos = [];
+  const ordenados = [...lista].sort((x, y) => (+pega(x, 'ordemAssinatura') || 99) - (+pega(y, 'ordemAssinatura') || 99));
+  for (const r of ordenados) {
+    const tipo = String(pega(r, 'tipoAutor', 'tipo') || '');
+    const nome = String(pega(r, 'nomeAutor', 'nome') || '').trim();
+    const cod = String(pega(r, 'codTipoAutor', 'codTipo') || '');
+    const uri = String(pega(r, 'uriAutor', 'uri') || '');
+    const idDep = pega(r, 'idDeputadoAutor') || (/\/deputados\/(\d+)/.exec(uri) || [])[1];
+    if (idDep && (cod === '10000' || /deputad/i.test(tipo) || /\/deputados\//.test(uri))) { deps.push({ k: 'C' + idDep, nome }); continue; }
+    if (/senador/i.test(tipo)) { const k = porNomeSenador.get(chaveNome(nome)); if (k) { sens.push({ k, nome }); continue; } }
+    if (nome || tipo) orgaos.push({ nome: nome || tipo, tipo });
+  }
+  return { deps, sens, orgaos };
+}
+async function coletarSemAutorParlamentar(anos) {
+  const porNomeSen = new Map(Object.entries(parlamentares.p).filter(([k]) => k[0] === 'S').map(([k, v]) => [chaveNome(v.n), k]));
+  const conhecida = (chave, a) => { const it = arquivoProposicoes(a).get(chave); return !!(it && ((it.a || []).length || it.au)); };
+  for (const a of anos) {
+    log(`Câmara, proposições de ${a} sem autor parlamentar`);
+    const base = n => `${ARQ_CAMARA}/${n}/json/${n}-${a}.json`;
+    const [props, autores] = await Promise.all(['proposicoes', 'proposicoesAutores']
+      .map(n => baixar(base(n), { tempo: 600000, tentativas: 3 }).then(registros).catch(e => { erro(`arquivo ${n}-${a}`, e); return null; })));
+    let lista = props;
+    if (!lista) {
+      // Reserva: a lista da API, página a página.
+      lista = [];
+      let pagina = 1, total = 1;
+      while (pagina <= total) {
+        try {
+          const q = new URLSearchParams({ siglaTipo: TIPOS.join(','), ano: String(a), itens: '100', pagina: String(pagina), ordem: 'ASC', ordenarPor: 'id' });
+          const j = await baixar(`${API_CAMARA}/proposicoes?${q}`);
+          lista = lista.concat(registros(j)); total = Motor.ultimaPagina(j);
+        } catch (e) { erro(`lista de proposições da Câmara ${a}`, e); break; }
+        pagina++;
+      }
+    }
+    if (autores) amostra('camara_arq_autor', autores[0]);
+    const autoresDe = new Map();
+    for (const r of autores || []) {
+      const id = String(pega(r, 'idProposicao') || (/proposicoes\/(\d+)/.exec(String(pega(r, 'uriProposicao') || '')) || [])[1] || '');
+      if (!id) continue;
+      if (!autoresDe.has(id)) autoresDe.set(id, []);
+      autoresDe.get(id).push(r);
+    }
+    const candidatas = [];
+    for (const d of lista) {
+      const sig = String(pega(d, 'siglaTipo') || '');
+      if (!TIPOS.includes(sig)) continue;
+      const chave = chaveMateria(sig, pega(d, 'numero'), pega(d, 'ano') || a);
+      if (!chave || +chave.split('/')[1] !== a || conhecida(chave, a)) continue;
+      candidatas.push({ chave, id: String(pega(d, 'id') || ''), d: String(pega(d, 'dataApresentacao') || '').slice(0, 10) || `${a}-01-01`, e: String(pega(d, 'ementa') || '') });
+    }
+    // Quem não tem autor no arquivo é lido na API (com teto, para não travar a execução).
+    const semAutor = candidatas.filter(c => c.id && !autoresDe.has(c.id)).slice(0, 4000);
+    await Motor.emParalelo(semAutor.map(c => async () => {
+      try { autoresDe.set(c.id, registros(await baixar(`${API_CAMARA}/proposicoes/${c.id}/autores`))); }
+      catch (e) { contar('autores_api_erro'); }
+    }), 6);
+    let n = 0;
+    for (const c of candidatas) {
+      const lidos = autoresDe.get(c.id); if (!lidos || !lidos.length) { contar('proposicoes_sem_autor_conhecido'); continue; }
+      const { deps, sens, orgaos } = lerAutores(lidos, porNomeSen);
+      const base = { c: c.chave, k: ['C'], d: c.d, e: c.e, i: +c.id || c.id };
+      if (deps.length || sens.length) {
+        // Parlamentar que a coleta por autor não trouxe.
+        for (const x of deps) if (!parlamentares.p[x.k]) registrarParlamentar(x.k, { n: x.nome, c: 'C' });
+        const ks = [...deps, ...sens].map(x => x.k);
+        guardarProposicao({ ...base, a: ks, p: [...new Set(ks.map(k => (parlamentares.p[k] || {}).p).filter(Boolean))] });
+        contar('proposicoes_parlamentar_recuperadas');
+      } else {
+        const au = orgaos.map(o => o.nome).filter((x, i, l) => l.indexOf(x) === i).join(', ').slice(0, 160);
+        guardarProposicao({ ...base, a: [], p: [], au, ta: tipoAutoria(orgaos.map(o => `${o.tipo} ${o.nome}`).join(' ')) });
+        contar('proposicoes_camara_sem_autor_parlamentar');
+      }
+      n++;
+    }
+    log(`  ${n} proposições acrescentadas em ${a} (${candidatas.length} sem autor conhecido antes)`);
+    if (props && autores) (estado.semAutor || (estado.semAutor = {}))[a] = HOJE;
+  }
 }
 
 // ------------------------------------------------------------------ 2b. relatorias do Senado
@@ -429,10 +534,53 @@ function guardarVotacao(v) {
   arquivoVotacoes(ano(v.d)).set(v.id, sai);
   contar('votacoes_' + v.k + (v.pl ? '_plenario' : '_comissao'));
 }
+// Votações simbólicas de plenário da Câmara: sem voto de cada deputado, mas com o resultado e a orientação das bancadas.
+const simbolicasPorAno = {};
+function arquivoSimbolicas(a) {
+  if (!simbolicasPorAno[a]) simbolicasPorAno[a] = new Map((lerJson(`votacoes-simbolicas-${a}.json`, { itens: [] }).itens || []).map(v => [v.id, v]));
+  return simbolicasPorAno[a];
+}
+function guardarSimbolica(v) {
+  if (!v || !v.d) return;
+  if (v.ori && !Object.keys(v.ori).length) delete v.ori;
+  // Sem orientação e sem matéria, não há o que mostrar.
+  if (!v.ori && !v.mat && !/projeto|proposta|medida provis|\b(pl|plp|pec|pdl|mpv)\b/i.test(v.desc || '')) return;
+  if (v.ori === undefined) delete v.ori;
+  arquivoSimbolicas(ano(v.d)).set(v.id, v);
+  contar('votacoes_simbolicas_plenario');
+}
 // Percorre os votos agrupados como pares [chave do parlamentar, voto].
 function* votosDe(vt) { for (const [c, lista] of Object.entries(vt.v || {})) for (const id of lista) yield [vt.k + id, c]; }
 
 const chaveMateria = (sigla, numero, anoM) => (sigla && numero && anoM) ? `${String(sigla).trim()} ${parseInt(numero, 10)}/${anoM}` : '';
+
+// Matéria principal de uma votação de requerimento, destaque, emenda ou parecer: o projeto citado na ementa
+// ou na descrição ("Requer urgência para o Projeto de Lei nº 4.675, de 2025" -> PL 4675/2025).
+// Assim a urgência, os destaques e o mérito ficam sob a mesma chave e herdam a mesma classificação.
+const PRINCIPAIS = ['PL', 'PLP', 'PEC', 'PDL', 'MPV', 'PLV', 'PLN'];
+const NOMES_MATERIA = [
+  [/projeto de lei complementar/, 'PLP'], [/projeto de lei de conversao/, 'PLV'], [/projeto de lei do congresso nacional/, 'PLN'],
+  [/projeto de decreto legislativo/, 'PDL'], [/proposta de emenda (a|à) constituicao/, 'PEC'], [/medida provisoria/, 'MPV'], [/projeto de lei/, 'PL']
+];
+export function materiaPrincipal(vt) {
+  const sig = String(vt.mat || '').split(' ')[0];
+  if (vt.mat && PRINCIPAIS.includes(sig)) return '';
+  for (const txt of [vt.me, vt.desc]) {
+    const t = Motor.normalizar(String(txt || ''));
+    if (!t) continue;
+    let melhor = null;
+    // Por extenso: "projeto de lei complementar nº 299, de 2026" ou "... n. 299/2026".
+    for (const [re, s] of NOMES_MATERIA) {
+      const r = new RegExp(re.source + '\\s*(?:n[ºo°.]*\\s*)?(\\d[\\d.]*)\\s*(?:,\\s*de\\s*|/)\\s*(\\d{4})', 'g');
+      let m; while ((m = r.exec(t))) if (!melhor || m.index < melhor.i) melhor = { i: m.index, c: `${s} ${parseInt(m[1].replace(/\./g, ''), 10)}/${m[2]}` };
+    }
+    // Por sigla: "PL 5874/2025", "PL-5874/2025", "PLP nº 299/2026".
+    const r2 = /\b(plp|plv|pln|pdl|pec|mpv|pl)\s*[-nº°o.]*\s*(\d[\d.]*)\s*\/\s*(\d{4})/g;
+    let m; while ((m = r2.exec(t))) if (!melhor || m.index < melhor.i) melhor = { i: m.index, c: `${m[1].toUpperCase()} ${parseInt(m[2].replace(/\./g, ''), 10)}/${m[3]}` };
+    if (melhor) return melhor.c;
+  }
+  return '';
+}
 
 // Câmara: arquivos anuais completos.
 const ultimaVotacaoArquivo = {};
@@ -477,9 +625,15 @@ async function coletarVotacoesCamaraArquivos(a) {
   ultimaVotacaoArquivo[a] = '';
   for (const r of vot) {
     const id = pega(r, 'id'); const x = porVotacao.get(id);
-    if (!x) continue;   // votação simbólica, sem votos nominais
     const orgao = String(pega(r, 'siglaOrgao') || '');
     const ob = objetos.get(id) || {};
+    if (!x) {
+      // Votação simbólica, sem votos nominais. No plenário, guarda a orientação das bancadas.
+      if (orgao.toUpperCase() === 'PLEN') guardarSimbolica({ id: 'C:' + id, k: 'C', d: String(pega(r, 'dataHoraRegistro', 'data') || '').slice(0, 10),
+        desc: String(pega(r, 'descricao') || '').slice(0, 400), mat: ob.c || '', me: String(ob.e || '').slice(0, 400),
+        res: String(pega(r, 'aprovacao')) === '1' ? 'A' : String(pega(r, 'aprovacao')) === '0' ? 'R' : '', ori: orient.get(id) });
+      continue;
+    }
     guardarVotacao({ id: 'C:' + id, k: 'C', o: orgao, pl: orgao.toUpperCase() === 'PLEN',
       d: String(pega(r, 'dataHoraRegistro', 'data') || '').slice(0, 10), desc: String(pega(r, 'descricao') || '').slice(0, 600),
       mat: ob.c || '', me: String(ob.e || '').slice(0, 700), res: String(pega(r, 'aprovacao')) === '1' ? 'A' : String(pega(r, 'aprovacao')) === '0' ? 'R' : '',
@@ -508,7 +662,17 @@ async function coletarVotacoesCamaraApi(ini, fim) {
         try {
           // A Câmara responde 404 quando a votação foi simbólica e não tem votos nominais.
           const vj = registros(await baixar(`${API_CAMARA}/votacoes/${id}/votos`).catch(e => { if (/http 404/.test(e.message)) return []; throw e; }));
-          if (!vj.length) { contar('camara_api_votacao_sem_votos'); return; }
+          if (!vj.length) {
+            contar('camara_api_votacao_sem_votos');
+            const orgao = String(pega(r, 'siglaOrgao') || '');
+            if (orgao.toUpperCase() === 'PLEN') {
+              let ori;
+              try { ori = {}; registros(await baixar(`${API_CAMARA}/votacoes/${id}/orientacoes`)).forEach(o => { const bb = pega(o, 'siglaPartidoBloco', 'siglaBancada'); const oo = pega(o, 'orientacaoVoto', 'orientacao'); if (bb && oo) ori[bb] = oo; }); } catch (e) { ori = undefined; }
+              guardarSimbolica({ id: 'C:' + id, k: 'C', d: String(pega(r, 'dataHoraRegistro', 'data') || '').slice(0, 10), desc: String(pega(r, 'descricao') || '').slice(0, 400),
+                mat: '', me: '', res: String(pega(r, 'aprovacao')) === '1' ? 'A' : String(pega(r, 'aprovacao')) === '0' ? 'R' : '', ori });
+            }
+            return;
+          }
           amostra('camara_api_voto', vj[0]);
           const v = {}, ps = {};
           for (const x of vj) {
@@ -925,7 +1089,7 @@ export function calcularBlocos(props, votos, indice, cl, sit = {}) {
     for (const c of ['T', p.c]) { casas[c][p.cl].membros++; if (p.ex) casas[c][p.cl].emExercicio++; }
   }
   for (const it of props) {
-    const a = (it.a || [])[0]; const casa = a ? a[0] : (it.k || [])[0];
+    const a = (it.a || [])[0]; const casa = a ? a[0] : it.ta === 'senado' ? 'S' : (it.k || [])[0];
     if (!['C', 'S'].includes(casa)) continue;
     const x = cl(it.c) || {}, avanca = x.s === 'avanca', g = a && indice[a] && indice[a].cl;
     const st = (sit[it.c] || [])[0] || '';
@@ -933,6 +1097,12 @@ export function calcularBlocos(props, votos, indice, cl, sit = {}) {
     for (const c of ['T', casa]) {
       tot[c].prop++; if (avanca) { tot[c].pauta++; if (x.g === 'extrema') tot[c].pautaExtrema++; }
       if (st) { tot[c].comSit++; if (aprov) tot[c].aprovada++; if (st === 'l') tot[c].lei++; if (st === 'a') tot[c].arquivada++; }
+      // Projetos sem autor parlamentar (Poder Executivo, comissões, outros órgãos): contam no total e aparecem à parte.
+      if (!a && it.ta) {
+        const f = tot[c].fora || (tot[c].fora = { prop: 0, pauta: 0, comSit: 0, aprovada: 0, lei: 0, arquivada: 0, tipos: {} });
+        f.prop++; f.tipos[it.ta] = (f.tipos[it.ta] || 0) + 1; if (avanca) f.pauta++;
+        if (st) { f.comSit++; if (aprov) f.aprovada++; if (st === 'l') f.lei++; if (st === 'a') f.arquivada++; }
+      }
       if (G.includes(g)) {
         const o = casas[c][g]; o.prop++; if (avanca) o.pauta++;
         if (st) { o.comSit++; if (aprov) o.aprovada++; if (st === 'l') o.lei++; if (st === 'a') o.arquivada++; }
@@ -959,6 +1129,48 @@ export function calcularBlocos(props, votos, indice, cl, sit = {}) {
     }
   }
   return Object.fromEntries(Object.keys(casas).map(c => [c, { ...tot[c], grupos: casas[c], temas: temas[c] }]));
+}
+
+// Votações-chave, escolhidas pela equipe (correcoes.json, campo votacoesChave, ou o botão na página de revisão).
+// Para cada matéria: todas as votações nominais e simbólicas ligadas a ela, o placar de cada grupo,
+// a orientação do governo e da oposição e, por parlamentar, uma letra por votação (. = sem registro).
+const ORIENT = o => { const t = Motor.normalizar(String(o || '')); return t.startsWith('sim') ? 'S' : t.startsWith('nao') ? 'N' : t.startsWith('libera') ? 'L' : t.startsWith('obstru') ? 'O' : t.startsWith('absten') ? 'A' : ''; };
+function orientacaoDe(ori, re) { if (!ori) return ''; const k = Object.keys(ori).find(b => re.test(Motor.normalizar(b))); return k ? ORIENT(ori[k]) : ''; }
+export function montarVotacoesChave(config, votacoes, simbolicas, indice, cl, props) {
+  const propDe = new Map(props.map(it => [it.c, it]));
+  const G = ['extrema', 'direita', 'centro', 'esquerda'];
+  const saida = { itens: [], votos: { C: { ids: [], v: {} }, S: { ids: [], v: {} } } };
+  const letras = { C: {}, S: {} };
+  for (const [c, cfg] of Object.entries(config || {})) {
+    if (!cfg) continue;
+    const ligada = vt => (vt.mp || vt.mat) === c || vt.id === c || vt.ck === c;
+    const nominais = votacoes.filter(ligada), simb = simbolicas.filter(v => (v.mp || v.mat) === c || v.id === c);
+    const prop = propDe.get(c) || {};
+    const vot = [];
+    for (const vt of nominais) {
+      const gr = Object.fromEntries([...G, 'sp'].map(g => [g, {}]));
+      for (const [voto, ids] of Object.entries(vt.v || {})) for (const id of ids) {
+        const p = indice[vt.k + id]; const g = p && G.includes(p.cl) ? p.cl : 'sp';
+        gr[g][voto] = (gr[g][voto] || 0) + 1;
+      }
+      vot.push({ id: vt.id, k: vt.k, pl: vt.pl, o: vt.o, d: vt.d, desc: vt.desc, res: vt.res, gov: orientacaoDe(vt.ori, /^governo/), op: orientacaoDe(vt.ori, /^oposicao/),
+        gv: vt.gv, be: vt.be, bd: vt.bd, gr, t: Object.fromEntries(Object.entries(vt.v || {}).map(([x, l]) => [x, l.length])) });
+    }
+    for (const v of simb) vot.push({ id: v.id, k: v.k, pl: true, o: 'PLEN', d: v.d, desc: v.desc, res: v.res, simb: 1, gov: orientacaoDe(v.ori, /^governo/), op: orientacaoDe(v.ori, /^oposicao/), ori: v.ori });
+    vot.sort((x, y) => (x.d || '').localeCompare(y.d || '') || String(x.id).localeCompare(String(y.id)));
+    const primeira = nominais[0] || simb[0] || {};
+    saida.itens.push({ c, t: String(cfg.t || ''), nota: String(cfg.nota || ''), e: prop.e || primeira.me || '', au: prop.au, ta: prop.ta, a: prop.a, i: prop.i, kp: prop.k,
+      x: cl(c), vot });
+    for (const vt of nominais) {
+      const casa = saida.votos[vt.k]; if (!casa) continue;
+      const pos = casa.ids.push(vt.id) - 1;
+      for (const [voto, ids] of Object.entries(vt.v || {})) for (const num of ids) (letras[vt.k][num] || (letras[vt.k][num] = []))[pos] = ['S', 'N', 'A', 'O'].includes(voto) ? voto : '-';
+    }
+  }
+  for (const k of ['C', 'S']) for (const [num, arr] of Object.entries(letras[k])) saida.votos[k].v[num] = Array.from({ length: saida.votos[k].ids.length }, (_, i) => arr[i] || '.').join('');
+  // Mais recentes primeiro.
+  saida.itens.sort((x, y) => String((y.vot[y.vot.length - 1] || {}).d || '').localeCompare(String((x.vot[x.vot.length - 1] || {}).d || '')));
+  return saida;
 }
 
 export function verificarNumeracao(itens, dias = 14) {
@@ -1004,7 +1216,14 @@ export async function executar() {
   await coletarVotacoesSenado(ini, HOJE);
 
   await coletarProposicoesCamara(anos);
-  await coletarProposicoesSenado(ini, HOJE);
+  // Na primeira execução com projetos sem autor parlamentar, o Senado é lido desde o início para trazê-los.
+  const iniSenado = estado.semAutorSenado ? ini : INICIO;
+  await coletarProposicoesSenado(iniSenado, HOJE);
+  estado.semAutorSenado = estado.semAutorSenado || HOJE;
+  // Câmara: o ano corrente todo dia; os anteriores na primeira vez e depois uma vez por mês.
+  const mesAtras = new Date(AGORA - 30 * 86400000).toISOString().slice(0, 10);
+  const anosSemAutor = anosDoPeriodo(INICIO, HOJE).filter(a => a === ano(HOJE) || anos.includes(a) || !(estado.semAutor || {})[a] || estado.semAutor[a] < mesAtras);
+  try { await coletarSemAutorParlamentar(anosSemAutor); } catch (e) { erro('proposições sem autor parlamentar', e); }
   let relatorias = [];
   try { relatorias = await coletarRelatoriasSenado(); } catch (e) { erro('relatorias Senado', e); relatorias = lerJson('relatorias.json', { itens: [] }).itens || []; }
 
@@ -1020,8 +1239,14 @@ export async function executar() {
   const paraClassificar = [];
   const vistos = new Set();
   for (const it of todasPropFinal) if (!Motor.ehHomenagem(it.e || '', TC)) { paraClassificar.push({ chave: it.c, texto: it.e }); vistos.add(it.c); }
+  // Requerimentos, destaques e emendas ficam sob a matéria principal citada na ementa (mp), com a ementa dela.
+  const ementaProp = new Map(todasPropFinal.map(it => [it.c, it.e]));
   for (const vt of todasVot) {
-    if (vt.mat && (vistos.has(vt.mat) || vt.me)) { if (!vistos.has(vt.mat)) { paraClassificar.push({ chave: vt.mat, texto: vt.me }); vistos.add(vt.mat); } vt.ck = vt.mat; }
+    const mp = materiaPrincipal(vt);
+    if (mp) { vt.mp = mp; contar('votacoes_ligadas_a_materia_principal'); } else delete vt.mp;
+    const m = vt.mp || vt.mat;
+    const texto = ementaProp.get(m) || (vt.mp ? [vt.me, vt.desc].filter(Boolean).join(' ') : vt.me);
+    if (m && (vistos.has(m) || texto)) { if (!vistos.has(m)) { paraClassificar.push({ chave: m, texto }); vistos.add(m); } vt.ck = m; }
     else { vt.ck = 'V:' + vt.id; paraClassificar.push({ chave: vt.ck, texto: [vt.desc, vt.me].filter(Boolean).join(' ') }); }
   }
   // Correções da equipe (correcoes.json na raiz) valem por cima da classificação da IA.
@@ -1128,10 +1353,10 @@ export async function executar() {
   // Câmara: arquivo gerado pelo script de relatorias da Câmara (robo/relatorias-camara.mjs).
   for (const r of (lerJson('relatorias-camara.json', { itens: [] }).itens || [])) if (r.at) { const l = relAtual.get(r.c) || []; l.push({ r: r.r, n: r.n, s: r.s, uf: r.uf, cm: r.cm }); relAtual.set(r.c, l); }
   const direita = todasPropFinal.filter(it => cl(it.c).s === 'avanca')
-    .map(it => ({ c: it.c, k: it.k, d: it.d, e: it.e, a: it.a, p: it.p, m: it.m, i: it.i, ss: it.ss, x: cl(it.c), rl: relAtual.get(it.c) }))
+    .map(it => ({ c: it.c, k: it.k, d: it.d, e: it.e, a: it.a, au: it.au, ta: it.ta, p: it.p, m: it.m, i: it.i, ss: it.ss, x: cl(it.c), rl: relAtual.get(it.c) }))
     .sort((x, y) => (y.d || '').localeCompare(x.d || ''));
   gravarJson('proposicoes-direita.json', { gerado: AGORA.toISOString(), itens: direita }, true);
-  const resumoVot = todasVot.map(vt => ({ id: vt.id, k: vt.k, o: vt.o, pl: vt.pl, d: vt.d, desc: vt.desc, mat: vt.mat, me: vt.me, res: vt.res,
+  const resumoVot = todasVot.map(vt => ({ id: vt.id, k: vt.k, o: vt.o, pl: vt.pl, d: vt.d, desc: vt.desc, mat: vt.mat, mp: vt.mp, ck: vt.ck, me: vt.me, res: vt.res,
     bl: vt.bl, blc: vt.blc, gv: vt.gv, disp: vt.disp, venceu: vt.venceu, be: vt.be, bec: vt.bec, bd: vt.bd, bdc: vt.bdc, dispE: vt.dispE, dispD: vt.dispD, vE: vt.vE, vD: vt.vD, ori: vt.ori, x: cl(vt.ck),
     t: Object.fromEntries(Object.entries(vt.v || {}).map(([c, l]) => [c, l.length])) }))
     .sort((x, y) => (y.d || '').localeCompare(x.d || ''));
@@ -1151,6 +1376,20 @@ export async function executar() {
   }
   for (const k of ['C', 'S']) for (const [num, arr] of Object.entries(letras[k])) votosDisp[k].v[num] = Array.from(arr, x => x || '.').join('');
   gravarJson('votos-disputadas.json', votosDisp, true);
+
+  // Votações simbólicas e votações-chave.
+  for (const a of anosDoPeriodo(INICIO, HOJE)) arquivoSimbolicas(a);
+  const todasSimb = Object.values(simbolicasPorAno).flatMap(m => [...m.values()]);
+  for (const v of todasSimb) { const mp = materiaPrincipal(v); if (mp) v.mp = mp; else delete v.mp; }
+  for (const [a, m] of Object.entries(simbolicasPorAno)) {
+    const itens = [...m.values()].sort((x, y) => (y.d || '').localeCompare(x.d || ''));
+    if (itens.length && +a >= 2023) gravarJson(`votacoes-simbolicas-${a}.json`, { ano: +a, itens }, true);
+  }
+  let configChave = {};
+  try { configChave = JSON.parse(fs.readFileSync(path.join(RAIZ, 'correcoes.json'), 'utf8')).votacoesChave || {}; } catch (e) {}
+  const chave = montarVotacoesChave(configChave, todasVot, todasSimb, indice, cl, todasPropFinal);
+  gravarJson('votacoes-chave.json', { gerado: AGORA.toISOString(), ...chave }, true);
+  contar('votacoes_chave', chave.itens.length);
 
   const desde = d => new Date(AGORA - d * 86400000).toISOString().slice(0, 10);
   const porPauta = {};

@@ -1,4 +1,4 @@
-# Passagem de sessão (17/11/2026)
+# Passagem de sessão (17/11/2026, com acréscimo de 21/11)
 
 Esta seção resume a sessão de 30/10 a 17/11. O histórico anterior está no arquivo PASSAGEM.md da área de arquivos do projeto no Claude.
 
@@ -41,6 +41,15 @@ Esta seção resume a sessão de 30/10 a 17/11. O histórico anterior está no a
 - Familiares por enquanto só na mídia (vínculos indiretos do levantamento de mídia). Fase 2: o mesmo cruzamento por setor, e as bases novas: titulares da ANM, lista da Secretaria de Prêmios e Apostas (a MP 1.394/2026 proibiu as apostas de quota fixa), operadoras da ANS, instituições do Banco Central, mantenedoras do e-MEC e doações de campanha de sócios de empresas do setor. Depois, exibir o enquadramento aprovado na ficha do parlamentar.
 
 - Página pública das bancadas retirada do ar em 18/11 a pedido do James até todas estarem operacionais; como recolocar está no LEIA-ME (commit 7597a34).
+
+## Projetos do Executivo, votações ligadas e votações-chave (21/11)
+- Motivo: o PL 4675/2025 (Mercados Digitais, do Poder Executivo) não aparecia na revisão, porque o robô só coletava projetos de parlamentares. A urgência dele (18/03/2026, 276 a 186) estava na base como REQ 4612/2025.
+- `robo/coletar.mjs` agora coleta os projetos sem autor parlamentar (Executivo, comissões, Senado como Casa, tribunais, outros órgãos) e eles **contam na produção legislativa** (decisão do James). Campos `au` e `ta`; no Balanço, linha "Executivo e outros" e campo `fora` em `resumo.blocos`.
+- Requerimentos, destaques e emendas ficam sob a matéria principal (`mp`, `materiaPrincipal`). 1.266 votações passaram a ficar ligadas a um projeto. A classificação da votação é a do projeto.
+- Votações-chave: campo `votacoesChave` em `correcoes.json` (já com PL 4675/2025 e PLP 299/2026), botão na revisão, saída `dados/votacoes-chave.json`, seção no Balanço e na ficha do parlamentar.
+- Votações simbólicas do plenário da Câmara em `dados/votacoes-simbolicas-AAAA.json`, com a orientação das bancadas.
+- A primeira execução depois disso lê o Senado desde 2023 e os arquivos da Câmara de todos os anos; demora mais e classifica algumas centenas de itens novos com a IA.
+- A Câmara adiou o PL 4675/2025 para 27/11. Quando o mérito for votado, entra sozinho na votação-chave.
 
 ## Pendências do James
 - 2FA no GitHub, Cloudflare e Registro.br e revisão dos tokens dos revisores encaminhadas pelo James em 17/11. Ramo `diag-dns` apagado em 17/11 (esta sessão não consegue apagar ramos; o James apaga pelo site).

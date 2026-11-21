@@ -390,7 +390,7 @@ async function dossieBalanco(casa) {
     <div class="meta">Gerado em ${hoje}. Período coberto de fevereiro de 2023 a ${hoje.replace(/^\d+ de /, '')}. Dados atualizados em ${dataBR(String(r.gerado || '').slice(0, 10))}.</div></header>
   <section><h2>Resumo</h2>
     <div class="kpis num">
-      <div class="kpi"><b>${p1(q(bloco, b.prop))}</b><span>dos ${fmt(b.prop)} projetos apresentados por parlamentares saíram da direita e da extrema-direita</span></div>
+      <div class="kpi"><b>${p1(q(bloco, b.prop))}</b><span>dos ${fmt(b.prop)} projetos apresentados saíram da direita e da extrema-direita${b.fora ? `; ${p1(q(b.fora.prop, b.prop))} vieram do Poder Executivo e de outros órgãos` : ''}</span></div>
       <div class="kpi"><b>${p1(q(b.pauta, b.prop))}</b><span>de todos os projetos fazem avançar alguma pauta da direita, ${p1(q(b.pautaExtrema, b.prop))} com grau de extrema-direita</span></div>
       ${temSit ? `<div class="kpi"><b>${p1(q(blocoAp, b.aprovada))}</b><span>dos ${fmt(b.aprovada)} projetos aprovados em ao menos uma Casa são da direita e da extrema-direita</span></div>` : ''}
       <div class="kpi"><b>${p1(q(g.extrema.venceu, g.extrema.vot))}</b><span>das votações nominais tiveram a maioria da extrema-direita do lado vencedor, contra ${p1(q(g.direita.venceu, g.direita.vot))} da direita</span></div>
@@ -399,6 +399,7 @@ async function dossieBalanco(casa) {
   <section><h2>Produção, aprovação e votações por grupo</h2>
     <div class="tabela"><table><thead><tr><th>Grupo</th><th class="d">Parlamentares</th><th class="d">Projetos</th><th class="d">Parte do total</th><th class="d">Por parlamentar</th><th class="d">Com pauta da direita</th>${temSit ? '<th class="d">Aprovados</th><th class="d">Taxa de aprovação</th><th class="d">Parte das aprovações</th><th class="d">Viraram lei</th>' : ''}<th class="d">Do lado vencedor nas votações</th></tr></thead><tbody>
     ${G.map(k => { const x = g[k]; return `<tr><td class="grp"><span class="pt" style="--cor:var(--g-${k})"></span>${GRUPOS[k]}</td><td class="d num">${fmt(x.membros)}</td><td class="d num">${fmt(x.prop)}</td><td class="d num">${p1(q(x.prop, b.prop))}</td><td class="d num">${fmt(Math.round(q(x.prop, x.membros)))}</td><td class="d num">${p1(q(x.pauta, x.prop))}</td>${temSit ? `<td class="d num">${fmt(x.aprovada)}</td><td class="d num">${p1(q(x.aprovada, x.comSit))}</td><td class="d num">${p1(q(x.aprovada, b.aprovada))}</td><td class="d num">${fmt(x.lei)}</td>` : ''}<td class="d num">${p1(q(x.venceu, x.vot))}</td></tr>`; }).join('')}
+    ${b.fora ? (x => `<tr><td class="grp"><span class="pt" style="--cor:#7a8582"></span>Executivo e outros órgãos</td><td class="d num">—</td><td class="d num">${fmt(x.prop)}</td><td class="d num">${p1(q(x.prop, b.prop))}</td><td class="d num">—</td><td class="d num">${p1(q(x.pauta, x.prop))}</td>${temSit ? `<td class="d num">${fmt(x.aprovada)}</td><td class="d num">${p1(q(x.aprovada, x.comSit))}</td><td class="d num">${p1(q(x.aprovada, b.aprovada))}</td><td class="d num">${fmt(x.lei)}</td>` : ''}<td class="d num">—</td></tr>`)(b.fora) : ''}
     </tbody></table></div>
     <div class="duas" style="margin-top:10px">
       <div><h3>Parte nos projetos apresentados</h3>

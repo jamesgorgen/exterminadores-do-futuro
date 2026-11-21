@@ -1,5 +1,5 @@
 {
-  "_leia": "Correções da equipe à classificação da IA. A chave é a do projeto (ex. PL 682/2024) ou a da votação sem matéria (ex. V:C:2585316-23). Campos, todos opcionais: s = avanca, barra ou vazio (vazio tira o item da lista); p = pautas de pautas.js; g = direita ou extrema; m = texto exibido como Checagem da equipe; lote = 1 marca confirmação em bloco, que vale no site com o selo Classificado por IA e fica fora dos exemplos da IA. Ao salvar este arquivo no GitHub, o robô roda sozinho e o site se atualiza em poucos minutos.",
+  "_leia": "Correções da equipe à classificação da IA. A chave é a do projeto (ex. PL 682/2024) ou a da votação sem matéria (ex. V:C:2585316-23). Campos, todos opcionais: s = avanca, barra ou vazio (vazio tira o item da lista); p = pautas de pautas.js; g = direita ou extrema; m = texto exibido como Checagem da equipe; lote = 1 marca confirmação em bloco, que vale no site com o selo Classificado por IA e fica fora dos exemplos da IA. Ao salvar este arquivo no GitHub, o robô roda sozinho e o site se atualiza em poucos minutos. O campo votacoesChave lista as votações-chave escolhidas pela equipe, pela chave da matéria (ex. PL 4675/2025), com t = título curto e nota = por que importa; o robô junta todas as votações ligadas à matéria (urgência, destaques, mérito).",
   "correcoes": {
     "PDL 100/2026": {
       "s": "avanca",
@@ -10837,6 +10837,16 @@
         "armas"
       ],
       "lote": 1
+    }
+  },
+  "votacoesChave": {
+    "PL 4675/2025": {
+      "t": "PL dos Mercados Digitais",
+      "nota": "Projeto do governo que cria a Superintendência de Mercados Digitais no Cade e impõe obrigações às grandes plataformas. Separa o governo da oposição."
+    },
+    "PLP 299/2026": {
+      "t": "Ajuste fiscal (PLP 299/2026)",
+      "nota": "Projeto do governo que dá ao Poder Executivo novos instrumentos de gestão fiscal. Separa o governo da oposição."
     }
   }
 }

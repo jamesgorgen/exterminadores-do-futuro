@@ -10,7 +10,8 @@ Um robô roda todo dia às 6h17 (horário de Brasília) no GitHub Actions, de gr
 
 1. Lista os deputados das legislaturas desde 2023 e reconhece os senadores pelos votos e pela autoria.
 2. Reúne os projetos de lei (PL, PLP, PEC e PDL) apresentados por deputados e senadores de todos os partidos. Na Câmara, a busca é feita pela autoria de cada deputado. No Senado, quinzena a quinzena, lendo os autores.
-3. Reúne as votações nominais dos plenários e das comissões. Na Câmara, pelos arquivos anuais completos de votações, votos, orientações e objetos, com a API como reserva. No Senado, pela API de votações de plenário e pela de votações em comissão.
+   Também reúne os projetos sem autor parlamentar (Poder Executivo, comissões, Mesas, Senado como Casa, tribunais e outros órgãos), que contam na produção legislativa total. Na Câmara, pelos arquivos anuais de proposições e de autores (`proposicoes-AAAA` e `proposicoesAutores-AAAA`), com a API de autores para o que faltar; o ano corrente todo dia e os anteriores uma vez por mês (controle em `estado.json`, campo `semAutor`). No Senado, os projetos sem senador entre os autores. Esses projetos ficam com `a` vazio, `au` (nome do autor) e `ta` (`executivo`, `comissao`, `senado`, `judiciario`, `mp` ou `outro`).
+3. Reúne as votações nominais dos plenários e das comissões. Na Câmara, pelos arquivos anuais completos de votações, votos, orientações e objetos, com a API como reserva. No Senado, pela API de votações de plenário e pela de votações em comissão. Requerimentos (urgência, retirada de pauta), destaques, emendas e pareceres são ligados ao projeto citado na ementa ou na descrição (campo `mp`, função `materiaPrincipal`), e a votação é classificada pela chave desse projeto. Assim a urgência, os destaques e o mérito de um projeto ficam juntos. As votações simbólicas do plenário da Câmara são guardadas à parte, com o resultado e a orientação das bancadas.
 4. Classifica cada projeto e cada votação pelas pautas de `pautas.js`, com o Claude Haiku. O que já foi classificado não é refeito.
 5. Calcula o índice de alinhamento de cada parlamentar e grava tudo na pasta `dados`.
 
@@ -77,7 +78,9 @@ Na pasta `dados`
 | `relatorias.json` | Relatorias do Senado desde 2023: matéria, relator, comissão e datas de designação e de saída. Os relatores em exercício também vão para `rl` em `proposicoes-direita.json` |
 | `relatorias-camara.json` | Relatorias da Câmara desde 2023, lidas das tramitações pelo script `robo/relatorias-camara.mjs` (workflow "Relatorias da Câmara", diário): proposição, deputado, órgão, data da designação, data do parecer e se a relatoria está em andamento |
 | `votos-disputadas.json` | Voto de cada parlamentar nas votações disputadas, uma letra por votação, usado pelo dossiê parlamentar |
-| `proposicoes-AAAA.json` | Todos os projetos do ano |
+| `proposicoes-AAAA.json` | Todos os projetos do ano, inclusive os do Poder Executivo, de comissões e de outros órgãos (`au`, `ta`) |
+| `votacoes-simbolicas-AAAA.json` | Votações simbólicas do plenário da Câmara no ano: resultado, matéria e orientação das bancadas |
+| `votacoes-chave.json` | Votações-chave escolhidas pela equipe: para cada matéria, todas as votações ligadas a ela, o placar de cada grupo, a orientação do governo e da oposição e, por parlamentar, uma letra por votação |
 | `classificacoes.json` | Classificações já feitas pela IA |
 | `parlamentares.json` | Cadastro de deputados e senadores |
 | `diagnostico.json` | Amostras dos dados brutos, contagens e erros da última execução. Em `numeracao`, as lacunas na numeração das proposições das últimas duas semanas; muitas de uma vez viram erro, sinal de falha na coleta |
@@ -129,7 +132,11 @@ Cuidado com as vírgulas e as aspas. Se o arquivo ficar com erro de formato, as 
 
 ## Balanço
 
-`resumo.json` traz o campo `blocos`, calculado por `calcularBlocos` em `robo/coletar.mjs`, com os totais por Casa (`C`, `S`) e somados (`T`). Para cada grupo (extrema, direita, centro, esquerda): projetos pelo primeiro autor (`prop`), projetos com pauta da direita (`pauta`), parlamentares que passaram pelo grupo (`membros`), votações em que o grupo teve maioria definida (`vot`) e em quantas essa maioria ficou do lado vencedor (`venceu`). Também traz, por grupo, os projetos com situação conhecida (`comSit`), aprovados em ao menos uma Casa ou transformados em lei (`aprovada`), transformados em lei (`lei`) e arquivados (`arquivada`), e por tema (`temas`) o total, os aprovados e, por grupo, projetos, aprovados e projetos com pauta da direita. `resumo.json` também leva os nomes dos temas e cadernos (`temas`). A aba Balanço do site lê esses números.
+`resumo.json` traz o campo `blocos`, calculado por `calcularBlocos` em `robo/coletar.mjs`, com os totais por Casa (`C`, `S`) e somados (`T`). Para cada grupo (extrema, direita, centro, esquerda): projetos pelo primeiro autor (`prop`), projetos com pauta da direita (`pauta`), parlamentares que passaram pelo grupo (`membros`), votações em que o grupo teve maioria definida (`vot`) e em quantas essa maioria ficou do lado vencedor (`venceu`). Também traz, por grupo, os projetos com situação conhecida (`comSit`), aprovados em ao menos uma Casa ou transformados em lei (`aprovada`), transformados em lei (`lei`) e arquivados (`arquivada`), e por tema (`temas`) o total, os aprovados e, por grupo, projetos, aprovados e projetos com pauta da direita. `resumo.json` também leva os nomes dos temas e cadernos (`temas`). Os projetos sem autor parlamentar contam em `prop` e nos demais totais da Casa e aparecem à parte no campo `fora` (projetos, pauta, situação e `tipos`, a contagem por tipo de autor). A aba Balanço do site lê esses números e mostra a linha "Executivo e outros".
+
+## Votações-chave
+
+A equipe escolhe as votações-chave na página de revisão (botão "Marcar como votação-chave" em cada projeto ou votação) ou à mão no campo `votacoesChave` de `correcoes.json`, pela chave da matéria (`"PL 4675/2025": { "t": "título curto", "nota": "por que importa" }`). O robô junta todas as votações ligadas à matéria, nominais e simbólicas, e grava `dados/votacoes-chave.json`. O site mostra as votações-chave na aba Balanço (placar de cada grupo) e na ficha de cada parlamentar (o voto e se acompanhou o governo). Na Câmara, a referência é a orientação oficial do governo; no Senado, que não publica orientações nos dados abertos, é a posição da esquerda.
 
 ## Situações das proposições
 
@@ -173,7 +180,7 @@ O GitHub Actions é gratuito para repositório público. A IA custa cerca de 2 d
 ## Limites conhecidos
 
 - A classificação lê só a ementa e serve como triagem.
-- Votações simbólicas e secretas ficam de fora, porque não há registro do voto de cada parlamentar.
+- Votações simbólicas e secretas ficam de fora dos índices, porque não há registro do voto de cada parlamentar. As simbólicas do plenário da Câmara aparecem nas votações-chave com a orientação das bancadas; as do Senado não.
 - Nos projetos da Câmara, o partido do autor é o mais recente. Nas votações, é o da data do voto.
 - Votações secretas do Senado (autoridades, embaixadores) ficam de fora.
 - Se uma consulta ao Senado falhar numa execução completa, a execução diária só refaz os últimos 45 dias. Uma nova execução completa recupera o que faltou.

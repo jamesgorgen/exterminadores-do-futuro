@@ -64,6 +64,7 @@ header .estado{font-size:13px;color:#c7cbe0}
 .s-salvo{background:var(--ver);color:#fff} .s-pend{background:var(--pend);color:#fff}
 .ementa{margin:8px 0 6px}
 .autores{font-size:13px;color:var(--ink-3);margin:0 0 8px}
+.chave-v{font-size:13px;margin:0 0 8px;padding:4px 8px;border-left:3px solid var(--ink);background:rgba(0,0,0,.04)}
 .ia{font-size:13px;color:var(--ink-2);background:var(--paper);border-radius:6px;padding:7px 10px;margin:0 0 10px}
 .ia b{color:var(--ink)}
 .linha{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:8px 0}
@@ -112,6 +113,8 @@ kbd{font:12px/1 ui-monospace,monospace;border:1px solid var(--line);border-botto
     <option value="barra">IA marcou como contra a pauta</option>
     <option value="fora">IA descartou na revisão do grau</option>
     <option value="corrigidos">Já conferidos pela equipe</option>
+    <option value="semautor">Sem autor parlamentar (Executivo, comissões e outros órgãos)</option>
+    <option value="chave">Votações-chave</option>
     <option value="todos">Todos (use a busca)</option>
   </select>
   <select id="fPauta" aria-label="Pauta"><option value="">Todas as pautas</option></select>
@@ -230,7 +233,8 @@ function descreve(x) {
 }
 
 // ------------------------------------------------------------ lista
-const chaveVot = v => v.mat || 'V:' + v.id;
+// Requerimentos, destaques e emendas ficam sob a matéria principal (mp), como no robô.
+const chaveVot = v => v.ck || v.mp || v.mat || 'V:' + v.id;
 // Amostra do mês: sorteio fixo pelo mês corrente, igual para toda a equipe e estável ao recarregar.
 const TAM_AMOSTRA = 50;
 const mesAtual = () => new Date().toISOString().slice(0, 7);
@@ -266,9 +270,11 @@ function itensDaLista() {
     if (lista === 'extrema' && !(a.s === 'avanca' && a.g === 'extrema')) continue;
     if (lista === 'barra' && a.s !== 'barra') continue;
     if (lista === 'fora' && !a.fora) continue;
+    if (lista === 'semautor' && !(b.tipo === 'p' ? !(b.it.a || []).length && b.it.au : (D.props.get(b.chave) && !(D.props.get(b.chave).a || []).length && D.props.get(b.chave).au))) continue;
+    if (lista === 'chave' && !chaves()[b.chave]) continue;
     if (lista === 'corrigidos' && !conferido && !Object.prototype.hasOwnProperty.call(pend, b.chave)) continue;
     if (lista === 'todos' && !busca) continue;
-    if (esconder && lista !== 'corrigidos' && conferido && !Object.prototype.hasOwnProperty.call(pend, b.chave)) continue;
+    if (esconder && !['corrigidos', 'chave'].includes(lista) && conferido && !Object.prototype.hasOwnProperty.call(pend, b.chave)) continue;
     if ($('#fCerteza').value && ['direita', 'extrema', 'fora'].includes(lista) && (a.cf === 'alta' || (a.cf === 'grau' && $('#fCerteza').value === 'baixa'))) continue;
     if (casa && !(b.tipo === 'p' ? (b.it.k || []).includes(casa) : b.it.k === casa)) continue;
     if (pauta) { const x = efetiva(b.chave); const pp = [...(x.p || []), ...(a.p || []), ...(a.fora || [])]; if (!pp.includes(pauta)) continue; }
@@ -295,7 +301,9 @@ function mais() {
   mostrados += PASSO;
   $('#mais').hidden = mostrados >= atual.length;
 }
-function autores(a) {
+const TIPO_AUTORIA = { executivo: 'Poder Executivo', comissao: 'Comissão ou Mesa', senado: 'Senado Federal', judiciario: 'Judiciário', mp: 'Ministério Público ou Defensoria', outro: 'Outro órgão' };
+function autores(a, it) {
+  if ((!a || !a.length) && it && it.au) return `<p class="autores"><b>Autoria não parlamentar</b> (${esc(TIPO_AUTORIA[it.ta] || 'outro órgão')}): ${esc(it.au)}</p>`;
   if (!a || !a.length) return '';
   const n = a.slice(0, 4).map(k => { const p = D.indice[k]; return p ? `${p.n} (${NOME_PARTIDO[p.p] || p.s || p.p || ''}/${p.uf || ''})` : ''; }).filter(Boolean);
   return n.length ? `<p class="autores">${esc(n.join('; '))}${a.length > 4 ? ` e mais ${a.length - 4}` : ''}</p>` : '';
@@ -309,7 +317,10 @@ function cartao(b) {
   const c = correcao(b.chave);
   const nota = c && typeof c === 'object' && c.m !== undefined ? c.m : '';
   const meta = b.tipo === 'p' ? esc((it.k || []).map(k => CASA[k]).join(' e ')) : esc(CASA[it.k] + ', ' + (it.pl ? 'plenário' : (it.o || 'comissão')));
-  const texto = b.tipo === 'p' ? it.e : (it.me || it.desc);
+  const principal = b.tipo === 'v' ? D.props.get(b.chave) : null;
+  const texto = b.tipo === 'p' ? it.e : (principal && principal.e) || it.me || it.desc;
+  const nVot = b.tipo === 'v' ? D.vots.filter(v => chaveVot(v) === b.chave).length : 0;
+  const ch = chaves()[b.chave];
   const link = b.tipo === 'p' ? linkProp(it) : '';
   const certeza = (D.ia[b.chave] || {}).cf;
   const iaTxt = a.fora ? `Descartado na revisão do grau (pautas originais ${esc(a.fora.map(p => PAUTA[p] ? PAUTA[p].nome : p).join(', '))})` : esc(descreve(a)) + (a.m ? ` — ${esc(a.m)}` : '');
@@ -319,8 +330,9 @@ function cartao(b) {
       ${link ? `<a class="meta" href="${esc(link)}" target="_blank" rel="noopener">Ficha oficial</a>` : ''}
       <span class="lado">${pendente ? '<span class="selo s-pend">Não salvo</span>' : salvo ? '<span class="selo s-salvo">Conferido</span>' : ''}</span></div>
     <p class="ementa">${esc(texto)}</p>
-    ${b.tipo === 'v' && it.me && it.desc ? `<p class="autores">${esc(it.desc)}</p>` : ''}
-    ${b.tipo === 'p' ? autores(it.a) : ''}
+    ${b.tipo === 'v' && it.desc && (it.me || principal) ? `<p class="autores">${esc(it.desc)}${nVot > 1 ? ` <b>${nVot} votações ligadas a esta matéria</b>, como urgência, destaques e mérito.` : ''}</p>` : ''}
+    ${ch ? `<p class="chave-v"><b>Votação-chave.</b> ${esc(ch.t || '')}</p>` : ''}
+    ${b.tipo === 'p' ? autores(it.a, it) : D.props.get(b.chave) ? autores(D.props.get(b.chave).a, D.props.get(b.chave)) : ''}
     <p class="ia"><b>IA.</b> ${iaTxt}${certeza ? ` <span class="meta">(${certeza === 'grau' ? 'dúvida só de grau' : 'certeza ' + certeza})</span>` : ''}</p>
     <div class="linha"><span class="rot">Sentido</span><span class="seg">
       <button type="button" class="avanca" data-s="avanca" aria-pressed="${s === 'avanca'}">Faz avançar a pauta</button>
@@ -333,7 +345,8 @@ function cartao(b) {
     <div class="linha" style="display:block"><textarea data-nota rows="1" placeholder="Nota da equipe (opcional). Aparece no site como Checagem da equipe.">${esc(nota)}</textarea></div>
     <div class="acoes"><button type="button" class="btn forte" data-confirmar>${pendente || salvo ? 'Confirmar' : 'Confirmar como está'}</button>
       ${pendente ? '<button type="button" class="btn" data-desfazer>Desfazer</button>' : ''}
-      ${salvo ? '<button type="button" class="btn" data-remover>Voltar para a IA</button>' : ''}</div>
+      ${salvo ? '<button type="button" class="btn" data-remover>Voltar para a IA</button>' : ''}
+      ${b.chave.startsWith('V:') ? '' : `<button type="button" class="btn" data-chave-v>${ch ? 'Deixar de ser votação-chave' : 'Marcar como votação-chave'}</button>`}</div>
   </article>`;
 }
 
@@ -385,6 +398,7 @@ $('#lista').addEventListener('click', e => {
   }
   if (bt.hasAttribute('data-confirmar')) { if (registrar(el)) { const n = redesenharCartao(el); proximo(n); } return; }
   if (bt.hasAttribute('data-desfazer')) { delete pend[el.dataset.chave]; guardarPend(); atualizarBarra(); redesenharCartao(el); return; }
+  if (bt.hasAttribute('data-chave-v')) { marcarChave(el.dataset.chave, el); return; }
   if (bt.hasAttribute('data-remover')) { pend[el.dataset.chave] = null; guardarPend(); atualizarBarra(); redesenharCartao(el); return; }
 });
 $('#lista').addEventListener('change', e => { if (e.target.matches('[data-nota]')) { const el = e.target.closest('.cartao'); registrar(el); el.classList.add('pendente'); } });
@@ -440,6 +454,41 @@ $('#mais').addEventListener('click', mais);
 ['#fTipo', '#fLista', '#fPauta', '#fCasa', '#fCerteza', '#fEsconder'].forEach(s => $(s).addEventListener('change', desenhar));
 let tBusca; $('#fBusca').addEventListener('input', () => { clearTimeout(tBusca); tBusca = setTimeout(desenhar, 250); });
 window.addEventListener('beforeunload', e => { if (Object.keys(pend).length) { e.preventDefault(); e.returnValue = ''; } });
+
+// ------------------------------------------------------------ votações-chave
+// Ficam em correcoes.json, no campo votacoesChave ({ "PL 4675/2025": { "t": "título curto", "nota": "" } }).
+// O robô junta todas as votações ligadas à matéria (urgência, destaques, mérito, também as simbólicas) e mostra o placar de cada grupo.
+const chaves = () => extras.votacoesChave || {};
+async function marcarChave(chave, el) {
+  if (!token()) { $('#config').showModal(); return; }
+  const atualC = chaves()[chave];
+  let novo = null;
+  if (!atualC) {
+    const t = prompt('Título curto da votação-chave (aparece no site). Por exemplo: PL dos Mercados Digitais.', '');
+    if (t === null) return;
+    const nota = prompt('Por que é uma votação-chave? (opcional, aparece no site)', '') || '';
+    novo = { t: t.trim(), nota: nota.trim() };
+  } else if (!confirm(`Tirar ${chave} das votações-chave?`)) return;
+  $('#msg').textContent = 'Salvando a votação-chave…';
+  for (let tentativa = 0; tentativa < 2; tentativa++) {
+    try {
+      const { sha, dados } = await lerCorrecoesGitHub();
+      const vc = Object.assign({}, dados.votacoesChave || {});
+      if (novo) vc[chave] = novo; else delete vc[chave];
+      const conteudo = Object.assign({}, dados, { votacoesChave: Object.fromEntries(Object.keys(vc).sort().map(k => [k, vc[k]])) });
+      const corpo = { message: `${novo ? 'Marca' : 'Desmarca'} ${chave} como votação-chave`, content: b64enc(JSON.stringify(conteudo, null, 2) + '\n'), branch: 'main' };
+      if (sha) corpo.sha = sha;
+      const r = await fetch(`https://api.github.com/repos/${REPO}/contents/${ARQ}`, { method: 'PUT', headers: { Authorization: 'Bearer ' + token(), Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' }, body: JSON.stringify(corpo) });
+      if (r.status === 409 || r.status === 422) continue;
+      if (!r.ok) throw new Error('o GitHub respondeu ' + r.status);
+      extras.votacoesChave = conteudo.votacoesChave; salvas = conteudo.correcoes || salvas;
+      $('#msg').textContent = `${chave} ${novo ? 'marcada como' : 'retirada das'} votações-chave. O site é atualizado em alguns minutos.`;
+      if (el) redesenharCartao(el);
+      return;
+    } catch (e) { $('#msg').textContent = 'Não foi possível salvar, porque ' + e.message + '.'; return; }
+  }
+  $('#msg').textContent = 'Não foi possível salvar por conflito com outra gravação. Tente de novo.';
+}
 
 // ------------------------------------------------------------ acesso
 function mostrarEstadoToken() { $('#estadoToken').textContent = token() ? 'Acesso configurado' : 'Sem acesso para salvar'; $('#avisoToken').hidden = !!token(); }
