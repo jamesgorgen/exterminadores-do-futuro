@@ -377,6 +377,26 @@ export function senadorDoTexto(texto, porNomeSenador = new Map()) {
   const cn = chaveNome(nome); if (!cn) return null;
   return { k: porNomeSenador.get(cn) || 'SN:' + cn, nome };
 }
+// Proposições de rotina, sem autor parlamentar: ficam na base, na classificação e na revisão, mas fora da
+// produção legislativa do Balanço (decisão da equipe, 21/11/2026). Três tipos:
+//   outorga         atos de outorga e renovação de rádio e TV (PDL da Comissão de Comunicação)
+//   acordo          aprovação de tratados, acordos e convenções internacionais (PDL)
+//   administrativa  pautas administrativas das Casas, dos tribunais, do Ministério Público e da Defensoria:
+//                   cargos, funções, varas, carreiras e remuneração de servidores, escolha de ministro do TCU
+export function rotinaDe(it) {
+  if (!it || (it.a || []).length) return '';
+  const e = Motor.normalizar(String(it.e || '')).trim();
+  const sig = String(it.c || '').split(' ')[0];
+  if (sig === 'PDL' && /^aprova o ato que/.test(e) && /(outorga|renova|autoriza|permiss|concess|transfer|radiodifus|radio|televis|sons e imagens|retransmiss)/.test(e)) return 'outorga';
+  // Atos do Ministério das Comunicações que tornam sem efeito ou anulam outorgas.
+  if (sig === 'PDL' && /^aprova o ato constante d[ao]s? (portaria|decreto)/.test(e) && /(sem efeito|anula|revoga|outorga|permiss|concess|autoriza)/.test(e)) return 'outorga';
+  if (sig === 'PDL' && /^aprova(m)? (o|os|a|as) (texto|textos|acordo|tratado|convencao|protocolo|adesao|emendas|renovacao|declaracao|estatutos)/.test(e) && /(acordo|tratado|convencao|convenio|protocolo|governo d|republica|organizacao|troca de notas|internacional|estatutos da comunidade)/.test(e)) return 'acordo';
+  if (['judiciario', 'mp', 'comissao', 'outro'].includes(it.ta)) {
+    if (/^escolhe o senhor|^escolhe a senhora/.test(e)) return 'administrativa';
+    if (/(cria(cao de)?|transforma(cao de)?|reestrutura(cao de)?|composicao e criacao de).{0,40}(cargos|funcoes comissionadas|varas)|quadro (de pessoal|permanente)|carreiras? (dos|de) servidores|plano de carreiras?|carreira legislativa|vantagens pessoais|remuneracao dos servidores/.test(e)) return 'administrativa';
+  }
+  return '';
+}
 // Autores de uma proposição (registros do arquivo anual ou da API) -> deputados, senadores ou órgão.
 export function lerAutores(lista, porNomeSenador = new Map()) {
   const deps = [], sens = [], orgaos = [];
@@ -1106,6 +1126,8 @@ export function calcularBlocos(props, votos, indice, cl, sit = {}) {
   for (const it of props) {
     const a = (it.a || [])[0]; const casa = a ? a[0] : it.ta === 'senado' ? 'S' : (it.k || [])[0];
     if (!['C', 'S'].includes(casa)) continue;
+    // Rotina (outorgas de rádio e TV, acordos internacionais, pautas administrativas): fora da produção, contada à parte.
+    if (it.rt) { for (const c of ['T', casa]) { const r = tot[c].rotina || (tot[c].rotina = { n: 0, tipos: {} }); r.n++; r.tipos[it.rt] = (r.tipos[it.rt] || 0) + 1; } continue; }
     const x = cl(it.c) || {}, avanca = x.s === 'avanca', g = a && indice[a] && indice[a].cl;
     const st = (sit[it.c] || [])[0] || '';
     const aprov = st === 'p' || st === 'l';
@@ -1259,6 +1281,7 @@ export async function executar() {
   const todasVot = Object.values(votacoesPorAno).flatMap(m => [...m.values()]);
   const todasPropFinal = Object.values(proposicoesPorAno).flatMap(m => [...m.values()]);
   verificarNumeracao(todasPropFinal);
+  for (const it of todasPropFinal) { const rt = rotinaDe(it); if (rt) { it.rt = rt; contar('rotina_' + rt); } else delete it.rt; }
   // Temas da taxonomia, pelas ementas.
   for (const it of todasPropFinal) if (!it.m) it.m = Motor.classificar(it.e || '', TC).map(t => t.id);
 
@@ -1380,7 +1403,7 @@ export async function executar() {
   // Câmara: arquivo gerado pelo script de relatorias da Câmara (robo/relatorias-camara.mjs).
   for (const r of (lerJson('relatorias-camara.json', { itens: [] }).itens || [])) if (r.at) { const l = relAtual.get(r.c) || []; l.push({ r: r.r, n: r.n, s: r.s, uf: r.uf, cm: r.cm }); relAtual.set(r.c, l); }
   const direita = todasPropFinal.filter(it => cl(it.c).s === 'avanca')
-    .map(it => ({ c: it.c, k: it.k, d: it.d, e: it.e, a: it.a, au: it.au, ta: it.ta, p: it.p, m: it.m, i: it.i, ss: it.ss, x: cl(it.c), rl: relAtual.get(it.c) }))
+    .map(it => ({ c: it.c, k: it.k, d: it.d, e: it.e, a: it.a, au: it.au, ta: it.ta, rt: it.rt, p: it.p, m: it.m, i: it.i, ss: it.ss, x: cl(it.c), rl: relAtual.get(it.c) }))
     .sort((x, y) => (y.d || '').localeCompare(x.d || ''));
   gravarJson('proposicoes-direita.json', { gerado: AGORA.toISOString(), itens: direita }, true);
   const resumoVot = todasVot.map(vt => ({ id: vt.id, k: vt.k, o: vt.o, pl: vt.pl, d: vt.d, desc: vt.desc, mat: vt.mat, mp: vt.mp, ck: vt.ck, me: vt.me, res: vt.res,

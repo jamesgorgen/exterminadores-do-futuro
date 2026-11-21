@@ -114,6 +114,7 @@ kbd{font:12px/1 ui-monospace,monospace;border:1px solid var(--line);border-botto
     <option value="fora">IA descartou na revisão do grau</option>
     <option value="corrigidos">Já conferidos pela equipe</option>
     <option value="semautor">Sem autor parlamentar (Executivo, comissões e outros órgãos)</option>
+    <option value="rotina">Rotina (outorgas, acordos, pautas administrativas)</option>
     <option value="chave">Votações-chave</option>
     <option value="todos">Todos (use a busca)</option>
   </select>
@@ -272,6 +273,7 @@ function itensDaLista() {
     if (lista === 'fora' && !a.fora) continue;
     if (lista === 'semautor' && !(b.tipo === 'p' ? !(b.it.a || []).length && b.it.au : (D.props.get(b.chave) && !(D.props.get(b.chave).a || []).length && D.props.get(b.chave).au))) continue;
     if (lista === 'chave' && !chaves()[b.chave]) continue;
+    if (lista === 'rotina' && !(b.tipo === 'p' ? b.it.rt : (D.props.get(b.chave) || {}).rt)) continue;
     if (lista === 'corrigidos' && !conferido && !Object.prototype.hasOwnProperty.call(pend, b.chave)) continue;
     if (lista === 'todos' && !busca) continue;
     if (esconder && !['corrigidos', 'chave'].includes(lista) && conferido && !Object.prototype.hasOwnProperty.call(pend, b.chave)) continue;
@@ -301,9 +303,10 @@ function mais() {
   mostrados += PASSO;
   $('#mais').hidden = mostrados >= atual.length;
 }
+const ROTINA = { outorga: 'outorga de rádio e TV', acordo: 'acordo internacional', administrativa: 'pauta administrativa' };
 const TIPO_AUTORIA = { executivo: 'Poder Executivo', comissao: 'Comissão ou Mesa', senado: 'Senado Federal', judiciario: 'Judiciário', mp: 'Ministério Público ou Defensoria', outro: 'Outro órgão' };
 function autores(a, it) {
-  if ((!a || !a.length) && it && it.au) return `<p class="autores"><b>Autoria não parlamentar</b> (${esc(TIPO_AUTORIA[it.ta] || 'outro órgão')}): ${esc(it.au)}</p>`;
+  if ((!a || !a.length) && it && it.au) return `<p class="autores"><b>Autoria não parlamentar</b> (${esc(TIPO_AUTORIA[it.ta] || 'outro órgão')}): ${esc(it.au)}${it.rt ? `. <b>Rotina</b> (${esc(ROTINA[it.rt] || it.rt)}), fora da conta da produção` : ''}</p>`;
   if (!a || !a.length) return '';
   const n = a.slice(0, 4).map(k => { const p = D.indice[k]; return p ? `${p.n} (${NOME_PARTIDO[p.p] || p.s || p.p || ''}/${p.uf || ''})` : ''; }).filter(Boolean);
   return n.length ? `<p class="autores">${esc(n.join('; '))}${a.length > 4 ? ` e mais ${a.length - 4}` : ''}</p>` : '';
