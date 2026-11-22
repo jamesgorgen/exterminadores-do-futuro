@@ -345,20 +345,35 @@ def citadas(txt):
     for m in RX_EXT.finditer(t): achou.append((m.start(), f"{dict(SIGLAS)[m.group(1)]} {int(m.group(2).replace('.', ''))}/{m.group(3)}"))
     for m in RX_SIG.finditer(t): achou.append((m.start(), f"{m.group(1)} {int(m.group(2).replace('.', ''))}/{m.group(3)}"))
     return [c for _, c in sorted(achou)]
-TIPOS_CHAVE = {'PEC', 'PDL', 'PL', 'PLP'}   # votações-chave: só projetos e propostas de emenda, nunca requerimentos
+TIPOS_CHAVE = {'PEC', 'PDL', 'PL', 'PLP'}   # votações-chave: projetos e propostas de emenda
 RX_PROCED = re.compile(r'REQUERIMENTO|PREFERENCIA|RETIRADA DE (MATERIA DA )?PAUTA|ADIAMENTO|URGENCIA|ENCERRAMENTO DA DISCUSSAO|VOTACAO POR PARTES|QUEBRA DE INTERSTICIO|RECURSO')
-def projeto_de(vt):
+RX_URG = re.compile(r'URGENCIA')
+RX_OUTRO_PROCED = re.compile(r'PREFERENCIA|RETIRADA DE (MATERIA DA )?PAUTA|ADIAMENTO|ENCERRAMENTO DA DISCUSSAO|VOTACAO POR PARTES|QUEBRA DE INTERSTICIO|RECURSO')
+def projeto_de(vt, urgencia=False):
     """Código do projeto (PEC, PDL, PL ou PLP) cujo texto foi votado, ou None para votações de procedimento.
-    Na Câmara, o objeto registrado costuma ser o requerimento de urgência, então a descrição do resultado vem primeiro."""
-    if RX_PROCED.search(norm(vt.get('desc'))): return None
+    Na Câmara, o objeto registrado costuma ser o requerimento de urgência, então a descrição do resultado vem primeiro.
+    Com urgencia=True, aceita também o requerimento de urgência de um projeto (decisão da equipe, 21/11/2026:
+    vale como votação-chave quando o projeto ainda não teve votação de mérito)."""
+    d = norm(vt.get('desc'))
+    if RX_PROCED.search(d):
+        if not (urgencia and RX_URG.search(d) and not RX_OUTRO_PROCED.search(d)): return None
+        mp = (vt.get('mp') or '').upper()
+        if mp.split(' ')[0] in TIPOS_CHAVE: return mp
     for c in citadas(vt.get('desc')) + ([vt['mat']] if vt.get('mat') else []) + citadas(vt.get('me')):
         sig = c.split(' ')[0].upper()
         if sig in TIPOS_CHAVE: return c.upper()
         if sig not in ('REQ', 'RCP', 'RQS'): return None   # medida provisória, emenda, parecer: fora
     return None
+# Projetos que já tiveram votação de mérito (texto): a urgência deles não vira votação-chave.
+COM_MERITO = {c for c in (projeto_de(v) for v in VOTS if v.get('pl')) if c}
+def projeto_ou_urgencia(vt):
+    c = projeto_de(vt)
+    if c: return c
+    c = projeto_de(vt, urgencia=True)
+    return c if c and c not in COM_MERITO else None
 for vt in VOTS:
     x = classe(vt.get('ck') or ''); texto = norm(f"{vt.get('desc')} {vt.get('me')}")
-    projeto = projeto_de(vt)
+    projeto = projeto_ou_urgencia(vt)
     for b in BAN:
         chave = CHAVE.get(b['id'], {}).get(vt['id']) if projeto else None
         doban = da_bancada(b, x.get('p') or [], texto) and x.get('s') in ('avanca', 'barra') and vt.get('bd') in ('S', 'N')

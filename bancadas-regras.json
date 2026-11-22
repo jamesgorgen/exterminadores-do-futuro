@@ -30,7 +30,7 @@
     "comissao_titular": 1,
     "comissao_presidencia": 2,
     "comissao_max": 2,
-    "chave_minimo": 3,
+    "chave_minimo": 2,
     "chave_alto": 2,
     "empresa_secundaria": 2,
     "empresa_controlada": 2,
