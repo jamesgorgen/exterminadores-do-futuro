@@ -504,6 +504,20 @@ for k, bs in S.items():
         cont_cat[(bid, cat, triar)] += 1
     if reg: saida[k] = {'n': p.get('n'), 'c': p.get('c'), 's': p.get('s') or p.get('p'), 'uf': p.get('uf'), 'g': p.get('cl'), 'b': reg}
 
+# Quem a equipe já enquadrou continua na triagem e na bancada, mesmo que a regra tenha deixado de apontar a pessoa
+# (os dados mudam entre uma execução e outra). Fica marcado para a equipe conferir.
+mantidos = 0
+for kk, d in (BC.get('decisoes') or {}).items():
+    k, _, bid = kk.partition('|')
+    if bid not in BID or k not in EX or (saida.get(k) or {}).get('b', {}).get(bid): continue
+    s0 = (S.get(k) or {}).get(bid) or {'V': 0, 'A': 0, 'E': 0, 'contra': 0, 'ev': []}
+    p = EX[k]
+    reg = saida.setdefault(k, {'n': p.get('n'), 'c': p.get('c'), 's': p.get('s') or p.get('p'), 'uf': p.get('uf'), 'g': p.get('cl'), 'b': {}})['b']
+    reg[bid] = {'cat': 'duvida', 't': 1, 'V': s0['V'], 'A': s0['A'], 'E': s0['E'], 'C': s0['contra'], 'sem_regra': 1,
+                'ev': list(s0['ev']) + [['A', 0, 'Triagem', 'Enquadrado pela equipe; com os dados atuais, a regra não aponta mais sinais suficientes', '']]}
+    mantidos += 1
+log('decisões da equipe mantidas sem sinal suficiente da regra:', mantidos)
+
 # links para as matérias das votações candidatas: a matéria votada e os projetos citados na ementa ou na descrição
 IDMAT = {}
 for f in glob.glob(P('dados', 'proposicoes-*.json')):
@@ -561,11 +575,29 @@ for b in BAN:
                        'bd': v.get('bd'), 'p': classe(v.get('ck') or '').get('p') or [], 's': classe(v.get('ck') or '').get('s') or '', 'l': links_votacao(v)} for v in vs[:60]]
 print('links de matérias:', len(CACHE_MAT), 'consultas às APIs,', sum(1 for i in CACHE_MAT.values() if i), 'encontradas')
 
+# Alinhamento de votos, à parte da bancada: quem vota com a pauta da bancada (pelo menos votos_alto_limite dos votos,
+# em votos_minimo votações) sem ser do núcleo nem aliado. Não entra no enquadramento: mostra o bloco de votos em torno dela.
+_dec = BC.get('decisoes') or {}
+def _membro(k, bid):
+    d = _dec.get(f'{k}|{bid}')
+    if d: return d.get('d') in ('nucleo', 'aliado')
+    x = (saida.get(k) or {}).get('b', {}).get(bid)
+    return bool(x and not x['t'] and x['cat'] in ('nucleo', 'aliado'))
+alinhados = collections.defaultdict(list)
+for (k, bid), (a_, n_) in cont.items():
+    if k not in EX or n_ < PES['votos_minimo'] or a_ / n_ < PES['votos_alto_limite'] or _membro(k, bid): continue
+    p = EX[k]
+    alinhados[bid].append({'k': k, 'n': p.get('n'), 'c': p.get('c'), 's': p.get('s') or p.get('p'), 'uf': p.get('uf'), 'g': p.get('cl'),
+                           'pct': round(100 * a_ / n_), 'v': round(n_, 1)})
+for bid, l in alinhados.items():
+    l.sort(key=lambda x: (-x['pct'], -x['v'], x['n'] or ''))
+    log(f"alinhados sem pertencer, {bid}:", len(l), dict(collections.Counter(x['g'] or 'sem grupo' for x in l)))
+
 out = {'gerado': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()), 'versao_regras': REG.get('versao'),
        'bancadas': [{k: b[k] for k in ('id', 'nome', 'descricao')} for b in BAN],
        'fontes': {'empresas_e_bens': 'Receita (quadro de sócios, nov/2026) e TSE, via ramo analises-saida-plp299_tudo', 'frentes': len(FRENTES) > 0, 'ocupacao_r2': bool(os.environ.get('R2_ACCOUNT_ID'))},
        'resumo': {f'{b}|{c}|{"triagem" if t else "regra"}': n for (b, c, t), n in sorted(cont_cat.items())},
-       'votacoes': cands, 'p': saida}
+       'votacoes': cands, 'alinhados': alinhados, 'p': saida}
 corpo = json.dumps(out, ensure_ascii=False, separators=(',', ':')).encode()
 if S3:
     S3.put_object(Bucket=BUCKET, Key='bancadas/bancadas.json', Body=corpo, ContentType='application/json')

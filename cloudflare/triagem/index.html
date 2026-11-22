@@ -92,6 +92,7 @@ textarea{width:100%;border:1px solid var(--line);border-radius:6px;padding:8px 1
 .desc{font-size:14px;color:var(--ink-2);margin:10px 0 0}
 .links-mat { margin: .4rem 0 .6rem; font-size: .9rem; }
 .links-mat a { font-weight: 600; }
+.alinh{width:100%;border-collapse:collapse;font-size:14px;background:var(--sheet);color:var(--ink)}.alinh th,.alinh td{text-align:left;padding:6px 8px;border-top:1px solid var(--line)}.alinh td:nth-child(4),.alinh td:nth-child(5){text-align:right;font-variant-numeric:tabular-nums}
 </style>
 </head>
 <body>
@@ -121,12 +122,17 @@ textarea{width:100%;border:1px solid var(--line);border-radius:6px;padding:8px 1
   <div class="abas" role="tablist">
     <button type="button" role="tab" id="abaP" aria-selected="true">Parlamentares</button>
     <button type="button" role="tab" id="abaV" aria-selected="false">Votações-chave</button>
+    <button type="button" role="tab" id="abaA" aria-selected="false">Votam com a bancada</button>
   </div>
   <section id="secP">
     <p class="contagem" id="contagem"></p>
     <div id="lista"><p class="carregando">Carregando…</p></div>
     <button class="btn mais" type="button" id="mais" hidden>Mostrar mais</button>
     <p class="dica">Vínculo: empresas do próprio parlamentar no setor, bens declarados ao TSE, ocupação declarada e nome de urna. Atuação: projetos e votos classificados nas pautas da bancada, projetos e relatorias sobre o tema, frentes parlamentares e emendas. Núcleo tem vínculo e atuação; aliado tem atuação sem vínculo; interesse sem atuação tem vínculo e pouca atuação. A decisão da equipe prevalece sobre a regra e não volta para a fila.</p>
+  </section>
+  <section id="secA" hidden>
+    <p class="contagem" id="contagemA"></p>
+    <div id="listaA"></div>
   </section>
   <section id="secV" hidden>
     <p class="contagem" id="contagemV"></p>
@@ -225,6 +231,7 @@ function desenhar() {
   $('#lista').innerHTML = l.slice(0, limite).map(cartao).join('') || '<p class="carregando">Nenhum parlamentar nesta lista.</p>';
   $('#mais').hidden = l.length <= limite;
   desenharVotacoes();
+  desenharAlinhados();
 }
 const votoChave = (b, id) => { const p = (pend.votacoes[b] || {}); return id in p ? p[id] : (salvas.votacoes[b] || {})[id]; };
 function desenharVotacoes() {
@@ -241,6 +248,15 @@ function desenharVotacoes() {
       <div class="linha"><span class="rot">Votação-chave</span><div class="seg">${bt('S', 'Sim favorece a pauta')}${bt('N', 'Não favorece a pauta')}${bt('', 'Não é chave')}</div></div>
     </div>`;
   }).join('') || '<p class="carregando">Nenhuma votação candidata.</p>';
+}
+// Alinhamento de votos, à parte do enquadramento: quem vota com a pauta da bancada sem ser do núcleo nem aliado.
+function desenharAlinhados() {
+  const b = bancada(), l = ((dados.alinhados || {})[b] || []).filter(x => !$('#fCasa').value || x.c === $('#fCasa').value);
+  const por = {}; l.forEach(x => { const g = GRUPO[x.g] || 'sem grupo'; por[g] = (por[g] || 0) + 1; });
+  $('#contagemA').textContent = `${l.length} ${l.length === 1 ? 'parlamentar vota' : 'parlamentares votam'} com a pauta da bancada em 80% ou mais das votações ligadas a ela, sem ser do núcleo nem aliado`
+    + (l.length ? ` (${Object.entries(por).sort((a, z) => z[1] - a[1]).map(([g, n]) => `${n} da ${g}`).join(', ')})` : '') + '. É o bloco de votos em torno da bancada; não entra no enquadramento.';
+  $('#listaA').innerHTML = l.length ? `<table class="alinh"><thead><tr><th>Parlamentar</th><th>Partido</th><th>Grupo</th><th>Com a pauta</th><th>Votos considerados</th></tr></thead><tbody>${l.map(x =>
+    `<tr><td>${esc(x.n)}</td><td>${esc(x.s)}/${esc(x.uf || '')}, ${CASA[x.c] || ''}</td><td>${esc(GRUPO[x.g] || '—')}</td><td>${x.pct}%</td><td>${x.v}</td></tr>`).join('')}</tbody></table>` : '<p class="carregando">Nenhum parlamentar alinhado fora da bancada, ou o robô ainda não calculou esta lista.</p>';
 }
 function atualizarBarra() {
   const n = nPend();
@@ -285,9 +301,13 @@ async function salvar() {
     $('#msg').textContent = `${n} ${n === 1 ? 'alteração salva' : 'alterações salvas'}. Votações-chave passam a valer na próxima execução do robô.`;
   } catch (e) { atualizarBarra(); $('#msg').textContent = 'Não foi possível salvar, porque ' + e.message + '.'; }
 }
-function aba(v) { $('#abaP').setAttribute('aria-selected', !v); $('#abaV').setAttribute('aria-selected', v); $('#secP').hidden = v; $('#secV').hidden = !v; }
-$('#abaP').addEventListener('click', () => aba(false));
-$('#abaV').addEventListener('click', () => aba(true));
+function aba(v) {
+  const qual = v === true ? 'V' : v || 'P';
+  for (const x of ['P', 'V', 'A']) { $('#aba' + x).setAttribute('aria-selected', x === qual); $('#sec' + x).hidden = x !== qual; }
+}
+$('#abaP').addEventListener('click', () => aba('P'));
+$('#abaV').addEventListener('click', () => aba('V'));
+$('#abaA').addEventListener('click', () => aba('A'));
 $('#salvar').addEventListener('click', salvar);
 $('#descartar').addEventListener('click', () => { if (!confirm('Descartar todas as alterações não salvas?')) return; pend = { decisoes: {}, votacoes: {} }; guardarPend(); atualizarBarra(); desenhar(); });
 $('#mais').addEventListener('click', () => { limite += 25; desenhar(); });
