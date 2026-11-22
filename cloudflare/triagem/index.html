@@ -137,7 +137,7 @@ textarea{width:100%;border:1px solid var(--line);border-radius:6px;padding:8px 1
   <section id="secV" hidden>
     <p class="contagem" id="contagemV"></p>
     <div id="listaV"></div>
-    <p class="dica">Marque as votações que definem a bancada e o voto que favorece a pauta. Votações-chave contam em dobro na próxima execução do robô; as demais votações da pauta continuam valendo, com o voto da direita como referência.</p>
+    <p class="dica">Marque as votações que definem a bancada e o voto que favorece a pauta. Votações-chave contam em dobro na próxima execução do robô. Nas demais votações da pauta, o voto esperado vem da classificação do projeto (nas votações do texto e da urgência) ou da maioria da direita (em destaques e emendas). Para mudar uma marcação já salva, clique em outra opção e salve; clicar na opção já marcada não muda nada.</p>
   </section>
 </main>
 
@@ -243,7 +243,7 @@ function desenharVotacoes() {
     const links = (v.l || []).filter(x => /^https:\/\/(www\.camara\.leg\.br|www25\.senado\.leg\.br)\//.test(x.u))
       .map(x => `<a href="${esc(x.u)}" target="_blank" rel="noopener">${esc(x.c)}${/^(REQ|RCP)\b/.test(x.c) ? ' (requerimento)' : ''} ↗</a>`).join(' · ');
     return `<div class="cartao ${atual ? 'aliado' : ''}" data-vid="${esc(v.id)}">
-      <div class="topo"><span class="num">${esc(v.mat || v.id)}</span><span class="meta">${CASA[v.k] || ''}, ${esc((v.d || '').split('-').reverse().join('/'))}${v.p && v.p.length ? ', pautas ' + esc(v.p.join(', ')) : ''} · voto da direita: ${v.bd === 'S' ? 'Sim' : v.bd === 'N' ? 'Não' : '—'}</span>${v.id in (pend.votacoes[b] || {}) ? '<span class="lado"><span class="selo s-pend">Não salva</span></span>' : ''}</div>
+      <div class="topo"><span class="num">${esc(v.mat || v.id)}</span><span class="meta">${CASA[v.k] || ''}, ${esc((v.d || '').split('-').reverse().join('/'))}${v.p && v.p.length ? ', pautas ' + esc(v.p.join(', ')) : ''} · voto da direita: ${v.bd === 'S' ? 'Sim' : v.bd === 'N' ? 'Não' : '—'}</span>${v.id in (pend.votacoes[b] || {}) ? '<span class="lado"><span class="selo s-pend">Não salva</span></span>' : (salvas.votacoes[b] || {})[v.id] ? '<span class="lado"><span class="selo s-salvo">Salva</span></span>' : ''}</div>
       <p class="pontos">${esc(v.desc)}</p><p class="meta">${esc(v.me)}</p>${links ? `<p class="links-mat"><span class="rot">Abrir a matéria:</span> ${links}</p>` : ''}
       <div class="linha"><span class="rot">Votação-chave</span><div class="seg">${bt('S', 'Sim favorece a pauta')}${bt('N', 'Não favorece a pauta')}${bt('', 'Não é chave')}</div></div>
     </div>`;
