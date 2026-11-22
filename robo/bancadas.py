@@ -403,6 +403,7 @@ for vt in VOTS:
     pj = projeto_chave(vt) if vt.get('pl') else None
     for b in BAN:
         chave = CHAVE_P.get(b['id'], {}).get(pj) if pj else None
+        if chave not in ('S', 'N'): chave = None   # X = descartada pela equipe
         if chave: VOT_CHAVE[b['id']][pj].append({'id': vt['id'], 'k': vt['k'], 'd': vt.get('d'), 'desc': (vt.get('desc') or '')[:160]})
         doban = da_bancada(b, x.get('p') or [], texto) and x.get('s') in ('avanca', 'barra') and pro_pauta(vt, x) in ('S', 'N')
         if doban or casa(b['_termos'], texto):

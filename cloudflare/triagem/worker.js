@@ -77,7 +77,8 @@ async function gravar(env, mudancas, email) {
       pro[b] = pro[b] || {};
       for (const [c, v] of Object.entries(o || {})) {
         if (!/^(PEC|PDL|PL|PLP) \d{1,5}\/\d{4}$/.test(c)) continue;
-        if (v === 'S' || v === 'N') pro[b][c] = v; else delete pro[b][c];
+        // S: favorece a pauta; N: contraria; X: descartada pela equipe (some das sugestões e não conta).
+        if (v === 'S' || v === 'N' || v === 'X') pro[b][c] = v; else delete pro[b][c];
       }
       if (!Object.keys(pro[b]).length) delete pro[b];
     }

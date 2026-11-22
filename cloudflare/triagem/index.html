@@ -95,6 +95,7 @@ textarea{width:100%;border:1px solid var(--line);border-radius:6px;padding:8px 1
 .alinh{width:100%;border-collapse:collapse;font-size:14px;background:var(--sheet);color:var(--ink)}.alinh th,.alinh td{text-align:left;padding:6px 8px;border-top:1px solid var(--line)}.alinh td:nth-child(4),.alinh td:nth-child(5){text-align:right;font-variant-numeric:tabular-nums}
 .sub-v{font-family:var(--display);font-size:22px;margin:18px 0 4px;text-transform:uppercase}.sug{font-size:14px;margin:4px 0 6px;color:var(--ink)}.sug .alerta{display:block;margin-top:4px;color:var(--int);font-weight:600}
 .busca-p{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}.busca-p input{padding:8px 10px;border:1px solid var(--line);border-radius:6px;min-width:180px;background:var(--sheet);color:var(--ink)}
+.descartadas{margin:18px 0}.descartadas summary{cursor:pointer;font-weight:600}
 </style>
 </head>
 <body>
@@ -263,27 +264,32 @@ function cartaoProposicao(b, c, v, sug) {
     <div class="topo"><span class="num">${esc(c)}</span><span class="meta">${v && v.p && v.p.length ? 'pautas ' + esc(v.p.join(', ')) : ''}</span>${selo ? `<span class="lado">${selo}</span>` : ''}</div>
     ${info}${v ? `<p class="meta">${esc(v.me || v.desc || '')}</p>` : ''}${links ? `<p class="links-mat"><span class="rot">Abrir a matéria:</span> ${links}</p>` : ''}
     ${atual && !pendente ? `<p class="meta">${vots.length ? `${vots.length} ${vots.length === 1 ? 'votação conta' : 'votações contam'} na última execução do robô (texto e urgência, em plenário).` : 'Nenhuma votação do texto ou da urgência em plenário até a última execução do robô.'}</p>` : ''}
-    <div class="linha"><span class="rot">Proposição-chave</span><div class="seg">${bt('S', 'Favorece a pauta')}${bt('N', 'Contraria a pauta')}${bt('', 'Não é chave')}</div></div>
+    <div class="linha"><span class="rot">Proposição-chave</span><div class="seg">${bt('S', 'Favorece a pauta')}${bt('N', 'Contraria a pauta')}${bt('X', 'Não é chave')}</div></div>
   </div>`;
 }
 function desenharVotacoes() {
   const b = bancada(), sug = (dados.sugestoes || {})[b] || [];
-  const marcadas = new Set([...Object.keys(salvas.proposicoes[b] || {}), ...Object.keys(pend.proposicoes[b] || {}), ...Object.keys(legadoProp(b))]);
+  const todas = new Set([...Object.keys(salvas.proposicoes[b] || {}), ...Object.keys(pend.proposicoes[b] || {}), ...Object.keys(legadoProp(b))]);
+  const valor = c => marcaProp(b, c) || legadoProp(b)[c] || '';
+  const marcadas = new Set([...todas].filter(c => ['S', 'N'].includes(valor(c))));
+  const descartadas = [...todas].filter(c => valor(c) === 'X').sort();
+  const fora = new Set([...marcadas, ...descartadas]);
   const ref = {}; for (const v of [...((dados.votacoes || {})[b] || []), ...sug]) ref[v.mat] = ref[v.mat] || v;
   const jaSug = new Set(sug.map(v => v.mat));
-  const outras = [...new Set(((dados.votacoes || {})[b] || []).map(v => v.mat))].filter(c => c && !jaSug.has(c) && !marcadas.has(c));
+  const outras = [...new Set(((dados.votacoes || {})[b] || []).map(v => v.mat))].filter(c => c && !jaSug.has(c) && !fora.has(c));
   const lista = (l, f) => l.map(f).join('');
-  $('#contagemV').textContent = `${marcadas.size} ${marcadas.size === 1 ? 'proposição marcada' : 'proposições marcadas'}, ${sug.length} sugeridas pelo robô e ${outras.length} outras candidatas.`;
+  $('#contagemV').textContent = `${marcadas.size} ${marcadas.size === 1 ? 'proposição marcada' : 'proposições marcadas'}, ${sug.filter(v => !fora.has(v.mat)).length} sugeridas pelo robô, ${outras.length} outras candidatas e ${descartadas.length} ${descartadas.length === 1 ? "descartada" : "descartadas"}.`;
   $('#listaV').innerHTML = `<div class="busca-p"><label for="novaProp">Marcar outro projeto:</label> <input id="novaProp" placeholder="PL 1234/2025" aria-label="Projeto"> <button type="button" class="btn" data-addp="S">Favorece a pauta</button> <button type="button" class="btn" data-addp="N">Contraria a pauta</button></div>
-    <p class="dica">Ao marcar um projeto, todas as votações de plenário do texto e da urgência dele contam como atuação, em dobro, inclusive as que ainda vão acontecer. Destaques e emendas não entram.</p>`
+    <p class="dica">Ao marcar um projeto, todas as votações de plenário do texto e da urgência dele contam como atuação, em dobro, inclusive as que ainda vão acontecer. Destaques e emendas não entram. Serve para qualquer projeto, mesmo os que o robô não sugeriu ou que a IA não classificou. "Não é chave" tira o projeto das sugestões; ele vai para a lista de descartadas, no fim da página.</p>`
     + (marcadas.size ? `<h3 class="sub-v">Marcadas</h3>${lista([...marcadas].sort(), c => cartaoProposicao(b, c, ref[c], sug.find(v => v.mat === c)))}` : '')
     + [['S', 'Sugeridas: favorecem a pauta da extrema-direita'], ['N', 'Sugeridas: vão contra a pauta da extrema-direita']].map(([e, tit]) => {
-      const l = sug.filter(v => v.esperado === e && !marcadas.has(v.mat));
+      const l = sug.filter(v => v.esperado === e && !fora.has(v.mat));
       return l.length ? `<h3 class="sub-v">${tit}</h3><p class="dica">Projetos ligados à bancada em que a extrema-direita e a esquerda votaram de lados opostos, dos mais disputados para os menos.</p>${lista(l, v => cartaoProposicao(b, v.mat, v, v))}` : '';
     }).join('')
     + (sug.length ? '' : '<p class="dica">O robô ainda não gerou sugestões para esta bancada, ou nenhuma votação passou pelo critério.</p>')
     + `<h3 class="sub-v">Outras candidatas</h3><p class="dica">Projetos com votação disputada em plenário ligada à pauta ou ao tema da bancada.</p>`
-    + (lista(outras, c => cartaoProposicao(b, c, ref[c], null)) || '<p class="carregando">Nenhuma outra candidata.</p>');
+    + (lista(outras, c => cartaoProposicao(b, c, ref[c], null)) || '<p class="carregando">Nenhuma outra candidata.</p>')
+    + (descartadas.length ? `<details class="descartadas"><summary>Descartadas pela equipe (${descartadas.length})</summary><p class="dica">Não aparecem nas sugestões e não contam. Para voltar atrás, marque como favorece ou contraria.</p>${lista(descartadas, c => cartaoProposicao(b, c, ref[c], sug.find(v => v.mat === c)))}</details>` : '');
 }
 // Alinhamento de votos, à parte do enquadramento: quem vota com a pauta da bancada sem ser do núcleo nem aliado.
 function desenharAlinhados() {
