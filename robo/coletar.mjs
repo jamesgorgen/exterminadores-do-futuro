@@ -583,6 +583,39 @@ function guardarSimbolica(v) {
   arquivoSimbolicas(ano(v.d)).set(v.id, v);
   contar('votacoes_simbolicas_plenario');
 }
+// Votações da Câmara registradas sem matéria (por exemplo, "Aprovado o Requerimento de Urgência", sem dizer de qual
+// projeto): o número antes do hífen no id é a proposição votada. A API dá a sigla, o número e a ementa dela, e a ementa
+// do requerimento leva à matéria principal. Também busca a ementa das matérias principais que não estão na base
+// (projetos anteriores a 2023, medidas provisórias), para a classificação. Guardado em dados/materias-votacoes.json.
+async function recuperarMateriasCamara(votacoes, ementaProp) {
+  const cache = lerJson('materias-votacoes.json', { p: {}, m: {} });
+  const P = cache.p || (cache.p = {}), Mm = cache.m || (cache.m = {});
+  const idDe = vt => (/^C:(\d+)-/.exec(vt.id) || [])[1];
+  const faltam = votacoes.filter(vt => vt.k === 'C' && !vt.mat && !materiaPrincipal(vt) && idDe(vt));
+  const ids = [...new Set(faltam.map(idDe))].filter(id => !(id in P));
+  await Motor.emParalelo(ids.map(id => async () => {
+    try {
+      const j = await baixar(`${API_CAMARA}/proposicoes/${id}`); const d = (j && j.dados) || j || {};
+      P[id] = { c: chaveMateria(pega(d, 'siglaTipo'), pega(d, 'numero'), pega(d, 'ano')), e: String(pega(d, 'ementa') || '').slice(0, 600) };
+    } catch (e) { contar('materia_votacao_erro'); }
+  }), 6);
+  let n = 0;
+  for (const vt of faltam) { const m = P[idDe(vt)]; if (!m || !m.c) continue; vt.mat = m.c; if (!vt.me) vt.me = m.e; n++; }
+  contar('votacoes_com_materia_recuperada', n);
+  // Ementa das matérias principais fora da base (só Câmara, onde a votação aconteceu).
+  const semEmenta = [...new Set(votacoes.filter(vt => vt.k === 'C').map(vt => materiaPrincipal(vt)).filter(c => c && !ementaProp.has(c) && !(c in Mm)))];
+  await Motor.emParalelo(semEmenta.slice(0, 1500).map(c => async () => {
+    const [sig, resto] = c.split(' '); const [num, an] = resto.split('/');
+    try {
+      const q = new URLSearchParams({ siglaTipo: sig, numero: num, ano: an, itens: '5' });
+      const d = registros(await baixar(`${API_CAMARA}/proposicoes?${q}`))[0];
+      Mm[c] = d ? String(pega(d, 'ementa') || '').slice(0, 600) : '';
+    } catch (e) { contar('ementa_materia_erro'); }
+  }), 6);
+  gravarJson('materias-votacoes.json', cache, true);
+  return Mm;
+}
+
 // Percorre os votos agrupados como pares [chave do parlamentar, voto].
 function* votosDe(vt) { for (const [c, lista] of Object.entries(vt.v || {})) for (const id of lista) yield [vt.k + id, c]; }
 
@@ -1290,6 +1323,9 @@ export async function executar() {
   for (const it of todasPropFinal) if (!Motor.ehHomenagem(it.e || '', TC)) { paraClassificar.push({ chave: it.c, texto: it.e }); vistos.add(it.c); }
   // Requerimentos, destaques e emendas ficam sob a matéria principal citada na ementa (mp), com a ementa dela.
   const ementaProp = new Map(todasPropFinal.map(it => [it.c, it.e]));
+  let ementaFora = {};
+  try { ementaFora = await recuperarMateriasCamara(todasVot, ementaProp); } catch (e) { erro('matérias das votações sem matéria', e); }
+  for (const [c, e] of Object.entries(ementaFora)) if (e && !ementaProp.has(c)) ementaProp.set(c, e);
   for (const vt of todasVot) {
     const mp = materiaPrincipal(vt);
     if (mp) { vt.mp = mp; contar('votacoes_ligadas_a_materia_principal'); } else delete vt.mp;

@@ -37,7 +37,14 @@ for f in sorted(glob.glob('dados/votacoes-20*.json')):
                 for i in ids: voto_de[v['k'] + str(i)] = op
             print('votação:', VOT, v.get('d'), v.get('mat'), (v.get('desc') or '')[:80])
 
+# Decisões da equipe sobre quem já não aparece no enquadramento atual (a regra deixou de apontar a pessoa).
+sem_entrada = Counter(d.get('d') for kk, d in dec.items() if kk.endswith('|' + BAN) and not (((bj.get('p') or {}).get(kk.split('|')[0]) or {}).get('b') or {}).get(BAN))
+print('decisões sem entrada no enquadramento atual:', dict(sem_entrada))
 membros, pend, por_dec, por_regra = {}, 0, 0, 0
+for kk, d in dec.items():
+    k, b = kk.split('|', 1)
+    if b == BAN and d.get('d') in ('nucleo', 'aliado') and not (((bj.get('p') or {}).get(k) or {}).get('b') or {}).get(BAN):
+        membros[k] = d['d']; por_dec += 1
 cats_equipe = Counter()
 for k, p in (bj.get('p') or {}).items():
     x = (p.get('b') or {}).get(BAN)
@@ -51,7 +58,7 @@ for k, p in (bj.get('p') or {}).items():
     else:
         pend += 1
 
-res = {'bancada': BAN, 'votacao': VOT, 'gerado': bj.get('gerado'),
+res = {'decisoes_sem_entrada_atual': dict(sem_entrada), 'bancada': BAN, 'votacao': VOT, 'gerado': bj.get('gerado'),
        'decisoes_da_equipe': dict(cats_equipe), 'pendentes_de_triagem': pend,
        'membros': {'total': len(membros), 'por_decisao_da_equipe': por_dec, 'pela_regra_sem_triagem': por_regra,
                    'por_categoria': dict(Counter(membros.values())),
