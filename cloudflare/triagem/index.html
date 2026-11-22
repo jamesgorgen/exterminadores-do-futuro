@@ -340,7 +340,9 @@ async function verResumo(c) {
   const ePos = principais.map(v => v.be).filter(v => v === 'S' || v === 'N');
   const eMaj = ePos.length ? (ePos.filter(v => v === 'S').length >= ePos.length / 2 ? 'S' : 'N') : '';
   if (!sug && eMaj) { sug = eMaj; por = `a extrema-direita votou majoritariamente ${POS[eMaj]} nas votações do texto e da urgência`; }
-  const conflito = sug && eMaj && sug !== eMaj;
+  const cPos = comissoes.map(v => v.be).filter(v => v === 'S' || v === 'N');
+  const eCom = cPos.length ? (cPos.filter(v => v === 'S').length >= cPos.length / 2 ? 'S' : 'N') : '';
+  const conflito = sug && (eMaj || eCom) && sug !== (eMaj || eCom);
   const linhaVot = v => `<li>${esc((v.d || '').split('-').reverse().join('/'))}, ${CASA[v.k] || ''}: ${esc((v.desc || '').slice(0, 120))}${v.res === 'A' ? ' <b>aprovada</b>' : v.res === 'R' ? ' <b>rejeitada</b>' : ''}. Extrema-direita: ${POS[v.be] || 'dividida'}${v.bec ? ` (${Math.round(100 * v.bec)}% coesa)` : ''}; esquerda e governo: ${POS[v.gv] || 'dividida'}${proc.test(v.desc || '') ? ' <span class="meta">(destaque ou procedimento, não conta)</span>' : ''}.</li>`;
   resumoHTML = `<div class="cartao resumo-p">
     <div class="topo"><span class="num">${esc(c)}</span><span class="meta">${prop ? esc((prop.d || '').split('-').reverse().join('/')) : 'fora da base de projetos (anterior a 2023 ou de outro tipo)'}</span></div>
@@ -350,7 +352,7 @@ async function verResumo(c) {
     ${vots.length ? `<p class="rot">Votações nominais de plenário (${vots.length})</p><ul class="vots-p">${vots.map(linhaVot).join('')}</ul>` : '<p class="meta">Nenhuma votação nominal de plenário nos dados. Marcar agora faz contar as votações futuras.</p>'}
     ${comissoes.length ? `<p class="meta">Também teve ${comissoes.length} ${comissoes.length === 1 ? 'votação nominal' : 'votações nominais'} em comissão (${esc([...new Set(comissoes.map(v => v.o))].join(', '))}), que não contam como proposição-chave. Extrema-direita na última: ${POS[comissoes.sort((x, y) => (y.d || '').localeCompare(x.d || ''))[0].be] || 'dividida'}.</p>` : ''}
     <p class="sug">${sug ? `Sugestão: <b>${sug === 'S' ? 'Favorece a pauta' : 'Contraria a pauta'}</b>, porque ${por}.` : 'Sem sugestão: o projeto não tem classificação nem votação que indique o lado da extrema-direita.'}
-      ${conflito ? '<span class="alerta">A classificação e o voto da extrema-direita apontam lados diferentes: confira a classificação na página de revisão.</span>' : ''}
+      ${conflito ? `<span class="alerta">A classificação e o voto da extrema-direita${eMaj ? '' : ' em comissão'} apontam lados diferentes: confira a classificação na página de revisão.</span>` : ''}
       ${x.s && !daBancada ? '<span class="alerta">A IA não ligou o projeto à pauta desta bancada; confira se é mesmo o que procura.</span>' : ''}</p>
     <div class="linha"><span class="rot">Marcar</span><div class="seg"><button type="button" class="S" data-addp="S" aria-pressed="${sug === 'S'}">Favorece a pauta</button><button type="button" class="N" data-addp="N" aria-pressed="${sug === 'N'}">Contraria a pauta</button></div></div>
   </div>`;
