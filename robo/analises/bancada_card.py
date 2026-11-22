@@ -71,6 +71,9 @@ for k, c in membros.items():
     g = (indice.get(k) or {}).get('cl') or 'sem grupo'
     cat_voto[c][vv] += 1; grupo_voto[g][vv] += 1
 res['deputados_na_votacao'] = {'por_categoria': {c: dict(n) for c, n in cat_voto.items()}, 'por_grupo': {g: dict(n) for g, n in grupo_voto.items()}}
+al = (bj.get('alinhados') or {}).get(BAN) or []
+res['alinhados_sem_pertencer'] = {'total': len(al), 'por_casa': dict(Counter(x.get('c') for x in al)), 'por_grupo': dict(Counter(x.get('g') or 'sem grupo' for x in al)),
+                                  'voto_na_votacao': dict(Counter(VOTO.get(voto_de.get(x['k']), 'sem voto registrado') for x in al if x['k'][0] == VOT[0]))}
 txt = json.dumps(res, ensure_ascii=False, indent=1)
 print(txt)
 open('saida/resultado.json', 'w').write(txt + '\n')
