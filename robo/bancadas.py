@@ -364,6 +364,17 @@ def projeto_de(vt, urgencia=False):
         if sig in TIPOS_CHAVE: return c.upper()
         if sig not in ('REQ', 'RCP', 'RQS'): return None   # medida provisória, emenda, parecer: fora
     return None
+# Voto a favor da pauta: quando a votação aprova o texto do projeto ou a urgência dele, vem da classificação da matéria
+# (faz avançar a pauta: sim; barra a pauta: não). Nos demais casos (destaques, emendas, outros procedimentos), o voto da
+# maioria da direita, como antes. Corrige votações em que a direita se dividiu ou votou contra a própria pauta
+# (urgência do PL 4675/2025: maioria da direita a favor da regulação das plataformas).
+RX_PARTE = re.compile(r'DESTAQUE|\bEMENDA|SUBEMENDA(?!.*SUBSTITUTIVA)')
+def pro_pauta(vt, x):
+    d = norm(vt.get('desc'))
+    if x.get('s') in ('avanca', 'barra') and not RX_PARTE.search(d) and (projeto_de(vt) or (RX_URG.search(d) and not RX_OUTRO_PROCED.search(d))):
+        return 'S' if x['s'] == 'avanca' else 'N'
+    return vt.get('bd')
+
 # Projetos que já tiveram votação de mérito (texto): a urgência deles não vira votação-chave.
 COM_MERITO = {c for c in (projeto_de(v) for v in VOTS if v.get('pl')) if c}
 def projeto_ou_urgencia(vt):
@@ -376,11 +387,11 @@ for vt in VOTS:
     projeto = projeto_ou_urgencia(vt)
     for b in BAN:
         chave = CHAVE.get(b['id'], {}).get(vt['id']) if projeto else None
-        doban = da_bancada(b, x.get('p') or [], texto) and x.get('s') in ('avanca', 'barra') and vt.get('bd') in ('S', 'N')
+        doban = da_bancada(b, x.get('p') or [], texto) and x.get('s') in ('avanca', 'barra') and pro_pauta(vt, x) in ('S', 'N')
         if doban or casa(b['_termos'], texto):
             if vt.get('pl') and vt.get('disp') and projeto: CAND[b['id']].append({**vt, 'mat': projeto})
         if not (doban or chave): continue
-        pro = chave or vt['bd']; peso = PES['votacao_chave_peso'] if chave else 1
+        pro = chave or pro_pauta(vt, x); peso = PES['votacao_chave_peso'] if chave else 1
         for k, v in votos_de(vt):
             if k not in EX or v not in ('S', 'N'): continue
             c = cont[(k, b['id'])]; c[1] += peso
