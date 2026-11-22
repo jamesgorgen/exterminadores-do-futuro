@@ -627,7 +627,7 @@ const chaveMateria = (sigla, numero, anoM) => (sigla && numero && anoM) ? `${Str
 const PRINCIPAIS = ['PL', 'PLP', 'PEC', 'PDL', 'MPV', 'PLV', 'PLN'];
 const NOMES_MATERIA = [
   [/projeto de lei complementar/, 'PLP'], [/projeto de lei de conversao/, 'PLV'], [/projeto de lei do congresso nacional/, 'PLN'],
-  [/projeto de decreto legislativo/, 'PDL'], [/proposta de emenda (a|à) constituicao/, 'PEC'], [/medida provisoria/, 'MPV'], [/projeto de lei/, 'PL']
+  [/projeto de decreto legislativo/, 'PDL'], [/proposta de emenda (?:a|à) constituicao/, 'PEC'], [/medida provisoria/, 'MPV'], [/projeto de lei/, 'PL']
 ];
 export function materiaPrincipal(vt) {
   const sig = String(vt.mat || '').split(' ')[0];
