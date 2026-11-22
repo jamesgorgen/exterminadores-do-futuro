@@ -1,5 +1,5 @@
 {
- "inicio": "2026-11-22T04:32:12.810Z",
+ "inicio": "2026-11-22T04:35:05.498Z",
  "modo": "diario",
  "amostras": {
   "camara_deputado": {
@@ -175,37 +175,37 @@
    "proponente": "1"
   },
   "senado_relatoria": {
-   "autoriaProcesso": "Presidência da República",
+   "autoriaProcesso": "Câmara dos Deputados",
    "casaRelator": "SF",
-   "codigoColegiado": 1998,
-   "codigoMateria": 154768,
-   "codigoParlamentar": 5998,
-   "codigoTipoColegiado": 128,
-   "dataApresentacaoProcesso": "2022-09-22 09:28:28",
-   "dataDesignacao": "2023-02-23 15:48:00",
-   "dataDestituicao": "2023-02-28 18:37:30",
+   "codigoColegiado": 34,
+   "codigoMateria": 156475,
+   "codigoParlamentar": 5748,
+   "codigoTipoColegiado": 21,
+   "dataApresentacaoProcesso": "2023-03-23 16:47:01",
+   "dataDesignacao": "2023-04-04 12:13:42",
+   "dataDestituicao": "2023-04-26 15:33:01",
    "dataFimColegiado": null,
    "descricaoTipoEncerramento": "Deliberação da matéria",
    "descricaoTipoRelator": "Relator",
-   "emailParlamentar": "sen.daniellaribeiro@senado.leg.br",
-   "ementaProcesso": "Altera a Lei nº 12.249, de 11 de junho de 2010, para dispor sobre a alíquota do imposto sobre a renda retido na fonte incidente sobre as operações a que se refere.",
-   "formaTratamentoParlamentar": "Senadora",
-   "id": 9261491,
-   "idProcesso": 8306238,
+   "emailParlamentar": "sen.venezianovitaldorego@senado.leg.br",
+   "ementaProcesso": "Dispõe sobre a transformação de cargos de Analista do Ministério Público da União em cargos de Procurador da Justiça Militar, em cargos de Promotor da Justiça Militar e em cargos em comissão que especifica, no âmbito do Ministério Público Militar; e altera a Lei nº 13.316, de 20 de julho de 2016.",
+   "formaTratamentoParlamentar": "Senador",
+   "id": 9309396,
+   "idProcesso": 8396007,
    "idTipoRelator": 1,
-   "identificacaoProcesso": "MPV 1138/2022",
-   "nomeColegiado": "Plenário do Senado Federal",
-   "nomeCompleto": "Daniella Velloso Borges Ribeiro",
-   "nomeParlamentar": "Daniella Ribeiro",
+   "identificacaoProcesso": "PL 2969/2022",
+   "nomeColegiado": "Comissão de Constituição, Justiça e Cidadania",
+   "nomeCompleto": "Veneziano Vital do Rêgo Segundo Neto",
+   "nomeParlamentar": "Veneziano Vital do Rêgo",
    "numeroAutuacao": "1",
-   "sexoParlamentar": "F",
+   "sexoParlamentar": "M",
    "siglaCasa": "SF",
-   "siglaColegiado": "PLEN",
-   "siglaPartidoParlamentar": "PSD",
+   "siglaColegiado": "CCJ",
+   "siglaPartidoParlamentar": "MDB",
    "tramitando": "N",
    "ufParlamentar": "PB",
-   "urlFotoParlamentar": "http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5998.jpg",
-   "urlPaginaParlamentar": "http://www25.senado.leg.br/web/senadores/senador/-/perfil/5998"
+   "urlFotoParlamentar": "http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5748.jpg",
+   "urlPaginaParlamentar": "http://www25.senado.leg.br/web/senadores/senador/-/perfil/5748"
   }
  },
  "contagens": {
@@ -264,9 +264,9 @@
    "inicio": "[{\"autoria\":\"Senador Jader Barbalho (MDB/PA)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175933,\"dataApresentacao\":\"2026-10-13\",\"dataSituacaoAtual\":\"2026-10-13\",\"dataUltimaAtualizacao\":\"2026-10-21T17:15:01.093\",\"ementa\":\"Institui a Política Nacional de Bioenergia Amazônica para Sistemas Isolados (PROBIO-SI), destinada a incentivar a substituição do óleo diesel fóssil por biocombustíveis e bioenergia produzidos a partir de biomassa local de origem sustentável, com prioridade para a Região Norte, e altera a Lei nº 12.111, de 9 de dezembro de 2009.\",\"enteIdentificador\":\"SF\",\"id\":9113033,\"identificacao\":\"PL 5540/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/7d76b464-ad7f-45ea-bb1d-2b024061e292\"},{\"autoria\":\"Câmara dos Deputados\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175948,\"dataApresentacao\":\"2026-10-13\",\"dataSituacaoAtual\":\"2026-10-14\",\"dataUltimaAtualizacao\":\"2026-10-22T15:15:33.938\",\"ementa\":\"Altera o art. 6º da Lei n° 10.826, de 22 de dezembro de 2003 (Estatuto do Desarmamento).\",\"enteIdentificador\":\"SF\",\"id\":9113381,\"identificacao\":\"PL 5555/2026\",\"objetivo\":\"Revisora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACA"
   },
   "senado_relatoria": {
-   "url": "https://legis.senado.leg.br/dadosabertos/processo/relatoria?dataInicio=2023-02-01&dataFim=2023-02-28",
-   "tamanho": 1238,
-   "inicio": "[{\"autoriaProcesso\":\"Presidência da República\",\"casaRelator\":\"SF\",\"codigoColegiado\":1998,\"codigoMateria\":154768,\"codigoParlamentar\":5998,\"codigoTipoColegiado\":128,\"dataApresentacaoProcesso\":\"2022-09-22 09:28:28\",\"dataDesignacao\":\"2023-02-23 15:48:00\",\"dataDestituicao\":\"2023-02-28 18:37:30\",\"dataFimColegiado\":null,\"descricaoTipoEncerramento\":\"Deliberação da matéria\",\"descricaoTipoRelator\":\"Relator\",\"emailParlamentar\":\"sen.daniellaribeiro@senado.leg.br\",\"ementaProcesso\":\"Altera a Lei nº 12.249, de 11 de junho de 2010, para dispor sobre a alíquota do imposto sobre a renda retido na fonte incidente sobre as operações a que se refere.\",\"formaTratamentoParlamentar\":\"Senadora\",\"id\":9261491,\"idProcesso\":8306238,\"idTipoRelator\":1,\"identificacaoProcesso\":\"MPV 1138/2022\",\"nomeColegiado\":\"Plenário do Senado Federal\",\"nomeCompleto\":\"Daniella Velloso Borges Ribeiro\",\"nomeParlamentar\":\"Daniella Ribeiro\",\"numeroAutuacao\":\"1\",\"sexoParlamentar\":\"F\",\"siglaCasa\":\"SF\",\"siglaColegiado\":\"PLEN\",\"siglaPartidoParlamentar\":\"PSD\",\"tramitando\":\"N\",\"ufParlamentar\":\"PB\",\"urlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5998.jpg\",\"urlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5998\"}]"
+   "url": "https://legis.senado.leg.br/dadosabertos/processo/relatoria?dataInicio=2023-04-01&dataFim=2023-04-30",
+   "tamanho": 69614,
+   "inicio": "[{\"autoriaProcesso\":\"Câmara dos Deputados\",\"casaRelator\":\"SF\",\"codigoColegiado\":34,\"codigoMateria\":156475,\"codigoParlamentar\":5748,\"codigoTipoColegiado\":21,\"dataApresentacaoProcesso\":\"2023-03-23 16:47:01\",\"dataDesignacao\":\"2023-04-04 12:13:42\",\"dataDestituicao\":\"2023-04-26 15:33:01\",\"dataFimColegiado\":null,\"descricaoTipoEncerramento\":\"Deliberação da matéria\",\"descricaoTipoRelator\":\"Relator\",\"emailParlamentar\":\"sen.venezianovitaldorego@senado.leg.br\",\"ementaProcesso\":\"Dispõe sobre a transformação de cargos de Analista do Ministério Público da União em cargos de Procurador da Justiça Militar, em cargos de Promotor da Justiça Militar e em cargos em comissão que especifica, no âmbito do Ministério Público Militar; e altera a Lei nº 13.316, de 20 de julho de 2016.\",\"formaTratamentoParlamentar\":\"Senador\",\"id\":9309396,\"idProcesso\":8396007,\"idTipoRelator\":1,\"identificacaoProcesso\":\"PL 2969/2022\",\"nomeColegiado\":\"Comissão de Constituição, Justiça e Cidadania\",\"nomeCompleto\":\"Veneziano Vital do Rêgo Segundo Neto\",\"nomeParlamentar\":\"Veneziano Vital do Rêgo\",\"numeroAutuacao\":\"1\",\"sexoParlamentar\":\"M\",\"siglaCasa\":\"SF\",\"siglaColegiado\":\"CCJ\",\"siglaPartidoParlamentar\":\"MDB\",\"tramitando\":\"N\",\"ufParlamentar\":\"PB\",\"urlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5748.jpg\",\"urlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5748\"},{\"autoriaProcesso\":\"Senador Rodrigo Cunha (PSDB/AL)\",\"casaRelator\":\"SF\",\"codigoColegiado\":40,\"codigoMa"
   }
  },
  "numeracao": {
@@ -303,5 +303,5 @@
    "numeros": []
   }
  },
- "fim": "2026-11-22T04:34:29.832Z"
+ "fim": "2026-11-22T04:37:36.773Z"
 }
