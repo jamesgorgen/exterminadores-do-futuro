@@ -1,0 +1,72 @@
+{
+ "decisoes_sem_entrada_atual": {},
+ "bancada": "plataformas",
+ "votacao": "C:2579791-17",
+ "gerado": "2026-11-22T03:33:07Z",
+ "decisoes_da_equipe": {
+  "aliado": 25,
+  "nucleo": 30,
+  "fora": 6
+ },
+ "pendentes_de_triagem": 102,
+ "membros": {
+  "total": 55,
+  "por_decisao_da_equipe": 55,
+  "pela_regra_sem_triagem": 0,
+  "por_categoria": {
+   "aliado": 25,
+   "nucleo": 30
+  },
+  "por_casa": {
+   "C": 45,
+   "S": 10
+  }
+ },
+ "deputados_na_votacao": {
+  "por_categoria": {
+   "aliado": {
+    "não": 11,
+    "sim": 5,
+    "sem voto registrado": 3
+   },
+   "nucleo": {
+    "sem voto registrado": 2,
+    "sim": 11,
+    "não": 13
+   }
+  },
+  "por_grupo": {
+   "direita": {
+    "não": 9,
+    "sem voto registrado": 2,
+    "sim": 9
+   },
+   "extrema": {
+    "não": 13,
+    "sem voto registrado": 1,
+    "sim": 1
+   },
+   "centro": {
+    "sim": 6,
+    "sem voto registrado": 2,
+    "não": 2
+   }
+  }
+ },
+ "alinhados_sem_pertencer": {
+  "total": 36,
+  "por_casa": {
+   "C": 36
+  },
+  "por_grupo": {
+   "direita": 20,
+   "extrema": 9,
+   "centro": 6,
+   "esquerda": 1
+  },
+  "voto_na_votacao": {
+   "não": 31,
+   "sem voto registrado": 5
+  }
+ }
+}
