@@ -692,7 +692,7 @@ for bid, l in alinhados.items():
     log(f"alinhados sem pertencer, {bid}:", len(l), dict(collections.Counter(x['g'] or 'sem grupo' for x in l)))
 
 out = {'gerado': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()), 'versao_regras': REG.get('versao'),
-       'bancadas': [{k: b[k] for k in ('id', 'nome', 'descricao')} for b in BAN],
+       'bancadas': [{**{k: b[k] for k in ('id', 'nome', 'descricao')}, 'pautas': b.get('pautas', [])} for b in BAN],
        'fontes': {'empresas_e_bens': 'Receita (quadro de sócios, nov/2026) e TSE, via ramo analises-saida-plp299_tudo', 'frentes': len(FRENTES) > 0, 'ocupacao_r2': bool(os.environ.get('R2_ACCOUNT_ID'))},
        'resumo': {f'{b}|{c}|{"triagem" if t else "regra"}': n for (b, c, t), n in sorted(cont_cat.items())},
        'votacoes': cands, 'sugestoes': sugestoes, 'proposicoes_chave': {b: {pj: sorted(l, key=lambda v: v['d'] or '') for pj, l in o.items()} for b, o in VOT_CHAVE.items()}, 'alinhados': alinhados, 'p': saida}

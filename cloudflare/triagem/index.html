@@ -96,6 +96,7 @@ textarea{width:100%;border:1px solid var(--line);border-radius:6px;padding:8px 1
 .sub-v{font-family:var(--display);font-size:22px;margin:18px 0 4px;text-transform:uppercase}.sug{font-size:14px;margin:4px 0 6px;color:var(--ink)}.sug .alerta{display:block;margin-top:4px;color:var(--int);font-weight:600}
 .busca-p{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}.busca-p input{padding:8px 10px;border:1px solid var(--line);border-radius:6px;min-width:180px;background:var(--sheet);color:var(--ink)}
 .descartadas{margin:18px 0}.descartadas summary{cursor:pointer;font-weight:600}
+.resumo-p{border-left:4px solid var(--mark)}.vots-p{margin:4px 0 8px 18px;padding:0;font-size:14px}.vots-p li{margin:2px 0}
 </style>
 </head>
 <body>
@@ -279,7 +280,7 @@ function desenharVotacoes() {
   const outras = [...new Set(((dados.votacoes || {})[b] || []).map(v => v.mat))].filter(c => c && !jaSug.has(c) && !fora.has(c));
   const lista = (l, f) => l.map(f).join('');
   $('#contagemV').textContent = `${marcadas.size} ${marcadas.size === 1 ? 'proposição marcada' : 'proposições marcadas'}, ${sug.filter(v => !fora.has(v.mat)).length} sugeridas pelo robô, ${outras.length} outras candidatas e ${descartadas.length} ${descartadas.length === 1 ? "descartada" : "descartadas"}.`;
-  $('#listaV').innerHTML = `<div class="busca-p"><label for="novaProp">Marcar outro projeto:</label> <input id="novaProp" placeholder="PL 1234/2025" aria-label="Projeto"> <button type="button" class="btn" data-addp="S">Favorece a pauta</button> <button type="button" class="btn" data-addp="N">Contraria a pauta</button></div>
+  $('#listaV').innerHTML = `<div class="busca-p"><label for="novaProp">Marcar outro projeto:</label> <input id="novaProp" placeholder="PL 1234/2025" aria-label="Projeto" value="${esc(ultimaBusca)}"> <button type="button" class="btn" data-verp>Ver resumo</button> <button type="button" class="btn" data-addp="S">Favorece a pauta</button> <button type="button" class="btn" data-addp="N">Contraria a pauta</button></div><div id="resumoP">${resumoHTML}</div>
     <p class="dica">Ao marcar um projeto, todas as votações de plenário do texto e da urgência dele contam como atuação, em dobro, inclusive as que ainda vão acontecer. Destaques e emendas não entram. Serve para qualquer projeto, mesmo os que o robô não sugeriu ou que a IA não classificou. "Não é chave" tira o projeto das sugestões; ele vai para a lista de descartadas, no fim da página.</p>`
     + (marcadas.size ? `<h3 class="sub-v">Marcadas</h3>${lista([...marcadas].sort(), c => cartaoProposicao(b, c, ref[c], sug.find(v => v.mat === c)))}` : '')
     + [['S', 'Sugeridas: favorecem a pauta da extrema-direita'], ['N', 'Sugeridas: vão contra a pauta da extrema-direita']].map(([e, tit]) => {
@@ -305,6 +306,56 @@ function atualizarBarra() {
   $('#msg').textContent = n ? `${n} ${n === 1 ? 'alteração não salva' : 'alterações não salvas'}. Ficam guardadas neste navegador até você salvar.` : 'Nenhuma alteração pendente.';
   $('#salvar').disabled = !n; $('#descartar').disabled = !n;
 }
+// Resumo de um projeto procurado pelo número, com os dados públicos do site (ementa, autoria, classificação da IA,
+// votações de plenário e como votaram a extrema-direita e a esquerda) e uma sugestão de marcação.
+const SITE = 'https://exterminadores.com.br/dados/';
+let pub = null, ultimaBusca = '', resumoHTML = '';
+const normProj = t => String(t || '').toUpperCase().replace(/\s+/g, ' ').replace(/N[º°O]\.?\s*/, '').replace(/(\d)\.(\d)/g, '$1$2').replace(/^(PEC|PDL|PL|PLP)\s*(\d+)\s*[\/,]\s*(?:DE\s*)?(\d{4})$/, '$1 $2/$3').trim();
+async function carregarPub() {
+  if (pub) return pub;
+  const ler = n => fetch(SITE + n, { cache: 'no-cache' }).then(r => r.ok ? r.json() : null).catch(() => null);
+  const [props, vots, mats, ind] = await Promise.all(['proposicoes-todas.json', 'votacoes-resumo.json', 'materias-votacoes.json', 'indice.json'].map(ler));
+  if (!props && !vots) throw new Error('não foi possível ler os dados do site');
+  pub = { props: new Map(((props || {}).itens || []).map(x => [x.c, x])), vots: (vots || {}).itens || [], mats: (mats || {}).m || {}, ind: (ind || {}).p || {} };
+  return pub;
+}
+const POS = { S: 'sim', N: 'não' };
+async function verResumo(c) {
+  ultimaBusca = c;
+  if (!RX_PROJ.test(c)) { $('#msg').textContent = 'Escreva o projeto no formato PL 1234/2025 (PEC, PDL, PL ou PLP).'; return; }
+  $('#resumoP').innerHTML = resumoHTML = '<p class="carregando">Lendo os dados do site…</p>';
+  try { await carregarPub(); } catch (e) { $('#resumoP').innerHTML = resumoHTML = `<p class="aviso">Não foi possível ler os dados do site (${esc(e.message)}). Dá para marcar o projeto mesmo assim.</p>`; return; }
+  const b = bancada(), ban = (dados.bancadas || []).find(x => x.id === b) || {};
+  const prop = pub.props.get(c);
+  const vots = pub.vots.filter(v => (v.mp || v.mat) === c && v.pl).sort((x, y) => (x.d || '').localeCompare(y.d || ''));
+  const comissoes = pub.vots.filter(v => (v.mp || v.mat) === c && !v.pl);
+  const proc = /DESTAQUE|EMENDA|PREFER|RETIRADA|ADIAMENTO|ENCERRAMENTO|VOTA[CÇ][AÃ]O POR PARTES/i;
+  const principais = vots.filter(v => !proc.test(v.desc || ''));
+  const x = (prop && prop.x) || (vots.find(v => v.x && v.x.s) || {}).x || {};
+  const ementa = (prop && prop.e) || pub.mats[c] || (vots[0] || {}).me || '';
+  const autores = prop ? ((prop.a || []).map(k => { const p = pub.ind[k]; return p ? `${p.n} (${p.p || p.s || ''}/${p.uf || ''})` : ''; }).filter(Boolean).join('; ') || prop.au || '') : '';
+  const daBancada = (x.p || []).some(p => (ban.pautas || []).includes(p));
+  let sug = '', por = '';
+  if (x.s === 'avanca' || x.s === 'barra') { sug = x.s === 'avanca' ? 'S' : 'N'; por = `pela classificação da IA, o projeto ${x.s === 'avanca' ? 'faz avançar' : 'barra'} a pauta da direita`; }
+  const ePos = principais.map(v => v.be).filter(v => v === 'S' || v === 'N');
+  const eMaj = ePos.length ? (ePos.filter(v => v === 'S').length >= ePos.length / 2 ? 'S' : 'N') : '';
+  if (!sug && eMaj) { sug = eMaj; por = `a extrema-direita votou majoritariamente ${POS[eMaj]} nas votações do texto e da urgência`; }
+  const conflito = sug && eMaj && sug !== eMaj;
+  const linhaVot = v => `<li>${esc((v.d || '').split('-').reverse().join('/'))}, ${CASA[v.k] || ''}: ${esc((v.desc || '').slice(0, 120))}${v.res === 'A' ? ' <b>aprovada</b>' : v.res === 'R' ? ' <b>rejeitada</b>' : ''}. Extrema-direita: ${POS[v.be] || 'dividida'}${v.bec ? ` (${Math.round(100 * v.bec)}% coesa)` : ''}; esquerda e governo: ${POS[v.gv] || 'dividida'}${proc.test(v.desc || '') ? ' <span class="meta">(destaque ou procedimento, não conta)</span>' : ''}.</li>`;
+  resumoHTML = `<div class="cartao resumo-p">
+    <div class="topo"><span class="num">${esc(c)}</span><span class="meta">${prop ? esc((prop.d || '').split('-').reverse().join('/')) : 'fora da base de projetos (anterior a 2023 ou de outro tipo)'}</span></div>
+    ${ementa ? `<p>${esc(ementa)}</p>` : '<p class="meta">Ementa não encontrada nos dados do site.</p>'}
+    ${autores ? `<p class="meta">Autoria: ${esc(autores)}</p>` : ''}
+    <p class="meta">Classificação da IA: ${x.s === 'avanca' ? 'faz avançar a pauta da direita' : x.s === 'barra' ? 'barra a pauta da direita' : 'sem pauta da direita'}${(x.p || []).length ? `, pautas ${esc(x.p.join(', '))}` : ''}${x.s ? (daBancada ? ' (pauta desta bancada)' : ' (<b>não é pauta desta bancada</b>)') : ''}.</p>
+    ${vots.length ? `<p class="rot">Votações nominais de plenário (${vots.length})</p><ul class="vots-p">${vots.map(linhaVot).join('')}</ul>` : '<p class="meta">Nenhuma votação nominal de plenário nos dados. Marcar agora faz contar as votações futuras.</p>'}
+    ${comissoes.length ? `<p class="meta">Também teve ${comissoes.length} ${comissoes.length === 1 ? 'votação nominal' : 'votações nominais'} em comissão (${esc([...new Set(comissoes.map(v => v.o))].join(', '))}), que não contam como proposição-chave. Extrema-direita na última: ${POS[comissoes.sort((x, y) => (y.d || '').localeCompare(x.d || ''))[0].be] || 'dividida'}.</p>` : ''}
+    <p class="sug">${sug ? `Sugestão: <b>${sug === 'S' ? 'Favorece a pauta' : 'Contraria a pauta'}</b>, porque ${por}.` : 'Sem sugestão: o projeto não tem classificação nem votação que indique o lado da extrema-direita.'}
+      ${conflito ? '<span class="alerta">A classificação e o voto da extrema-direita apontam lados diferentes: confira a classificação na página de revisão.</span>' : ''}
+      ${x.s && !daBancada ? '<span class="alerta">A IA não ligou o projeto à pauta desta bancada; confira se é mesmo o que procura.</span>' : ''}</p>
+    <div class="linha"><span class="rot">Marcar</span><div class="seg"><button type="button" class="S" data-addp="S" aria-pressed="${sug === 'S'}">Favorece a pauta</button><button type="button" class="N" data-addp="N" aria-pressed="${sug === 'N'}">Contraria a pauta</button></div></div>
+  </div>`;
+  $('#resumoP').innerHTML = resumoHTML;
+}
 function marcarProp(b, c, val) {
   const salvo = (salvas.proposicoes[b] || {})[c] || '';
   pend.proposicoes[b] = pend.proposicoes[b] || {};
@@ -312,12 +363,14 @@ function marcarProp(b, c, val) {
   if (!Object.keys(pend.proposicoes[b]).length) delete pend.proposicoes[b];
   guardarPend(); atualizarBarra(); desenharVotacoes();
 }
+document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.id === 'novaProp') verResumo(normProj(e.target.value)); });
 document.addEventListener('click', e => {
+  if (e.target.closest('[data-verp]')) { verResumo(normProj($('#novaProp').value)); return; }
   const add = e.target.closest('[data-addp]');
   if (add) {
-    const c = String($('#novaProp').value || '').toUpperCase().replace(/\s+/g, ' ').replace(/N[º°O]\.?\s*/, '').replace(/(\d)\.(\d)/g, '$1$2').replace(/^(PEC|PDL|PL|PLP)\s*(\d+)\s*[\/,]\s*(?:DE\s*)?(\d{4})$/, '$1 $2/$3').trim();
+    const c = normProj($('#novaProp').value);
     if (!RX_PROJ.test(c)) { $('#msg').textContent = 'Escreva o projeto no formato PL 1234/2025 (PEC, PDL, PL ou PLP).'; return; }
-    marcarProp(bancada(), c, add.dataset.addp); return;
+    resumoHTML = ''; ultimaBusca = ''; marcarProp(bancada(), c, add.dataset.addp); return;
   }
   const card = e.target.closest('.cartao'); if (!card) return;
   const b = bancada();
