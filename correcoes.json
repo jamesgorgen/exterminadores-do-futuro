@@ -1,5 +1,5 @@
 {
-  "_leia": "Correções da equipe à classificação da IA. A chave é a do projeto (ex. PL 682/2024) ou a da votação sem matéria (ex. V:C:2585316-23). Campos, todos opcionais: s = avanca, barra ou vazio (vazio tira o item da lista); p = pautas de pautas.js; g = direita ou extrema; m = texto exibido como Checagem da equipe; lote = 1 marca confirmação em bloco, que vale no site com o selo Classificado por IA e fica fora dos exemplos da IA. Ao salvar este arquivo no GitHub, o robô roda sozinho e o site se atualiza em poucos minutos. O campo votacoesChave lista as votações-chave escolhidas pela equipe, pela chave da matéria (ex. PL 4675/2025), com t = título curto e nota = por que importa; o robô junta todas as votações ligadas à matéria (urgência, destaques, mérito).",
+  "_leia": "Correções da equipe à classificação da IA. A chave é a do projeto (ex. PL 682/2024) ou a da votação sem matéria (ex. V:C:2585316-23). Campos, todos opcionais: s = avanca, barra ou vazio (vazio tira o item da lista); p = pautas de pautas.js; g = direita ou extrema; m = texto exibido como Checagem da equipe; lote = 1 marca confirmação em bloco, que vale no site com o selo Classificado por IA e fica fora dos exemplos da IA. Ao salvar este arquivo no GitHub, o robô roda sozinho e o site se atualiza em poucos minutos. O campo proposicoesChave lista as proposições-chave escolhidas pela equipe, pela chave da matéria (ex. PL 4675/2025), com t = título curto e nota = por que importa; o robô junta todas as votações ligadas à matéria (urgência, destaques, mérito).",
   "correcoes": {
     "PDL 100/2026": {
       "s": "avanca",
@@ -10839,7 +10839,7 @@
       "lote": 1
     }
   },
-  "votacoesChave": {
+  "proposicoesChave": {
     "PL 2338/2023": {
       "t": "PL da Inteligência Artificial",
       "nota": "Marco regulatório da inteligência artificial, aprovado no Senado em 2024 e em análise na Câmara."

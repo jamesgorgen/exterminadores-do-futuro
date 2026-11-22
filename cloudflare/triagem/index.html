@@ -93,6 +93,8 @@ textarea{width:100%;border:1px solid var(--line);border-radius:6px;padding:8px 1
 .links-mat { margin: .4rem 0 .6rem; font-size: .9rem; }
 .links-mat a { font-weight: 600; }
 .alinh{width:100%;border-collapse:collapse;font-size:14px;background:var(--sheet);color:var(--ink)}.alinh th,.alinh td{text-align:left;padding:6px 8px;border-top:1px solid var(--line)}.alinh td:nth-child(4),.alinh td:nth-child(5){text-align:right;font-variant-numeric:tabular-nums}
+.sub-v{font-family:var(--display);font-size:22px;margin:18px 0 4px;text-transform:uppercase}.sug{font-size:14px;margin:4px 0 6px;color:var(--ink)}.sug .alerta{display:block;margin-top:4px;color:var(--int);font-weight:600}
+.busca-p{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}.busca-p input{padding:8px 10px;border:1px solid var(--line);border-radius:6px;min-width:180px;background:var(--sheet);color:var(--ink)}
 </style>
 </head>
 <body>
@@ -121,7 +123,7 @@ textarea{width:100%;border:1px solid var(--line);border-radius:6px;padding:8px 1
   <div class="situacao" id="situacao"></div>
   <div class="abas" role="tablist">
     <button type="button" role="tab" id="abaP" aria-selected="true">Parlamentares</button>
-    <button type="button" role="tab" id="abaV" aria-selected="false">Votações-chave</button>
+    <button type="button" role="tab" id="abaV" aria-selected="false">Proposições-chave</button>
     <button type="button" role="tab" id="abaA" aria-selected="false">Votam com a bancada</button>
   </div>
   <section id="secP">
@@ -137,7 +139,7 @@ textarea{width:100%;border:1px solid var(--line);border-radius:6px;padding:8px 1
   <section id="secV" hidden>
     <p class="contagem" id="contagemV"></p>
     <div id="listaV"></div>
-    <p class="dica">Marque as votações que definem a bancada e o voto que favorece a pauta. Votações-chave contam em dobro na próxima execução do robô. Nas demais votações da pauta, o voto esperado vem da classificação do projeto (nas votações do texto e da urgência) ou da maioria da direita (em destaques e emendas). Para mudar uma marcação já salva, clique em outra opção e salve; clicar na opção já marcada não muda nada.</p>
+    <p class="dica">Proposições-chave contam em dobro na próxima execução do robô. Nas demais votações ligadas à pauta, o voto esperado vem da classificação do projeto (votações do texto e da urgência) ou da maioria da direita (destaques e emendas). Para mudar uma marcação já salva, clique em outra opção e salve.</p>
   </section>
 </main>
 
@@ -159,16 +161,17 @@ const norm = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLow
 const ls = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
 const hoje = () => new Date().toISOString().slice(0, 10);
 
-let dados = { bancadas: [], p: {}, votacoes: {} }, salvas = { decisoes: {}, votacoes: {} }, limite = 25;
-let pend = { decisoes: {}, votacoes: {} };
-try { pend = Object.assign({ decisoes: {}, votacoes: {} }, JSON.parse(ls.get('bancadas-pendentes') || '{}')); } catch (e) {}
+let dados = { bancadas: [], p: {}, votacoes: {} }, salvas = { decisoes: {}, votacoes: {}, proposicoes: {} }, limite = 25;
+const PEND0 = () => ({ decisoes: {}, votacoes: {}, proposicoes: {} });
+let pend = PEND0();
+try { pend = Object.assign(PEND0(), JSON.parse(ls.get('bancadas-pendentes') || '{}')); } catch (e) {}
 const guardarPend = () => ls.set('bancadas-pendentes', JSON.stringify(pend));
-const nPend = () => Object.keys(pend.decisoes).length + Object.values(pend.votacoes).reduce((s, o) => s + Object.keys(o).length, 0);
+const nPend = () => Object.keys(pend.decisoes).length + [pend.votacoes, pend.proposicoes].reduce((t, g) => t + Object.values(g || {}).reduce((s, o) => s + Object.keys(o).length, 0), 0);
 
 async function json(url) { const r = await fetch(url, { cache: 'no-store' }); if (!r.ok) throw new Error(url + ' ' + r.status); return r.json(); }
 async function carregar() {
   const [d, c, eu] = await Promise.all([json('/api/dados'), json('/api/decisoes'), json('/api/eu').catch(() => ({}))]);
-  dados = d; salvas = { decisoes: c.decisoes || {}, votacoes: c.votacoes || {} };
+  dados = d; salvas = { decisoes: c.decisoes || {}, votacoes: c.votacoes || {}, proposicoes: c.proposicoes || {} };
   $('#fBancada').innerHTML = dados.bancadas.map(b => `<option value="${esc(b.id)}">${esc(b.nome)}</option>`).join('');
   const ult = ls.get('bancadas-ultima'); if (ult && dados.bancadas.some(b => b.id === ult)) $('#fBancada').value = ult;
   $('#estadoToken').textContent = eu.email ? 'Entrou como ' + eu.email : '';
@@ -234,20 +237,53 @@ function desenhar() {
   desenharAlinhados();
 }
 const votoChave = (b, id) => { const p = (pend.votacoes[b] || {}); return id in p ? p[id] : (salvas.votacoes[b] || {})[id]; };
+// Proposições-chave: a equipe marca o projeto (favorece ou contraria a pauta da bancada) e todas as votações de plenário
+// do texto e da urgência dele contam, inclusive as futuras.
+const RX_PROJ = /^(PEC|PDL|PL|PLP) \d{1,5}\/\d{4}$/;
+const marcaProp = (b, c) => { const p = pend.proposicoes[b] || {}; return c in p ? p[c] : (salvas.proposicoes[b] || {})[c] || ''; };
+// Marcações antigas, por votação, aparecem convertidas no projeto da votação.
+function legadoProp(b) {
+  const r = {}, porId = {};
+  for (const v of [...((dados.sugestoes || {})[b] || []), ...((dados.votacoes || {})[b] || [])]) porId[v.id] = v.mat;
+  for (const [id, val] of Object.entries(salvas.votacoes[b] || {})) if (porId[id] && !(porId[id] in r)) r[porId[id]] = val;
+  return r;
+}
+function cartaoProposicao(b, c, v, sug) {
+  const atual = marcaProp(b, c) || legadoProp(b)[c] || '';
+  const bt = (val, rot) => `<button type="button" class="${val || 'nao'}" data-p="${val}" aria-pressed="${atual === val}">${rot}</button>`;
+  const links = ((v && v.l) || []).filter(x => /^https:\/\/(www\.camara\.leg\.br|www25\.senado\.leg\.br)\//.test(x.u))
+    .map(x => `<a href="${esc(x.u)}" target="_blank" rel="noopener">${esc(x.c)}${/^(REQ|RCP)\b/.test(x.c) ? ' (requerimento)' : ''} ↗</a>`).join(' · ');
+  const pendente = c in (pend.proposicoes[b] || {});
+  const selo = pendente ? '<span class="selo s-pend">Não salva</span>' : (salvas.proposicoes[b] || {})[c] ? '<span class="selo s-salvo">Salva</span>' : legadoProp(b)[c] ? '<span class="selo s-salvo">Salva (por votação)</span>' : '';
+  const vots = ((dados.proposicoes_chave || {})[b] || {})[c] || [];
+  const info = sug ? `<p class="sug">${sug.t === 'urgencia' ? 'Urgência' : 'Votação do texto'} de ${esc((sug.d || '').split('-').reverse().join('/'))}, ${CASA[sug.k] || ''}. Extrema-direita: ${sug.pe}% sim · esquerda: ${sug.pq}% sim · placar ${sug.S} a ${sug.N}.
+      Sugestão: <b>${sug.esperado === 'S' ? 'favorece a pauta' : 'contraria a pauta'}</b> (${sug.fonte === 'classificacao' ? 'pela classificação do projeto' : 'pelo voto coeso da extrema-direita; projeto sem classificação'}).
+      ${sug.coerente ? '' : '<span class="alerta">A extrema-direita votou ao contrário da classificação: confira a classificação do projeto na página de revisão antes de marcar.</span>'}</p>` : '';
+  return `<div class="cartao ${atual ? 'aliado' : ''} ${pendente ? 'pendente' : ''}" data-pj="${esc(c)}">
+    <div class="topo"><span class="num">${esc(c)}</span><span class="meta">${v && v.p && v.p.length ? 'pautas ' + esc(v.p.join(', ')) : ''}</span>${selo ? `<span class="lado">${selo}</span>` : ''}</div>
+    ${info}${v ? `<p class="meta">${esc(v.me || v.desc || '')}</p>` : ''}${links ? `<p class="links-mat"><span class="rot">Abrir a matéria:</span> ${links}</p>` : ''}
+    ${atual && !pendente ? `<p class="meta">${vots.length ? `${vots.length} ${vots.length === 1 ? 'votação conta' : 'votações contam'} na última execução do robô (texto e urgência, em plenário).` : 'Nenhuma votação do texto ou da urgência em plenário até a última execução do robô.'}</p>` : ''}
+    <div class="linha"><span class="rot">Proposição-chave</span><div class="seg">${bt('S', 'Favorece a pauta')}${bt('N', 'Contraria a pauta')}${bt('', 'Não é chave')}</div></div>
+  </div>`;
+}
 function desenharVotacoes() {
-  const b = bancada(), vs = (dados.votacoes || {})[b] || [];
-  $('#contagemV').textContent = `${vs.length} votações em plenário de PECs, PDLs, PLs e PLPs, disputadas, ligadas à pauta ou ao tema da bancada (as mais recentes primeiro). Requerimentos de urgência entram só quando o projeto ainda não teve votação de mérito; os demais requerimentos não entram.`;
-  $('#listaV').innerHTML = vs.map(v => {
-    const atual = votoChave(b, v.id) || '';
-    const bt = (val, rot) => `<button type="button" class="${val || 'nao'}" data-v="${val}" aria-pressed="${atual === val}">${rot}</button>`;
-    const links = (v.l || []).filter(x => /^https:\/\/(www\.camara\.leg\.br|www25\.senado\.leg\.br)\//.test(x.u))
-      .map(x => `<a href="${esc(x.u)}" target="_blank" rel="noopener">${esc(x.c)}${/^(REQ|RCP)\b/.test(x.c) ? ' (requerimento)' : ''} ↗</a>`).join(' · ');
-    return `<div class="cartao ${atual ? 'aliado' : ''}" data-vid="${esc(v.id)}">
-      <div class="topo"><span class="num">${esc(v.mat || v.id)}</span><span class="meta">${CASA[v.k] || ''}, ${esc((v.d || '').split('-').reverse().join('/'))}${v.p && v.p.length ? ', pautas ' + esc(v.p.join(', ')) : ''} · voto da direita: ${v.bd === 'S' ? 'Sim' : v.bd === 'N' ? 'Não' : '—'}</span>${v.id in (pend.votacoes[b] || {}) ? '<span class="lado"><span class="selo s-pend">Não salva</span></span>' : (salvas.votacoes[b] || {})[v.id] ? '<span class="lado"><span class="selo s-salvo">Salva</span></span>' : ''}</div>
-      <p class="pontos">${esc(v.desc)}</p><p class="meta">${esc(v.me)}</p>${links ? `<p class="links-mat"><span class="rot">Abrir a matéria:</span> ${links}</p>` : ''}
-      <div class="linha"><span class="rot">Votação-chave</span><div class="seg">${bt('S', 'Sim favorece a pauta')}${bt('N', 'Não favorece a pauta')}${bt('', 'Não é chave')}</div></div>
-    </div>`;
-  }).join('') || '<p class="carregando">Nenhuma votação candidata.</p>';
+  const b = bancada(), sug = (dados.sugestoes || {})[b] || [];
+  const marcadas = new Set([...Object.keys(salvas.proposicoes[b] || {}), ...Object.keys(pend.proposicoes[b] || {}), ...Object.keys(legadoProp(b))]);
+  const ref = {}; for (const v of [...((dados.votacoes || {})[b] || []), ...sug]) ref[v.mat] = ref[v.mat] || v;
+  const jaSug = new Set(sug.map(v => v.mat));
+  const outras = [...new Set(((dados.votacoes || {})[b] || []).map(v => v.mat))].filter(c => c && !jaSug.has(c) && !marcadas.has(c));
+  const lista = (l, f) => l.map(f).join('');
+  $('#contagemV').textContent = `${marcadas.size} ${marcadas.size === 1 ? 'proposição marcada' : 'proposições marcadas'}, ${sug.length} sugeridas pelo robô e ${outras.length} outras candidatas.`;
+  $('#listaV').innerHTML = `<div class="busca-p"><label for="novaProp">Marcar outro projeto:</label> <input id="novaProp" placeholder="PL 1234/2025" aria-label="Projeto"> <button type="button" class="btn" data-addp="S">Favorece a pauta</button> <button type="button" class="btn" data-addp="N">Contraria a pauta</button></div>
+    <p class="dica">Ao marcar um projeto, todas as votações de plenário do texto e da urgência dele contam como atuação, em dobro, inclusive as que ainda vão acontecer. Destaques e emendas não entram.</p>`
+    + (marcadas.size ? `<h3 class="sub-v">Marcadas</h3>${lista([...marcadas].sort(), c => cartaoProposicao(b, c, ref[c], sug.find(v => v.mat === c)))}` : '')
+    + [['S', 'Sugeridas: favorecem a pauta da extrema-direita'], ['N', 'Sugeridas: vão contra a pauta da extrema-direita']].map(([e, tit]) => {
+      const l = sug.filter(v => v.esperado === e && !marcadas.has(v.mat));
+      return l.length ? `<h3 class="sub-v">${tit}</h3><p class="dica">Projetos ligados à bancada em que a extrema-direita e a esquerda votaram de lados opostos, dos mais disputados para os menos.</p>${lista(l, v => cartaoProposicao(b, v.mat, v, v))}` : '';
+    }).join('')
+    + (sug.length ? '' : '<p class="dica">O robô ainda não gerou sugestões para esta bancada, ou nenhuma votação passou pelo critério.</p>')
+    + `<h3 class="sub-v">Outras candidatas</h3><p class="dica">Projetos com votação disputada em plenário ligada à pauta ou ao tema da bancada.</p>`
+    + (lista(outras, c => cartaoProposicao(b, c, ref[c], null)) || '<p class="carregando">Nenhuma outra candidata.</p>');
 }
 // Alinhamento de votos, à parte do enquadramento: quem vota com a pauta da bancada sem ser do núcleo nem aliado.
 function desenharAlinhados() {
@@ -263,7 +299,20 @@ function atualizarBarra() {
   $('#msg').textContent = n ? `${n} ${n === 1 ? 'alteração não salva' : 'alterações não salvas'}. Ficam guardadas neste navegador até você salvar.` : 'Nenhuma alteração pendente.';
   $('#salvar').disabled = !n; $('#descartar').disabled = !n;
 }
+function marcarProp(b, c, val) {
+  const salvo = (salvas.proposicoes[b] || {})[c] || '';
+  pend.proposicoes[b] = pend.proposicoes[b] || {};
+  if (val === salvo) delete pend.proposicoes[b][c]; else pend.proposicoes[b][c] = val;
+  if (!Object.keys(pend.proposicoes[b]).length) delete pend.proposicoes[b];
+  guardarPend(); atualizarBarra(); desenharVotacoes();
+}
 document.addEventListener('click', e => {
+  const add = e.target.closest('[data-addp]');
+  if (add) {
+    const c = String($('#novaProp').value || '').toUpperCase().replace(/\s+/g, ' ').replace(/N[º°O]\.?\s*/, '').replace(/(\d)\.(\d)/g, '$1$2').replace(/^(PEC|PDL|PL|PLP)\s*(\d+)\s*[\/,]\s*(?:DE\s*)?(\d{4})$/, '$1 $2/$3').trim();
+    if (!RX_PROJ.test(c)) { $('#msg').textContent = 'Escreva o projeto no formato PL 1234/2025 (PEC, PDL, PL ou PLP).'; return; }
+    marcarProp(bancada(), c, add.dataset.addp); return;
+  }
   const card = e.target.closest('.cartao'); if (!card) return;
   const b = bancada();
   if (card.dataset.k) {
@@ -273,6 +322,9 @@ document.addEventListener('click', e => {
     if (limpar) { if (salvas.decisoes[c]) pend.decisoes[c] = null; else delete pend.decisoes[c]; }
     else { const atual = decisao(k, b) || {}; pend.decisoes[c] = { d: btn.dataset.d, m: atual.m || '', data: hoje() }; }
     guardarPend(); atualizarBarra(); card.outerHTML = cartao([k, dados.p[k]]); situacao();
+  } else if (card.dataset.pj) {
+    const btn = e.target.closest('[data-p]'); if (!btn) return;
+    marcarProp(b, card.dataset.pj, btn.dataset.p);
   } else if (card.dataset.vid) {
     const btn = e.target.closest('[data-v]'); if (!btn) return;
     const id = card.dataset.vid, val = btn.dataset.v, salvo = (salvas.votacoes[b] || {})[id] || '';
@@ -297,8 +349,8 @@ async function salvar() {
     const j = await r.json().catch(() => ({}));
     if (r.status === 403) throw new Error('a sessão expirou; recarregue a página e entre de novo');
     if (!r.ok) throw new Error(j.erro || 'o servidor respondeu ' + r.status);
-    salvas = { decisoes: j.decisoes || {}, votacoes: j.votacoes || {} }; pend = { decisoes: {}, votacoes: {} }; guardarPend(); atualizarBarra(); desenhar();
-    $('#msg').textContent = `${n} ${n === 1 ? 'alteração salva' : 'alterações salvas'}. Votações-chave passam a valer na próxima execução do robô.`;
+    salvas = { decisoes: j.decisoes || {}, votacoes: j.votacoes || {}, proposicoes: j.proposicoes || {} }; pend = PEND0(); guardarPend(); atualizarBarra(); desenhar();
+    $('#msg').textContent = `${n} ${n === 1 ? 'alteração salva' : 'alterações salvas'}. Proposições-chave passam a valer na próxima execução do robô.`;
   } catch (e) { atualizarBarra(); $('#msg').textContent = 'Não foi possível salvar, porque ' + e.message + '.'; }
 }
 function aba(v) {
@@ -309,7 +361,7 @@ $('#abaP').addEventListener('click', () => aba('P'));
 $('#abaV').addEventListener('click', () => aba('V'));
 $('#abaA').addEventListener('click', () => aba('A'));
 $('#salvar').addEventListener('click', salvar);
-$('#descartar').addEventListener('click', () => { if (!confirm('Descartar todas as alterações não salvas?')) return; pend = { decisoes: {}, votacoes: {} }; guardarPend(); atualizarBarra(); desenhar(); });
+$('#descartar').addEventListener('click', () => { if (!confirm('Descartar todas as alterações não salvas?')) return; pend = PEND0(); guardarPend(); atualizarBarra(); desenhar(); });
 $('#mais').addEventListener('click', () => { limite += 25; desenhar(); });
 $('#fBancada').addEventListener('change', () => { ls.set('bancadas-ultima', bancada()); limite = 25; desenhar(); });
 ['#fLista', '#fCat', '#fCasa', '#fTipo'].forEach(s => $(s).addEventListener('change', () => { limite = 25; desenhar(); }));

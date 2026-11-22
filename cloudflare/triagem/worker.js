@@ -52,26 +52,36 @@ async function usuario(req, env) {
 // ---------- decisões: mescla no servidor, com gravação condicional para não perder alterações simultâneas
 async function lerDecisoes(env) {
   const o = await env.R2.get(DECISOES);
-  if (!o) return { etag: null, dados: { decisoes: {}, votacoes: {} } };
+  if (!o) return { etag: null, dados: { decisoes: {}, votacoes: {}, proposicoes: {} } };
   return { etag: o.etag, dados: await o.json() };
 }
 async function gravar(env, mudancas, email) {
   const agora = new Date().toISOString();
   for (let t = 0; t < 5; t++) {
     const { etag, dados } = await lerDecisoes(env);
-    const dec = dados.decisoes || {}, vot = dados.votacoes || {};
+    const dec = dados.decisoes || {}, vot = dados.votacoes || {}, pro = dados.proposicoes || {};
     for (const [c, v] of Object.entries(mudancas.decisoes || {})) {
-      if (!/^[CS]\d+\|[a-z]+$/.test(c)) continue;
+      if (!/^[CS]\d+\|[a-z_]+$/.test(c)) continue;
       if (v === null) delete dec[c];
       else if (['nucleo', 'aliado', 'fora', 'incerto'].includes(v.d)) dec[c] = { d: v.d, m: String(v.m || '').slice(0, 2000), por: email, data: agora.slice(0, 10) };
     }
     for (const [b, o] of Object.entries(mudancas.votacoes || {})) {
-      if (!/^[a-z]+$/.test(b)) continue;
+      if (!/^[a-z_]+$/.test(b)) continue;
       vot[b] = vot[b] || {};
       for (const [id, v] of Object.entries(o || {})) { if (v === 'S' || v === 'N') vot[b][id] = v; else delete vot[b][id]; }
       if (!Object.keys(vot[b]).length) delete vot[b];
     }
-    const novo = { atualizado: agora, decisoes: dec, votacoes: vot };
+    // Proposições-chave: bancada -> {"PL 4675/2025": "S" (favorece a pauta) ou "N" (contraria)}.
+    for (const [b, o] of Object.entries(mudancas.proposicoes || {})) {
+      if (!/^[a-z_]+$/.test(b)) continue;
+      pro[b] = pro[b] || {};
+      for (const [c, v] of Object.entries(o || {})) {
+        if (!/^(PEC|PDL|PL|PLP) \d{1,5}\/\d{4}$/.test(c)) continue;
+        if (v === 'S' || v === 'N') pro[b][c] = v; else delete pro[b][c];
+      }
+      if (!Object.keys(pro[b]).length) delete pro[b];
+    }
+    const novo = { atualizado: agora, decisoes: dec, votacoes: vot, proposicoes: pro };
     const corpo = JSON.stringify(novo);
     const r = await env.R2.put(DECISOES, corpo, etag ? { onlyIf: { etagMatches: etag }, httpMetadata: { contentType: 'application/json' } } : { httpMetadata: { contentType: 'application/json' } });
     if (r) {

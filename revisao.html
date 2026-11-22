@@ -115,7 +115,7 @@ kbd{font:12px/1 ui-monospace,monospace;border:1px solid var(--line);border-botto
     <option value="corrigidos">Já conferidos pela equipe</option>
     <option value="semautor">Sem autor parlamentar (Executivo, comissões e outros órgãos)</option>
     <option value="rotina">Rotina (outorgas de rádio e TV, pautas administrativas)</option>
-    <option value="chave">Votações-chave</option>
+    <option value="chave">Proposições-chave</option>
     <option value="todos">Todos (use a busca)</option>
   </select>
   <select id="fPauta" aria-label="Pauta"><option value="">Todas as pautas</option></select>
@@ -334,7 +334,7 @@ function cartao(b) {
       <span class="lado">${pendente ? '<span class="selo s-pend">Não salvo</span>' : salvo ? '<span class="selo s-salvo">Conferido</span>' : ''}</span></div>
     <p class="ementa">${esc(texto)}</p>
     ${b.tipo === 'v' && it.desc && (it.me || principal) ? `<p class="autores">${esc(it.desc)}${nVot > 1 ? ` <b>${nVot} votações ligadas a esta matéria</b>, como urgência, destaques e mérito.` : ''}</p>` : ''}
-    ${ch ? `<p class="chave-v"><b>Votação-chave.</b> ${esc(ch.t || '')}</p>` : ''}
+    ${ch ? `<p class="chave-v"><b>Proposição-chave.</b> ${esc(ch.t || '')}</p>` : ''}
     ${b.tipo === 'p' ? autores(it.a, it) : D.props.get(b.chave) ? autores(D.props.get(b.chave).a, D.props.get(b.chave)) : ''}
     <p class="ia"><b>IA.</b> ${iaTxt}${certeza ? ` <span class="meta">(${certeza === 'grau' ? 'dúvida só de grau' : 'certeza ' + certeza})</span>` : ''}</p>
     <div class="linha"><span class="rot">Sentido</span><span class="seg">
@@ -349,7 +349,7 @@ function cartao(b) {
     <div class="acoes"><button type="button" class="btn forte" data-confirmar>${pendente || salvo ? 'Confirmar' : 'Confirmar como está'}</button>
       ${pendente ? '<button type="button" class="btn" data-desfazer>Desfazer</button>' : ''}
       ${salvo ? '<button type="button" class="btn" data-remover>Voltar para a IA</button>' : ''}
-      ${b.chave.startsWith('V:') ? '' : `<button type="button" class="btn" data-chave-v>${ch ? 'Deixar de ser votação-chave' : 'Marcar como votação-chave'}</button>`}</div>
+      ${b.chave.startsWith('V:') ? '' : `<button type="button" class="btn" data-chave-v>${ch ? 'Deixar de ser proposição-chave' : 'Marcar como potação-chave'}</button>`}</div>
   </article>`;
 }
 
@@ -459,33 +459,34 @@ let tBusca; $('#fBusca').addEventListener('input', () => { clearTimeout(tBusca);
 window.addEventListener('beforeunload', e => { if (Object.keys(pend).length) { e.preventDefault(); e.returnValue = ''; } });
 
 // ------------------------------------------------------------ votações-chave
-// Ficam em correcoes.json, no campo votacoesChave ({ "PL 4675/2025": { "t": "título curto", "nota": "" } }).
+// Ficam em correcoes.json, no campo proposicoesChave (antes votacoesChave) ({ "PL 4675/2025": { "t": "título curto", "nota": "" } }).
 // O robô junta todas as votações ligadas à matéria (urgência, destaques, mérito, também as simbólicas) e mostra o placar de cada grupo.
-const chaves = () => extras.votacoesChave || {};
+const chaves = () => extras.proposicoesChave || extras.votacoesChave || {};
 async function marcarChave(chave, el) {
   if (!token()) { $('#config').showModal(); return; }
   const atualC = chaves()[chave];
   let novo = null;
   if (!atualC) {
-    const t = prompt('Título curto da votação-chave (aparece no site). Por exemplo: PL dos Mercados Digitais.', '');
+    const t = prompt('Título curto da proposição-chave (aparece no site). Por exemplo: PL dos Mercados Digitais.', '');
     if (t === null) return;
-    const nota = prompt('Por que é uma votação-chave? (opcional, aparece no site)', '') || '';
+    const nota = prompt('Por que é uma proposição-chave? (opcional, aparece no site)', '') || '';
     novo = { t: t.trim(), nota: nota.trim() };
-  } else if (!confirm(`Tirar ${chave} das votações-chave?`)) return;
-  $('#msg').textContent = 'Salvando a votação-chave…';
+  } else if (!confirm(`Tirar ${chave} das proposições-chave?`)) return;
+  $('#msg').textContent = 'Salvando a proposição-chave…';
   for (let tentativa = 0; tentativa < 2; tentativa++) {
     try {
       const { sha, dados } = await lerCorrecoesGitHub();
-      const vc = Object.assign({}, dados.votacoesChave || {});
+      const vc = Object.assign({}, dados.proposicoesChave || dados.votacoesChave || {});
       if (novo) vc[chave] = novo; else delete vc[chave];
-      const conteudo = Object.assign({}, dados, { votacoesChave: Object.fromEntries(Object.keys(vc).sort().map(k => [k, vc[k]])) });
-      const corpo = { message: `${novo ? 'Marca' : 'Desmarca'} ${chave} como votação-chave`, content: b64enc(JSON.stringify(conteudo, null, 2) + '\n'), branch: 'main' };
+      const conteudo = Object.assign({}, dados, { proposicoesChave: Object.fromEntries(Object.keys(vc).sort().map(k => [k, vc[k]])) });
+      delete conteudo.votacoesChave;
+      const corpo = { message: `${novo ? 'Marca' : 'Desmarca'} ${chave} como proposição-chave`, content: b64enc(JSON.stringify(conteudo, null, 2) + '\n'), branch: 'main' };
       if (sha) corpo.sha = sha;
       const r = await fetch(`https://api.github.com/repos/${REPO}/contents/${ARQ}`, { method: 'PUT', headers: { Authorization: 'Bearer ' + token(), Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' }, body: JSON.stringify(corpo) });
       if (r.status === 409 || r.status === 422) continue;
       if (!r.ok) throw new Error('o GitHub respondeu ' + r.status);
-      extras.votacoesChave = conteudo.votacoesChave; salvas = conteudo.correcoes || salvas;
-      $('#msg').textContent = `${chave} ${novo ? 'marcada como' : 'retirada das'} votações-chave. O site é atualizado em alguns minutos.`;
+      delete conteudo.votacoesChave; extras.proposicoesChave = conteudo.proposicoesChave; delete extras.votacoesChave; salvas = conteudo.correcoes || salvas;
+      $('#msg').textContent = `${chave} ${novo ? 'incluída nas' : 'retirada das'} proposições-chave. O site é atualizado em alguns minutos.`;
       if (el) redesenharCartao(el);
       return;
     } catch (e) { $('#msg').textContent = 'Não foi possível salvar, porque ' + e.message + '.'; return; }

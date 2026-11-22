@@ -128,7 +128,11 @@ BC = {}
 if S3:
     try: BC = json.loads(S3.get_object(Bucket=BUCKET, Key='bancadas/decisoes.json')['Body'].read())
     except Exception as e: log('sem decisões da equipe no R2', e)
-CHAVE = BC.get('votacoes', {})      # bancada -> {id da votação: voto esperado 'S' ou 'N'}
+# Proposições-chave da equipe: bancada -> {projeto: 'S' se o projeto favorece a pauta, 'N' se a contraria}.
+# Todas as votações de plenário do texto e da urgência do projeto contam (as futuras também), com o voto esperado
+# "sim" quando o projeto favorece a pauta. As marcações antigas, por votação, são convertidas no projeto da votação.
+CHAVE_P = {b: dict(o) for b, o in (BC.get('proposicoes') or {}).items()}
+CHAVE_V = BC.get('votacoes', {}) or {}      # formato antigo: bancada -> {id da votação: voto esperado}
 
 def da_bancada(b, pautas, texto):
     """A proposição ou votação é da bancada: pauta da bancada (com termos, se exigido) ou, sem pauta, só os termos."""
@@ -382,11 +386,24 @@ def projeto_ou_urgencia(vt):
     if c: return c
     c = projeto_de(vt, urgencia=True)
     return c if c and c not in COM_MERITO else None
+def projeto_chave(vt):
+    """Projeto cuja votação do texto ou da urgência é esta (destaques, emendas e outros procedimentos: None)."""
+    if RX_PARTE.search(norm(vt.get('desc'))): return None
+    return projeto_de(vt) or projeto_de(vt, urgencia=True)
+_vot_id = {v['id']: v for v in VOTS}
+for b, o in CHAVE_V.items():
+    for i, val in (o or {}).items():
+        pj = projeto_chave(_vot_id[i]) if i in _vot_id else None
+        if pj and val in ('S', 'N'): CHAVE_P.setdefault(b, {}).setdefault(pj, val)
+# Votações de cada proposição-chave, para a página de triagem.
+VOT_CHAVE = collections.defaultdict(lambda: collections.defaultdict(list))
 for vt in VOTS:
     x = classe(vt.get('ck') or ''); texto = norm(f"{vt.get('desc')} {vt.get('me')}")
     projeto = projeto_ou_urgencia(vt)
+    pj = projeto_chave(vt) if vt.get('pl') else None
     for b in BAN:
-        chave = CHAVE.get(b['id'], {}).get(vt['id']) if projeto else None
+        chave = CHAVE_P.get(b['id'], {}).get(pj) if pj else None
+        if chave: VOT_CHAVE[b['id']][pj].append({'id': vt['id'], 'k': vt['k'], 'd': vt.get('d'), 'desc': (vt.get('desc') or '')[:160]})
         doban = da_bancada(b, x.get('p') or [], texto) and x.get('s') in ('avanca', 'barra') and pro_pauta(vt, x) in ('S', 'N')
         if doban or casa(b['_termos'], texto):
             if vt.get('pl') and vt.get('disp') and projeto: CAND[b['id']].append({**vt, 'mat': projeto})
@@ -594,6 +611,60 @@ _pend |= {('S' if k == 'C' else 'C', c) for k, c in _pend}
 with ThreadPoolExecutor(12) as ex: list(ex.map(lambda x: id_materia(*x), sorted(_pend - set(IDMAT))))
 log('matérias consultadas nas APIs:', len(_pend))
 
+# Sugestões de votações-chave para a triagem: votações de plenário do texto ou da urgência de um projeto (PEC, PDL, PL,
+# PLP) ligadas à bancada, em que a extrema-direita e a esquerda votaram de lados opostos. O voto que favorece a pauta
+# vem da classificação do projeto ou, sem classificação, do voto coeso da extrema-direita. "coerente" = falso quando a
+# extrema-direita votou ao contrário do que a classificação indica (classificação a conferir na revisão).
+RX_REQ_ME = re.compile(r'\s*(REQUER|REQUERIMENTO)')
+RX_OUTRO_ME = re.compile(r'RETIRADA DE (MATERIA DA )?PAUTA|RETIRADA DE ASSINATURA|ADIAMENTO|PREFERENCIA|ENCERRAMENTO|VOTACAO POR PARTES')
+def _tipo_sug(vt):
+    d, me = norm(vt.get('desc')), norm(vt.get('me'))
+    m = (vt.get('mp') or vt.get('mat') or '').upper()
+    if m.split(' ')[0] not in TIPOS_CHAVE or RX_PARTE.search(d): return None, None
+    urg = RX_REQ_ME.match(me)
+    if urg and ('URGENCIA' not in me or RX_OUTRO_ME.search(me)): return None, None
+    if RX_PROCED.search(d) or urg:
+        return (m, 'urgencia') if (RX_URG.search(d) or urg) and not RX_OUTRO_PROCED.search(d) else (None, None)
+    return m, 'merito'
+_sug_cand, _com_merito = [], set()
+for vt in VOTS:
+    if not vt.get('pl'): continue
+    m, t = _tipo_sug(vt)
+    if not m: continue
+    if t == 'merito': _com_merito.add(m)
+    c = collections.defaultdict(lambda: [0, 0])
+    for k, v in votos_de(vt):
+        if v in ('S', 'N'): c[(IND.get(k) or {}).get('cl') or 'sp'][0 if v == 'S' else 1] += 1
+    e, q = c['extrema'], c['esquerda']
+    if sum(e) < 10: continue
+    pe = e[0] / sum(e); pq = q[0] / sum(q) if sum(q) else 0.5
+    coes, pol = max(pe, 1 - pe), abs(pe - pq)
+    S, N = sum(x[0] for x in c.values()), sum(x[1] for x in c.values())
+    x = classe(vt.get('ck') or ''); voto_e = 'S' if pe >= .5 else 'N'
+    if x.get('s') in ('avanca', 'barra'): esp, fonte = ('S' if x['s'] == 'avanca' else 'N'), 'classificacao'
+    elif coes >= .8 and pol >= .5: esp, fonte = voto_e, 'voto da extrema-direita'
+    else: continue
+    score = pol * coes * (.5 + .5 * (1 - abs(S - N) / max(1, S + N)))
+    if score < .3: continue
+    _sug_cand.append({'vt': vt, 'm': m, 't': t, 'x': x, 'esperado': esp, 'fonte': fonte, 'coerente': voto_e == esp,
+                      'pe': round(100 * pe), 'pq': round(100 * pq), 'S': S, 'N': N, 'score': round(score, 3)})
+_sug_cand = [c for c in _sug_cand if not (c['t'] == 'urgencia' and c['m'] in _com_merito)]
+sugestoes = {}
+for b in BAN:
+    melhor = {}
+    for c in sorted(_sug_cand, key=lambda c: (c['t'] != 'merito', -c['score'])):
+        texto = norm(f"{c['vt'].get('desc')} {c['vt'].get('me')}")
+        pela_pauta = c['fonte'] == 'classificacao' and da_bancada(b, c['x'].get('p') or [], texto)
+        if not (pela_pauta or casa(b['_termos'], texto)): continue
+        melhor.setdefault(c['m'], c)
+    l = sorted(melhor.values(), key=lambda c: -c['score'])
+    sel = [c for c in l if c['esperado'] == 'S'][:8] + [c for c in l if c['esperado'] == 'N'][:8]
+    sugestoes[b['id']] = [{'id': c['vt']['id'], 'k': c['vt']['k'], 'd': c['vt'].get('d'), 'mat': c['m'], 't': c['t'], 'desc': (c['vt'].get('desc') or '')[:220],
+                           'me': (c['vt'].get('me') or '')[:400], 'esperado': c['esperado'], 'fonte': c['fonte'], 'coerente': c['coerente'],
+                           'pe': c['pe'], 'pq': c['pq'], 'S': c['S'], 'N': c['N'], 'score': c['score'], 'p': c['x'].get('p') or [],
+                           'l': links_votacao({**c['vt'], 'mat': c['m']})} for c in sel]
+    log(f"sugestões de votações-chave, {b['id']}:", sum(1 for c in sel if c['esperado'] == 'S'), 'a favor,', sum(1 for c in sel if c['esperado'] == 'N'), 'contra')
+
 cands = {}
 for b in BAN:
     vs = sorted(CAND[b['id']], key=lambda v: v.get('d') or '', reverse=True)
@@ -623,7 +694,7 @@ out = {'gerado': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()), 'versao_reg
        'bancadas': [{k: b[k] for k in ('id', 'nome', 'descricao')} for b in BAN],
        'fontes': {'empresas_e_bens': 'Receita (quadro de sócios, nov/2026) e TSE, via ramo analises-saida-plp299_tudo', 'frentes': len(FRENTES) > 0, 'ocupacao_r2': bool(os.environ.get('R2_ACCOUNT_ID'))},
        'resumo': {f'{b}|{c}|{"triagem" if t else "regra"}': n for (b, c, t), n in sorted(cont_cat.items())},
-       'votacoes': cands, 'alinhados': alinhados, 'p': saida}
+       'votacoes': cands, 'sugestoes': sugestoes, 'proposicoes_chave': {b: {pj: sorted(l, key=lambda v: v['d'] or '') for pj, l in o.items()} for b, o in VOT_CHAVE.items()}, 'alinhados': alinhados, 'p': saida}
 corpo = json.dumps(out, ensure_ascii=False, separators=(',', ':')).encode()
 if S3:
     S3.put_object(Bucket=BUCKET, Key='bancadas/bancadas.json', Body=corpo, ContentType='application/json')

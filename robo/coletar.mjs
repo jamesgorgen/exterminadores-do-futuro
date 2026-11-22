@@ -1200,7 +1200,7 @@ export function calcularBlocos(props, votos, indice, cl, sit = {}) {
   return Object.fromEntries(Object.keys(casas).map(c => [c, { ...tot[c], grupos: casas[c], temas: temas[c] }]));
 }
 
-// Votações-chave, escolhidas pela equipe (correcoes.json, campo votacoesChave, ou o botão na página de revisão).
+// Proposições-chave, escolhidas pela equipe (correcoes.json, campo proposicoesChave, antes votacoesChave, ou o botão na página de revisão).
 // Para cada matéria: todas as votações nominais e simbólicas ligadas a ela, o placar de cada grupo,
 // a orientação do governo e da oposição e, por parlamentar, uma letra por votação (. = sem registro).
 const ORIENT = o => { const t = Motor.normalizar(String(o || '')); return t.startsWith('sim') ? 'S' : t.startsWith('nao') ? 'N' : t.startsWith('libera') ? 'L' : t.startsWith('obstru') ? 'O' : t.startsWith('absten') ? 'A' : ''; };
@@ -1482,7 +1482,7 @@ export async function executar() {
     if (itens.length && +a >= 2023) gravarJson(`votacoes-simbolicas-${a}.json`, { ano: +a, itens }, true);
   }
   let configChave = {};
-  try { configChave = JSON.parse(fs.readFileSync(path.join(RAIZ, 'correcoes.json'), 'utf8')).votacoesChave || {}; } catch (e) {}
+  try { configChave = (c => c.proposicoesChave || c.votacoesChave)(JSON.parse(fs.readFileSync(path.join(RAIZ, 'correcoes.json'), 'utf8'))) || {}; } catch (e) {}
   const chave = montarVotacoesChave(configChave, todasVot, todasSimb, indice, cl, todasPropFinal);
   gravarJson('votacoes-chave.json', { gerado: AGORA.toISOString(), ...chave }, true);
   contar('votacoes_chave', chave.itens.length);

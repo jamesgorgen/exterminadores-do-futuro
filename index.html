@@ -521,7 +521,7 @@ function cartaoVot(v){
   const selVit = (disp, vit, rot) => disp && vit !== null && vit !== undefined ? (vit ? `<span class="selo s-venceu">${rot} venceu</span>` : `<span class="selo s-perdeu">${rot} perdeu</span>`) : '';
   const vitorias = v.be !== undefined ? selVit(v.dispE, v.vE, 'A extrema-direita') + selVit(v.dispD, v.vD, 'A direita') : selVit(v.disp, v.venceu, 'A direita');
   return `<article class="cartao ${classeCartao(x)}">
-    <div class="topo"><span class="num">${esc(v.mp || v.mat || 'Votação')}</span>${v.mp && v.mat ? `<span class="meta">${esc(v.mat)}</span>` : ''}<span class="meta">${esc(CASA[v.k])}, ${v.pl ? 'plenário' : esc(v.o || 'comissão')}</span><span class="data">${dataBR(v.d)}</span>${D.chave && D.chave.porMat[v.mp || v.mat] ? '<span class="selo s-chave">Votação-chave</span>' : ''}</div>
+    <div class="topo"><span class="num">${esc(v.mp || v.mat || 'Votação')}</span>${v.mp && v.mat ? `<span class="meta">${esc(v.mat)}</span>` : ''}<span class="meta">${esc(CASA[v.k])}, ${v.pl ? 'plenário' : esc(v.o || 'comissão')}</span><span class="data">${dataBR(v.d)}</span>${D.chave && D.chave.porMat[v.mp || v.mat] ? '<span class="selo s-chave">Proposição-chave</span>' : ''}</div>
     <div class="topo">${res ? `<span class="selo s-pauta">${res}</span>` : ''}${vitorias}${selosClass(x)}</div>
     <p class="ementa">${esc(v.me || v.desc)}</p>
     ${v.me && v.desc ? `<p class="motivo">${esc(v.desc)}</p>` : ''}
@@ -835,7 +835,7 @@ async function desenharPerfil(k){
     <h4>Projetos com pauta da direita (${fmt(props.length)})</h4>
     ${props.length ? `<div class="grade">${props.slice(0, 6).map(cartaoProp).join('')}</div>${props.length > 6 ? `<p><button type="button" class="btn" data-ver-props="${esc(k)}">Ver todos os ${props.length}</button></p>` : ''}` : '<p class="meta">Nenhum projeto com pauta da direita.</p>'}
     <h4>O que relata</h4><div id="perfil-rel">Carregando.</div>
-    ${D.chave && D.chave.itens.some(it => it.vot.some(v => v.k === p.c && !v.simb)) ? `<h4>Votações-chave</h4><div class="lista-chave" id="perfil-chave">${votosChaveHTML(k, p)}</div>` : ''}
+    ${D.chave && D.chave.itens.some(it => it.vot.some(v => v.k === p.c && !v.simb)) ? `<h4>Proposições-chave</h4><div class="lista-chave" id="perfil-chave">${votosChaveHTML(k, p)}</div>` : ''}
     <h4>Votos recentes em votações disputadas</h4><div class="lista-votos" id="perfil-votos">Carregando.</div>
   </div>`;
   desenharRelatorias(k, p);
@@ -881,8 +881,8 @@ function desenharMetodo(){
     <h3>Limites</h3>
     <ul>
       <li>A classificação lê só a ementa e não substitui a leitura do texto integral.</li>
-      <li>Votações simbólicas, em que não há registro do voto de cada parlamentar, e votações secretas ficam de fora dos índices. Nas votações-chave, as simbólicas do plenário da Câmara aparecem com o resultado, porque a Câmara não publica o voto nem a orientação das bancadas nesses casos.</li>
-      <li>As votações-chave são escolhidas pela equipe, por separar o governo da oposição. A lista fica na aba Balanço e na ficha de cada parlamentar.</li>
+      <li>Votações simbólicas, em que não há registro do voto de cada parlamentar, e votações secretas ficam de fora dos índices. Nas proposições-chave, as votações simbólicas do plenário da Câmara aparecem com o resultado, porque a Câmara não publica o voto nem a orientação das bancadas nesses casos.</li>
+      <li>As proposições-chave são escolhidas pela equipe, por separar o governo da oposição. Para cada uma, entram todas as votações nominais ligadas a ela (urgência, destaques e mérito). A lista fica na aba Balanço e na ficha de cada parlamentar.</li>
       <li>O partido de cada parlamentar nas votações é o da data do voto. Nos projetos, é o partido mais recente.</li>
       <li>Nas emendas, a ligação ao autor é feita pelo nome e cobre a maior parte do valor, mas não todo. A parcela que não pôde ser ligada a um parlamentar fica fora dos totais por grupo.</li>
     </ul>
@@ -942,7 +942,7 @@ function votosChaveHTML(k, p){
     linhas.push(`<div><span class="meta">${dataBR(v.d)}</span><span><b>${esc(it.t || it.c)}</b> ${esc(it.c)}</span><span>${voto && voto !== '.' ? esc(VOTO[voto] || (voto === '-' ? 'presente, sem voto' : voto)) : '<span class="meta">sem registro</span>'}</span>
       <small>${esc(corta(v.desc || '', 140))}${comGov ? ` · votou ${comGov}` : ''}</small></div>`);
   }
-  return linhas.join('') || '<p class="meta">Sem votos registrados nas votações-chave.</p>';
+  return linhas.join('') || '<p class="meta">Sem votos registrados nas proposições-chave.</p>';
 }
 const GRUPOS_CHAVE = ['extrema', 'direita', 'centro', 'esquerda'];
 // Uma linha por votação, uma coluna por grupo, com sim × não. Simbólicas trazem a orientação das bancadas.
@@ -958,8 +958,8 @@ function secaoChave(casa){
   if (!D.chave || !D.chave.itens.length) return '';
   const itens = D.chave.itens.map(it => ({ it, vot: it.vot.filter(v => casa === 'T' || v.k === casa) })).filter(x => x.vot.length);
   if (!itens.length) return '';
-  return `<div class="secao"><h2 class="titulo">Votações-chave</h2>
-    <p class="sub">Votações escolhidas pela equipe por separar o governo da oposição. Cada matéria reúne a urgência, os destaques e o mérito. O grupo de cada parlamentar é o usado no resto do site.</p>
+  return `<div class="secao"><h2 class="titulo">Proposições-chave</h2>
+    <p class="sub">Projetos escolhidos pela equipe por separar o governo da oposição. Cada um reúne todas as suas votações nominais: urgência, destaques e mérito. O grupo de cada parlamentar é o usado no resto do site.</p>
     ${itens.map(({ it, vot }) => `<div class="vchave"><h3>${esc(it.t || it.c)}</h3>
       <p class="meta">${esc(it.c)}${autoriaFora(it) ? `, de autoria do ${esc(autoriaFora(it))}` : ''}</p>
       <p class="ementa">${esc(corta(it.e || '', 320))}</p>${it.nota ? `<p class="motivo"><b>Por que importa.</b> ${esc(it.nota)}</p>` : ''}
