@@ -1,5 +1,5 @@
 {
- "gerado": "2026-11-22T04:35:05.498Z",
+ "gerado": "2026-11-22T17:13:41.732Z",
  "inicio": "2023-02-01",
  "totais": {
   "proposicoes": 29264,
@@ -42,16 +42,16 @@
    "prop": 1313,
    "extrema": 834,
    "prop30": 14,
-   "vot": 63,
-   "vitorias": 49,
+   "vot": 66,
+   "vitorias": 52,
    "derrotas": 3
   },
   "instituicoes": {
    "prop": 241,
    "extrema": 211,
    "prop30": 12,
-   "vot": 49,
-   "vitorias": 42,
+   "vot": 50,
+   "vitorias": 43,
    "derrotas": 4
   },
   "costumes": {
@@ -90,8 +90,8 @@
    "prop": 118,
    "extrema": 114,
    "prop30": 0,
-   "vot": 39,
-   "vitorias": 26,
+   "vot": 40,
+   "vitorias": 27,
    "derrotas": 0
   },
   "movimentos": {
@@ -122,8 +122,8 @@
    "prop": 331,
    "extrema": 62,
    "prop30": 3,
-   "vot": 47,
-   "vitorias": 21,
+   "vot": 49,
+   "vitorias": 23,
    "derrotas": 14
   },
   "plataformas": {
@@ -138,8 +138,8 @@
    "prop": 39,
    "extrema": 36,
    "prop30": 0,
-   "vot": 27,
-   "vitorias": 9,
+   "vot": 25,
+   "vitorias": 7,
    "derrotas": 12
   },
   "drogas": {
