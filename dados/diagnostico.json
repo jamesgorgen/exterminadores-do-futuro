@@ -1,5 +1,5 @@
 {
- "inicio": "2026-11-21T20:12:46.984Z",
+ "inicio": "2026-11-22T02:08:36.547Z",
  "modo": "diario",
  "amostras": {
   "camara_deputado": {
@@ -104,29 +104,29 @@
    "siglaVotoParlamentar": "Sim"
   },
   "senado_comissao_votacao": {
-   "CodigoVotacao": "42027",
+   "CodigoVotacao": "42268",
    "SiglaCasaColegiado": "SF",
-   "CodigoReuniao": "14969",
-   "DataHoraInicioReuniao": "2026-11-11T09:26:00",
-   "NumeroReuniaoColegiado": "52",
+   "CodigoReuniao": "15038",
+   "DataHoraInicioReuniao": "2026-11-18T09:30:00",
+   "NumeroReuniaoColegiado": "17",
    "TipoReuniao": "Extraordinária",
-   "CodigoColegiado": "40",
-   "SiglaColegiado": "CAS",
-   "NomeColegiado": "Comissão de Assuntos Sociais",
-   "CodigoParlamentarPresidente": "742",
-   "NomeParlamentarPresidente": "Marcelo Castro",
-   "IdentificacaoMateria": "PL 4366/2024",
-   "DescricaoIdentificacaoMateria": "Projeto de Lei n° 4366, de 2024",
-   "DescricaoVotacao": "PL 4366/2024 e emenda, nos termos do relatório apresentado",
-   "Votos": "{\"Voto\":[{\"CodigoParlamentar\":\"4531\",\"NomeParlamentar\":\"Jayme Campos\",\"SiglaPartidoParlamentar\":\"UNIÃO\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"5386\",\"NomeParlamentar\":\"Professora Dorinha Seabra\",\"SiglaPartidoParlamentar\":\"UNIÃO\",\"SiglaCasaParl",
-   "TotalVotosSim": "13",
+   "CodigoColegiado": "34",
+   "SiglaColegiado": "CCJ",
+   "NomeColegiado": "Comissão de Constituição, Justiça e Cidadania",
+   "CodigoParlamentarPresidente": "5523",
+   "NomeParlamentarPresidente": "Otto Alencar",
+   "IdentificacaoMateria": "PL 2091/2023",
+   "DescricaoIdentificacaoMateria": "Projeto de Lei n° 2091, de 2023",
+   "DescricaoVotacao": "Substitutivo ao PL 2091/2023 (nos termos do Parecer)",
+   "Votos": "{\"Voto\":[{\"CodigoParlamentar\":\"5924\",\"NomeParlamentar\":\"Oriovisto Guimarães\",\"SiglaPartidoParlamentar\":\"PSDB\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"5982\",\"NomeParlamentar\":\"Alessandro Vieira\",\"SiglaPartidoParlamentar\":\"MDB\",\"SiglaCasaParlamen",
+   "TotalVotosSim": "15",
    "TotalVotosNao": "0",
    "TotalVotosAbstencao": "0"
   },
   "senado_comissao_voto": {
-   "CodigoParlamentar": "4531",
-   "NomeParlamentar": "Jayme Campos",
-   "SiglaPartidoParlamentar": "UNIÃO",
+   "CodigoParlamentar": "5924",
+   "NomeParlamentar": "Oriovisto Guimarães",
+   "SiglaPartidoParlamentar": "PSDB",
    "SiglaCasaParlamentar": "SF",
    "QualidadeVoto": "S",
    "VotoPresidente": "false"
@@ -142,23 +142,23 @@
    "dataApresentacao": "2026-02-24T15:48"
   },
   "senado_proposicao": {
-   "autoria": "Senador Styvenson Valentim (PODE/RN)",
+   "autoria": "Senador Jader Barbalho (MDB/PA)",
    "casaIdentificadora": "SF",
-   "codigoMateria": 175925,
-   "dataApresentacao": "2026-10-07",
-   "dataSituacaoAtual": "2026-10-07",
-   "dataUltimaAtualizacao": "2026-10-14T15:15:01.467",
-   "ementa": "Estabelece a obrigatoriedade de disponibilização, nos telefones celulares comercializados no território nacional, de funcionalidade que permita ao usuário bloquear, rejeitar ou silenciar chamadas provenientes de números que não constem de sua lista de contatos.",
+   "codigoMateria": 175933,
+   "dataApresentacao": "2026-10-13",
+   "dataSituacaoAtual": "2026-10-13",
+   "dataUltimaAtualizacao": "2026-10-21T17:15:01.093",
+   "ementa": "Institui a Política Nacional de Bioenergia Amazônica para Sistemas Isolados (PROBIO-SI), destinada a incentivar a substituição do óleo diesel fóssil por biocombustíveis e bioenergia produzidos a partir de biomassa local de origem sustentável, com prioridade para a Região Norte, e altera a Lei nº 12.111, de 9 de dezembro de 2009.",
    "enteIdentificador": "SF",
-   "id": 9112665,
-   "identificacao": "PL 5535/2026",
+   "id": 9113033,
+   "identificacao": "PL 5540/2026",
    "objetivo": "Iniciadora",
    "situacaoAtual": "AGUARDANDO DESPACHO",
    "tipoConteudo": "Norma Geral",
    "tipoDocumento": "Projeto de Lei Ordinária",
    "tramitando": "Sim",
    "ultimaInformacaoAtualizada": "PUBLICACAO_OFICIAL",
-   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/b2ce3cf1-53ee-40a4-a310-4300991445dd"
+   "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/7d76b464-ad7f-45ea-bb1d-2b024061e292"
   },
   "camara_arq_autor": {
    "idProposicao": 2655709,
@@ -216,7 +216,7 @@
   "votacoes_C_plenario": 125,
   "votacoes_C_comissao": 34,
   "votacoes_sem_sim_nao": 1,
-  "camara_dias_completados_pela_api": 10,
+  "camara_dias_completados_pela_api": 11,
   "camara_api_votacao_sem_votos": 537,
   "senado_plenario_votacoes_achadas": 15,
   "votacoes_S_plenario": 15,
@@ -224,9 +224,8 @@
   "votacoes_S_comissao": 17,
   "proposicoes_camara_registros": 9282,
   "proposicoes_data_corrigida": 4,
-  "senado_processo_registros": 260,
-  "proposicoes_senado": 58,
-  "proposicoes_devolvidas_ao_senador": 30,
+  "senado_processo_registros": 259,
+  "proposicoes_senado": 57,
   "relatorias_senado": 2558,
   "numeracao_lacunas_PL": 5,
   "numeracao_lacunas_PLP": 1,
@@ -234,33 +233,40 @@
   "numeracao_lacunas_PDL": 0,
   "rotina_outorga": 2313,
   "rotina_administrativa": 33,
-  "votacoes_ligadas_a_materia_principal": 1266,
-  "confirmacoes_em_bloco": 2695,
-  "correcoes_aplicadas": 3935,
+  "votacoes_com_materia_recuperada": 529,
+  "ementa_materia_erro": 8,
+  "votacoes_ligadas_a_materia_principal": 1335,
+  "classificados": 189,
+  "grau_segunda_leitura": 3,
+  "grau_certeza_alta": 6,
+  "grau_para_revisao": 3,
+  "graduados": 9,
+  "confirmacoes_em_bloco": 2702,
+  "correcoes_aplicadas": 3938,
   "grupo_pelos_votos_diferente": 216,
-  "votacoes_chave": 2
+  "votacoes_chave": 4
  },
  "erros": [],
  "brutos": {
   "senado_atual": {
    "url": "https://legis.senado.leg.br/dadosabertos/senador/lista/atual.json",
    "tamanho": 128942,
-   "inicio": "{\"ListaParlamentarEmExercicio\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/ListaParlamentarEmExerciciov4.xsd\",\"Metadados\":{\"Versao\":\"21/11/2026 17:04:19\",\"VersaoServico\":\"4\",\"DataVersaoServico\":\"2020-07-15\",\"DescricaoDataSet\":\"Lista dos Parlamentares que estão atualmente em Exercício. Informações atuais sobre o Parlamentar.\"},\"Parlamentares\":{\"Parlamentar\":[{\"IdentificacaoParlamentar\":{\"CodigoParlamentar\":\"5672\",\"CodigoPublicoNaLegAtual\":\"800\",\"NomeParlamentar\":\"Alan Rick\",\"NomeCompletoParlamentar\":\"Alan Rick Miranda\",\"SexoParlamentar\":\"Masculino\",\"FormaTratamento\":\"Senador \",\"UrlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg\",\"UrlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5672\",\"EmailParlamentar\":\"sen.alanrick@senado.leg.br\",\"Telefones\":{\"Telefone\":[{\"NumeroTelefone\":\"33036333\",\"OrdemPublicacao\":\"1\",\"IndicadorFax\":\"Não\"}]},\"SiglaPartidoParlamentar\":\"REPUBLICANOS\",\"UfParlamentar\":\"AC\",\"Bloco\":{\"CodigoBloco\":\"346\",\"NomeBloco\":\"Bloco Parlamentar Aliança\",\"NomeApelido\":\"BLALIANÇA\",\"DataCriacao\":\"2023-03-20\"},\"MembroMesa\":\"Não\",\"MembroLideranca\":\"Sim\"},\"Mandato\":{\"CodigoMandato\":\"596\",\"UfParlamentar\":\"AC\",\"PrimeiraLegislaturaDoMandato\":{\"NumeroLegislatura\":\"57\",\"DataInicio\":\"2023-02-01\",\"DataFim\":\"2027-01-31\"},\"SegundaLegislaturaDoMandato\":{\"NumeroLegislatura\":\"58\",\"DataInicio\":\"2027-02-01\",\"DataFim\":\"2031-01-31\"},\"DescricaoParticipacao\":\"Titular\",\"Suplentes\":{\"Suplente\":["
+   "inicio": "{\"ListaParlamentarEmExercicio\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/ListaParlamentarEmExerciciov4.xsd\",\"Metadados\":{\"Versao\":\"21/11/2026 22:55:43\",\"VersaoServico\":\"4\",\"DataVersaoServico\":\"2020-07-15\",\"DescricaoDataSet\":\"Lista dos Parlamentares que estão atualmente em Exercício. Informações atuais sobre o Parlamentar.\"},\"Parlamentares\":{\"Parlamentar\":[{\"IdentificacaoParlamentar\":{\"CodigoParlamentar\":\"5672\",\"CodigoPublicoNaLegAtual\":\"800\",\"NomeParlamentar\":\"Alan Rick\",\"NomeCompletoParlamentar\":\"Alan Rick Miranda\",\"SexoParlamentar\":\"Masculino\",\"FormaTratamento\":\"Senador \",\"UrlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg\",\"UrlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5672\",\"EmailParlamentar\":\"sen.alanrick@senado.leg.br\",\"Telefones\":{\"Telefone\":[{\"NumeroTelefone\":\"33036333\",\"OrdemPublicacao\":\"1\",\"IndicadorFax\":\"Não\"}]},\"SiglaPartidoParlamentar\":\"REPUBLICANOS\",\"UfParlamentar\":\"AC\",\"Bloco\":{\"CodigoBloco\":\"346\",\"NomeBloco\":\"Bloco Parlamentar Aliança\",\"NomeApelido\":\"BLALIANÇA\",\"DataCriacao\":\"2023-03-20\"},\"MembroMesa\":\"Não\",\"MembroLideranca\":\"Sim\"},\"Mandato\":{\"CodigoMandato\":\"596\",\"UfParlamentar\":\"AC\",\"PrimeiraLegislaturaDoMandato\":{\"NumeroLegislatura\":\"57\",\"DataInicio\":\"2023-02-01\",\"DataFim\":\"2027-01-31\"},\"SegundaLegislaturaDoMandato\":{\"NumeroLegislatura\":\"58\",\"DataInicio\":\"2027-02-01\",\"DataFim\":\"2031-01-31\"},\"DescricaoParticipacao\":\"Titular\",\"Suplentes\":{\"Suplente\":["
   },
   "senado_votacao_iso": {
-   "url": "https://legis.senado.leg.br/dadosabertos/votacao?dataInicio=2026-10-07&dataFim=2026-10-31",
+   "url": "https://legis.senado.leg.br/dadosabertos/votacao?dataInicio=2026-10-08&dataFim=2026-10-31",
    "tamanho": 55340,
    "inicio": "[{\"ano\":2019,\"casaSessao\":\"SF\",\"codigoMateria\":174386,\"codigoSessao\":591267,\"codigoSessaoLegislativa\":874,\"codigoSessaoVotacao\":7106,\"dataApresentacao\":\"2026-05-28\",\"dataSessao\":\"2026-10-14\",\"descricaoVotacao\":\"Votação nominal da Proposta de Emenda à Constituição nº 221, de 2019, em primeiro turno.\",\"ementa\":\"Altera o art. 7º da Constituição Federal para reduzir a duração máxima semanal do trabalho e prever 2 (dois) dias de repouso semanal remunerado, sem qualquer redução salarial; e dá outras providências.\",\"idProcesso\":9056435,\"identificacao\":\"PEC 221/2019\",\"informeLegislativo\":{\"casaColegiado\":\"SF\",\"casaEnteAdm\":\"SF\",\"codigoColegiado\":1998,\"data\":\"2026-10-14\",\"id\":2319636,\"idEnteAdm\":13594,\"idEvento\":11392905,\"nomeColegiado\":\"Plenário do Senado Federal\",\"nomeEnteAdm\":\"Secretaria de Atas e Diários\",\"numeroAutuacao\":1,\"siglaColegiado\":\"PLEN\",\"siglaEnteAdm\":\"SEADI\",\"texto\":\"(Sessão Deliberativa Ordinária - semipresencial - de 14 de outubro de 2026) \\nQuinta e última sessão de discussão da matéria encerrada em 1º turno. \\nCalendário especial aprovado para a matéria (Requerimento nº 706/2026). \\nEmenda nº 37 encaminhada à publicação.  \\nParecer nº 207/2026-Plen/SF proferido pelo Senador Omar Aziz e encaminhado à publicação (contrário à emenda nº 37). \\nDestaque retirado pelo autor (Requerimento nº 710/2026 encaminhado à publicação). \\nProposta aprovada em 1º turno (Sim: 75; Não: 1; Presidente: 1; Total: 77). \\nDiscussão da matéria encerrada em 2º turno. \\nProposta aprovada em 2"
   },
   "senado_comissao": {
-   "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20261007&dataFim=20261121",
+   "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20261008&dataFim=20261122",
    "tamanho": 220,
-   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"21/11/2026 17:09:47\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
+   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"21/11/2026 23:04:23\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
   },
   "senado_processo": {
-   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-10-07&dataFimApresentacao=2026-10-15",
-   "tamanho": 8893,
-   "inicio": "[{\"autoria\":\"Senador Styvenson Valentim (PODE/RN)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175925,\"dataApresentacao\":\"2026-10-07\",\"dataSituacaoAtual\":\"2026-10-07\",\"dataUltimaAtualizacao\":\"2026-10-14T15:15:01.467\",\"ementa\":\"Estabelece a obrigatoriedade de disponibilização, nos telefones celulares comercializados no território nacional, de funcionalidade que permita ao usuário bloquear, rejeitar ou silenciar chamadas provenientes de números que não constem de sua lista de contatos.\",\"enteIdentificador\":\"SF\",\"id\":9112665,\"identificacao\":\"PL 5535/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/b2ce3cf1-53ee-40a4-a310-4300991445dd\"},{\"autoria\":\"Senador Jader Barbalho (MDB/PA)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175933,\"dataApresentacao\":\"2026-10-13\",\"dataSituacaoAtual\":\"2026-10-13\",\"dataUltimaAtualizacao\":\"2026-10-21T17:15:01.093\",\"ementa\":\"Institui a Política Nacional de Bioenergia Amazônica para Sistemas Isolados (PROBIO-SI), destinada a incentivar a substituição do óleo diesel fóssil por biocombustíveis e bioenergia produzidos a partir de biomassa local de origem sustentável, com prioridade para a Região Norte, e altera a Lei nº 12.111, de 9 de dezembro de 2009.\",\"enteIdentificador\":\"SF\",\"id\":9113033,\"identificacao\":\"PL 5540/2026\",\""
+   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-10-08&dataFimApresentacao=2026-10-15",
+   "tamanho": 8015,
+   "inicio": "[{\"autoria\":\"Senador Jader Barbalho (MDB/PA)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175933,\"dataApresentacao\":\"2026-10-13\",\"dataSituacaoAtual\":\"2026-10-13\",\"dataUltimaAtualizacao\":\"2026-10-21T17:15:01.093\",\"ementa\":\"Institui a Política Nacional de Bioenergia Amazônica para Sistemas Isolados (PROBIO-SI), destinada a incentivar a substituição do óleo diesel fóssil por biocombustíveis e bioenergia produzidos a partir de biomassa local de origem sustentável, com prioridade para a Região Norte, e altera a Lei nº 12.111, de 9 de dezembro de 2009.\",\"enteIdentificador\":\"SF\",\"id\":9113033,\"identificacao\":\"PL 5540/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/7d76b464-ad7f-45ea-bb1d-2b024061e292\"},{\"autoria\":\"Câmara dos Deputados\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175948,\"dataApresentacao\":\"2026-10-13\",\"dataSituacaoAtual\":\"2026-10-14\",\"dataUltimaAtualizacao\":\"2026-10-22T15:15:33.938\",\"ementa\":\"Altera o art. 6º da Lei n° 10.826, de 22 de dezembro de 2003 (Estatuto do Desarmamento).\",\"enteIdentificador\":\"SF\",\"id\":9113381,\"identificacao\":\"PL 5555/2026\",\"objetivo\":\"Revisora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACA"
   },
   "senado_relatoria": {
    "url": "https://legis.senado.leg.br/dadosabertos/processo/relatoria?dataInicio=2023-02-01&dataFim=2023-02-28",
@@ -302,5 +308,5 @@
    "numeros": []
   }
  },
- "fim": "2026-11-21T20:16:01.258Z"
+ "fim": "2026-11-22T02:13:26.100Z"
 }
