@@ -1,5 +1,5 @@
 {
- "inicio": "2026-11-22T02:08:36.547Z",
+ "inicio": "2026-11-22T04:32:12.810Z",
  "modo": "diario",
  "amostras": {
   "camara_deputado": {
@@ -104,29 +104,29 @@
    "siglaVotoParlamentar": "Sim"
   },
   "senado_comissao_votacao": {
-   "CodigoVotacao": "42268",
+   "CodigoVotacao": "42027",
    "SiglaCasaColegiado": "SF",
-   "CodigoReuniao": "15038",
-   "DataHoraInicioReuniao": "2026-11-18T09:30:00",
-   "NumeroReuniaoColegiado": "17",
+   "CodigoReuniao": "14969",
+   "DataHoraInicioReuniao": "2026-11-11T09:26:00",
+   "NumeroReuniaoColegiado": "52",
    "TipoReuniao": "Extraordinária",
-   "CodigoColegiado": "34",
-   "SiglaColegiado": "CCJ",
-   "NomeColegiado": "Comissão de Constituição, Justiça e Cidadania",
-   "CodigoParlamentarPresidente": "5523",
-   "NomeParlamentarPresidente": "Otto Alencar",
-   "IdentificacaoMateria": "PL 2091/2023",
-   "DescricaoIdentificacaoMateria": "Projeto de Lei n° 2091, de 2023",
-   "DescricaoVotacao": "Substitutivo ao PL 2091/2023 (nos termos do Parecer)",
-   "Votos": "{\"Voto\":[{\"CodigoParlamentar\":\"5924\",\"NomeParlamentar\":\"Oriovisto Guimarães\",\"SiglaPartidoParlamentar\":\"PSDB\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"5982\",\"NomeParlamentar\":\"Alessandro Vieira\",\"SiglaPartidoParlamentar\":\"MDB\",\"SiglaCasaParlamen",
-   "TotalVotosSim": "15",
+   "CodigoColegiado": "40",
+   "SiglaColegiado": "CAS",
+   "NomeColegiado": "Comissão de Assuntos Sociais",
+   "CodigoParlamentarPresidente": "742",
+   "NomeParlamentarPresidente": "Marcelo Castro",
+   "IdentificacaoMateria": "PL 4366/2024",
+   "DescricaoIdentificacaoMateria": "Projeto de Lei n° 4366, de 2024",
+   "DescricaoVotacao": "PL 4366/2024 e emenda, nos termos do relatório apresentado",
+   "Votos": "{\"Voto\":[{\"CodigoParlamentar\":\"4531\",\"NomeParlamentar\":\"Jayme Campos\",\"SiglaPartidoParlamentar\":\"UNIÃO\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"5386\",\"NomeParlamentar\":\"Professora Dorinha Seabra\",\"SiglaPartidoParlamentar\":\"UNIÃO\",\"SiglaCasaParl",
+   "TotalVotosSim": "13",
    "TotalVotosNao": "0",
    "TotalVotosAbstencao": "0"
   },
   "senado_comissao_voto": {
-   "CodigoParlamentar": "5924",
-   "NomeParlamentar": "Oriovisto Guimarães",
-   "SiglaPartidoParlamentar": "PSDB",
+   "CodigoParlamentar": "4531",
+   "NomeParlamentar": "Jayme Campos",
+   "SiglaPartidoParlamentar": "UNIÃO",
    "SiglaCasaParlamentar": "SF",
    "QualidadeVoto": "S",
    "VotoPresidente": "false"
@@ -233,14 +233,9 @@
   "numeracao_lacunas_PDL": 0,
   "rotina_outorga": 2313,
   "rotina_administrativa": 33,
-  "votacoes_com_materia_recuperada": 529,
+  "votacoes_com_materia_recuperada": 47,
   "ementa_materia_erro": 8,
   "votacoes_ligadas_a_materia_principal": 1335,
-  "classificados": 189,
-  "grau_segunda_leitura": 3,
-  "grau_certeza_alta": 6,
-  "grau_para_revisao": 3,
-  "graduados": 9,
   "confirmacoes_em_bloco": 2702,
   "correcoes_aplicadas": 3938,
   "grupo_pelos_votos_diferente": 216,
@@ -251,7 +246,7 @@
   "senado_atual": {
    "url": "https://legis.senado.leg.br/dadosabertos/senador/lista/atual.json",
    "tamanho": 128942,
-   "inicio": "{\"ListaParlamentarEmExercicio\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/ListaParlamentarEmExerciciov4.xsd\",\"Metadados\":{\"Versao\":\"21/11/2026 22:55:43\",\"VersaoServico\":\"4\",\"DataVersaoServico\":\"2020-07-15\",\"DescricaoDataSet\":\"Lista dos Parlamentares que estão atualmente em Exercício. Informações atuais sobre o Parlamentar.\"},\"Parlamentares\":{\"Parlamentar\":[{\"IdentificacaoParlamentar\":{\"CodigoParlamentar\":\"5672\",\"CodigoPublicoNaLegAtual\":\"800\",\"NomeParlamentar\":\"Alan Rick\",\"NomeCompletoParlamentar\":\"Alan Rick Miranda\",\"SexoParlamentar\":\"Masculino\",\"FormaTratamento\":\"Senador \",\"UrlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg\",\"UrlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5672\",\"EmailParlamentar\":\"sen.alanrick@senado.leg.br\",\"Telefones\":{\"Telefone\":[{\"NumeroTelefone\":\"33036333\",\"OrdemPublicacao\":\"1\",\"IndicadorFax\":\"Não\"}]},\"SiglaPartidoParlamentar\":\"REPUBLICANOS\",\"UfParlamentar\":\"AC\",\"Bloco\":{\"CodigoBloco\":\"346\",\"NomeBloco\":\"Bloco Parlamentar Aliança\",\"NomeApelido\":\"BLALIANÇA\",\"DataCriacao\":\"2023-03-20\"},\"MembroMesa\":\"Não\",\"MembroLideranca\":\"Sim\"},\"Mandato\":{\"CodigoMandato\":\"596\",\"UfParlamentar\":\"AC\",\"PrimeiraLegislaturaDoMandato\":{\"NumeroLegislatura\":\"57\",\"DataInicio\":\"2023-02-01\",\"DataFim\":\"2027-01-31\"},\"SegundaLegislaturaDoMandato\":{\"NumeroLegislatura\":\"58\",\"DataInicio\":\"2027-02-01\",\"DataFim\":\"2031-01-31\"},\"DescricaoParticipacao\":\"Titular\",\"Suplentes\":{\"Suplente\":["
+   "inicio": "{\"ListaParlamentarEmExercicio\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/ListaParlamentarEmExerciciov4.xsd\",\"Metadados\":{\"Versao\":\"22/11/2026 01:30:04\",\"VersaoServico\":\"4\",\"DataVersaoServico\":\"2020-07-15\",\"DescricaoDataSet\":\"Lista dos Parlamentares que estão atualmente em Exercício. Informações atuais sobre o Parlamentar.\"},\"Parlamentares\":{\"Parlamentar\":[{\"IdentificacaoParlamentar\":{\"CodigoParlamentar\":\"5672\",\"CodigoPublicoNaLegAtual\":\"800\",\"NomeParlamentar\":\"Alan Rick\",\"NomeCompletoParlamentar\":\"Alan Rick Miranda\",\"SexoParlamentar\":\"Masculino\",\"FormaTratamento\":\"Senador \",\"UrlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg\",\"UrlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5672\",\"EmailParlamentar\":\"sen.alanrick@senado.leg.br\",\"Telefones\":{\"Telefone\":[{\"NumeroTelefone\":\"33036333\",\"OrdemPublicacao\":\"1\",\"IndicadorFax\":\"Não\"}]},\"SiglaPartidoParlamentar\":\"REPUBLICANOS\",\"UfParlamentar\":\"AC\",\"Bloco\":{\"CodigoBloco\":\"346\",\"NomeBloco\":\"Bloco Parlamentar Aliança\",\"NomeApelido\":\"BLALIANÇA\",\"DataCriacao\":\"2023-03-20\"},\"MembroMesa\":\"Não\",\"MembroLideranca\":\"Sim\"},\"Mandato\":{\"CodigoMandato\":\"596\",\"UfParlamentar\":\"AC\",\"PrimeiraLegislaturaDoMandato\":{\"NumeroLegislatura\":\"57\",\"DataInicio\":\"2023-02-01\",\"DataFim\":\"2027-01-31\"},\"SegundaLegislaturaDoMandato\":{\"NumeroLegislatura\":\"58\",\"DataInicio\":\"2027-02-01\",\"DataFim\":\"2031-01-31\"},\"DescricaoParticipacao\":\"Titular\",\"Suplentes\":{\"Suplente\":["
   },
   "senado_votacao_iso": {
    "url": "https://legis.senado.leg.br/dadosabertos/votacao?dataInicio=2026-10-08&dataFim=2026-10-31",
@@ -261,7 +256,7 @@
   "senado_comissao": {
    "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20261008&dataFim=20261122",
    "tamanho": 220,
-   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"21/11/2026 23:04:23\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
+   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"22/11/2026 01:33:19\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
   },
   "senado_processo": {
    "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-10-08&dataFimApresentacao=2026-10-15",
@@ -308,5 +303,5 @@
    "numeros": []
   }
  },
- "fim": "2026-11-22T02:13:26.100Z"
+ "fim": "2026-11-22T04:34:29.832Z"
 }
