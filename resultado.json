@@ -1,0 +1,53 @@
+{
+ "bancada": "plataformas",
+ "votacao": "C:2579791-17",
+ "voto": "N",
+ "total": 186,
+ "situacao": {
+  "nenhum sinal na bancada": 160,
+  "membro (núcleo)": 13,
+  "membro (aliado)": 11,
+  "retirado pela equipe": 2
+ },
+ "situacao_por_grupo": {
+  "extrema": {
+   "nenhum sinal na bancada": 79,
+   "membro (núcleo)": 7,
+   "membro (aliado)": 6
+  },
+  "direita": {
+   "nenhum sinal na bancada": 65,
+   "membro (núcleo)": 5,
+   "membro (aliado)": 4,
+   "retirado pela equipe": 2
+  },
+  "centro": {
+   "nenhum sinal na bancada": 16,
+   "membro (núcleo)": 1,
+   "membro (aliado)": 1
+  }
+ },
+ "evidencias_de_quem_nao_e_membro": {
+  "A · Votos": 2,
+  "V · Sócio do parlamentar em outra empresa": 1,
+  "V · Empresa citada nos bens declarados ao TSE": 1
+ },
+ "ocupacoes_tse_tecnologia_comunicacao": {
+  "2022 · ANALISTA DE SISTEMAS": 24,
+  "2022 · JORNALISTA E REDATORA/REDATOR": 210,
+  "2022 · LOCUTORA/LOCUTOR E COMENTARISTA DE RADIO E TELEVISAO E RADIALISTA": 48,
+  "2022 · PROGRAMADORA/PROGRAMADOR DE COMPUTADOR": 7,
+  "2022 · PUBLICITARIA/PUBLICITARIO": 37,
+  "2022 · TECNICA/TECNICO DE ELETRICIDADE, ELETRONICA E TELECOMUNICACOES": 7,
+  "2022 · TECNICA/TECNICO EM INFORMATICA": 9,
+  "2026 · ANALISTA DE SISTEMAS": 11,
+  "2026 · JORNALISTA E REDATORA/REDATOR": 156,
+  "2026 · LOCUTORA/LOCUTOR E COMENTARISTA DE RADIO E TELEVISAO E RADIALISTA": 30,
+  "2026 · OPERADORA/OPERADOR DE COMPUTADOR": 1,
+  "2026 · PROGRAMADORA/PROGRAMADOR DE COMPUTADOR": 1,
+  "2026 · PUBLICITARIA/PUBLICITARIO": 37,
+  "2026 · TECNICA/TECNICO DE ELETRICIDADE, ELETRONICA E TELECOMUNICACOES": 12,
+  "2026 · TECNICA/TECNICO EM INFORMATICA": 6
+ },
+ "ocupacoes_distintas_no_tse": 203
+}
