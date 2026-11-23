@@ -1,5 +1,5 @@
 {
- "inicio": "2026-11-22T17:13:41.732Z",
+ "inicio": "2026-11-23T21:31:35.984Z",
  "modo": "diario",
  "amostras": {
   "camara_deputado": {
@@ -43,9 +43,9 @@
    "uriVotacao": "https://dadosabertos.camara.leg.br/api/v2/votacoes/2407484-42",
    "siglaOrgao": "CMULHER",
    "descricao": "Rejeitado o Requerimento de Retirada de Pauta. Resultado:  7 votos \"Sim\", 12 votos \"Não\". Quórum de votação: 19 votos.",
-   "siglaBancada": "PP",
-   "uriBancada": "https://dadosabertos.camara.leg.br/api/v2/partidos/37903",
-   "orientacao": "Obstrução"
+   "siglaBancada": "PL",
+   "uriBancada": "https://dadosabertos.camara.leg.br/api/v2/partidos/37906",
+   "orientacao": "Sim"
   },
   "camara_arq_objeto": {
    "idVotacao": "2555417-29",
@@ -216,17 +216,17 @@
   "votacoes_C_plenario": 125,
   "votacoes_C_comissao": 34,
   "votacoes_sem_sim_nao": 1,
-  "camara_dias_completados_pela_api": 11,
+  "camara_dias_completados_pela_api": 12,
   "camara_api_votacao_sem_votos": 537,
   "senado_plenario_votacoes_achadas": 15,
   "votacoes_S_plenario": 15,
   "senado_comissao_votacoes_achadas": 17,
   "votacoes_S_comissao": 17,
-  "proposicoes_camara_registros": 9282,
+  "proposicoes_camara_registros": 9328,
   "proposicoes_data_corrigida": 4,
-  "senado_processo_registros": 259,
-  "proposicoes_senado": 57,
-  "relatorias_senado": 2558,
+  "senado_processo_registros": 260,
+  "proposicoes_senado": 58,
+  "relatorias_senado": 2568,
   "numeracao_lacunas_PL": 5,
   "numeracao_lacunas_PLP": 1,
   "numeracao_lacunas_PEC": 0,
@@ -235,10 +235,16 @@
   "rotina_administrativa": 33,
   "votacoes_com_materia_recuperada": 47,
   "votacoes_ligadas_a_materia_principal": 1335,
-  "classificados": 1,
+  "classificados": 18,
+  "ia_json_invalido_cortado": 1,
+  "grau_segunda_leitura": 219,
+  "grau_certeza_alta": 159,
+  "grau_duvida_so_de_grau": 171,
+  "grau_para_revisao": 19,
+  "graduados": 174,
   "confirmacoes_em_bloco": 2702,
   "correcoes_aplicadas": 3938,
-  "grupo_pelos_votos_diferente": 216,
+  "grupo_pelos_votos_diferente": 370,
   "votacoes_chave": 4
  },
  "erros": [],
@@ -246,22 +252,22 @@
   "senado_atual": {
    "url": "https://legis.senado.leg.br/dadosabertos/senador/lista/atual.json",
    "tamanho": 128942,
-   "inicio": "{\"ListaParlamentarEmExercicio\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/ListaParlamentarEmExerciciov4.xsd\",\"Metadados\":{\"Versao\":\"22/11/2026 14:00:03\",\"VersaoServico\":\"4\",\"DataVersaoServico\":\"2020-07-15\",\"DescricaoDataSet\":\"Lista dos Parlamentares que estão atualmente em Exercício. Informações atuais sobre o Parlamentar.\"},\"Parlamentares\":{\"Parlamentar\":[{\"IdentificacaoParlamentar\":{\"CodigoParlamentar\":\"5672\",\"CodigoPublicoNaLegAtual\":\"800\",\"NomeParlamentar\":\"Alan Rick\",\"NomeCompletoParlamentar\":\"Alan Rick Miranda\",\"SexoParlamentar\":\"Masculino\",\"FormaTratamento\":\"Senador \",\"UrlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg\",\"UrlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5672\",\"EmailParlamentar\":\"sen.alanrick@senado.leg.br\",\"Telefones\":{\"Telefone\":[{\"NumeroTelefone\":\"33036333\",\"OrdemPublicacao\":\"1\",\"IndicadorFax\":\"Não\"}]},\"SiglaPartidoParlamentar\":\"REPUBLICANOS\",\"UfParlamentar\":\"AC\",\"Bloco\":{\"CodigoBloco\":\"346\",\"NomeBloco\":\"Bloco Parlamentar Aliança\",\"NomeApelido\":\"BLALIANÇA\",\"DataCriacao\":\"2023-03-20\"},\"MembroMesa\":\"Não\",\"MembroLideranca\":\"Sim\"},\"Mandato\":{\"CodigoMandato\":\"596\",\"UfParlamentar\":\"AC\",\"PrimeiraLegislaturaDoMandato\":{\"NumeroLegislatura\":\"57\",\"DataInicio\":\"2023-02-01\",\"DataFim\":\"2027-01-31\"},\"SegundaLegislaturaDoMandato\":{\"NumeroLegislatura\":\"58\",\"DataInicio\":\"2027-02-01\",\"DataFim\":\"2031-01-31\"},\"DescricaoParticipacao\":\"Titular\",\"Suplentes\":{\"Suplente\":["
+   "inicio": "{\"ListaParlamentarEmExercicio\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/ListaParlamentarEmExerciciov4.xsd\",\"Metadados\":{\"Versao\":\"23/11/2026 18:16:52\",\"VersaoServico\":\"4\",\"DataVersaoServico\":\"2020-07-15\",\"DescricaoDataSet\":\"Lista dos Parlamentares que estão atualmente em Exercício. Informações atuais sobre o Parlamentar.\"},\"Parlamentares\":{\"Parlamentar\":[{\"IdentificacaoParlamentar\":{\"CodigoParlamentar\":\"5672\",\"CodigoPublicoNaLegAtual\":\"800\",\"NomeParlamentar\":\"Alan Rick\",\"NomeCompletoParlamentar\":\"Alan Rick Miranda\",\"SexoParlamentar\":\"Masculino\",\"FormaTratamento\":\"Senador \",\"UrlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg\",\"UrlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5672\",\"EmailParlamentar\":\"sen.alanrick@senado.leg.br\",\"Telefones\":{\"Telefone\":[{\"NumeroTelefone\":\"33036333\",\"OrdemPublicacao\":\"1\",\"IndicadorFax\":\"Não\"}]},\"SiglaPartidoParlamentar\":\"REPUBLICANOS\",\"UfParlamentar\":\"AC\",\"Bloco\":{\"CodigoBloco\":\"346\",\"NomeBloco\":\"Bloco Parlamentar Aliança\",\"NomeApelido\":\"BLALIANÇA\",\"DataCriacao\":\"2023-03-20\"},\"MembroMesa\":\"Não\",\"MembroLideranca\":\"Sim\"},\"Mandato\":{\"CodigoMandato\":\"596\",\"UfParlamentar\":\"AC\",\"PrimeiraLegislaturaDoMandato\":{\"NumeroLegislatura\":\"57\",\"DataInicio\":\"2023-02-01\",\"DataFim\":\"2027-01-31\"},\"SegundaLegislaturaDoMandato\":{\"NumeroLegislatura\":\"58\",\"DataInicio\":\"2027-02-01\",\"DataFim\":\"2031-01-31\"},\"DescricaoParticipacao\":\"Titular\",\"Suplentes\":{\"Suplente\":["
   },
   "senado_votacao_iso": {
-   "url": "https://legis.senado.leg.br/dadosabertos/votacao?dataInicio=2026-10-08&dataFim=2026-10-31",
+   "url": "https://legis.senado.leg.br/dadosabertos/votacao?dataInicio=2026-10-09&dataFim=2026-10-31",
    "tamanho": 55340,
    "inicio": "[{\"ano\":2019,\"casaSessao\":\"SF\",\"codigoMateria\":174386,\"codigoSessao\":591267,\"codigoSessaoLegislativa\":874,\"codigoSessaoVotacao\":7106,\"dataApresentacao\":\"2026-05-28\",\"dataSessao\":\"2026-10-14\",\"descricaoVotacao\":\"Votação nominal da Proposta de Emenda à Constituição nº 221, de 2019, em primeiro turno.\",\"ementa\":\"Altera o art. 7º da Constituição Federal para reduzir a duração máxima semanal do trabalho e prever 2 (dois) dias de repouso semanal remunerado, sem qualquer redução salarial; e dá outras providências.\",\"idProcesso\":9056435,\"identificacao\":\"PEC 221/2019\",\"informeLegislativo\":{\"casaColegiado\":\"SF\",\"casaEnteAdm\":\"SF\",\"codigoColegiado\":1998,\"data\":\"2026-10-14\",\"id\":2319636,\"idEnteAdm\":13594,\"idEvento\":11392905,\"nomeColegiado\":\"Plenário do Senado Federal\",\"nomeEnteAdm\":\"Secretaria de Atas e Diários\",\"numeroAutuacao\":1,\"siglaColegiado\":\"PLEN\",\"siglaEnteAdm\":\"SEADI\",\"texto\":\"(Sessão Deliberativa Ordinária - semipresencial - de 14 de outubro de 2026) \\nQuinta e última sessão de discussão da matéria encerrada em 1º turno. \\nCalendário especial aprovado para a matéria (Requerimento nº 706/2026). \\nEmenda nº 37 encaminhada à publicação.  \\nParecer nº 207/2026-Plen/SF proferido pelo Senador Omar Aziz e encaminhado à publicação (contrário à emenda nº 37). \\nDestaque retirado pelo autor (Requerimento nº 710/2026 encaminhado à publicação). \\nProposta aprovada em 1º turno (Sim: 75; Não: 1; Presidente: 1; Total: 77). \\nDiscussão da matéria encerrada em 2º turno. \\nProposta aprovada em 2"
   },
   "senado_comissao": {
-   "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20261008&dataFim=20261122",
+   "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20261009&dataFim=20261123",
    "tamanho": 220,
-   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"22/11/2026 14:15:00\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
+   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"23/11/2026 18:32:45\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
   },
   "senado_processo": {
-   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-10-16&dataFimApresentacao=2026-10-31",
-   "tamanho": 32886,
-   "inicio": "[{\"autoria\":\"Senador Dr. Hiran (PP/RR)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175985,\"dataApresentacao\":\"2026-10-19\",\"dataSituacaoAtual\":\"2026-10-19\",\"dataUltimaAtualizacao\":\"2026-10-21T15:30:01.3\",\"ementa\":\"Altera o art. 9º da Lei nº 15.211, de 17 de setembro de 2025 (Estatuto Digital da Criança e do Adolescente), para admitir a estimativa de idade por biometria facial como mecanismo de verificação de idade e para ampliar, de forma graduada, as categorias de serviços digitais de acesso restrito a maiores de 18 (dezoito) anos.\",\"enteIdentificador\":\"SF\",\"id\":9115144,\"identificacao\":\"PL 5593/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/3dc7461f-fa42-46e9-aa85-0ff9dd90f0a9\"},{\"autoria\":\"Câmara dos Deputados\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175994,\"dataApresentacao\":\"2026-10-19\",\"dataSituacaoAtual\":\"2026-10-20\",\"dataUltimaAtualizacao\":\"2026-10-23T18:30:01.076\",\"ementa\":\"Altera a Lei nº 8.080, de 19 de setembro de 1990 (Lei Orgânica da Saúde), para determinar a aceitação, pelas unidades do Sistema Único de Saúde (SUS), de exames realizados em serviços privados.\",\"enteIdentificador\":\"SF\",\"id\":9115232,\"identificacao\":\"PL 1123/2025\",\"objetivo\":\"Revisora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocum"
+   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-10-09&dataFimApresentacao=2026-10-15",
+   "tamanho": 8014,
+   "inicio": "[{\"autoria\":\"Senador Jader Barbalho (MDB/PA)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175933,\"dataApresentacao\":\"2026-10-13\",\"dataSituacaoAtual\":\"2026-10-13\",\"dataUltimaAtualizacao\":\"2026-10-21T17:15:01.093\",\"ementa\":\"Institui a Política Nacional de Bioenergia Amazônica para Sistemas Isolados (PROBIO-SI), destinada a incentivar a substituição do óleo diesel fóssil por biocombustíveis e bioenergia produzidos a partir de biomassa local de origem sustentável, com prioridade para a Região Norte, e altera a Lei nº 12.111, de 9 de dezembro de 2009.\",\"enteIdentificador\":\"SF\",\"id\":9113033,\"identificacao\":\"PL 5540/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/7d76b464-ad7f-45ea-bb1d-2b024061e292\"},{\"autoria\":\"Câmara dos Deputados\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175948,\"dataApresentacao\":\"2026-10-13\",\"dataSituacaoAtual\":\"2026-10-14\",\"dataUltimaAtualizacao\":\"2026-10-22T15:15:33.938\",\"ementa\":\"Altera o art. 6º da Lei n° 10.826, de 22 de dezembro de 2003 (Estatuto do Desarmamento).\",\"enteIdentificador\":\"SF\",\"id\":9113381,\"identificacao\":\"PL 5555/2026\",\"objetivo\":\"Revisora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACA"
   },
   "senado_relatoria": {
    "url": "https://legis.senado.leg.br/dadosabertos/processo/relatoria?dataInicio=2023-02-01&dataFim=2023-02-28",
@@ -272,7 +278,7 @@
  "numeracao": {
   "PL": {
    "de": 5794,
-   "ate": 5916,
+   "ate": 5931,
    "faltam": 5,
    "numeros": [
     5833,
@@ -284,7 +290,7 @@
   },
   "PLP": {
    "de": 287,
-   "ate": 313,
+   "ate": 316,
    "faltam": 1,
    "numeros": [
     290
@@ -298,10 +304,10 @@
   },
   "PDL": {
    "de": 1036,
-   "ate": 1244,
+   "ate": 1245,
    "faltam": 0,
    "numeros": []
   }
  },
- "fim": "2026-11-22T17:16:19.587Z"
+ "fim": "2026-11-23T21:40:57.196Z"
 }
