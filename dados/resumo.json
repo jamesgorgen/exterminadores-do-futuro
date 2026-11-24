@@ -1,10 +1,10 @@
 {
- "gerado": "2026-11-24T20:13:53.674Z",
+ "gerado": "2026-11-24T20:18:12.130Z",
  "inicio": "2023-02-01",
  "totais": {
   "proposicoes": 29317,
-  "direita": 2709,
-  "extrema": 1813,
+  "direita": 2712,
+  "extrema": 1816,
   "votacoes": 2471,
   "disputadas": 1193,
   "vitorias": 509,
@@ -39,9 +39,9 @@
    "derrotas": 3
   },
   "punitivismo": {
-   "prop": 1305,
-   "extrema": 871,
-   "prop30": 15,
+   "prop": 1306,
+   "extrema": 872,
+   "prop30": 16,
    "vot": 65,
    "vitorias": 51,
    "derrotas": 3
@@ -55,9 +55,9 @@
    "derrotas": 4
   },
   "costumes": {
-   "prop": 302,
-   "extrema": 283,
-   "prop30": 2,
+   "prop": 303,
+   "extrema": 284,
+   "prop30": 3,
    "vot": 37,
    "vitorias": 13,
    "derrotas": 16
@@ -87,9 +87,9 @@
    "derrotas": 4
   },
   "povos": {
-   "prop": 118,
-   "extrema": 115,
-   "prop30": 1,
+   "prop": 119,
+   "extrema": 116,
+   "prop30": 2,
    "vot": 40,
    "vitorias": 27,
    "derrotas": 0
@@ -573,8 +573,8 @@
  "blocos": {
   "T": {
    "prop": 26971,
-   "pauta": 2709,
-   "pautaExtrema": 1813,
+   "pauta": 2712,
+   "pautaExtrema": 1816,
    "vot": 1617,
    "comSit": 26933,
    "aprovada": 1202,
@@ -604,7 +604,7 @@
    "grupos": {
     "extrema": {
      "prop": 4864,
-     "pauta": 1210,
+     "pauta": 1211,
      "membros": 104,
      "emExercicio": 83,
      "vot": 1574,
@@ -616,7 +616,7 @@
     },
     "direita": {
      "prop": 6490,
-     "pauta": 713,
+     "pauta": 714,
      "membros": 170,
      "emExercicio": 123,
      "vot": 1562,
@@ -640,7 +640,7 @@
     },
     "esquerda": {
      "prop": 7650,
-     "pauta": 317,
+     "pauta": 318,
      "membros": 261,
      "emExercicio": 209,
      "vot": 1590,
@@ -674,7 +674,7 @@
       "direita": [
        358,
        14,
-       41
+       42
       ]
      }
     },
@@ -1917,7 +1917,7 @@
       "extrema": [
        77,
        0,
-       35
+       36
       ],
       "centro": [
        54,
@@ -2580,8 +2580,8 @@
   },
   "C": {
    "prop": 23748,
-   "pauta": 2320,
-   "pautaExtrema": 1544,
+   "pauta": 2323,
+   "pautaExtrema": 1547,
    "vot": 1419,
    "comSit": 23733,
    "aprovada": 850,
@@ -2611,7 +2611,7 @@
    "grupos": {
     "extrema": {
      "prop": 4185,
-     "pauta": 1060,
+     "pauta": 1061,
      "membros": 83,
      "emExercicio": 68,
      "vot": 1376,
@@ -2623,7 +2623,7 @@
     },
     "direita": {
      "prop": 5240,
-     "pauta": 570,
+     "pauta": 571,
      "membros": 126,
      "emExercicio": 90,
      "vot": 1364,
@@ -2647,7 +2647,7 @@
     },
     "esquerda": {
      "prop": 6934,
-     "pauta": 266,
+     "pauta": 267,
      "membros": 236,
      "emExercicio": 191,
      "vot": 1394,
@@ -2681,7 +2681,7 @@
       "direita": [
        306,
        7,
-       35
+       36
       ]
      }
     },
@@ -3794,7 +3794,7 @@
       "extrema": [
        70,
        0,
-       31
+       32
       ],
       "centro": [
        53,
@@ -6520,7 +6520,7 @@
   }
  },
  "recentes": {
-  "proposicoes": 12,
+  "proposicoes": 15,
   "votacoes": 22
  }
 }
