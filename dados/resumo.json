@@ -1,10 +1,10 @@
 {
- "gerado": "2026-11-24T20:18:12.130Z",
+ "gerado": "2026-11-24T20:22:26.724Z",
  "inicio": "2023-02-01",
  "totais": {
   "proposicoes": 29317,
-  "direita": 2712,
-  "extrema": 1816,
+  "direita": 2711,
+  "extrema": 1815,
   "votacoes": 2471,
   "disputadas": 1193,
   "vitorias": 509,
@@ -573,8 +573,8 @@
  "blocos": {
   "T": {
    "prop": 26971,
-   "pauta": 2712,
-   "pautaExtrema": 1816,
+   "pauta": 2711,
+   "pautaExtrema": 1815,
    "vot": 1617,
    "comSit": 26933,
    "aprovada": 1202,
@@ -2580,8 +2580,8 @@
   },
   "C": {
    "prop": 23748,
-   "pauta": 2323,
-   "pautaExtrema": 1547,
+   "pauta": 2322,
+   "pautaExtrema": 1546,
    "vot": 1419,
    "comSit": 23733,
    "aprovada": 850,
@@ -6520,7 +6520,7 @@
   }
  },
  "recentes": {
-  "proposicoes": 15,
+  "proposicoes": 14,
   "votacoes": 22
  }
 }
