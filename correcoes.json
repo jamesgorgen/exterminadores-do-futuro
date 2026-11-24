@@ -279,6 +279,14 @@
       ],
       "g": "extrema"
     },
+    "PDL 1245/2026": {
+      "s": "avanca",
+      "p": [
+        "trabalho"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
     "PDL 1246/2026": {
       "s": "barra",
       "p": [
@@ -1015,6 +1023,14 @@
         "punitivismo"
       ],
       "g": "extrema"
+    },
+    "PEC 24/2026": {
+      "s": "avanca",
+      "p": [
+        "instituicoes"
+      ],
+      "g": "extrema",
+      "m": ""
     },
     "PEC 26/2023": {
       "s": ""
@@ -9194,6 +9210,31 @@
       ],
       "g": "extrema"
     },
+    "PL 5892/2026": {
+      "s": "barra",
+      "p": [
+        "drogas"
+      ],
+      "m": ""
+    },
+    "PL 5893/2026": {
+      "s": ""
+    },
+    "PL 5894/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "extrema"
+    },
+    "PL 5895/2026": {
+      "s": "avanca",
+      "p": [
+        "trabalho"
+      ],
+      "g": "direita",
+      "m": ""
+    },
     "PL 5896/2025": {
       "s": "avanca",
       "p": [
@@ -9201,6 +9242,32 @@
         "movimentos"
       ],
       "g": "extrema"
+    },
+    "PL 5897/2026": {
+      "s": ""
+    },
+    "PL 5898/2026": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ],
+      "m": ""
+    },
+    "PL 5899/2026": {
+      "s": ""
+    },
+    "PL 5900/2026": {
+      "s": ""
+    },
+    "PL 5901/2026": {
+      "s": "barra",
+      "p": [
+        "costumes"
+      ],
+      "m": ""
+    },
+    "PL 5902/2026": {
+      "s": ""
     },
     "PL 5903/2026": {
       "s": "barra",
@@ -9277,6 +9344,20 @@
         "soberania"
       ],
       "m": ""
+    },
+    "PL 5916/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "extrema"
+    },
+    "PL 5917/2026": {
+      "s": "avanca",
+      "p": [
+        "armas"
+      ],
+      "g": "extrema"
     },
     "PL 5918/2026": {
       "s": "barra",
@@ -10950,8 +11031,25 @@
       ],
       "lote": 1
     },
+    "PLP 311/2026": {
+      "s": "barra",
+      "p": [
+        "privilegios"
+      ],
+      "m": ""
+    },
+    "PLP 312/2026": {
+      "s": ""
+    },
     "PLP 313/2026": {
       "s": ""
+    },
+    "PLP 314/2026": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ],
+      "m": ""
     },
     "PLP 315/2026": {
       "s": "avanca",
