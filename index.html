@@ -144,6 +144,7 @@ p.sub{color:var(--ink-2);max-width:70ch;margin:0 0 18px}
 .s-dir{background:var(--dir-soft);color:var(--dir-ink)}
 .s-contra{background:var(--contra);color:#fff}
 .s-pauta{background:var(--paper);color:var(--ink);border:1px solid var(--line)}
+.s-tipo{background:var(--accent);color:#fff;border:1px solid var(--accent)}
 .s-ia{background:var(--paper);color:var(--ink-3);font-size:11px;letter-spacing:.04em}
 .s-ver{background:var(--ver);color:#fff}
 .s-chave{background:var(--ink);color:var(--sheet)}
@@ -522,8 +523,9 @@ function cartaoVot(v){
   const vitorias = v.be !== undefined ? selVit(v.dispE, v.vE, 'A extrema-direita') + selVit(v.dispD, v.vD, 'A direita') : selVit(v.disp, v.venceu, 'A direita');
   return `<article class="cartao ${classeCartao(x)}">
     <div class="topo"><span class="num">${esc(v.mp || v.mat || 'Votação')}</span>${v.mp && v.mat ? `<span class="meta">${esc(v.mat)}</span>` : ''}<span class="meta">${esc(CASA[v.k])}, ${v.pl ? 'plenário' : esc(v.o || 'comissão')}</span><span class="data">${dataBR(v.d)}</span>${D.chave && D.chave.porMat[v.mp || v.mat] ? '<span class="selo s-chave">Proposição-chave</span>' : ''}</div>
-    <div class="topo">${res ? `<span class="selo s-pauta">${res}</span>` : ''}${vitorias}${selosClass(x)}</div>
+    <div class="topo">${TIPO_VOT[v.tp] ? `<span class="selo s-tipo">${TIPO_VOT[v.tp]}</span>` : ''}${res ? `<span class="selo s-pauta">${res}</span>` : ''}${vitorias}${selosClass(x)}</div>
     <p class="ementa">${esc(v.me || v.desc)}</p>
+    ${v.ab && v.tp !== 'principal' ? `<p class="motivo"><b>Em votação:</b> ${esc(v.ab)}</p>` : ''}
     ${v.me && v.desc ? `<p class="motivo">${esc(v.desc)}</p>` : ''}
     ${x.m ? `<p class="motivo"><b>${x.eq ? 'Checagem da equipe.' : 'Triagem automática.'}</b> ${esc(x.m)}</p>` : ''}
     <p class="bloco">${bloco}</p>
@@ -686,9 +688,13 @@ function filtrarVot(){
     return true;
   });
 }
+// Nas votações de um projeto, a do texto (mérito) vem primeiro; depois, as demais, da mais recente para a mais antiga.
+const TIPO_VOT = { principal: 'Texto principal', destaque: 'Destaque', emenda: 'Emenda', urgencia: 'Urgência', requerimento: 'Requerimento', redacao: 'Redação final' };
+const ordemVot = (a, b) => (b.d || '').localeCompare(a.d || '') || (b.h || '').localeCompare(a.h || '');
 function desenharVotacoes(){
   const f = est.vot;
   const lista = filtrarVot();
+  if (f.mat) lista.sort((a, b) => (b.tp === 'principal') - (a.tp === 'principal') || ordemVot(a, b));
   const paginas = Math.max(1, Math.ceil(lista.length / POR_PAGINA)); f.pagina = Math.min(f.pagina, paginas);
   $('#aba-votacoes').innerHTML = `
     <h2 class="titulo">Votações nominais</h2>
