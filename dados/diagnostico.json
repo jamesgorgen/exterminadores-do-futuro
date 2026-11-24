@@ -1,5 +1,5 @@
 {
- "inicio": "2026-11-24T23:06:15.175Z",
+ "inicio": "2026-11-24T23:10:28.671Z",
  "modo": "diario",
  "amostras": {
   "camara_deputado": {
@@ -91,29 +91,29 @@
    "siglaVotoParlamentar": "Sim"
   },
   "senado_comissao_votacao": {
-   "CodigoVotacao": "42027",
+   "CodigoVotacao": "42268",
    "SiglaCasaColegiado": "SF",
-   "CodigoReuniao": "14969",
-   "DataHoraInicioReuniao": "2026-11-11T09:26:00",
-   "NumeroReuniaoColegiado": "52",
+   "CodigoReuniao": "15038",
+   "DataHoraInicioReuniao": "2026-11-18T09:30:00",
+   "NumeroReuniaoColegiado": "17",
    "TipoReuniao": "Extraordinária",
-   "CodigoColegiado": "40",
-   "SiglaColegiado": "CAS",
-   "NomeColegiado": "Comissão de Assuntos Sociais",
-   "CodigoParlamentarPresidente": "742",
-   "NomeParlamentarPresidente": "Marcelo Castro",
-   "IdentificacaoMateria": "PL 4366/2024",
-   "DescricaoIdentificacaoMateria": "Projeto de Lei n° 4366, de 2024",
-   "DescricaoVotacao": "PL 4366/2024 e emenda, nos termos do relatório apresentado",
-   "Votos": "{\"Voto\":[{\"CodigoParlamentar\":\"4531\",\"NomeParlamentar\":\"Jayme Campos\",\"SiglaPartidoParlamentar\":\"UNIÃO\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"5386\",\"NomeParlamentar\":\"Professora Dorinha Seabra\",\"SiglaPartidoParlamentar\":\"UNIÃO\",\"SiglaCasaParl",
-   "TotalVotosSim": "13",
+   "CodigoColegiado": "34",
+   "SiglaColegiado": "CCJ",
+   "NomeColegiado": "Comissão de Constituição, Justiça e Cidadania",
+   "CodigoParlamentarPresidente": "5523",
+   "NomeParlamentarPresidente": "Otto Alencar",
+   "IdentificacaoMateria": "PL 2091/2023",
+   "DescricaoIdentificacaoMateria": "Projeto de Lei n° 2091, de 2023",
+   "DescricaoVotacao": "Substitutivo ao PL 2091/2023 (nos termos do Parecer)",
+   "Votos": "{\"Voto\":[{\"CodigoParlamentar\":\"5924\",\"NomeParlamentar\":\"Oriovisto Guimarães\",\"SiglaPartidoParlamentar\":\"PSDB\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"5982\",\"NomeParlamentar\":\"Alessandro Vieira\",\"SiglaPartidoParlamentar\":\"MDB\",\"SiglaCasaParlamen",
+   "TotalVotosSim": "15",
    "TotalVotosNao": "0",
    "TotalVotosAbstencao": "0"
   },
   "senado_comissao_voto": {
-   "CodigoParlamentar": "4531",
-   "NomeParlamentar": "Jayme Campos",
-   "SiglaPartidoParlamentar": "UNIÃO",
+   "CodigoParlamentar": "5924",
+   "NomeParlamentar": "Oriovisto Guimarães",
+   "SiglaPartidoParlamentar": "PSDB",
    "SiglaCasaParlamentar": "SF",
    "QualidadeVoto": "S",
    "VotoPresidente": "false"
@@ -208,7 +208,7 @@
   "votacoes_S_plenario": 15,
   "senado_comissao_votacoes_achadas": 19,
   "votacoes_S_comissao": 19,
-  "proposicoes_camara_registros": 9361,
+  "proposicoes_camara_registros": 9353,
   "proposicoes_data_corrigida": 4,
   "senado_processo_registros": 261,
   "proposicoes_senado": 59,
@@ -222,11 +222,13 @@
   "votacoes_com_materia_recuperada": 56,
   "votacoes_ligadas_a_materia_principal": 1339,
   "confirmacoes_em_bloco": 2702,
-  "correcoes_aplicadas": 4132,
+  "correcoes_aplicadas": 4207,
   "grupo_pelos_votos_diferente": 316,
   "votacoes_chave": 5
  },
- "erros": [],
+ "erros": [
+  "proposições C210989 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=210989&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id"
+ ],
  "brutos": {
   "senado_atual": {
    "url": "https://legis.senado.leg.br/dadosabertos/senador/lista/atual.json",
@@ -241,7 +243,7 @@
   "senado_comissao": {
    "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20261010&dataFim=20261124",
    "tamanho": 220,
-   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"24/11/2026 19:55:18\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
+   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"24/11/2026 20:06:37\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
   },
   "senado_processo": {
    "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-10-10&dataFimApresentacao=2026-10-15",
@@ -288,5 +290,5 @@
    "numeros": []
   }
  },
- "fim": "2026-11-24T23:10:06.157Z"
+ "fim": "2026-11-24T23:15:32.060Z"
 }

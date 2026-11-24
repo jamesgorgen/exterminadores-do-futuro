@@ -1,10 +1,10 @@
 {
- "gerado": "2026-11-24T23:06:15.175Z",
+ "gerado": "2026-11-24T23:10:28.671Z",
  "inicio": "2023-02-01",
  "totais": {
   "proposicoes": 29319,
-  "direita": 2712,
-  "extrema": 1816,
+  "direita": 2715,
+  "extrema": 1818,
   "votacoes": 2471,
   "disputadas": 1193,
   "vitorias": 509,
@@ -47,9 +47,9 @@
    "derrotas": 3
   },
   "instituicoes": {
-   "prop": 240,
-   "extrema": 212,
-   "prop30": 13,
+   "prop": 241,
+   "extrema": 213,
+   "prop30": 14,
    "vot": 46,
    "vitorias": 39,
    "derrotas": 4
@@ -103,9 +103,9 @@
    "derrotas": 0
   },
   "trabalho": {
-   "prop": 108,
-   "extrema": 35,
-   "prop30": 0,
+   "prop": 110,
+   "extrema": 36,
+   "prop30": 2,
    "vot": 34,
    "vitorias": 21,
    "derrotas": 4
@@ -573,8 +573,8 @@
  "blocos": {
   "T": {
    "prop": 26973,
-   "pauta": 2712,
-   "pautaExtrema": 1816,
+   "pauta": 2715,
+   "pautaExtrema": 1818,
    "vot": 1617,
    "comSit": 26949,
    "aprovada": 1204,
@@ -604,7 +604,7 @@
    "grupos": {
     "extrema": {
      "prop": 4865,
-     "pauta": 1211,
+     "pauta": 1213,
      "membros": 104,
      "emExercicio": 83,
      "vot": 1574,
@@ -616,7 +616,7 @@
     },
     "direita": {
      "prop": 6490,
-     "pauta": 714,
+     "pauta": 715,
      "membros": 170,
      "emExercicio": 123,
      "vot": 1562,
@@ -2580,8 +2580,8 @@
   },
   "C": {
    "prop": 23750,
-   "pauta": 2323,
-   "pautaExtrema": 1547,
+   "pauta": 2325,
+   "pautaExtrema": 1548,
    "vot": 1419,
    "comSit": 23748,
    "aprovada": 850,
@@ -2611,7 +2611,7 @@
    "grupos": {
     "extrema": {
      "prop": 4186,
-     "pauta": 1061,
+     "pauta": 1062,
      "membros": 83,
      "emExercicio": 68,
      "vot": 1376,
@@ -2623,7 +2623,7 @@
     },
     "direita": {
      "prop": 5240,
-     "pauta": 571,
+     "pauta": 572,
      "membros": 126,
      "emExercicio": 90,
      "vot": 1364,
@@ -4587,8 +4587,8 @@
   },
   "S": {
    "prop": 3223,
-   "pauta": 389,
-   "pautaExtrema": 269,
+   "pauta": 390,
+   "pautaExtrema": 270,
    "vot": 198,
    "comSit": 3201,
    "aprovada": 354,
@@ -4614,7 +4614,7 @@
    "grupos": {
     "extrema": {
      "prop": 679,
-     "pauta": 150,
+     "pauta": 151,
      "membros": 21,
      "emExercicio": 15,
      "vot": 198,
@@ -6520,7 +6520,7 @@
   }
  },
  "recentes": {
-  "proposicoes": 15,
+  "proposicoes": 18,
   "votacoes": 22
  }
 }
