@@ -1,0 +1,178 @@
+From 1928ae414a77c9aaf1533de3a2340a6f921fe15d Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Tue, 24 Nov 2026 08:37:55 -0300
+Subject: [PATCH] =?UTF-8?q?Identifica=20destaques=20e=20o=20texto=20princi?=
+ =?UTF-8?q?pal=20nas=20vota=C3=A7=C3=B5es=20da=20C=C3=A2mara?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+- Guarda a abertura de cada votação (qual destaque, emenda ou turno), que a
+  descrição geral da Câmara não traz.
+- Classifica as votações (texto principal, destaque, emenda, urgência,
+  requerimento, redação final) e, na lista de um projeto, põe o texto principal
+  primeiro.
+- Usa a data da sessão, e não a do registro, para sessões que passam da
+  meia-noite.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_018MARvVbvARB2k8vgvDC5sp
+---
+ index.html       |  8 ++++++-
+ robo/coletar.mjs | 62 +++++++++++++++++++++++++++++++++++++++++-------
+ 2 files changed, 60 insertions(+), 10 deletions(-)
+
+diff --git a/index.html b/index.html
+index c843c49..cd547e0 100644
+--- a/index.html
++++ b/index.html
+@@ -144,6 +144,7 @@ p.sub{color:var(--ink-2);max-width:70ch;margin:0 0 18px}
+ .s-dir{background:var(--dir-soft);color:var(--dir-ink)}
+ .s-contra{background:var(--contra);color:#fff}
+ .s-pauta{background:var(--paper);color:var(--ink);border:1px solid var(--line)}
++.s-tipo{background:var(--accent);color:#fff;border:1px solid var(--accent)}
+ .s-ia{background:var(--paper);color:var(--ink-3);font-size:11px;letter-spacing:.04em}
+ .s-ver{background:var(--ver);color:#fff}
+ .s-chave{background:var(--ink);color:var(--sheet)}
+@@ -522,8 +523,9 @@ function cartaoVot(v){
+   const vitorias = v.be !== undefined ? selVit(v.dispE, v.vE, 'A extrema-direita') + selVit(v.dispD, v.vD, 'A direita') : selVit(v.disp, v.venceu, 'A direita');
+   return `<article class="cartao ${classeCartao(x)}">
+     <div class="topo"><span class="num">${esc(v.mp || v.mat || 'Votação')}</span>${v.mp && v.mat ? `<span class="meta">${esc(v.mat)}</span>` : ''}<span class="meta">${esc(CASA[v.k])}, ${v.pl ? 'plenário' : esc(v.o || 'comissão')}</span><span class="data">${dataBR(v.d)}</span>${D.chave && D.chave.porMat[v.mp || v.mat] ? '<span class="selo s-chave">Proposição-chave</span>' : ''}</div>
+-    <div class="topo">${res ? `<span class="selo s-pauta">${res}</span>` : ''}${vitorias}${selosClass(x)}</div>
++    <div class="topo">${TIPO_VOT[v.tp] ? `<span class="selo s-tipo">${TIPO_VOT[v.tp]}</span>` : ''}${res ? `<span class="selo s-pauta">${res}</span>` : ''}${vitorias}${selosClass(x)}</div>
+     <p class="ementa">${esc(v.me || v.desc)}</p>
++    ${v.ab && v.tp !== 'principal' ? `<p class="motivo"><b>Em votação:</b> ${esc(v.ab)}</p>` : ''}
+     ${v.me && v.desc ? `<p class="motivo">${esc(v.desc)}</p>` : ''}
+     ${x.m ? `<p class="motivo"><b>${x.eq ? 'Checagem da equipe.' : 'Triagem automática.'}</b> ${esc(x.m)}</p>` : ''}
+     <p class="bloco">${bloco}</p>
+@@ -686,9 +688,13 @@ function filtrarVot(){
+     return true;
+   });
+ }
++// Nas votações de um projeto, a do texto (mérito) vem primeiro; depois, as demais, da mais recente para a mais antiga.
++const TIPO_VOT = { principal: 'Texto principal', destaque: 'Destaque', emenda: 'Emenda', urgencia: 'Urgência', requerimento: 'Requerimento', redacao: 'Redação final' };
++const ordemVot = (a, b) => (b.d || '').localeCompare(a.d || '') || (b.h || '').localeCompare(a.h || '');
+ function desenharVotacoes(){
+   const f = est.vot;
+   const lista = filtrarVot();
++  if (f.mat) lista.sort((a, b) => (b.tp === 'principal') - (a.tp === 'principal') || ordemVot(a, b));
+   const paginas = Math.max(1, Math.ceil(lista.length / POR_PAGINA)); f.pagina = Math.min(f.pagina, paginas);
+   $('#aba-votacoes').innerHTML = `
+     <h2 class="titulo">Votações nominais</h2>
+diff --git a/robo/coletar.mjs b/robo/coletar.mjs
+index f5b1334..b36b138 100644
+--- a/robo/coletar.mjs
++++ b/robo/coletar.mjs
+@@ -546,11 +546,49 @@ function arquivoVotacoes(a) {
+   }
+   return votacoesPorAno[a];
+ }
++// Câmara: descrição da abertura da votação (ultimaAberturaVotacao), que diz qual destaque, emenda ou turno foi votado.
++// A descrição geral ("Mantido o texto. Sim: 310; Não: 132") não diz. No arquivo anual o campo vem como objeto ou como
++// texto JSON; na API, só na ficha da votação (descUltimaAberturaVotacao).
++function aberturaCamara(r) {
++  let a = pega(r, 'descUltimaAberturaVotacao');
++  if (!a) {
++    let o = pega(r, 'ultimaAberturaVotacao');
++    if (typeof o === 'string') { try { o = JSON.parse(o); } catch (e) { o = null; } }
++    a = o && typeof o === 'object' ? pega(o, 'descricao') : '';
++  }
++  return limparAbertura(a);
++}
++// "Votação do DTQ 8 (PL): Destaque para Votação em Separado do art. 2º (...) (161, I)." vira
++// "Destaque 8 (PL): votação em separado do art. 2º (...)".
++function limparAbertura(a) {
++  let t = String(a || '').replace(/\s+/g, ' ').trim();
++  if (!t) return '';
++  t = t.replace(/\s*\(\d+\s*,\s*[IVX]+\)\s*\.?$/, '').replace(/\.$/, '');
++  const m = /^Votação do DTQ (\d+) \(([^)]+)\):\s*(.*)$/i.exec(t);
++  if (m) return `Destaque ${m[1]} (${m[2]}): ` + m[3].replace(/^Destaque para Votação em Separado d([oa])/i, 'votação em separado d$1').replace(/^Destaque de /i, '');
++  return t.slice(0, 400);
++}
++// Tipo da votação, para a página pôr a votação do texto na frente das de urgência, destaques e emendas:
++// principal (texto ou substitutivo), destaque, emenda, urgencia, requerimento, redacao (redação final) ou outra.
++function tipoVotacao(desc, ab) {
++  const d = String(desc || ''), a = String(ab || ''), t = a + ' ' + d;
++  if (/urg[êe]ncia/i.test(t)) return 'urgencia';
++  if (/^Destaque|\bDTQ\b/i.test(a) || /destacad[oa]/i.test(d)) return 'destaque';
++  if (/reda[çc][ãa]o final/i.test(t)) return 'redacao';
++  if (/requerimento/i.test(d)) return 'requerimento';
++  if (/emenda/i.test(a) || /^(Aprovad|Rejeitad)[ao]s? (a|as) Emendas?\b/i.test(d)) return 'emenda';
++  if (/turno único|primeiro turno|segundo turno|quanto ao mérito/i.test(a) && !/preliminar/i.test(a)) return 'principal';
++  if (/ressalvados os destaques|texto principal|(Aprovad|Rejeitad)[oa] o (Projeto|Substitutivo)/i.test(d)) return 'principal';
++  return 'outra';
++}
+ // Guarda a votação já com a posição do bloco e da referência calculadas pelos partidos da época,
+ // e com os votos agrupados por tipo ({S: [códigos], N: [...], A, O, '-'}), o que reduz o tamanho dos arquivos.
+ function guardarVotacao(v) {
+   if (!v || !v.d || !Object.keys(v.v || {}).length) return;
+   if (!Object.values(v.v).some(c => c === 'S' || c === 'N')) { contar('votacoes_sem_sim_nao'); return; }
++  if (!v.ab) delete v.ab;
++  if (!v.h) delete v.h;
++  v.tp = tipoVotacao(v.desc, v.ab);
+   const b = posicao(v.v, v.ps || {}, NUCLEO);
+   const g = posicao(v.v, v.ps || {}, REFERENCIA);
+   const e = posicao(v.v, v.ps || {}, EXTREMA);
+@@ -696,16 +734,18 @@ async function coletarVotacoesCamaraArquivos(a) {
+     const ob = objetos.get(id) || {};
+     if (!x) {
+       // Votação simbólica, sem votos nominais. No plenário, guarda a matéria e o resultado (e a orientação, se um dia vier).
+-      if (orgao.toUpperCase() === 'PLEN') guardarSimbolica({ id: 'C:' + id, k: 'C', d: String(pega(r, 'dataHoraRegistro', 'data') || '').slice(0, 10),
+-        desc: String(pega(r, 'descricao') || '').slice(0, 400), mat: ob.c || '', me: String(ob.e || '').slice(0, 400),
++      if (orgao.toUpperCase() === 'PLEN') guardarSimbolica({ id: 'C:' + id, k: 'C', d: String(pega(r, 'data', 'dataHoraRegistro') || '').slice(0, 10),
++        desc: String(pega(r, 'descricao') || '').slice(0, 400), ab: aberturaCamara(r) || undefined, mat: ob.c || '', me: String(ob.e || '').slice(0, 400),
+         res: String(pega(r, 'aprovacao')) === '1' ? 'A' : String(pega(r, 'aprovacao')) === '0' ? 'R' : '', ori: orient.get(id) });
+       continue;
+     }
+     guardarVotacao({ id: 'C:' + id, k: 'C', o: orgao, pl: orgao.toUpperCase() === 'PLEN',
+-      d: String(pega(r, 'dataHoraRegistro', 'data') || '').slice(0, 10), desc: String(pega(r, 'descricao') || '').slice(0, 600),
++      // Data da sessão (campo data), e não a do registro: uma sessão que passa da meia-noite fica num só dia.
++      d: String(pega(r, 'data', 'dataHoraRegistro') || '').slice(0, 10), h: String(pega(r, 'dataHoraRegistro') || '').slice(0, 19),
++      desc: String(pega(r, 'descricao') || '').slice(0, 600), ab: aberturaCamara(r),
+       mat: ob.c || '', me: String(ob.e || '').slice(0, 700), res: String(pega(r, 'aprovacao')) === '1' ? 'A' : String(pega(r, 'aprovacao')) === '0' ? 'R' : '',
+       v: x.v, ps: x.ps, ori: orient.get(id) || undefined });
+-    const dv = String(pega(r, 'dataHoraRegistro', 'data') || '').slice(0, 10);
++    const dv = String(pega(r, 'data', 'dataHoraRegistro') || '').slice(0, 10);
+     if (dv > ultimaVotacaoArquivo[a]) ultimaVotacaoArquivo[a] = dv;
+     n++;
+   }
+@@ -735,7 +775,7 @@ async function coletarVotacoesCamaraApi(ini, fim) {
+             if (orgao.toUpperCase() === 'PLEN') {
+               let ori;
+               try { ori = {}; registros(await baixar(`${API_CAMARA}/votacoes/${id}/orientacoes`)).forEach(o => { const bb = pega(o, 'siglaPartidoBloco', 'siglaBancada'); const oo = pega(o, 'orientacaoVoto', 'orientacao'); if (bb && oo) ori[bb] = oo; }); } catch (e) { ori = undefined; }
+-              guardarSimbolica({ id: 'C:' + id, k: 'C', d: String(pega(r, 'dataHoraRegistro', 'data') || '').slice(0, 10), desc: String(pega(r, 'descricao') || '').slice(0, 400),
++              guardarSimbolica({ id: 'C:' + id, k: 'C', d: String(pega(r, 'data', 'dataHoraRegistro') || '').slice(0, 10), desc: String(pega(r, 'descricao') || '').slice(0, 400),
+                 mat: '', me: '', res: String(pega(r, 'aprovacao')) === '1' ? 'A' : String(pega(r, 'aprovacao')) === '0' ? 'R' : '', ori });
+             }
+             return;
+@@ -751,8 +791,11 @@ async function coletarVotacoesCamaraApi(ini, fim) {
+           let ori;
+           try { ori = {}; registros(await baixar(`${API_CAMARA}/votacoes/${id}/orientacoes`)).forEach(o => { const bb = pega(o, 'siglaPartidoBloco', 'siglaBancada'); const oo = pega(o, 'orientacaoVoto', 'orientacao'); if (bb && oo) ori[bb] = oo; }); } catch (e) { ori = undefined; }
+           const orgao = String(pega(r, 'siglaOrgao') || '');
+-          guardarVotacao({ id: 'C:' + id, k: 'C', o: orgao, pl: orgao.toUpperCase() === 'PLEN', d: String(pega(r, 'dataHoraRegistro', 'data') || '').slice(0, 10),
+-            desc: String(pega(r, 'descricao') || '').slice(0, 600), mat: '', me: '', res: String(pega(r, 'aprovacao')) === '1' ? 'A' : String(pega(r, 'aprovacao')) === '0' ? 'R' : '', v, ps, ori });
++          // A lista da API não traz a abertura da votação (qual destaque ou turno); a ficha traz. Só no plenário.
++          let ab = '';
++          if (orgao.toUpperCase() === 'PLEN') { try { const fj = await baixar(`${API_CAMARA}/votacoes/${id}`); ab = aberturaCamara((fj && fj.dados) || fj); } catch (e) { contar('camara_api_ficha_votacao_erro'); } }
++          guardarVotacao({ id: 'C:' + id, k: 'C', o: orgao, pl: orgao.toUpperCase() === 'PLEN', d: String(pega(r, 'data', 'dataHoraRegistro') || '').slice(0, 10),
++            h: String(pega(r, 'dataHoraRegistro') || '').slice(0, 19), desc: String(pega(r, 'descricao') || '').slice(0, 600), ab, mat: '', me: '', res: String(pega(r, 'aprovacao')) === '1' ? 'A' : String(pega(r, 'aprovacao')) === '0' ? 'R' : '', v, ps, ori });
+         } catch (e) { contar('camara_api_votacao_erro'); if ((diag.contagens.camara_api_votacao_erro || 0) <= 3) erro(`votos da votação ${id} da Câmara`, e); }
+       }), 4);
+       pagina++;
+@@ -1452,10 +1495,11 @@ export async function executar() {
+     return o;
+   }).sort((x, y) => (y.d || '').localeCompare(x.d || ''));
+   gravarJson('proposicoes-todas.json', { gerado: AGORA.toISOString(), itens: leve }, true);
+-  const resumoVot = todasVot.map(vt => ({ id: vt.id, k: vt.k, o: vt.o, pl: vt.pl, d: vt.d, desc: vt.desc, mat: vt.mat, mp: vt.mp, ck: vt.ck, me: vt.me, res: vt.res,
++  const resumoVot = todasVot.map(vt => ({ id: vt.id, k: vt.k, o: vt.o, pl: vt.pl, d: vt.d, h: vt.h, desc: vt.desc, ab: vt.ab, tp: vt.tp || tipoVotacao(vt.desc, vt.ab),
++    mat: vt.mat, mp: vt.mp, ck: vt.ck, me: vt.me, res: vt.res,
+     bl: vt.bl, blc: vt.blc, gv: vt.gv, disp: vt.disp, venceu: vt.venceu, be: vt.be, bec: vt.bec, bd: vt.bd, bdc: vt.bdc, dispE: vt.dispE, dispD: vt.dispD, vE: vt.vE, vD: vt.vD, ori: vt.ori, x: cl(vt.ck),
+     t: Object.fromEntries(Object.entries(vt.v || {}).map(([c, l]) => [c, l.length])) }))
+-    .sort((x, y) => (y.d || '').localeCompare(x.d || ''));
++    .sort((x, y) => (y.d || '').localeCompare(x.d || '') || (y.h || '').localeCompare(x.h || ''));
+   gravarJson('votacoes-resumo.json', { gerado: AGORA.toISOString(), itens: resumoVot }, true);
+   // Votos de cada parlamentar nas votações disputadas, para o dossiê não precisar baixar todas as votações.
+   // Para cada Casa, a lista de votações e, por parlamentar, uma letra por votação na mesma ordem (. = sem registro).
+-- 
+2.43.0
+

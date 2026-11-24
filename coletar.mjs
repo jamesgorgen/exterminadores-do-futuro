@@ -1,0 +1,1567 @@
+// Robô de coleta de "Os exterminadores do futuro", observatório da direita no Congresso.
+//
+// Roda no GitHub Actions todo dia (.github/workflows/atualizar.yml) e grava os dados em dados/.
+//
+// Etapas
+// 1. Parlamentares. Deputados das legislaturas do período (API da Câmara). Senadores são reconhecidos
+//    pelos votos e pela autoria das proposições.
+// 2. Proposições. Na Câmara, por autoria de cada deputado e por ano. No Senado, quinzena a quinzena,
+//    lendo os autores no texto de autoria. Tipos PL, PLP, PEC e PDL.
+//    Também os projetos sem autor parlamentar (Executivo, comissões, outros órgãos), que contam na produção.
+// 3. Votações nominais de plenário e de comissões.
+//    Câmara, pelos arquivos anuais completos (votações, votos, orientações e objetos), com a API como reserva.
+//    Requerimentos, destaques e emendas ficam sob a matéria principal. Simbólicas do plenário da Câmara à parte.
+//    Senado, plenário pela API de votações e comissões pela API de votações em comissão.
+// 4. Classificação por IA (Claude Haiku) de cada proposição e de cada votação sem proposição conhecida,
+//    pelas pautas de pautas.js. O que já foi classificado fica em dados/classificacoes.json e não é refeito.
+// 5. Índice de alinhamento de cada parlamentar nas votações disputadas entre o núcleo da direita e o PT.
+// 6. Arquivos para a página e um diagnóstico com amostras dos dados brutos.
+//
+// Variáveis de ambiente
+//   ANTHROPIC_API_KEY  chave da API da Anthropic (segredo do repositório)
+//   MODO               diario (padrão) ou completo (refaz a legislatura inteira)
+//   INICIO             data inicial da coleta completa (padrão 2023-02-01)
+//   MAX_CLASSIFICACOES teto de itens classificados por execução (padrão 60000)
+//   SEM_IA             1 para pular a classificação (teste)
+
+import fs from 'node:fs';
+import path from 'node:path';
+import vm from 'node:vm';
+import { createRequire } from 'node:module';
+import { fileURLToPath } from 'node:url';
+
+const require = createRequire(import.meta.url);
+const RAIZ = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const DADOS = path.join(RAIZ, 'dados');
+// Cópia própria do motor, para não interferir na página publicada.
+const Motor = require(path.join(RAIZ, 'robo', 'motor.js'));
+const PAUTAS = require(path.join(RAIZ, 'pautas.js'));
+const TAX = (() => { const ctx = { window: {} }; vm.runInNewContext(fs.readFileSync(path.join(RAIZ, 'taxonomia.js'), 'utf8'), ctx); return ctx.window.TAXONOMIA; })();
+const TC = Motor.compilarTaxonomia(TAX);
+
+const AGORA = new Date();
+const HOJE = AGORA.toISOString().slice(0, 10);
+const MODO = process.env.MODO || 'diario';
+const INICIO = process.env.INICIO || '2023-02-01';
+const MAX_CLASSIFICACOES = +(process.env.MAX_CLASSIFICACOES || 60000);
+const SEM_IA = process.env.SEM_IA === '1';
+const TIPOS = ['PL', 'PLP', 'PEC', 'PDL'];
+const MODELO = 'claude-haiku-5-5';
+const MODELO_REGRAS = 'claude-opus-5-5'; // deduz as regras a partir das correções da equipe
+const MODELO_GRAU = 'claude-opus-5-5';   // segunda leitura do grau; o item só sai da revisão humana quando as duas leituras concordam
+const PASSO_REGRAS = 100;                // a cada tantas correções novas, as regras são deduzidas de novo e o grau é refeito
+const VERSAO_CLASSIFICACAO = 'd3';   // mude para refazer todas as classificações
+const VERSAO_GRAU = 'g8';          // mude para refazer só o grau (direita ou extrema-direita)
+
+const API_CAMARA = 'https://dadosabertos.camara.leg.br/api/v2';
+const ARQ_CAMARA = 'https://dadosabertos.camara.leg.br/arquivos';
+const API_SENADO = 'https://legis.senado.leg.br/dadosabertos';
+// Comissões permanentes do Senado consultadas para votações em comissão.
+const COMISSOES_SENADO = ['CAE', 'CAS', 'CCJ', 'CCDD', 'CCT', 'CDH', 'CDR', 'CE', 'CEsp', 'CI', 'CMA', 'CRA', 'CRE', 'CSP', 'CTFC'];
+
+// Permite trocar o acesso à rede nos testes.
+const rede = { fetch: (...a) => fetch(...a) };
+export function trocarRede(f) { rede.fetch = f; }
+
+// ------------------------------------------------------------------ utilidades
+const log = (...a) => console.log(new Date().toISOString().slice(11, 19), ...a);
+const diag = { inicio: AGORA.toISOString(), modo: MODO, amostras: {}, contagens: {}, erros: [] };
+function amostra(nome, obj) {
+  if (diag.amostras[nome] || !obj || typeof obj !== 'object') return;
+  const resumo = {};
+  for (const [k, v] of Object.entries(obj)) resumo[k] = typeof v === 'object' && v !== null ? (Array.isArray(v) ? `[${v.length}] ` + JSON.stringify(v[0] || null).slice(0, 300) : JSON.stringify(v).slice(0, 300)) : v;
+  diag.amostras[nome] = resumo;
+}
+function erro(onde, e) { const m = `${onde}: ${String(e && e.message || e).slice(0, 300)}`; diag.erros.push(m); log('ERRO', m); }
+const contar = (nome, n = 1) => { diag.contagens[nome] = (diag.contagens[nome] || 0) + n; };
+
+function lerJson(nome, padrao) {
+  try { return JSON.parse(fs.readFileSync(path.join(DADOS, nome), 'utf8')); } catch (e) { return padrao; }
+}
+function gravarJson(nome, obj, compacto) {
+  fs.mkdirSync(DADOS, { recursive: true });
+  fs.writeFileSync(path.join(DADOS, nome), compacto ? JSON.stringify(obj) : JSON.stringify(obj, null, 1));
+}
+const espera = ms => new Promise(r => setTimeout(r, ms));
+
+async function baixar(url, { tentativas = 4, tempo = 90000, tipo = 'json' } = {}) {
+  let atraso = 1500;
+  for (let i = 0; i < tentativas; i++) {
+    try {
+      const r = await rede.fetch(url, { headers: { Accept: 'application/json', 'User-Agent': 'exterminadores-do-futuro (observatorio)' }, signal: AbortSignal.timeout(tempo) });
+      if (r.ok) return tipo === 'texto' ? await r.text() : await r.json();
+      if (r.status === 404 || r.status === 400) throw Object.assign(new Error('http ' + r.status), { definitivo: true });
+      if (r.status === 429) atraso *= 2;
+    } catch (e) {
+      if (e.definitivo) throw e;
+      if (i === tentativas - 1) throw e;
+    }
+    await espera(atraso); atraso *= 2;
+  }
+  throw new Error('falhou ' + url);
+}
+
+// XML simples -> objeto (filhos repetidos viram lista, atributos são ignorados, texto vira string).
+function xmlParaObjeto(xml) {
+  const raiz = {}; const pilha = [{ nome: '#', obj: raiz }];
+  const re = /<(\/?)([A-Za-z_][\w.:-]*)[^>]*?(\/?)>|([^<]+)/g;
+  let m;
+  xml = String(xml).replace(/<\?[\s\S]*?\?>|<!--[\s\S]*?-->|<!DOCTYPE[^>]*>/g, '');
+  while ((m = re.exec(xml))) {
+    const topo = pilha[pilha.length - 1];
+    if (m[4] !== undefined) { const t = m[4].trim(); if (t) topo.texto = (topo.texto || '') + t.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, '&'); continue; }
+    if (m[1]) {   // fechamento
+      const no = pilha.pop(); const pai = pilha[pilha.length - 1];
+      const valor = Object.keys(no.obj).length ? no.obj : (no.texto || '');
+      const ja = pai.obj[no.nome];
+      pai.obj[no.nome] = ja === undefined ? valor : Array.isArray(ja) ? [...ja, valor] : [ja, valor];
+      continue;
+    }
+    if (m[3]) { const pai = topo; const ja = pai.obj[m[2]]; pai.obj[m[2]] = ja === undefined ? '' : Array.isArray(ja) ? [...ja, ''] : [ja, '']; continue; }
+    pilha.push({ nome: m[2], obj: {} });
+  }
+  return raiz;
+}
+// Listas de um único item no XML viram objeto; esta função garante a lista.
+const comoLista = v => Array.isArray(v) ? v : v && typeof v === 'object' ? [v] : [];
+
+// Senado: aceita JSON ou XML e guarda no diagnóstico a primeira resposta bruta de cada tipo de consulta.
+async function baixarSenado(url, rotulo, opcoes = {}) {
+  const texto = await baixar(url, Object.assign({}, opcoes, { tipo: 'texto' }));
+  if (!diag.brutos) diag.brutos = {};
+  if (!diag.brutos[rotulo]) diag.brutos[rotulo] = { url, tamanho: texto.length, inicio: texto.slice(0, 1500) };
+  const t = texto.trim();
+  if (!t) return null;
+  if (t[0] === '<') return xmlParaObjeto(t);
+  return JSON.parse(t);
+}
+
+// Procura um campo pelo nome, sem diferenciar maiúsculas, inclusive em objetos aninhados de um nível
+// ("deputado_id", "deputado_.id" ou "deputado.id").
+function pega(o, ...nomes) {
+  if (!o || typeof o !== 'object') return undefined;
+  const chaves = Object.keys(o);
+  for (const nome of nomes) {
+    const alvo = nome.toLowerCase();
+    const k = chaves.find(c => c.toLowerCase() === alvo);
+    if (k !== undefined && o[k] !== null && o[k] !== '') return o[k];
+    const partes = alvo.split(/[._]/).filter(Boolean);
+    if (partes.length === 2) {
+      const pai = chaves.find(c => c.toLowerCase().replace(/_$/, '') === partes[0]);
+      if (pai && o[pai] && typeof o[pai] === 'object') {
+        const filho = Object.keys(o[pai]).find(c => c.toLowerCase() === partes[1]);
+        if (filho !== undefined && o[pai][filho] !== null && o[pai][filho] !== '') return o[pai][filho];
+      }
+    }
+  }
+  return undefined;
+}
+// Lista de registros de uma resposta (dados, ou o primeiro array encontrado).
+function registros(j) {
+  if (Array.isArray(j)) return j;
+  if (j && Array.isArray(j.dados)) return j.dados;
+  if (j && typeof j === 'object') for (const v of Object.values(j)) { const r = registros(v); if (r.length) return r; }
+  return [];
+}
+
+const ano = d => +String(d).slice(0, 4);
+function anosDoPeriodo(ini, fim) { const out = []; for (let a = ano(ini); a <= ano(fim); a++) out.push(a); return out; }
+
+// Sigla de partido -> id do partido (lista do motor), ou a própria sigla.
+const SIGLA_PARA_ID = new Map();
+for (const p of Motor.PARTIDOS) [...p.camara, ...p.senado, ...p.antecessoras].forEach(s => SIGLA_PARA_ID.set(s.toUpperCase(), p.id));
+const idPartido = s => { if (/^s[\s.\/]*part|sem partido/i.test(String(s || ''))) return 'SP'; const k = Motor.normalizar(String(s || '')).toUpperCase().replace(/\s+/g, ' ').trim(); return SIGLA_PARA_ID.get(String(s || '').toUpperCase().trim()) || SIGLA_PARA_ID.get(k) || (k ? 'OUTROS' : ''); };
+const NUCLEO = new Set(PAUTAS.nucleo);
+const EXTREMA = new Set((PAUTAS.blocos || {}).extrema || []);
+const DIREITA = new Set((PAUTAS.blocos || {}).direita || []);
+const GRUPO_DE = new Map(Object.entries(PAUTAS.grupos || {}).flatMap(([g, ps]) => ps.map(x => [x, g])));
+const grupoDoPartido = id => GRUPO_DE.get(id) || 'sp';
+const REFERENCIA = new Set(PAUTAS.referenciaGoverno);
+
+function codigoVoto(v) {
+  const t = Motor.normalizar(String(v || '')).trim();
+  if (t === 'sim' || t === 's') return 'S';
+  if (t === 'nao' || t === 'n') return 'N';
+  if (t.startsWith('absten')) return 'A';
+  if (t.startsWith('obstru')) return 'O';
+  return '';
+}
+
+// ------------------------------------------------------------------ estado e arquivos
+const estado = lerJson('estado.json', { anosCompletos: {}, ultimaColeta: '' });
+const parlamentares = lerJson('parlamentares.json', { gerado: '', p: {} });       // chave C<id> ou S<id>
+const classificacoes = lerJson('classificacoes.json', { versao: VERSAO_CLASSIFICACAO, c: {} });
+if (classificacoes.versao !== VERSAO_CLASSIFICACAO) { classificacoes.versao = VERSAO_CLASSIFICACAO; classificacoes.c = {}; }
+
+function registrarParlamentar(chave, dados) {
+  const atual = parlamentares.p[chave] || {};
+  // O partido mais recente prevalece.
+  if (dados.d && atual.d && dados.d < atual.d) { parlamentares.p[chave] = Object.assign({}, dados, atual); return; }
+  parlamentares.p[chave] = Object.assign(atual, Object.fromEntries(Object.entries(dados).filter(([, v]) => v !== undefined && v !== '')));
+}
+// Índice de nomes de senadores, para ligar a autoria das proposições aos códigos dos votos.
+function chaveNome(n) { return Motor.normalizar(String(n || '')).trim().replace(/^senador[a]?\s+/, '').replace(/[^a-z ]/g, '').replace(/\s+/g, ' ').trim(); }
+
+// ------------------------------------------------------------------ 1. deputados
+async function coletarDeputados(ini, fim) {
+  for (const leg of Motor.legislaturas(ini, fim)) {
+    let pagina = 1, total = 1;
+    while (pagina <= total) {
+      try {
+        const j = await baixar(`${API_CAMARA}/deputados?idLegislatura=${leg}&itens=100&pagina=${pagina}&ordem=ASC&ordenarPor=nome`);
+        const lista = registros(j);
+        amostra('camara_deputado', lista[0]);
+        lista.forEach(d => registrarParlamentar('C' + pega(d, 'id'), { n: pega(d, 'nome'), s: pega(d, 'siglaPartido'), p: idPartido(pega(d, 'siglaPartido')), uf: pega(d, 'siglaUf'), c: 'C' }));
+        contar('deputados', lista.length);
+        total = Motor.ultimaPagina(j);
+      } catch (e) { erro(`deputados leg ${leg} pág ${pagina}`, e); }
+      pagina++;
+    }
+  }
+}
+
+// ------------------------------------------------------------------ 1b. quem está no mandato hoje
+// Câmara (lista sem legislatura = deputados em exercício) e Senado (lista atual). O partido atual vem daqui.
+function procuraParlamentares(o, out = []) {
+  if (Array.isArray(o)) { o.forEach(x => procuraParlamentares(x, out)); return out; }
+  if (!o || typeof o !== 'object') return out;
+  const id = o.IdentificacaoParlamentar || o.identificacaoParlamentar;
+  if (id && typeof id === 'object') { out.push(id); return out; }
+  Object.values(o).forEach(v => procuraParlamentares(v, out));
+  return out;
+}
+async function coletarEmExercicio() {
+  const camara = [], senado = [];
+  let pagina = 1, total = 1;
+  try {
+    while (pagina <= total) {
+      const j = await baixar(`${API_CAMARA}/deputados?itens=100&pagina=${pagina}&ordem=ASC&ordenarPor=nome`);
+      camara.push(...registros(j)); total = Motor.ultimaPagina(j); pagina++;
+    }
+  } catch (e) { erro('deputados em exercício', e); }
+  try {
+    const j = await baixarSenado(`${API_SENADO}/senador/lista/atual.json`, 'senado_atual');
+    senado.push(...procuraParlamentares(j));
+  } catch (e) { erro('senadores em exercício', e); }
+  contar('deputados_em_exercicio', camara.length); contar('senadores_em_exercicio', senado.length);
+  // Só troca a marca quando a lista veio completa; senão mantém a da execução anterior.
+  if (camara.length >= 500) {
+    for (const p of Object.entries(parlamentares.p)) if (p[0][0] === 'C') delete p[1].ex;
+    for (const d of camara) registrarParlamentar('C' + pega(d, 'id'), { n: pega(d, 'nome'), s: pega(d, 'siglaPartido'), p: idPartido(pega(d, 'siglaPartido')), uf: pega(d, 'siglaUf'), c: 'C', d: HOJE, ex: 1 });
+  } else erro('deputados em exercício', new Error(`lista incompleta (${camara.length})`));
+  if (senado.length >= 78) {
+    for (const p of Object.entries(parlamentares.p)) if (p[0][0] === 'S') delete p[1].ex;
+    for (const d of senado) {
+      const sig = pega(d, 'SiglaPartidoParlamentar', 'siglaPartidoParlamentar');
+      registrarParlamentar('S' + pega(d, 'CodigoParlamentar', 'codigoParlamentar'), { n: pega(d, 'NomeParlamentar', 'nomeParlamentar'), s: sig, p: idPartido(sig), uf: pega(d, 'UfParlamentar', 'SiglaUFParlamentar', 'ufParlamentar'), c: 'S', d: HOJE, ex: 1 });
+    }
+  } else erro('senadores em exercício', new Error(`lista incompleta (${senado.length})`));
+}
+
+// ------------------------------------------------------------------ 2. proposições
+const proposicoesPorAno = {};
+function arquivoProposicoes(a) {
+  if (!proposicoesPorAno[a]) {
+    const j = lerJson(`proposicoes-${a}.json`, { ano: a, itens: [] });
+    proposicoesPorAno[a] = new Map(j.itens.map(it => [it.c, it]));
+  }
+  return proposicoesPorAno[a];
+}
+function guardarProposicao(it) {
+  // Algumas datas de apresentação vêm erradas na fonte (PL de 2026 com data de 2009). O ano do número prevalece.
+  const anoChave = +String(it.c).split('/')[1];
+  if (anoChave && it.d && ano(it.d) !== anoChave) { contar('proposicoes_data_corrigida'); it.d = `${anoChave}-01-01`; }
+  const mapa = arquivoProposicoes(ano(it.d || it.c.split('/')[1]));
+  const ja = mapa.get(it.c);
+  if (ja) {
+    ja.a = [...new Set([...(ja.a || []), ...(it.a || [])])];
+    ja.p = [...new Set([...(ja.p || []), ...(it.p || [])])];
+    if (!ja.k.includes(it.k[0])) ja.k = [...ja.k, ...it.k];
+    for (const f of ['i', 'l', 'e', 'd', 'u', 'ss', 'au', 'ta']) if (!ja[f] && it[f]) ja[f] = it[f];
+  } else mapa.set(it.c, it);
+}
+
+async function coletarProposicoesCamara(anos) {
+  const deps = Object.entries(parlamentares.p).filter(([k]) => k[0] === 'C');
+  const tarefas = [];
+  for (const [chave] of deps) for (const a of anos) tarefas.push({ chave, a });
+  log(`Câmara, proposições de ${deps.length} deputados em ${anos.join(', ')} (${tarefas.length} consultas)`);
+  let feitas = 0;
+  await Motor.emParalelo(tarefas.map(t => async () => {
+    let pagina = 1, total = 1;
+    while (pagina <= total) {
+      const q = new URLSearchParams({ idDeputadoAutor: t.chave.slice(1), siglaTipo: TIPOS.join(','), ano: String(t.a), itens: '100', pagina: String(pagina), ordem: 'ASC', ordenarPor: 'id' });
+      try {
+        const j = await baixar(`${API_CAMARA}/proposicoes?${q}`);
+        const lista = registros(j);
+        amostra('camara_proposicao', lista[0]);
+        for (const d of lista) {
+          const chave = `${pega(d, 'siglaTipo')} ${pega(d, 'numero')}/${pega(d, 'ano')}`;
+          const dep = parlamentares.p[t.chave] || {};
+          guardarProposicao({ c: chave, k: ['C'], d: String(pega(d, 'dataApresentacao') || '').slice(0, 10) || `${pega(d, 'ano')}-01-01`,
+            e: String(pega(d, 'ementa') || ''), a: [t.chave], p: dep.p ? [dep.p] : [], i: pega(d, 'id') });
+        }
+        contar('proposicoes_camara_registros', lista.length);
+        total = Motor.ultimaPagina(j);
+      } catch (e) { if (pagina === 1) erro(`proposições ${t.chave} ${t.a}`, e); }
+      pagina++;
+    }
+    if (++feitas % 200 === 0) log(`  ${feitas} de ${tarefas.length}`);
+  }), 6);
+}
+
+async function coletarProposicoesSenado(ini, fim) {
+  const janelas = Motor.janelasQuinzenais(ini, fim);
+  log(`Senado, proposições em ${janelas.length} quinzenas`);
+  const porNome = new Map(Object.entries(parlamentares.p).filter(([k]) => k[0] === 'S').map(([k, v]) => [chaveNome(v.n), k]));
+  await Motor.emParalelo(janelas.map(([a, b]) => async () => {
+    // Uma consulta por tipo, porque a API pode não aceitar a sigla repetida.
+    let lista = [];
+    for (const tipo of TIPOS) {
+      try { lista = lista.concat(registros(await baixarSenado(Motor.urlSenado([tipo], a, b), 'senado_processo'))); }
+      catch (e) { erro(`proposições Senado ${tipo} ${a}`, e); }
+    }
+    contar('senado_processo_registros', lista.length);
+    amostra('senado_proposicao', lista[0]);
+    for (const d of lista) {
+      if (pega(d, 'objetivo') === 'Revisora') continue;
+      const autoria = String(pega(d, 'autoria') || '');
+      // "Senador Fulano (PL/SP), Senadora Beltrana (PT/BA)"; sem partido vem como "(S/Partido/AP)" ou "(/AP)".
+      const autores = [...autoria.matchAll(/([^,(]+?)\s*\((S\/Partido|[^()\/]*)\/([A-Z]{2})\)/g)];
+      const m = /^(\S+)\s+(\d+)\/(\d{4})/.exec(String(pega(d, 'identificacao') || ''));
+      if (!m) continue;
+      const chave = `${m[1]} ${parseInt(m[2], 10)}/${m[3]}`;
+      // Sem senador entre os autores: comissão, Mesa, Presidência da República ou outro órgão. Entra sem grupo político.
+      if (!autores.length) {
+        if (!autoria.trim() || /c[aâ]mara dos deputados/i.test(autoria)) continue;
+        guardarProposicao({ c: chave, k: ['S'], d: String(pega(d, 'dataApresentacao') || '').slice(0, 10), e: String(pega(d, 'ementa') || ''),
+          a: [], p: [], i: pega(d, 'codigoMateria'), ss: String(pega(d, 'situacaoAtual') || ''), au: autoria.slice(0, 160), ta: tipoAutoria(autoria) });
+        contar('proposicoes_senado_sem_autor_parlamentar');
+        continue;
+      }
+      const ids = [], partidos = [];
+      for (const [, nome, sigla, uf] of autores) {
+        const cn = chaveNome(nome);
+        let k = porNome.get(cn);
+        if (!k) { k = 'SN:' + cn; registrarParlamentar(k, { n: nome.replace(/^\s*Senador[a]?\s+/i, '').trim(), s: sigla.trim(), p: idPartido(sigla), uf, c: 'S' }); porNome.set(cn, k); }
+        ids.push(k); partidos.push(idPartido(sigla));
+      }
+      guardarProposicao({ c: chave, k: ['S'], d: String(pega(d, 'dataApresentacao') || '').slice(0, 10), e: String(pega(d, 'ementa') || ''),
+        a: ids, p: [...new Set(partidos)], i: pega(d, 'codigoMateria'), ss: String(pega(d, 'situacaoAtual') || '') });
+      contar('proposicoes_senado', 1);
+    }
+  }), 3);
+}
+
+// ------------------------------------------------------------------ 2c. proposições sem autor parlamentar
+// Projetos do Poder Executivo, de comissões, do Senado como Casa, de tribunais e de outros órgãos.
+// Contam na produção legislativa total, ficam sem grupo político e passam pela classificação e pela revisão.
+// Câmara: arquivos anuais de proposições e de autores. Quem não tiver autor no arquivo é conferido na API.
+export function tipoAutoria(texto) {
+  const t = Motor.normalizar(String(texto || ''));
+  if (/poder executivo|presidencia da republica|presidente da republica/.test(t)) return 'executivo';
+  if (/comissao|mesa diretora|mesa do senado|mesa da camara|\bcpi\b|\bcpmi\b|conselho de etica/.test(t)) return 'comissao';
+  if (/senado/.test(t)) return 'senado';
+  if (/tribunal|supremo|justica|judiciario/.test(t)) return 'judiciario';
+  if (/ministerio publico|procurador|defensoria/.test(t)) return 'mp';
+  return 'outro';
+}
+// "Senado Federal - Fulano", "Senado Federal - Senadora Fulana" ou "Senador Fulano (PT/BA)" -> senador.
+// Quem não está no cadastro recebe a chave SN:nome, como na coleta do Senado.
+export function senadorDoTexto(texto, porNomeSenador = new Map()) {
+  const t = String(texto || '').trim();
+  let m = /^senado federal\s*-\s*(?:senador[a]?\s+)?(.+)$/i.exec(t) || /^senador[a]?\s+([^(,]+?)\s*\(/i.exec(t);
+  if (!m) return null;
+  const nome = m[1].trim();
+  if (/comiss|mesa|cpi|cpmi|bancada|lideran|presid|conselho|subcomiss|frente/i.test(nome)) return null;
+  const cn = chaveNome(nome); if (!cn) return null;
+  return { k: porNomeSenador.get(cn) || 'SN:' + cn, nome };
+}
+// Proposições de rotina, sem autor parlamentar: ficam na base, na classificação e na revisão, mas fora da
+// produção legislativa do Balanço (decisão da equipe, 21/11/2026). Dois tipos:
+//   outorga         atos de outorga e renovação de rádio e TV (PDL da Comissão de Comunicação)
+//   administrativa  pautas administrativas das Casas, dos tribunais, do Ministério Público e da Defensoria:
+//                   cargos, funções, varas, carreiras e remuneração de servidores, escolha de ministro do TCU
+export function rotinaDe(it) {
+  if (!it || (it.a || []).length) return '';
+  const e = Motor.normalizar(String(it.e || '')).trim();
+  const sig = String(it.c || '').split(' ')[0];
+  if (sig === 'PDL' && /^aprova o ato que/.test(e) && /(outorga|renova|autoriza|permiss|concess|transfer|radiodifus|radio|televis|sons e imagens|retransmiss)/.test(e)) return 'outorga';
+  // Atos do Ministério das Comunicações que tornam sem efeito ou anulam outorgas.
+  if (sig === 'PDL' && /^aprova o ato constante d[ao]s? (portaria|decreto)/.test(e) && /(sem efeito|anula|revoga|outorga|permiss|concess|autoriza)/.test(e)) return 'outorga';
+  // Acordos internacionais contam na produção: muitas vezes dividem a direita e a esquerda (decisão da equipe, 21/11/2026).
+  if (['judiciario', 'mp', 'comissao', 'outro'].includes(it.ta)) {
+    if (/^escolhe o senhor|^escolhe a senhora/.test(e)) return 'administrativa';
+    if (/(cria(cao de)?|transforma(cao de)?|reestrutura(cao de)?|composicao e criacao de).{0,40}(cargos|funcoes comissionadas|varas)|quadro (de pessoal|permanente)|carreiras? (dos|de) servidores|plano de carreiras?|carreira legislativa|vantagens pessoais|remuneracao dos servidores/.test(e)) return 'administrativa';
+  }
+  return '';
+}
+// Autores de uma proposição (registros do arquivo anual ou da API) -> deputados, senadores ou órgão.
+export function lerAutores(lista, porNomeSenador = new Map()) {
+  const deps = [], sens = [], orgaos = [];
+  const ordenados = [...lista].sort((x, y) => (+pega(x, 'ordemAssinatura') || 99) - (+pega(y, 'ordemAssinatura') || 99));
+  for (const r of ordenados) {
+    const tipo = String(pega(r, 'tipoAutor', 'tipo') || '');
+    const nome = String(pega(r, 'nomeAutor', 'nome') || '').trim();
+    const cod = String(pega(r, 'codTipoAutor', 'codTipo') || '');
+    const uri = String(pega(r, 'uriAutor', 'uri') || '');
+    const idDep = pega(r, 'idDeputadoAutor') || (/\/deputados\/(\d+)/.exec(uri) || [])[1];
+    if (idDep && (cod === '10000' || /deputad/i.test(tipo) || /\/deputados\//.test(uri))) { deps.push({ k: 'C' + idDep, nome }); continue; }
+    if (/senador/i.test(tipo)) { const k = porNomeSenador.get(chaveNome(nome)); if (k) { sens.push({ k, nome }); continue; } }
+    // Projeto de senador que chegou à Câmara: "Senado Federal - Fulano". Comissões do Senado continuam como órgão.
+    const sen = senadorDoTexto(nome, porNomeSenador);
+    if (sen) { sens.push({ ...sen, s: String(pega(r, 'siglaPartidoAutor') || ''), uf: String(pega(r, 'siglaUFAutor', 'siglaUfAutor') || '') }); continue; }
+    if (nome || tipo) orgaos.push({ nome: nome || tipo, tipo });
+  }
+  return { deps, sens, orgaos };
+}
+async function coletarSemAutorParlamentar(anos) {
+  const porNomeSen = new Map(Object.entries(parlamentares.p).filter(([k]) => k[0] === 'S').map(([k, v]) => [chaveNome(v.n), k]));
+  const conhecida = (chave, a) => { const it = arquivoProposicoes(a).get(chave); return !!(it && ((it.a || []).length || it.au)); };
+  for (const a of anos) {
+    log(`Câmara, proposições de ${a} sem autor parlamentar`);
+    const base = n => `${ARQ_CAMARA}/${n}/json/${n}-${a}.json`;
+    const [props, autores] = await Promise.all(['proposicoes', 'proposicoesAutores']
+      .map(n => baixar(base(n), { tempo: 600000, tentativas: 3 }).then(registros).catch(e => { erro(`arquivo ${n}-${a}`, e); return null; })));
+    let lista = props;
+    if (!lista) {
+      // Reserva: a lista da API, página a página.
+      lista = [];
+      let pagina = 1, total = 1;
+      while (pagina <= total) {
+        try {
+          const q = new URLSearchParams({ siglaTipo: TIPOS.join(','), ano: String(a), itens: '100', pagina: String(pagina), ordem: 'ASC', ordenarPor: 'id' });
+          const j = await baixar(`${API_CAMARA}/proposicoes?${q}`);
+          lista = lista.concat(registros(j)); total = Motor.ultimaPagina(j);
+        } catch (e) { erro(`lista de proposições da Câmara ${a}`, e); break; }
+        pagina++;
+      }
+    }
+    if (autores) amostra('camara_arq_autor', autores[0]);
+    const autoresDe = new Map();
+    for (const r of autores || []) {
+      const id = String(pega(r, 'idProposicao') || (/proposicoes\/(\d+)/.exec(String(pega(r, 'uriProposicao') || '')) || [])[1] || '');
+      if (!id) continue;
+      if (!autoresDe.has(id)) autoresDe.set(id, []);
+      autoresDe.get(id).push(r);
+    }
+    const candidatas = [];
+    for (const d of lista) {
+      const sig = String(pega(d, 'siglaTipo') || '');
+      if (!TIPOS.includes(sig)) continue;
+      const chave = chaveMateria(sig, pega(d, 'numero'), pega(d, 'ano') || a);
+      if (!chave || +chave.split('/')[1] !== a || conhecida(chave, a)) continue;
+      candidatas.push({ chave, id: String(pega(d, 'id') || ''), d: String(pega(d, 'dataApresentacao') || '').slice(0, 10) || `${a}-01-01`, e: String(pega(d, 'ementa') || '') });
+    }
+    // Quem não tem autor no arquivo é lido na API (com teto, para não travar a execução).
+    const semAutor = candidatas.filter(c => c.id && !autoresDe.has(c.id)).slice(0, 4000);
+    await Motor.emParalelo(semAutor.map(c => async () => {
+      try { autoresDe.set(c.id, registros(await baixar(`${API_CAMARA}/proposicoes/${c.id}/autores`))); }
+      catch (e) { contar('autores_api_erro'); }
+    }), 6);
+    let n = 0;
+    for (const c of candidatas) {
+      const lidos = autoresDe.get(c.id); if (!lidos || !lidos.length) { contar('proposicoes_sem_autor_conhecido'); continue; }
+      const { deps, sens, orgaos } = lerAutores(lidos, porNomeSen);
+      const base = { c: c.chave, k: ['C'], d: c.d, e: c.e, i: +c.id || c.id };
+      if (deps.length || sens.length) {
+        // Parlamentar que a coleta por autor não trouxe.
+        for (const x of deps) if (!parlamentares.p[x.k]) registrarParlamentar(x.k, { n: x.nome, c: 'C' });
+        for (const x of sens) if (!parlamentares.p[x.k]) { registrarParlamentar(x.k, { n: x.nome, s: x.s, p: x.s ? idPartido(x.s) : undefined, uf: x.uf, c: 'S' }); porNomeSen.set(chaveNome(x.nome), x.k); }
+        const ks = [...deps, ...sens].map(x => x.k);
+        guardarProposicao({ ...base, a: ks, p: [...new Set(ks.map(k => (parlamentares.p[k] || {}).p).filter(Boolean))] });
+        contar('proposicoes_parlamentar_recuperadas');
+      } else {
+        const au = orgaos.map(o => o.nome).filter((x, i, l) => l.indexOf(x) === i).join(', ').slice(0, 160);
+        guardarProposicao({ ...base, a: [], p: [], au, ta: tipoAutoria(orgaos.map(o => `${o.tipo} ${o.nome}`).join(' ')) });
+        contar('proposicoes_camara_sem_autor_parlamentar');
+      }
+      n++;
+    }
+    log(`  ${n} proposições acrescentadas em ${a} (${candidatas.length} sem autor conhecido antes)`);
+    if (props && autores) (estado.semAutor || (estado.semAutor = {}))[a] = HOJE;
+  }
+}
+
+// ------------------------------------------------------------------ 2b. relatorias do Senado
+// O Senado publica cada designação de relator (matéria, relator, comissão, datas de início e de fim).
+// Baixa tudo desde o início do período, mês a mês, porque designações antigas mudam quando o relator sai.
+export function chaveProcesso(ident) {
+  const m = /^\s*(\S+)\s+(\d+)\/(\d{4})/.exec(String(ident || ''));
+  return m ? `${m[1].toUpperCase()} ${parseInt(m[2], 10)}/${m[3]}` : '';
+}
+export function lerRelatoria(d) {
+  const cod = pega(d, 'codigoParlamentar', 'CodigoParlamentar', 'codigoRelator', 'parlamentar.codigo', 'relator.codigo');
+  const c = chaveProcesso(pega(d, 'identificacaoProcesso', 'processo', 'identificacao', 'siglaNumeroAno', 'materia'));
+  if (!cod || !c) return null;
+  const sig = String(pega(d, 'siglaPartidoParlamentar', 'siglaPartido', 'partido', 'partidoParlamentar') || '');
+  const dt = x => String(x || '').slice(0, 10) || undefined;
+  return {
+    c, k: 'S', r: 'S' + cod,
+    n: String(pega(d, 'nomeParlamentar', 'nomeRelator', 'relator', 'NomeParlamentar') || ''),
+    s: sig, p: idPartido(sig), uf: String(pega(d, 'siglaUfParlamentar', 'ufParlamentar', 'uf', 'siglaUf') || ''),
+    cm: String(pega(d, 'siglaColegiado', 'siglaComissao', 'comissao', 'colegiado') || ''),
+    cn: String(pega(d, 'nomeColegiado', 'nomeComissao') || ''),
+    tr: String(pega(d, 'descricaoTipoRelator', 'tipoRelator', 'descricaoTipoRelatoria') || ''),
+    di: dt(pega(d, 'dataDesignacao', 'dataInicio')), df: dt(pega(d, 'dataDestituicao', 'dataFim')),
+    mo: String(pega(d, 'descricaoTipoEncerramento', 'descricaoMotivoDestituicao', 'motivoEncerramento', 'descricaoMotivoEncerramento', 'motivoDestituicao') || '') || undefined,
+    i: pega(d, 'codigoMateria'),
+    e: String(pega(d, 'ementaProcesso', 'ementa') || '').slice(0, 400) || undefined,
+    au: String(pega(d, 'autoriaProcesso', 'autoria') || '').slice(0, 160) || undefined
+  };
+}
+async function coletarRelatoriasSenado() {
+  const janelas = Motor.janelasMensais(INICIO, HOJE);
+  log(`Senado, relatorias em ${janelas.length} meses`);
+  const todas = new Map(); let falhas = 0;
+  await Motor.emParalelo(janelas.map(([a, b]) => async () => {
+    for (const fmt of [x => x, x => x.replace(/-/g, '')]) {
+      try {
+        const lista = registros(await baixarSenado(`${API_SENADO}/processo/relatoria?dataInicio=${fmt(a)}&dataFim=${fmt(b)}`, 'senado_relatoria'));
+        amostra('senado_relatoria', lista[0]);
+        for (const d of lista) {
+          const r = lerRelatoria(d); if (!r) { contar('relatorias_ilegiveis'); continue; }
+          todas.set([r.c, r.r, r.cm, r.di].join('|'), r);
+          if (!parlamentares.p[r.r]) registrarParlamentar(r.r, { n: r.n, s: r.s, p: r.p, uf: r.uf, c: 'S' });
+        }
+        return;
+      } catch (e) { if (fmt(a) !== a) { falhas++; erro(`relatorias Senado ${a}`, e); } }
+    }
+  }), 3);
+  contar('relatorias_senado', todas.size);
+  // Só substitui o arquivo se a coleta veio razoavelmente completa.
+  const antes = lerJson('relatorias.json', { itens: [] }).itens || [];
+  if (falhas > janelas.length / 4 || todas.size < antes.length * 0.8) { log('  relatorias incompletas, mantendo o arquivo anterior'); return antes; }
+  const itens = [...todas.values()].sort((x, y) => (y.di || '').localeCompare(x.di || ''));
+  gravarJson('relatorias.json', { gerado: AGORA.toISOString(), fonte: 'Senado Federal, Dados Abertos, processo/relatoria', itens }, true);
+  return itens;
+}
+
+// ------------------------------------------------------------------ 3. votações
+const votacoesPorAno = {};
+function arquivoVotacoes(a) {
+  if (!votacoesPorAno[a]) {
+    const j = lerJson(`votacoes-${a}.json`, { ano: a, itens: [] });
+    votacoesPorAno[a] = new Map(j.itens.map(v => [v.id, v]));
+  }
+  return votacoesPorAno[a];
+}
+// Câmara: descrição da abertura da votação (ultimaAberturaVotacao), que diz qual destaque, emenda ou turno foi votado.
+// A descrição geral ("Mantido o texto. Sim: 310; Não: 132") não diz. No arquivo anual o campo vem como objeto ou como
+// texto JSON; na API, só na ficha da votação (descUltimaAberturaVotacao).
+function aberturaCamara(r) {
+  let a = pega(r, 'descUltimaAberturaVotacao');
+  if (!a) {
+    let o = pega(r, 'ultimaAberturaVotacao');
+    if (typeof o === 'string') { try { o = JSON.parse(o); } catch (e) { o = null; } }
+    a = o && typeof o === 'object' ? pega(o, 'descricao') : '';
+  }
+  return limparAbertura(a);
+}
+// "Votação do DTQ 8 (PL): Destaque para Votação em Separado do art. 2º (...) (161, I)." vira
+// "Destaque 8 (PL): votação em separado do art. 2º (...)".
+function limparAbertura(a) {
+  let t = String(a || '').replace(/\s+/g, ' ').trim();
+  if (!t) return '';
+  t = t.replace(/\s*\(\d+\s*,\s*[IVX]+\)\s*\.?$/, '').replace(/\.$/, '');
+  const m = /^Votação do DTQ (\d+) \(([^)]+)\):\s*(.*)$/i.exec(t);
+  if (m) return `Destaque ${m[1]} (${m[2]}): ` + m[3].replace(/^Destaque para Votação em Separado d([oa])/i, 'votação em separado d$1').replace(/^Destaque de /i, '');
+  return t.slice(0, 400);
+}
+// Tipo da votação, para a página pôr a votação do texto na frente das de urgência, destaques e emendas:
+// principal (texto ou substitutivo), destaque, emenda, urgencia, requerimento, redacao (redação final) ou outra.
+function tipoVotacao(desc, ab) {
+  const d = String(desc || ''), a = String(ab || ''), t = a + ' ' + d;
+  if (/urg[êe]ncia/i.test(t)) return 'urgencia';
+  if (/^Destaque|\bDTQ\b/i.test(a) || /destacad[oa]/i.test(d)) return 'destaque';
+  if (/reda[çc][ãa]o final/i.test(t)) return 'redacao';
+  if (/requerimento/i.test(d)) return 'requerimento';
+  if (/emenda/i.test(a) || /^(Aprovad|Rejeitad)[ao]s? (a|as) Emendas?\b/i.test(d)) return 'emenda';
+  if (/turno único|primeiro turno|segundo turno|quanto ao mérito/i.test(a) && !/preliminar/i.test(a)) return 'principal';
+  if (/ressalvados os destaques|texto principal|(Aprovad|Rejeitad)[oa] o (Projeto|Substitutivo)/i.test(d)) return 'principal';
+  return 'outra';
+}
+// Guarda a votação já com a posição do bloco e da referência calculadas pelos partidos da época,
+// e com os votos agrupados por tipo ({S: [códigos], N: [...], A, O, '-'}), o que reduz o tamanho dos arquivos.
+function guardarVotacao(v) {
+  if (!v || !v.d || !Object.keys(v.v || {}).length) return;
+  if (!Object.values(v.v).some(c => c === 'S' || c === 'N')) { contar('votacoes_sem_sim_nao'); return; }
+  if (!v.ab) delete v.ab;
+  if (!v.h) delete v.h;
+  v.tp = tipoVotacao(v.desc, v.ab);
+  const b = posicao(v.v, v.ps || {}, NUCLEO);
+  const g = posicao(v.v, v.ps || {}, REFERENCIA);
+  const e = posicao(v.v, v.ps || {}, EXTREMA);
+  const d = posicao(v.v, v.ps || {}, DIREITA);
+  const grupos = {};
+  for (const [k, c] of Object.entries(v.v)) (grupos[c] || (grupos[c] = [])).push(+k.slice(1));
+  const oposto = x => !!(x.pos && g.pos && x.pos !== g.pos);
+  const ganhou = pos => pos && v.res ? ((pos === 'S') === (v.res === 'A')) : null;
+  // bl e disp: núcleo inteiro (os dois blocos somados). be/bd e dispE/dispD: cada bloco contra o PT.
+  const sai = Object.assign({}, v, { v: grupos, bl: b.pos, blc: b.coesao, gv: g.pos, be: e.pos, bec: e.coesao, bd: d.pos, bdc: d.coesao,
+    dispE: oposto(e), dispD: oposto(d) });
+  sai.disp = sai.dispE || sai.dispD;
+  delete sai.ps;
+  sai.venceu = ganhou(sai.bl); sai.vE = ganhou(sai.be); sai.vD = ganhou(sai.bd);
+  arquivoVotacoes(ano(v.d)).set(v.id, sai);
+  contar('votacoes_' + v.k + (v.pl ? '_plenario' : '_comissao'));
+}
+// Votações simbólicas de plenário da Câmara: sem voto de cada deputado, mas com o resultado e a orientação das bancadas.
+const simbolicasPorAno = {};
+function arquivoSimbolicas(a) {
+  if (!simbolicasPorAno[a]) simbolicasPorAno[a] = new Map((lerJson(`votacoes-simbolicas-${a}.json`, { itens: [] }).itens || []).map(v => [v.id, v]));
+  return simbolicasPorAno[a];
+}
+function guardarSimbolica(v) {
+  if (!v || !v.d) return;
+  if (v.ori && !Object.keys(v.ori).length) delete v.ori;
+  // Sem orientação e sem matéria, não há o que mostrar.
+  if (!v.ori && !v.mat && !/projeto|proposta|medida provis|\b(pl|plp|pec|pdl|mpv)\b/i.test(v.desc || '')) return;
+  if (v.ori === undefined) delete v.ori;
+  arquivoSimbolicas(ano(v.d)).set(v.id, v);
+  contar('votacoes_simbolicas_plenario');
+}
+// Votações da Câmara registradas sem matéria (por exemplo, "Aprovado o Requerimento de Urgência", sem dizer de qual
+// projeto): o número antes do hífen no id é a proposição votada. A API dá a sigla, o número e a ementa dela, e a ementa
+// do requerimento leva à matéria principal. Também busca a ementa das matérias principais que não estão na base
+// (projetos anteriores a 2023, medidas provisórias), para a classificação. Guardado em dados/materias-votacoes.json.
+async function recuperarMateriasCamara(votacoes, ementaProp) {
+  const cache = lerJson('materias-votacoes.json', { p: {}, m: {} });
+  const P = cache.p || (cache.p = {}), Mm = cache.m || (cache.m = {});
+  const idDe = vt => (/^C:(\d+)-/.exec(vt.id) || [])[1];
+  const faltam = votacoes.filter(vt => vt.k === 'C' && !vt.mat && !materiaPrincipal(vt) && idDe(vt));
+  const ids = [...new Set(faltam.map(idDe))].filter(id => !(id in P));
+  await Motor.emParalelo(ids.map(id => async () => {
+    try {
+      const j = await baixar(`${API_CAMARA}/proposicoes/${id}`); const d = (j && j.dados) || j || {};
+      P[id] = { c: chaveMateria(pega(d, 'siglaTipo'), pega(d, 'numero'), pega(d, 'ano')), e: String(pega(d, 'ementa') || '').slice(0, 600) };
+    } catch (e) { contar('materia_votacao_erro'); }
+  }), 6);
+  let n = 0;
+  for (const vt of faltam) { const m = P[idDe(vt)]; if (!m || !m.c) continue; vt.mat = m.c; if (!vt.me) vt.me = m.e; n++; }
+  contar('votacoes_com_materia_recuperada', n);
+  // Ementa das matérias principais fora da base (só Câmara, onde a votação aconteceu).
+  const semEmenta = [...new Set(votacoes.filter(vt => vt.k === 'C').map(vt => materiaPrincipal(vt)).filter(c => c && !ementaProp.has(c) && !(c in Mm)))];
+  await Motor.emParalelo(semEmenta.slice(0, 1500).map(c => async () => {
+    const [sig, resto] = c.split(' '); const [num, an] = resto.split('/');
+    try {
+      const q = new URLSearchParams({ siglaTipo: sig, numero: num, ano: an, itens: '5' });
+      const d = registros(await baixar(`${API_CAMARA}/proposicoes?${q}`))[0];
+      Mm[c] = d ? String(pega(d, 'ementa') || '').slice(0, 600) : '';
+    } catch (e) { contar('ementa_materia_erro'); }
+  }), 6);
+  gravarJson('materias-votacoes.json', cache, true);
+  return Mm;
+}
+
+// Percorre os votos agrupados como pares [chave do parlamentar, voto].
+function* votosDe(vt) { for (const [c, lista] of Object.entries(vt.v || {})) for (const id of lista) yield [vt.k + id, c]; }
+
+const chaveMateria = (sigla, numero, anoM) => (sigla && numero && anoM) ? `${String(sigla).trim()} ${parseInt(numero, 10)}/${anoM}` : '';
+
+// Matéria principal de uma votação de requerimento, destaque, emenda ou parecer: o projeto citado na ementa
+// ou na descrição ("Requer urgência para o Projeto de Lei nº 4.675, de 2025" -> PL 4675/2025).
+// Assim a urgência, os destaques e o mérito ficam sob a mesma chave e herdam a mesma classificação.
+const PRINCIPAIS = ['PL', 'PLP', 'PEC', 'PDL', 'MPV', 'PLV', 'PLN'];
+const NOMES_MATERIA = [
+  [/projeto de lei complementar/, 'PLP'], [/projeto de lei de conversao/, 'PLV'], [/projeto de lei do congresso nacional/, 'PLN'],
+  [/projeto de decreto legislativo/, 'PDL'], [/proposta de emenda (?:a|à) constituicao/, 'PEC'], [/medida provisoria/, 'MPV'], [/projeto de lei/, 'PL']
+];
+export function materiaPrincipal(vt) {
+  const sig = String(vt.mat || '').split(' ')[0];
+  if (vt.mat && PRINCIPAIS.includes(sig)) return '';
+  for (const txt of [vt.me, vt.desc]) {
+    const t = Motor.normalizar(String(txt || ''));
+    if (!t) continue;
+    let melhor = null;
+    // Por extenso: "projeto de lei complementar nº 299, de 2026" ou "... n. 299/2026".
+    for (const [re, s] of NOMES_MATERIA) {
+      const r = new RegExp(re.source + '\\s*(?:n[ºo°.]*\\s*)?(\\d[\\d.]*)\\s*(?:,\\s*de\\s*|/)\\s*(\\d{4})', 'g');
+      let m; while ((m = r.exec(t))) if (!melhor || m.index < melhor.i) melhor = { i: m.index, c: `${s} ${parseInt(m[1].replace(/\./g, ''), 10)}/${m[2]}` };
+    }
+    // Por sigla: "PL 5874/2025", "PL-5874/2025", "PLP nº 299/2026".
+    const r2 = /\b(plp|plv|pln|pdl|pec|mpv|pl)\s*[-nº°o.]*\s*(\d[\d.]*)\s*\/\s*(\d{4})/g;
+    let m; while ((m = r2.exec(t))) if (!melhor || m.index < melhor.i) melhor = { i: m.index, c: `${m[1].toUpperCase()} ${parseInt(m[2].replace(/\./g, ''), 10)}/${m[3]}` };
+    if (melhor) return melhor.c;
+  }
+  return '';
+}
+
+// Câmara: arquivos anuais completos.
+const ultimaVotacaoArquivo = {};
+async function coletarVotacoesCamaraArquivos(a) {
+  const base = n => `${ARQ_CAMARA}/${n}/json/${n}-${a}.json`;
+  log(`Câmara, arquivos anuais de votações de ${a}`);
+  const [vot, votos, ori, obj] = await Promise.all(['votacoes', 'votacoesVotos', 'votacoesOrientacoes', 'votacoesObjetos']
+    .map(n => baixar(base(n), { tempo: 600000, tentativas: 3 }).then(registros).catch(e => { erro(`arquivo ${n}-${a}`, e); return null; })));
+  if (!vot || !votos) return false;
+  amostra('camara_arq_votacao', vot[0]); amostra('camara_arq_voto', votos[0]);
+  if (ori) amostra('camara_arq_orientacao', ori[0]);
+  if (obj) amostra('camara_arq_objeto', obj[0]);
+  const porVotacao = new Map();
+  for (const r of votos) {
+    const id = pega(r, 'idVotacao'); if (!id) continue;
+    const dep = pega(r, 'deputado_id', 'idDeputado');
+    const cv = codigoVoto(pega(r, 'voto', 'tipoVoto'));
+    if (!dep) continue;
+    const sigla = pega(r, 'deputado_siglaPartido', 'siglaPartido');
+    registrarParlamentar('C' + dep, { n: pega(r, 'deputado_nome', 'nome'), uf: pega(r, 'deputado_siglaUf', 'siglaUf'), c: 'C' });
+    if (!porVotacao.has(id)) porVotacao.set(id, { v: {}, ps: {} });
+    const x = porVotacao.get(id);
+    x.v['C' + dep] = cv || '-';
+    if (sigla) x.ps['C' + dep] = idPartido(sigla);
+  }
+  const orient = new Map();
+  for (const r of ori || []) {
+    const id = pega(r, 'idVotacao'); if (!id) continue;
+    if (!orient.has(id)) orient.set(id, {});
+    const b = pega(r, 'siglaBancada', 'siglaPartidoBloco'); const o = pega(r, 'orientacao', 'orientacaoVoto');
+    if (b && o) orient.get(id)[b] = o;
+  }
+  const objetos = new Map();
+  for (const r of obj || []) {
+    const id = pega(r, 'idVotacao'); if (!id) continue;
+    const sig = pega(r, 'proposicao_siglaTipo', 'siglaTipo');
+    const item = { c: chaveMateria(sig, pega(r, 'proposicao_numero', 'numero'), pega(r, 'proposicao_ano', 'ano')), e: pega(r, 'proposicao_ementa', 'ementa') || '', principal: ['PL', 'PLP', 'PEC', 'PDL', 'MPV', 'PLV', 'PLN'].includes(sig) };
+    const ja = objetos.get(id);
+    if (!ja || (!ja.principal && item.principal)) objetos.set(id, item);
+  }
+  let n = 0;
+  ultimaVotacaoArquivo[a] = '';
+  for (const r of vot) {
+    const id = pega(r, 'id'); const x = porVotacao.get(id);
+    const orgao = String(pega(r, 'siglaOrgao') || '');
+    const ob = objetos.get(id) || {};
+    if (!x) {
+      // Votação simbólica, sem votos nominais. No plenário, guarda a matéria e o resultado (e a orientação, se um dia vier).
+      if (orgao.toUpperCase() === 'PLEN') guardarSimbolica({ id: 'C:' + id, k: 'C', d: String(pega(r, 'data', 'dataHoraRegistro') || '').slice(0, 10),
+        desc: String(pega(r, 'descricao') || '').slice(0, 400), ab: aberturaCamara(r) || undefined, mat: ob.c || '', me: String(ob.e || '').slice(0, 400),
+        res: String(pega(r, 'aprovacao')) === '1' ? 'A' : String(pega(r, 'aprovacao')) === '0' ? 'R' : '', ori: orient.get(id) });
+      continue;
+    }
+    guardarVotacao({ id: 'C:' + id, k: 'C', o: orgao, pl: orgao.toUpperCase() === 'PLEN',
+      // Data da sessão (campo data), e não a do registro: uma sessão que passa da meia-noite fica num só dia.
+      d: String(pega(r, 'data', 'dataHoraRegistro') || '').slice(0, 10), h: String(pega(r, 'dataHoraRegistro') || '').slice(0, 19),
+      desc: String(pega(r, 'descricao') || '').slice(0, 600), ab: aberturaCamara(r),
+      mat: ob.c || '', me: String(ob.e || '').slice(0, 700), res: String(pega(r, 'aprovacao')) === '1' ? 'A' : String(pega(r, 'aprovacao')) === '0' ? 'R' : '',
+      v: x.v, ps: x.ps, ori: orient.get(id) || undefined });
+    const dv = String(pega(r, 'data', 'dataHoraRegistro') || '').slice(0, 10);
+    if (dv > ultimaVotacaoArquivo[a]) ultimaVotacaoArquivo[a] = dv;
+    n++;
+  }
+  log(`  ${n} votações nominais da Câmara em ${a}`);
+  return n > 0 || vot.length > 0;
+}
+
+// Câmara: reserva pela API, mês a mês.
+async function coletarVotacoesCamaraApi(ini, fim) {
+  for (const [a, b] of Motor.janelasMensais(ini, fim)) {
+    let pagina = 1, total = 1;
+    while (pagina <= total) {
+      let lista = [];
+      try {
+        const j = await baixar(`${API_CAMARA}/votacoes?dataInicio=${a}&dataFim=${b}&itens=200&pagina=${pagina}&ordem=ASC&ordenarPor=dataHoraRegistro`);
+        lista = registros(j); total = Motor.ultimaPagina(j);
+        amostra('camara_api_votacao', lista[0]);
+      } catch (e) { erro(`votações Câmara API ${a}`, e); break; }
+      await Motor.emParalelo(lista.map(r => async () => {
+        const id = pega(r, 'id');
+        try {
+          // A Câmara responde 404 quando a votação foi simbólica e não tem votos nominais.
+          const vj = registros(await baixar(`${API_CAMARA}/votacoes/${id}/votos`).catch(e => { if (/http 404/.test(e.message)) return []; throw e; }));
+          if (!vj.length) {
+            contar('camara_api_votacao_sem_votos');
+            const orgao = String(pega(r, 'siglaOrgao') || '');
+            if (orgao.toUpperCase() === 'PLEN') {
+              let ori;
+              try { ori = {}; registros(await baixar(`${API_CAMARA}/votacoes/${id}/orientacoes`)).forEach(o => { const bb = pega(o, 'siglaPartidoBloco', 'siglaBancada'); const oo = pega(o, 'orientacaoVoto', 'orientacao'); if (bb && oo) ori[bb] = oo; }); } catch (e) { ori = undefined; }
+              guardarSimbolica({ id: 'C:' + id, k: 'C', d: String(pega(r, 'data', 'dataHoraRegistro') || '').slice(0, 10), desc: String(pega(r, 'descricao') || '').slice(0, 400),
+                mat: '', me: '', res: String(pega(r, 'aprovacao')) === '1' ? 'A' : String(pega(r, 'aprovacao')) === '0' ? 'R' : '', ori });
+            }
+            return;
+          }
+          amostra('camara_api_voto', vj[0]);
+          const v = {}, ps = {};
+          for (const x of vj) {
+            const dep = pega(x, 'deputado_.id', 'deputado_id'); if (!dep) continue;
+            v['C' + dep] = codigoVoto(pega(x, 'tipoVoto', 'voto')) || '-';
+            ps['C' + dep] = idPartido(pega(x, 'deputado_.siglaPartido', 'deputado_siglaPartido'));
+            registrarParlamentar('C' + dep, { n: pega(x, 'deputado_.nome', 'deputado_nome'), uf: pega(x, 'deputado_.siglaUf', 'deputado_siglaUf'), c: 'C' });
+          }
+          let ori;
+          try { ori = {}; registros(await baixar(`${API_CAMARA}/votacoes/${id}/orientacoes`)).forEach(o => { const bb = pega(o, 'siglaPartidoBloco', 'siglaBancada'); const oo = pega(o, 'orientacaoVoto', 'orientacao'); if (bb && oo) ori[bb] = oo; }); } catch (e) { ori = undefined; }
+          const orgao = String(pega(r, 'siglaOrgao') || '');
+          // A lista da API não traz a abertura da votação (qual destaque ou turno); a ficha traz. Só no plenário.
+          let ab = '';
+          if (orgao.toUpperCase() === 'PLEN') { try { const fj = await baixar(`${API_CAMARA}/votacoes/${id}`); ab = aberturaCamara((fj && fj.dados) || fj); } catch (e) { contar('camara_api_ficha_votacao_erro'); } }
+          guardarVotacao({ id: 'C:' + id, k: 'C', o: orgao, pl: orgao.toUpperCase() === 'PLEN', d: String(pega(r, 'data', 'dataHoraRegistro') || '').slice(0, 10),
+            h: String(pega(r, 'dataHoraRegistro') || '').slice(0, 19), desc: String(pega(r, 'descricao') || '').slice(0, 600), ab, mat: '', me: '', res: String(pega(r, 'aprovacao')) === '1' ? 'A' : String(pega(r, 'aprovacao')) === '0' ? 'R' : '', v, ps, ori });
+        } catch (e) { contar('camara_api_votacao_erro'); if ((diag.contagens.camara_api_votacao_erro || 0) <= 3) erro(`votos da votação ${id} da Câmara`, e); }
+      }), 4);
+      pagina++;
+    }
+  }
+}
+
+const CAMPOS_VOTO = ['siglaVotoParlamentar', 'descricaoVotoParlamentar', 'voto', 'QualidadeVoto', 'DescricaoVoto', 'SiglaVoto'];
+// Procura, em qualquer formato de resposta, os objetos que são votações com votos nominais.
+// Uma votação é um objeto que contém uma lista de votos (registros com código do parlamentar e voto).
+function acharVotacoes(no, saida = [], pai = null) {
+  if (Array.isArray(no)) {
+    const pareceVotos = no.length && no.every(x => x && typeof x === 'object' && pega(x, 'codigoParlamentar', 'codigoSenador', 'CodigoParlamentar') !== undefined)
+      && CAMPOS_VOTO.some(c => pega(no[0], c) !== undefined);
+    if (pareceVotos && pai) { saida.push({ votacao: pai, votos: no }); return saida; }
+    no.forEach(x => acharVotacoes(x, saida, null));
+  } else if (no && typeof no === 'object') {
+    for (const v of Object.values(no)) {
+      // Formato XML convertido: { Votos: { Voto: [...] } }
+      if (v && typeof v === 'object' && !Array.isArray(v)) {
+        const interno = Object.values(v).find(Array.isArray);
+        if (interno && interno.length && pega(interno[0], 'codigoParlamentar', 'CodigoParlamentar') !== undefined && CAMPOS_VOTO.some(c => pega(interno[0], c) !== undefined) && Object.keys(v).length === 1) { saida.push({ votacao: no, votos: interno }); continue; }
+      }
+      acharVotacoes(v, saida, no);
+    }
+  }
+  return saida;
+}
+function votacaoSenado({ votacao: o, votos }, plenario, comissao) {
+  const sigla = pega(o, 'siglaMateria', 'SiglaSubtipoMateria', 'siglaSubtipoMateria', 'sigla');
+  const num = pega(o, 'numeroMateria', 'NumeroMateria', 'numero');
+  const an = pega(o, 'anoMateria', 'AnoMateria', 'ano');
+  let mat = chaveMateria(sigla, num, an);
+  const ident = String(pega(o, 'identificacao', 'materia', 'DescricaoIdentificacaoMateria', 'identificacaoMateria') || '');
+  const mm = /^(\S+)\s+(\d+)\/(\d{4})/.exec(ident);
+  if (!mat && mm) mat = `${mm[1]} ${parseInt(mm[2], 10)}/${mm[3]}`;
+  const data = String(pega(o, 'dataSessao', 'data', 'DataHoraInicioReuniao', 'dataHoraInicioReuniao', 'dataInicio', 'DataSessao') || '').slice(0, 10);
+  const cod = pega(o, 'codigoSessaoVotacao', 'codigoVotacao', 'CodigoVotacao', 'codigoVotacaoSve', 'codigo', 'idVotacao');
+  const secreta = /^(s|sim|true)$/i.test(String(pega(o, 'votacaoSecreta', 'secreta', 'IndicadorVotacaoSecreta') || ''));
+  if (secreta) { contar('senado_secretas'); return null; }
+  const res = Motor.normalizar(String(pega(o, 'resultadoVotacao', 'resultado', 'DescricaoResultado') || ''));
+  const v = {}, ps = {};
+  for (const x of votos) {
+    const c = pega(x, 'codigoParlamentar', 'codigoSenador', 'CodigoParlamentar'); if (!c) continue;
+    const nome = pega(x, 'nomeParlamentar', 'nomeSenador', 'NomeParlamentar');
+    const sigP = pega(x, 'siglaPartidoParlamentar', 'partido', 'SiglaPartidoParlamentar', 'siglaPartido');
+    const uf = pega(x, 'siglaUFParlamentar', 'siglaUfParlamentar', 'uf', 'SiglaUFParlamentar', 'SiglaUfParlamentar');
+    v['S' + c] = codigoVoto(pega(x, ...CAMPOS_VOTO)) || '-';
+    if (sigP) ps['S' + c] = idPartido(sigP);
+    registrarParlamentar('S' + c, { n: nome, s: sigP, p: idPartido(sigP), uf, c: 'S', d: data });
+  }
+  if (!data || !cod) return null;
+  return { id: (plenario ? 'S:' : 'SC:') + (comissao ? comissao + ':' : '') + cod, k: 'S', o: plenario ? 'PLEN' : comissao, pl: plenario, d: data,
+    desc: String(pega(o, 'descricaoVotacao', 'descricao', 'DescricaoVotacao') || '').slice(0, 600), mat, me: String(pega(o, 'ementa', 'EmentaMateria', 'ementaMateria') || '').slice(0, 700),
+    res: res.startsWith('aprov') || res === 'a' ? 'A' : res.startsWith('rejeit') || res === 'r' ? 'R' : '', v, ps };
+}
+
+async function coletarVotacoesSenado(ini, fim) {
+  log('Senado, votações de plenário');
+  const buscar = async (a, b) => {
+    let achadas = [], falhou = null;
+    for (const fmt of [s => s, s => s.replace(/-/g, '')]) {
+      try {
+        achadas = acharVotacoes(await baixarSenado(`${API_SENADO}/votacao?dataInicio=${fmt(a)}&dataFim=${fmt(b)}`, 'senado_votacao_' + (fmt(a) === a ? 'iso' : 'compacta')));
+        falhou = null;
+        if (achadas.length) break;
+      } catch (e) { falhou = e; }
+    }
+    return { achadas, falhou };
+  };
+  for (const [a, b] of Motor.janelasMensais(ini, fim)) {
+    let { achadas, falhou } = await buscar(a, b);
+    // Quando a janela do mês é recusada, tenta de semana em semana.
+    if (falhou) {
+      achadas = [];
+      for (let t = Date.parse(a); t <= Date.parse(b); t += 7 * 86400000) {
+        const x = new Date(t).toISOString().slice(0, 10), y = new Date(Math.min(t + 6 * 86400000, Date.parse(b))).toISOString().slice(0, 10);
+        const r = await buscar(x, y);
+        if (r.falhou) { erro(`votações Senado ${x} a ${y}`, r.falhou); } else achadas = achadas.concat(r.achadas);
+      }
+      contar('senado_janelas_divididas');
+    }
+    contar('senado_plenario_votacoes_achadas', achadas.length);
+    if (achadas[0]) { amostra('senado_votacao', achadas[0].votacao); amostra('senado_voto', achadas[0].votos[0]); }
+    achadas.forEach(x => guardarVotacao(votacaoSenado(x, true)));
+  }
+  log('Senado, votações em comissões');
+  const trimestres = [];
+  for (const [a, b] of Motor.janelasMensais(ini, fim)) {
+    const u = trimestres[trimestres.length - 1];
+    if (u && u.n < 3) { u.b = b; u.n++; } else trimestres.push({ a, b, n: 1 });
+  }
+  const tarefas = [];
+  for (const com of COMISSOES_SENADO) for (const t of trimestres) tarefas.push({ com, t });
+  await Motor.emParalelo(tarefas.map(({ com, t }) => async () => {
+    const urls = [
+      `${API_SENADO}/votacaoComissao/comissao/${com}?dataInicio=${t.a.replace(/-/g, '')}&dataFim=${t.b.replace(/-/g, '')}`,
+      `${API_SENADO}/votacaoComissao/comissao/${com}.json?dataInicio=${t.a.replace(/-/g, '')}&dataFim=${t.b.replace(/-/g, '')}`,
+    ];
+    for (const u of urls) {
+      try {
+        const j = await baixarSenado(u, 'senado_comissao', { tentativas: 2 });
+        const achadas = acharVotacoes(j);
+        contar('senado_comissao_votacoes_achadas', achadas.length);
+        if (achadas[0]) { amostra('senado_comissao_votacao', achadas[0].votacao); amostra('senado_comissao_voto', achadas[0].votos[0]); }
+        achadas.forEach(x => guardarVotacao(votacaoSenado(x, false, com)));
+        return;
+      } catch (e) { if (u === urls[urls.length - 1]) { contar('senado_comissao_falha'); if (!diag.erros.some(x => x.startsWith('comissão Senado'))) erro(`comissão Senado ${com}`, e); } }
+    }
+  }), 3);
+}
+
+// ------------------------------------------------------------------ 4. classificação por IA
+const LISTA_PAUTAS = PAUTAS.lista.map(p => `- ${p.id} (${p.nome}). ${p.descricao} Extrema-direita quando: ${p.extrema}`).join('\n');
+const IDS_PAUTAS = new Set(PAUTAS.lista.map(p => p.id));
+const INSTRUCOES = `Você é analista de um observatório que acompanha a atuação da direita e da extrema-direita no Congresso Nacional brasileiro. Para cada item numerado (uma proposição legislativa ou uma votação, descrita pela ementa), diga se ele trata de alguma das pautas abaixo e em que sentido.
+
+PAUTAS
+${LISTA_PAUTAS}
+
+CAMPOS
+- "s" é o sentido. Use "avanca" quando o item faz avançar a pauta da direita (por exemplo, flexibiliza o porte de armas, reduz a maioridade penal, anistia golpistas, restringe o aborto legal, afrouxa o licenciamento ambiental, retira direitos trabalhistas). Use "barra" quando o item vai contra a pauta da direita (por exemplo, amplia o controle de armas, reduz a jornada de trabalho, protege terras indígenas, regula plataformas digitais). Deixe vazio quando o item não trata de nenhuma pauta.
+- "p" é a lista de pautas tratadas, de uma a três, pelos identificadores acima. Vazia quando "s" for vazio.
+- "g" é o grau, só quando "s" for "avanca". Use "extrema" quando o item se encaixa na descrição de extrema-direita da pauta, e "direita" nos demais casos. Vazio quando "s" for "barra" ou vazio.
+- "m" é o motivo, em até 20 palavras, dizendo o que o item faz em relação à pauta. Tom informativo, sem adjetivos de militância. Não use dois-pontos. Vazio quando "s" for vazio.
+
+REGRAS
+- Julgue só o conteúdo da ementa. Os autores e os partidos não são informados.
+- Confira o sentido antes de responder. Um item que cria, amplia ou protege direitos de mulheres, pessoas LGBTQIA+, pessoas intersexo, população negra, povos indígenas, trabalhadores ou do meio ambiente vai contra a pauta da direita ("barra"), mesmo que trate do mesmo tema. Só é "avanca" o item que restringe, retira ou ataca esses direitos, ou que segue a descrição da pauta.
+- Novos crimes ou penas maiores para proteger grupos vulneráveis (violência contra a mulher, abuso de crianças, crimes contra idosos, crimes digitais contra a intimidade) não são punitivismo. Deixe "s" vazio, a não ser que o item também reduza garantias processuais ou amplie a letalidade policial.
+- Só use uma pauta quando o item tratar de fato do que a descrição dela diz. Regras de consumo, de mercado, tributárias ou de serviços sem relação direta com as descrições ficam com "s" vazio.
+- Em votações de requerimento (urgência, adiamento, retirada de pauta, apensação), julgue a matéria a que o requerimento se refere. Se a matéria não estiver clara, deixe "s" vazio.
+- Homenagens, datas comemorativas, denominações e ajustes administrativos ficam com "s" vazio.
+- Na dúvida, deixe "s" vazio. É melhor deixar de marcar do que marcar errado.
+
+Responda somente com JSON válido, sem texto antes ou depois, neste formato.
+{"r":[{"n":1,"s":"avanca","p":["armas"],"g":"direita","m":"Amplia o porte de armas para vigilantes de empresas privadas"},{"n":2,"s":"","p":[],"g":"","m":""}]}`;
+
+// Chamada à API da Anthropic que devolve a lista "r" da resposta em JSON, ou null.
+let avisou400 = false;
+export let semCredito = false;
+export async function chamarClaude(sistema, texto, maxTokens, modelo = MODELO) {
+  const corpo = { model: modelo, max_tokens: maxTokens, thinking: { type: 'disabled' },
+    system: [{ type: 'text', text: sistema, cache_control: { type: 'ephemeral' } }], messages: [{ role: 'user', content: texto }] };
+  let atraso = 3000;
+  for (let i = 0; i < 7; i++) {
+    let r;
+    try {
+      r = await rede.fetch('https://api.anthropic.com/v1/messages', { method: 'POST', signal: AbortSignal.timeout(120000),
+        headers: { 'content-type': 'application/json', 'x-api-key': process.env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' }, body: JSON.stringify(corpo) });
+    } catch (e) { await espera(atraso); atraso *= 2; continue; }
+    if (r.status === 400 && corpo.thinking) { delete corpo.thinking; continue; }
+    // Um 400 não se resolve repetindo. O caso mais comum é o saldo de créditos da API ter acabado.
+    if (r.status === 400) {
+      contar('ia_http_400');
+      let msg = ''; try { msg = String(((await r.json()).error || {}).message || '').slice(0, 200); } catch (e) {}
+      if (!avisou400) { avisou400 = true; log('ERRO da API da Anthropic (400):', msg || 'sem mensagem'); }
+      if (/credit|billing|balance/i.test(msg)) semCredito = true;
+      contar('ia_lotes_falharam'); return null;
+    }
+    if (r.status === 401 || r.status === 403) throw new Error('chave da Anthropic recusada');
+    if (!r.ok) { contar('ia_http_' + r.status); const ra = +r.headers.get('retry-after'); await espera(ra ? ra * 1000 + 500 : atraso); atraso = Math.min(atraso * 2, 60000); continue; }
+    const j = await r.json();
+    const t = (j.content || []).filter(b => b.type === 'text').map(b => b.text).join('');
+    let res;
+    try { res = JSON.parse(t.slice(t.indexOf('{'), t.lastIndexOf('}') + 1)).r; } catch (e) { res = null; }
+    if (Array.isArray(res)) return res;
+    contar('ia_json_invalido' + (j.stop_reason === 'max_tokens' ? '_cortado' : ''));
+    if (j.stop_reason === 'max_tokens') corpo.max_tokens = Math.min(16000, corpo.max_tokens * 2);
+    await espera(atraso);
+  }
+  contar('ia_lotes_falharam');
+  return null;
+}
+
+async function classificarLote(itens) {
+  const lista = itens.map((it, k) => `${k + 1}. ${it.chave}. ${String(it.texto).slice(0, 700)}`).join('\n');
+  const res = await chamarClaude(INSTRUCOES, 'ITENS\n' + lista, Math.min(8000, 1200 + itens.length * 120));
+  if (!res) return {};
+  const saida = {};
+  for (const x of res) {
+    const it = itens[(+x.n) - 1]; if (!it) continue;
+    const s = ['avanca', 'barra'].includes(x.s) ? x.s : '';
+    const p = s ? (Array.isArray(x.p) ? x.p : []).filter(id => IDS_PAUTAS.has(id)).slice(0, 3) : [];
+    saida[it.chave] = { s: p.length ? s : '', p, g: s === 'avanca' && p.length ? (x.g === 'extrema' ? 'extrema' : 'direita') : '', m: p.length ? String(x.m || '').slice(0, 200) : '' };
+  }
+  return saida;
+}
+
+// Segunda etapa, só para o que faz avançar a pauta da direita. Decide o grau com uma instrução dedicada,
+// porque na primeira etapa a cautela ("na dúvida, deixe vazio") puxava tudo para o grau direita.
+const LISTA_GRAUS = PAUTAS.lista.map(p => `- ${p.id} (${p.nome}). ${p.descricao} Extrema-direita quando: ${p.extrema}`).join('\n');
+export function instrucoesGrau(exemplos, regrasNovas = false) {
+  return `Você é analista de um observatório da direita e da extrema-direita no Congresso Nacional brasileiro. Todos os itens abaixo já foram identificados como projetos ou votações que fazem avançar a pauta da direita. Para cada um, decida o grau, revise as pautas e diga quanta certeza você tem.
+
+PAUTAS E O QUE CARACTERIZA A EXTREMA-DIREITA EM CADA UMA
+${LISTA_GRAUS}
+
+CRITÉRIOS GERAIS DE EXTREMA-DIREITA (basta um)
+- Ataca a democracia, o sistema eleitoral, o STF, o TSE ou juízes por suas decisões, ou livra de punição quem atentou contra o Estado Democrático de Direito.
+- Retira direitos já garantidos de grupos inteiros (mulheres, pessoas LGBTQIA+, população negra, indígenas, quilombolas, trabalhadores).
+- Trata movimentos sociais, ocupações de terra, protestos ou adversários políticos como terroristas ou criminosos.
+- Amplia a violência do Estado sem controle, como licença para matar, legítima defesa presumida ou preventiva, excludente de ilicitude para agentes, pena de morte, prisão perpétua ou castração.
+- Desfaz demarcações ou homologações de terras indígenas ou impede novas, revoga proteções de áreas protegidas, ou anistia desmatamento ilegal.
+- Impõe preceitos religiosos ao Estado, à lei ou à escola, ou restringe o aborto nos casos já permitidos, inclusive pelo Estatuto do Nascituro.
+- Defende interferência estrangeira ou sanções contra o próprio país.
+
+CRITÉRIOS DA EQUIPE POR TEMA (seguem a régua do observatório e prevalecem sobre a intuição)
+- Punitivismo. É extrema-direita aumentar a pena de crimes comuns (furto, roubo, dano, resistência, associação criminosa, tráfico de drogas), acabar com benefícios penais (tráfico privilegiado, livramento condicional, progressão de regime, saída temporária), antecipar a execução da pena, ampliar prisões cautelares como regra ou endurecer o processo contra o réu. É direita criar tipos penais pontuais, aumentar penas de estelionato, fraudes e crimes econômicos, criar programas contra o crime organizado, medidas de gestão, informação e inteligência, e benefícios a policiais.
+- Armas. É extrema-direita qualquer ampliação de posse ou porte de arma a novas categorias ou pessoas, a facilitação de registros e renovações de CACs e de clubes de tiro, e a ampliação da legítima defesa.
+- Educação. É extrema-direita a escola cívico-militar, o ensino domiciliar, a punição de pais ou alunos por indisciplina, a censura a professores e o ensino religioso ou confessional imposto.
+- Drogas. É extrema-direita o endurecimento penal; é direita o financiamento ou a regulação de comunidades terapêuticas e sanções administrativas ao consumo.
+- Economia, trabalho e Estado. Privilégios fiscais, flexibilizações trabalhistas, privatizações e desregulação econômica são em geral direita. São extrema-direita só quando retiram direitos de forma ampla (por exemplo, fim da Justiça do Trabalho ou do combate ao trabalho escravo).
+${regrasNovas === true ? `- Estado. É extrema-direita extinguir órgãos, conselhos, fundações ou empresas públicas (por exemplo CONAB, FUNASA, Codevasf, Iphan, conselhos de políticas públicas).
+- Decretos legislativos (PDL) que sustam atos do governo federal são sempre pauta da direita, nunca "fora", salvo quando o ato sustado é ele próprio uma medida da direita. São extrema-direita quando derrubam proteção ambiental (embargos, atos do MMA, Ibama ou ICMBio), direitos trabalhistas, políticas de igualdade, a estrutura da Presidência ou medidas de defesa da soberania e de reciprocidade econômica. São direita quando tratam de tributos, tarifas, preços, regulação setorial ou burocracia.
+- Vigilância e poder policial. É extrema-direita ampliar a vigilância em massa (reconhecimento facial em espaços públicos), dar poder de busca ou de polícia a guardas municipais, facilitar quebra de sigilo, prisão preventiva ou temporária, restringir direitos de presos (saúde, trabalho externo, visitas) e ampliar a internação de adolescentes.
+- Religião. É extrema-direita dar estatuto legal, proteção especial, reconhecimento oficial ou recursos públicos a igrejas, líderes e ritos religiosos.
+- Policiais e militares. Vantagens, isenções e prerrogativas para policiais e militares são pauta da direita, nunca "fora".
+- Na dúvida entre "fora" e "direita", prefira "direita" quando o projeto reduz tributo, regulação ou fiscalização sobre empresas, ou endurece regra penal ou de trânsito.
+` : ''}${typeof regrasNovas === 'string' && regrasNovas ? `
+CRITÉRIOS APRENDIDOS COM AS DECISÕES DA EQUIPE (prevalecem sobre todos os critérios anteriores quando houver conflito)
+${regrasNovas}
+` : ''}
+PAUTAS
+- Liste todas as pautas que se aplicam, até três, pelos identificadores acima. Exemplos frequentes de combinação são armas com punitivismo, educação com religião, punitivismo com movimentos, drogas com punitivismo.
+
+CERTEZA
+- "c" é "alta" quando o caso se encaixa com clareza nos critérios e nos exemplos da equipe, e "baixa" quando a ementa é ambígua, técnica, pode ser lida nos dois sentidos ou quando você hesitou entre os graus ou sobre se é pauta da direita. Os itens de certeza baixa vão para a revisão humana, por isso não economize no "baixa" quando houver dúvida real.
+
+Use "fora" no campo "g" quando, olhando de novo, o item não faz avançar nenhuma pauta da direita (é neutro, técnico, amplia direitos ou garantias, ou vai contra a pauta, como restringir armas ou proteger a soberania contra sanções estrangeiras).
+
+REGRAS
+- O traço de extrema-direita tem de estar claro na ementa. Não presuma efeitos que a ementa não diz.
+- O campo "m" é o motivo, em até 20 palavras, em tom informativo e sem dois-pontos.
+${exemplos ? `
+CASOS JÁ DECIDIDOS PELA EQUIPE (siga o mesmo raciocínio em casos parecidos)
+${exemplos}
+` : ''}
+Responda somente com JSON válido, neste formato.
+{"r":[{"n":1,"g":"extrema","p":["armas","punitivismo"],"c":"alta","m":"Estende o porte de arma a guardas municipais"},{"n":2,"g":"direita","p":["privilegios"],"c":"baixa","m":"Isenta dividendos de imposto de renda"},{"n":3,"g":"fora","p":[],"c":"alta","m":""}]}`;
+}
+
+async function graduarLote(itens, sistema, versao) {
+  if (semCredito) return 0;
+  const linha = (it, k) => `${k + 1}. ${it.chave}. ${String(it.texto).slice(0, 700)}`;
+  const max = n => Math.min(10000, 1500 + n * 160);
+  const grauDe = x => x.g === 'fora' ? 'fora' : x.g === 'extrema' ? 'extrema' : 'direita';
+  // Primeira leitura, do modelo rápido, para todos os itens.
+  const rapida = await chamarClaude(sistema, 'ITENS\n' + itens.map(linha).join('\n'), max(itens.length));
+  if (!rapida) return 0;
+  const lidas = new Map();
+  for (const x of rapida) { const it = itens[(+x.n) - 1]; if (it) lidas.set(it, x); }
+  // Segunda leitura, do modelo mais forte, só para os itens em que o rápido hesitou.
+  const duvidosos = itens.filter(it => lidas.has(it) && lidas.get(it).c !== 'alta');
+  const fortes = new Map();
+  if (duvidosos.length) {
+    contar('grau_segunda_leitura', duvidosos.length);
+    const res = await chamarClaude(sistema, 'ITENS\n' + duvidosos.map(linha).join('\n'), max(duvidosos.length), MODELO_GRAU);
+    for (const y of res || []) { const it = duvidosos[(+y.n) - 1]; if (it) fortes.set(it, y); }
+  }
+  let n = 0;
+  for (const [it, r] of lidas) {
+    const c = classificacoes.c[it.chave]; if (!c || (c.s !== 'avanca' && !c.fora)) continue;
+    const y = fortes.get(it);
+    const x = y || r; // vale a leitura do mais forte quando ela existe
+    // Três níveis. "alta" quando o modelo rápido está seguro, ou quando o mais forte confirma o grau e está seguro.
+    // "grau" quando as duas leituras veem pauta da direita e a dúvida é só entre direita e extrema-direita.
+    // "baixa", que pede revisão humana, quando há dúvida sobre ser ou não pauta da direita ou falta a segunda leitura.
+    const cf = r.c === 'alta' ? 'alta' : !y ? 'baixa' : grauDe(y) === grauDe(r) && y.c === 'alta' ? 'alta'
+      : grauDe(y) !== 'fora' && grauDe(r) !== 'fora' ? 'grau' : 'baixa';
+    contar(cf === 'alta' ? 'grau_certeza_alta' : cf === 'grau' ? 'grau_duvida_so_de_grau' : 'grau_para_revisao');
+    c.lr = grauDe(r)[0] + (r.c === 'alta' ? 'a' : 'b') + (y ? grauDe(y)[0] + (y.c === 'alta' ? 'a' : 'b') : '');
+    if (x.g === 'fora') { if (!c.fora) c.fora = c.p; c.s = ''; c.p = []; c.g = ''; c.m = ''; c.cf = cf; c.vg = versao; n++; continue; }
+    if (c.fora) { c.s = 'avanca'; c.p = c.fora; delete c.fora; }
+    const pp = (Array.isArray(x.p) ? x.p : []).filter(id => IDS_PAUTAS.has(id)).slice(0, 3);
+    if (pp.length) c.p = pp;
+    c.g = x.g === 'extrema' ? 'extrema' : 'direita';
+    if (x.m) c.m = String(x.m).slice(0, 200);
+    c.cf = cf; c.vg = versao; n++;
+  }
+  return n;
+}
+
+// Pede a um modelo mais forte que deduza, das decisões da equipe, as regras que ela aplica.
+export async function induzirRegras(exemplos, modelo = MODELO_REGRAS) {
+  const sistema = `Você ajuda um observatório da direita e da extrema-direita no Congresso brasileiro. A equipe do observatório revisou à mão a classificação de centenas de projetos. Cada linha abaixo traz a ementa e a decisão da equipe, que pode ser "extrema-direita", "direita", "não é pauta da direita" ou "contra a pauta da direita".
+
+Sua tarefa é deduzir a régua que a equipe aplica e escrevê-la como regras de decisão para outro classificador, que só verá a ementa. As regras antigas do classificador erram sobretudo por marcar como direita o que a equipe considera extrema-direita, e por deixar de fora projetos que a equipe considera pauta da direita.
+
+COMO ESCREVER
+- Até 45 regras, cada uma com no máximo 60 palavras, agrupadas por tema (punitivismo, armas, costumes, religião, educação, ambiente, povos, trabalho, Estado, privilégios fiscais, instituições, plataformas, soberania, decretos legislativos que sustam atos do governo e outros que os casos mostrarem).
+- Cada regra diz o que é extrema-direita, o que é direita e o que fica de fora naquele tema, com os sinais concretos da ementa que decidem (verbos, objetos, leis alteradas) e exemplos curtos.
+- Inclua regras de desempate, dizendo para que lado a equipe pende em cada tema quando a ementa é ambígua.
+- Descreva o padrão geral, não casos isolados. Quando as decisões da equipe forem contraditórias entre si, siga a maioria.
+- Sem dois-pontos como transição entre frases.
+
+Responda somente com JSON válido, no formato {"r":["regra 1","regra 2"]}.`;
+  const res = await chamarClaude(sistema, 'DECISÕES DA EQUIPE\n' + exemplos, 9000, modelo);
+  return res ? res.filter(x => typeof x === 'string').map(x => '- ' + x.trim()).join('\n') : '';
+}
+
+// Os casos corrigidos pela equipe entram como exemplos. A versão do grau inclui um contador que sobe a cada
+// PASSO_REGRAS correções novas, o que faz o robô refazer o grau sozinho à medida que a equipe ensina a IA.
+async function graduarPendentes(itens, exemplos, nCorrecoes, todosExemplos, corrigidos = {}) {
+  let versao = `${VERSAO_GRAU}-${Math.floor(nCorrecoes / PASSO_REGRAS)}`;
+  let guardadas = {}; try { guardadas = JSON.parse(fs.readFileSync(path.join(DADOS, 'regras-equipe.json'), 'utf8')); } catch (e) {}
+  // A reclassificação com regras novas só acontece uma vez por semana, na execução agendada de segunda-feira,
+  // ou quando disparada à mão com a opção "reclassificar" marcada. Nas outras execuções o robô só gradua os itens novos, com as regras já guardadas.
+  const evento = process.env.GITHUB_EVENT_NAME || '';
+  const diaDeReclassificar = (evento === 'workflow_dispatch' && process.env.RECLASSIFICAR === 'sim') || (evento === 'schedule' && AGORA.getUTCDay() === 1) || !evento;
+  if (!diaDeReclassificar && guardadas.versao && guardadas.regras && guardadas.versao !== versao && String(guardadas.versao).startsWith(VERSAO_GRAU + '-')) {
+    log(`  reclassificação (${versao}) adiada para a execução de segunda-feira; esta só gradua itens novos`);
+    versao = guardadas.versao;
+  }
+  // Só vão para a IA os itens que a equipe ainda não corrigiu (a correção prevalece de qualquer forma) e que
+  // ainda não têm grau, ou que têm grau antigo sem certeza alta. Os de certeza alta não são refeitos a cada nova versão das regras.
+  const pend = itens.filter(it => {
+    if (Object.prototype.hasOwnProperty.call(corrigidos, it.chave)) return false;
+    const c = classificacoes.c[it.chave];
+    return c && (c.s === 'avanca' || c.fora) && (!c.vg || (c.vg !== versao && c.cf !== 'alta'));
+  });
+  log(`Grau, ${pend.length} itens a revisar (versão ${versao}, ${nCorrecoes} correções como exemplo)`);
+  if (!pend.length || SEM_IA || !process.env.ANTHROPIC_API_KEY) return;
+  // Regras deduzidas das correções da equipe, guardadas em dados/regras-equipe.json e refeitas a cada PASSO_REGRAS correções.
+  if (guardadas.versao !== versao || !guardadas.regras) {
+    let regras = ''; try { regras = todosExemplos ? await induzirRegras(todosExemplos) : ''; } catch (e) { erro('regras da equipe', e); if (/recusada/.test(e.message)) throw e; }
+    if (regras) { guardadas = { versao, correcoes: nCorrecoes, gerado: HOJE, regras }; gravarJson('regras-equipe.json', guardadas, true); log(`  regras da equipe deduzidas de ${nCorrecoes} correções`); }
+  }
+  const sistema = instrucoesGrau(exemplos, guardadas.regras || false);
+  const lotes = [];
+  for (let i = 0; i < pend.length; i += 25) lotes.push(pend.slice(i, i + 25));
+  let feitos = 0;
+  await Motor.emParalelo(lotes.map(l => async () => {
+    try { feitos += await graduarLote(l, sistema, versao); }
+    catch (e) { erro('grau', e); if (/recusada/.test(e.message)) throw e; }
+  }), 2);
+  contar('graduados', feitos);
+}
+
+async function classificarPendentes(itens) {
+  const pend = itens.filter(it => !classificacoes.c[it.chave]).slice(0, MAX_CLASSIFICACOES);
+  log(`Classificação, ${pend.length} itens novos (${itens.length - pend.length} já classificados)`);
+  if (!pend.length || SEM_IA || !process.env.ANTHROPIC_API_KEY) { if (pend.length) log('  sem chave da Anthropic ou SEM_IA, classificação pulada'); return; }
+  const lotes = [];
+  for (let i = 0; i < pend.length; i += 25) lotes.push(pend.slice(i, i + 25));
+  let feitos = 0;
+  await Motor.emParalelo(lotes.map(l => async () => {
+    try { Object.assign(classificacoes.c, await classificarLote(l)); }
+    catch (e) { erro('classificação', e); if (/recusada/.test(e.message)) throw e; }
+    feitos += l.length;
+    if (feitos % 1000 < 25) { log(`  ${feitos} de ${pend.length}`); gravarJson('classificacoes.json', classificacoes, true); }
+  }), 4);
+  contar('classificados', feitos);
+}
+
+// ------------------------------------------------------------------ 5. alinhamento
+function posicao(votos, ps, grupo) {
+  let s = 0, n = 0;
+  for (const [k, v] of Object.entries(votos)) {
+    if (!grupo.has(ps[k])) continue;
+    if (v === 'S') s++; else if (v === 'N') n++;
+  }
+  const t = s + n;
+  // Ao menos dois votos do grupo, para que comissões pequenas do Senado também entrem.
+  if (t < 2) return { pos: '', coesao: 0 };
+  const c = Math.max(s, n) / t;
+  return { pos: c >= PAUTAS.indice.coesaoMinima ? (s >= n ? 'S' : 'N') : '', coesao: Math.round(c * 100) / 100 };
+}
+// Para cada parlamentar, votos com cada bloco nas votações em que aquele bloco e o PT se opuseram.
+function calcularAlinhamento(todasVotacoes) {
+  const conta = {};
+  for (const vt of todasVotacoes) {
+    if (!vt.disp) continue;
+    for (const [k, v] of votosDe(vt)) {
+      if (v !== 'S' && v !== 'N') continue;
+      const c = conta[k] || (conta[k] = { vd: 0, va: 0, vde: 0, vae: 0, vdd: 0, vad: 0 });
+      c.vd++; if (vt.bl && v === vt.bl) c.va++;
+      if (vt.dispE) { c.vde++; if (v === vt.be) c.vae++; }
+      if (vt.dispD) { c.vdd++; if (v === vt.bd) c.vad++; }
+    }
+  }
+  return conta;
+}
+
+// A numeração das proposições é única para as duas Casas. Lacunas nos números das últimas duas semanas
+// indicam proposições que o robô não trouxe. Algumas são esperadas (Executivo, comissões, outros órgãos);
+// muitas de uma vez indicam falha na coleta e aparecem como erro no diagnóstico.
+// Peso de cada bloco na produção legislativa e nas votações, por Casa e no total.
+// Autoria pelo primeiro autor; sucesso em votação quando a maioria do grupo votou no lado vencedor.
+export function calcularBlocos(props, votos, indice, cl, sit = {}) {
+  const G = ['extrema', 'direita', 'centro', 'esquerda'];
+  const vazio = () => ({ prop: 0, pauta: 0, membros: 0, emExercicio: 0, vot: 0, venceu: 0, comSit: 0, aprovada: 0, lei: 0, arquivada: 0 });
+  const casas = { T: {}, C: {}, S: {} };
+  const novoTot = () => ({ prop: 0, pauta: 0, pautaExtrema: 0, vot: 0, comSit: 0, aprovada: 0, lei: 0, arquivada: 0 });
+  const tot = { T: novoTot(), C: novoTot(), S: novoTot() };
+  // Por tema: projetos e aprovados de cada grupo.
+  const temas = { T: {}, C: {}, S: {} };
+  for (const c of Object.keys(casas)) for (const g of G) casas[c][g] = vazio();
+  for (const [k, p] of Object.entries(indice)) {
+    if (!G.includes(p.cl)) continue;
+    for (const c of ['T', p.c]) { casas[c][p.cl].membros++; if (p.ex) casas[c][p.cl].emExercicio++; }
+  }
+  for (const it of props) {
+    const a = (it.a || [])[0]; const casa = a ? a[0] : it.ta === 'senado' ? 'S' : (it.k || [])[0];
+    if (!['C', 'S'].includes(casa)) continue;
+    // Rotina (outorgas de rádio e TV, acordos internacionais, pautas administrativas): fora da produção, contada à parte.
+    if (it.rt) { for (const c of ['T', casa]) { const r = tot[c].rotina || (tot[c].rotina = { n: 0, tipos: {} }); r.n++; r.tipos[it.rt] = (r.tipos[it.rt] || 0) + 1; } continue; }
+    const x = cl(it.c) || {}, avanca = x.s === 'avanca', g = a && indice[a] && indice[a].cl;
+    const st = (sit[it.c] || [])[0] || '';
+    const aprov = st === 'p' || st === 'l';
+    for (const c of ['T', casa]) {
+      tot[c].prop++; if (avanca) { tot[c].pauta++; if (x.g === 'extrema') tot[c].pautaExtrema++; }
+      if (st) { tot[c].comSit++; if (aprov) tot[c].aprovada++; if (st === 'l') tot[c].lei++; if (st === 'a') tot[c].arquivada++; }
+      // Projetos sem autor parlamentar (Poder Executivo, comissões, outros órgãos): contam no total e aparecem à parte.
+      if (!a && it.ta) {
+        const f = tot[c].fora || (tot[c].fora = { prop: 0, pauta: 0, comSit: 0, aprovada: 0, lei: 0, arquivada: 0, tipos: {} });
+        f.prop++; f.tipos[it.ta] = (f.tipos[it.ta] || 0) + 1; if (avanca) f.pauta++;
+        if (st) { f.comSit++; if (aprov) f.aprovada++; if (st === 'l') f.lei++; if (st === 'a') f.arquivada++; }
+      }
+      if (G.includes(g)) {
+        const o = casas[c][g]; o.prop++; if (avanca) o.pauta++;
+        if (st) { o.comSit++; if (aprov) o.aprovada++; if (st === 'l') o.lei++; if (st === 'a') o.arquivada++; }
+      }
+      for (const m of it.m || []) {
+        const t = temas[c][m] || (temas[c][m] = { n: 0, ap: 0, g: {} });
+        t.n++; if (aprov) t.ap++;
+        if (G.includes(g)) { const tg = t.g[g] || (t.g[g] = [0, 0, 0]); tg[0]++; if (aprov) tg[1]++; if (avanca) tg[2]++; }
+      }
+    }
+  }
+  for (const vt of votos) {
+    const vence = { A: 'S', R: 'N' }[vt.res]; if (!vence || !['C', 'S'].includes(vt.k)) continue;
+    for (const c of ['T', vt.k]) tot[c].vot++;
+    const n = {};
+    for (const [op, ids] of Object.entries(vt.v || {})) {
+      if (op !== 'S' && op !== 'N') continue;
+      for (const id of ids) { const p = indice[vt.k + id]; if (!p || !G.includes(p.cl)) continue; (n[p.cl] = n[p.cl] || { S: 0, N: 0 })[op]++; }
+    }
+    for (const [g, c] of Object.entries(n)) {
+      if (c.S === c.N) continue;
+      const lado = c.S > c.N ? 'S' : 'N';
+      for (const casa of ['T', vt.k]) { casas[casa][g].vot++; if (lado === vence) casas[casa][g].venceu++; }
+    }
+  }
+  return Object.fromEntries(Object.keys(casas).map(c => [c, { ...tot[c], grupos: casas[c], temas: temas[c] }]));
+}
+
+// Proposições-chave, escolhidas pela equipe (correcoes.json, campo proposicoesChave, antes votacoesChave, ou o botão na página de revisão).
+// Para cada matéria: todas as votações nominais e simbólicas ligadas a ela, o placar de cada grupo,
+// a orientação do governo e da oposição e, por parlamentar, uma letra por votação (. = sem registro).
+const ORIENT = o => { const t = Motor.normalizar(String(o || '')); return t.startsWith('sim') ? 'S' : t.startsWith('nao') ? 'N' : t.startsWith('libera') ? 'L' : t.startsWith('obstru') ? 'O' : t.startsWith('absten') ? 'A' : ''; };
+function orientacaoDe(ori, re) { if (!ori) return ''; const k = Object.keys(ori).find(b => re.test(Motor.normalizar(b))); return k ? ORIENT(ori[k]) : ''; }
+export function montarVotacoesChave(config, votacoes, simbolicas, indice, cl, props) {
+  const propDe = new Map(props.map(it => [it.c, it]));
+  const G = ['extrema', 'direita', 'centro', 'esquerda'];
+  const saida = { itens: [], votos: { C: { ids: [], v: {} }, S: { ids: [], v: {} } } };
+  const letras = { C: {}, S: {} };
+  for (const [c, cfg] of Object.entries(config || {})) {
+    if (!cfg) continue;
+    const ligada = vt => (vt.mp || vt.mat) === c || vt.id === c || vt.ck === c;
+    const nominais = votacoes.filter(ligada), simb = simbolicas.filter(v => (v.mp || v.mat) === c || v.id === c);
+    const prop = propDe.get(c) || {};
+    const vot = [];
+    for (const vt of nominais) {
+      const gr = Object.fromEntries([...G, 'sp'].map(g => [g, {}]));
+      for (const [voto, ids] of Object.entries(vt.v || {})) for (const id of ids) {
+        const p = indice[vt.k + id]; const g = p && G.includes(p.cl) ? p.cl : 'sp';
+        gr[g][voto] = (gr[g][voto] || 0) + 1;
+      }
+      vot.push({ id: vt.id, k: vt.k, pl: vt.pl, o: vt.o, d: vt.d, desc: vt.desc, res: vt.res, gov: orientacaoDe(vt.ori, /^governo/), op: orientacaoDe(vt.ori, /^oposicao/),
+        gv: vt.gv, be: vt.be, bd: vt.bd, gr, t: Object.fromEntries(Object.entries(vt.v || {}).map(([x, l]) => [x, l.length])) });
+    }
+    for (const v of simb) vot.push({ id: v.id, k: v.k, pl: true, o: 'PLEN', d: v.d, desc: v.desc, res: v.res, simb: 1, gov: orientacaoDe(v.ori, /^governo/), op: orientacaoDe(v.ori, /^oposicao/), ori: v.ori });
+    vot.sort((x, y) => (x.d || '').localeCompare(y.d || '') || String(x.id).localeCompare(String(y.id)));
+    const primeira = nominais[0] || simb[0] || {};
+    saida.itens.push({ c, t: String(cfg.t || ''), nota: String(cfg.nota || ''), e: prop.e || primeira.me || '', au: prop.au, ta: prop.ta, a: prop.a, i: prop.i, kp: prop.k,
+      x: cl(c), vot });
+    for (const vt of nominais) {
+      const casa = saida.votos[vt.k]; if (!casa) continue;
+      const pos = casa.ids.push(vt.id) - 1;
+      for (const [voto, ids] of Object.entries(vt.v || {})) for (const num of ids) (letras[vt.k][num] || (letras[vt.k][num] = []))[pos] = ['S', 'N', 'A', 'O'].includes(voto) ? voto : '-';
+    }
+  }
+  for (const k of ['C', 'S']) for (const [num, arr] of Object.entries(letras[k])) saida.votos[k].v[num] = Array.from({ length: saida.votos[k].ids.length }, (_, i) => arr[i] || '.').join('');
+  // Mais recentes primeiro.
+  saida.itens.sort((x, y) => String((y.vot[y.vot.length - 1] || {}).d || '').localeCompare(String((x.vot[x.vot.length - 1] || {}).d || '')));
+  return saida;
+}
+
+export function verificarNumeracao(itens, dias = 14) {
+  const desde = new Date(AGORA - dias * 86400000).toISOString().slice(0, 10);
+  const saida = {};
+  for (const tipo of TIPOS) {
+    const nums = itens.filter(it => it.d >= desde && it.c.startsWith(tipo + ' ') && it.c.endsWith('/' + ano(HOJE)))
+      .map(it => +it.c.slice(tipo.length + 1).split('/')[0]).filter(Number.isFinite).sort((a, b) => a - b);
+    if (nums.length < 2) continue;
+    const tem = new Set(nums); const faltam = [];
+    for (let n = nums[0]; n <= nums[nums.length - 1]; n++) if (!tem.has(n)) faltam.push(n);
+    const total = nums[nums.length - 1] - nums[0] + 1;
+    saida[tipo] = { de: nums[0], ate: nums[nums.length - 1], faltam: faltam.length, numeros: faltam.slice(0, 30) };
+    contar('numeracao_lacunas_' + tipo, faltam.length);
+    if (faltam.length >= 10 && faltam.length / total > 0.15) erro(`numeração ${tipo}: faltam ${faltam.length} de ${total} números desde ${desde}`, new Error('possível falha na coleta de proposições'));
+  }
+  diag.numeracao = saida;
+  return saida;
+}
+
+// ------------------------------------------------------------------ execução
+export async function executar() {
+  const completo = MODO === 'completo' || !estado.ultimaColeta;
+  const ini = completo ? INICIO : new Date(AGORA - 45 * 86400000).toISOString().slice(0, 10);
+  const anos = anosDoPeriodo(completo ? INICIO : ini, HOJE);
+  log(`Modo ${completo ? 'completo' : 'diário'}, período ${ini} a ${HOJE}`);
+
+  await coletarDeputados(INICIO, HOJE);
+  await coletarEmExercicio();
+
+  // Votações primeiro, porque trazem os códigos dos senadores usados para ligar a autoria das proposições.
+  for (const a of anos) {
+    const ok = await coletarVotacoesCamaraArquivos(a);
+    if (!ok) await coletarVotacoesCamaraApi(a === anos[0] ? ini : `${a}-01-01`, a === ano(HOJE) ? HOJE : `${a}-12-31`);
+    // O arquivo anual da Câmara costuma chegar com dias de atraso. Os dias seguintes à última votação dele vêm pela API.
+    else if (a === ano(HOJE) && ultimaVotacaoArquivo[a] && ultimaVotacaoArquivo[a] < HOJE) {
+      const desde = new Date(Date.parse(ultimaVotacaoArquivo[a]) + 86400000).toISOString().slice(0, 10);
+      log(`  arquivo da Câmara vai até ${ultimaVotacaoArquivo[a]}, completando de ${desde} a ${HOJE} pela API`);
+      contar('camara_dias_completados_pela_api', Math.round((Date.parse(HOJE) - Date.parse(desde)) / 86400000) + 1);
+      if (desde <= HOJE) await coletarVotacoesCamaraApi(desde, HOJE);
+    }
+  }
+  await coletarVotacoesSenado(ini, HOJE);
+
+  await coletarProposicoesCamara(anos);
+  // Na primeira execução com projetos sem autor parlamentar, o Senado é lido desde o início para trazê-los.
+  const iniSenado = estado.semAutorSenado ? ini : INICIO;
+  await coletarProposicoesSenado(iniSenado, HOJE);
+  estado.semAutorSenado = estado.semAutorSenado || HOJE;
+  // Câmara: o ano corrente todo dia; os anteriores na primeira vez e depois uma vez por mês.
+  const mesAtras = new Date(AGORA - 30 * 86400000).toISOString().slice(0, 10);
+  const anosSemAutor = anosDoPeriodo(INICIO, HOJE).filter(a => a === ano(HOJE) || anos.includes(a) || !(estado.semAutor || {})[a] || estado.semAutor[a] < mesAtras);
+  try { await coletarSemAutorParlamentar(anosSemAutor); } catch (e) { erro('proposições sem autor parlamentar', e); }
+  // Projetos de senador gravados antes como "sem autor parlamentar" (Senado Federal - Fulano) voltam para o senador.
+  {
+    const porNomeSen = new Map(Object.entries(parlamentares.p).filter(([k]) => k[0] === 'S').map(([k, v]) => [chaveNome(v.n), k]));
+    for (const a of anosDoPeriodo(INICIO, HOJE)) for (const it of arquivoProposicoes(a).values()) {
+      if ((it.a || []).length || !it.au) continue;
+      const sen = senadorDoTexto(String(it.au).split(',')[0], porNomeSen); if (!sen) continue;
+      if (!parlamentares.p[sen.k]) { registrarParlamentar(sen.k, { n: sen.nome, c: 'S' }); porNomeSen.set(chaveNome(sen.nome), sen.k); }
+      it.a = [sen.k]; it.p = (parlamentares.p[sen.k] || {}).p ? [parlamentares.p[sen.k].p] : [];
+      delete it.au; delete it.ta;
+      contar('proposicoes_devolvidas_ao_senador');
+    }
+  }
+  let relatorias = [];
+  try { relatorias = await coletarRelatoriasSenado(); } catch (e) { erro('relatorias Senado', e); relatorias = lerJson('relatorias.json', { itens: [] }).itens || []; }
+
+  // Carrega os anos que não foram tocados nesta execução, para que os arquivos gravados fiquem completos.
+  for (const a of anosDoPeriodo(INICIO, HOJE)) { arquivoVotacoes(a); arquivoProposicoes(a); }
+  const todasVot = Object.values(votacoesPorAno).flatMap(m => [...m.values()]);
+  const todasPropFinal = Object.values(proposicoesPorAno).flatMap(m => [...m.values()]);
+  verificarNumeracao(todasPropFinal);
+  for (const it of todasPropFinal) { const rt = rotinaDe(it); if (rt) { it.rt = rt; contar('rotina_' + rt); } else delete it.rt; }
+  // Temas da taxonomia, pelas ementas.
+  for (const it of todasPropFinal) if (!it.m) it.m = Motor.classificar(it.e || '', TC).map(t => t.id);
+
+  // Classificação. Proposições pela chave; votações pela matéria quando houver ementa, senão pela descrição.
+  const paraClassificar = [];
+  const vistos = new Set();
+  for (const it of todasPropFinal) if (!Motor.ehHomenagem(it.e || '', TC)) { paraClassificar.push({ chave: it.c, texto: it.e }); vistos.add(it.c); }
+  // Requerimentos, destaques e emendas ficam sob a matéria principal citada na ementa (mp), com a ementa dela.
+  const ementaProp = new Map(todasPropFinal.map(it => [it.c, it.e]));
+  let ementaFora = {};
+  try { ementaFora = await recuperarMateriasCamara(todasVot, ementaProp); } catch (e) { erro('matérias das votações sem matéria', e); }
+  for (const [c, e] of Object.entries(ementaFora)) if (e && !ementaProp.has(c)) ementaProp.set(c, e);
+  for (const vt of todasVot) {
+    const mp = materiaPrincipal(vt);
+    if (mp) { vt.mp = mp; contar('votacoes_ligadas_a_materia_principal'); } else delete vt.mp;
+    const m = vt.mp || vt.mat;
+    const texto = ementaProp.get(m) || (vt.mp ? [vt.me, vt.desc].filter(Boolean).join(' ') : vt.me);
+    if (m && (vistos.has(m) || texto)) { if (!vistos.has(m)) { paraClassificar.push({ chave: m, texto }); vistos.add(m); } vt.ck = m; }
+    else { vt.ck = 'V:' + vt.id; paraClassificar.push({ chave: vt.ck, texto: [vt.desc, vt.me].filter(Boolean).join(' ') }); }
+  }
+  // Correções da equipe (correcoes.json na raiz) valem por cima da classificação da IA.
+  let correcoes = {};
+  try { correcoes = JSON.parse(fs.readFileSync(path.join(RAIZ, 'correcoes.json'), 'utf8')).correcoes || {}; }
+  catch (e) { if (fs.existsSync(path.join(RAIZ, 'correcoes.json'))) erro('correcoes.json com erro de formato', e); }
+  // Exemplos para a IA, a partir das correções da equipe (até 300, com a ementa).
+  const ementaDe = new Map(paraClassificar.map(it => [it.chave, it.texto]));
+  const descreveCorrecao = (k, c) => {
+    const ia = classificacoes.c[k] || {};
+    const sent = c.s !== undefined ? c.s : (ia.s || (ia.fora || c.g || c.p ? 'avanca' : ''));
+    const ppIa = ia.p && ia.p.length ? ia.p : (ia.fora || []);
+    if (!sent) return 'não é pauta da direita';
+    if (sent === 'barra') return 'contra a pauta da direita';
+    const g = c.g || ia.g || 'direita';
+    const pp = Array.isArray(c.p) ? c.p : ppIa;
+    return `${g === 'extrema' ? 'extrema-direita' : 'direita'}${pp.length ? ', pautas ' + pp.join(', ') : ''}`;
+  };
+  // As confirmações em bloco (lote: 1) não foram lidas uma a uma pela equipe e ficam fora dos exemplos e da contagem.
+  const linhasEx = Object.entries(correcoes).filter(([k, c]) => c && typeof c === 'object' && !c.lote && ementaDe.get(k))
+    .map(([k, c]) => `- ${k}. ${String(ementaDe.get(k)).slice(0, 260)} => ${descreveCorrecao(k, c)}`);
+  const exemplos = linhasEx.slice(-300).join('\n');
+  await classificarPendentes(paraClassificar);
+  await graduarPendentes(paraClassificar, exemplos, Object.values(correcoes).filter(c => !(c && c.lote)).length, linhasEx.slice(-700).join('\n'), correcoes);
+
+  const classificado = k => {
+    const ia = classificacoes.c[k] || {};
+    const c = correcoes[k];
+    const x = { s: ia.s || '', p: ia.p || [], g: ia.g || '', m: ia.m || '' };
+    if (ia.cf) x.cf = ia.cf;
+    if (c && typeof c === 'object') {
+      if (c.s !== undefined) x.s = ['avanca', 'barra'].includes(c.s) ? c.s : '';
+      if (Array.isArray(c.p)) x.p = c.p.filter(id => IDS_PAUTAS.has(id)).slice(0, 3);
+      if (c.g !== undefined) x.g = c.g === 'extrema' ? 'extrema' : 'direita';
+      if (c.m !== undefined) x.m = String(c.m);
+      if (!x.s) { x.p = []; x.g = ''; if (c.m === undefined) x.m = ''; }
+      else if (x.s === 'barra') x.g = '';
+      else if (!x.g) x.g = 'direita';
+      if (c.lote) { x.lt = 1; contar('confirmacoes_em_bloco'); }   // vale, mas com o selo de classificação por IA
+      else { x.eq = 1; contar('correcoes_aplicadas'); }
+    }
+    return x;
+  };
+
+  // Alinhamento.
+  const conta = calcularAlinhamento(todasVot);
+  const contaProp = {};
+  for (const it of todasPropFinal) {
+    const cl = classificado(it.c);
+    for (const a of it.a || []) {
+      const c = contaProp[a] || (contaProp[a] = { n: 0, d: 0, x: 0, pp: {} });
+      c.n++;
+      if (cl && cl.s === 'avanca') { c.d++; if (cl.g === 'extrema') c.x++; cl.p.forEach(p => c.pp[p] = (c.pp[p] || 0) + 1); }
+    }
+  }
+  // Câmara: o grupo de cada deputado vem da posição estimada pelas votações (robo/posicoes.py), quando há votos suficientes.
+  // Senado e deputados sem votos suficientes: grupo pelo partido.
+  const POS = lerJson('posicoes.json', {});
+  const posC = (POS.C && POS.C.p) || {}, cortesC = (POS.C && POS.C.cortes) || null;
+  const grupoPelosVotos = x => x < cortesC[0] ? 'esquerda' : x < cortesC[1] ? 'centro' : x < cortesC[2] ? 'direita' : 'extrema';
+  const indice = {};
+  for (const [k, p] of Object.entries(parlamentares.p)) {
+    const c = conta[k] || { vd: 0, va: 0, vde: 0, vae: 0, vdd: 0, vad: 0 };
+    const pr = contaProp[k] || { n: 0, d: 0, x: 0, pp: {} };
+    const ind = (a, t) => t >= PAUTAS.indice.votacoesMinimas ? Math.round(1000 * a / t) / 10 : null;
+    const i = ind(c.va, c.vd), ie = ind(c.vae, c.vde), id = ind(c.vad, c.vdd);
+    // Alinhados e próximos: parlamentares de outros partidos, pelo maior dos dois índices.
+    const m = Math.max(ie ?? -1, id ?? -1);
+    // Grupo pelo partido; para quem está fora dos dois blocos, marca também se vota com a direita (alinhado ou próximo).
+    const classePartido = grupoDoPartido(p.p);
+    const pv = k[0] === 'C' && cortesC && posC[k] ? posC[k] : null;
+    const classe = pv ? grupoPelosVotos(pv[0]) : classePartido;
+    if (pv && classe !== classePartido) contar('grupo_pelos_votos_diferente');
+    const al = classe === 'extrema' || classe === 'direita' ? '' : m >= PAUTAS.indice.alinhado * 100 ? 'alinhado' : m >= PAUTAS.indice.proximo * 100 ? 'proximo' : '';
+    if (!c.vd && !pr.n && !p.ex) continue;
+    indice[k] = { n: p.n, c: p.c, p: p.p, s: p.s, uf: p.uf, i, vd: c.vd, va: c.va, ie, vde: c.vde, vae: c.vae, id, vdd: c.vdd, vad: c.vad,
+      cl: classe, ...(pv ? { cv: 1, po: Math.round(pv[0] * 100) / 100, clp: classePartido } : {}), al, ex: p.ex ? 1 : 0, np: pr.n, nd: pr.d, nx: pr.x, pp: pr.pp };
+  }
+
+  // Gravação. Apaga arquivos de anos anteriores à legislatura, criados por datas erradas da fonte.
+  fs.mkdirSync(DADOS, { recursive: true });
+  for (const f of fs.readdirSync(DADOS)) {
+    const mm = /^(proposicoes|votacoes)-(\d{4})\.json$/.exec(f);
+    if (mm && +mm[2] < 2023) { fs.unlinkSync(path.join(DADOS, f)); delete (mm[1] === 'proposicoes' ? proposicoesPorAno : votacoesPorAno)[mm[2]]; }
+  }
+  for (const [a, m] of Object.entries(proposicoesPorAno)) {
+    const itens = [...m.values()].sort((x, y) => (y.d || '').localeCompare(x.d || ''));
+    if (itens.length) gravarJson(`proposicoes-${a}.json`, { ano: +a, itens }, true);
+  }
+  for (const [a, m] of Object.entries(votacoesPorAno)) {
+    const itens = [...m.values()].sort((x, y) => (y.d || '').localeCompare(x.d || ''));
+    if (itens.length) gravarJson(`votacoes-${a}.json`, { ano: +a, itens }, true);
+  }
+  gravarJson('classificacoes.json', classificacoes, true);
+  parlamentares.gerado = AGORA.toISOString();
+  gravarJson('parlamentares.json', parlamentares, true);
+  gravarJson('indice.json', { gerado: AGORA.toISOString(), regras: PAUTAS.indice, nucleo: PAUTAS.nucleo, referencia: PAUTAS.referenciaGoverno, p: indice }, true);
+
+  // Arquivos leves para a página.
+  const cl = classificado;
+  // Relatores em exercício de cada matéria (sem data de fim), para mostrar na ficha do projeto.
+  const relAtual = new Map();
+  for (const r of relatorias) if (!r.df) { const l = relAtual.get(r.c) || []; l.push({ r: r.r, n: r.n, s: r.s, uf: r.uf, cm: r.cm }); relAtual.set(r.c, l); }
+  // Câmara: arquivo gerado pelo script de relatorias da Câmara (robo/relatorias-camara.mjs).
+  for (const r of (lerJson('relatorias-camara.json', { itens: [] }).itens || [])) if (r.at) { const l = relAtual.get(r.c) || []; l.push({ r: r.r, n: r.n, s: r.s, uf: r.uf, cm: r.cm }); relAtual.set(r.c, l); }
+  const direita = todasPropFinal.filter(it => cl(it.c).s === 'avanca')
+    .map(it => ({ c: it.c, k: it.k, d: it.d, e: it.e, a: it.a, au: it.au, ta: it.ta, rt: it.rt, p: it.p, m: it.m, i: it.i, ss: it.ss, x: cl(it.c), rl: relAtual.get(it.c) }))
+    .sort((x, y) => (y.d || '').localeCompare(x.d || ''));
+  gravarJson('proposicoes-direita.json', { gerado: AGORA.toISOString(), itens: direita }, true);
+  // Todos os projetos, em versão leve, para a busca do site (aba Proposições, opção "Todos os projetos").
+  const leve = todasPropFinal.map(it => {
+    const x = cl(it.c) || {};
+    const e = String(it.e || ''), o = { c: it.c, k: it.k, d: it.d, e: e.length > 320 ? e.slice(0, 320).replace(/\s+\S*$/, '') + '…' : e, i: it.i };
+    if ((it.a || []).length) { o.a = it.a.slice(0, 4); if (it.a.length > 4) o.na = it.a.length; o.p = it.p; }
+    if (it.au) { o.au = it.au; o.ta = it.ta; }
+    if (it.rt) o.rt = it.rt;
+    if (x.s) { o.x = { s: x.s, p: x.p, g: x.g, m: x.m }; if (x.eq) o.x.eq = 1; if (x.lt) o.x.lt = 1; }
+    return o;
+  }).sort((x, y) => (y.d || '').localeCompare(x.d || ''));
+  gravarJson('proposicoes-todas.json', { gerado: AGORA.toISOString(), itens: leve }, true);
+  const resumoVot = todasVot.map(vt => ({ id: vt.id, k: vt.k, o: vt.o, pl: vt.pl, d: vt.d, h: vt.h, desc: vt.desc, ab: vt.ab, tp: vt.tp || tipoVotacao(vt.desc, vt.ab),
+    mat: vt.mat, mp: vt.mp, ck: vt.ck, me: vt.me, res: vt.res,
+    bl: vt.bl, blc: vt.blc, gv: vt.gv, disp: vt.disp, venceu: vt.venceu, be: vt.be, bec: vt.bec, bd: vt.bd, bdc: vt.bdc, dispE: vt.dispE, dispD: vt.dispD, vE: vt.vE, vD: vt.vD, ori: vt.ori, x: cl(vt.ck),
+    t: Object.fromEntries(Object.entries(vt.v || {}).map(([c, l]) => [c, l.length])) }))
+    .sort((x, y) => (y.d || '').localeCompare(x.d || '') || (y.h || '').localeCompare(x.h || ''));
+  gravarJson('votacoes-resumo.json', { gerado: AGORA.toISOString(), itens: resumoVot }, true);
+  // Votos de cada parlamentar nas votações disputadas, para o dossiê não precisar baixar todas as votações.
+  // Para cada Casa, a lista de votações e, por parlamentar, uma letra por votação na mesma ordem (. = sem registro).
+  const votosDisp = { gerado: AGORA.toISOString(), C: { ids: [], v: {} }, S: { ids: [], v: {} } };
+  const dispOrdem = todasVot.filter(vt => vt.dispE || vt.dispD || vt.disp).sort((x, y) => (x.d || '').localeCompare(y.d || '') || String(x.id).localeCompare(String(y.id)));
+  const letras = { C: {}, S: {} };
+  for (const vt of dispOrdem) {
+    const casa = votosDisp[vt.k]; if (!casa) continue;
+    const pos = casa.ids.push(vt.id) - 1;
+    for (const [c, l] of Object.entries(vt.v || {})) for (const num of l) {
+      const arr = letras[vt.k][num] || (letras[vt.k][num] = []);
+      arr[pos] = ['S', 'N', 'A', 'O'].includes(c) ? c : '-';
+    }
+  }
+  for (const k of ['C', 'S']) for (const [num, arr] of Object.entries(letras[k])) votosDisp[k].v[num] = Array.from(arr, x => x || '.').join('');
+  gravarJson('votos-disputadas.json', votosDisp, true);
+
+  // Votações simbólicas e votações-chave.
+  for (const a of anosDoPeriodo(INICIO, HOJE)) arquivoSimbolicas(a);
+  const todasSimb = Object.values(simbolicasPorAno).flatMap(m => [...m.values()]);
+  for (const v of todasSimb) { const mp = materiaPrincipal(v); if (mp) v.mp = mp; else delete v.mp; }
+  for (const [a, m] of Object.entries(simbolicasPorAno)) {
+    const itens = [...m.values()].sort((x, y) => (y.d || '').localeCompare(x.d || ''));
+    if (itens.length && +a >= 2023) gravarJson(`votacoes-simbolicas-${a}.json`, { ano: +a, itens }, true);
+  }
+  let configChave = {};
+  try { configChave = (c => c.proposicoesChave || c.votacoesChave)(JSON.parse(fs.readFileSync(path.join(RAIZ, 'correcoes.json'), 'utf8'))) || {}; } catch (e) {}
+  const chave = montarVotacoesChave(configChave, todasVot, todasSimb, indice, cl, todasPropFinal);
+  gravarJson('votacoes-chave.json', { gerado: AGORA.toISOString(), ...chave }, true);
+  contar('votacoes_chave', chave.itens.length);
+
+  const desde = d => new Date(AGORA - d * 86400000).toISOString().slice(0, 10);
+  const porPauta = {};
+  for (const p of PAUTAS.lista) porPauta[p.id] = { prop: 0, extrema: 0, prop30: 0, vot: 0, vitorias: 0, derrotas: 0 };
+  for (const it of direita) { const x = it.x; if (x.s !== 'avanca') continue; for (const p of x.p) { if (!porPauta[p]) continue; porPauta[p].prop++; if (x.g === 'extrema') porPauta[p].extrema++; if (it.d >= desde(30)) porPauta[p].prop30++; } }
+  for (const vt of resumoVot) { if (!vt.x.p) continue; for (const p of vt.x.p) { if (!porPauta[p]) continue; porPauta[p].vot++; const vv = vt.dispE ? vt.vE : vt.venceu; if (vv === true) porPauta[p].vitorias++; if (vv === false) porPauta[p].derrotas++; } }
+  const emExercicio = Object.values(indice).filter(p => p.ex);
+  gravarJson('resumo.json', {
+    gerado: AGORA.toISOString(), inicio: INICIO,
+    totais: { proposicoes: todasPropFinal.length, direita: direita.filter(it => it.x.s === 'avanca').length, extrema: direita.filter(it => it.x.g === 'extrema').length,
+      votacoes: resumoVot.length, disputadas: resumoVot.filter(v => v.disp).length, vitorias: resumoVot.filter(v => v.disp && v.venceu === true).length,
+      derrotas: resumoVot.filter(v => v.disp && v.venceu === false).length,
+      dispE: resumoVot.filter(v => v.dispE).length, vitoriasE: resumoVot.filter(v => v.dispE && v.vE === true).length, derrotasE: resumoVot.filter(v => v.dispE && v.vE === false).length,
+      dispD: resumoVot.filter(v => v.dispD).length, vitoriasD: resumoVot.filter(v => v.dispD && v.vD === true).length, derrotasD: resumoVot.filter(v => v.dispD && v.vD === false).length,
+      grupos: Object.fromEntries(['extrema', 'direita', 'centro', 'esquerda', 'sp'].map(g => [g, emExercicio.filter(p => p.cl === g).length])),
+      nucleo: emExercicio.filter(p => p.cl === 'extrema' || p.cl === 'direita').length, alinhados: emExercicio.filter(p => p.al === 'alinhado').length,
+      emExercicio: { C: emExercicio.filter(p => p.c === 'C').length, S: emExercicio.filter(p => p.c === 'S').length } },
+    porPauta,
+    temas: { cadernos: TAX.cadernos.map(c => ({ id: c.id, nome: c.nome, sub: c.subtitulo })), lista: TAX.temas.map(t => ({ id: t.id, c: t.caderno, n: t.tema })) },
+    blocos: calcularBlocos(todasPropFinal, todasVot, indice, cl, lerJson('situacoes.json', { itens: {} }).itens || {}),
+    recentes: { proposicoes: direita.filter(it => it.x.s === 'avanca' && it.d >= desde(7)).length, votacoes: resumoVot.filter(v => v.d >= desde(7)).length }
+  });
+
+  estado.ultimaColeta = AGORA.toISOString();
+  if (completo) anos.forEach(a => estado.anosCompletos[a] = HOJE);
+  gravarJson('estado.json', estado);
+  diag.fim = new Date().toISOString();
+  gravarJson('diagnostico.json', diag);
+  log('Concluído', JSON.stringify(diag.contagens));
+  return { indice, direita, resumoVot };
+}
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  executar().catch(e => { erro('geral', e); try { gravarJson('diagnostico.json', diag); } catch (er) {} process.exit(1); });
+}

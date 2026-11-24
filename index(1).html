@@ -1,0 +1,1151 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>Os exterminadores do futuro</title>
+<meta name="description" content="Observatório dos movimentos da direita e da extrema-direita no Congresso Nacional. Projetos e votações na Câmara e no Senado, com dados oficiais atualizados todos os dias.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Os exterminadores do futuro">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://exterminadores.com.br/">
+<meta property="og:title" content="Os exterminadores do futuro">
+<meta property="og:description" content="O que a direita e a extrema-direita fazem no Congresso, todos os dias. Projetos e votações com dados oficiais da Câmara e do Senado.">
+<meta property="og:image" content="https://exterminadores.com.br/compartilhar.jpg?v=3">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Os exterminadores do futuro. Observatório da direita no Congresso.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://exterminadores.com.br/compartilhar.jpg?v=3">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#123B40; --night-2:#1E4B51; --accent:#0B6E73; --red:#0B6E73; --red-ink:#ffffff;
+  --paper:#F2F4F1; --sheet:#ffffff; --ink:#1B2523; --ink-2:#4C5A57; --ink-3:#5F6B68;
+  --line:#D5DCD9; --mark:#E3B75B; --mark-ink:#1B2523; --warn:#7a4f00; --warn-soft:#fbf1dc;
+  --ext:#9A3424; --dir:#C9822B; --dir-soft:#F4E2C2; --dir-ink:#6E430A; --contra:#2F7F84; --ver:#2F6B3A; --wa:#1F7A4D;
+  --nao:#B4442F; --sim:#2F6B3A;
+  --g-esq:#6FB3B8; --g-cen:#9C9A90; --g-sp:#DCE3E0; --g-dir:#E3B75B; --g-ext:#E57A63;
+  --display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --text:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --night:#0E2C30; --night-2:#1A3E43; --accent:#6FB3B8; --red:#6FB3B8; --paper:#141B1A; --sheet:#1C2523; --ink:#EEF2F0; --ink-2:#B6C2BF; --ink-3:#97A3A0;
+    color-scheme:dark; --line:#2C3836; --warn:#f0c46a; --warn-soft:#3a3120; --ext:#F08A74; --dir:#E3B75B; --dir-soft:#3A2F1C; --dir-ink:#F2D49A; --contra:#6FB3B8; --ver:#6CC08A; --nao:#F08A74; --sim:#6CC08A;
+  }
+}
+:root[data-theme="dark"]{ color-scheme:dark;
+  --night:#0E2C30; --night-2:#1A3E43; --accent:#6FB3B8; --red:#6FB3B8; --paper:#141B1A; --sheet:#1C2523; --ink:#EEF2F0; --ink-2:#B6C2BF; --ink-3:#97A3A0;
+  --line:#2C3836; --warn:#f0c46a; --warn-soft:#3a3120; --ext:#F08A74; --dir:#E3B75B; --dir-soft:#3A2F1C; --dir-ink:#F2D49A; --contra:#6FB3B8; --ver:#6CC08A; --nao:#F08A74; --sim:#6CC08A;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font:16px/1.55 var(--text);-webkit-font-smoothing:antialiased}
+a{color:var(--red)}
+button,input,select{font:inherit;color:inherit}
+select{background-color:var(--sheet);color:var(--ink);border:1.5px solid var(--line);border-radius:4px;padding:7px 9px}
+select option{background-color:var(--sheet);color:var(--ink)}
+:focus-visible{outline:3px solid var(--mark);outline-offset:2px}
+.wrap{max-width:1280px;margin:0 auto;padding:0 20px}
+@media (max-width:560px){.wrap{padding:0 16px}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+[hidden]{display:none!important}
+
+/* abertura */
+.hero{background:var(--night);color:#F2F4F1}
+.hero .wrap{padding-top:30px;padding-bottom:28px;display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:20px 48px;align-items:center}
+@media (max-width:900px){.hero .wrap{grid-template-columns:1fr;padding-top:22px;padding-bottom:22px}}
+@media (max-width:600px){
+  .hero .hemiciclo{display:flex;gap:14px;align-items:flex-end}
+  .hero .hemiciclo svg{width:46%;max-width:190px;flex:none}
+  .hero .hemiciclo figcaption{margin-top:0;font-size:12px}
+  .hero .hemiciclo .leg{flex-direction:column;gap:2px}
+  .hero .lede{font-size:14.5px}
+  .faixa .numeros{gap:10px 16px}
+  .faixa .numeros p{font-size:13px}
+}
+.hemiciclo{margin:0}
+.hemiciclo svg{display:block;width:100%;max-width:380px;height:auto}
+.hemiciclo figcaption{margin-top:8px;font-size:13px;line-height:1.5;color:#C5D3D0}
+.hemiciclo figcaption b{display:block;margin-bottom:6px;color:#F2F4F1;font-weight:600}
+.hemiciclo .leg{display:flex;flex-wrap:wrap;gap:4px 18px}
+.hemiciclo .leg span{display:inline-flex;align-items:center;gap:7px}
+.hemiciclo .leg i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.marca-hero svg{display:block;width:230px;height:auto;margin:0 0 10px -2px}
+@media (max-width:600px){.marca-hero svg{width:150px;margin-bottom:6px}.hero .wrap{padding-top:14px}.hero .lede{margin-top:10px}}
+.hero h1{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(40px,5vw,72px);line-height:.9;margin:0;color:#F2F4F1}
+.hero .slogan{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:clamp(24px,2.7vw,36px);line-height:1;margin:12px 0 0;color:var(--mark)}
+.hero .lede{font-size:clamp(15px,1.3vw,17px);line-height:1.55;max-width:62ch;margin:14px 0 0;color:#C5D3D0}
+.faixa{background:var(--sheet);color:var(--ink-2);border-bottom:1px solid var(--line)}
+.faixa .wrap{padding-top:14px;padding-bottom:10px}
+.faixa .numeros{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px 24px}
+.faixa .numeros p{margin:0;font-size:14px;line-height:1.3}
+.faixa .numeros p+p{border-left:1px solid var(--line);padding-left:24px}
+.faixa .numeros b{display:block;font-family:var(--display);font-weight:800;font-size:32px;line-height:1;color:var(--night)}
+.faixa .atual{margin:8px 0 0;font-size:12.5px;color:var(--ink-3)}
+@media (max-width:760px){.faixa .numeros{grid-template-columns:repeat(2,minmax(0,1fr))}.faixa .numeros p:nth-child(3){border-left:0;padding-left:0}.faixa .numeros b{font-size:28px}}
+:root[data-theme="dark"] .faixa .numeros b{color:var(--ink)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .faixa .numeros b{color:var(--ink)}}
+.abas{background:var(--sheet);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+.abas .wrap{display:flex;gap:2px;overflow-x:auto}
+.abas button{border:0;background:transparent;padding:14px 14px 12px;font-weight:700;font-size:15px;color:var(--ink-2);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap}
+.abas button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--night)}
+.abas .aba-link{padding:14px 14px 12px;font-weight:700;font-size:15px;color:var(--ink-2);text-decoration:none;border-bottom:3px solid transparent;white-space:nowrap}
+.abas .aba-link:hover{color:var(--ink)}
+main .wrap{padding-top:44px;padding-bottom:72px}
+h2.titulo{font-family:var(--display);font-weight:800;font-size:clamp(32px,3.6vw,44px);line-height:1;margin:0 0 10px}
+p.sub{color:var(--ink-2);max-width:70ch;margin:0 0 18px}
+.secao{margin-bottom:52px}
+
+/* números */
+.bal-filtro{margin:0 0 22px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.bal-filtro .btn{text-decoration:none}
+.bal-lede{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:18px 28px;margin:0 0 34px}
+.bal-lede p{margin:0;font-size:16px;line-height:1.45;color:var(--ink-2)}
+.bal-lede b{display:block;font-family:var(--display);font-weight:800;font-size:44px;line-height:1;color:var(--ink);margin-bottom:4px}
+.bal-graficos{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:30px 44px}
+.bal-g h3{font-size:18px;margin:0 0 4px}
+.bal-g .sub{margin:0 0 12px;font-size:14.5px}
+.bal-linha{display:grid;grid-template-columns:128px minmax(0,1fr) 128px;align-items:center;gap:10px;padding:5px 0}
+.bal-linha .nome{font-size:14.5px;color:var(--ink)}
+.bal-linha .trilho{height:14px}
+.bal-linha .barra{display:block;height:14px;border-radius:0 4px 4px 0;min-width:2px}
+.bal-linha .val{font-size:14.5px;font-variant-numeric:tabular-nums;color:var(--ink);text-align:right}
+.bal-linha .val small{display:block;white-space:nowrap;color:var(--ink-3);font-size:12.5px}
+.bal-nota{font-size:13.5px;color:var(--ink-3);margin:10px 0 0;line-height:1.5}
+@media (max-width:600px){.bal-linha{grid-template-columns:96px minmax(0,1fr) 112px}.bal-linha .nome{font-size:13.5px}.bal-lede b{font-size:36px}}
+.bal-temas-ctrl{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 14px}
+.bal-temas-ctrl select,.bal-filtro select{max-width:100%}
+.bal-legenda{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--ink-2);margin:0 0 12px}
+.bal-legenda span{display:inline-flex;align-items:center;gap:7px}
+.bal-legenda i{width:12px;height:12px;border-radius:2px;display:inline-block}
+.bal-tema{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:6px 20px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.bal-tema .t{font-size:15px;line-height:1.35}
+.bal-tema .t small{display:block;color:var(--ink-3);font-size:13px}
+.bal-pilha{display:flex;gap:2px;height:16px}
+.bal-pilha span{display:block;height:16px;min-width:2px}
+.bal-pilha span:last-child{border-radius:0 4px 4px 0}
+.bal-tema .p{grid-column:2;font-size:13px;color:var(--ink-3);margin-top:-2px}
+@media (max-width:700px){.bal-tema{grid-template-columns:1fr}.bal-tema .p{grid-column:1}}
+.kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,170px),1fr));gap:16px 0;margin:0 0 30px}
+.kpi{background:transparent;border-left:1px solid var(--line);padding:2px 18px}
+.kpi b{display:block;font-family:var(--display);font-weight:900;font-size:40px;line-height:1}
+.kpi span{font-size:14px;color:var(--ink-2)}
+.kpi.ext b{color:var(--ext)}
+
+/* selos */
+.selo{display:inline-block;font-size:12px;font-weight:700;border-radius:3px;padding:1px 7px;white-space:nowrap}
+.s-ext{background:var(--ext);color:#fff}
+.s-dir{background:var(--dir-soft);color:var(--dir-ink)}
+.s-contra{background:var(--contra);color:#fff}
+.s-pauta{background:var(--paper);color:var(--ink);border:1px solid var(--line)}
+.s-tipo{background:var(--accent);color:#fff;border:1px solid var(--accent)}
+.s-ia{background:var(--paper);color:var(--ink-3);font-size:11px;letter-spacing:.04em}
+.s-ver{background:var(--ver);color:#fff}
+.s-chave{background:var(--ink);color:var(--sheet)}
+.vchave{background:var(--sheet);border:1px solid var(--line);padding:14px 16px;margin:0 0 14px}
+.vchave h3{margin:0 0 4px;font-size:18px}
+.vchave .ementa{font-size:14.5px;color:var(--ink-2);margin:0 0 8px}
+.vchave table{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums}
+.vchave th,.vchave td{text-align:right;padding:4px 6px;border-top:1px solid var(--line)}
+.vchave th:first-child,.vchave td:first-child{text-align:left;width:52%}
+.vchave td{white-space:nowrap}.vchave td:first-child{white-space:normal}
+@media (max-width:600px){.vchave td:first-child,.vchave th:first-child{min-width:210px}}
+.tabela-rolar{overflow-x:auto}
+.lista-chave div{display:grid;grid-template-columns:86px minmax(0,1fr) auto;gap:4px 10px;padding:6px 0;border-top:1px solid var(--line);font-size:14px}
+.lista-chave small{grid-column:2 / 4;color:var(--ink-3)}
+.s-venceu{background:var(--ink);color:var(--sheet)}
+.s-perdeu{background:transparent;color:var(--ink-2);border:1.5px solid var(--ink-3)}
+.s-partido{background:var(--night-2);color:#fff}
+.s-cl-nucleo,.s-cl-extrema{background:var(--ext);color:#fff}
+.s-cl-direita{background:var(--dir-soft);color:var(--dir-ink)}
+.s-cl-alinhado{background:transparent;color:var(--dir-ink);border:1.5px solid var(--dir)}
+.s-cl-centro{background:var(--warn-soft);color:var(--warn);border:1px solid var(--warn)}
+.s-cl-esquerda{background:var(--contra);color:#fff}
+.s-cl-sp{background:var(--paper);color:var(--ink-2);border:1px solid var(--line)}
+.s-cl-proximo{background:var(--warn-soft);color:var(--warn);border:1px solid var(--warn)}
+
+/* cartões */
+.grade{display:flex;flex-direction:column;background:var(--sheet);border:1px solid var(--line)}
+.cartao{display:grid;grid-template-columns:180px minmax(0,1fr);column-gap:28px;row-gap:0;padding:20px 24px;border-top:1px solid var(--line);min-width:0;position:relative}
+.cartao:first-child{border-top:0}
+.cartao>*{grid-column:2}
+.cartao>*+*{margin-top:8px}
+.cartao>.topo:first-child+*{margin-top:0}
+.cartao>.topo:first-child{grid-column:1;grid-row:1/span 8;flex-direction:column;align-items:flex-start;gap:3px}
+.cartao::before{content:"";position:absolute;left:0;top:20px;bottom:20px;width:3px;background:transparent}
+.cartao.ext::before{background:var(--ext)}
+.cartao.dir::before{background:var(--dir)}
+.cartao.contra::before{background:var(--contra)}
+@media (max-width:700px){.cartao{grid-template-columns:1fr;padding:16px 16px 16px 18px}.cartao>*,.cartao>.topo:first-child{grid-column:1;grid-row:auto}.cartao>.topo:first-child{flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:4px 10px}}
+.cartao .topo{display:flex;gap:5px 9px;align-items:baseline;flex-wrap:wrap}
+.cartao .num{font-family:var(--text);font-weight:700;font-size:18px;line-height:1.2}
+.cartao .meta{font-size:13.5px;color:var(--ink-3);font-weight:500}
+.cartao .data{font-size:13.5px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.cartao .ementa{margin:0;font-size:16.5px;line-height:1.5;max-width:75ch}
+.cartao .motivo{margin:0;font-size:14px;color:var(--ink-2)}
+.cartao .motivo b{color:var(--ink)}
+.cartao .autores{margin:0;font-size:13px;color:var(--ink-3)}
+.cartao .acoes{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:auto;padding-top:2px;font-size:13.5px}
+.placar{display:flex;gap:2px;height:8px;border-radius:2px;overflow:hidden;background:var(--paper)}
+.placar span{display:block;height:100%}
+.placar .ps{background:var(--sim)}.placar .pn{background:var(--nao)}.placar .pa{background:var(--ink-3)}
+.bloco{font-size:14px}
+.bloco b{font-weight:700}
+.btn{border:1.5px solid var(--ink);background:transparent;border-radius:4px;padding:5px 10px;font-weight:600;font-size:13.5px;cursor:pointer;color:var(--ink);text-decoration:none}
+.btn.forte{background:var(--wa);border-color:var(--wa);color:#fff}
+.btn.vermelho{background:var(--night);border-color:var(--night);color:#fff}
+.vazio{background:var(--sheet);border:1px solid var(--line);padding:28px;text-align:center;color:var(--ink-2)}
+
+/* pautas */
+.grade-pautas{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:10px}
+.pauta{background:var(--sheet);border:1px solid var(--line);padding:14px 16px;cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:6px}
+.pauta:hover{border-color:var(--ink)}
+.pauta h3{margin:0;font-size:17px;line-height:1.25}
+.pauta .nums{display:flex;gap:4px 14px;flex-wrap:wrap;font-size:13.5px;color:var(--ink-2)}
+.pauta .nums b{font-family:var(--display);font-weight:900;font-size:24px;color:var(--ink);margin-right:3px}
+.pauta .nums .x b{color:var(--ext)}
+
+/* filtros */
+.quadro-grupos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:4px 0 8px}
+.qg{display:flex;flex-direction:column;gap:8px;text-align:left;background:var(--sheet);border:1px solid var(--line);border-top:5px solid var(--cor);padding:12px 14px 14px;cursor:pointer;color:var(--ink);font:inherit}
+.qg:hover{border-color:var(--cor)}
+.qg.ativo{outline:2px solid var(--cor);outline-offset:-1px}
+.qg-topo{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.qg-nome{font-weight:700;font-size:16px}
+.qg-topo b{font-family:var(--display);font-weight:800;font-size:38px;line-height:1}
+.qg-casa{font-size:13.5px;color:var(--ink-2)}
+.qg-partidos{display:flex;flex-direction:column;gap:4px}
+.qg-p{display:grid;grid-template-columns:96px minmax(0,1fr) 28px;align-items:center;gap:8px;font-size:13.5px}
+.qg-s{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qg-b{height:8px}
+.qg-b i{display:block;height:8px;background:var(--cor);border-radius:0 3px 3px 0;min-width:2px}
+.qg-n{text-align:right;font-variant-numeric:tabular-nums}
+.qg-outros{font-size:12.5px;color:var(--ink-3)}
+.como-grupo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 28px;margin:18px 0 6px}
+.como-grupo h3{font-size:16px;margin:0 0 4px}
+.como-grupo p{margin:0;font-size:15px;color:var(--ink-2);line-height:1.55}
+.ler-tabela{margin:14px 0 16px;background:var(--sheet);border:1px solid var(--line);padding:10px 14px}
+.ler-tabela summary{cursor:pointer;font-weight:600}
+.ler-tabela dl{margin:10px 0 2px;display:grid;grid-template-columns:200px minmax(0,1fr);gap:8px 16px;font-size:14.5px}
+.ler-tabela dt{font-weight:600}
+.ler-tabela dd{margin:0;color:var(--ink-2)}
+@media (max-width:900px){.quadro-grupos{grid-template-columns:repeat(2,minmax(0,1fr))}.como-grupo{grid-template-columns:1fr}}
+@media (max-width:520px){.quadro-grupos{grid-template-columns:1fr}.qg-p:nth-child(n+4),.qg-outros{display:none}.qg{gap:6px;padding:10px 12px 12px}.qg-topo b{font-size:32px}.ler-tabela dl{grid-template-columns:1fr;gap:2px}.ler-tabela dd{margin-bottom:8px}}
+.filtros{display:flex;gap:8px 10px;flex-wrap:wrap;align-items:center;background:var(--sheet);border:1px solid var(--line);padding:12px 14px;margin:0 0 14px}
+.filtros select,.filtros input[type=search]{border:1.5px solid var(--line);background:var(--sheet);border-radius:4px;padding:7px 9px;min-width:0;max-width:100%}
+.filtros input[type=search]{flex:1 1 220px}
+.filtros label.chk{display:flex;gap:6px;align-items:center;font-size:14px;color:var(--ink-2);cursor:pointer}
+.filtros label.chk input{accent-color:var(--red)}
+.contagem{font-size:14px;color:var(--ink-2);margin:0 0 10px}
+.pager{display:flex;gap:12px;justify-content:center;align-items:center;margin-top:18px;font-size:14px;color:var(--ink-2)}
+
+/* parlamentares */
+.tabela-wrap{overflow-x:auto;background:var(--sheet);border:1px solid var(--line)}
+table.parl{border-collapse:collapse;width:100%;font-size:14px;min-width:720px}
+table.parl th{text-align:left;font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-3);padding:10px 10px;border-bottom:2px solid var(--ink);white-space:nowrap}
+table.parl th button{border:0;background:none;padding:0;font:inherit;color:inherit;cursor:pointer;text-transform:inherit;letter-spacing:inherit}
+table.parl td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+table.parl tr.linha{cursor:pointer}
+table.parl tr.linha:hover td{background:var(--paper)}
+.barra{display:flex;align-items:center;gap:8px;min-width:150px}
+.barra .fundo{flex:1;height:8px;background:var(--paper);border-radius:4px;overflow:hidden}
+.barra .fundo span{display:block;height:100%;background:var(--ext)}
+.barra b{font-variant-numeric:tabular-nums;min-width:44px;text-align:right}
+#perfil-dlg{border:0;padding:0;margin:0 0 0 auto;width:min(860px,100%);max-width:100%;height:100%;max-height:100%;background:var(--sheet);color:var(--ink);box-shadow:-8px 0 30px rgba(0,0,0,.25);overscroll-behavior:contain}
+#perfil{min-height:100%}
+#perfil-dlg::backdrop{background:rgba(18,59,64,.45)}
+.perfil{padding:0 22px 28px}
+.perfil .perfil-topo{position:sticky;top:0;z-index:2;background:var(--sheet);display:flex;align-items:center;gap:12px;padding:16px 0 10px;margin-bottom:6px;border-bottom:1px solid var(--line)}
+.perfil .perfil-topo h3{margin:0;flex:1}
+@media (max-width:600px){.perfil{padding:0 16px 24px}.perfil h3{font-size:28px}}
+.perfil h3{font-family:var(--display);font-weight:800;font-size:34px;line-height:1;margin:0 0 6px}
+.perfil .bio{max-width:72ch;font-size:16.5px;line-height:1.6;margin:4px 0 8px}
+.perfil .bio-fontes{font-size:13.5px;color:var(--ink-2);margin:0 0 14px}
+.perfil .linha-perfil{display:flex;gap:6px 14px;flex-wrap:wrap;align-items:baseline;font-size:14px;color:var(--ink-2);margin-bottom:10px}
+.perfil h4{margin:16px 0 8px;font-size:14px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3)}
+.lista-votos{display:grid;gap:6px}
+.lista-votos div{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;font-size:14px;border-bottom:1px solid var(--line);padding:5px 0}
+.lista-votos .rel-e{flex-basis:100%;font-size:14.5px;line-height:1.45;color:var(--ink-2)}
+.cartao .relator{margin:0}
+
+/* votos de uma votação */
+.votos-det{margin-top:6px;border-top:1px dashed var(--line);padding-top:8px;font-size:13.5px}
+.votos-det h5{margin:8px 0 4px;font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3)}
+.votos-det p{margin:0 0 4px}
+
+/* método */
+.metodo{max-width:78ch}
+.metodo h3{font-size:19px;margin:26px 0 6px}
+.metodo p,.metodo li{color:var(--ink-2)}
+.pautas-met{display:grid;gap:8px;margin-top:10px}
+.pautas-met div{background:var(--sheet);border-left:3px solid var(--night);padding:10px 14px}
+.pautas-met b{display:block;color:var(--ink)}
+.pautas-met small{display:block;color:var(--ink-3);margin-top:4px}
+
+footer{background:var(--night);color:#C5D3D0;font-size:13.5px}
+footer .wrap{padding-top:22px;padding-bottom:30px}
+footer p{max-width:90ch;margin:0 0 6px}
+footer a{color:#fff}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<dialog id="perfil-dlg" aria-label="Ficha do parlamentar"><div id="perfil"></div></dialog>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+    <div class="marca-hero"><svg viewBox="0 290 1000 370" aria-hidden="true" focusable="false"><g fill="#F2F4F1"><path d="M248 598 A100 82 0 0 1 448 598 Z"/><rect x="486" y="330" width="28" height="268"/><rect x="528" y="330" width="28" height="268"/><rect x="486" y="448" width="70" height="18"/><path d="M576 542 A116 54 0 0 0 808 542 Z"/><rect x="236" y="598" width="724" height="30"/></g><g fill="#E3B75B"><circle cx="36" cy="613" r="11" opacity=".24"/><circle cx="78" cy="613" r="15" opacity=".46"/><rect x="110" y="598" width="34" height="30" rx="15" opacity=".72"/><rect x="164" y="598" width="54" height="30" rx="15"/></g></svg><h1>Os exterminadores<br>do futuro</h1></div>
+    <p class="slogan">O que a direita faz no Congresso, todos os dias.</p>
+    <p class="lede">Um observatório dos movimentos da direita e da extrema-direita na Câmara dos Deputados e no Senado Federal. Cada projeto apresentado e cada voto, com os dados oficiais das duas Casas, atualizados diariamente.</p>
+    </div>
+    <figure class="hemiciclo" id="hemiciclo" hidden></figure>
+  </div>
+</header>
+<div class="faixa"><div class="wrap" id="faixa">Carregando os dados.</div></div>
+<nav class="abas" aria-label="Seções"><div class="wrap" role="tablist">
+  <button role="tab" data-aba="movimentos" aria-selected="true">Movimentos</button>
+  <button role="tab" data-aba="parlamentares" aria-selected="false">Parlamentares</button>
+  <button role="tab" data-aba="proposicoes" aria-selected="false">Proposições</button>
+  <button role="tab" data-aba="votacoes" aria-selected="false">Votações</button>
+  <button role="tab" data-aba="balanco" aria-selected="false">Balanço</button>
+  <a class="aba-link" href="emendas.html">Emendas</a>
+  <a class="aba-link" href="dossie.html">Dossiês</a>
+  <button role="tab" data-aba="metodo" aria-selected="false">Como funciona</button>
+</div></nav>
+
+<main><div class="wrap">
+  <section id="aba-movimentos"></section>
+  <section id="aba-parlamentares" hidden></section>
+  <section id="aba-proposicoes" hidden></section>
+  <section id="aba-votacoes" hidden></section>
+  <section id="aba-balanco" hidden></section>
+  <section id="aba-metodo" hidden></section>
+</div></main>
+
+<footer><div class="wrap">
+  <p>Dados oficiais da API de Dados Abertos da Câmara dos Deputados e da API de Dados Abertos Legislativos do Senado Federal, coletados todos os dias. A classificação das pautas é feita por inteligência artificial a partir das ementas e serve como triagem. Confira o texto integral antes de divulgar.</p>
+  <p>Os dados completos, em formato aberto, estão na <a href="https://github.com/jamesgorgen/exterminadores-do-futuro/tree/main/dados">pasta de dados do projeto no GitHub</a>.</p>
+  <p><b>Contato.</b> Sugestões, correções de classificação e pedidos de imprensa podem ser enviados para <a href="mailto:contato@exterminadores.com.br">contato@exterminadores.com.br</a>.</p>
+</div></footer>
+
+<script src="pautas.js?v=20261031"></script>
+<script>
+(function(){
+'use strict';
+const P = window.PAUTAS;
+const PAUTA = Object.fromEntries(P.lista.map(p => [p.id, p]));
+const NOME_PARTIDO = { MISSAO: 'Missão', DC: 'DC', AVANTE: 'Avante', CIDADANIA: 'Cidadania', MDB: 'MDB', NOVO: 'Novo', PCDOB: 'PCdoB', PDT: 'PDT', PL: 'PL', PODE: 'Podemos', PP: 'PP', PRD: 'PRD',
+  PSB: 'PSB', PSD: 'PSD', PSDB: 'PSDB', PSOL: 'PSOL', PT: 'PT', PV: 'PV', REDE: 'Rede', REPUBLICANOS: 'Republicanos', SOLIDARIEDADE: 'Solidariedade', UNIAO: 'União Brasil', OUTROS: 'Outros', SP: 'Sem partido' };
+const nomePartido = (id, s) => NOME_PARTIDO[id] || s || id || '';
+const CLASSE = { extrema: 'Extrema-direita', direita: 'Direita', centro: 'Centro-direita', esquerda: 'Esquerda', sp: 'Sem partido', nucleo: 'Núcleo da direita', alinhado: 'Vota com a direita', proximo: 'Vota próximo da direita' };
+const seloGrupo = p => (p.cl ? `<span class="selo s-cl-${p.cl}">${CLASSE[p.cl] || p.cl}</span>` : '') + (p.al ? ` <span class="selo s-cl-${p.al}">${CLASSE[p.al]}</span>` : '') + (p.ex === 0 ? ' <span class="selo s-cl-sp">Fora do mandato</span>' : '');
+const listaE = l => l.length > 1 ? l.slice(0, -1).join(', ') + ' e ' + l[l.length - 1] : l.join('');
+const corta = (t, n) => { t = String(t || ''); return t.length > n ? t.slice(0, n - 1).replace(/\s+\S*$/, '') + '…' : t; };
+const GRUPO_TXT = g => listaE(((P.grupos || {})[g] || []).map(x => nomePartido(x)));
+const BLOCO_E = () => listaE(((P.blocos || {}).extrema || []).map(p => nomePartido(p)));
+const BLOCO_D = () => listaE(((P.blocos || {}).direita || []).map(p => nomePartido(p)));
+const indiceTxt = v => v === null || v === undefined ? '—' : String(v).replace('.', ',') + '%';
+// Posição que o parlamentar deveria seguir: a do seu bloco; para os de fora, a do núcleo inteiro.
+const posBloco = (p, v) => p && p.cl === 'extrema' ? v.be : p && p.cl === 'direita' ? v.bd : v.bl;
+const CASA = { C: 'Câmara', S: 'Senado' };
+const VOTO = { S: 'Sim', N: 'Não', A: 'Abstenção', O: 'Obstrução', '-': 'Outro' };
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt = n => (n || 0).toLocaleString('pt-BR');
+const dataBR = s => s ? String(s).slice(0, 10).split('-').reverse().join('/') : '';
+const norm = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+const POR_PAGINA = 30;
+
+const D = { resumo: null, indice: {}, prop: [], vot: [], ver: {}, votosAno: {} };
+const est = {
+  aba: 'movimentos',
+  prop: { escopo: 'todos', pauta: '', grau: '', casa: '', partido: '', ano: '', texto: '', pagina: 1, foco: '' },
+  vot: { casa: '', local: '', disp: true, pauta: '', resultado: '', ano: '', texto: '', pagina: 1, foco: '', mat: '' },
+  parl: { casa: '', mandato: '', classe: 'direita', partido: '', uf: '', texto: '', ordem: 'ie', pagina: 1, sel: '' }
+};
+
+// ---------------------------------------------------------------- dados
+async function lerJson(nome){ try { const r = await fetch('dados/' + nome, { cache: 'no-cache' }); return r.ok ? await r.json() : null; } catch (e) { return null; } }
+async function carregar(){
+  const [resumo, indice, prop, vot, chave] = await Promise.all(['resumo.json', 'indice.json', 'proposicoes-direita.json', 'votacoes-resumo.json', 'votacoes-chave.json'].map(lerJson));
+  D.chave = chave && chave.itens ? Object.assign(chave, { porMat: Object.fromEntries(chave.itens.map(it => [it.c, it])) }) : null;
+  const ver = null;
+  D.resumo = resumo; D.indice = (indice && indice.p) || {}; D.regras = indice && indice.regras;
+  D.prop = (prop && prop.itens) || []; D.vot = (vot && vot.itens) || []; D.ver = (ver && ver.casos) || {};
+  // Votações de cada projeto: urgência, destaques e mérito ficam sob a matéria principal (mp).
+  D.votPorMat = new Map(); for (const v of D.vot) { const m = materiaDaVot(v); if (m) D.votPorMat.set(m, (D.votPorMat.get(m) || 0) + 1); }
+  desenharFaixa();
+  aplicarEndereco();
+  desenhar();
+}
+// Relatorias, carregadas só quando um perfil é aberto (Senado num arquivo, Câmara um arquivo por deputado).
+const relatoriasCache = {};
+async function relatorias(casa, k){
+  const arq = casa === 'C' ? `relatorias-camara/${k}.json` : 'relatorias.json';
+  if (!relatoriasCache[arq]) relatoriasCache[arq] = lerJson(arq).then(j => j.itens || []).catch(() => []);
+  return relatoriasCache[arq];
+}
+// Biografias, escritas pelo robô a partir das APIs da Câmara e do Senado e da Wikipédia. A versão corrigida pela equipe prevalece.
+let biografiasCache = null;
+function biografias(){
+  if (!biografiasCache) biografiasCache = Promise.all([
+    lerJson('biografias.json').then(j => (j && j.itens) || {}),
+    fetch('biografias-correcoes.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : null).catch(() => null).then(j => (j && j.correcoes) || {})
+  ]).then(([b, c]) => ({ b, c }));
+  return biografiasCache;
+}
+async function desenharBio(k, p){
+  const caixa = $('#perfil-bio'); if (!caixa) return;
+  const { b, c } = await biografias();
+  const bio = b[k] || {}, corr = c[k];
+  const texto = corr && corr.b ? corr.b : bio.b;
+  const id = k.slice(1);
+  const oficial = p.c === 'S' ? { t: 'Senado Federal', u: `https://www25.senado.leg.br/web/senadores/senador/-/perfil/${id}` } : { t: 'Câmara dos Deputados', u: `https://www.camara.leg.br/deputados/${id}` };
+  const fontes = (bio.f && bio.f.length ? bio.f : [oficial]).filter(f => f && f.u);
+  caixa.innerHTML = `${texto ? `<p class="bio">${esc(texto)}</p>` : ''}<p class="bio-fontes">${texto ? `Escrita com base em dados ${fontes.map(f => `${f.t === 'Senado Federal' ? 'do' : 'da'} <a href="${esc(f.u)}" target="_blank" rel="noopener">${esc(f.t)}</a>`).join(' e ')}${corr && (corr.b || corr.ok === bio.h) ? ' e conferida pela equipe' : ''}. ` : ''}<a href="${esc(oficial.u)}" target="_blank" rel="noopener">Perfil oficial no site ${p.c === 'S' ? 'do Senado' : 'da Câmara'}</a>.</p>`;
+}
+const COMISSAO_TXT = c => c === 'PLEN' ? 'Plenário' : c;
+async function desenharRelatorias(k, p){
+  const caixa = $('#perfil-rel'); if (!caixa) return;
+  const base = await relatorias(p.c, k);
+  const todas = base.filter(r => r.r === k);
+  if (!todas.length) { caixa.innerHTML = '<p class="meta">Nenhuma relatoria registrada desde 2023.</p>'; return; }
+  const direita = new Map(D.prop.map(it => [it.c, it]));
+  const ativa = r => r.k === 'C' ? r.at === 1 : !r.df;
+  const ativas = todas.filter(ativa).length;
+  const daDireita = todas.filter(r => direita.has(r.c));
+  const linha = r => { const it = direita.get(r.c); const x = it ? it.x || {} : null;
+    const url = !r.i ? '' : r.k === 'C' ? `https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=${encodeURIComponent(r.i)}` : `https://www25.senado.leg.br/web/atividade/materias/-/materia/${encodeURIComponent(r.i)}`;
+    const situacao = r.k === 'C'
+      ? (r.pa ? `parecer apresentado em ${dataBR(r.pa)}` : r.at ? 'em andamento' : r.sb ? 'substituído por outro relator' : 'encerrada')
+      : (r.df ? `encerrada em ${dataBR(r.df)}${r.mo ? `, ${esc(r.mo.toLowerCase())}` : ''}` : 'em andamento');
+    return `<div class="rel"><span class="meta">${dataBR(r.di)}</span><b>${url ? `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(r.c)}</a>` : esc(r.c)}</b><span>${esc(COMISSAO_TXT(r.cm))}${r.tr && !/^relator$/i.test(r.tr) ? `, ${esc(r.tr.toLowerCase())}` : ''}</span><span class="meta">${situacao}</span>${x ? `<span class="selo ${x.g === 'extrema' ? 's-ext' : 's-dir'}">Pauta da ${x.g === 'extrema' ? 'extrema-direita' : 'direita'}</span>` : ''}${r.e ? `<span class="rel-e">${esc(r.e)}${r.au ? ` <span class="meta">Autoria: ${esc(r.au)}.</span>` : ''}</span>` : ''}</div>`; };
+  caixa.innerHTML = `<p class="meta">${fmt(todas.length)} relatorias desde 2023, ${fmt(ativas)} em andamento. ${daDireita.length ? `${fmt(daDireita.length)} sobre projetos com pauta da direita.` : ''}</p>
+    <div class="lista-votos">${[...daDireita, ...todas.filter(r => !direita.has(r.c))].slice(0, 20).map(linha).join('')}</div>${todas.length > 20 ? `<p class="meta">Mostrando 20 designações, primeiro as de projetos com pauta da direita e depois as mais recentes.</p>` : ''}`;
+}
+async function votosDoAno(ano){
+  if (!D.votosAno[ano]) D.votosAno[ano] = lerJson(`votacoes-${ano}.json`).then(j => new Map(((j && j.itens) || []).map(v => [v.id, v])));
+  return D.votosAno[ano];
+}
+const nomeParl = k => (D.indice[k] && D.indice[k].n) || '';
+const linkProp = it => it.i ? (it.k && it.k[0] === 'S' ? 'https://www25.senado.leg.br/web/atividade/materias/-/materia/' + it.i : 'https://www.camara.leg.br/propostas-legislativas/' + it.i) : '';
+
+// ---------------------------------------------------------------- faixa
+function desenharFaixa(){
+  const r = D.resumo;
+  if (!r) { $('#faixa').innerHTML = 'Os dados estão sendo reunidos. A primeira atualização completa leva algumas horas.'; return; }
+  const g = new Date(r.gerado);
+  const desde = r.inicio ? r.inicio.slice(0, 4) : '2023';
+  $('#faixa').innerHTML = `<div class="numeros">
+    <p><b>${fmt(r.totais.direita)}</b>projetos da direita desde ${desde}</p>
+    <p><b>${fmt(r.totais.extrema)}</b>deles de extrema-direita</p>
+    <p><b>${fmt(r.totais.disputadas)}</b>votações em que direita e esquerda se opuseram</p>${r.totais.vitoriasE != null ? `
+    <p><b>${fmt(r.totais.vitoriasE)}</b>vitórias da extrema-direita sobre a esquerda</p>` : ''}</div>
+    <p class="atual">Dados atualizados em ${g.toLocaleDateString('pt-BR')} às ${g.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}.</p>`;
+  desenharHemiciclo(r.totais.grupos, r.totais.emExercicio);
+}
+
+// Hemiciclo com os parlamentares em exercício, da esquerda para a direita do plenário.
+function desenharHemiciclo(gr, ex){
+  if (!gr) return;
+  const ordem = [['esquerda', 'Esquerda', '--g-esq'], ['sp', 'Sem partido', '--g-sp'], ['centro', 'Centro-direita', '--g-cen'], ['direita', 'Direita', '--g-dir'], ['extrema', 'Extrema-direita', '--g-ext']];
+  const N = ordem.reduce((a, o) => a + (gr[o[0]] || 0), 0); if (!N) return;
+  const F = 12, R = 255, cx = 260, cy = 266, rIn = 0.4;
+  const raios = Array.from({ length: F }, (_, i) => rIn + (1 - rIn) * i / (F - 1));
+  const soma = raios.reduce((a, b) => a + b, 0);
+  const porFila = raios.map(r => Math.round(N * r / soma)); porFila[F - 1] += N - porFila.reduce((a, b) => a + b, 0);
+  const lugares = [];
+  raios.forEach((r, i) => { const n = porFila[i]; for (let j = 0; j < n; j++) lugares.push({ a: Math.PI * (1 - j / Math.max(1, n - 1)), r }); });
+  lugares.sort((x, y) => y.a - x.a || x.r - y.r);
+  const cores = []; ordem.forEach(o => { for (let k = 0; k < (gr[o[0]] || 0); k++) cores.push(`var(${o[2]})`); });
+  const pts = lugares.map((l, k) => `<circle cx="${(cx + l.r * R * Math.cos(l.a)).toFixed(1)}" cy="${(cy - l.r * R * Math.sin(l.a)).toFixed(1)}" r="4.6" style="fill:${cores[k]}"/>`).join('');
+  const total = ex ? (ex.C || 0) + (ex.S || 0) : N;
+  $('#hemiciclo').innerHTML = `<svg viewBox="0 0 520 276" role="img" aria-label="Hemiciclo com os ${fmt(total)} parlamentares em exercício, por grupo político">${pts}</svg>
+    <figcaption><b>Os ${fmt(total)} parlamentares em exercício</b><span class="leg">${ordem.filter(o => gr[o[0]]).map(o => `<span><i style="background:var(${o[2]})"></i>${o[1]} ${fmt(gr[o[0]])}</span>`).join('')}</span></figcaption>`;
+  $('#hemiciclo').hidden = false;
+}
+
+// ---------------------------------------------------------------- selos e cartões
+function selosClass(x){
+  if (!x || !x.s) return '';
+  const pautas = (x.p || []).map(p => `<span class="selo s-pauta">${esc(PAUTA[p] ? PAUTA[p].nome : p)}</span>`).join('');
+  const grau = x.s === 'barra' ? '<span class="selo s-contra">Contra a pauta da direita</span>'
+    : x.g === 'extrema' ? '<span class="selo s-ext">Extrema-direita</span>' : '<span class="selo s-dir">Direita</span>';
+  const origem = x.eq ? '<span class="selo s-ver" title="Classificação conferida pela equipe do observatório">Conferido pela equipe</span>'
+    : x.lt ? '<span class="selo s-ia" title="Classificação automática por inteligência artificial, a partir da ementa, confirmada pela equipe em bloco">Classificado por IA</span>'
+    : '<span class="selo s-ia" title="Classificação automática por inteligência artificial, a partir da ementa">IA</span>';
+  return origem + grau + pautas;
+}
+const classeCartao = x => !x || !x.s ? '' : x.s === 'barra' ? 'contra' : x.g === 'extrema' ? 'ext' : 'dir';
+const TIPO_AUTORIA = { executivo: 'Poder Executivo', comissao: 'comissão ou Mesa', senado: 'Senado Federal', judiciario: 'Judiciário', mp: 'Ministério Público ou Defensoria', outro: 'outro órgão' };
+const autoriaFora = it => it && !(it.a || []).length && it.au ? (it.ta === 'executivo' ? 'Poder Executivo' : it.au) : '';
+function autoresHTML(a, it){
+  if ((!a || !a.length) && autoriaFora(it)) return `<p class="autores">Autoria: ${esc(autoriaFora(it))}</p>`;
+  if (!a || !a.length) return '';
+  const nomes = a.slice(0, 4).map(k => { const p = D.indice[k]; return p ? `${esc(p.n)} (${esc(nomePartido(p.p, p.s))}/${esc(p.uf || '')})` : ''; }).filter(Boolean);
+  const n = (it && it.na) || a.length;
+  return nomes.length ? `<p class="autores">${nomes.join('; ')}${n > 4 ? ` e mais ${n - 4}` : ''}</p>` : '';
+}
+function cartaoProp(it){
+  const x = it.x || {};
+  const ver = D.ver[it.c];
+  return `<article class="cartao ${classeCartao(x)}">
+    <div class="topo"><span class="num">${esc(it.c)}</span><span class="meta">${esc((it.k || []).map(k => CASA[k]).join(' e '))}</span>${ver ? '<span class="selo s-ver">Verificado</span>' : ''}<span class="data">${dataBR(it.d)}</span></div>
+    <div class="topo">${selosClass(x)}</div>
+    <p class="ementa">${esc(it.e)}</p>
+    ${ver && ver.nota ? `<p class="motivo"><b>Checagem da equipe.</b> ${esc(ver.nota)}</p>` : x.m ? `<p class="motivo"><b>${x.eq ? 'Checagem da equipe.' : 'Triagem automática.'}</b> ${esc(x.m)}</p>` : ''}
+    ${autoresHTML(it.a, it)}
+    ${(it.rl || []).length ? `<p class="meta relator">Relatoria: ${it.rl.map(r => `${esc(r.n)} (${esc(r.s)}-${esc(r.uf)})${r.cm ? `, ${esc(r.cm)}` : ''}`).join('; ')}</p>` : ''}
+    <div class="acoes">${D.votPorMat && D.votPorMat.get(it.c) ? `<button type="button" class="btn" data-ir-vot="${esc(it.c)}">${D.votPorMat.get(it.c) === 1 ? 'Ver a votação' : `Ver as ${fmt(D.votPorMat.get(it.c))} votações`}</button>` : ''}${linkProp(it) ? `<a class="btn" href="${esc(linkProp(it))}" target="_blank" rel="noopener">Ficha oficial</a>` : ''}
+      <button type="button" class="btn forte" data-comp="p:${esc(it.c)}">Compartilhar</button><button type="button" class="btn" data-copiar="p:${esc(it.c)}">Copiar</button></div>
+  </article>`;
+}
+function placar(t){
+  const s = t.S || 0, n = t.N || 0, a = (t.A || 0) + (t.O || 0), tot = s + n + a || 1;
+  return `<div class="placar" title="${s} sim, ${n} não, ${a} abstenção ou obstrução"><span class="ps" style="width:${100 * s / tot}%"></span><span class="pn" style="width:${100 * n / tot}%"></span><span class="pa" style="width:${100 * a / tot}%"></span></div>
+    <div class="meta">${fmt(s)} sim, ${fmt(n)} não${a ? `, ${fmt(a)} abstenção ou obstrução` : ''}</div>`;
+}
+function cartaoVot(v){
+  const x = v.x || {};
+  const res = v.res === 'A' ? 'Aprovada' : v.res === 'R' ? 'Rejeitada' : '';
+  const pos = (rot, b, c) => b ? `${rot} votou <b>${VOTO[b]}</b>${c ? ` (${Math.round(c * 100)}%)` : ''}` : `${rot} se dividiu`;
+  const bloco = v.be !== undefined ? `${pos('A extrema-direita', v.be, v.bec)}, ${pos('a direita', v.bd, v.bdc).charAt(0).toLowerCase() + pos('a direita', v.bd, v.bdc).slice(1)}${v.gv ? ` e a esquerda votou <b>${VOTO[v.gv]}</b>` : ''}.`
+    : v.bl ? `A direita votou <b>${VOTO[v.bl]}</b>${v.blc ? ` (${Math.round(v.blc * 100)}% do bloco)` : ''}${v.gv ? `, a esquerda votou <b>${VOTO[v.gv]}</b>` : ''}.` : 'A direita se dividiu.';
+  const selVit = (disp, vit, rot) => disp && vit !== null && vit !== undefined ? (vit ? `<span class="selo s-venceu">${rot} venceu</span>` : `<span class="selo s-perdeu">${rot} perdeu</span>`) : '';
+  const vitorias = v.be !== undefined ? selVit(v.dispE, v.vE, 'A extrema-direita') + selVit(v.dispD, v.vD, 'A direita') : selVit(v.disp, v.venceu, 'A direita');
+  return `<article class="cartao ${classeCartao(x)}">
+    <div class="topo"><span class="num">${esc(v.mp || v.mat || 'Votação')}</span>${v.mp && v.mat ? `<span class="meta">${esc(v.mat)}</span>` : ''}<span class="meta">${esc(CASA[v.k])}, ${v.pl ? 'plenário' : esc(v.o || 'comissão')}</span><span class="data">${dataBR(v.d)}</span>${D.chave && D.chave.porMat[v.mp || v.mat] ? '<span class="selo s-chave">Proposição-chave</span>' : ''}</div>
+    <div class="topo">${TIPO_VOT[v.tp] ? `<span class="selo s-tipo">${TIPO_VOT[v.tp]}</span>` : ''}${res ? `<span class="selo s-pauta">${res}</span>` : ''}${vitorias}${selosClass(x)}</div>
+    <p class="ementa">${esc(v.me || v.desc)}</p>
+    ${v.ab && v.tp !== 'principal' ? `<p class="motivo"><b>Em votação:</b> ${esc(v.ab)}</p>` : ''}
+    ${v.me && v.desc ? `<p class="motivo">${esc(v.desc)}</p>` : ''}
+    ${x.m ? `<p class="motivo"><b>${x.eq ? 'Checagem da equipe.' : 'Triagem automática.'}</b> ${esc(x.m)}</p>` : ''}
+    <p class="bloco">${bloco}</p>
+    ${placar(v.t || {})}
+    <div class="votos-det" data-votos="${esc(v.id)}" hidden></div>
+    <div class="acoes"><button type="button" class="btn" data-ver-votos="${esc(v.id)}">Ver como votaram</button>${temFichaProjeto(materiaDaVot(v)) ? `<button type="button" class="btn" data-ir-prop="${esc(materiaDaVot(v))}">Ver o projeto</button>` : ''}${(D.votPorMat.get(materiaDaVot(v)) || 0) > 1 && est.vot.mat !== materiaDaVot(v) ? `<button type="button" class="btn" data-ir-vot="${esc(materiaDaVot(v))}">Todas as ${fmt(D.votPorMat.get(materiaDaVot(v)))} do projeto</button>` : ''}
+      <button type="button" class="btn forte" data-comp="v:${esc(v.id)}">Compartilhar</button><button type="button" class="btn" data-copiar="v:${esc(v.id)}">Copiar</button></div>
+  </article>`;
+}
+
+// ---------------------------------------------------------------- movimentos
+function desenharMovimentos(){
+  const el = $('#aba-movimentos');
+  const r = D.resumo;
+  if (!r) { el.innerHTML = `<div class="vazio"><p>O robô do observatório ainda está reunindo os dados da Câmara e do Senado. Volte em algumas horas.</p></div>`; return; }
+  const desde = dias => new Date(Date.now() - dias * 86400000).toISOString().slice(0, 10);
+  let janela = 7;
+  let votRec = D.vot.filter(v => v.d >= desde(janela) && (v.disp || (v.x && v.x.s)));
+  let propRec = D.prop.filter(it => it.d >= desde(janela) && it.x && it.x.s === 'avanca');
+  if (!votRec.length && !propRec.length) { janela = 30; votRec = D.vot.filter(v => v.d >= desde(janela) && (v.disp || (v.x && v.x.s))); propRec = D.prop.filter(it => it.d >= desde(janela) && it.x && it.x.s === 'avanca'); }
+  // Casos conferidos pela equipe, os mais recentes primeiro.
+  const casos = D.prop.filter(it => it.x && it.x.eq && it.x.s === 'avanca').sort((a, b) => (b.d || '').localeCompare(a.d || ''));
+  const t = r.totais;
+  el.innerHTML = `
+    <div class="secao">
+      <h2 class="titulo">Movimentos dos últimos ${janela} dias</h2>
+      <p class="sub">O que deputados e senadores da direita apresentaram e como votaram nas votações nominais da Câmara e do Senado, em plenário e nas comissões.</p>
+      <div class="kpis">
+        <div class="kpi"><b>${fmt(propRec.length)}</b><span>projetos novos com pauta da direita</span></div>
+        <div class="kpi ext"><b>${fmt(propRec.filter(it => it.x.g === 'extrema').length)}</b><span>de extrema-direita</span></div>
+        <div class="kpi"><b>${fmt(votRec.filter(v => v.disp).length)}</b><span>votações disputadas com a esquerda</span></div>
+        <div class="kpi ext"><b>${fmt(votRec.filter(v => v.dispE && v.vE === true).length)}</b><span>vencidas pela extrema-direita</span></div>
+        <div class="kpi"><b>${fmt(votRec.filter(v => v.dispD && v.vD === true).length)}</b><span>vencidas pela direita</span></div>
+      </div>
+    </div>
+    ${casos.length ? `<div class="secao"><h2 class="titulo">Casos verificados</h2><p class="sub">Os projetos mais recentes cuja classificação foi conferida pela equipe do observatório, entre ${fmt(casos.length)} já conferidos.</p><div class="grade">${casos.slice(0, 6).map(cartaoProp).join('')}</div></div>` : ''}
+    <div class="secao">
+      <h2 class="titulo">Votações</h2>
+      ${votRec.length ? `<div class="grade">${votRec.slice(0, 12).map(cartaoVot).join('')}</div>${votRec.length > 12 ? `<p><button type="button" class="btn" data-ir="votacoes">Ver todas as votações</button></p>` : ''}` : `<div class="vazio"><p>Nenhuma votação disputada ou com pauta da direita no período.</p></div>`}
+    </div>
+    <div class="secao">
+      <h2 class="titulo">Projetos apresentados</h2>
+      ${propRec.length ? `<div class="grade">${propRec.slice(0, 12).map(cartaoProp).join('')}</div>${propRec.length > 12 ? `<p><button type="button" class="btn" data-ir="proposicoes">Ver todos os projetos</button></p>` : ''}` : `<div class="vazio"><p>Nenhum projeto com pauta da direita apresentado no período.</p></div>`}
+    </div>
+    <div class="secao">
+      <h2 class="titulo">Pautas desde ${dataBR(r.inicio)}</h2>
+      <p class="sub">Clique numa pauta para ver os projetos.</p>
+      <div class="grade-pautas">${P.lista.map(p => { const s = r.porPauta[p.id] || {}; return `<button type="button" class="pauta" data-pauta="${p.id}">
+        <h3>${esc(p.nome)}</h3>
+        <span class="nums"><span><b>${fmt(s.prop)}</b>projetos</span><span class="x"><b>${fmt(s.extrema)}</b>extrema-direita</span><span><b>${fmt(s.vot)}</b>votações</span></span>
+        ${s.vitorias || s.derrotas ? `<span class="nums"><span>Vitórias da direita ${fmt(s.vitorias)}, derrotas ${fmt(s.derrotas)}</span></span>` : ''}
+      </button>`; }).join('')}</div>
+    </div>`;
+}
+
+// ---------------------------------------------------------------- proposições
+function opcoes(lista, atual, rotuloVazio){ return `<option value="">${esc(rotuloVazio)}</option>` + lista.map(([v, r]) => `<option value="${esc(v)}" ${String(atual) === String(v) ? 'selected' : ''}>${esc(r)}</option>`).join(''); }
+const anosDe = lista => [...new Set(lista.map(x => String(x.d || '').slice(0, 4)).filter(Boolean))].sort().reverse();
+// Todos os projetos (dados/proposicoes-todas.json, versão leve gerada pelo robô), carregados só quando pedidos.
+// Os projetos com pauta da direita usam a versão completa (com relatoria), quando existe.
+let todasCarregando = null;
+function carregarTodas(){
+  if (!todasCarregando) todasCarregando = lerJson('proposicoes-todas.json').then(j => {
+    const direita = new Map(D.prop.map(it => [it.c, it]));
+    // Enquanto o arquivo não existir (antes da primeira execução do robô), fica a lista com pauta da direita.
+    D.todas = j && j.itens ? j.itens.map(it => direita.get(it.c) || it) : D.prop.slice();
+    D.semTodas = !(j && j.itens);
+    D.todasMap = new Map(D.todas.map(it => [it.c, it]));
+  });
+  return todasCarregando;
+}
+const textoBusca = it => it._b || (it._b = norm([it.c, it.e, ...(it.a || []).map(nomeParl), it.au || ''].join(' ')));
+// "4.675" e "PL 4.675/2025" acham o PL 4675/2025.
+const termoBusca = t => norm(t).replace(/(\d)\.(\d)/g, '$1$2').trim();
+function filtrarProp(){
+  const f = est.prop, txt = termoBusca(f.texto);
+  const base = f.escopo === 'todos' && D.todas ? D.todas : D.prop;
+  return base.filter(it => {
+    if (f.foco) return it.c === f.foco;
+    const x = it.x || {};
+    if (f.pauta && !(x.p || []).includes(f.pauta)) return false;
+    if (f.grau === 'barra' ? x.s !== 'barra' : f.grau === 'fora' ? !!x.s : f.grau && !(x.s === 'avanca' && (x.g || 'direita') === f.grau)) return false;
+    if (f.casa && !(it.k || []).includes(f.casa)) return false;
+    if (f.partido && !(it.p || []).includes(f.partido)) return false;
+    if (f.ano && !String(it.d).startsWith(f.ano)) return false;
+    if (txt && !txt.split(/\s+/).every(t => textoBusca(it).includes(t))) return false;
+    return true;
+  });
+}
+function desenharProposicoes(){
+  const f = est.prop;
+  const todos = f.escopo === 'todos';
+  if ((todos || f.foco) && !D.todas) {
+    $('#aba-proposicoes').innerHTML = '<p class="carregando">Carregando todos os projetos…</p>';
+    carregarTodas().then(() => { if (!f.foco || D.todasMap.has(f.foco)) desenharProposicoes(); else { f.escopo = 'direita'; desenharProposicoes(); } });
+    return;
+  }
+  if (f.foco && D.todasMap && D.todasMap.has(f.foco) && !D.prop.some(it => it.c === f.foco)) f.escopo = 'todos';
+  const lista = filtrarProp();
+  const paginas = Math.max(1, Math.ceil(lista.length / POR_PAGINA)); f.pagina = Math.min(f.pagina, paginas);
+  const base = f.escopo === 'todos' && D.todas ? D.todas : D.prop;
+  const partidos = [...new Set(D.prop.flatMap(it => it.p || []))].sort().map(p => [p, nomePartido(p)]);
+  const graus = f.escopo === 'todos' ? [['extrema', 'Extrema-direita'], ['direita', 'Direita'], ['barra', 'Contra a pauta da direita'], ['fora', 'Sem pauta da direita']] : [['extrema', 'Extrema-direita'], ['direita', 'Direita']];
+  if (f.escopo !== 'todos' && ['barra', 'fora'].includes(f.grau)) f.grau = '';
+  $('#aba-proposicoes').innerHTML = `
+    <h2 class="titulo">${f.escopo === 'todos' ? 'Projetos' : 'Projetos com pauta da direita'}</h2>
+    <p class="sub">${f.escopo === 'todos'
+      ? 'Todos os projetos de lei, de lei complementar, de emenda à Constituição e de decreto legislativo coletados desde 2023, de parlamentares, do Poder Executivo, de comissões e de outros órgãos, com a classificação das pautas.'
+      : 'Projetos de lei, de lei complementar, de emenda à Constituição e de decreto legislativo que fazem avançar alguma das pautas monitoradas, apresentados por parlamentares de qualquer partido.'}</p>
+    <div class="filtros">
+      <label class="sr" for="fp-texto">Procurar</label><input type="search" id="fp-texto" placeholder="Procurar por número, palavra ou autor" value="${esc(f.texto)}">
+      <select id="fp-escopo" aria-label="Quais projetos"><option value="todos" ${f.escopo === 'todos' ? 'selected' : ''}>Todos os projetos</option><option value="direita" ${f.escopo !== 'todos' ? 'selected' : ''}>Só com pauta da direita</option></select>
+      <select id="fp-pauta" aria-label="Pauta">${opcoes(P.lista.map(p => [p.id, p.nome]), f.pauta, 'Todas as pautas')}</select>
+      <select id="fp-grau" aria-label="Grau">${opcoes(graus, f.grau, f.escopo === 'todos' ? 'Todas as classificações' : 'Direita e extrema-direita')}</select>
+      <select id="fp-casa" aria-label="Casa">${opcoes([['C', 'Câmara'], ['S', 'Senado']], f.casa, 'Câmara e Senado')}</select>
+      <select id="fp-partido" aria-label="Partido">${opcoes(partidos, f.partido, 'Todos os partidos')}</select>
+      <select id="fp-ano" aria-label="Ano">${opcoes(anosDe(base).map(a => [a, a]), f.ano, 'Todos os anos')}</select>
+    </div>
+    ${f.escopo === 'todos' && D.semTodas ? '<p class="meta">A lista com todos os projetos fica disponível depois da próxima atualização dos dados. Por enquanto, aparecem só os projetos com pauta da direita.</p>' : ''}
+    ${f.foco ? `<p class="contagem">Mostrando só o ${esc(f.foco)}. <button type="button" class="btn" data-limpar-foco="prop">Ver todos</button></p>` : `<p class="contagem">${fmt(lista.length)} ${lista.length === 1 ? 'projeto' : 'projetos'}</p>`}
+    ${lista.length ? `<div class="grade">${lista.slice((f.pagina - 1) * POR_PAGINA, f.pagina * POR_PAGINA).map(cartaoProp).join('')}</div>` : '<div class="vazio"><p>Nenhum projeto com esses filtros.</p></div>'}
+    ${paginador(f.pagina, paginas, 'prop')}`;
+  ligarFiltros('fp', est.prop, desenharProposicoes);
+}
+function paginador(pg, total, alvo){
+  return total > 1 ? `<div class="pager"><button type="button" class="btn" data-pg="${alvo}:-1" ${pg === 1 ? 'disabled' : ''}>Anteriores</button><span>Página ${pg} de ${total}</span><button type="button" class="btn" data-pg="${alvo}:1" ${pg === total ? 'disabled' : ''}>Próximos</button></div>` : '';
+}
+function ligarFiltros(prefixo, f, redesenhar){
+  document.querySelectorAll(`[id^="${prefixo}-"]`).forEach(el => {
+    const campo = el.id.slice(prefixo.length + 1);
+    const ev = el.type === 'search' ? 'input' : 'change';
+    el.addEventListener(ev, () => {
+      f[campo] = el.type === 'checkbox' ? el.checked : el.value; f.pagina = 1; f.foco = '';
+      if (el.type === 'search') { clearTimeout(el._t); el._t = setTimeout(() => { redesenhar(); const n = $('#' + el.id); if (n) { n.focus(); n.setSelectionRange(n.value.length, n.value.length); } }, 250); }
+      else redesenhar();
+    });
+  });
+}
+
+// ---------------------------------------------------------------- votações
+const materiaDaVot = v => v.mp || v.mat || '';
+// Só há ficha para os tipos coletados, desde 2023.
+const temFichaProjeto = c => /^(PL|PLP|PEC|PDL) \d+\/(\d{4})$/.test(c || '') && +c.split('/')[1] >= 2023;
+function filtrarVot(){
+  const f = est.vot, txt = norm(f.texto);
+  return D.vot.filter(v => {
+    if (f.foco) return v.id === f.foco;
+    if (f.mat) return materiaDaVot(v) === f.mat;
+    if (f.disp && !v.disp) return false;
+    if (f.casa && v.k !== f.casa) return false;
+    if (f.local === 'pl' && !v.pl) return false;
+    if (f.local === 'com' && v.pl) return false;
+    if (f.pauta && !((v.x && v.x.p) || []).includes(f.pauta)) return false;
+    if (f.resultado === 'eventeu' && !(v.dispE && v.vE === true)) return false;
+    if (f.resultado === 'eperdeu' && !(v.dispE && v.vE === false)) return false;
+    if (f.resultado === 'dventeu' && !(v.dispD && v.vD === true)) return false;
+    if (f.resultado === 'dperdeu' && !(v.dispD && v.vD === false)) return false;
+    if (f.ano && !String(v.d).startsWith(f.ano)) return false;
+    if (txt && !norm([v.mat, v.me, v.desc, v.o].join(' ')).includes(txt)) return false;
+    return true;
+  });
+}
+// Nas votações de um projeto, a do texto (mérito) vem primeiro; depois, as demais, da mais recente para a mais antiga.
+const TIPO_VOT = { principal: 'Texto principal', destaque: 'Destaque', emenda: 'Emenda', urgencia: 'Urgência', requerimento: 'Requerimento', redacao: 'Redação final' };
+const ordemVot = (a, b) => (b.d || '').localeCompare(a.d || '') || (b.h || '').localeCompare(a.h || '');
+function desenharVotacoes(){
+  const f = est.vot;
+  const lista = filtrarVot();
+  if (f.mat) lista.sort((a, b) => (b.tp === 'principal') - (a.tp === 'principal') || ordemVot(a, b));
+  const paginas = Math.max(1, Math.ceil(lista.length / POR_PAGINA)); f.pagina = Math.min(f.pagina, paginas);
+  $('#aba-votacoes').innerHTML = `
+    <h2 class="titulo">Votações nominais</h2>
+    <p class="sub">Votações em que cada parlamentar registrou o voto, nos plenários e nas comissões. A posição da extrema-direita é a da maioria dos parlamentares de ${esc(BLOCO_E())}, e a da direita, a da maioria de ${esc(BLOCO_D())}. Disputadas são as votações em que ao menos um desses blocos e a esquerda votaram em sentidos opostos.</p>
+    <div class="filtros">
+      <label class="sr" for="fv-texto">Procurar</label><input type="search" id="fv-texto" placeholder="Procurar por matéria ou palavra" value="${esc(f.texto)}">
+      <select id="fv-casa" aria-label="Casa">${opcoes([['C', 'Câmara'], ['S', 'Senado']], f.casa, 'Câmara e Senado')}</select>
+      <select id="fv-local" aria-label="Local">${opcoes([['pl', 'Plenário'], ['com', 'Comissões']], f.local, 'Plenário e comissões')}</select>
+      <select id="fv-pauta" aria-label="Pauta">${opcoes(P.lista.map(p => [p.id, p.nome]), f.pauta, 'Todas as pautas')}</select>
+      <select id="fv-resultado" aria-label="Resultado">${opcoes([['eventeu', 'A extrema-direita venceu'], ['eperdeu', 'A extrema-direita perdeu'], ['dventeu', 'A direita venceu'], ['dperdeu', 'A direita perdeu']], f.resultado, 'Vitórias e derrotas')}</select>
+      <select id="fv-ano" aria-label="Ano">${opcoes(anosDe(D.vot).map(a => [a, a]), f.ano, 'Todos os anos')}</select>
+      <label class="chk"><input type="checkbox" id="fv-disp" ${f.disp ? 'checked' : ''}> Só disputadas</label>
+    </div>
+    ${f.mat ? `<p class="contagem">${fmt(lista.length)} ${lista.length === 1 ? 'votação' : 'votações'} do ${esc(f.mat)}, entre urgência, destaques e mérito. ${temFichaProjeto(f.mat) ? `<button type="button" class="btn" data-ir-prop="${esc(f.mat)}">Ver o projeto</button> ` : ''}<button type="button" class="btn" data-limpar-foco="vot">Ver todas</button></p>` : f.foco ? `<p class="contagem">Mostrando uma votação. <button type="button" class="btn" data-limpar-foco="vot">Ver todas</button></p>` : `<p class="contagem">${fmt(lista.length)} ${lista.length === 1 ? 'votação' : 'votações'}</p>`}
+    ${lista.length ? `<div class="grade">${lista.slice((f.pagina - 1) * POR_PAGINA, f.pagina * POR_PAGINA).map(cartaoVot).join('')}</div>` : '<div class="vazio"><p>Nenhuma votação com esses filtros.</p></div>'}
+    ${paginador(f.pagina, paginas, 'vot')}`;
+  ligarFiltros('fv', est.vot, desenharVotacoes);
+}
+async function mostrarVotos(id, botao){
+  const caixa = document.querySelector(`[data-votos="${CSS.escape(id)}"]`); if (!caixa) return;
+  if (!caixa.hidden) { caixa.hidden = true; botao.textContent = 'Ver como votaram'; return; }
+  const v = D.vot.find(x => x.id === id); if (!v) return;
+  caixa.hidden = false; caixa.innerHTML = 'Carregando os votos.'; botao.textContent = 'Esconder os votos';
+  const mapa = await votosDoAno(String(v.d).slice(0, 4));
+  const det = mapa.get(id);
+  if (!det) { caixa.innerHTML = 'Os votos desta votação não estão disponíveis.'; return; }
+  const grupos = { contra: [], com: [] };
+  for (const [c, ids] of Object.entries(det.v || {})) for (const n of ids) {
+    const k = det.k + n, p = D.indice[k];
+    if (!p) continue;
+    const alvo = posBloco(p, v);
+    if ((p.cl === 'extrema' || p.cl === 'direita') && (c === 'S' || c === 'N') && alvo && c !== alvo) grupos.contra.push(p);
+    if (p.cl !== 'extrema' && p.cl !== 'direita' && v.bl && c === v.bl && (c === 'S' || c === 'N')) grupos.com.push(p);
+  }
+  const nomes = l => l.length ? l.slice(0, 40).map(p => `${esc(p.n)} (${esc(nomePartido(p.p, p.s))}/${esc(p.uf || '')})`).join('; ') + (l.length > 40 ? ` e mais ${l.length - 40}` : '') : 'Ninguém.';
+  caixa.innerHTML = (v.bl || v.be || v.bd) ? `<h5>Da extrema-direita e da direita, votaram contra o próprio bloco</h5><p>${nomes(grupos.contra)}</p>
+    <h5>De fora do campo, votaram com a direita</h5><p>${nomes(grupos.com)}</p>` : '<p>O bloco da direita se dividiu nesta votação.</p>';
+}
+
+// ---------------------------------------------------------------- parlamentares
+function filtrarParl(){
+  const f = est.parl, txt = norm(f.texto);
+  const temEx = Object.values(D.indice).some(p => p.ex);
+  return Object.entries(D.indice).filter(([k, p]) => {
+    if (temEx && !f.mandato && !p.ex) return false;
+    if (f.casa && p.c !== f.casa) return false;
+    if (f.classe === 'direita' && p.cl !== 'extrema' && p.cl !== 'direita' && !p.al) return false;
+    if (f.classe === 'direita_b' && p.cl !== 'direita') return false;
+    if (f.classe === 'al' && !p.al) return false;
+    if (f.classe && !['direita', 'direita_b', 'al'].includes(f.classe) && p.cl !== f.classe) return false;
+    if (f.partido && p.p !== f.partido) return false;
+    if (f.uf && p.uf !== f.uf) return false;
+    if (txt && !norm(p.n).includes(txt)) return false;
+    return true;
+  }).sort(([, a], [, b]) => f.ordem === 'nd' ? (b.nd || 0) - (a.nd || 0) || (b.nx || 0) - (a.nx || 0)
+    : f.ordem === 'nx' ? (b.nx || 0) - (a.nx || 0) || (b.nd || 0) - (a.nd || 0)
+    : f.ordem === 'n' ? a.n.localeCompare(b.n) : f.ordem === 'id' ? (b.id ?? -1) - (a.id ?? -1) || (b.vdd || 0) - (a.vdd || 0)
+    : (b.ie ?? b.i ?? -1) - (a.ie ?? a.i ?? -1) || (b.vde || b.vd || 0) - (a.vde || a.vd || 0));
+}
+// Quadro dos quatro grupos, com a composição por partido em cada Casa.
+function quadroGrupos(){
+  const ex = Object.values(D.indice).filter(p => p.ex);
+  const G = [['extrema', 'Extrema-direita', '--ext'], ['direita', 'Direita', '--dir'], ['centro', 'Centro-direita', '--g-cen'], ['esquerda', 'Esquerda', '--contra']];
+  const contar = l => Object.entries(l.reduce((a, p) => { const s = nomePartido(p.p, p.s) || '?'; a[s] = (a[s] || 0) + 1; return a; }, {})).sort((a, b) => b[1] - a[1]);
+  const sp = ex.filter(p => p.cl === 'sp');
+  return `<div class="quadro-grupos">${G.map(([g, nome, cor]) => {
+    const cam = ex.filter(p => p.cl === g && p.c === 'C'), sen = ex.filter(p => p.cl === g && p.c === 'S');
+    const pc = contar(cam), max = pc.length ? pc[0][1] : 1, top = pc.slice(0, 5), resto = pc.slice(5).reduce((a, x) => a + x[1], 0);
+    return `<button type="button" class="qg ${est.parl.classe === (g === 'direita' ? 'direita_b' : g) ? 'ativo' : ''}" data-grupo="${g}" style="--cor:var(${cor})">
+      <span class="qg-topo"><span class="qg-nome">${nome}</span><b>${fmt(cam.length + sen.length)}</b></span>
+      <span class="qg-casa">${fmt(cam.length)} deputados</span>
+      <span class="qg-partidos">${top.map(([s, n]) => `<span class="qg-p"><span class="qg-s">${esc(s)}</span><span class="qg-b"><i style="width:${(100 * n / max).toFixed(1)}%"></i></span><span class="qg-n">${n}</span></span>`).join('')}${resto ? `<span class="qg-outros">e mais ${resto} de outros partidos</span>` : ''}</span>
+      <span class="qg-casa">${fmt(sen.length)} senadores${sen.length ? `, de ${listaE(contar(sen).map(([s, n]) => `${s} (${n})`))}` : ''}</span>
+    </button>`;
+  }).join('')}</div>${sp.length ? `<p class="meta">Sem partido, e por isso fora dos quatro grupos: ${listaE(sp.map(p => `${p.n} (${CASA[p.c]})`))}.</p>` : ''}`;
+}
+function desenharParlamentares(){
+  const f = est.parl;
+  const lista = filtrarParl();
+  const paginas = Math.max(1, Math.ceil(lista.length / 50)); f.pagina = Math.min(f.pagina, paginas);
+  const todos = Object.values(D.indice);
+  const partidos = [...new Set(todos.map(p => p.p).filter(Boolean))].sort().map(p => [p, nomePartido(p)]);
+  const ufs = [...new Set(todos.map(p => p.uf).filter(Boolean))].sort().map(u => [u, u]);
+  const r = D.regras || P.indice;
+  $('#aba-parlamentares').innerHTML = `
+    <h2 class="titulo">Parlamentares</h2>
+    <p class="sub">Cada deputado e senador em exercício está em um de quatro grupos políticos. Clique num grupo para ver só os parlamentares dele na tabela.</p>
+    ${quadroGrupos()}
+    <div class="como-grupo">
+      <div><h3>Na Câmara, o grupo vem dos votos</h3><p>Um modelo estatístico coloca cada deputado numa escala da esquerda para a direita, de acordo com o jeito como votou desde 2023. Quem vota parecido fica perto. Por isso um deputado do MDB pode estar na extrema-direita e um do PL na direita. A <a href="posicoes.html">página das posições</a> mostra a escala completa.</p></div>
+      <div><h3>No Senado, o grupo vem do partido</h3><p>Há poucas votações disputadas no Senado para o modelo funcionar bem. Extrema-direita reúne ${esc(GRUPO_TXT('extrema'))}. Direita reúne ${esc(GRUPO_TXT('direita'))}. Centro-direita reúne ${esc(GRUPO_TXT('centro'))}. Esquerda reúne ${esc(GRUPO_TXT('esquerda'))}.</p></div>
+    </div>
+    <details class="ler-tabela"><summary>Como ler a tabela</summary>
+      <dl>
+        <dt>Índice com a extrema-direita</dt><dd>Nas votações em que a extrema-direita e a esquerda votaram em lados opostos, a parte em que o parlamentar votou como a extrema-direita. Só aparece para quem participou de pelo menos ${r.votacoesMinimas} dessas votações.</dd>
+        <dt>Índice com a direita</dt><dd>A mesma conta, comparando com a direita.</dd>
+        <dt>Vota com a direita</dt><dd>Selo dado a quem é da centro-direita ou da esquerda, mas tem um dos dois índices em ${Math.round(r.alinhado * 100)}% ou mais. De ${Math.round(r.proximo * 100)}% a ${Math.round(r.alinhado * 100)}%, o selo é "vota próximo da direita".</dd>
+        <dt>Projetos da direita</dt><dd>Projetos apresentados pelo parlamentar que fazem avançar alguma pauta da direita. A coluna ao lado conta quantos deles têm grau de extrema-direita.</dd>
+        <dt>Quem aparece</dt><dd>A lista mostra quem está em exercício hoje. Para ver suplentes que já saíram, licenciados e ex-parlamentares, escolha "Também quem já deixou o mandato".</dd>
+      </dl>
+    </details>
+    <div class="filtros">
+      <label class="sr" for="fa-texto">Procurar parlamentar</label><input type="search" id="fa-texto" placeholder="Procurar parlamentar" value="${esc(f.texto)}">
+      <select id="fa-classe" aria-label="Grupo">${opcoes([['direita', 'Extrema-direita, direita e quem vota com elas'], ['extrema', 'Extrema-direita'], ['direita_b', 'Direita'], ['centro', 'Centro-direita'], ['esquerda', 'Esquerda'], ['sp', 'Sem partido'], ['al', 'De outros grupos que votam com a direita']], f.classe, 'Todos os parlamentares')}</select>
+      <select id="fa-casa" aria-label="Casa">${opcoes([['C', 'Câmara'], ['S', 'Senado']], f.casa, 'Câmara e Senado')}</select>
+      <select id="fa-mandato" aria-label="Mandato">${opcoes([['todos', 'Também quem já deixou o mandato']], f.mandato, 'Em exercício hoje')}</select>
+      <select id="fa-partido" aria-label="Partido">${opcoes(partidos, f.partido, 'Todos os partidos')}</select>
+      <select id="fa-uf" aria-label="Estado">${opcoes(ufs, f.uf, 'Todos os estados')}</select>
+      <select id="fa-ordem" aria-label="Ordenar">${opcoes([['id', 'Maior índice com a direita'], ['nd', 'Mais projetos da direita'], ['nx', 'Mais projetos de extrema-direita'], ['n', 'Nome']], f.ordem === 'ie' ? '' : f.ordem, 'Maior índice com a extrema-direita')}</select>
+    </div>
+    <p class="contagem">${fmt(lista.length)} parlamentares</p>
+    <div class="tabela-wrap"><table class="parl">
+      <thead><tr><th>Parlamentar</th><th>Partido</th><th>Casa</th><th>Grupo</th><th>Índice com a extrema-direita</th><th>Índice com a direita</th><th>Projetos da direita</th><th>Extrema-direita</th></tr></thead>
+      <tbody>${lista.slice((f.pagina - 1) * 50, f.pagina * 50).map(([k, p]) => `<tr class="linha" data-parl="${esc(k)}" tabindex="0">
+        <td><b>${esc(p.n)}</b></td><td>${esc(nomePartido(p.p, p.s))}/${esc(p.uf || '')}</td><td>${CASA[p.c] || ''}</td>
+        <td>${seloGrupo(p)}</td>
+        ${[[p.ie, p.vde], [p.id, p.vdd]].map(([iv, n]) => `<td>${iv !== null && iv !== undefined ? `<span class="barra"><span class="fundo"><span style="width:${iv}%"></span></span><b>${indiceTxt(iv)}</b></span><span class="meta"> em ${fmt(n)}</span>` : '<span class="meta">sem votações suficientes</span>'}</td>`).join('')}
+        <td>${fmt(p.nd)}</td><td>${fmt(p.nx)}</td></tr>`).join('')}</tbody>
+    </table></div>
+    ${paginador(f.pagina, paginas, 'parl')}`;
+  if (f.ordem === 'ie') $('#fa-ordem').value = '';
+  ligarFiltros('fa', est.parl, desenharParlamentares);
+  document.querySelectorAll('.quadro-grupos .qg').forEach(b => b.addEventListener('click', () => {
+    const v = b.dataset.grupo === 'direita' ? 'direita_b' : b.dataset.grupo;
+    est.parl.classe = est.parl.classe === v ? '' : v; est.parl.pagina = 1; desenharParlamentares();
+    const t = $('.contagem'); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }));
+  $('#fa-ordem').addEventListener('change', e => { est.parl.ordem = e.target.value || 'ie'; desenharParlamentares(); });
+  if (f.sel && !$('#perfil-dlg').open) desenharPerfil(f.sel);
+}
+async function desenharPerfil(k){
+  const p = D.indice[k]; const el = $('#perfil'); if (!p || !el) return;
+  const props = D.prop.filter(it => (it.a || []).includes(k));
+  const pautas = Object.entries(p.pp || {}).sort((a, b) => b[1] - a[1]);
+  el.innerHTML = `<div class="perfil" id="perfil-caixa">
+    <div class="perfil-topo"><h3>${esc(p.n)}</h3><button type="button" class="btn" data-fechar-perfil>Fechar</button></div>
+    <div class="linha-perfil"><span>${esc(nomePartido(p.p, p.s))}/${esc(p.uf || '')}, ${CASA[p.c] || ''}</span>${seloGrupo(p)}
+      ${p.cv ? `<span>Grupo pelos votos, na posição <a href="posicoes.html">${(p.po >= 0 ? '+' : '') + String(p.po.toFixed(2)).replace('.', ',')}</a> da escala.${p.clp && p.clp !== p.cl ? ` Pelo partido, seria ${CLASSE[p.clp] || p.clp}.` : ''}</span>` : p.c === 'C' ? '<span>Grupo pelo partido, por falta de votos suficientes.</span>' : ''}
+      ${p.ie != null || p.id != null ? `<span>Índice com a extrema-direita <b>${indiceTxt(p.ie)}</b>${p.vde ? ` em ${fmt(p.vde)} votações` : ''}; com a direita <b>${indiceTxt(p.id)}</b>${p.vdd ? ` em ${fmt(p.vdd)}` : ''}</span>` : p.i != null ? `<span>Índice de alinhamento <b>${indiceTxt(p.i)}</b>, em ${fmt(p.vd)} votações disputadas</span>` : ''}
+      <a class="btn" href="dossie.html?tipo=parlamentar&id=${encodeURIComponent(k)}" style="text-decoration:none">Gerar dossiê</a>
+</div>
+    <div id="perfil-bio"></div>
+    <div class="topo">${pautas.map(([id, n]) => `<span class="selo s-pauta">${esc(PAUTA[id] ? PAUTA[id].nome : id)} ${n}</span>`).join(' ')}</div>
+    <h4>Projetos com pauta da direita (${fmt(props.length)})</h4>
+    ${props.length ? `<div class="grade">${props.slice(0, 6).map(cartaoProp).join('')}</div>${props.length > 6 ? `<p><button type="button" class="btn" data-ver-props="${esc(k)}">Ver todos os ${props.length}</button></p>` : ''}` : '<p class="meta">Nenhum projeto com pauta da direita.</p>'}
+    <h4>O que relata</h4><div id="perfil-rel">Carregando.</div>
+    ${D.chave && D.chave.itens.some(it => it.vot.some(v => v.k === p.c && !v.simb)) ? `<h4>Proposições-chave</h4><div class="lista-chave" id="perfil-chave">${votosChaveHTML(k, p)}</div>` : ''}
+    <h4>Votos recentes em votações disputadas</h4><div class="lista-votos" id="perfil-votos">Carregando.</div>
+  </div>`;
+  desenharRelatorias(k, p);
+  desenharBio(k, p);
+  const dlg = $('#perfil-dlg'); if (!dlg.open) dlg.showModal(); dlg.scrollTop = 0;
+  const recentes = D.vot.filter(v => v.disp && v.k === p.c).slice(0, 60);
+  const anos = [...new Set(recentes.map(v => String(v.d).slice(0, 4)))];
+  const mapas = await Promise.all(anos.map(votosDoAno));
+  const id = +k.slice(1);
+  const linhas = [];
+  for (const v of recentes) {
+    const det = mapas[anos.indexOf(String(v.d).slice(0, 4))].get(v.id); if (!det) continue;
+    const voto = Object.entries(det.v || {}).find(([, ids]) => ids.includes(id));
+    if (!voto) continue;
+    linhas.push(`<div><span class="meta">${dataBR(v.d)}</span><b>${esc(v.mat || 'Votação')}</b><span>${esc(VOTO[voto[0]] || voto[0])}</span>${(() => { const alvo = posBloco(p, v); const rot = p.cl === 'extrema' ? 'o bloco da extrema-direita' : p.cl === 'direita' ? 'o bloco da direita' : 'a direita'; return alvo ? (voto[0] === alvo ? `<span class="selo s-dir">com ${rot}</span>` : (voto[0] === 'S' || voto[0] === 'N') ? `<span class="selo s-perdeu">contra ${rot}</span>` : '') : ''; })()}<span class="meta">${esc(String(v.me || v.desc).slice(0, 110))}</span></div>`);
+    if (linhas.length >= 15) break;
+  }
+  const caixa = $('#perfil-votos'); if (caixa) caixa.innerHTML = linhas.join('') || '<p class="meta">Nenhum voto em votação disputada.</p>';
+}
+
+// ---------------------------------------------------------------- método
+function desenharMetodo(){
+  const r = D.regras || P.indice;
+  $('#aba-metodo').innerHTML = `<div class="metodo">
+    <h2 class="titulo">Como funciona</h2>
+    <p>Todo dia, um robô consulta os dados abertos da Câmara dos Deputados e do Senado Federal e reúne os projetos de lei, de lei complementar, de emenda à Constituição e de decreto legislativo apresentados por deputados e senadores, pelo Poder Executivo, por comissões e por outros órgãos, e todas as votações nominais dos plenários e das comissões, com o voto de cada parlamentar. Requerimentos de urgência, destaques e emendas são ligados ao projeto a que se referem, de modo que a urgência, os destaques e o mérito de um mesmo projeto aparecem juntos e com a mesma classificação.</p>
+    <h3>Quem é a direita</h3>
+    <p>Na Câmara dos Deputados, o grupo de cada deputado vem dos próprios votos. Um modelo estatístico estima a posição de cada um numa escala da esquerda para a direita a partir de todas as votações nominais disputadas desde 2023, de modo que quem vota parecido fica perto, e a escala é dividida nos quatro grupos onde os votos se concentram. O cálculo é refeito toda segunda-feira. Deputados com menos de 25 votos ficam no grupo do partido. A <a href="posicoes.html">página das posições</a> mostra a escala, os partidos e quem vota diferente da legenda. No Senado, onde há poucas votações disputadas para o modelo funcionar bem, vale o grupo do partido.</p>
+    <p>Na divisão por partido, usada no Senado e nas votações, os partidos estão divididos em extrema-direita (${esc(GRUPO_TXT('extrema'))}), direita (${esc(GRUPO_TXT('direita'))}), centro-direita (${esc(GRUPO_TXT('centro'))}) e esquerda (${esc(GRUPO_TXT('esquerda'))}). Em cada votação nominal, a posição de cada bloco é a da maioria dos seus votos, desde que ao menos ${Math.round(r.coesaoMinima * 100)}% dele vote no mesmo sentido. A mesma regra define a posição da esquerda, usada como referência do campo do governo.</p>
+    <p>A posição é calculada para dois blocos, a extrema-direita e a direita. Disputadas são as votações em que ao menos um desses blocos e a esquerda votaram em sentidos opostos. Cada parlamentar tem dois índices. O índice com a extrema-direita é a porcentagem das votações em que a extrema-direita e a esquerda se opuseram em que ele votou como a extrema-direita, e o índice com a direita segue a mesma regra, contando só votos Sim e Não e a partir de ${r.votacoesMinimas} votações. Parlamentares da centro-direita, da esquerda ou sem partido aparecem como "vota com a direita" quando o maior dos dois índices chega a ${Math.round(r.alinhado * 100)}%, e como "vota próximo da direita" de ${Math.round(r.proximo * 100)}% a ${Math.round(r.alinhado * 100)}%.</p>
+    <h3>Pautas e grau</h3>
+    <p>Uma inteligência artificial lê a ementa de cada projeto e de cada votação e indica se o item faz avançar alguma das pautas abaixo, se vai contra ela ou se não trata de nenhuma. Quando faz avançar, indica o grau, direita ou extrema-direita. O grau vale para o projeto ou para a votação, e não para a pessoa. A classificação é automática e serve como triagem. Os casos conferidos pela equipe recebem o selo "Conferido pela equipe".</p>
+    <div class="pautas-met">${P.lista.map(p => `<div><b>${esc(p.nome)}</b>${esc(p.descricao)}<small>Extrema-direita quando ${esc(p.extrema.charAt(0).toLowerCase() + p.extrema.slice(1))}</small></div>`).join('')}</div>
+    <h3>Relatorias</h3>
+    <p>O relator é o parlamentar que estuda um projeto numa comissão ou no plenário e escreve o parecer, muitas vezes com um texto novo, que vai a voto. Por isso a relatoria costuma pesar tanto quanto a autoria. Os dados do Senado vêm da base de relatorias do próprio Senado, com cada designação desde 2023, a comissão, a data em que o senador assumiu e a data e o motivo de quando deixou a relatoria. Na Câmara, que não publica uma base própria de relatorias, as designações são lidas das tramitações de cada proposição, que trazem o deputado designado e a comissão, e o parecer é identificado pela tramitação seguinte do mesmo relator. O perfil de cada parlamentar mostra o que ele relata, e a ficha dos projetos da direita mostra quem os relata no momento.</p>
+    <h3>Balanço</h3>
+    <p>A aba Balanço mede o peso de cada grupo político no Congresso desde fevereiro de 2023, com todos os projetos apresentados e todas as votações nominais coletadas. Cada projeto de parlamentar é atribuído ao grupo do primeiro autor. Os projetos do Poder Executivo, de comissões, do Senado como Casa, de tribunais e de outros órgãos contam no total e aparecem numa linha própria, porque não têm autor de um grupo político. As proposições de rotina sem autor parlamentar (atos de outorga e renovação de rádio e TV e pautas administrativas das Casas, dos tribunais e do Ministério Público, como criação de cargos e varas) ficam fora da conta da produção, mas continuam na base, na classificação e nas votações. Os acordos internacionais contam, porque muitas vezes dividem os grupos. A média por parlamentar divide os projetos do grupo por todos que passaram por ele no período, inclusive suplentes e quem deixou o mandato. A pauta da direita segue a mesma classificação usada no resto do site. Nas votações, o grupo fica do lado vencedor quando a maioria dos seus integrantes que votaram sim ou não acompanhou o resultado final. Votações sem resultado de aprovação ou rejeição registrado e empates dentro do grupo ficam fora da conta. A situação de cada projeto (em tramitação, aprovado em ao menos uma Casa, transformado em lei ou arquivado) é lida todos os dias nos arquivos de dados abertos da Câmara e na API do Senado. Um projeto conta como aprovado quando já passou pelo plenário de uma Casa, ou pela comissão quando ela decide em caráter terminativo, e seguiu para a outra Casa, para a sanção ou virou lei. Na análise por tema, valem os temas identificados nas ementas, e um mesmo projeto pode contar em mais de um tema. Os números são recalculados todos os dias pelo robô.</p>
+    <h3>Biografias</h3>
+    <p>A biografia de cada parlamentar é escrita por um modelo de IA a partir de duas fontes públicas, os dados oficiais da Câmara dos Deputados ou do Senado Federal e o verbete da Wikipédia em português. O modelo é instruído a não acrescentar nenhum fato que não esteja nessas fontes e a manter um tom descritivo, sem juízos. Partido e situação do mandato vêm sempre dos dados oficiais, porque o verbete pode estar desatualizado. A equipe revisa os textos, e a versão revisada prevalece sobre a da IA. Cada ficha traz os links das fontes usadas e do perfil oficial do parlamentar.</p>
+    <h3>Emendas parlamentares</h3>
+    <p>O módulo de emendas mostra para onde deputados e senadores mandam o dinheiro das emendas individuais ao Orçamento. Os dados vêm do Portal da Transparência, do governo federal, que publica as emendas, os pagamentos a cada favorecido e os convênios. O robô baixa esses arquivos toda segunda-feira. Entram as emendas individuais de 2023 a 2026, com 2026 ainda em execução. As emendas de bancada, de comissão e de relator ficam de fora, porque não têm um autor individual.</p>
+    <p>Cada emenda é ligada ao parlamentar autor pelo nome e somada ao grupo do partido dele, com a mesma divisão usada no resto do site. Os totais usam o valor empenhado, que é o compromisso de gasto, e o perfil de cada parlamentar mostra também o valor efetivamente pago. As áreas seguem a função orçamentária da emenda. As transferências especiais, conhecidas como emendas Pix, aparecem separadas, porque o dinheiro chega ao município sem finalidade definida. O mapa liga cada pagamento ao município que o recebeu, e o valor por habitante usa a população do Censo 2022 do IBGE. Os detalhes estão em <a href="emendas.html#metodo">Como foi feito</a>, no próprio módulo.</p>
+    <h3>Limites</h3>
+    <ul>
+      <li>A classificação lê só a ementa e não substitui a leitura do texto integral.</li>
+      <li>Votações simbólicas, em que não há registro do voto de cada parlamentar, e votações secretas ficam de fora dos índices. Nas proposições-chave, as votações simbólicas do plenário da Câmara aparecem com o resultado, porque a Câmara não publica o voto nem a orientação das bancadas nesses casos.</li>
+      <li>As proposições-chave são escolhidas pela equipe, por separar o governo da oposição. Para cada uma, entram todas as votações nominais ligadas a ela (urgência, destaques e mérito). A lista fica na aba Balanço e na ficha de cada parlamentar.</li>
+      <li>O partido de cada parlamentar nas votações é o da data do voto. Nos projetos, é o partido mais recente.</li>
+      <li>Nas emendas, a ligação ao autor é feita pelo nome e cobre a maior parte do valor, mas não todo. A parcela que não pôde ser ligada a um parlamentar fica fora dos totais por grupo.</li>
+    </ul>
+    <h3>Dados abertos</h3>
+    <p>Todos os arquivos usados pela página estão na <a href="https://github.com/jamesgorgen/exterminadores-do-futuro/tree/main/dados">pasta de dados do projeto no GitHub</a>, em formato JSON, para quem quiser conferir ou fazer outras análises.</p>
+    <h3>Contato</h3>
+    <p>Encontrou uma classificação que parece errada, tem uma sugestão ou quer usar os dados num trabalho? Escreva para <a href="mailto:contato@exterminadores.com.br">contato@exterminadores.com.br</a>. Ao apontar um erro, informe o número do projeto ou da votação.</p>
+  </div>`;
+}
+
+// ---------------------------------------------------------------- compartilhar
+const base = () => location.origin + location.pathname.replace(/index\.html$/, '');
+function textoComp(ref){
+  const [tipo, id] = [ref.slice(0, 1), ref.slice(2)];
+  if (tipo === 'p') {
+    const it = D.prop.find(x => x.c === id) || (D.todasMap && D.todasMap.get(id)) || (D.ver[id] && { c: id, e: D.ver[id].ementa, a: D.ver[id].autores, k: D.ver[id].casa, i: D.ver[id].i, x: D.ver[id].x || {} });
+    if (!it) return '';
+    const ver = D.ver[id];
+    const autores = (it.a || []).slice(0, 3).map(k => { const p = D.indice[k]; return p ? `${p.n} (${nomePartido(p.p, p.s)}/${p.uf || ''})` : ''; }).filter(Boolean).join('; ') || autoriaFora(it);
+    return [`*${it.c}*${autores ? '\nAutoria de ' + autores : ''}`, it.e, ver && ver.nota ? `✅ *Checagem da equipe.* ${ver.nota}` : '',
+      linkProp(it) ? `Ficha oficial\n${linkProp(it)}` : '', `*Os exterminadores do futuro*, observatório da direita no Congresso\n${base()}?p=${encodeURIComponent(id)}`].filter(Boolean).join('\n\n');
+  }
+  const v = D.vot.find(x => x.id === id); if (!v) return '';
+  const t = v.t || {};
+  return [`*${v.mat || 'Votação'}*, ${CASA[v.k]}, ${v.pl ? 'plenário' : v.o}, ${dataBR(v.d)}`, v.me || v.desc,
+    (v.be || v.bd || v.bl) ? `${v.be !== undefined ? `A extrema-direita votou ${VOTO[v.be] || 'dividida'}, a direita votou ${VOTO[v.bd] || 'dividida'}` : `A direita votou ${VOTO[v.bl]}`}${v.gv ? ` e a esquerda votou ${VOTO[v.gv]}` : ''}. ${v.res === 'A' ? 'Aprovada' : v.res === 'R' ? 'Rejeitada' : ''}, com ${t.S || 0} votos sim e ${t.N || 0} não.` : '',
+    `*Os exterminadores do futuro*, observatório da direita no Congresso\n${base()}?v=${encodeURIComponent(id)}`].filter(Boolean).join('\n\n');
+}
+async function compartilhar(ref){
+  const texto = textoComp(ref); if (!texto) return;
+  if (navigator.share && /Android|iPhone|iPad|Mobile/i.test(navigator.userAgent)) { try { await navigator.share({ text: texto }); return; } catch (e) { if (e && e.name === 'AbortError') return; } }
+  window.open('https://wa.me/?text=' + encodeURIComponent(texto), '_blank', 'noopener');
+}
+async function copiar(ref, b){
+  const texto = textoComp(ref); if (!texto) return;
+  let ok = false;
+  try { await navigator.clipboard.writeText(texto); ok = true; } catch (e) { const t = document.createElement('textarea'); t.value = texto; document.body.appendChild(t); t.select(); try { ok = document.execCommand('copy'); } catch (er) {} t.remove(); }
+  const antes = b.textContent; b.textContent = ok ? 'Copiado' : 'Não foi possível copiar'; setTimeout(() => { b.textContent = antes; }, 2000);
+}
+
+// ---------------------------------------------------------------- votações-chave
+// Escolhidas pela equipe. Cada matéria reúne a urgência, os destaques e o mérito, nominais e simbólicos.
+const ORI_TXT = { S: 'sim', N: 'não', L: 'liberou', O: 'obstrução', A: 'abstenção' };
+const resTxt = r => r === 'A' ? 'aprovada' : r === 'R' ? 'rejeitada' : '';
+function votoChave(k, p, v){
+  const casa = D.chave.votos[p.c] || { ids: [], v: {} };
+  const i = casa.ids.indexOf(v.id); if (i < 0) return '';
+  return (casa.v[k.slice(1)] || '')[i] || '';
+}
+function votosChaveHTML(k, p){
+  const linhas = [];
+  for (const it of D.chave.itens) for (const v of it.vot) {
+    if (v.k !== p.c || v.simb) continue;
+    const voto = votoChave(k, p, v);
+    const ref = v.gov || v.gv, rotRef = v.gov ? 'o governo' : 'a esquerda';
+    const comGov = !voto || voto === '.' || !ref || !['S', 'N'].includes(ref) || !['S', 'N'].includes(voto) ? '' : voto === ref ? `com ${rotRef}` : `contra ${rotRef}`;
+    linhas.push(`<div><span class="meta">${dataBR(v.d)}</span><span><b>${esc(it.t || it.c)}</b> ${esc(it.c)}</span><span>${voto && voto !== '.' ? esc(VOTO[voto] || (voto === '-' ? 'presente, sem voto' : voto)) : '<span class="meta">sem registro</span>'}</span>
+      <small>${esc(corta(v.desc || '', 140))}${comGov ? ` · votou ${comGov}` : ''}</small></div>`);
+  }
+  return linhas.join('') || '<p class="meta">Sem votos registrados nas proposições-chave.</p>';
+}
+const GRUPOS_CHAVE = ['extrema', 'direita', 'centro', 'esquerda'];
+// Uma linha por votação, uma coluna por grupo, com sim × não. Simbólicas trazem a orientação das bancadas.
+function tabelaChave(vot){
+  const cel = (v, g) => { const x = (v.gr || {})[g] || {}; const s = x.S || 0, n = x.N || 0;
+    return `<td title="${NOME_GRUPO[g]}: ${s} sim, ${n} não${(x.A || 0) + (x.O || 0) ? `, ${(x.A || 0) + (x.O || 0)} abstenção ou obstrução` : ''}">${fmt(s)} × ${fmt(n)}</td>`; };
+  return `<div class="tabela-rolar"><table><thead><tr><th>Votação</th>${GRUPOS_CHAVE.map(g => `<th>${NOME_GRUPO[g]}</th>`).join('')}</tr></thead><tbody>
+    ${vot.map(v => `<tr><td><b>${dataBR(v.d)}</b>, ${esc(CASA[v.k])}${v.pl ? '' : ', ' + esc(v.o)}. ${esc(corta(v.desc || '', 150))}${resTxt(v.res) ? ` <b>${resTxt(v.res)}</b>.` : ''}${v.gov ? ` Governo orientou ${ORI_TXT[v.gov] || v.gov}${v.op ? `, oposição ${ORI_TXT[v.op] || v.op}` : ''}.` : ''}</td>
+      ${v.simb ? `<td colspan="4" class="meta">Simbólica, sem voto de cada parlamentar${v.ori ? '. Orientações: ' + esc(Object.entries(v.ori).map(([b, o]) => `${b} ${String(o).toLowerCase()}`).join(', ')) : ''}</td>` : GRUPOS_CHAVE.map(g => cel(v, g)).join('')}</tr>`).join('')}
+  </tbody></table></div><p class="meta">Em cada grupo, votos sim × votos não.</p>`;
+}
+function secaoChave(casa){
+  if (!D.chave || !D.chave.itens.length) return '';
+  const itens = D.chave.itens.map(it => ({ it, vot: it.vot.filter(v => casa === 'T' || v.k === casa) })).filter(x => x.vot.length);
+  if (!itens.length) return '';
+  return `<div class="secao"><h2 class="titulo">Proposições-chave</h2>
+    <p class="sub">Projetos escolhidos pela equipe por separar o governo da oposição. Cada um reúne todas as suas votações nominais: urgência, destaques e mérito. O grupo de cada parlamentar é o usado no resto do site.</p>
+    ${itens.map(({ it, vot }) => `<div class="vchave"><h3>${esc(it.t || it.c)}</h3>
+      <p class="meta">${esc(it.c)}${autoriaFora(it) ? `, de autoria do ${esc(autoriaFora(it))}` : ''}</p>
+      <p class="ementa">${esc(corta(it.e || '', 320))}</p>${it.nota ? `<p class="motivo"><b>Por que importa.</b> ${esc(it.nota)}</p>` : ''}
+      ${tabelaChave(vot)}
+      <div class="acoes">${temFichaProjeto(it.c) ? `<button type="button" class="btn" data-ir-prop="${esc(it.c)}">Ver o projeto</button>` : ''}${D.votPorMat.get(it.c) ? `<button type="button" class="btn" data-ir-vot="${esc(it.c)}">Ver as votações nominais</button>` : ''}</div>
+    </div>`).join('')}</div>`;
+}
+
+// ---------------------------------------------------------------- balanço
+// Peso de cada grupo na produção de projetos e nas votações (resumo.blocos, calculado pelo robô).
+const COR_GRUPO = { extrema: 'var(--ext)', direita: 'var(--dir)', centro: 'var(--g-cen)', esquerda: 'var(--contra)' };
+const NOME_GRUPO = { extrema: 'Extrema-direita', direita: 'Direita', centro: 'Centro-direita', esquerda: 'Esquerda', fora: 'Executivo e outros' };
+COR_GRUPO.fora = 'var(--ink-3)';
+// Projetos sem autor parlamentar (resumo.blocos.X.fora): Poder Executivo, comissões, Senado como Casa, tribunais e outros órgãos.
+const TIPO_FORA = { executivo: ['projeto do Poder Executivo', 'projetos do Poder Executivo'], comissao: ['de comissão ou da Mesa', 'de comissões e das Mesas'], senado: ['do Senado como Casa', 'do Senado como Casa'], judiciario: ['do Judiciário', 'do Judiciário'], mp: ['do Ministério Público ou da Defensoria', 'do Ministério Público e da Defensoria'], outro: ['de outro órgão', 'de outros órgãos'] };
+const foraTxt = f => listaE(Object.entries(f.tipos || {}).sort((a, b) => b[1] - a[1]).map(([t, n]) => `${fmt(n)} ${t === 'executivo' ? TIPO_FORA[t][n === 1 ? 0 : 1] : (n === 1 ? 'projeto ' : 'projetos ') + (TIPO_FORA[t] || TIPO_FORA.outro)[n === 1 ? 0 : 1]}`));
+const ROTINA_TXT = { outorga: ['ato de outorga ou renovação de rádio e TV', 'atos de outorga e renovação de rádio e TV'], acordo: ['acordo internacional', 'acordos internacionais'], administrativa: ['pauta administrativa', 'pautas administrativas das Casas, dos tribunais e do Ministério Público'] };
+const rotinaTxt = r => `${fmt(r.n)} ${r.n === 1 ? 'proposição' : 'proposições'} de rotina (${listaE(Object.entries(r.tipos || {}).sort((a, b) => b[1] - a[1]).map(([t, n]) => `${fmt(n)} ${(ROTINA_TXT[t] || [t, t])[n === 1 ? 0 : 1]}`))})`;
+function linhaFora(campo, total, rot){
+  const f = (D.resumo && D.resumo.blocos && (D.resumo.blocos[(est.bal || {}).casa || 'T'] || {}).fora); if (!f) return [];
+  return [{ g: 'fora', v: pct(campo(f), total), txt: fmtPct(pct(campo(f), total)), det: `${fmt(campo(f))} ${rot}`, dica: `Executivo e outros órgãos: ${fmt(campo(f))} de ${fmt(total)} ${rot}` }];
+}
+const pct = (a, b) => b ? (100 * a / b) : 0;
+const fmtPct = x => x.toLocaleString('pt-BR', { maximumFractionDigits: 1, minimumFractionDigits: x < 10 && x % 1 ? 1 : 0 }) + '%';
+function graficoBlocos(titulo, sub, linhas, maximo, nota){
+  return `<div class="bal-g"><h3>${esc(titulo)}</h3><p class="sub">${esc(sub)}</p>
+    ${linhas.map(l => `<div class="bal-linha" title="${esc(l.dica)}"><span class="nome">${NOME_GRUPO[l.g]}</span>
+      <span class="trilho"><span class="barra" style="width:${Math.max(0, Math.min(100, 100 * l.v / (maximo || 1))).toFixed(1)}%;background:${COR_GRUPO[l.g]}"></span></span>
+      <span class="val">${l.txt}${l.det ? `<small>${l.det}</small>` : ''}</span></div>`).join('')}
+    ${nota ? `<p class="bal-nota">${nota}</p>` : ''}</div>`;
+}
+function desenharBalanco(){
+  const el = $('#aba-balanco');
+  const r = D.resumo, B = r && r.blocos;
+  if (!B) { el.innerHTML = `<div class="vazio"><p>O balanço é calculado pelo robô do observatório e aparece depois da próxima atualização diária.</p></div>`; return; }
+  est.bal = est.bal || { casa: 'T' };
+  const b = B[est.bal.casa] || B.T, G = ['extrema', 'direita', 'centro', 'esquerda'], g = b.grupos;
+  const casaTxt = { T: 'na Câmara dos Deputados e no Senado Federal', C: 'na Câmara dos Deputados', S: 'no Senado Federal' }[est.bal.casa];
+  const blocoProp = g.extrema.prop + g.direita.prop;
+  const maxPC = Math.max(...G.map(x => g[x].prop / (g[x].membros || 1)));
+  el.innerHTML = `
+    <div class="secao">
+      <h2 class="titulo">O peso de cada bloco no Congresso</h2>
+      <p class="sub">Quanto cada grupo político produz e com que frequência fica do lado vencedor ${casaTxt}, desde ${dataBR(r.inicio)}.</p>
+      <div class="bal-filtro"><select id="bal-casa" aria-label="Casa">${[['T', 'Câmara e Senado'], ['C', 'Câmara dos Deputados'], ['S', 'Senado Federal']].map(([v, t]) => `<option value="${v}" ${est.bal.casa === v ? 'selected' : ''}>${t}</option>`).join('')}</select>
+        <a class="btn" href="dossie.html?tipo=balanco&casa=${est.bal.casa}" target="_blank" rel="noopener">Gerar dossiê do balanço</a></div>
+      <div class="bal-lede">
+        <p><b>${fmtPct(pct(blocoProp, b.prop))}</b>dos ${fmt(b.prop)} projetos apresentados saíram da direita e da extrema-direita${b.fora ? `; ${fmtPct(pct(b.fora.prop, b.prop))} vieram do Poder Executivo e de outros órgãos` : ''}</p>
+        <p><b>${fmtPct(pct(b.pauta, b.prop))}</b>de todos os projetos fazem avançar alguma pauta da direita, ${fmtPct(pct(b.pautaExtrema, b.prop))} com grau de extrema-direita</p>
+        ${b.comSit ? `<p><b>${fmtPct(pct(g.extrema.aprovada + g.direita.aprovada, b.aprovada))}</b>dos ${fmt(b.aprovada)} projetos aprovados em ao menos uma Casa são da direita e da extrema-direita, que apresentaram ${fmtPct(pct(blocoProp, b.prop))} do total</p>` : ''}
+        <p><b>${fmtPct(pct(g.extrema.venceu, g.extrema.vot))}</b>das votações nominais tiveram a maioria da extrema-direita do lado vencedor, contra ${fmtPct(pct(g.direita.venceu, g.direita.vot))} da direita</p>
+      </div>
+      <div class="bal-graficos">
+        ${graficoBlocos('Projetos apresentados', 'Parte de cada grupo no total de projetos, pelo primeiro autor.',
+          [...G.map(x => ({ g: x, v: pct(g[x].prop, b.prop), txt: fmtPct(pct(g[x].prop, b.prop)), det: `${fmt(g[x].prop)} projetos`, dica: `${NOME_GRUPO[x]}: ${fmt(g[x].prop)} de ${fmt(b.prop)} projetos` })), ...linhaFora(f => f.prop, b.prop, 'projetos')], 50,
+          `A centro-direita reúne partidos que oscilam entre o governo e a oposição. ${b.fora ? `A linha do Executivo e outros órgãos reúne ${foraTxt(b.fora)}. ` : ''}Projetos de parlamentares sem partido contam no total, sem grupo.${b.rotina ? ` Ficam fora da conta ${rotinaTxt(b.rotina)}, que seguem na base e nas votações.` : ''}`)}
+        ${graficoBlocos('Projetos por parlamentar', 'Média de projetos apresentados por integrante do grupo.',
+          G.map(x => ({ g: x, v: g[x].prop / (g[x].membros || 1), txt: fmt(Math.round(g[x].prop / (g[x].membros || 1))), det: `${fmt(g[x].membros)} parlamentares`, dica: `${NOME_GRUPO[x]}: ${fmt(g[x].prop)} projetos de ${fmt(g[x].membros)} parlamentares` })), maxPC,
+          `Conta todos que passaram pelo grupo desde ${dataBR(r.inicio)}, inclusive suplentes e quem deixou o mandato.`)}
+        ${graficoBlocos('Pauta da direita na produção de cada grupo', 'Parte dos projetos do próprio grupo que faz avançar alguma pauta da direita.',
+          [...G.map(x => ({ g: x, v: pct(g[x].pauta, g[x].prop), txt: fmtPct(pct(g[x].pauta, g[x].prop)), det: `${fmt(g[x].pauta)} projetos`, dica: `${NOME_GRUPO[x]}: ${fmt(g[x].pauta)} de ${fmt(g[x].prop)} projetos com pauta da direita` })), ...(b.fora ? [{ g: 'fora', v: pct(b.fora.pauta, b.fora.prop), txt: fmtPct(pct(b.fora.pauta, b.fora.prop)), det: `${fmt(b.fora.pauta)} projetos`, dica: `Executivo e outros órgãos: ${fmt(b.fora.pauta)} de ${fmt(b.fora.prop)} projetos com pauta da direita` }] : [])], 100,
+          `A classificação das pautas é feita por IA e conferida pela equipe. Veja a aba Como funciona.`)}
+        ${b.comSit ? graficoBlocos('Projetos aprovados', 'Parte dos projetos de cada grupo aprovada em ao menos uma Casa ou transformada em lei.',
+          [...G.map(x => ({ g: x, v: pct(g[x].aprovada, g[x].comSit), txt: fmtPct(pct(g[x].aprovada, g[x].comSit)), det: `${fmt(g[x].aprovada)}, ${fmt(g[x].lei)} viraram lei`, dica: `${NOME_GRUPO[x]}: ${fmt(g[x].aprovada)} aprovados e ${fmt(g[x].lei)} transformados em lei, de ${fmt(g[x].comSit)} projetos com situação conhecida` })),
+            ...(b.fora && b.fora.comSit ? [{ g: 'fora', v: pct(b.fora.aprovada, b.fora.comSit), txt: fmtPct(pct(b.fora.aprovada, b.fora.comSit)), det: `${fmt(b.fora.aprovada)}, ${fmt(b.fora.lei)} viraram lei`, dica: `Executivo e outros órgãos: ${fmt(b.fora.aprovada)} aprovados de ${fmt(b.fora.comSit)} com situação conhecida` }] : [])],
+          Math.max(...G.map(x => pct(g[x].aprovada, g[x].comSit)), b.fora && b.fora.comSit ? pct(b.fora.aprovada, b.fora.comSit) : 0) * 1.15,
+          `Situação atual de ${fmt(b.comSit)} projetos, lida todos os dias nas APIs da Câmara e do Senado. Muitos projetos ainda estão em tramitação, então a taxa tende a crescer com o tempo, sobretudo para os mais recentes.`) : ''}
+        ${b.comSit ? graficoBlocos('Peso nas aprovações', 'Parte de cada grupo no total de projetos aprovados.',
+          [...G.map(x => ({ g: x, v: pct(g[x].aprovada, b.aprovada), txt: fmtPct(pct(g[x].aprovada, b.aprovada)), det: `${fmt(g[x].aprovada)} de ${fmt(b.aprovada)}`, dica: `${NOME_GRUPO[x]}: ${fmt(g[x].aprovada)} dos ${fmt(b.aprovada)} projetos aprovados` })), ...linhaFora(f => f.aprovada, b.aprovada, 'aprovados')], 50,
+          `Compare com o gráfico de projetos apresentados. Quando a parte nas aprovações é maior que a parte nos projetos apresentados, o grupo aprova proporcionalmente mais do que propõe.`) : ''}
+        ${graficoBlocos('Do lado vencedor nas votações', 'Votações nominais em que a maioria do grupo votou como o resultado final.',
+          G.map(x => ({ g: x, v: pct(g[x].venceu, g[x].vot), txt: fmtPct(pct(g[x].venceu, g[x].vot)), det: `${fmt(g[x].venceu)} de ${fmt(g[x].vot)}`, dica: `${NOME_GRUPO[x]}: maioria do lado vencedor em ${fmt(g[x].venceu)} de ${fmt(g[x].vot)} votações` })), 100,
+          `Base de ${fmt(b.vot)} votações nominais com resultado registrado de aprovação ou rejeição, em plenário e nas comissões. Empates dentro do grupo não entram na conta.`)}
+      </div>
+    </div>
+    ${secaoChave(est.bal.casa)}
+    ${b.temas && r.temas ? `<div class="secao" id="bal-temas"></div>` : ''}`;
+  $('#bal-casa').addEventListener('change', e => { est.bal.casa = e.target.value; desenharBalanco(); });
+  if (b.temas && r.temas) desenharTemasBalanco(b, r.temas);
+}
+
+// Texto de cada tema: projetos e aprovados de cada grupo lado a lado, e a soma da direita com a extrema-direita.
+function resumoTema(l, comSit){
+  const G = ['extrema', 'direita', 'centro', 'esquerda'];
+  const aprov = n => n === 0 ? 'nenhum aprovado' : `${fmt(n)} ${n === 1 ? 'aprovado' : 'aprovados'}`;
+  const proj = n => `${fmt(n)} ${n === 1 ? 'projeto' : 'projetos'}`;
+  let txt = `${proj(l.x.n)}${comSit ? `, ${aprov(l.x.ap)} em ao menos uma Casa (${fmtPct(pct(l.x.ap, l.x.n))})` : ''}. `;
+  txt += G.map(g => { const v = l.x.g[g] || [0, 0]; return `${NOME_GRUPO[g]}: ${proj(v[0])} (${fmtPct(l.sh[g])})${comSit ? `, ${aprov(v[1])}` : ''}`; }).join('; ') + '.';
+  const semN = l.x.n - l.nG, semAp = l.x.ap - l.apG;
+  if (semN > 0) txt += ` Sem grupo definido: ${proj(semN)}${comSit ? `, ${aprov(semAp)}` : ''}.`;
+  const nDir = ((l.x.g.extrema || [0])[0]) + ((l.x.g.direita || [0])[0]);
+  txt += ` Direita e extrema-direita somam ${fmtPct(pct(nDir, l.nG))} dos projetos`;
+  txt += comSit && l.apG ? ` e ${fmt(l.apDir)} ${l.apG === 1 ? 'do único aprovado' : `dos ${fmt(l.apG)} aprovados`}.` : '.';
+  return txt;
+}
+
+// Peso de cada grupo em cada tema, agrupados por grande área.
+function desenharTemasBalanco(b, tax){
+  const caixa = $('#bal-temas'); if (!caixa) return;
+  est.bal.cad = est.bal.cad || ''; est.bal.ord = est.bal.ord || 'ext'; est.bal.todos = !!est.bal.todos;
+  const G = ['extrema', 'direita', 'centro', 'esquerda'];
+  const cads = Object.fromEntries(tax.cadernos.map(c => [c.id, c]));
+  const linhas = tax.lista.filter(t => b.temas[t.id] && b.temas[t.id].n >= 20 && (!est.bal.cad || t.c === est.bal.cad)).map(t => {
+    const x = b.temas[t.id], soma = G.reduce((a, g) => a + ((x.g[g] || [0])[0]), 0) || 1;
+    const sh = Object.fromEntries(G.map(g => [g, 100 * ((x.g[g] || [0])[0]) / soma]));
+    const apG = G.reduce((a, g) => a + ((x.g[g] || [0, 0])[1]), 0);
+    const apDir = ((x.g.extrema || [0, 0])[1]) + ((x.g.direita || [0, 0])[1]);
+    const nG = G.reduce((a, g) => a + ((x.g[g] || [0])[0]), 0);
+    return { t, x, sh, apG, apDir, nG };
+  });
+  const ord = { ext: (a, c) => c.sh.extrema - a.sh.extrema, blo: (a, c) => (c.sh.extrema + c.sh.direita) - (a.sh.extrema + a.sh.direita),
+    esq: (a, c) => c.sh.esquerda - a.sh.esquerda, n: (a, c) => c.x.n - a.x.n, ap: (a, c) => c.x.ap - a.x.ap }[est.bal.ord];
+  linhas.sort(ord);
+  const vis = est.bal.todos ? linhas : linhas.slice(0, 20);
+  const opc = (v, t, a) => `<option value="${v}" ${a === v ? 'selected' : ''}>${esc(t)}</option>`;
+  caixa.innerHTML = `
+    <h2 class="titulo">Os blocos em cada tema</h2>
+    <p class="sub">Parte de cada grupo nos projetos de cada tema, pelo primeiro autor. Um projeto pode tratar de mais de um tema. Só entram temas com pelo menos 20 projetos.</p>
+    <div class="bal-temas-ctrl">
+      <select id="bal-cad" aria-label="Área">${opc('', 'Todas as áreas', est.bal.cad)}${tax.cadernos.map(c => opc(c.id, c.sub, est.bal.cad)).join('')}</select>
+      <select id="bal-ord" aria-label="Ordem">${opc('ext', 'Onde a extrema-direita mais pesa', est.bal.ord)}${opc('blo', 'Onde direita e extrema-direita mais pesam', est.bal.ord)}${opc('esq', 'Onde a esquerda mais pesa', est.bal.ord)}${opc('n', 'Temas com mais projetos', est.bal.ord)}${opc('ap', 'Temas com mais aprovações', est.bal.ord)}</select>
+    </div>
+    <div class="bal-legenda">${G.map(g => `<span><i style="background:${COR_GRUPO[g]}"></i>${NOME_GRUPO[g]}</span>`).join('')}</div>
+    ${vis.map(l => `<div class="bal-tema">
+      <span class="t">${esc(l.t.n)}<small>${esc((cads[l.t.c] || {}).sub || '')}</small></span>
+      <span class="bal-pilha" role="img" aria-label="${G.map(g => `${NOME_GRUPO[g]} ${fmtPct(l.sh[g])}`).join(', ')}">${G.filter(g => l.sh[g] > 0).map(g => `<span style="width:${l.sh[g].toFixed(2)}%;background:${COR_GRUPO[g]}" title="${NOME_GRUPO[g]}: ${fmtPct(l.sh[g])} dos projetos do tema (${fmt((l.x.g[g] || [0])[0])})"></span>`).join('')}</span>
+      <span class="p">${resumoTema(l, !!b.comSit)}</span>
+    </div>`).join('')}
+    ${linhas.length > 20 ? `<p><button type="button" class="btn" id="bal-todos">${est.bal.todos ? 'Mostrar só os 20 primeiros' : `Mostrar os ${linhas.length} temas`}</button></p>` : ''}`;
+  $('#bal-cad').addEventListener('change', e => { est.bal.cad = e.target.value; desenharTemasBalanco(b, tax); });
+  $('#bal-ord').addEventListener('change', e => { est.bal.ord = e.target.value; desenharTemasBalanco(b, tax); });
+  const bt = $('#bal-todos'); if (bt) bt.addEventListener('click', () => { est.bal.todos = !est.bal.todos; desenharTemasBalanco(b, tax); });
+}
+
+// ---------------------------------------------------------------- navegação
+function irPara(aba){
+  est.aba = aba;
+  document.querySelectorAll('.abas button').forEach(b => b.setAttribute('aria-selected', b.dataset.aba === aba ? 'true' : 'false'));
+  document.querySelectorAll('main section[id^="aba-"]').forEach(s => s.hidden = s.id !== 'aba-' + aba);
+  desenhar();
+}
+function desenhar(){
+  ({ movimentos: desenharMovimentos, parlamentares: desenharParlamentares, proposicoes: desenharProposicoes, votacoes: desenharVotacoes, balanco: desenharBalanco, metodo: desenharMetodo })[est.aba]();
+}
+function aplicarEndereco(){
+  const q = new URLSearchParams(location.search);
+  if (q.get('p')) { est.prop.foco = q.get('p'); est.aba = 'proposicoes'; }
+  else if (q.get('v')) { est.vot.foco = q.get('v'); est.vot.disp = false; est.aba = 'votacoes'; }
+  else if (q.get('vm')) { est.vot.mat = q.get('vm'); est.aba = 'votacoes'; }
+  else if (q.get('parlamentar')) { est.parl.sel = q.get('parlamentar'); est.aba = 'parlamentares'; }
+  else if (q.get('aba')) est.aba = q.get('aba');
+  irPara(est.aba);
+}
+function limparEndereco(){ history.replaceState(null, '', location.pathname); }
+
+// A ficha abre numa janela sobre a lista. Fecha pelo botão, pela tecla Esc ou clicando fora dela, e a lista fica onde estava.
+$('#perfil-dlg').addEventListener('close', () => { est.parl.sel = ''; limparEndereco(); $('#perfil').innerHTML = ''; });
+$('#perfil-dlg').addEventListener('click', e => { if (e.target === e.currentTarget) e.currentTarget.close(); });
+document.addEventListener('click', e => {
+  const b = e.target.closest('button, tr.linha'); if (!b) return;
+  if (b.dataset.aba) { limparEndereco(); irPara(b.dataset.aba); window.scrollTo({ top: document.querySelector('.abas').offsetTop, behavior: 'smooth' }); }
+  if (b.dataset.ir) { irPara(b.dataset.ir); }
+  if (b.dataset.pauta) { est.prop = Object.assign(est.prop, { pauta: b.dataset.pauta, pagina: 1, foco: '' }); irPara('proposicoes'); window.scrollTo({ top: document.querySelector('.abas').offsetTop }); }
+  if (b.dataset.comp) compartilhar(b.dataset.comp);
+  if (b.dataset.copiar) copiar(b.dataset.copiar, b);
+  if (b.dataset.verVotos) mostrarVotos(b.dataset.verVotos, b);
+  if (b.dataset.pg) { const [alvo, d] = b.dataset.pg.split(':'); est[alvo].pagina += +d; desenhar(); document.querySelector('.abas').scrollIntoView(); }
+  if (b.dataset.limparFoco) { est[b.dataset.limparFoco].foco = ''; if (b.dataset.limparFoco === 'vot') est.vot.mat = ''; limparEndereco(); desenhar(); }
+  // Do projeto para as votações dele e de volta.
+  if (b.dataset.irVot) { est.vot.mat = b.dataset.irVot; est.vot.foco = ''; est.vot.pagina = 1; history.replaceState(null, '', '?vm=' + encodeURIComponent(b.dataset.irVot)); irPara('votacoes'); window.scrollTo({ top: document.querySelector('.abas').offsetTop, behavior: 'smooth' }); }
+  if (b.dataset.irProp) { est.prop.foco = b.dataset.irProp; est.prop.pagina = 1; history.replaceState(null, '', '?p=' + encodeURIComponent(b.dataset.irProp)); irPara('proposicoes'); window.scrollTo({ top: document.querySelector('.abas').offsetTop, behavior: 'smooth' }); }
+  if (b.dataset.parl) { est.parl.sel = b.dataset.parl; history.replaceState(null, '', '?parlamentar=' + encodeURIComponent(b.dataset.parl)); desenharPerfil(b.dataset.parl); }
+  if (b.hasAttribute && b.hasAttribute('data-fechar-perfil')) $('#perfil-dlg').close();
+  if (b.dataset.verProps) { $('#perfil-dlg').close(); est.prop = Object.assign(est.prop, { texto: nomeParl(b.dataset.verProps), pauta: '', grau: '', pagina: 1, foco: '' }); irPara('proposicoes'); }
+});
+document.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('tr.linha')) { e.preventDefault(); e.target.click(); } });
+
+carregar();
+})();
+</script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0442ff160c604457a59372125331648a"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
