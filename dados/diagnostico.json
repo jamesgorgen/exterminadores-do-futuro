@@ -1,5 +1,5 @@
 {
- "inicio": "2026-11-24T22:55:03.536Z",
+ "inicio": "2026-11-24T23:06:15.175Z",
  "modo": "diario",
  "amostras": {
   "camara_deputado": {
@@ -119,14 +119,14 @@
    "VotoPresidente": "false"
   },
   "camara_proposicao": {
-   "id": 2610267,
-   "uri": "https://dadosabertos.camara.leg.br/api/v2/proposicoes/2610267",
-   "siglaTipo": "PL",
-   "codTipo": 139,
-   "numero": 1252,
+   "id": 2604173,
+   "uri": "https://dadosabertos.camara.leg.br/api/v2/proposicoes/2604173",
+   "siglaTipo": "PEC",
+   "codTipo": 136,
+   "numero": 3,
    "ano": 2026,
-   "ementa": "Institui, no âmbito da União, o Dia Nacional do Povo Cigano, inscreve essa efeméride no calendário oficial da República Federativa do Brasil e dá outras providências.",
-   "dataApresentacao": "2026-03-18T14:01"
+   "ementa": "Altera o art. 155 da Constituição Federal para estabelecer alíquota máxima e base de cálculo exclusiva do Imposto sobre a Propriedade de Veículos Automotores – IPVA, e acrescenta dispositivos ao Ato das Disposições Constitucionais Transitórias para limitar despesas com publicidade institucional e com o Poder Legislativo.",
+   "dataApresentacao": "2026-02-24T15:48"
   },
   "senado_proposicao": {
    "autoria": "Senador Jader Barbalho (MDB/PA)",
@@ -162,37 +162,37 @@
    "proponente": "1"
   },
   "senado_relatoria": {
-   "autoriaProcesso": "Câmara dos Deputados",
+   "autoriaProcesso": "Presidência da República",
    "casaRelator": "SF",
    "codigoColegiado": 1998,
-   "codigoMateria": 154374,
-   "codigoParlamentar": 6350,
+   "codigoMateria": 154768,
+   "codigoParlamentar": 5998,
    "codigoTipoColegiado": 128,
-   "dataApresentacaoProcesso": "2021-10-21 19:32:25",
-   "dataDesignacao": "2023-03-06 17:32:18",
-   "dataDestituicao": "2023-03-07 16:37:19",
+   "dataApresentacaoProcesso": "2022-09-22 09:28:28",
+   "dataDesignacao": "2023-02-23 15:48:00",
+   "dataDestituicao": "2023-02-28 18:37:30",
    "dataFimColegiado": null,
-   "descricaoTipoEncerramento": "Designação de relator de plenário",
+   "descricaoTipoEncerramento": "Deliberação da matéria",
    "descricaoTipoRelator": "Relator",
-   "emailParlamentar": "sen.augustabrito@senado.leg.br",
-   "ementaProcesso": "Altera a Lei nº 13.667, de 17 de maio de 2018, para dispor sobre a prioridade no atendimento às mulheres em situação de violência doméstica ou familiar pelo Sistema Nacional de Emprego (Sine).",
+   "emailParlamentar": "sen.daniellaribeiro@senado.leg.br",
+   "ementaProcesso": "Altera a Lei nº 12.249, de 11 de junho de 2010, para dispor sobre a alíquota do imposto sobre a renda retido na fonte incidente sobre as operações a que se refere.",
    "formaTratamentoParlamentar": "Senadora",
-   "id": 9279975,
-   "idProcesso": 8154733,
+   "id": 9261491,
+   "idProcesso": 8306238,
    "idTipoRelator": 1,
-   "identificacaoProcesso": "PL 3878/2020",
+   "identificacaoProcesso": "MPV 1138/2022",
    "nomeColegiado": "Plenário do Senado Federal",
-   "nomeCompleto": "Augusta Brito de Paula",
-   "nomeParlamentar": "Augusta Brito",
+   "nomeCompleto": "Daniella Velloso Borges Ribeiro",
+   "nomeParlamentar": "Daniella Ribeiro",
    "numeroAutuacao": "1",
    "sexoParlamentar": "F",
    "siglaCasa": "SF",
    "siglaColegiado": "PLEN",
-   "siglaPartidoParlamentar": "PT",
+   "siglaPartidoParlamentar": "PSD",
    "tramitando": "N",
-   "ufParlamentar": "CE",
-   "urlFotoParlamentar": "http://www.senado.leg.br/senadores/img/fotos-oficiais/senador6350.jpg",
-   "urlPaginaParlamentar": "http://www25.senado.leg.br/web/senadores/senador/-/perfil/6350"
+   "ufParlamentar": "PB",
+   "urlFotoParlamentar": "http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5998.jpg",
+   "urlPaginaParlamentar": "http://www25.senado.leg.br/web/senadores/senador/-/perfil/5998"
   }
  },
  "contagens": {
@@ -221,18 +221,17 @@
   "rotina_administrativa": 33,
   "votacoes_com_materia_recuperada": 56,
   "votacoes_ligadas_a_materia_principal": 1339,
-  "classificados": 2,
   "confirmacoes_em_bloco": 2702,
   "correcoes_aplicadas": 4132,
   "grupo_pelos_votos_diferente": 316,
-  "votacoes_chave": 4
+  "votacoes_chave": 5
  },
  "erros": [],
  "brutos": {
   "senado_atual": {
    "url": "https://legis.senado.leg.br/dadosabertos/senador/lista/atual.json",
    "tamanho": 129042,
-   "inicio": "{\"ListaParlamentarEmExercicio\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/ListaParlamentarEmExerciciov4.xsd\",\"Metadados\":{\"Versao\":\"24/11/2026 19:47:16\",\"VersaoServico\":\"4\",\"DataVersaoServico\":\"2020-07-15\",\"DescricaoDataSet\":\"Lista dos Parlamentares que estão atualmente em Exercício. Informações atuais sobre o Parlamentar.\"},\"Parlamentares\":{\"Parlamentar\":[{\"IdentificacaoParlamentar\":{\"CodigoParlamentar\":\"5672\",\"CodigoPublicoNaLegAtual\":\"800\",\"NomeParlamentar\":\"Alan Rick\",\"NomeCompletoParlamentar\":\"Alan Rick Miranda\",\"SexoParlamentar\":\"Masculino\",\"FormaTratamento\":\"Senador \",\"UrlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg\",\"UrlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5672\",\"EmailParlamentar\":\"sen.alanrick@senado.leg.br\",\"Telefones\":{\"Telefone\":[{\"NumeroTelefone\":\"33036333\",\"OrdemPublicacao\":\"1\",\"IndicadorFax\":\"Não\"}]},\"SiglaPartidoParlamentar\":\"REPUBLICANOS\",\"UfParlamentar\":\"AC\",\"Bloco\":{\"CodigoBloco\":\"346\",\"NomeBloco\":\"Bloco Parlamentar Aliança\",\"NomeApelido\":\"BLALIANÇA\",\"DataCriacao\":\"2023-03-20\"},\"MembroMesa\":\"Não\",\"MembroLideranca\":\"Sim\"},\"Mandato\":{\"CodigoMandato\":\"596\",\"UfParlamentar\":\"AC\",\"PrimeiraLegislaturaDoMandato\":{\"NumeroLegislatura\":\"57\",\"DataInicio\":\"2023-02-01\",\"DataFim\":\"2027-01-31\"},\"SegundaLegislaturaDoMandato\":{\"NumeroLegislatura\":\"58\",\"DataInicio\":\"2027-02-01\",\"DataFim\":\"2031-01-31\"},\"DescricaoParticipacao\":\"Titular\",\"Suplentes\":{\"Suplente\":["
+   "inicio": "{\"ListaParlamentarEmExercicio\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/ListaParlamentarEmExerciciov4.xsd\",\"Metadados\":{\"Versao\":\"24/11/2026 20:02:18\",\"VersaoServico\":\"4\",\"DataVersaoServico\":\"2020-07-15\",\"DescricaoDataSet\":\"Lista dos Parlamentares que estão atualmente em Exercício. Informações atuais sobre o Parlamentar.\"},\"Parlamentares\":{\"Parlamentar\":[{\"IdentificacaoParlamentar\":{\"CodigoParlamentar\":\"5672\",\"CodigoPublicoNaLegAtual\":\"800\",\"NomeParlamentar\":\"Alan Rick\",\"NomeCompletoParlamentar\":\"Alan Rick Miranda\",\"SexoParlamentar\":\"Masculino\",\"FormaTratamento\":\"Senador \",\"UrlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg\",\"UrlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5672\",\"EmailParlamentar\":\"sen.alanrick@senado.leg.br\",\"Telefones\":{\"Telefone\":[{\"NumeroTelefone\":\"33036333\",\"OrdemPublicacao\":\"1\",\"IndicadorFax\":\"Não\"}]},\"SiglaPartidoParlamentar\":\"REPUBLICANOS\",\"UfParlamentar\":\"AC\",\"Bloco\":{\"CodigoBloco\":\"346\",\"NomeBloco\":\"Bloco Parlamentar Aliança\",\"NomeApelido\":\"BLALIANÇA\",\"DataCriacao\":\"2023-03-20\"},\"MembroMesa\":\"Não\",\"MembroLideranca\":\"Sim\"},\"Mandato\":{\"CodigoMandato\":\"596\",\"UfParlamentar\":\"AC\",\"PrimeiraLegislaturaDoMandato\":{\"NumeroLegislatura\":\"57\",\"DataInicio\":\"2023-02-01\",\"DataFim\":\"2027-01-31\"},\"SegundaLegislaturaDoMandato\":{\"NumeroLegislatura\":\"58\",\"DataInicio\":\"2027-02-01\",\"DataFim\":\"2031-01-31\"},\"DescricaoParticipacao\":\"Titular\",\"Suplentes\":{\"Suplente\":["
   },
   "senado_votacao_iso": {
    "url": "https://legis.senado.leg.br/dadosabertos/votacao?dataInicio=2026-10-10&dataFim=2026-10-31",
@@ -245,14 +244,14 @@
    "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"24/11/2026 19:55:18\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
   },
   "senado_processo": {
-   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-10-16&dataFimApresentacao=2026-10-31",
-   "tamanho": 32916,
-   "inicio": "[{\"autoria\":\"Senador Dr. Hiran (PP/RR)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175985,\"dataApresentacao\":\"2026-10-19\",\"dataSituacaoAtual\":\"2026-11-24\",\"dataUltimaAtualizacao\":\"2026-11-24T17:06:46.765\",\"ementa\":\"Altera o art. 9º da Lei nº 15.211, de 17 de setembro de 2025 (Estatuto Digital da Criança e do Adolescente), para admitir a estimativa de idade por biometria facial como mecanismo de verificação de idade e para ampliar, de forma graduada, as categorias de serviços digitais de acesso restrito a maiores de 18 (dezoito) anos.\",\"enteIdentificador\":\"SF\",\"id\":9115144,\"identificacao\":\"PL 5593/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO RECEBIMENTO DE EMENDAS\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"EVENTO_LEGISLATIVO\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/3dc7461f-fa42-46e9-aa85-0ff9dd90f0a9\"},{\"autoria\":\"Câmara dos Deputados\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175994,\"dataApresentacao\":\"2026-10-19\",\"dataSituacaoAtual\":\"2026-10-20\",\"dataUltimaAtualizacao\":\"2026-10-23T18:30:01.076\",\"ementa\":\"Altera a Lei nº 8.080, de 19 de setembro de 1990 (Lei Orgânica da Saúde), para determinar a aceitação, pelas unidades do Sistema Único de Saúde (SUS), de exames realizados em serviços privados.\",\"enteIdentificador\":\"SF\",\"id\":9115232,\"identificacao\":\"PL 1123/2025\",\"objetivo\":\"Revisora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma G"
+   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-10-10&dataFimApresentacao=2026-10-15",
+   "tamanho": 8045,
+   "inicio": "[{\"autoria\":\"Senador Jader Barbalho (MDB/PA)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175933,\"dataApresentacao\":\"2026-10-13\",\"dataSituacaoAtual\":\"2026-10-13\",\"dataUltimaAtualizacao\":\"2026-10-21T17:15:01.093\",\"ementa\":\"Institui a Política Nacional de Bioenergia Amazônica para Sistemas Isolados (PROBIO-SI), destinada a incentivar a substituição do óleo diesel fóssil por biocombustíveis e bioenergia produzidos a partir de biomassa local de origem sustentável, com prioridade para a Região Norte, e altera a Lei nº 12.111, de 9 de dezembro de 2009.\",\"enteIdentificador\":\"SF\",\"id\":9113033,\"identificacao\":\"PL 5540/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/7d76b464-ad7f-45ea-bb1d-2b024061e292\"},{\"autoria\":\"Câmara dos Deputados\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175948,\"dataApresentacao\":\"2026-10-13\",\"dataSituacaoAtual\":\"2026-10-14\",\"dataUltimaAtualizacao\":\"2026-10-22T15:15:33.938\",\"ementa\":\"Altera o art. 6º da Lei n° 10.826, de 22 de dezembro de 2003 (Estatuto do Desarmamento).\",\"enteIdentificador\":\"SF\",\"id\":9113381,\"identificacao\":\"PL 5555/2026\",\"objetivo\":\"Revisora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACA"
   },
   "senado_relatoria": {
-   "url": "https://legis.senado.leg.br/dadosabertos/processo/relatoria?dataInicio=2023-03-01&dataFim=2023-03-31",
-   "tamanho": 142759,
-   "inicio": "[{\"autoriaProcesso\":\"Câmara dos Deputados\",\"casaRelator\":\"SF\",\"codigoColegiado\":1998,\"codigoMateria\":154374,\"codigoParlamentar\":6350,\"codigoTipoColegiado\":128,\"dataApresentacaoProcesso\":\"2021-10-21 19:32:25\",\"dataDesignacao\":\"2023-03-06 17:32:18\",\"dataDestituicao\":\"2023-03-07 16:37:19\",\"dataFimColegiado\":null,\"descricaoTipoEncerramento\":\"Designação de relator de plenário\",\"descricaoTipoRelator\":\"Relator\",\"emailParlamentar\":\"sen.augustabrito@senado.leg.br\",\"ementaProcesso\":\"Altera a Lei nº 13.667, de 17 de maio de 2018, para dispor sobre a prioridade no atendimento às mulheres em situação de violência doméstica ou familiar pelo Sistema Nacional de Emprego (Sine).\",\"formaTratamentoParlamentar\":\"Senadora\",\"id\":9279975,\"idProcesso\":8154733,\"idTipoRelator\":1,\"identificacaoProcesso\":\"PL 3878/2020\",\"nomeColegiado\":\"Plenário do Senado Federal\",\"nomeCompleto\":\"Augusta Brito de Paula\",\"nomeParlamentar\":\"Augusta Brito\",\"numeroAutuacao\":\"1\",\"sexoParlamentar\":\"F\",\"siglaCasa\":\"SF\",\"siglaColegiado\":\"PLEN\",\"siglaPartidoParlamentar\":\"PT\",\"tramitando\":\"N\",\"ufParlamentar\":\"CE\",\"urlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador6350.jpg\",\"urlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/6350\"},{\"autoriaProcesso\":\"Câmara dos Deputados\",\"casaRelator\":\"SF\",\"codigoColegiado\":1998,\"codigoMateria\":137310,\"codigoParlamentar\":4560,\"codigoTipoColegiado\":128,\"dataApresentacaoProcesso\":\"2019-05-30 08:58:22\",\"dataDesignacao\":\"2023-03-07 17:09:2"
+   "url": "https://legis.senado.leg.br/dadosabertos/processo/relatoria?dataInicio=2023-02-01&dataFim=2023-02-28",
+   "tamanho": 1238,
+   "inicio": "[{\"autoriaProcesso\":\"Presidência da República\",\"casaRelator\":\"SF\",\"codigoColegiado\":1998,\"codigoMateria\":154768,\"codigoParlamentar\":5998,\"codigoTipoColegiado\":128,\"dataApresentacaoProcesso\":\"2022-09-22 09:28:28\",\"dataDesignacao\":\"2023-02-23 15:48:00\",\"dataDestituicao\":\"2023-02-28 18:37:30\",\"dataFimColegiado\":null,\"descricaoTipoEncerramento\":\"Deliberação da matéria\",\"descricaoTipoRelator\":\"Relator\",\"emailParlamentar\":\"sen.daniellaribeiro@senado.leg.br\",\"ementaProcesso\":\"Altera a Lei nº 12.249, de 11 de junho de 2010, para dispor sobre a alíquota do imposto sobre a renda retido na fonte incidente sobre as operações a que se refere.\",\"formaTratamentoParlamentar\":\"Senadora\",\"id\":9261491,\"idProcesso\":8306238,\"idTipoRelator\":1,\"identificacaoProcesso\":\"MPV 1138/2022\",\"nomeColegiado\":\"Plenário do Senado Federal\",\"nomeCompleto\":\"Daniella Velloso Borges Ribeiro\",\"nomeParlamentar\":\"Daniella Ribeiro\",\"numeroAutuacao\":\"1\",\"sexoParlamentar\":\"F\",\"siglaCasa\":\"SF\",\"siglaColegiado\":\"PLEN\",\"siglaPartidoParlamentar\":\"PSD\",\"tramitando\":\"N\",\"ufParlamentar\":\"PB\",\"urlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5998.jpg\",\"urlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5998\"}]"
   }
  },
  "numeracao": {
@@ -289,5 +288,5 @@
    "numeros": []
   }
  },
- "fim": "2026-11-24T22:58:36.601Z"
+ "fim": "2026-11-24T23:10:06.157Z"
 }
