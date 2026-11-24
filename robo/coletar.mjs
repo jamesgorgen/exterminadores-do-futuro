@@ -1135,9 +1135,11 @@ async function graduarPendentes(itens, exemplos, nCorrecoes, todosExemplos, corr
   contar('graduados', feitos);
 }
 
-async function classificarPendentes(itens) {
-  const pend = itens.filter(it => !classificacoes.c[it.chave]).slice(0, MAX_CLASSIFICACOES);
-  log(`Classificação, ${pend.length} itens novos (${itens.length - pend.length} já classificados)`);
+// Itens já classificados pela equipe (correcoes.json) não vão para a IA: a correção prevalece e não se gastam créditos.
+async function classificarPendentes(itens, corrigidos = {}) {
+  const daEquipe = itens.filter(it => !classificacoes.c[it.chave] && Object.prototype.hasOwnProperty.call(corrigidos, it.chave)).length;
+  const pend = itens.filter(it => !classificacoes.c[it.chave] && !Object.prototype.hasOwnProperty.call(corrigidos, it.chave)).slice(0, MAX_CLASSIFICACOES);
+  log(`Classificação, ${pend.length} itens novos (${itens.length - pend.length - daEquipe} já classificados, ${daEquipe} classificados só pela equipe)`);
   if (!pend.length || SEM_IA || !process.env.ANTHROPIC_API_KEY) { if (pend.length) log('  sem chave da Anthropic ou SEM_IA, classificação pulada'); return; }
   const lotes = [];
   for (let i = 0; i < pend.length; i += 25) lotes.push(pend.slice(i, i + 25));
@@ -1397,7 +1399,7 @@ export async function executar() {
   const linhasEx = Object.entries(correcoes).filter(([k, c]) => c && typeof c === 'object' && !c.lote && ementaDe.get(k))
     .map(([k, c]) => `- ${k}. ${String(ementaDe.get(k)).slice(0, 260)} => ${descreveCorrecao(k, c)}`);
   const exemplos = linhasEx.slice(-300).join('\n');
-  await classificarPendentes(paraClassificar);
+  await classificarPendentes(paraClassificar, correcoes);
   await graduarPendentes(paraClassificar, exemplos, Object.values(correcoes).filter(c => !(c && c.lote)).length, linhasEx.slice(-700).join('\n'), correcoes);
 
   const classificado = k => {

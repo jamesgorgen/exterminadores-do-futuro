@@ -47,7 +47,7 @@ header .estado{font-size:13px;color:#c7cbe0}
 .filtros select,.filtros input{border:1px solid var(--line);border-radius:6px;padding:7px 9px;background:var(--sheet);min-height:36px;max-width:100%}
 .filtros input[type=search]{flex:1 1 220px}
 .filtros label.chk{display:flex;gap:6px;align-items:center;font-size:14px;color:var(--ink-2)}
-.situacao{background:var(--sheet);border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin:14px 0 0;font-size:14px;color:var(--ink-2);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.situacao{background:var(--sheet);border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin:14px 0 0;font-size:14px;color:var(--ink-2);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
 @media (max-width:760px){.situacao{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .situacao b{display:block;font-size:20px;color:var(--ink)}
 .situacao .nota-s{grid-column:1/-1;font-size:13px;color:var(--ink-3)}
@@ -97,6 +97,10 @@ dialog input{width:100%;border:1px solid var(--line);border-radius:6px;padding:8
 .carregando{padding:40px 0;text-align:center;color:var(--ink-2)}
 kbd{font:12px/1 ui-monospace,monospace;border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:2px 5px;background:var(--paper)}
 .dica{font-size:13px;color:var(--ink-3);margin:6px 0 0}
+.periodo{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.periodo .btn{min-height:36px}
+.periodo .btn[aria-pressed=true]{background:var(--ink);color:var(--sheet);border-color:var(--ink)}
+.mov{font-size:13px;color:var(--ink-2);margin:0 0 8px}
 </style>
 </head>
 <body>
@@ -108,6 +112,7 @@ kbd{font:12px/1 ui-monospace,monospace;border:1px solid var(--line);border-botto
 <div class="filtros"><div class="wrap">
   <select id="fTipo" aria-label="Tipo"><option value="p">Projetos</option><option value="v">Votações</option></select>
   <select id="fLista" aria-label="Lista">
+    <option value="aclassificar">A classificar pela equipe (ainda não conferidos)</option>
     <option value="direita">IA marcou como direita</option>
     <option value="extrema">IA marcou como extrema-direita</option>
     <option value="barra">IA marcou como contra a pauta</option>
@@ -123,6 +128,8 @@ kbd{font:12px/1 ui-monospace,monospace;border:1px solid var(--line);border-botto
   <input type="search" id="fBusca" placeholder="Número (PL 1234/2025) ou palavra da ementa" aria-label="Buscar">
   <select id="fCerteza" aria-label="Certeza da IA"><option value="baixa">Só os que exigem revisão</option><option value="grau">Inclui dúvida só de grau</option><option value="">Todos, até os de certeza alta</option><option value="amostra">Amostra do mês (50 de certeza alta)</option></select>
   <label class="chk"><input type="checkbox" id="fEsconder" checked> Esconder conferidos</label>
+  <span class="periodo"><label class="chk" for="fDesde">Movimentados desde</label><input type="date" id="fDesde" aria-label="Movimentados desde">
+    <button type="button" class="btn" id="fCorte" title="Volta ao corte de 30/09/2026">30/09/2026</button><button type="button" class="btn" id="fTudo">Todo o período</button></span>
 </div></div>
 
 <main class="wrap">
@@ -157,6 +164,8 @@ kbd{font:12px/1 ui-monospace,monospace;border:1px solid var(--line);border-botto
 </dialog>
 
 <script src="pautas.js?v=20261031"></script>
+<script src="taxonomia.js?v=20261124"></script>
+<script src="robo/motor.js?v=20261124"></script>
 <script>
 'use strict';
 const REPO = 'jamesgorgen/exterminadores-do-futuro';
@@ -172,7 +181,9 @@ const norm = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLow
 const dataBR = d => d ? d.slice(8, 10) + '/' + d.slice(5, 7) + '/' + d.slice(0, 4) : '';
 const ls = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }, del(k) { try { localStorage.removeItem(k); } catch (e) {} } };
 
-const D = { ia: {}, props: new Map(), vots: [], indice: {} };
+const D = { ia: {}, props: new Map(), vots: [], indice: {}, sit: {}, sitDesc: [], votData: new Map(), homenagem: new Set() };
+// Corte padrão do período: só o que foi apresentado ou se movimentou desde esta data.
+const CORTE = '2026-09-30';
 let salvas = {};                 // correções já gravadas no repositório
 let pend = {};                   // alterações locais ainda não salvas (valor null = apagar a correção)
 let extras = { _leia: '' };      // demais campos do arquivo
@@ -199,12 +210,26 @@ async function carregarCorrecoes() {
   extras = Object.fromEntries(Object.entries(dados).filter(([k]) => k !== 'correcoes'));
 }
 async function carregar() {
-  const [cl, ind, vr] = await Promise.all([json('dados/classificacoes.json'), json('dados/indice.json').catch(() => ({ p: {} })), json('dados/votacoes-resumo.json').catch(() => ({ itens: [] }))]);
+  const [cl, ind, vr, st] = await Promise.all([json('dados/classificacoes.json'), json('dados/indice.json').catch(() => ({ p: {} })), json('dados/votacoes-resumo.json').catch(() => ({ itens: [] })), json('dados/situacoes.json').catch(() => ({ itens: {}, descricoes: [] }))]);
   D.ia = cl.c || {}; D.indice = ind.p || {}; D.vots = vr.itens || [];
+  D.sit = st.itens || {}; D.sitDesc = st.descricoes || [];
+  for (const v of D.vots) { const k = chaveVot(v); if (String(v.d || '') > (D.votData.get(k) || '')) D.votData.set(k, String(v.d || '')); }
   const anos = await Promise.all(ANOS.map(a => json(`dados/proposicoes-${a}.json`).catch(() => null)));
   for (const j of anos) if (j) for (const it of j.itens) D.props.set(it.c, it);
+  // Homenagens (datas comemorativas, títulos, denominações) não vão para a IA nem para a lista a classificar.
+  try {
+    const TC = window.Motor.compilarTaxonomia(window.TAXONOMIA);
+    for (const it of D.props.values()) if (!D.ia[it.c] && window.Motor.ehHomenagem(it.e || '', TC)) D.homenagem.add(it.c);
+  } catch (e) {}
   await carregarCorrecoes();
 }
+// Data da última movimentação: a mais recente entre a apresentação, a última tramitação e a última votação ligada.
+function dataRef(b) {
+  const sit = D.sit[b.chave];
+  const prop = b.tipo === 'p' ? b.it : D.props.get(b.chave);
+  return [b.tipo === 'p' ? b.it.d : '', prop && prop.d, sit && sit[2], D.votData.get(b.chave), b.tipo === 'v' ? b.it.d : ''].map(x => String(x || '').slice(0, 10)).sort().pop() || '';
+}
+const desde = () => $('#fDesde').value || '';
 
 // ------------------------------------------------------------ classificação efetiva
 function ia(chave) {
@@ -258,14 +283,24 @@ function itensDaLista() {
   }
   const out = [];
   const sorteados = amostra ? amostraDoMes(base) : null;
+  // O período vale para todas as listas, menos a amostra do mês, a busca em "Todos" e as proposições-chave.
+  const corte = amostra || ['todos', 'chave'].includes(lista) ? '' : desde();
   for (const b of base) {
     const a = D.ia[b.chave] || {};
     const conferido = correcao(b.chave) !== undefined && correcao(b.chave) !== null;
+    b.dr = dataRef(b);
+    if (corte && b.dr < corte) continue;
     if (amostra) {
       // A amostra junta direita e extrema-direita e mostra também os já conferidos, para acompanhar o andamento.
       if (!sorteados.has(b.chave)) continue;
       if (casa && !(b.tipo === 'p' ? (b.it.k || []).includes(casa) : b.it.k === casa)) continue;
       out.push(b); continue;
+    }
+    if (lista === 'aclassificar') {
+      // Tudo o que a equipe ainda não conferiu, com ou sem leitura da IA; ficam de fora as homenagens e a rotina.
+      if (conferido && !Object.prototype.hasOwnProperty.call(pend, b.chave)) continue;
+      if (D.homenagem.has(b.chave)) continue;
+      if (b.tipo === 'p' ? b.it.rt : (D.props.get(b.chave) || {}).rt) continue;
     }
     if (lista === 'direita' && !(a.s === 'avanca' && a.g !== 'extrema')) continue;
     if (lista === 'extrema' && !(a.s === 'avanca' && a.g === 'extrema')) continue;
@@ -283,9 +318,15 @@ function itensDaLista() {
     if (busca) { const txt = norm(b.chave + ' ' + (b.tipo === 'p' ? b.it.e : (b.it.me || '') + ' ' + (b.it.desc || ''))); if (!busca.split(/\s+/).every(t => txt.includes(t))) continue; }
     out.push(b);
   }
-  out.sort((x, y) => String(y.it.d || '').localeCompare(String(x.it.d || '')));
+  // Os que se movimentaram mais recentemente vêm primeiro.
+  out.sort((x, y) => y.dr.localeCompare(x.dr) || String(y.it.d || '').localeCompare(String(x.it.d || '')));
   return out;
 }
+const periodoTxt = () => {
+  const l = $('#fLista').value;
+  if (!desde() || $('#fCerteza').value === 'amostra' || ['todos', 'chave'].includes(l)) return '';
+  return `, apresentados ou movimentados desde ${dataBR(desde())}, do mais recente para o mais antigo`;
+};
 let atual = [], mostrados = 0;
 const PASSO = 25;
 function desenhar() {
@@ -294,7 +335,8 @@ function desenhar() {
   const conferidos = atual.filter(b => (correcao(b.chave) !== undefined && correcao(b.chave) !== null) || Object.prototype.hasOwnProperty.call(pend, b.chave)).length;
   $('#contagem').textContent = $('#fCerteza').value === 'amostra' && atual.length
     ? `Amostra de ${mesAtual().split('-').reverse().join('/')} (${$('#fTipo').value === 'p' ? 'projetos' : 'votações'}, direita e extrema-direita): ${atual.length} itens, ${conferidos} já conferidos. O sorteio é o mesmo para toda a equipe e muda no mês seguinte.`
-    : atual.length ? `${atual.length.toLocaleString('pt-BR')} itens nesta lista` : ($('#fLista').value === 'todos' && !$('#fBusca').value.trim() ? 'Digite um número ou uma palavra para buscar entre todos os itens.' : 'Nenhum item nesta lista.');
+    : atual.length ? `${atual.length.toLocaleString('pt-BR')} itens nesta lista${periodoTxt()}` : ($('#fLista').value === 'todos' && !$('#fBusca').value.trim() ? 'Digite um número ou uma palavra para buscar entre todos os itens, de qualquer período.' : 'Nenhum item nesta lista' + periodoTxt() + '.');
+  $('#fCorte').setAttribute('aria-pressed', desde() === CORTE); $('#fTudo').setAttribute('aria-pressed', !desde());
   mais();
 }
 function mais() {
@@ -326,13 +368,19 @@ function cartao(b) {
   const ch = chaves()[b.chave];
   const link = b.tipo === 'p' ? linkProp(it) : '';
   const certeza = (D.ia[b.chave] || {}).cf;
-  const iaTxt = a.fora ? `Descartado na revisão do grau (pautas originais ${esc(a.fora.map(p => PAUTA[p] ? PAUTA[p].nome : p).join(', '))})` : esc(descreve(a)) + (a.m ? ` — ${esc(a.m)}` : '');
+  const sit = D.sit[b.chave];
+  const movTxt = sit && sit[2] ? `Última movimentação em ${dataBR(sit[2])}${D.sitDesc[sit[1]] ? ': ' + esc(D.sitDesc[sit[1]]) : ''}` : '';
+  const vd = D.votData.get(b.chave);
+  const movVot = b.tipo === 'p' && vd ? `Última votação ligada em ${dataBR(vd)}` : '';
+  const semIA = !D.ia[b.chave];
+  const iaTxt = semIA ? 'Ainda não lida pela IA. A classificação da equipe vale sozinha, e o robô não gasta créditos com ela.' : a.fora ?`Descartado na revisão do grau (pautas originais ${esc(a.fora.map(p => PAUTA[p] ? PAUTA[p].nome : p).join(', '))})` : esc(descreve(a)) + (a.m ? ` — ${esc(a.m)}` : '');
   const s = x.s || 'fora';
   return `<article class="cartao ${classeDe(x)}${pendente ? ' pendente' : ''}" tabindex="0" data-chave="${esc(b.chave)}">
     <div class="topo"><span class="num">${esc(b.chave.startsWith('V:') ? 'Votação' : b.chave)}</span><span class="meta">${meta}</span><span class="meta">${dataBR(it.d)}</span>
       ${link ? `<a class="meta" href="${esc(link)}" target="_blank" rel="noopener">Ficha oficial</a>` : ''}
       <span class="lado">${pendente ? '<span class="selo s-pend">Não salvo</span>' : salvo ? '<span class="selo s-salvo">Conferido</span>' : ''}</span></div>
     <p class="ementa">${esc(texto)}</p>
+    ${movTxt || movVot ? `<p class="mov">${[movTxt, movVot].filter(Boolean).join('. ')}.</p>` : ''}
     ${b.tipo === 'v' && it.desc && (it.me || principal) ? `<p class="autores">${esc(it.desc)}${nVot > 1 ? ` <b>${nVot} votações ligadas a esta matéria</b>, como urgência, destaques e mérito.` : ''}</p>` : ''}
     ${ch ? `<p class="chave-v"><b>Proposição-chave.</b> ${esc(ch.t || '')}</p>` : ''}
     ${b.tipo === 'p' ? autores(it.a, it) : D.props.get(b.chave) ? autores(D.props.get(b.chave).a, D.props.get(b.chave)) : ''}
@@ -349,7 +397,7 @@ function cartao(b) {
     <div class="acoes"><button type="button" class="btn forte" data-confirmar>${pendente || salvo ? 'Confirmar' : 'Confirmar como está'}</button>
       ${pendente ? '<button type="button" class="btn" data-desfazer>Desfazer</button>' : ''}
       ${salvo ? '<button type="button" class="btn" data-remover>Voltar para a IA</button>' : ''}
-      ${b.chave.startsWith('V:') ? '' : `<button type="button" class="btn" data-chave-v>${ch ? 'Deixar de ser proposição-chave' : 'Marcar como potação-chave'}</button>`}</div>
+      ${b.chave.startsWith('V:') ? '' : `<button type="button" class="btn" data-chave-v>${ch ? 'Deixar de ser proposição-chave' : 'Marcar como proposição-chave'}</button>`}</div>
   </article>`;
 }
 
@@ -455,6 +503,13 @@ $('#salvar').addEventListener('click', salvar);
 $('#descartar').addEventListener('click', () => { if (!confirm('Descartar todas as alterações não salvas?')) return; pend = {}; guardarPend(); atualizarBarra(); desenhar(); });
 $('#mais').addEventListener('click', mais);
 ['#fTipo', '#fLista', '#fPauta', '#fCasa', '#fCerteza', '#fEsconder'].forEach(s => $(s).addEventListener('change', desenhar));
+// Período: guardado neste navegador; começa no corte de 30/09/2026.
+const guardada = ls.get('revisao-desde');
+$('#fDesde').value = guardada === null ? CORTE : guardada;
+const mudarPeriodo = v => { $('#fDesde').value = v; ls.set('revisao-desde', v); desenharSituacao(); desenhar(); };
+$('#fDesde').addEventListener('change', () => mudarPeriodo($('#fDesde').value));
+$('#fCorte').addEventListener('click', () => mudarPeriodo(CORTE));
+$('#fTudo').addEventListener('click', () => mudarPeriodo(''));
 let tBusca; $('#fBusca').addEventListener('input', () => { clearTimeout(tBusca); tBusca = setTimeout(desenhar, 250); });
 window.addEventListener('beforeunload', e => { if (Object.keys(pend).length) { e.preventDefault(); e.returnValue = ''; } });
 
@@ -527,12 +582,21 @@ function desenharSituacao() {
   const semConferir = Object.entries(D.ia).filter(([k, c]) => c.s === 'avanca' && salvas[k] === undefined);
   const fila = semConferir.filter(([k, c]) => c.cf !== 'alta' && c.cf !== 'grau').length;
   const soGrau = semConferir.filter(([k, c]) => c.cf === 'grau').length;
-  $('#situacao').innerHTML = `<div><b class="num">${n.toLocaleString('pt-BR')}</b>correções salvas pela equipe</div>
+  // Projetos a classificar no período escolhido (sem homenagens e sem rotina).
+  const corte = desde();
+  let aClassificar = 0;
+  for (const it of D.props.values()) {
+    if (salvas[it.c] !== undefined || it.rt || D.homenagem.has(it.c)) continue;
+    if (corte && dataRef({ tipo: 'p', chave: it.c, it }) < corte) continue;
+    aClassificar++;
+  }
+  $('#situacao').innerHTML = `<div><b class="num">${aClassificar.toLocaleString('pt-BR')}</b>projetos a classificar pela equipe${corte ? `, apresentados ou movimentados desde ${dataBR(corte)}` : ', em todo o período'}</div>
+    <div><b class="num">${n.toLocaleString('pt-BR')}</b>correções salvas pela equipe</div>
     <div><b class="num">${usadas == null ? '—' : usadas + ' a ' + (proxima - 1)}</b>correções existiam na última reclassificação geral</div>
     <div><b class="num">${proxima == null ? '—' : n >= proxima ? 'em curso' : proxima}</b>${proxima != null && n >= proxima ? 'reclassificação, na próxima segunda-feira às 6h17 de Brasília' : 'correções liberam a próxima reclassificação, feita às segundas-feiras'}</div>
     <div><b class="num">${fila.toLocaleString('pt-BR')}</b>itens que exigem revisão, por dúvida sobre ser ou não pauta da direita</div>
     <div><b class="num">${soGrau.toLocaleString('pt-BR')}</b>itens com dúvida só de grau, de revisão opcional</div>
-    <p class="nota-s">Cada correção salva vale no site na hora. Cada projeto é lido por um modelo de IA rápido, e um modelo mais forte relê os casos em que o primeiro hesita. Só exige revisão o projeto em que eles divergem sobre ser ou não pauta da direita. Quando os dois veem pauta da direita e a dúvida é apenas entre direita e extrema-direita, vale a leitura do modelo mais forte e o item fica na lista opcional, que aparece ao escolher "Inclui dúvida só de grau". A cada 100 correções, a IA deduz de novo as regras que a equipe aplica e refaz o grau só dos projetos ainda em dúvida e não conferidos, uma vez por semana, na execução de segunda-feira às 6h17 de Brasília. Os de certeza alta e os já corrigidos pela equipe não são refeitos. Os números mudam alguns minutos depois de salvar.</p>`;
+    <p class="nota-s">A lista "A classificar pela equipe" reúne o que ninguém da equipe conferiu ainda, com ou sem leitura da IA, sem as homenagens e as proposições de rotina, e vem do mais recente para o mais antigo. O período conta a data mais recente entre a apresentação, a última movimentação na tramitação e a última votação ligada ao projeto. A classificação da equipe vale sozinha no site, e o robô não manda para a IA os itens que a equipe já classificou. Cada correção salva vale no site na hora. Cada projeto é lido por um modelo de IA rápido, e um modelo mais forte relê os casos em que o primeiro hesita. Só exige revisão o projeto em que eles divergem sobre ser ou não pauta da direita. Quando os dois veem pauta da direita e a dúvida é apenas entre direita e extrema-direita, vale a leitura do modelo mais forte e o item fica na lista opcional, que aparece ao escolher "Inclui dúvida só de grau". A cada 100 correções, a IA deduz de novo as regras que a equipe aplica e refaz o grau só dos projetos ainda em dúvida e não conferidos, uma vez por semana, na execução de segunda-feira às 6h17 de Brasília. Os de certeza alta e os já corrigidos pela equipe não são refeitos. Os números mudam alguns minutos depois de salvar.</p>`;
 }
 carregar().then(() => { desenharSituacao(); desenhar(); }).catch(e => { $('#lista').innerHTML = `<p class="carregando">Não foi possível carregar os dados (${esc(e.message)}).</p>`; });
 </script>

@@ -61,7 +61,8 @@ async function situacoesCamara(itens) {
         const st = p.ultimoStatus || {};
         const desc = st.descricaoSituacao || p.ultimoStatus_descricaoSituacao || '';
         const tram = st.descricaoTramitacao || p.ultimoStatus_descricaoTramitacao || '';
-        out[c] = { s: desc || tram, d: String(st.dataHora || p.ultimoStatus_dataHora || '').slice(0, 10) };
+        // O arquivo anual traz a data em ultimoStatus.data; a API, em statusProposicao.dataHora.
+        out[c] = { s: desc || tram, d: String(st.data || st.dataHora || p.ultimoStatus_data || p.ultimoStatus_dataHora || '').slice(0, 10) };
       }
     } catch (e) { log(`  arquivo ${a} indisponível (${e.message}); as fichas serão lidas pela API`); }
   }

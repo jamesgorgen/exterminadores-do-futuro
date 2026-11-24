@@ -1,4 +1,4 @@
-# Passagem de sessão (17/11/2026, com acréscimo de 21/11)
+# Passagem de sessão (17/11/2026, com acréscimos de 21/11 e 24/11)
 
 Esta seção resume a sessão de 30/10 a 17/11. O histórico anterior está no arquivo PASSAGEM.md da área de arquivos do projeto no Claude.
 
@@ -57,6 +57,11 @@ Esta seção resume a sessão de 30/10 a 17/11. O histórico anterior está no a
 - Proposições de rotina sem autor parlamentar ficam fora da produção (decisão do James, 21/11): outorgas de rádio e TV (2.313, quase todas da Comissão de Comunicação) e pautas administrativas (33). Os acordos internacionais (118) contam na produção, por decisão do James, porque muitas vezes dividem os grupos. Campo `rt`. Possível uso: cruzar as outorgas com os vínculos de mídia.
 - Aba Proposições abre em "Todos os projetos" (`dados/proposicoes-todas.json`, versão leve); busca aceita "4.675". Projeto e votações ligados nos dois sentidos (botões nos cartões, endereços `?p=` e `?vm=`).
 - A Câmara adiou o PL 4675/2025 para 27/11. Quando o mérito for votado, entra sozinho na votação-chave.
+
+## Triagem das proposições por período (24/11)
+- Página de revisão: lista "A classificar pela equipe" (itens não conferidos, sem homenagens e sem rotina) e filtro "Movimentados desde", com corte padrão em 30/09/2026. Em 24/11 eram 4.172 projetos a classificar desde o corte (24.042 em todo o período). Detalhes no LEIA-ME.
+- Corrigido `robo/situacoes.mjs`: o arquivo anual da Câmara traz a data do último status em `ultimoStatus.data`, e o robô lia `dataHora`, por isso 27.297 projetos da Câmara estavam sem data. As datas foram preenchidas em `dados/situacoes.json` a partir dos arquivos anuais em 24/11; ainda faltam 1.196.
+- O robô não manda para a IA os itens já classificados pela equipe.
 
 ## Pendências do James
 - 2FA no GitHub, Cloudflare e Registro.br e revisão dos tokens dos revisores encaminhadas pelo James em 17/11. Ramo `diag-dns` apagado em 17/11 (esta sessão não consegue apagar ramos; o James apaga pelo site).
