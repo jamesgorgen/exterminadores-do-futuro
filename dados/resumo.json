@@ -1,10 +1,10 @@
 {
- "gerado": "2026-11-24T20:22:26.724Z",
+ "gerado": "2026-11-24T22:55:03.536Z",
  "inicio": "2023-02-01",
  "totais": {
-  "proposicoes": 29317,
-  "direita": 2711,
-  "extrema": 1815,
+  "proposicoes": 29319,
+  "direita": 2712,
+  "extrema": 1816,
   "votacoes": 2471,
   "disputadas": 1193,
   "vitorias": 509,
@@ -572,19 +572,19 @@
  },
  "blocos": {
   "T": {
-   "prop": 26971,
-   "pauta": 2711,
-   "pautaExtrema": 1815,
+   "prop": 26973,
+   "pauta": 2712,
+   "pautaExtrema": 1816,
    "vot": 1617,
-   "comSit": 26933,
-   "aprovada": 1202,
+   "comSit": 26949,
+   "aprovada": 1204,
    "lei": 372,
    "arquivada": 1794,
    "fora": {
     "prop": 363,
     "pauta": 22,
     "comSit": 362,
-    "aprovada": 144,
+    "aprovada": 145,
     "lei": 113,
     "arquivada": 23,
     "tipos": {
@@ -603,13 +603,13 @@
    },
    "grupos": {
     "extrema": {
-     "prop": 4864,
+     "prop": 4865,
      "pauta": 1211,
      "membros": 104,
      "emExercicio": 83,
      "vot": 1574,
      "venceu": 803,
-     "comSit": 4857,
+     "comSit": 4860,
      "aprovada": 142,
      "lei": 23,
      "arquivada": 388
@@ -621,19 +621,19 @@
      "emExercicio": 123,
      "vot": 1562,
      "venceu": 1099,
-     "comSit": 6482,
-     "aprovada": 249,
+     "comSit": 6484,
+     "aprovada": 250,
      "lei": 58,
      "arquivada": 400
     },
     "centro": {
-     "prop": 7524,
+     "prop": 7525,
      "pauta": 443,
      "membros": 216,
      "emExercicio": 178,
      "vot": 1559,
      "venceu": 1509,
-     "comSit": 7516,
+     "comSit": 7524,
      "aprovada": 278,
      "lei": 69,
      "arquivada": 470
@@ -645,7 +645,7 @@
      "emExercicio": 209,
      "vot": 1590,
      "venceu": 1233,
-     "comSit": 7637,
+     "comSit": 7640,
      "aprovada": 363,
      "lei": 101,
      "arquivada": 512
@@ -1043,7 +1043,7 @@
      }
     },
     "energia": {
-     "n": 613,
+     "n": 614,
      "ap": 11,
      "g": {
       "direita": [
@@ -1052,7 +1052,7 @@
        6
       ],
       "centro": [
-       206,
+       207,
        4,
        2
       ],
@@ -1330,7 +1330,7 @@
     },
     "protecao-animal": {
      "n": 565,
-     "ap": 9,
+     "ap": 10,
      "g": {
       "centro": [
        236,
@@ -1408,7 +1408,7 @@
     },
     "florestas-licenciamento": {
      "n": 787,
-     "ap": 21,
+     "ap": 22,
      "g": {
       "centro": [
        163,
@@ -1422,7 +1422,7 @@
       ],
       "direita": [
        239,
-       7,
+       8,
        45
       ],
       "extrema": [
@@ -2579,11 +2579,11 @@
    }
   },
   "C": {
-   "prop": 23748,
-   "pauta": 2322,
-   "pautaExtrema": 1546,
+   "prop": 23750,
+   "pauta": 2323,
+   "pautaExtrema": 1547,
    "vot": 1419,
-   "comSit": 23733,
+   "comSit": 23748,
    "aprovada": 850,
    "lei": 296,
    "arquivada": 1643,
@@ -2610,13 +2610,13 @@
    },
    "grupos": {
     "extrema": {
-     "prop": 4185,
+     "prop": 4186,
      "pauta": 1061,
      "membros": 83,
      "emExercicio": 68,
      "vot": 1376,
      "venceu": 665,
-     "comSit": 4183,
+     "comSit": 4185,
      "aprovada": 79,
      "lei": 12,
      "arquivada": 352
@@ -2628,19 +2628,19 @@
      "emExercicio": 90,
      "vot": 1364,
      "venceu": 912,
-     "comSit": 5238,
+     "comSit": 5240,
      "aprovada": 119,
      "lei": 28,
      "arquivada": 332
     },
     "centro": {
-     "prop": 7085,
+     "prop": 7086,
      "pauta": 413,
      "membros": 200,
      "emExercicio": 164,
      "vot": 1363,
      "venceu": 1320,
-     "comSit": 7077,
+     "comSit": 7085,
      "aprovada": 234,
      "lei": 60,
      "arquivada": 460
@@ -2652,7 +2652,7 @@
      "emExercicio": 191,
      "vot": 1394,
      "venceu": 1065,
-     "comSit": 6931,
+     "comSit": 6934,
      "aprovada": 269,
      "lei": 79,
      "arquivada": 476
@@ -3024,7 +3024,7 @@
      }
     },
     "energia": {
-     "n": 544,
+     "n": 545,
      "ap": 8,
      "g": {
       "direita": [
@@ -3033,7 +3033,7 @@
        5
       ],
       "centro": [
-       193,
+       194,
        3,
        2
       ],
@@ -4590,15 +4590,15 @@
    "pauta": 389,
    "pautaExtrema": 269,
    "vot": 198,
-   "comSit": 3200,
-   "aprovada": 352,
+   "comSit": 3201,
+   "aprovada": 354,
    "lei": 76,
    "arquivada": 151,
    "fora": {
     "prop": 73,
     "pauta": 12,
     "comSit": 72,
-    "aprovada": 6,
+    "aprovada": 7,
     "lei": 0,
     "arquivada": 0,
     "tipos": {
@@ -4619,7 +4619,7 @@
      "emExercicio": 15,
      "vot": 198,
      "venceu": 138,
-     "comSit": 674,
+     "comSit": 675,
      "aprovada": 63,
      "lei": 11,
      "arquivada": 36
@@ -4632,7 +4632,7 @@
      "vot": 198,
      "venceu": 187,
      "comSit": 1244,
-     "aprovada": 130,
+     "aprovada": 131,
      "lei": 30,
      "arquivada": 68
     },
@@ -5392,7 +5392,7 @@
     },
     "florestas-licenciamento": {
      "n": 133,
-     "ap": 10,
+     "ap": 11,
      "g": {
       "extrema": [
        27,
@@ -5401,7 +5401,7 @@
       ],
       "direita": [
        57,
-       6,
+       7,
        16
       ],
       "esquerda": [
@@ -5850,7 +5850,7 @@
     },
     "protecao-animal": {
      "n": 36,
-     "ap": 2,
+     "ap": 3,
      "g": {
       "direita": [
        8,
@@ -6520,7 +6520,7 @@
   }
  },
  "recentes": {
-  "proposicoes": 14,
+  "proposicoes": 15,
   "votacoes": 22
  }
 }
