@@ -59,7 +59,7 @@ Esta seção resume a sessão de 30/10 a 17/11. O histórico anterior está no a
 - A Câmara adiou o PL 4675/2025 para 27/11. Quando o mérito for votado, entra sozinho na votação-chave.
 
 ## Triagem das proposições por período (24/11)
-- Página de revisão: lista "A classificar pela equipe" (itens não conferidos, sem homenagens e sem rotina) e filtro "Movimentados desde", com corte padrão em 30/09/2026. Em 24/11 eram 4.172 projetos a classificar desde o corte (24.042 em todo o período). Detalhes no LEIA-ME.
+- Página de revisão: lista "A classificar pela equipe" (itens não conferidos, sem homenagens e sem rotina) e filtro por data de protocolo ("Protocolados de … até …"), com corte padrão em 30/09/2026 e atalho para os últimos 7 dias. A primeira versão usava a data da última movimentação, mas trazia milhares de projetos antigos com passos burocráticos de tramitação (redistribuições em massa em novembro), e o James pediu a troca pelo protocolo. Em 24/11 eram 440 projetos a classificar protocolados desde o corte. Detalhes no LEIA-ME.
 - Corrigido `robo/situacoes.mjs`: o arquivo anual da Câmara traz a data do último status em `ultimoStatus.data`, e o robô lia `dataHora`, por isso 27.297 projetos da Câmara estavam sem data. As datas foram preenchidas em `dados/situacoes.json` a partir dos arquivos anuais em 24/11; ainda faltam 1.196.
 - O robô não manda para a IA os itens já classificados pela equipe.
 

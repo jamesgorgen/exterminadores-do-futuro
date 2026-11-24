@@ -128,8 +128,9 @@ kbd{font:12px/1 ui-monospace,monospace;border:1px solid var(--line);border-botto
   <input type="search" id="fBusca" placeholder="Número (PL 1234/2025) ou palavra da ementa" aria-label="Buscar">
   <select id="fCerteza" aria-label="Certeza da IA"><option value="baixa">Só os que exigem revisão</option><option value="grau">Inclui dúvida só de grau</option><option value="">Todos, até os de certeza alta</option><option value="amostra">Amostra do mês (50 de certeza alta)</option></select>
   <label class="chk"><input type="checkbox" id="fEsconder" checked> Esconder conferidos</label>
-  <span class="periodo"><label class="chk" for="fDesde">Movimentados desde</label><input type="date" id="fDesde" aria-label="Movimentados desde">
-    <button type="button" class="btn" id="fCorte" title="Volta ao corte de 30/09/2026">30/09/2026</button><button type="button" class="btn" id="fTudo">Todo o período</button></span>
+  <span class="periodo"><label class="chk" for="fDesde">Protocolados de</label><input type="date" id="fDesde" aria-label="Protocolados a partir de">
+    <label class="chk" for="fAte">até</label><input type="date" id="fAte" aria-label="Protocolados até">
+    <button type="button" class="btn" id="fCorte" title="Tudo o que foi protocolado desde 30/09/2026">Desde 30/09/2026</button><button type="button" class="btn" id="fSemana">Últimos 7 dias</button><button type="button" class="btn" id="fTudo">Todo o período</button></span>
 </div></div>
 
 <main class="wrap">
@@ -223,13 +224,21 @@ async function carregar() {
   } catch (e) {}
   await carregarCorrecoes();
 }
-// Data da última movimentação: a mais recente entre a apresentação, a última tramitação e a última votação ligada.
+// Data de referência do período: nos projetos, a data de protocolo (apresentação); nas votações, a da última votação ligada à matéria.
 function dataRef(b) {
-  const sit = D.sit[b.chave];
-  const prop = b.tipo === 'p' ? b.it : D.props.get(b.chave);
-  return [b.tipo === 'p' ? b.it.d : '', prop && prop.d, sit && sit[2], D.votData.get(b.chave), b.tipo === 'v' ? b.it.d : ''].map(x => String(x || '').slice(0, 10)).sort().pop() || '';
+  if (b.tipo === 'p') return String(b.it.d || '').slice(0, 10);
+  return String(D.votData.get(b.chave) || b.it.d || '').slice(0, 10);
 }
 const desde = () => $('#fDesde').value || '';
+const ate = () => $('#fAte').value || '';
+const noPeriodo = d => (!desde() || d >= desde()) && (!ate() || d <= ate());
+const hojeLocal = (dias = 0) => { const d = new Date(Date.now() - dias * 86400000); return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10); };
+function intervaloTxt() {
+  if (desde() && ate()) return `de ${dataBR(desde())} a ${dataBR(ate())}`;
+  if (desde()) return `desde ${dataBR(desde())}`;
+  if (ate()) return `até ${dataBR(ate())}`;
+  return '';
+}
 
 // ------------------------------------------------------------ classificação efetiva
 function ia(chave) {
@@ -284,12 +293,12 @@ function itensDaLista() {
   const out = [];
   const sorteados = amostra ? amostraDoMes(base) : null;
   // O período vale para todas as listas, menos a amostra do mês, a busca em "Todos" e as proposições-chave.
-  const corte = amostra || ['todos', 'chave'].includes(lista) ? '' : desde();
+  const comPeriodo = !amostra && !['todos', 'chave'].includes(lista) && (desde() || ate());
   for (const b of base) {
     const a = D.ia[b.chave] || {};
     const conferido = correcao(b.chave) !== undefined && correcao(b.chave) !== null;
     b.dr = dataRef(b);
-    if (corte && b.dr < corte) continue;
+    if (comPeriodo && !noPeriodo(b.dr)) continue;
     if (amostra) {
       // A amostra junta direita e extrema-direita e mostra também os já conferidos, para acompanhar o andamento.
       if (!sorteados.has(b.chave)) continue;
@@ -318,14 +327,14 @@ function itensDaLista() {
     if (busca) { const txt = norm(b.chave + ' ' + (b.tipo === 'p' ? b.it.e : (b.it.me || '') + ' ' + (b.it.desc || ''))); if (!busca.split(/\s+/).every(t => txt.includes(t))) continue; }
     out.push(b);
   }
-  // Os que se movimentaram mais recentemente vêm primeiro.
+  // Os protocolados (ou votados) mais recentemente vêm primeiro.
   out.sort((x, y) => y.dr.localeCompare(x.dr) || String(y.it.d || '').localeCompare(String(x.it.d || '')));
   return out;
 }
 const periodoTxt = () => {
   const l = $('#fLista').value;
-  if (!desde() || $('#fCerteza').value === 'amostra' || ['todos', 'chave'].includes(l)) return '';
-  return `, apresentados ou movimentados desde ${dataBR(desde())}, do mais recente para o mais antigo`;
+  if (!intervaloTxt() || $('#fCerteza').value === 'amostra' || ['todos', 'chave'].includes(l)) return '';
+  return `, ${$('#fTipo').value === 'p' ? 'protocolados' : 'votados'} ${intervaloTxt()}, do mais recente para o mais antigo`;
 };
 let atual = [], mostrados = 0;
 const PASSO = 25;
@@ -336,7 +345,7 @@ function desenhar() {
   $('#contagem').textContent = $('#fCerteza').value === 'amostra' && atual.length
     ? `Amostra de ${mesAtual().split('-').reverse().join('/')} (${$('#fTipo').value === 'p' ? 'projetos' : 'votações'}, direita e extrema-direita): ${atual.length} itens, ${conferidos} já conferidos. O sorteio é o mesmo para toda a equipe e muda no mês seguinte.`
     : atual.length ? `${atual.length.toLocaleString('pt-BR')} itens nesta lista${periodoTxt()}` : ($('#fLista').value === 'todos' && !$('#fBusca').value.trim() ? 'Digite um número ou uma palavra para buscar entre todos os itens, de qualquer período.' : 'Nenhum item nesta lista' + periodoTxt() + '.');
-  $('#fCorte').setAttribute('aria-pressed', desde() === CORTE); $('#fTudo').setAttribute('aria-pressed', !desde());
+  $('#fCorte').setAttribute('aria-pressed', desde() === CORTE && !ate()); $('#fSemana').setAttribute('aria-pressed', desde() === hojeLocal(6) && !ate()); $('#fTudo').setAttribute('aria-pressed', !desde() && !ate());
   mais();
 }
 function mais() {
@@ -503,13 +512,15 @@ $('#salvar').addEventListener('click', salvar);
 $('#descartar').addEventListener('click', () => { if (!confirm('Descartar todas as alterações não salvas?')) return; pend = {}; guardarPend(); atualizarBarra(); desenhar(); });
 $('#mais').addEventListener('click', mais);
 ['#fTipo', '#fLista', '#fPauta', '#fCasa', '#fCerteza', '#fEsconder'].forEach(s => $(s).addEventListener('change', desenhar));
-// Período: guardado neste navegador; começa no corte de 30/09/2026.
-const guardada = ls.get('revisao-desde');
+// Período de protocolo: guardado neste navegador; começa no corte de 30/09/2026, sem data final.
+const guardada = ls.get('revisao-protocolo-desde');
 $('#fDesde').value = guardada === null ? CORTE : guardada;
-const mudarPeriodo = v => { $('#fDesde').value = v; ls.set('revisao-desde', v); desenharSituacao(); desenhar(); };
-$('#fDesde').addEventListener('change', () => mudarPeriodo($('#fDesde').value));
-$('#fCorte').addEventListener('click', () => mudarPeriodo(CORTE));
-$('#fTudo').addEventListener('click', () => mudarPeriodo(''));
+$('#fAte').value = ls.get('revisao-protocolo-ate') || '';
+const mudarPeriodo = (de, ate_) => { $('#fDesde').value = de; $('#fAte').value = ate_; ls.set('revisao-protocolo-desde', de); ls.set('revisao-protocolo-ate', ate_); desenharSituacao(); desenhar(); };
+['#fDesde', '#fAte'].forEach(s => $(s).addEventListener('change', () => mudarPeriodo($('#fDesde').value, $('#fAte').value)));
+$('#fCorte').addEventListener('click', () => mudarPeriodo(CORTE, ''));
+$('#fSemana').addEventListener('click', () => mudarPeriodo(hojeLocal(6), ''));
+$('#fTudo').addEventListener('click', () => mudarPeriodo('', ''));
 let tBusca; $('#fBusca').addEventListener('input', () => { clearTimeout(tBusca); tBusca = setTimeout(desenhar, 250); });
 window.addEventListener('beforeunload', e => { if (Object.keys(pend).length) { e.preventDefault(); e.returnValue = ''; } });
 
@@ -583,20 +594,19 @@ function desenharSituacao() {
   const fila = semConferir.filter(([k, c]) => c.cf !== 'alta' && c.cf !== 'grau').length;
   const soGrau = semConferir.filter(([k, c]) => c.cf === 'grau').length;
   // Projetos a classificar no período escolhido (sem homenagens e sem rotina).
-  const corte = desde();
   let aClassificar = 0;
   for (const it of D.props.values()) {
     if (salvas[it.c] !== undefined || it.rt || D.homenagem.has(it.c)) continue;
-    if (corte && dataRef({ tipo: 'p', chave: it.c, it }) < corte) continue;
+    if (!noPeriodo(dataRef({ tipo: 'p', chave: it.c, it }))) continue;
     aClassificar++;
   }
-  $('#situacao').innerHTML = `<div><b class="num">${aClassificar.toLocaleString('pt-BR')}</b>projetos a classificar pela equipe${corte ? `, apresentados ou movimentados desde ${dataBR(corte)}` : ', em todo o período'}</div>
+  $('#situacao').innerHTML = `<div><b class="num">${aClassificar.toLocaleString('pt-BR')}</b>projetos a classificar pela equipe${intervaloTxt() ? `, protocolados ${intervaloTxt()}` : ', em todo o período'}</div>
     <div><b class="num">${n.toLocaleString('pt-BR')}</b>correções salvas pela equipe</div>
     <div><b class="num">${usadas == null ? '—' : usadas + ' a ' + (proxima - 1)}</b>correções existiam na última reclassificação geral</div>
     <div><b class="num">${proxima == null ? '—' : n >= proxima ? 'em curso' : proxima}</b>${proxima != null && n >= proxima ? 'reclassificação, na próxima segunda-feira às 6h17 de Brasília' : 'correções liberam a próxima reclassificação, feita às segundas-feiras'}</div>
     <div><b class="num">${fila.toLocaleString('pt-BR')}</b>itens que exigem revisão, por dúvida sobre ser ou não pauta da direita</div>
     <div><b class="num">${soGrau.toLocaleString('pt-BR')}</b>itens com dúvida só de grau, de revisão opcional</div>
-    <p class="nota-s">A lista "A classificar pela equipe" reúne o que ninguém da equipe conferiu ainda, com ou sem leitura da IA, sem as homenagens e as proposições de rotina, e vem do mais recente para o mais antigo. O período conta a data mais recente entre a apresentação, a última movimentação na tramitação e a última votação ligada ao projeto. A classificação da equipe vale sozinha no site, e o robô não manda para a IA os itens que a equipe já classificou. Cada correção salva vale no site na hora. Cada projeto é lido por um modelo de IA rápido, e um modelo mais forte relê os casos em que o primeiro hesita. Só exige revisão o projeto em que eles divergem sobre ser ou não pauta da direita. Quando os dois veem pauta da direita e a dúvida é apenas entre direita e extrema-direita, vale a leitura do modelo mais forte e o item fica na lista opcional, que aparece ao escolher "Inclui dúvida só de grau". A cada 100 correções, a IA deduz de novo as regras que a equipe aplica e refaz o grau só dos projetos ainda em dúvida e não conferidos, uma vez por semana, na execução de segunda-feira às 6h17 de Brasília. Os de certeza alta e os já corrigidos pela equipe não são refeitos. Os números mudam alguns minutos depois de salvar.</p>`;
+    <p class="nota-s">A lista "A classificar pela equipe" reúne o que ninguém da equipe conferiu ainda, com ou sem leitura da IA, sem as homenagens e as proposições de rotina, e vem do mais recente para o mais antigo. O período vale pela data de protocolo do projeto (nas votações, pela data da última votação ligada à matéria), e pode ser fechado numa semana, por exemplo, com as duas datas. A classificação da equipe vale sozinha no site, e o robô não manda para a IA os itens que a equipe já classificou. Cada correção salva vale no site na hora. Cada projeto é lido por um modelo de IA rápido, e um modelo mais forte relê os casos em que o primeiro hesita. Só exige revisão o projeto em que eles divergem sobre ser ou não pauta da direita. Quando os dois veem pauta da direita e a dúvida é apenas entre direita e extrema-direita, vale a leitura do modelo mais forte e o item fica na lista opcional, que aparece ao escolher "Inclui dúvida só de grau". A cada 100 correções, a IA deduz de novo as regras que a equipe aplica e refaz o grau só dos projetos ainda em dúvida e não conferidos, uma vez por semana, na execução de segunda-feira às 6h17 de Brasília. Os de certeza alta e os já corrigidos pela equipe não são refeitos. Os números mudam alguns minutos depois de salvar.</p>`;
 }
 carregar().then(() => { desenharSituacao(); desenhar(); }).catch(e => { $('#lista').innerHTML = `<p class="carregando">Não foi possível carregar os dados (${esc(e.message)}).</p>`; });
 </script>
