@@ -1446,7 +1446,9 @@ export async function executar() {
     // Grupo pelo partido; para quem está fora dos dois blocos, marca também se vota com a direita (alinhado ou próximo).
     const classePartido = grupoDoPartido(p.p);
     const pv = k[0] === 'C' && cortesC && posC[k] ? posC[k] : null;
-    const classe = pv ? grupoPelosVotos(pv[0]) : classePartido;
+    // Deputado de partido de esquerda fica sempre na esquerda. O eixo estimado pelas votações mede, sobretudo, governo
+    // contra oposição, e quem vota contra o governo pela esquerda (o PSOL é o caso típico) cai no lado da direita.
+    const classe = pv && classePartido !== 'esquerda' ? grupoPelosVotos(pv[0]) : classePartido;
     if (pv && classe !== classePartido) contar('grupo_pelos_votos_diferente');
     const al = classe === 'extrema' || classe === 'direita' ? '' : m >= PAUTAS.indice.alinhado * 100 ? 'alinhado' : m >= PAUTAS.indice.proximo * 100 ? 'proximo' : '';
     if (!c.vd && !pr.n && !p.ex) continue;
