@@ -279,6 +279,13 @@
       ],
       "g": "extrema"
     },
+    "PDL 1249/2026": {
+      "s": "avanca",
+      "p": [
+        "povos"
+      ],
+      "g": "extrema"
+    },
     "PDL 14/2026": {
       "s": "barra",
       "p": [
@@ -9205,12 +9212,76 @@
       ],
       "lote": 1
     },
+    "PL 5918/2026": {
+      "s": "barra",
+      "p": [
+        "ambiente"
+      ],
+      "m": ""
+    },
+    "PL 5919/2026": {
+      "s": "barra",
+      "p": [
+        "trabalho"
+      ]
+    },
+    "PL 5920/2026": {
+      "s": ""
+    },
+    "PL 5921/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "direita",
+      "m": ""
+    },
+    "PL 5922/2026": {
+      "s": "barra",
+      "p": [
+        "educacao"
+      ],
+      "m": ""
+    },
+    "PL 5924/2026": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
+    "PL 5925/2026": {
+      "s": "barra",
+      "p": [
+        "instituicoes"
+      ],
+      "m": ""
+    },
+    "PL 5927/2026": {
+      "s": "avanca",
+      "p": [
+        "costumes"
+      ],
+      "g": "extrema",
+      "m": ""
+    },
     "PL 5929/2023": {
       "s": "barra",
       "p": [
         "trabalho"
       ],
       "lote": 1
+    },
+    "PL 5929/2026": {
+      "s": "barra",
+      "p": [
+        "plataformas"
+      ],
+      "m": ""
+    },
+    "PL 5931/2026": {
+      "s": ""
     },
     "PL 5936/2023": {
       "s": "barra",
@@ -9232,6 +9303,9 @@
         "costumes"
       ],
       "lote": 1
+    },
+    "PL 5946/2026": {
+      "s": ""
     },
     "PL 5948/2025": {
       "s": "barra",
@@ -10727,6 +10801,19 @@
         "costumes"
       ],
       "lote": 1
+    },
+    "PLP 315/2026": {
+      "s": "avanca",
+      "p": [
+        "instituicoes"
+      ],
+      "g": "direita"
+    },
+    "PLP 316/2026": {
+      "s": "barra",
+      "p": [
+        "estado"
+      ]
     },
     "PLP 33/2024": {
       "s": "avanca",
