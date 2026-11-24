@@ -1,5 +1,5 @@
 {
- "inicio": "2026-11-24T11:12:02.781Z",
+ "inicio": "2026-11-24T12:46:19.548Z",
  "modo": "diario",
  "amostras": {
   "camara_deputado": {
@@ -162,37 +162,37 @@
    "proponente": "1"
   },
   "senado_relatoria": {
-   "autoriaProcesso": "Senador Jaques Wagner (PT/BA)",
+   "autoriaProcesso": "Câmara dos Deputados",
    "casaRelator": "SF",
-   "codigoColegiado": 34,
-   "codigoMateria": 148047,
-   "codigoParlamentar": 5523,
-   "codigoTipoColegiado": 21,
-   "dataApresentacaoProcesso": "2021-04-12 15:41:45",
-   "dataDesignacao": "2026-11-11 08:34:00",
+   "codigoColegiado": 1998,
+   "codigoMateria": 175950,
+   "codigoParlamentar": 5008,
+   "codigoTipoColegiado": 128,
+   "dataApresentacaoProcesso": "2026-10-13 18:51:42",
+   "dataDesignacao": "2026-11-24 07:00:00",
    "dataDestituicao": null,
    "dataFimColegiado": null,
    "descricaoTipoEncerramento": null,
    "descricaoTipoRelator": "Relator",
-   "emailParlamentar": "sen.ottoalencar@senado.leg.br",
-   "ementaProcesso": "Dispõe sobre o Regime Especial de Contribuição Patronal Previdenciária dos Municípios – SIMPLES Municipal.",
+   "emailParlamentar": "sen.humbertocosta@senado.leg.br",
+   "ementaProcesso": "Institui o Plano Nacional de Cultura (PNC) para o decênio 2026-2036; e altera a Lei nº 14.399, de 8 de julho de 2022.",
    "formaTratamentoParlamentar": "Senador",
-   "id": 10348721,
-   "idProcesso": 8060689,
+   "id": 10363913,
+   "idProcesso": 9113430,
    "idTipoRelator": 1,
-   "identificacaoProcesso": "PLP 51/2021",
-   "nomeColegiado": "Comissão de Constituição, Justiça e Cidadania",
-   "nomeCompleto": "Otto Roberto Mendonça de Alencar",
-   "nomeParlamentar": "Otto Alencar",
+   "identificacaoProcesso": "PL 5894/2025",
+   "nomeColegiado": "Plenário do Senado Federal",
+   "nomeCompleto": "Humberto Sérgio Costa Lima",
+   "nomeParlamentar": "Humberto Costa",
    "numeroAutuacao": "1",
    "sexoParlamentar": "M",
    "siglaCasa": "SF",
-   "siglaColegiado": "CCJ",
-   "siglaPartidoParlamentar": "PSD",
+   "siglaColegiado": "PLEN",
+   "siglaPartidoParlamentar": "PT",
    "tramitando": "S",
-   "ufParlamentar": "BA",
-   "urlFotoParlamentar": "http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5523.jpg",
-   "urlPaginaParlamentar": "http://www25.senado.leg.br/web/senadores/senador/-/perfil/5523"
+   "ufParlamentar": "PE",
+   "urlFotoParlamentar": "http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5008.jpg",
+   "urlPaginaParlamentar": "http://www25.senado.leg.br/web/senadores/senador/-/perfil/5008"
   }
  },
  "contagens": {
@@ -203,15 +203,16 @@
   "votacoes_C_plenario": 135,
   "votacoes_C_comissao": 34,
   "votacoes_sem_sim_nao": 1,
+  "camara_dias_completados_pela_api": 1,
   "senado_plenario_votacoes_achadas": 15,
   "votacoes_S_plenario": 15,
   "senado_comissao_votacoes_achadas": 17,
   "votacoes_S_comissao": 17,
-  "proposicoes_camara_registros": 9344,
+  "proposicoes_camara_registros": 9346,
   "proposicoes_data_corrigida": 4,
   "senado_processo_registros": 260,
   "proposicoes_senado": 58,
-  "relatorias_senado": 96,
+  "relatorias_senado": 2,
   "numeracao_lacunas_PL": 5,
   "numeracao_lacunas_PLP": 1,
   "numeracao_lacunas_PEC": 0,
@@ -220,9 +221,12 @@
   "rotina_administrativa": 7,
   "votacoes_com_materia_recuperada": 56,
   "votacoes_ligadas_a_materia_principal": 172,
+  "classificados": 2,
+  "grau_certeza_alta": 1,
+  "graduados": 1,
   "correcoes_aplicadas": 1927,
   "confirmacoes_em_bloco": 775,
-  "grupo_pelos_votos_diferente": 370,
+  "grupo_pelos_votos_diferente": 316,
   "votacoes_chave": 4
  },
  "erros": [],
@@ -230,7 +234,7 @@
   "senado_atual": {
    "url": "https://legis.senado.leg.br/dadosabertos/senador/lista/atual.json",
    "tamanho": 128942,
-   "inicio": "{\"ListaParlamentarEmExercicio\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/ListaParlamentarEmExerciciov4.xsd\",\"Metadados\":{\"Versao\":\"24/11/2026 08:11:15\",\"VersaoServico\":\"4\",\"DataVersaoServico\":\"2020-07-15\",\"DescricaoDataSet\":\"Lista dos Parlamentares que estão atualmente em Exercício. Informações atuais sobre o Parlamentar.\"},\"Parlamentares\":{\"Parlamentar\":[{\"IdentificacaoParlamentar\":{\"CodigoParlamentar\":\"5672\",\"CodigoPublicoNaLegAtual\":\"800\",\"NomeParlamentar\":\"Alan Rick\",\"NomeCompletoParlamentar\":\"Alan Rick Miranda\",\"SexoParlamentar\":\"Masculino\",\"FormaTratamento\":\"Senador \",\"UrlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg\",\"UrlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5672\",\"EmailParlamentar\":\"sen.alanrick@senado.leg.br\",\"Telefones\":{\"Telefone\":[{\"NumeroTelefone\":\"33036333\",\"OrdemPublicacao\":\"1\",\"IndicadorFax\":\"Não\"}]},\"SiglaPartidoParlamentar\":\"REPUBLICANOS\",\"UfParlamentar\":\"AC\",\"Bloco\":{\"CodigoBloco\":\"346\",\"NomeBloco\":\"Bloco Parlamentar Aliança\",\"NomeApelido\":\"BLALIANÇA\",\"DataCriacao\":\"2023-03-20\"},\"MembroMesa\":\"Não\",\"MembroLideranca\":\"Sim\"},\"Mandato\":{\"CodigoMandato\":\"596\",\"UfParlamentar\":\"AC\",\"PrimeiraLegislaturaDoMandato\":{\"NumeroLegislatura\":\"57\",\"DataInicio\":\"2023-02-01\",\"DataFim\":\"2027-01-31\"},\"SegundaLegislaturaDoMandato\":{\"NumeroLegislatura\":\"58\",\"DataInicio\":\"2027-02-01\",\"DataFim\":\"2031-01-31\"},\"DescricaoParticipacao\":\"Titular\",\"Suplentes\":{\"Suplente\":["
+   "inicio": "{\"ListaParlamentarEmExercicio\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/ListaParlamentarEmExerciciov4.xsd\",\"Metadados\":{\"Versao\":\"24/11/2026 09:41:44\",\"VersaoServico\":\"4\",\"DataVersaoServico\":\"2020-07-15\",\"DescricaoDataSet\":\"Lista dos Parlamentares que estão atualmente em Exercício. Informações atuais sobre o Parlamentar.\"},\"Parlamentares\":{\"Parlamentar\":[{\"IdentificacaoParlamentar\":{\"CodigoParlamentar\":\"5672\",\"CodigoPublicoNaLegAtual\":\"800\",\"NomeParlamentar\":\"Alan Rick\",\"NomeCompletoParlamentar\":\"Alan Rick Miranda\",\"SexoParlamentar\":\"Masculino\",\"FormaTratamento\":\"Senador \",\"UrlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg\",\"UrlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5672\",\"EmailParlamentar\":\"sen.alanrick@senado.leg.br\",\"Telefones\":{\"Telefone\":[{\"NumeroTelefone\":\"33036333\",\"OrdemPublicacao\":\"1\",\"IndicadorFax\":\"Não\"}]},\"SiglaPartidoParlamentar\":\"REPUBLICANOS\",\"UfParlamentar\":\"AC\",\"Bloco\":{\"CodigoBloco\":\"346\",\"NomeBloco\":\"Bloco Parlamentar Aliança\",\"NomeApelido\":\"BLALIANÇA\",\"DataCriacao\":\"2023-03-20\"},\"MembroMesa\":\"Não\",\"MembroLideranca\":\"Sim\"},\"Mandato\":{\"CodigoMandato\":\"596\",\"UfParlamentar\":\"AC\",\"PrimeiraLegislaturaDoMandato\":{\"NumeroLegislatura\":\"57\",\"DataInicio\":\"2023-02-01\",\"DataFim\":\"2027-01-31\"},\"SegundaLegislaturaDoMandato\":{\"NumeroLegislatura\":\"58\",\"DataInicio\":\"2027-02-01\",\"DataFim\":\"2031-01-31\"},\"DescricaoParticipacao\":\"Titular\",\"Suplentes\":{\"Suplente\":["
   },
   "senado_votacao_iso": {
    "url": "https://legis.senado.leg.br/dadosabertos/votacao?dataInicio=2026-10-10&dataFim=2026-10-31",
@@ -240,23 +244,23 @@
   "senado_comissao": {
    "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20261010&dataFim=20261124",
    "tamanho": 220,
-   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"24/11/2026 08:09:41\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
+   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"24/11/2026 09:41:59\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
   },
   "senado_processo": {
-   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-10-10&dataFimApresentacao=2026-10-15",
-   "tamanho": 8014,
-   "inicio": "[{\"autoria\":\"Senador Jader Barbalho (MDB/PA)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175933,\"dataApresentacao\":\"2026-10-13\",\"dataSituacaoAtual\":\"2026-10-13\",\"dataUltimaAtualizacao\":\"2026-10-21T17:15:01.093\",\"ementa\":\"Institui a Política Nacional de Bioenergia Amazônica para Sistemas Isolados (PROBIO-SI), destinada a incentivar a substituição do óleo diesel fóssil por biocombustíveis e bioenergia produzidos a partir de biomassa local de origem sustentável, com prioridade para a Região Norte, e altera a Lei nº 12.111, de 9 de dezembro de 2009.\",\"enteIdentificador\":\"SF\",\"id\":9113033,\"identificacao\":\"PL 5540/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/7d76b464-ad7f-45ea-bb1d-2b024061e292\"},{\"autoria\":\"Câmara dos Deputados\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175948,\"dataApresentacao\":\"2026-10-13\",\"dataSituacaoAtual\":\"2026-10-14\",\"dataUltimaAtualizacao\":\"2026-10-22T15:15:33.938\",\"ementa\":\"Altera o art. 6º da Lei n° 10.826, de 22 de dezembro de 2003 (Estatuto do Desarmamento).\",\"enteIdentificador\":\"SF\",\"id\":9113381,\"identificacao\":\"PL 5555/2026\",\"objetivo\":\"Revisora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACA"
+   "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-10-16&dataFimApresentacao=2026-10-31",
+   "tamanho": 32886,
+   "inicio": "[{\"autoria\":\"Senador Dr. Hiran (PP/RR)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175985,\"dataApresentacao\":\"2026-10-19\",\"dataSituacaoAtual\":\"2026-10-19\",\"dataUltimaAtualizacao\":\"2026-10-21T15:30:01.3\",\"ementa\":\"Altera o art. 9º da Lei nº 15.211, de 17 de setembro de 2025 (Estatuto Digital da Criança e do Adolescente), para admitir a estimativa de idade por biometria facial como mecanismo de verificação de idade e para ampliar, de forma graduada, as categorias de serviços digitais de acesso restrito a maiores de 18 (dezoito) anos.\",\"enteIdentificador\":\"SF\",\"id\":9115144,\"identificacao\":\"PL 5593/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"PUBLICACAO_OFICIAL\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/3dc7461f-fa42-46e9-aa85-0ff9dd90f0a9\"},{\"autoria\":\"Câmara dos Deputados\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175994,\"dataApresentacao\":\"2026-10-19\",\"dataSituacaoAtual\":\"2026-10-20\",\"dataUltimaAtualizacao\":\"2026-10-23T18:30:01.076\",\"ementa\":\"Altera a Lei nº 8.080, de 19 de setembro de 1990 (Lei Orgânica da Saúde), para determinar a aceitação, pelas unidades do Sistema Único de Saúde (SUS), de exames realizados em serviços privados.\",\"enteIdentificador\":\"SF\",\"id\":9115232,\"identificacao\":\"PL 1123/2025\",\"objetivo\":\"Revisora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocum"
   },
   "senado_relatoria": {
-   "url": "https://legis.senado.leg.br/dadosabertos/processo/relatoria?dataInicio=2026-11-11&dataFim=2026-11-24",
-   "tamanho": 121685,
-   "inicio": "[{\"autoriaProcesso\":\"Senador Jaques Wagner (PT/BA)\",\"casaRelator\":\"SF\",\"codigoColegiado\":34,\"codigoMateria\":148047,\"codigoParlamentar\":5523,\"codigoTipoColegiado\":21,\"dataApresentacaoProcesso\":\"2021-04-12 15:41:45\",\"dataDesignacao\":\"2026-11-11 08:34:00\",\"dataDestituicao\":null,\"dataFimColegiado\":null,\"descricaoTipoEncerramento\":null,\"descricaoTipoRelator\":\"Relator\",\"emailParlamentar\":\"sen.ottoalencar@senado.leg.br\",\"ementaProcesso\":\"Dispõe sobre o Regime Especial de Contribuição Patronal Previdenciária dos Municípios – SIMPLES Municipal.\",\"formaTratamentoParlamentar\":\"Senador\",\"id\":10348721,\"idProcesso\":8060689,\"idTipoRelator\":1,\"identificacaoProcesso\":\"PLP 51/2021\",\"nomeColegiado\":\"Comissão de Constituição, Justiça e Cidadania\",\"nomeCompleto\":\"Otto Roberto Mendonça de Alencar\",\"nomeParlamentar\":\"Otto Alencar\",\"numeroAutuacao\":\"1\",\"sexoParlamentar\":\"M\",\"siglaCasa\":\"SF\",\"siglaColegiado\":\"CCJ\",\"siglaPartidoParlamentar\":\"PSD\",\"tramitando\":\"S\",\"ufParlamentar\":\"BA\",\"urlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5523.jpg\",\"urlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5523\"},{\"autoriaProcesso\":\"Câmara dos Deputados\",\"casaRelator\":\"SF\",\"codigoColegiado\":34,\"codigoMateria\":166699,\"codigoParlamentar\":285,\"codigoTipoColegiado\":21,\"dataApresentacaoProcesso\":\"2024-12-13 17:18:37\",\"dataDesignacao\":\"2026-11-11 09:30:00\",\"dataDestituicao\":null,\"dataFimColegiado\":null,\"descricaoTipoEncerramento\":null,\"descricaoTipoRelator\":"
+   "url": "https://legis.senado.leg.br/dadosabertos/processo/relatoria?dataInicio=2026-11-24&dataFim=2026-11-24",
+   "tamanho": 2944,
+   "inicio": "[{\"autoriaProcesso\":\"Câmara dos Deputados\",\"casaRelator\":\"SF\",\"codigoColegiado\":1998,\"codigoMateria\":175950,\"codigoParlamentar\":5008,\"codigoTipoColegiado\":128,\"dataApresentacaoProcesso\":\"2026-10-13 18:51:42\",\"dataDesignacao\":\"2026-11-24 07:00:00\",\"dataDestituicao\":null,\"dataFimColegiado\":null,\"descricaoTipoEncerramento\":null,\"descricaoTipoRelator\":\"Relator\",\"emailParlamentar\":\"sen.humbertocosta@senado.leg.br\",\"ementaProcesso\":\"Institui o Plano Nacional de Cultura (PNC) para o decênio 2026-2036; e altera a Lei nº 14.399, de 8 de julho de 2022.\",\"formaTratamentoParlamentar\":\"Senador\",\"id\":10363913,\"idProcesso\":9113430,\"idTipoRelator\":1,\"identificacaoProcesso\":\"PL 5894/2025\",\"nomeColegiado\":\"Plenário do Senado Federal\",\"nomeCompleto\":\"Humberto Sérgio Costa Lima\",\"nomeParlamentar\":\"Humberto Costa\",\"numeroAutuacao\":\"1\",\"sexoParlamentar\":\"M\",\"siglaCasa\":\"SF\",\"siglaColegiado\":\"PLEN\",\"siglaPartidoParlamentar\":\"PT\",\"tramitando\":\"S\",\"ufParlamentar\":\"PE\",\"urlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5008.jpg\",\"urlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5008\"},{\"autoriaProcesso\":\"Câmara dos Deputados\",\"casaRelator\":\"SF\",\"codigoColegiado\":1998,\"codigoMateria\":171596,\"codigoParlamentar\":5008,\"codigoTipoColegiado\":128,\"dataApresentacaoProcesso\":\"2025-11-11 13:38:28\",\"dataDesignacao\":\"2026-11-25 07:00:00\",\"dataDestituicao\":null,\"dataFimColegiado\":null,\"descricaoTipoEncerramento\":null,\"descricaoTipoRelator\":\"Relator\",\""
   }
  },
  "numeracao": {
   "PL": {
    "de": 5799,
-   "ate": 5945,
+   "ate": 5946,
    "faltam": 5,
    "numeros": [
     5833,
@@ -282,10 +286,10 @@
   },
   "PDL": {
    "de": 1036,
-   "ate": 1248,
+   "ate": 1249,
    "faltam": 0,
    "numeros": []
   }
  },
- "fim": "2026-11-24T11:13:42.251Z"
+ "fim": "2026-11-24T12:47:35.797Z"
 }
