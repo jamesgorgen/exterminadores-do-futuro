@@ -1245,6 +1245,51 @@ export function calcularBlocos(props, votos, indice, cl, sit = {}) {
   return Object.fromEntries(Object.keys(casas).map(c => [c, { ...tot[c], grupos: casas[c], temas: temas[c] }]));
 }
 
+// Desempenho do governo federal: o que o Executivo envia (projetos e medidas provisórias) e como termina, e o lado
+// indicado pelo líder do governo nas votações nominais. Câmara: orientação "Governo" que vem com cada votação.
+// Senado: orientação lida por robo/governo.mjs (dados/governo-fontes.json). Só votações com resultado de
+// aprovação ou rejeição e orientação Sim ou Não; liberação e obstrução ficam fora.
+export function calcularGoverno(props, sit, votos, fontes = {}) {
+  const tipos = {};
+  const diasLei = [];
+  for (const it of props) {
+    if (it.ta !== 'executivo') continue;
+    const tp = String(it.c).split(' ')[0];
+    const t = tipos[tp] || (tipos[tp] = { n: 0, aprovada: 0, lei: 0, arquivada: 0, tramitando: 0 });
+    const [st, , dt] = sit[it.c] || [];
+    t.n++;
+    if (st === 'l') { t.lei++; t.aprovada++; if (dt && it.d) diasLei.push((Date.parse(dt) - Date.parse(it.d)) / 864e5); }
+    else if (st === 'p') t.aprovada++;
+    else if (st === 'a') t.arquivada++;
+    else t.tramitando++;
+  }
+  const mediana = l => { if (!l.length) return null; const o = [...l].sort((a, b) => a - b); return Math.round(o[Math.floor(o.length / 2)]); };
+  const mpv = { credito: {}, outras: {} };
+  for (const m of fontes.mpv || []) {
+    const g = /cr[eé]dito extraordin[aá]rio/i.test(m.e) ? mpv.credito : mpv.outras;
+    g.n = (g.n || 0) + 1; g[m.s] = (g[m.s] || 0) + 1;
+  }
+  const oriGov = vt => {
+    if (vt.k === 'S') return (fontes.orientacaoSenado || {})[vt.id] || '';
+    return orientacaoDe(vt.ori, /^gov|governo/);
+  };
+  const vazio = () => ({ n: 0, venceu: 0, anos: {} });
+  const geral = { C: vazio(), S: vazio() }, contraE = { C: vazio(), S: vazio() };
+  const derrotas = [];
+  for (const vt of votos) {
+    if (!['A', 'R'].includes(vt.res) || !['C', 'S'].includes(vt.k)) continue;
+    const g = oriGov(vt); if (g !== 'S' && g !== 'N') continue;
+    const venceu = (g === 'S') === (vt.res === 'A'), ano = String(vt.d).slice(0, 4);
+    const soma = o => { o.n++; if (venceu) o.venceu++; const a = o.anos[ano] || (o.anos[ano] = [0, 0]); a[0]++; if (venceu) a[1]++; };
+    soma(geral[vt.k]);
+    const contra = (vt.be === 'S' || vt.be === 'N') && vt.be !== g;
+    if (contra) soma(contraE[vt.k]);
+    if (!venceu) derrotas.push({ id: vt.id, k: vt.k, d: vt.d, mat: vt.mat || '', desc: String(vt.desc || '').slice(0, 220), me: String(vt.me || '').slice(0, 220), pl: !!vt.pl, o: vt.o || '', gv: g, res: vt.res, e: contra, t: vt.t || {} });
+  }
+  derrotas.sort((a, b) => (b.d || '').localeCompare(a.d || ''));
+  return { projetos: { tipos, medianaDiasLei: mediana(diasLei), nLei: diasLei.length }, mpv, votos: geral, contraE, derrotas: derrotas.slice(0, 12), nDerrotas: derrotas.length };
+}
+
 // Proposições-chave, escolhidas pela equipe (correcoes.json, campo proposicoesChave, antes votacoesChave, ou o botão na página de revisão).
 // Para cada matéria: todas as votações nominais e simbólicas ligadas a ela, o placar de cada grupo,
 // a orientação do governo e da oposição e, por parlamentar, uma letra por votação (. = sem registro).
@@ -1554,6 +1599,7 @@ export async function executar() {
     porPauta,
     temas: { cadernos: TAX.cadernos.map(c => ({ id: c.id, nome: c.nome, sub: c.subtitulo })), lista: TAX.temas.map(t => ({ id: t.id, c: t.caderno, n: t.tema })) },
     blocos: calcularBlocos(todasPropFinal, todasVot, indice, cl, lerJson('situacoes.json', { itens: {} }).itens || {}),
+    governo: calcularGoverno(todasPropFinal, lerJson('situacoes.json', { itens: {} }).itens || {}, resumoVot, lerJson('governo-fontes.json', {})),
     recentes: { proposicoes: direita.filter(it => it.x.s === 'avanca' && it.d >= desde(7)).length, votacoes: resumoVot.filter(v => v.d >= desde(7)).length }
   });
 

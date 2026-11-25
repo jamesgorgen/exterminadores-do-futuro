@@ -25,12 +25,16 @@ jobs:
           node-version: '22'
       - name: Ler as situações
         run: node robo/situacoes.mjs
+      - name: Ler as medidas provisórias e a orientação do governo no Senado
+        if: always()
+        run: node robo/governo.mjs
       - name: Gravar os dados no repositório
         if: always()
         run: |
           git config user.name "robo-exterminadores"
           git config user.email "robo-exterminadores@users.noreply.github.com"
           if [ -f dados/situacoes.json ]; then git add dados/situacoes.json; fi
+          if [ -f dados/governo-fontes.json ]; then git add dados/governo-fontes.json; fi
           if git diff --cached --quiet; then echo "Nada mudou."; exit 0; fi
           git commit -m "Atualiza as situações das proposições ($(date -u +%Y-%m-%d))"
           for i in 1 2 3 4 5; do
