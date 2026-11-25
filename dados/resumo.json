@@ -1,19 +1,19 @@
 {
- "gerado": "2026-11-24T23:10:28.671Z",
+ "gerado": "2026-11-25T00:56:47.106Z",
  "inicio": "2023-02-01",
  "totais": {
   "proposicoes": 29319,
-  "direita": 2715,
-  "extrema": 1818,
-  "votacoes": 2471,
-  "disputadas": 1193,
-  "vitorias": 509,
+  "direita": 2716,
+  "extrema": 1819,
+  "votacoes": 2473,
+  "disputadas": 1195,
+  "vitorias": 510,
   "derrotas": 124,
-  "dispE": 1183,
-  "vitoriasE": 360,
-  "derrotasE": 622,
-  "dispD": 451,
-  "vitoriasD": 345,
+  "dispE": 1185,
+  "vitoriasE": 361,
+  "derrotasE": 623,
+  "dispD": 452,
+  "vitoriasD": 346,
   "derrotasD": 29,
   "grupos": {
    "extrema": 83,
@@ -39,12 +39,12 @@
    "derrotas": 3
   },
   "punitivismo": {
-   "prop": 1306,
-   "extrema": 872,
-   "prop30": 16,
-   "vot": 65,
+   "prop": 1307,
+   "extrema": 873,
+   "prop30": 17,
+   "vot": 66,
    "vitorias": 51,
-   "derrotas": 3
+   "derrotas": 4
   },
   "instituicoes": {
    "prop": 241,
@@ -95,9 +95,9 @@
    "derrotas": 0
   },
   "movimentos": {
-   "prop": 151,
-   "extrema": 140,
-   "prop30": 0,
+   "prop": 152,
+   "extrema": 141,
+   "prop30": 1,
    "vot": 27,
    "vitorias": 20,
    "derrotas": 0
@@ -111,9 +111,9 @@
    "derrotas": 4
   },
   "estado": {
-   "prop": 126,
-   "extrema": 58,
-   "prop30": 1,
+   "prop": 127,
+   "extrema": 59,
+   "prop30": 2,
    "vot": 35,
    "vitorias": 10,
    "derrotas": 17
@@ -573,9 +573,9 @@
  "blocos": {
   "T": {
    "prop": 26973,
-   "pauta": 2715,
-   "pautaExtrema": 1818,
-   "vot": 1617,
+   "pauta": 2716,
+   "pautaExtrema": 1819,
+   "vot": 1619,
    "comSit": 26949,
    "aprovada": 1204,
    "lei": 372,
@@ -607,8 +607,8 @@
      "pauta": 1213,
      "membros": 104,
      "emExercicio": 83,
-     "vot": 1574,
-     "venceu": 803,
+     "vot": 1576,
+     "venceu": 804,
      "comSit": 4860,
      "aprovada": 142,
      "lei": 23,
@@ -619,8 +619,8 @@
      "pauta": 715,
      "membros": 170,
      "emExercicio": 123,
-     "vot": 1562,
-     "venceu": 1099,
+     "vot": 1564,
+     "venceu": 1100,
      "comSit": 6484,
      "aprovada": 250,
      "lei": 58,
@@ -631,8 +631,8 @@
      "pauta": 443,
      "membros": 216,
      "emExercicio": 178,
-     "vot": 1559,
-     "venceu": 1509,
+     "vot": 1561,
+     "venceu": 1511,
      "comSit": 7524,
      "aprovada": 278,
      "lei": 69,
@@ -640,11 +640,11 @@
     },
     "esquerda": {
      "prop": 7650,
-     "pauta": 318,
+     "pauta": 319,
      "membros": 261,
      "emExercicio": 209,
-     "vot": 1590,
-     "venceu": 1233,
+     "vot": 1592,
+     "venceu": 1234,
      "comSit": 7640,
      "aprovada": 363,
      "lei": 101,
@@ -778,7 +778,7 @@
       "esquerda": [
        357,
        10,
-       14
+       15
       ]
      }
     },
@@ -1673,7 +1673,7 @@
       "esquerda": [
        172,
        5,
-       43
+       44
       ],
       "extrema": [
        366,
@@ -2580,9 +2580,9 @@
   },
   "C": {
    "prop": 23750,
-   "pauta": 2325,
-   "pautaExtrema": 1548,
-   "vot": 1419,
+   "pauta": 2326,
+   "pautaExtrema": 1549,
+   "vot": 1421,
    "comSit": 23748,
    "aprovada": 850,
    "lei": 296,
@@ -2614,8 +2614,8 @@
      "pauta": 1062,
      "membros": 83,
      "emExercicio": 68,
-     "vot": 1376,
-     "venceu": 665,
+     "vot": 1378,
+     "venceu": 666,
      "comSit": 4185,
      "aprovada": 79,
      "lei": 12,
@@ -2626,8 +2626,8 @@
      "pauta": 572,
      "membros": 126,
      "emExercicio": 90,
-     "vot": 1364,
-     "venceu": 912,
+     "vot": 1366,
+     "venceu": 913,
      "comSit": 5240,
      "aprovada": 119,
      "lei": 28,
@@ -2638,8 +2638,8 @@
      "pauta": 413,
      "membros": 200,
      "emExercicio": 164,
-     "vot": 1363,
-     "venceu": 1320,
+     "vot": 1365,
+     "venceu": 1322,
      "comSit": 7085,
      "aprovada": 234,
      "lei": 60,
@@ -2647,11 +2647,11 @@
     },
     "esquerda": {
      "prop": 6934,
-     "pauta": 267,
+     "pauta": 268,
      "membros": 236,
      "emExercicio": 191,
-     "vot": 1394,
-     "venceu": 1065,
+     "vot": 1396,
+     "venceu": 1066,
      "comSit": 6934,
      "aprovada": 269,
      "lei": 79,
@@ -2785,7 +2785,7 @@
       "esquerda": [
        338,
        9,
-       11
+       12
       ]
      }
     },
@@ -3654,7 +3654,7 @@
       "esquerda": [
        156,
        4,
-       36
+       37
       ],
       "extrema": [
        341,
@@ -6520,7 +6520,7 @@
   }
  },
  "recentes": {
-  "proposicoes": 18,
-  "votacoes": 22
+  "proposicoes": 16,
+  "votacoes": 23
  }
 }
