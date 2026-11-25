@@ -9,12 +9,20 @@
 //   email/<conta>.json          novidades do dia para o resumo por e-mail
 //   config/vapid.json, config/segredo
 //
-// Limites (serviço sem IA): sem cadastro, até 3 projetos, só push; com cadastro, até 100 projetos, push e e-mail.
+// Limites (serviço sem IA): sem cadastro, até 3 projetos e 3 parlamentares, só push; com cadastro, até 100 projetos
+// e 30 parlamentares, push e e-mail. Parlamentares (dep:<id>, sen:<código>) ficam nas mesmas listas e no mesmo
+// índice que os projetos; a leitura da atividade deles está em parl.js.
+
+import { criarParl, novidades, ehParl, PARL } from './parl.js';
 
 const A = 'acomp/';
-const LIM_ANON = 3, LIM_CONTA = 100;
-const CONSENT_ACOMP = '2026-11-25';
-const CHAVE = /^(camara:\d{1,9}|senado:\d{1,12})$/;
+const LIM_ANON = 3, LIM_CONTA = 100, LIM_PARL_ANON = 3, LIM_PARL_CONTA = 30;
+// Versão do consentimento: a de 25/11/2026 (2) inclui os parlamentares acompanhados.
+const CONSENT_ACOMP = '2026-11-25.2';
+const consentAtual = c => !!c && String(typeof c === 'string' ? c : c.versao) >= CONSENT_ACOMP;
+const CHAVE = /^(camara:\d{1,9}|senado:\d{1,12}|dep:\d{1,9}|sen:\d{1,9})$/;
+const limite = (k, conta) => ehParl(k) ? (conta ? LIM_PARL_CONTA : LIM_PARL_ANON) : (conta ? LIM_CONTA : LIM_ANON);
+const LIMITES = conta => ({ projetos: conta ? LIM_CONTA : LIM_ANON, parlamentares: conta ? LIM_PARL_CONTA : LIM_PARL_ANON });
 const CAM = 'https://dadosabertos.camara.leg.br/api/v2';
 const SEN = 'https://legis.senado.leg.br/dadosabertos';
 const TIPOS_CAM = new Set(['PRLP', 'PRL', 'PAR', 'PPP', 'SBT', 'SBT-A', 'SBE', 'SBR', 'EMC', 'EMC-A', 'EMP', 'EMR', 'EMS', 'ESB', 'EMA', 'RDF', 'PEP', 'PES', 'EMD']);
@@ -92,8 +100,9 @@ export function criarAcomp(h) {
     const id = await idAparelho(endpoint), k = `${A}disp/${id}.json`;
     const u = await sessao(req, env);
     const d = (await lerJ(env, k)) || { criado: agoraIso(), projetos: [] };
-    if (!u && !d.consentimento && c.consentimento !== true) return erro(req, 'É preciso concordar com o uso da lista de projetos para receber avisos.');
-    d.endpoint = endpoint; d.atualizado = agoraIso(); d.consentimento = d.consentimento || CONSENT_ACOMP;
+    if (!u && !d.consentimento && c.consentimento !== true) return erro(req, 'É preciso concordar com o uso da lista do que você acompanha para receber avisos.');
+    d.endpoint = endpoint; d.atualizado = agoraIso();
+    if (c.consentimento === true) d.consentimento = CONSENT_ACOMP; else d.consentimento = d.consentimento || CONSENT_ACOMP;
     if (u) {
       d.usuario = u.id;
       const ru = semSessao(u); ru.dispositivos = [...new Set([...(ru.dispositivos || []), id])].slice(-10);
@@ -118,22 +127,24 @@ export function criarAcomp(h) {
   async function lista(req, env) {
     const c = req.method === 'POST' ? await corpoDe(req) : {};
     const q = await quem(req, env, c);
-    if (q.u) return json(req, { conta: true, projetos: q.u.acomp || [], limite: LIM_CONTA, email: q.u.avisosEmail !== false, consentimento: !!q.u.consentimentoAcomp, aparelhos: (q.u.dispositivos || []).length });
-    if (q.d) return json(req, { conta: false, projetos: q.d.projetos || [], limite: LIM_ANON, email: false, consentimento: true });
-    return json(req, { conta: false, projetos: [], limite: LIM_ANON, email: false, consentimento: false });
+    if (q.u) return json(req, { conta: true, projetos: q.u.acomp || [], limite: LIM_CONTA, limites: LIMITES(true), email: q.u.avisosEmail !== false, consentimento: consentAtual(q.u.consentimentoAcomp), aparelhos: (q.u.dispositivos || []).length });
+    if (q.d) return json(req, { conta: false, projetos: q.d.projetos || [], limite: LIM_ANON, limites: LIMITES(false), email: false, consentimento: consentAtual(q.d.consentimento) });
+    return json(req, { conta: false, projetos: [], limite: LIM_ANON, limites: LIMITES(false), email: false, consentimento: false });
   }
 
   async function seguir(req, env) {
     const c = await corpoDe(req);
     const k = String(c.k || ''), t = limpa(c.t, 160);
-    if (!CHAVE.test(k)) return erro(req, 'Projeto inválido.');
+    if (!CHAVE.test(k)) return erro(req, ehParl(k) ? 'Parlamentar inválido.' : 'Projeto inválido.');
     const q = await quem(req, env, c);
+    const doTipo = l => l.filter(p => ehParl(p.k) === ehParl(k)).length;
+    const nomeTipo = ehParl(k) ? 'parlamentares' : 'projetos';
     if (q.u) {
       const u = semSessao(q.u);
-      if (!u.consentimentoAcomp) { if (c.consentimento !== true) return erro(req, 'É preciso concordar com o uso da lista de projetos acompanhados.', 400, { precisaConsentimento: true }); u.consentimentoAcomp = { versao: CONSENT_ACOMP, data: agoraIso() }; }
+      if (!consentAtual(u.consentimentoAcomp)) { if (c.consentimento !== true) return erro(req, 'É preciso concordar com o uso da lista do que você acompanha.', 400, { precisaConsentimento: true }); u.consentimentoAcomp = { versao: CONSENT_ACOMP, data: agoraIso() }; }
       u.acomp = u.acomp || [];
       if (!u.acomp.some(p => p.k === k)) {
-        if (u.acomp.length >= LIM_CONTA) return erro(req, `O limite é de ${LIM_CONTA} projetos acompanhados por conta.`, 429);
+        if (doTipo(u.acomp) >= limite(k, true)) return erro(req, `O limite é de ${limite(k, true)} ${nomeTipo} acompanhados por conta.`, 429);
         u.acomp.push({ k, t, desde: agoraIso() });
       }
       if (u.avisosEmail === undefined) u.avisosEmail = true;
@@ -143,20 +154,21 @@ export function criarAcomp(h) {
     }
     if (q.d) {
       const d = q.d; d.projetos = d.projetos || [];
+      if (!consentAtual(d.consentimento)) { if (c.consentimento !== true) return erro(req, 'É preciso concordar com o uso da lista do que você acompanha.', 400, { precisaConsentimento: true }); d.consentimento = CONSENT_ACOMP; }
       if (!d.projetos.some(p => p.k === k)) {
-        if (d.projetos.length >= LIM_ANON) return erro(req, `Sem cadastro, é possível acompanhar até ${LIM_ANON} projetos. Entre com o seu e-mail na Minha área para acompanhar até ${LIM_CONTA}.`, 429);
+        if (doTipo(d.projetos) >= limite(k, false)) return erro(req, `Sem cadastro, é possível acompanhar até ${limite(k, false)} ${nomeTipo}. Entre com o seu e-mail na Minha área para acompanhar até ${limite(k, true)}.`, 429);
         d.projetos.push({ k, t, desde: agoraIso() });
       }
       await gravarJ(env, `${A}disp/${q.dId}.json`, d);
       await mudarIndice(env, ind => juntar(ind, k, t, 'd', q.dId));
       return json(req, { ok: true, projetos: d.projetos });
     }
-    return erro(req, 'Para acompanhar projetos, ative os avisos neste aparelho ou entre com o seu e-mail na Minha área.', 401);
+    return erro(req, `Para acompanhar ${nomeTipo}, ative os avisos neste aparelho ou entre com o seu e-mail na Minha área.`, 401);
   }
 
   async function deixar(req, env) {
     const c = await corpoDe(req); const k = String(c.k || '');
-    if (!CHAVE.test(k)) return erro(req, 'Projeto inválido.');
+    if (!CHAVE.test(k)) return erro(req, 'Item inválido.');
     const q = await quem(req, env, c);
     if (q.u) {
       const u = semSessao(q.u); u.acomp = (u.acomp || []).filter(p => p.k !== k);
@@ -190,7 +202,7 @@ export function criarAcomp(h) {
     if (!/^[0-9a-f]{32}$/.test(uid) || t !== await tokenSaida(env, uid)) return pagina('Link inválido.');
     const u = await lerJ(env, `contas/usuarios/${uid}.json`);
     if (u) { u.avisosEmail = false; await gravarJ(env, `contas/usuarios/${uid}.json`, u); }
-    return pagina('Pronto: você não vai mais receber o resumo diário por e-mail. Os avisos por push e a lista de projetos continuam como estavam, e é possível reativar o e-mail na Minha área.');
+    return pagina('Pronto: você não vai mais receber o resumo diário por e-mail. Os avisos por push e a lista do que você acompanha continuam como estavam, e é possível reativar o e-mail na Minha área.');
   }
 
   async function avisos(req, env) {
@@ -240,11 +252,49 @@ export function criarAcomp(h) {
 
   async function rodar(env, quando = Date.now()) {
     const ind = await lerJ(env, A + 'indice.json');
-    const resumo = { projetos: 0, eventos: 0, push: 0, emails: 0, erros: 0 };
+    const resumo = { projetos: 0, parlamentares: 0, adiados: 0, eventos: 0, push: 0, emails: 0, erros: 0 };
     const avisosPorDisp = new Map(), emailPorConta = new Map();
     const contas = new Map();
     const conta = async uid => { if (!contas.has(uid)) contas.set(uid, await lerJ(env, `contas/usuarios/${uid}.json`)); return contas.get(uid); };
-    for (const [k, seg] of Object.entries((ind && ind.p) || {})) {
+    const entradas = Object.entries((ind && ind.p) || {});
+    // Chamadas externas por execução: os parlamentares que não couberem ficam para a próxima hora, em rodízio.
+    const cont = { n: 0, max: 700 };
+    const P = criarParl(cont);
+    const parls = entradas.filter(([k]) => ehParl(k));
+    let votosCam = null;
+    if (parls.some(([k]) => k.startsWith('dep:'))) { try { votosCam = await P.votosCamara(env, lerJ, gravarJ, new Date(quando - 2 * 864e5).toISOString().slice(0, 10)); } catch (e) { resumo.erros++; console.log('votos da Câmara:', String(e).slice(0, 200)); } }
+    const ultima = (await lerJ(env, A + 'ultima-execucao.json')) || {};
+    const ini = parls.length ? (ultima.cursor || 0) % parls.length : 0;
+    const ordemParl = [...parls.slice(ini), ...parls.slice(0, ini)];
+    let feitosParl = 0;
+    const distribuir = (seg, itens) => {
+      for (const d of seg.d) avisosPorDisp.set(d, [...(avisosPorDisp.get(d) || []), ...itens]);
+      return Promise.all(seg.u.map(async uid => {
+        const u = await conta(uid); if (!u) return;
+        for (const d of u.dispositivos || []) avisosPorDisp.set(d, [...(avisosPorDisp.get(d) || []), ...itens]);
+        if (u.avisosEmail !== false) emailPorConta.set(uid, [...(emailPorConta.get(uid) || []), ...itens]);
+      }));
+    };
+    for (const [k, seg] of ordemParl) {
+      if (cont.n > cont.max) { resumo.adiados++; continue; }
+      feitosParl++; resumo.parlamentares++;
+      const ke = `${A}estado/${seguro(k)}.json`, antes = await lerJ(env, ke);
+      // Janela fixa de três dias (mais, se a última leitura for antiga): o que já foi visto não se repete.
+      const desde = new Date(Math.min(quando - 3 * 864e5, antes && antes.verificado ? Date.parse(antes.verificado) - 864e5 : quando)).toISOString().slice(0, 10);
+      let atual;
+      try { atual = await P.atividade(k, desde, votosCam); } catch (e) { resumo.erros++; console.log('parlamentar', k, String(e).slice(0, 200)); continue; }
+      const { novos, estado } = novidades(antes, atual);
+      await gravarJ(env, ke, { ...estado, verificado: new Date(quando).toISOString() });
+      if (!novos.length) continue;
+      resumo.eventos += novos.length;
+      // Muitos votos numa só sessão: os avisos trazem até 15 e uma linha com o restante.
+      const votos = novos.filter(e => e.tipo === 'voto'), outros = novos.filter(e => e.tipo !== 'voto');
+      const lst = [...outros, ...votos.slice(0, 15)];
+      if (votos.length > 15) lst.push({ tipo: 'voto', texto: `E mais ${votos.length - 15} votos registrados.`, url: atual.url });
+      await distribuir(seg, lst.map(e => ({ k, titulo: atual.nome, nome: seg.t || atual.nome, url: e.url || atual.url, tipo: e.tipo, texto: e.texto, data: e.data })));
+    }
+    for (const [k, seg] of entradas) {
+      if (ehParl(k)) continue;
       resumo.projetos++;
       let atual;
       try { atual = await situacao(k); } catch (e) { resumo.erros++; continue; }
@@ -257,12 +307,7 @@ export function criarAcomp(h) {
       if (!eventos.length) continue;
       resumo.eventos += eventos.length;
       const itens = eventos.map(e => ({ k, titulo: atual.titulo, nome: seg.t || atual.titulo, url: e.tipo === 'versao' ? 'https://exterminadores.com.br/comparador.html' : atual.url, tipo: e.tipo, texto: e.texto, data: e.data }));
-      for (const d of seg.d) avisosPorDisp.set(d, [...(avisosPorDisp.get(d) || []), ...itens]);
-      for (const uid of seg.u) {
-        const u = await conta(uid); if (!u) continue;
-        for (const d of u.dispositivos || []) avisosPorDisp.set(d, [...(avisosPorDisp.get(d) || []), ...itens]);
-        if (u.avisosEmail !== false) emailPorConta.set(uid, [...(emailPorConta.get(uid) || []), ...itens]);
-      }
+      await distribuir(seg, itens);
     }
     // push: guarda os avisos e acorda o aparelho
     for (const [d, itens] of avisosPorDisp) {
@@ -278,10 +323,10 @@ export function criarAcomp(h) {
     // e-mail: acumula no dia e envia o resumo às 19h de Brasília
     for (const [uid, itens] of emailPorConta) {
       const ke = `${A}email/${uid}.json`;
-      await gravarJ(env, ke, [...((await lerJ(env, ke)) || []), ...itens].slice(-200));
+      await gravarJ(env, ke, [...((await lerJ(env, ke)) || []), ...itens].slice(-400));
     }
     if (new Date(quando).getUTCHours() === 22) resumo.emails = await enviarResumos(env);
-    await gravarJ(env, A + 'ultima-execucao.json', { ...resumo, em: new Date(quando).toISOString() });
+    await gravarJ(env, A + 'ultima-execucao.json', { ...resumo, chamadas: cont.n, cursor: parls.length ? (ini + feitosParl) % parls.length : 0, em: new Date(quando).toISOString() });
     return resumo;
   }
 
@@ -297,15 +342,18 @@ export function criarAcomp(h) {
         const porProj = new Map(); itens.forEach(i => porProj.set(i.k, [...(porProj.get(i.k) || []), i]));
         const e = s => String(s || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
         const saida = `https://comparador-exterminadores.gorgen-james.workers.dev/api/acomp/sair-email?u=${uid}&t=${await tokenSaida(env, uid)}`;
-        const blocos = [...porProj.values()].map(lst => `<h3 style="font-size:17px;margin:18px 0 4px">${e(lst[0].nome)}</h3><ul style="margin:0;padding-left:18px">${lst.map(i => `<li style="margin:4px 0">${i.tipo === 'versao' ? '<b>Novo texto.</b> ' : ''}${e(i.texto)} <a href="${e(i.url)}">ver</a></li>`).join('')}</ul>`).join('');
-        const texto = [...porProj.values()].map(lst => `${lst[0].nome}\n` + lst.map(i => `- ${i.texto} (${i.url})`).join('\n')).join('\n\n');
+        const nP = [...porProj.keys()].filter(ehParl).length, nJ = porProj.size - nP;
+        const oque = [nJ ? `${nJ} projeto${nJ > 1 ? 's' : ''}` : '', nP ? `${nP} parlamentar${nP > 1 ? 'es' : ''}` : ''].filter(Boolean).join(' e ');
+        const ordem = [...porProj.values()].sort((a, b) => ehParl(a[0].k) - ehParl(b[0].k));
+        const blocos = ordem.map(lst => `<h3 style="font-size:17px;margin:18px 0 4px">${e(lst[0].nome)}</h3><ul style="margin:0;padding-left:18px">${lst.map(i => `<li style="margin:4px 0">${i.tipo === 'versao' ? '<b>Novo texto.</b> ' : ''}${e(i.texto)}${i.url ? ` <a href="${e(i.url)}">ver</a>` : ''}</li>`).join('')}</ul>`).join('');
+        const texto = ordem.map(lst => `${lst[0].nome}\n` + lst.map(i => `- ${i.texto} (${i.url})`).join('\n')).join('\n\n');
         try {
           await env.EMAIL.send({ to: u.email, from: { email: 'avisos@exterminadores.com.br', name: 'Os exterminadores do futuro' },
-            subject: `Novidades em ${porProj.size} projeto${porProj.size > 1 ? 's' : ''} que você acompanha`,
-            text: `Novidades de hoje nos projetos que você acompanha no observatório Os exterminadores do futuro:\n\n${texto}\n\nGerencie os seus projetos: https://exterminadores.com.br/conta.html\nParar de receber este resumo: ${saida}`,
-            html: `<div style="font-family:Arial,sans-serif;font-size:15px;line-height:1.5;color:#1B2523;max-width:600px"><p>Novidades de hoje nos projetos que você acompanha no observatório <b>Os exterminadores do futuro</b>:</p>${blocos}
-<p style="margin-top:24px"><a href="https://exterminadores.com.br/conta.html">Gerenciar os meus projetos</a></p>
-<p style="font-size:12px;color:#5F6B68">Você recebe este resumo porque acompanha projetos na sua conta. <a href="${saida}">Parar de receber por e-mail</a>.</p></div>`,
+            subject: `Novidades em ${oque} que você acompanha`,
+            text: `Novidades de hoje no que você acompanha no observatório Os exterminadores do futuro:\n\n${texto}\n\nGerencie o que você acompanha: https://exterminadores.com.br/conta.html\nParar de receber este resumo: ${saida}`,
+            html: `<div style="font-family:Arial,sans-serif;font-size:15px;line-height:1.5;color:#1B2523;max-width:600px"><p>Novidades de hoje no que você acompanha no observatório <b>Os exterminadores do futuro</b>:</p>${blocos}
+<p style="margin-top:24px"><a href="https://exterminadores.com.br/conta.html#acompanhamento">Gerenciar o que eu acompanho</a></p>
+<p style="font-size:12px;color:#5F6B68">Você recebe este resumo porque acompanha projetos ou parlamentares na sua conta. <a href="${saida}">Parar de receber por e-mail</a>.</p></div>`,
             headers: { 'List-Unsubscribe': `<${saida}>` } });
           n++;
         } catch (err) { console.log('resumo por e-mail falhou:', String(err && err.message || err).slice(0, 200)); }
@@ -321,5 +369,5 @@ export function criarAcomp(h) {
     await env.R2.delete(`${A}email/${u.id}.json`);
   }
 
-  return { teste, chavePublica, inscrever, cancelar, lista, seguir, deixar, preferenciaEmail, sairEmail, avisos, rodar, apagarConta, LIM_ANON, LIM_CONTA };
+  return { LIM_PARL_ANON, LIM_PARL_CONTA, teste, chavePublica, inscrever, cancelar, lista, seguir, deixar, preferenciaEmail, sairEmail, avisos, rodar, apagarConta, LIM_ANON, LIM_CONTA };
 }

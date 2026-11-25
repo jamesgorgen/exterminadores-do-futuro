@@ -139,7 +139,7 @@ td .pilha{margin:0;height:10px;min-width:90px}
 </div></div>
 <main class="folha" id="folha"><p class="carregando">Carregando os dados…</p></main>
 
-<script src="avisos.js?v=3"></script>
+<script src="avisos.js?v=4"></script>
 <script src="pautas.js?v=20261031"></script>
 <script src="lib/d3.min.js?v=7.9.0"></script>
 <script src="lib/topojson.min.js?v=3.0.2"></script>
@@ -168,7 +168,8 @@ function reais(v) {
   if (a >= 1e3) return 'R$ ' + f(v / 1e3, 0) + ' mil'; return 'R$ ' + f(v || 0, 0);
 }
 const corta = (s, n) => { s = String(s || ''); return s.length > n ? s.slice(0, n - 1).replace(/\s+\S*$/, '') + '…' : s; };
-const json = u => fetch(u, { cache: 'no-cache' }).then(r => { if (!r.ok) throw new Error(u); return r.json(); });
+const cacheJ = new Map();
+const json = u => { if (!cacheJ.has(u)) cacheJ.set(u, fetch(u, { cache: 'no-cache' }).then(r => { if (!r.ok) throw new Error(u); return r.json(); })); return cacheJ.get(u); };
 const hoje = new Date().toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' });
 function etqGrau(x) {
   if (!x || !x.s) return '';
@@ -269,8 +270,55 @@ async function dossieParlamentar(k) {
       ${(e.objs || []).length ? `<h3>Principais convênios</h3><table><thead><tr><th>Objeto</th><th>Local</th><th class="d">Valor</th></tr></thead><tbody>${e.objs.map(([o, v, l]) => `<tr><td>${esc(corta(o, 180))}</td><td>${esc(l)}</td><td class="d num">${reais(v)}</td></tr>`).join('')}</tbody></table>` : ''}
     </section>`;
   }
+  h += await atividadeRecente(k, p).catch(() => `<section><h2>Atividade nos últimos 30 dias</h2><p class="leve">Não foi possível consultar as APIs da Câmara e do Senado agora.</p></section>`);
   h += METODO + `<div class="rodape">Dossiê gerado automaticamente a partir de dados públicos em ${hoje}. As classificações por IA são triagem e podem conter erros.</div>`;
   $('#folha').innerHTML = h;
+}
+
+// Atividade legislativa registrada nos últimos 30 dias, consultada na hora nas APIs das Casas.
+async function atividadeRecente(k, p) {
+  const C = 'https://dadosabertos.camara.leg.br/api/v2', S = 'https://legis.senado.leg.br/dadosabertos';
+  const g = u => fetch(u, { headers: { accept: 'application/json' } }).then(r => { if (!r.ok) throw new Error(u); return r.json(); });
+  const lst = x => (Array.isArray(x) ? x : x ? [x] : []);
+  const ini = new Date(Date.now() - 30 * 864e5).toISOString().slice(0, 10), fim = new Date().toISOString().slice(0, 10);
+  const id = k.slice(1), br = d => { const m = String(d || '').match(/(\d{4})-(\d{2})-(\d{2})/); return m ? `${m[3]}/${m[2]}/${m[1]}` : ''; };
+  const tab = (titulo, cab, linhas, vazio) => `<h3>${titulo}</h3>${linhas.length ? `<table><thead><tr>${cab.map(c => `<th>${c}</th>`).join('')}</tr></thead><tbody>${linhas.join('')}</tbody></table>` : `<p class="peq">${vazio}</p>`}`;
+  let h = `<section class="quebra"><h2>Atividade nos últimos 30 dias</h2><p class="leve">Registros de ${br(ini)} a ${br(fim)} nos dados abertos ${k[0] === 'C' ? 'da Câmara dos Deputados' : 'do Senado Federal'}, consultados no momento da geração.</p>`;
+  if (k[0] === 'C') {
+    const [props, disc] = await Promise.all([
+      g(`${C}/proposicoes?idDeputadoAutor=${id}&dataApresentacaoInicio=${ini}&itens=100&ordem=DESC&ordenarPor=id`).then(j => j.dados || []),
+      g(`${C}/deputados/${id}/discursos?dataInicio=${ini}&dataFim=${fim}&ordenarPor=dataHoraInicio&ordem=DESC`).then(j => j.dados || [])]);
+    h += tab(`Proposições apresentadas (${fmt(props.length)})`, ['Proposição', 'Ementa'], props.slice(0, 40).map(x => `<tr><td class="num"><b>${esc(+x.ano ? `${x.siglaTipo} ${x.numero}/${x.ano}` : `${x.siglaTipo} ${x.numero}`)}</b></td><td>${esc(corta(x.ementa, 200))}</td></tr>`), 'Nenhuma proposição apresentada no período.');
+    h += tab(`Discursos (${fmt(disc.length)})`, ['Data', 'Tipo', 'Trecho'], disc.slice(0, 25).map(d => `<tr><td class="num">${br(d.dataHoraInicio)}</td><td>${esc(d.tipoDiscurso || '')}</td><td>${esc(corta(d.sumario || String(d.transcricao || '').replace(/^[^)]{0,200}\)\s*-\s*/, ''), 220))}</td></tr>`), 'Nenhum discurso registrado no período.');
+    h += `<p class="peq">Os votos de ${esc(p.n)} nas votações disputadas estão na seção de votações. A API da Câmara não publica as relatorias por deputado.</p>`;
+  } else {
+    const [props, rel, vot, disc] = await Promise.all([
+      g(`${S}/processo?codigoParlamentarAutor=${id}&dataInicioApresentacao=${ini}`).then(lst),
+      g(`${S}/processo/relatoria?codigoParlamentar=${id}&dataInicio=${ini}`).then(lst),
+      g(`${S}/votacao?codigoParlamentar=${id}&dataInicio=${ini}&dataFim=${fim}`).then(lst),
+      g(`${S}/senador/${id}/discursos?dataInicio=${ini.replace(/-/g, '')}&dataFim=${fim.replace(/-/g, '')}`).then(j => lst(((j.DiscursosParlamentar.Parlamentar || {}).Pronunciamentos || {}).Pronunciamento))]);
+    h += tab(`Proposições apresentadas (${fmt(props.length)})`, ['Data', 'Proposição', 'Ementa'], props.slice(0, 40).map(x => `<tr><td class="num">${br(x.dataApresentacao)}</td><td><b>${esc(x.identificacao)}</b></td><td>${esc(corta(x.ementa, 200))}</td></tr>`), 'Nenhuma proposição apresentada no período.');
+    h += tab(`Relatorias designadas (${fmt(rel.length)})`, ['Data', 'Matéria', 'Colegiado'], rel.slice(0, 30).map(r => `<tr><td class="num">${br(r.dataDesignacao)}</td><td><b>${esc(r.identificacaoProcesso)}</b><br><span class="ementa">${esc(corta(r.ementaProcesso, 150))}</span></td><td>${esc(r.siglaColegiado || '')}</td></tr>`), 'Nenhuma relatoria designada no período.');
+    h += tab(`Votos nominais no Plenário (${fmt(vot.length)})`, ['Data', 'Matéria', 'Voto', 'Resultado'], vot.slice(0, 40).map(v => { const m = lst(v.votos).find(x => String(x.codigoParlamentar) === id); return `<tr><td class="num">${br(v.dataSessao)}</td><td><b>${esc(v.identificacao || '')}</b><br><span class="ementa">${esc(corta(v.descricaoVotacao, 150))}</span></td><td>${esc((m && m.siglaVotoParlamentar) || '')}</td><td>${esc(v.resultadoVotacao === 'A' ? 'Aprovada' : v.resultadoVotacao === 'R' ? 'Rejeitada' : v.resultadoVotacao || '')}</td></tr>`; }), 'Nenhum voto nominal registrado no período.');
+    h += tab(`Pronunciamentos (${fmt(disc.length)})`, ['Data', 'Tipo', 'Resumo'], disc.slice(0, 25).map(d => `<tr><td class="num">${br(d.DataPronunciamento)}</td><td>${esc((d.TipoUsoPalavra && d.TipoUsoPalavra.Descricao) || '')}</td><td>${esc(corta(d.TextoResumo, 220))}</td></tr>`), 'Nenhum pronunciamento registrado no período.');
+  }
+  return h + '</section>';
+}
+
+// Vários parlamentares num só documento: o dossiê padrão de cada um, em sequência.
+async function dossieParlamentares(lista) {
+  const max = (window.Avisos && window.Avisos.sessao()) ? 10 : 3;
+  const ks = String(lista || '').split(',').map(x => x.trim()).filter(x => /^[CS]\d+$/.test(x));
+  if (!ks.length) return escolher();
+  const usar = ks.slice(0, max);
+  const partes = [];
+  for (const [i, k] of usar.entries()) {
+    $('#folha').innerHTML = `<p class="carregando">Montando o dossiê ${i + 1} de ${usar.length}…</p>`;
+    try { await dossieParlamentar(k); partes.push(`<div style="break-before:${i ? 'page' : 'auto'}">${$('#folha').innerHTML}</div>`); }
+    catch (e) { partes.push(`<p class="carregando">Não foi possível gerar o dossiê de ${esc(k)}.</p>`); }
+  }
+  document.title = usar.length > 1 ? `Dossiê de ${usar.length} parlamentares` : document.title;
+  $('#folha').innerHTML = (ks.length > usar.length ? `<p class="leve">Limite de ${max} parlamentares por dossiê${max < 10 ? ' sem cadastro; com cadastro na Minha área, até 10' : ''}: ${ks.length - usar.length} ficaram de fora.</p>` : '') + partes.join('');
 }
 
 // --------------------------------------------------------------- dossiê do estado
@@ -570,7 +618,7 @@ function alertaFaltou(f) { try { sessionStorage.setItem('faltou', f.join(', '));
 
 $('#imprimir').addEventListener('click', () => window.print());
 const q = new URLSearchParams(location.search);
-(q.get('tipo') === 'projetos' ? dossieProjetos(q.get('ids')) : q.get('tipo') === 'parlamentar' ? dossieParlamentar(q.get('id')) : q.get('tipo') === 'balanco' ? dossieBalanco((q.get('casa') || 'T').toUpperCase()) : q.get('tipo') === 'estado' ? dossieEstado((q.get('uf') || '').toUpperCase()) : escolher())
+(q.get('tipo') === 'projetos' ? dossieProjetos(q.get('ids')) : q.get('tipo') === 'parlamentares' ? dossieParlamentares(q.get('ids')) : q.get('tipo') === 'parlamentar' ? dossieParlamentar(q.get('id')) : q.get('tipo') === 'balanco' ? dossieBalanco((q.get('casa') || 'T').toUpperCase()) : q.get('tipo') === 'estado' ? dossieEstado((q.get('uf') || '').toUpperCase()) : escolher())
   .catch(e => { $('#folha').innerHTML = `<p class="carregando">Não foi possível gerar o dossiê (${esc(e.message)}). <a href="dossie.html">Escolher outro</a>.</p>`; });
 </script>
 <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0442ff160c604457a59372125331648a"}'></script>

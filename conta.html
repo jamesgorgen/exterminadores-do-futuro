@@ -109,10 +109,10 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
   </section>
 
   <section id="acompanhamento" class="painel" hidden>
-    <h2>Acompanhamento de projetos</h2>
-    <p>Escolha os projetos que quer acompanhar e receba um aviso quando houver nova movimentação (despacho, parecer, inclusão em pauta, votação) ou um novo texto, como um substitutivo. A plataforma confere a Câmara e o Senado a cada hora.</p>
+    <h2>Acompanhamento de projetos e parlamentares</h2>
+    <p>Receba um aviso quando um projeto acompanhado tiver nova movimentação (despacho, parecer, inclusão em pauta, votação) ou um novo texto, como um substitutivo. De cada parlamentar acompanhado, você recebe a atividade legislativa registrada: projetos, requerimentos e emendas apresentados, votos nominais, discursos, mudança de partido e, no Senado, relatorias. A plataforma confere a Câmara e o Senado a cada hora.</p>
     <p class="mini" id="ac-limite"></p>
-    <label class="ck" id="ac-consente-box" hidden><input type="checkbox" id="ac-consente"><span>Concordo que a plataforma guarde a lista dos projetos que eu acompanhar. Sei que essa lista pode indicar os meus interesses políticos e que ela será usada só para me enviar os avisos, nunca compartilhada. Posso apagá-la a qualquer momento.</span></label>
+    <label class="ck" id="ac-consente-box" hidden><input type="checkbox" id="ac-consente"><span>Concordo que a plataforma guarde a lista dos projetos e parlamentares que eu acompanhar. Sei que essa lista pode indicar os meus interesses políticos e que ela será usada só para me enviar os avisos, nunca compartilhada. Posso apagá-la a qualquer momento.</span></label>
     <h3 style="margin-top:14px">Avisos neste aparelho</h3>
     <p id="ac-push" class="mini"></p>
     <div class="acoes"><button class="btn sec" id="ac-push-btn" hidden></button><button class="btn sec" id="ac-teste" hidden>Enviar um aviso de teste</button></div>
@@ -124,19 +124,28 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
       <label class="campo" style="flex:0 0 auto">Onde<select id="ac-casa"><option value="ambas">Câmara e Senado</option><option value="camara">Câmara</option><option value="senado">Senado</option></select></label>
       <button class="btn" type="submit">Acompanhar</button>
     </form>
+    <h3 style="margin-top:18px">Acompanhar um parlamentar</h3>
+    <form class="linha" id="ap-form">
+      <label class="campo" style="flex:1 1 260px">Nome do deputado ou senador<input id="ap-q" list="ap-nomes" placeholder="Digite o nome" autocomplete="off" required></label>
+      <datalist id="ap-nomes"></datalist>
+      <button class="btn" type="submit">Acompanhar</button>
+    </form>
     <p class="msg" id="ac-msg" aria-live="polite"></p>
-    <ul class="lista" id="ac-lista" style="margin-top:12px"></ul>
+    <h3 style="margin-top:18px">Projetos acompanhados</h3>
+    <ul class="lista" id="ac-lista"></ul>
+    <h3 style="margin-top:18px">Parlamentares acompanhados</h3>
+    <ul class="lista" id="ap-lista"></ul>
   </section>
 
   <section id="dossies" class="painel" hidden>
     <h2>Dossiês sob medida</h2>
-    <p>Um documento para imprimir ou salvar em PDF com a situação, as últimas movimentações, as versões do texto, as votações e as comparações prontas de cada projeto escolhido.</p>
+    <p>Documentos para imprimir ou salvar em PDF. O de projetos traz a situação, as últimas movimentações, as versões do texto, as votações e as comparações prontas de cada um. O de parlamentares traz o dossiê padrão de cada deputado ou senador, com a atividade legislativa dos últimos 30 dias.</p>
     <p class="mini" id="do-limite"></p>
-    <div class="acoes"><a class="btn" id="do-meus" href="dossie.html?tipo=projetos" style="display:inline-flex;align-items:center;text-decoration:none">Dossiê dos projetos que acompanho</a><a class="btn sec" href="dossie.html?tipo=projetos" style="display:inline-flex;align-items:center;text-decoration:none">Escolher outros projetos</a><a class="btn sec" href="dossie.html" style="display:inline-flex;align-items:center;text-decoration:none">Dossiês de parlamentar, estado e Congresso</a></div>
+    <div class="acoes"><a class="btn" id="do-meus" href="dossie.html?tipo=projetos" style="display:inline-flex;align-items:center;text-decoration:none">Dossiê dos projetos que acompanho</a><a class="btn sec" href="dossie.html?tipo=projetos" style="display:inline-flex;align-items:center;text-decoration:none">Escolher outros projetos</a><a class="btn" id="do-parl" href="dossie.html" style="display:inline-flex;align-items:center;text-decoration:none">Dossiê dos parlamentares que acompanho</a><a class="btn sec" href="dossie.html" style="display:inline-flex;align-items:center;text-decoration:none">Dossiês de parlamentar, estado e Congresso</a></div>
   </section>
 </div></main>
 
-<dialog id="dlg-excluir"><h3>Apagar a conta?</h3><p>O seu e-mail, as sessões abertas, os projetos acompanhados e os avisos serão apagados agora. As comparações que você pediu continuam na lista pública, sem nenhuma ligação com você. Não é possível desfazer.</p>
+<dialog id="dlg-excluir"><h3>Apagar a conta?</h3><p>O seu e-mail, as sessões abertas, os projetos e parlamentares acompanhados e os avisos serão apagados agora. As comparações que você pediu continuam na lista pública, sem nenhuma ligação com você. Não é possível desfazer.</p>
   <div class="acoes"><button class="btn perigo" id="confirma">Apagar definitivamente</button><button class="btn sec" id="cancela">Cancelar</button></div></dialog>
 
 <footer class="rodape"><div class="wrap">
@@ -144,7 +153,7 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
   <p>Dúvidas e pedidos sobre os seus dados: contato@exterminadores.com.br</p>
 </div></footer>
 
-<script src="avisos.js?v=3"></script>
+<script src="avisos.js?v=4"></script>
 <script>
 {
 const API = 'https://comparador-exterminadores.gorgen-james.workers.dev';
@@ -210,24 +219,43 @@ $('confirma').addEventListener('click', async () => {
 const AV = window.Avisos;
 const casaDe = k => k.startsWith('senado:') ? '<span class="casa c-sen">Senado</span>' : '<span class="casa c-cam">Câmara</span>';
 const linkDe = k => k.startsWith('camara:') ? `https://www.camara.leg.br/propostas-legislativas/${k.slice(7)}` : '';
-let acInfo = { projetos: [], limite: 3, conta: false, consentimento: false };
+const ehParl = k => /^(dep|sen):/.test(k);
+const deIndice = c => (c[0] === 'S' ? 'sen:' : 'dep:') + c.slice(1), paraIndice = k => (k.startsWith('sen:') ? 'S' : 'C') + k.slice(4);
+let acInfo = { projetos: [], limite: 3, limites: { projetos: 3, parlamentares: 3 }, conta: false, consentimento: false };
+// Nomes dos parlamentares (dados/indice.json), carregados só quando a pessoa vai escolher um.
+let nomesParl = null;
+async function carregarNomes() {
+  if (nomesParl) return nomesParl;
+  const ind = (await (await fetch('dados/indice.json')).json()).p;
+  const partido = p => p.s || p.p || '';
+  nomesParl = new Map(Object.entries(ind).filter(([, p]) => p.ex).sort((a, b) => a[1].n.localeCompare(b[1].n)).map(([c, p]) => [`${p.n} (${partido(p)}-${p.uf || ''}, ${p.c === 'S' ? 'Senado' : 'Câmara'})`, { c, n: p.n }]));
+  $('ap-nomes').innerHTML = [...nomesParl.keys()].map(r => `<option value="${esc(r)}">`).join('');
+  return nomesParl;
+}
+$('ap-q').addEventListener('focus', () => carregarNomes().catch(() => {}), { once: true });
 async function desenharAcomp() {
   $('acompanhamento').hidden = false; $('dossies').hidden = false;
   try { acInfo = await AV.lista(); } catch (_) {}
   const est = await AV.estado();
-  $('ac-limite').textContent = acInfo.conta ? `Com cadastro: até ${acInfo.limite} projetos, com avisos por push e por e-mail.` : `Sem cadastro: até ${acInfo.limite} projetos, só com avisos neste aparelho. Entre com o seu e-mail para acompanhar até 100 e receber o resumo por e-mail.`;
+  const lim = acInfo.limites || { projetos: acInfo.limite, parlamentares: 3 };
+  $('ac-limite').textContent = acInfo.conta ? `Com cadastro: até ${lim.projetos} projetos e ${lim.parlamentares} parlamentares, com avisos por push e por e-mail.` : `Sem cadastro: até ${lim.projetos} projetos e ${lim.parlamentares} parlamentares, só com avisos neste aparelho. Entre com o seu e-mail para acompanhar até 100 projetos e 30 parlamentares e receber o resumo por e-mail.`;
   $('ac-consente-box').hidden = !!acInfo.consentimento;
   $('ac-email-box').hidden = !acInfo.conta; $('ac-email').checked = acInfo.email !== false;
   $('ac-ios').hidden = est !== 'ios-instalar';
   const b = $('ac-push-btn');
   $('ac-push').textContent = { ativo: 'Os avisos estão ativos neste aparelho.', inativo: 'Os avisos estão desligados neste aparelho.', negado: 'As notificações deste site estão bloqueadas no navegador. Para receber avisos, libere-as nas configurações do navegador.', 'sem-suporte': 'Este navegador não recebe avisos por push.', 'ios-instalar': 'Os avisos ainda não estão disponíveis neste aparelho.' }[est];
   b.hidden = !['ativo', 'inativo'].includes(est); $('ac-teste').hidden = est !== 'ativo'; b.textContent = est === 'ativo' ? 'Desligar os avisos neste aparelho' : 'Ativar os avisos neste aparelho'; b.dataset.est = est;
-  $('ac-lista').innerHTML = acInfo.projetos.length ? acInfo.projetos.map(p => `<li class="proj"><span>${casaDe(p.k)} <b>${esc(p.t || p.k)}</b>${linkDe(p.k) ? ` <a class="mini" href="${linkDe(p.k)}" target="_blank" rel="noopener">tramitação ↗</a>` : ''}</span><button class="x" data-deixar="${esc(p.k)}">Deixar de acompanhar</button></li>`).join('')
+  const projs = acInfo.projetos.filter(p => !ehParl(p.k)), parls = acInfo.projetos.filter(p => ehParl(p.k));
+  $('ap-lista').innerHTML = parls.length ? parls.map(p => `<li class="proj"><span>${p.k.startsWith('sen:') ? '<span class="casa c-sen">Senado</span>' : '<span class="casa c-cam">Câmara</span>'} <b>${esc(p.t || p.k)}</b> <a class="mini" href="dossie.html?tipo=parlamentar&id=${encodeURIComponent(paraIndice(p.k))}" target="_blank" rel="noopener">dossiê ↗</a></span><button class="x" data-deixar="${esc(p.k)}">Deixar de acompanhar</button></li>`).join('')
+    : '<li class="mini">Nenhum parlamentar acompanhado ainda.</li>';
+  $('ac-lista').innerHTML = projs.length ? projs.map(p => `<li class="proj"><span>${casaDe(p.k)} <b>${esc(p.t || p.k)}</b>${linkDe(p.k) ? ` <a class="mini" href="${linkDe(p.k)}" target="_blank" rel="noopener">tramitação ↗</a>` : ''}</span><button class="x" data-deixar="${esc(p.k)}">Deixar de acompanhar</button></li>`).join('')
     : '<li class="mini">Nenhum projeto acompanhado ainda.</li>';
-  const max = AV.sessao() ? 30 : 3;
-  $('do-limite').textContent = AV.sessao() ? 'Com cadastro: até 30 projetos por dossiê.' : 'Sem cadastro: até 3 projetos por dossiê.';
-  const ids = acInfo.projetos.slice(0, max).map(p => p.k);
+  const max = AV.sessao() ? 30 : 3, maxP = AV.sessao() ? 10 : 3;
+  $('do-limite').textContent = AV.sessao() ? 'Com cadastro: até 30 projetos ou 10 parlamentares por dossiê.' : 'Sem cadastro: até 3 projetos ou 3 parlamentares por dossiê.';
+  const ids = projs.slice(0, max).map(p => p.k);
   $('do-meus').hidden = !ids.length; $('do-meus').href = 'dossie.html?tipo=projetos&ids=' + encodeURIComponent(ids.join(','));
+  const idsP = parls.slice(0, maxP).map(p => paraIndice(p.k));
+  $('do-parl').hidden = !idsP.length; $('do-parl').href = 'dossie.html?tipo=parlamentares&ids=' + encodeURIComponent(idsP.join(','));
 }
 const consentiu = () => acInfo.consentimento || $('ac-consente').checked;
 $('ac-push-btn').addEventListener('click', async e => {
@@ -251,7 +279,20 @@ $('ac-form').addEventListener('submit', async e => {
   } catch (err) { msg('ac-msg', err.message, 'erro'); }
   desenharAcomp();
 });
-$('ac-lista').addEventListener('click', async e => {
+$('ap-form').addEventListener('submit', async e => {
+  e.preventDefault(); msg('ac-msg', 'Procurando…');
+  try {
+    if (!consentiu()) throw new Error('Marque a concordância acima para acompanhar parlamentares.');
+    if (!AV.sessao() && (await AV.estado()) !== 'ativo') throw new Error('Sem cadastro, os avisos chegam por push: ative os avisos neste aparelho primeiro, ou entre com o seu e-mail.');
+    const nomes = await carregarNomes(), v = $('ap-q').value.trim();
+    const p = nomes.get(v) || [...nomes.values()].find(x => x.n.toLowerCase() === v.toLowerCase());
+    if (!p) throw new Error('Escolha um nome da lista.');
+    await AV.seguir(deIndice(p.c), p.n, true);
+    msg('ac-msg', `Pronto: você passou a acompanhar ${p.n}. Os avisos começam a partir da próxima atividade registrada.`, 'ok'); $('ap-q').value = '';
+  } catch (err) { msg('ac-msg', err.message, 'erro'); }
+  desenharAcomp();
+});
+for (const id of ['ac-lista', 'ap-lista']) $(id).addEventListener('click', async e => {
   const b = e.target.closest('[data-deixar]'); if (!b) return;
   try { await AV.deixar(b.dataset.deixar); } catch (err) { msg('ac-msg', err.message, 'erro'); }
   desenharAcomp();
