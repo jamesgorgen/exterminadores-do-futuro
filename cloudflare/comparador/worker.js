@@ -81,7 +81,7 @@ const gravarJ = (env, k, v) => env.R2.put(k, JSON.stringify(v), { httpMetadata: 
 const agoraIso = () => new Date().toISOString().slice(0, 19) + '+00:00';
 const EMAIL_OK = /^[^\s@<>()",;:]{1,64}@[a-z0-9.-]{1,190}\.[a-z]{2,24}$/;
 async function idDoEmail(email) { return (await sha256('conta|' + email)).slice(0, 32); }
-// Contas sem nenhum limite de uso (a do responsável pelo observatório), pelo id da conta, que é um hash do e-mail.
+// Contas sem limite pessoal de uso (a do responsável pelo observatório); o teto geral do mês vale para todos, pelo id da conta, que é um hash do e-mail.
 const ISENTOS = new Set(['c296536fce9b354fca37feacb296beea']);
 const isento = u => !!u && ISENTOS.has(u.id);
 
@@ -223,9 +223,10 @@ async function comparar(req, env) {
   const livre_ = isento(u) ? { k: null, livre: true } : await cotaLivre(u, env);
   const k = livre_.k;
   if (!livre_.livre) return erro(req, 'Você já usou a sua comparação desta semana. As comparações prontas continuam abertas.', 429, { renova: proximaSemana() });
-  if (!isento(u) && (await totalMes(env)) >= Number(env.LIMITE_GLOBAL_MES || 300)) return erro(req, 'O limite geral de comparações novas deste mês foi atingido. Tente no mês que vem.', 429);
+  if ((await totalMes(env)) >= Number(env.LIMITE_GLOBAL_MES || 300)) return erro(req, 'O limite geral de comparações novas deste mês foi atingido. Tente no mês que vem.', 429);
   const agora = new Date().toISOString().slice(0, 19) + '+00:00';
-  if (k) { await env.R2.put(P + k, JSON.stringify({ id, criado: agora })); await env.R2.put(`${P}global/${mes()}/${id}`, agora); }
+  if (k) await env.R2.put(P + k, JSON.stringify({ id, criado: agora }));
+  await env.R2.put(`${P}global/${mes()}/${id}`, agora);
   const pedido = { id, estado: 'fila', criado: agora, atualizado: agora, origem: 'site', a, b, titulo: limpa(corpo.titulo, 140), proposicao: limpa(corpo.proposicao, 60), tentativas: 0, cota: k, usuario: u.id };
   await env.R2.put(`${P}pedidos/${id}.json`, JSON.stringify(pedido), { httpMetadata: { contentType: 'application/json' } });
   const { sessaoHash, sessaoExpira, ...semSessao } = u;
