@@ -23,6 +23,14 @@ main .wrap{padding-block:26px 50px}
 h2{font-size:20px;margin:30px 0 8px}
 p,li{color:var(--ink-2)}p b,li b{color:var(--ink)}
 .versao{font-size:14px;color:var(--ink-2)}
+.resumo{background:var(--sheet);border:1px solid var(--line);border-left:4px solid var(--mark);border-radius:6px;padding:14px 18px;margin:18px 0}
+.resumo ul{margin:6px 0 0;padding-left:20px}
+table{width:100%;border-collapse:collapse;font-size:14.5px;margin:10px 0 6px;background:var(--sheet)}
+th,td{text-align:left;vertical-align:top;padding:8px 10px;border:1px solid var(--line);color:var(--ink-2)}
+th{color:var(--ink);background:var(--paper)}
+.tab{overflow-x:auto}
+nav.indice{font-size:14.5px}nav.indice ol{columns:2;column-gap:28px;padding-left:20px;margin:6px 0}
+@media (max-width:600px){nav.indice ol{columns:1}}
 </style>
 </head>
 <body>
@@ -33,50 +41,150 @@ p,li{color:var(--ink-2)}p b,li b{color:var(--ink)}
 <main><div class="wrap">
   <p class="versao">Versão de 25 de novembro de 2026.</p>
 
-  <p>O observatório Os exterminadores do futuro publica dados oficiais e abertos da Câmara dos Deputados e do Senado Federal. Para ler o site, buscar proposições e abrir as comparações prontas, não é preciso cadastro e não coletamos dados pessoais. Esta política trata do cadastro na Minha área, exigido para os serviços que usam inteligência artificial, e segue a Lei Geral de Proteção de Dados Pessoais (Lei nº 13.709/2018).</p>
+  <p>Esta política explica quais dados pessoais o observatório Os exterminadores do futuro trata, para quê, com que base legal, com quem são compartilhados, por quanto tempo ficam guardados e como você exerce os seus direitos. Ela segue a Lei Geral de Proteção de Dados Pessoais (LGPD, Lei nº 13.709/2018).</p>
 
-  <h2>Quais dados guardamos</h2>
+  <div class="resumo"><b>Em resumo</b>
+    <ul>
+      <li>Para ler o site, buscar proposições, usar o comparador já pronto e gerar dossiês, não é preciso cadastro.</li>
+      <li>O cadastro na Minha área guarda só o seu e-mail. Não pedimos nome, CPF, telefone nem senha.</li>
+      <li>A lista dos projetos que você acompanha é tratada como dado sensível, porque pode indicar opinião política, e só é guardada com o seu consentimento específico.</li>
+      <li>Não vendemos dados, não usamos cookies de rastreamento nem publicidade e não traçamos perfil de quem usa o site.</li>
+      <li>Você pode baixar os seus dados e apagar a conta sozinho, a qualquer momento, na Minha área.</li>
+    </ul>
+  </div>
+
+  <nav class="indice" aria-label="Seções"><ol>
+    <li><a href="#controlador">Quem é o responsável</a></li>
+    <li><a href="#visita">Ao visitar o site</a></li>
+    <li><a href="#cadastro">No cadastro e nos serviços</a></li>
+    <li><a href="#bases">Finalidades e bases legais</a></li>
+    <li><a href="#sensivel">A lista de projetos acompanhados</a></li>
+    <li><a href="#pdfs">PDFs enviados ao comparador</a></li>
+    <li><a href="#parlamentares">Dados de parlamentares</a></li>
+    <li><a href="#compartilhamento">Com quem compartilhamos</a></li>
+    <li><a href="#internacional">Transferência internacional</a></li>
+    <li><a href="#retencao">Por quanto tempo</a></li>
+    <li><a href="#direitos">Os seus direitos</a></li>
+    <li><a href="#consentimento">Consentimento e recusa</a></li>
+    <li><a href="#automatizadas">Decisões automatizadas</a></li>
+    <li><a href="#menores">Crianças e adolescentes</a></li>
+    <li><a href="#seguranca">Segurança e incidentes</a></li>
+    <li><a href="#encarregado">Encarregado</a></li>
+    <li><a href="#mudancas">Mudanças nesta política</a></li>
+  </ol></nav>
+
+  <h2 id="controlador">1. Quem é o responsável</h2>
+  <p>O controlador dos dados, isto é, quem decide sobre o tratamento (art. 5º, VI, da LGPD), é <b>James Görgen</b>, responsável pelo observatório Os exterminadores do futuro (exterminadores.com.br). Contato para qualquer assunto de dados pessoais: <b><a href="mailto:contato@exterminadores.com.br">contato@exterminadores.com.br</a></b>.</p>
+
+  <h2 id="visita">2. Ao visitar o site</h2>
+  <p>A leitura do site não exige cadastro. Ainda assim, alguns dados técnicos circulam, como em qualquer página na internet:</p>
   <ul>
-    <li><b>O seu e-mail,</b> para enviar o link de acesso e, quando você pedir, avisos dos serviços.</li>
-    <li><b>O registro da sua concordância</b> com esta política: a data e a versão.</li>
+    <li><b>Hospedagem do site (GitHub Pages).</b> O servidor que entrega as páginas recebe o endereço IP e os dados técnicos do navegador para responder ao pedido e se proteger de ataques. Esses registros ficam com o GitHub, sob a política de privacidade dele.</li>
+    <li><b>Estatística de visitas (Cloudflare Web Analytics).</b> Contamos visitas por página de forma agregada, sem cookies e, segundo a Cloudflare, sem guardar o endereço IP nem identificar quem visita.</li>
+    <li><b>Fontes tipográficas (Google Fonts).</b> As páginas carregam as fontes dos servidores do Google, que recebem o endereço IP e os dados técnicos do navegador ao entregá-las.</li>
+    <li><b>Consultas diretas às Casas.</b> O comparador, o dossiê e a busca de projetos consultam, a partir do seu navegador, as APIs abertas da Câmara dos Deputados e do Senado Federal, que recebem o endereço IP como em qualquer acesso aos seus portais.</li>
+    <li><b>Armazenamento no seu navegador.</b> Não usamos cookies. Guardamos no próprio navegador, e só nele, o código de acesso de quem entrou na Minha área, a página para onde voltar depois do login e a seleção temporária de projetos na aba Proposições, que some ao fechar a aba. Você pode apagar esses dados nas configurações do navegador.</li>
+  </ul>
+
+  <h2 id="cadastro">3. No cadastro e nos serviços</h2>
+  <p>O cadastro na Minha área é necessário para os serviços que usam inteligência artificial, para enviar PDFs ao comparador e para acompanhar mais de três projetos. Guardamos:</p>
+  <ul>
+    <li><b>O seu e-mail,</b> para enviar o link de acesso e, quando você pedir, o resumo diário dos projetos acompanhados.</li>
+    <li><b>O registro da sua concordância</b> com esta política e, se for o caso, com o uso da lista de projetos acompanhados: a data e a versão de cada uma.</li>
     <li><b>As sessões abertas:</b> um código aleatório por aparelho conectado, que vence depois de 90 dias sem uso. Guardamos só uma forma cifrada desse código.</li>
-    <li><b>As comparações que você pediu:</b> o identificador, o título e a data, para mostrar a sua lista. A comparação em si é pública, sem o seu e-mail.</li>
-    <li><b>Os projetos que você acompanha,</b> se usar o acompanhamento, e a preferência de receber ou não o resumo por e-mail.</li>
-    <li><b>O endereço de avisos do seu aparelho,</b> se ativar os avisos por push: um endereço técnico criado pelo navegador, que não identifica você. Sem cadastro, a lista de até três projetos fica ligada só a esse endereço.</li>
-    <li><b>Os avisos ainda não entregues</b> ao aparelho e as novidades do dia para o resumo por e-mail, apagados assim que entregues.</li>
-    <li><b>Um código derivado do seu endereço IP,</b> nunca o endereço em si, por até duas horas, só para impedir pedidos de link em massa.</li>
+    <li><b>As comparações que você pediu:</b> o identificador, o título e a data, para mostrar a sua lista, e um contador semanal de uso ligado a um código da conta, sem o e-mail. A comparação em si é pública e não leva o seu e-mail.</li>
+    <li><b>Os projetos que você acompanha</b> e a preferência de receber ou não o resumo por e-mail.</li>
+    <li><b>O endereço de avisos do seu aparelho,</b> se ativar os avisos por push: um endereço técnico criado pelo navegador, que não revela quem você é. Sem cadastro, a lista de até três projetos fica ligada só a esse endereço.</li>
+    <li><b>Os avisos ainda não entregues</b> ao aparelho e as novidades do dia para o resumo por e-mail, apagados depois de entregues.</li>
+    <li><b>Códigos derivados do endereço IP e do e-mail,</b> nunca o endereço IP em si, por até duas horas, só para impedir pedidos de link em massa.</li>
   </ul>
-  <p>Não pedimos nome, CPF, telefone nem senha. Não usamos cookies de rastreamento nem ferramentas de publicidade.</p>
 
-  <h2>Para que usamos</h2>
-  <p>Somente para o acesso à sua conta, o controle do limite de uso dos serviços e o envio das mensagens que você pedir. Não vendemos, não alugamos e não compartilhamos os seus dados para nenhum outro fim, e não os usamos para traçar perfil político ou de qualquer outro tipo.</p>
+  <h2 id="bases">4. Finalidades e bases legais</h2>
+  <p>Cada tratamento tem uma finalidade definida e uma base legal prevista na LGPD (arts. 7º e 11). Não usamos os dados para nenhuma outra finalidade.</p>
+  <div class="tab"><table>
+    <thead><tr><th>Dado</th><th>Para quê</th><th>Base legal</th></tr></thead>
+    <tbody>
+      <tr><td>E-mail, sessões, concordância, comparações pedidas</td><td>Dar acesso à conta, controlar o limite de uso e mostrar o seu histórico</td><td>Consentimento (art. 7º, I)</td></tr>
+      <tr><td>Lista de projetos acompanhados</td><td>Enviar os avisos que você pediu</td><td>Consentimento específico e destacado para dado sensível (art. 11, I)</td></tr>
+      <tr><td>Endereço de avisos do aparelho</td><td>Entregar os avisos por push</td><td>Consentimento (art. 7º, I), dado ao ativar os avisos</td></tr>
+      <tr><td>Códigos derivados do IP e do e-mail</td><td>Impedir abuso e envio de links em massa</td><td>Legítimo interesse na segurança do serviço (art. 7º, IX), com retenção de até duas horas</td></tr>
+      <tr><td>Registros técnicos de acesso e estatística agregada</td><td>Entregar as páginas, proteger o site e saber quais páginas são lidas</td><td>Legítimo interesse (art. 7º, IX), sem identificação de quem visita</td></tr>
+      <tr><td>Dados públicos de parlamentares</td><td>Informar o público sobre a atuação parlamentar</td><td>Veja a seção 7</td></tr>
+    </tbody>
+  </table></div>
 
-  <h2>Base legal</h2>
-  <p>O tratamento se baseia no seu consentimento (art. 7º, I, da LGPD), dado ao criar a conta, e pode ser revogado a qualquer momento ao apagar a conta.</p>
-  <p><b>Lista de projetos acompanhados.</b> Como os projetos que uma pessoa acompanha podem indicar a sua opinião política, tratamos essa lista como dado pessoal sensível. Ela só é guardada com o seu consentimento específico e destacado (art. 11, I, da LGPD), pedido à parte na primeira vez em que você acompanha um projeto, e só é usada para enviar os avisos que você pediu. A lista não é compartilhada, não é usada para nenhuma análise sobre você e é apagada quando você deixa de acompanhar os projetos, desativa os avisos sem cadastro ou apaga a conta.</p>
+  <h2 id="sensivel">5. A lista de projetos acompanhados</h2>
+  <p>Como os projetos que uma pessoa acompanha podem indicar a sua opinião política, tratamos essa lista como dado pessoal sensível (art. 5º, II, da LGPD). Ela só é guardada com o seu consentimento específico e destacado, pedido à parte na primeira vez em que você acompanha um projeto, e só é usada para enviar os avisos que você pediu. A lista não é compartilhada, não é usada para nenhuma análise sobre você e é apagada quando você deixa de acompanhar os projetos, desativa os avisos sem cadastro ou apaga a conta. Para saber quais projetos têm novidade, a plataforma consulta as APIs públicas da Câmara e do Senado pelo número do projeto, sem enviar nenhum dado seu.</p>
 
-  <h2>Quem processa os dados</h2>
+  <h2 id="pdfs">6. PDFs enviados ao comparador</h2>
+  <p>Os PDFs que você envia e as comparações feitas com eles ficam públicos na lista do comparador, sem o seu e-mail. Envie apenas textos legislativos, como projetos, substitutivos e pareceres. <b>Não envie documentos com dados pessoais de terceiros ou seus.</b> Se um arquivo com dados pessoais for publicado por engano, escreva para o contato acima e ele será retirado.</p>
+
+  <h2 id="parlamentares">7. Dados de parlamentares</h2>
+  <p>O observatório publica nomes, partidos, estados, autorias, relatorias, votos e outras informações sobre a atuação de deputados e senadores. Esses dados vêm das fontes oficiais e abertas da Câmara e do Senado e dizem respeito ao exercício de mandato público. Eles são tratados com finalidade jornalística e de interesse público, hipótese em que a LGPD não se aplica (art. 4º, II, "a"), e, no que couber, conforme o art. 7º, §§ 3º e 4º, que admitem o tratamento de dados tornados públicos, observadas a finalidade, a boa-fé e o interesse público que justificaram a sua publicação. A classificação das pautas é uma análise sobre projetos e votos, não sobre a vida privada de ninguém. Parlamentares podem pedir a correção de qualquer informação pelo contato acima.</p>
+
+  <h2 id="compartilhamento">8. Com quem compartilhamos</h2>
+  <p>Não vendemos nem alugamos dados pessoais. Eles passam apenas pelos operadores que fazem o serviço funcionar, que os tratam em nosso nome e conforme as nossas instruções (art. 39 da LGPD):</p>
   <ul>
-    <li><b>Cloudflare:</b> hospeda o serviço da Minha área, guarda os dados da conta e envia os e-mails de acesso e de resumo. Os servidores podem ficar fora do Brasil, o que configura transferência internacional de dados, feita com prestador que adota cláusulas contratuais de proteção de dados.</li>
+    <li><b>Cloudflare:</b> hospeda o serviço da Minha área, guarda os dados da conta, envia os e-mails de acesso e de resumo e fornece a estatística agregada de visitas.</li>
     <li><b>GitHub:</b> hospeda o site público, que não recebe dados da conta.</li>
-    <li><b>Serviços de push do navegador</b> (Google, Apple, Mozilla ou Microsoft, conforme o seu navegador): recebem apenas um sinal vazio para acordar o aparelho; o texto do aviso é buscado pelo próprio aparelho na plataforma.</li>
-    <li><b>Anthropic:</b> fornece o modelo de inteligência artificial do comparador e recebe apenas trechos dos textos legislativos comparados, nunca dados pessoais.</li>
+    <li><b>Google:</b> entrega as fontes tipográficas das páginas.</li>
+    <li><b>Serviços de push do navegador</b> (Google, Apple, Mozilla ou Microsoft, conforme o seu navegador): recebem apenas um sinal vazio para acordar o aparelho. O texto do aviso é buscado pelo próprio aparelho na plataforma.</li>
+    <li><b>Anthropic:</b> fornece o modelo de inteligência artificial do comparador e recebe apenas trechos dos textos legislativos comparados, nunca dados da conta.</li>
   </ul>
+  <p>Poderemos fornecer dados a autoridades públicas apenas quando houver ordem judicial ou obrigação legal.</p>
 
-  <h2>Por quanto tempo</h2>
-  <p>O e-mail e o registro de concordância ficam guardados enquanto a conta existir. Links de acesso vencem em 20 minutos e são apagados em até um dia. Sessões vencem depois de 90 dias sem uso. O código derivado do IP é apagado em até duas horas. A lista de projetos acompanhados fica guardada enquanto você a mantiver. O endereço de avisos de um aparelho é apagado quando você desativa os avisos ou quando o navegador informa que ele deixou de valer.</p>
+  <h2 id="internacional">9. Transferência internacional</h2>
+  <p>Os operadores listados acima têm servidores fora do Brasil, principalmente nos Estados Unidos e na União Europeia, o que configura transferência internacional de dados (art. 33 da LGPD). Essa transferência é limitada ao necessário para prestar o serviço e se apoia nas garantias contratuais de proteção de dados oferecidas por esses prestadores. Você pode pedir informações sobre essas garantias pelo contato acima.</p>
 
-  <h2>Os seus direitos</h2>
-  <p>Na Minha área você pode, a qualquer momento e sem pedir a ninguém, <b>baixar todos os dados</b> que guardamos sobre você e <b>apagar a conta</b>, o que apaga o e-mail e as sessões na hora. Para os demais direitos previstos no art. 18 da LGPD, como confirmação, correção, informação sobre compartilhamento e revogação do consentimento, escreva para o canal abaixo.</p>
+  <h2 id="retencao">10. Por quanto tempo</h2>
+  <div class="tab"><table>
+    <thead><tr><th>Dado</th><th>Prazo</th></tr></thead>
+    <tbody>
+      <tr><td>E-mail, concordância e histórico de comparações</td><td>Enquanto a conta existir. Apagados na hora em que você apaga a conta.</td></tr>
+      <tr><td>Link de acesso</td><td>Vence em 20 minutos e é apagado em até um dia.</td></tr>
+      <tr><td>Sessão</td><td>Vence depois de 90 dias sem uso e é apagada em seguida.</td></tr>
+      <tr><td>Códigos derivados do IP e do e-mail</td><td>Até duas horas.</td></tr>
+      <tr><td>Lista de projetos acompanhados</td><td>Enquanto você a mantiver.</td></tr>
+      <tr><td>Endereço de avisos do aparelho</td><td>Até você desativar os avisos ou o navegador informar que ele deixou de valer.</td></tr>
+      <tr><td>Avisos e novidades do dia</td><td>Até a entrega. Os avisos guardados para o aparelho ficam limitados aos 30 mais recentes.</td></tr>
+      <tr><td>PDFs enviados e comparações</td><td>Ficam públicos na lista do comparador por tempo indeterminado, sem ligação com o seu e-mail depois que a conta é apagada.</td></tr>
+    </tbody>
+  </table></div>
+  <p>Terminado o tratamento, os dados são eliminados (arts. 15 e 16 da LGPD), salvo quando a lei exigir que sejam mantidos.</p>
 
-  <h2>Encarregado e contato</h2>
-  <p>Pedidos e dúvidas sobre dados pessoais: <b>contato@exterminadores.com.br</b>. Cada resumo por e-mail traz um link para parar de recebê-lo sem precisar entrar na conta.</p>
+  <h2 id="direitos">11. Os seus direitos</h2>
+  <p>A LGPD (art. 18) garante a você, a qualquer momento e de graça:</p>
+  <ul>
+    <li>confirmação de que tratamos dados seus e acesso a eles;</li>
+    <li>correção de dados incompletos, inexatos ou desatualizados;</li>
+    <li>anonimização, bloqueio ou eliminação de dados desnecessários, excessivos ou tratados em desconformidade com a lei;</li>
+    <li>portabilidade dos dados a outro fornecedor de serviço;</li>
+    <li>eliminação dos dados tratados com o seu consentimento;</li>
+    <li>informação sobre com quem compartilhamos os dados (seção 8);</li>
+    <li>informação sobre a possibilidade de não dar o consentimento e as consequências da recusa (seção 12);</li>
+    <li>revogação do consentimento;</li>
+    <li>oposição a tratamento feito sem consentimento, se houver descumprimento da lei.</li>
+  </ul>
+  <p><b>Como exercer.</b> Na Minha área você pode, sozinho e na hora, <b>baixar todos os dados</b> que guardamos sobre você, em formato aberto (JSON), deixar de acompanhar projetos, desligar o resumo por e-mail e <b>apagar a conta</b>. Cada resumo por e-mail traz um link para parar de recebê-lo sem entrar na conta. Para os demais pedidos, escreva para <b>contato@exterminadores.com.br</b> a partir do e-mail cadastrado. Respondemos em até 15 dias.</p>
+  <p>Se considerar que os seus direitos não foram atendidos, você pode apresentar petição à Autoridade Nacional de Proteção de Dados (ANPD), em <a href="https://www.gov.br/anpd" rel="noopener">gov.br/anpd</a>, ou a um órgão de defesa do consumidor.</p>
 
-  <h2>Segurança</h2>
-  <p>A comunicação é cifrada (HTTPS), o acesso não usa senha e os códigos de sessão e de link são guardados apenas em forma cifrada. Em caso de incidente de segurança que possa trazer risco a você, avisaremos pelo e-mail cadastrado e à Autoridade Nacional de Proteção de Dados, nos termos da lei.</p>
+  <h2 id="consentimento">12. Consentimento e recusa</h2>
+  <p>O consentimento é pedido por uma caixa de concordância que você marca, nunca pré-marcada, com finalidade definida. O consentimento para a lista de projetos acompanhados é pedido em separado. Você pode revogá-lo a qualquer momento, de graça: apagando a conta, deixando de acompanhar os projetos ou desativando os avisos. Se não quiser dar o consentimento, você continua podendo ler todo o site, buscar proposições, abrir as comparações prontas e gerar dossiês de até três projetos. Só não poderá pedir comparações novas, enviar PDFs nem acompanhar projetos.</p>
 
-  <h2>Mudanças nesta política</h2>
-  <p>Se esta política mudar, a nova versão terá outra data nesta página. Mudanças que ampliem o uso dos seus dados só valerão com nova concordância.</p>
+  <h2 id="automatizadas">13. Decisões automatizadas</h2>
+  <p>Não tomamos decisões automatizadas sobre quem usa o site nem traçamos perfil de usuários. A inteligência artificial é usada só para analisar textos legislativos e classificar projetos e votações, e o próprio site avisa que essa análise não substitui a revisão humana.</p>
+
+  <h2 id="menores">14. Crianças e adolescentes</h2>
+  <p>O observatório se destina ao público adulto. O cadastro na Minha área não deve ser feito por crianças, isto é, por menores de 12 anos. Se soubermos que uma conta pertence a uma criança, ela será apagada. Adolescentes podem usar o site e, no cadastro, recomendamos que o façam com o conhecimento dos responsáveis.</p>
+
+  <h2 id="seguranca">15. Segurança e incidentes</h2>
+  <p>A comunicação é cifrada (HTTPS), o acesso não usa senha, os códigos de sessão e de link são guardados só em forma cifrada, o armazenamento dos dados da conta é privado e guardamos o mínimo necessário para cada serviço. Em caso de incidente de segurança que possa trazer risco ou dano relevante a você, comunicaremos a ANPD e as pessoas afetadas, nos termos do art. 48 da LGPD e da regulamentação da ANPD, informando os dados envolvidos, os riscos e as medidas adotadas.</p>
+
+  <h2 id="encarregado">16. Encarregado</h2>
+  <p>O encarregado pelo tratamento de dados pessoais (art. 41 da LGPD), canal de comunicação com você e com a ANPD, é <b>James Görgen</b>, pelo e-mail <b><a href="mailto:contato@exterminadores.com.br">contato@exterminadores.com.br</a></b>.</p>
+
+  <h2 id="mudancas">17. Mudanças nesta política</h2>
+  <p>Se esta política mudar, a nova versão terá outra data nesta página. Mudanças que ampliem o uso dos seus dados ou criem nova finalidade só valerão com nova concordância. Se você não concordar, poderá revogar o consentimento e apagar a conta.</p>
 </div></main>
 </body>
 </html>

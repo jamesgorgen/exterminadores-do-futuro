@@ -200,6 +200,24 @@ p.sub{color:var(--ink-2);max-width:70ch;margin:0 0 18px}
 .bloco b{font-weight:700}
 .btn{border:1.5px solid var(--ink);background:transparent;border-radius:4px;padding:5px 10px;font-weight:600;font-size:13.5px;cursor:pointer;color:var(--ink);text-decoration:none}
 .btn.forte{background:var(--wa);border-color:var(--wa);color:#fff}
+.sel-prop{display:inline-flex;align-items:center;gap:6px;font-weight:600;cursor:pointer;margin-right:4px;padding:4px 8px 4px 4px;border-radius:4px}
+.sel-prop input{width:17px;height:17px;accent-color:var(--night);margin:0}
+.cartao.selecionado{background:rgba(227,183,91,.12)}
+#selbar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--night);color:#fff;box-shadow:0 -6px 20px rgba(0,0,0,.2)}
+#selbar .wrap{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;padding-bottom:10px}
+#selbar .n{font-weight:700;margin-right:auto}
+#selbar .btn{color:#fff;border-color:#fff}
+#selbar .btn.forte{background:#E3B75B;border-color:#E3B75B;color:#123B40}
+body.com-selbar footer{padding-bottom:80px}
+#seg-dlg{border:0;border-radius:8px;padding:22px 24px;width:min(560px,94vw);background:var(--sheet);color:var(--ink);box-shadow:0 10px 40px rgba(0,0,0,.3)}
+#seg-dlg::backdrop{background:rgba(18,59,64,.45)}
+#seg-dlg h2{margin:0 0 8px;font-size:20px}
+#seg-dlg ul{margin:8px 0 12px;padding-left:20px;max-height:180px;overflow:auto;font-size:14px}
+#seg-dlg .ck{display:flex;gap:8px;align-items:flex-start;font-size:14px;margin:10px 0}
+#seg-dlg .ck input{margin-top:3px}
+#seg-dlg .acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+#seg-dlg .msg{font-size:14px;min-height:1em}
+#seg-dlg .msg.erro{color:#a3261c}
 .btn.vermelho{background:var(--night);border-color:var(--night);color:#fff}
 .vazio{background:var(--sheet);border:1px solid var(--line);padding:28px;text-align:center;color:var(--ink-2)}
 
@@ -298,6 +316,8 @@ footer a{color:#fff}
 </head>
 <body>
 <dialog id="perfil-dlg" aria-label="Ficha do parlamentar"><div id="perfil"></div></dialog>
+<dialog id="seg-dlg" aria-labelledby="seg-tit"><div id="seg"></div></dialog>
+<div id="selbar" hidden><div class="wrap"><span class="n" id="sel-n"></span><button type="button" class="btn forte" id="sel-seguir">Acompanhar</button><button type="button" class="btn" id="sel-dossie">Gerar dossiê</button><button type="button" class="btn" id="sel-limpar">Limpar a seleção</button></div></div>
 
 <header class="hero">
   <div class="wrap">
@@ -339,6 +359,7 @@ footer a{color:#fff}
 </div></footer>
 
 <script src="pautas.js?v=20261031"></script>
+<script src="avisos.js?v=2"></script>
 <script>
 (function(){
 'use strict';
@@ -497,17 +518,105 @@ function autoresHTML(a, it){
   const n = (it && it.na) || a.length;
   return nomes.length ? `<p class="autores">${nomes.join('; ')}${n > 4 ? ` e mais ${n - 4}` : ''}</p>` : '';
 }
+// ---------------------------------------------------------------- seleção de projetos (acompanhar e dossiê)
+// A seleção vale para a aba inteira, em qualquer página ou filtro, e fica guardada só neste navegador até a aba ser fechada.
+const SEL = new Map();
+try { (JSON.parse(sessionStorage.getItem('ext-sel-prop')) || []).forEach(p => SEL.set(p.c, p)); } catch (_) {}
+const guardarSel = () => { try { sessionStorage.setItem('ext-sel-prop', JSON.stringify([...SEL.values()])); } catch (_) {} };
+function barraSel(){
+  const n = SEL.size, ver = n > 0 && est.aba === 'proposicoes';
+  $('#selbar').hidden = !ver; document.body.classList.toggle('com-selbar', ver);
+  $('#sel-n').textContent = n === 1 ? '1 projeto selecionado' : `${fmt(n)} projetos selecionados`;
+}
+// Chave usada pelo acompanhamento e pelo dossiê: na Câmara, o id da proposição; no Senado, o id do processo, que é procurado na hora.
+const chaveCache = new Map();
+async function chaveDe(p){
+  if (chaveCache.has(p.c)) return chaveCache.get(p.c);
+  const k = p.o === 'C' && p.i ? 'camara:' + p.i : (await window.Avisos.resolver(p.c, p.o === 'S' ? 'senado' : 'ambas')).k;
+  chaveCache.set(p.c, k); return k;
+}
+async function chaves(lista){
+  const ok = [], falhou = [];
+  for (const p of lista) { try { ok.push({ p, k: await chaveDe(p) }); } catch (_) { falhou.push(p.c); } }
+  return { ok, falhou };
+}
+function dossieSel(){
+  const max = window.Avisos.sessao() ? 30 : 3, lista = [...SEL.values()];
+  const b = $('#sel-dossie'), rot = b.textContent; b.disabled = true; b.textContent = 'Preparando…';
+  const janela = window.open('', '_blank');
+  chaves(lista.slice(0, max)).then(({ ok }) => {
+    b.disabled = false; b.textContent = rot;
+    if (!ok.length) { if (janela) janela.close(); alert('Não foi possível localizar esses projetos nas bases da Câmara e do Senado agora. Tente de novo em instantes.'); return; }
+    const url = 'dossie.html?tipo=projetos&ids=' + encodeURIComponent(ok.map(x => x.k).join(','));
+    if (janela) janela.location = url; else location.href = url;
+  });
+}
+async function abrirSeguir(){
+  const AV = window.Avisos, dlg = $('#seg-dlg'), lista = [...SEL.values()];
+  const logado = !!AV.sessao();
+  let info = { consentimento: false, limite: logado ? 100 : 3, projetos: [] }, estado = 'sem-suporte';
+  $('#seg').innerHTML = '<p>Carregando…</p>'; if (!dlg.open) dlg.showModal();
+  try { [info, estado] = await Promise.all([AV.lista(), AV.estado()]); } catch (_) {}
+  const jaTem = info.projetos.length, livres = Math.max(0, info.limite - jaTem);
+  const precisaPush = !logado && estado !== 'ativo';
+  $('#seg').innerHTML = `<h2 id="seg-tit">Acompanhar ${lista.length === 1 ? 'este projeto' : `estes ${fmt(lista.length)} projetos`}</h2>
+    <p class="meta">Você recebe um aviso quando houver nova movimentação ou um novo texto, como um substitutivo. A plataforma confere a Câmara e o Senado a cada hora.</p>
+    <ul>${lista.map(p => `<li>${esc(p.c)}</li>`).join('')}</ul>
+    <p class="meta">${logado ? `Com cadastro: até ${info.limite} projetos, com avisos por push e resumo por e-mail.` : `Sem cadastro: até ${info.limite} projetos, só com avisos neste aparelho. <a href="conta.html">Entre com o seu e-mail</a> para acompanhar até 100 e receber o resumo por e-mail.`} Você já acompanha ${fmt(jaTem)}.${lista.length > livres ? ` <b>Cabem mais ${fmt(livres)}</b>; os demais ficarão de fora.` : ''}</p>
+    ${info.consentimento || (precisaPush && estado !== 'inativo') ? '' : '<label class="ck"><input type="checkbox" id="seg-consente"><span>Concordo que a plataforma guarde a lista dos projetos que eu acompanhar. Sei que essa lista pode indicar os meus interesses políticos e que ela será usada só para me enviar os avisos, nunca compartilhada. Posso apagá-la a qualquer momento na <a href="conta.html#acompanhamento">Minha área</a>. Detalhes na <a href="privacidade.html">política de privacidade</a>.</span></label>'}
+    ${precisaPush ? (estado === 'inativo' ? '<p class="meta">Sem cadastro, os avisos chegam por push. O navegador vai pedir permissão para mostrar notificações.</p>'
+      : estado === 'ios-instalar' ? '<p class="meta">No iPhone e no iPad, os avisos só funcionam com o site instalado: toque em <b>Compartilhar</b> e em <b>Adicionar à Tela de Início</b>, abra o ícone dos Exterminadores e selecione os projetos por ali. Outra opção é <a href="conta.html">entrar com o seu e-mail</a> e receber o resumo por e-mail.</p>'
+      : estado === 'negado' ? '<p class="meta">As notificações deste site estão bloqueadas no navegador. Libere-as nas configurações do navegador ou <a href="conta.html">entre com o seu e-mail</a> para receber o resumo por e-mail.</p>'
+      : '<p class="meta">Este navegador não recebe avisos por push. <a href="conta.html">Entre com o seu e-mail</a> para acompanhar os projetos e receber o resumo por e-mail.</p>') : ''}
+    <p class="msg" id="seg-msg" aria-live="polite"></p>
+    <div class="acoes">${!precisaPush || estado === 'inativo' ? `<button type="button" class="btn forte" id="seg-ok" ${livres ? '' : 'disabled'}>${precisaPush ? 'Ativar os avisos e acompanhar' : 'Acompanhar'}</button>` : ''}<button type="button" class="btn" id="seg-fechar">${livres ? 'Cancelar' : 'Fechar'}</button></div>`;
+  $('#seg-fechar').addEventListener('click', () => dlg.close());
+  const ok = $('#seg-ok'); if (!ok) return;
+  ok.addEventListener('click', async () => {
+    const m = $('#seg-msg'), cons = info.consentimento || ($('#seg-consente') && $('#seg-consente').checked);
+    if (!cons) { m.className = 'msg erro'; m.textContent = 'Marque a concordância acima para acompanhar projetos.'; return; }
+    ok.disabled = true; m.className = 'msg'; m.textContent = 'Salvando…';
+    try {
+      if (precisaPush) await AV.ativar(true);
+      const { ok: achados, falhou } = await chaves(lista.slice(0, livres));
+      const feitos = []; let erro = '';
+      for (const { p, k } of achados) { try { await AV.seguir(k, p.c, true); feitos.push(p.c); } catch (e) { erro = e.message; if (e.status === 429 || e.status === 401) break; } }
+      if (feitos.length) { feitos.forEach(c => SEL.delete(c)); guardarSel(); barraSel(); desenharProposicoes(); }
+      const partes = [];
+      if (feitos.length) partes.push(`Pronto: você passou a acompanhar ${feitos.length === 1 ? feitos[0] : `${fmt(feitos.length)} projetos`}.`);
+      if (falhou.length) partes.push(`Não foi possível localizar ${falhou.join(', ')} agora.`);
+      if (lista.length > livres) partes.push(`${fmt(lista.length - livres)} ficaram de fora pelo limite.`);
+      if (erro) partes.push(erro);
+      m.className = feitos.length ? 'msg' : 'msg erro';
+      m.innerHTML = esc(partes.join(' ')) + (feitos.length ? ' <a href="conta.html#acompanhamento">Ver os meus projetos</a>' : '');
+      ok.hidden = true; $('#seg-fechar').textContent = 'Fechar';
+    } catch (e) { m.className = 'msg erro'; m.textContent = e.message; ok.disabled = false; }
+  });
+}
+$('#seg-dlg').addEventListener('click', e => { if (e.target === e.currentTarget) e.currentTarget.close(); });
+document.addEventListener('change', e => {
+  const c = e.target.dataset && e.target.dataset.sel; if (!c) return;
+  const it = (D.todasMap && D.todasMap.get(c)) || D.prop.find(x => x.c === c);
+  if (e.target.checked && it) SEL.set(c, { c, i: it.i, o: (it.k || [])[0] }); else SEL.delete(c);
+  e.target.closest('.cartao').classList.toggle('selecionado', e.target.checked);
+  guardarSel(); barraSel();
+});
+$('#sel-limpar').addEventListener('click', () => { SEL.clear(); guardarSel(); barraSel(); desenharProposicoes(); });
+$('#sel-dossie').addEventListener('click', dossieSel);
+$('#sel-seguir').addEventListener('click', abrirSeguir);
+
 function cartaoProp(it){
   const x = it.x || {};
   const ver = D.ver[it.c];
-  return `<article class="cartao ${classeCartao(x)}">
+  const sel = SEL.has(it.c);
+  return `<article class="cartao ${classeCartao(x)}${sel ? ' selecionado' : ''}">
     <div class="topo"><span class="num">${esc(it.c)}</span><span class="meta">${esc((it.k || []).map(k => CASA[k]).join(' e '))}</span>${ver ? '<span class="selo s-ver">Verificado</span>' : ''}<span class="data">${dataBR(it.d)}</span></div>
     <div class="topo">${selosClass(x)}</div>
     <p class="ementa">${esc(it.e)}</p>
     ${ver && ver.nota ? `<p class="motivo"><b>Checagem da equipe.</b> ${esc(ver.nota)}</p>` : x.m ? `<p class="motivo"><b>${x.eq ? 'Checagem da equipe.' : 'Triagem automática.'}</b> ${esc(x.m)}</p>` : ''}
     ${autoresHTML(it.a, it)}
     ${(it.rl || []).length ? `<p class="meta relator">Relatoria: ${it.rl.map(r => `${esc(r.n)} (${esc(r.s)}-${esc(r.uf)})${r.cm ? `, ${esc(r.cm)}` : ''}`).join('; ')}</p>` : ''}
-    <div class="acoes">${D.votPorMat && D.votPorMat.get(it.c) ? `<button type="button" class="btn" data-ir-vot="${esc(it.c)}">${D.votPorMat.get(it.c) === 1 ? 'Ver a votação' : `Ver as ${fmt(D.votPorMat.get(it.c))} votações`}</button>` : ''}${linkProp(it) ? `<a class="btn" href="${esc(linkProp(it))}" target="_blank" rel="noopener">Ficha oficial</a>` : ''}
+    <div class="acoes"><label class="sel-prop" title="Selecionar para acompanhar ou gerar um dossiê"><input type="checkbox" data-sel="${esc(it.c)}" ${sel ? 'checked' : ''}> Selecionar</label>${D.votPorMat && D.votPorMat.get(it.c) ? `<button type="button" class="btn" data-ir-vot="${esc(it.c)}">${D.votPorMat.get(it.c) === 1 ? 'Ver a votação' : `Ver as ${fmt(D.votPorMat.get(it.c))} votações`}</button>` : ''}${linkProp(it) ? `<a class="btn" href="${esc(linkProp(it))}" target="_blank" rel="noopener">Ficha oficial</a>` : ''}
       <button type="button" class="btn forte" data-comp="p:${esc(it.c)}">Compartilhar</button><button type="button" class="btn" data-copiar="p:${esc(it.c)}">Copiar</button></div>
   </article>`;
 }
@@ -652,6 +761,7 @@ function desenharProposicoes(){
     ${lista.length ? `<div class="grade">${lista.slice((f.pagina - 1) * POR_PAGINA, f.pagina * POR_PAGINA).map(cartaoProp).join('')}</div>` : '<div class="vazio"><p>Nenhum projeto com esses filtros.</p></div>'}
     ${paginador(f.pagina, paginas, 'prop')}`;
   ligarFiltros('fp', est.prop, desenharProposicoes);
+  barraSel();
 }
 function paginador(pg, total, alvo){
   return total > 1 ? `<div class="pager"><button type="button" class="btn" data-pg="${alvo}:-1" ${pg === 1 ? 'disabled' : ''}>Anteriores</button><span>Página ${pg} de ${total}</span><button type="button" class="btn" data-pg="${alvo}:1" ${pg === total ? 'disabled' : ''}>Próximos</button></div>` : '';
@@ -1108,6 +1218,7 @@ function irPara(aba){
   est.aba = aba;
   document.querySelectorAll('.abas button').forEach(b => b.setAttribute('aria-selected', b.dataset.aba === aba ? 'true' : 'false'));
   document.querySelectorAll('main section[id^="aba-"]').forEach(s => s.hidden = s.id !== 'aba-' + aba);
+  barraSel();
   desenhar();
 }
 function desenhar(){
