@@ -1,10 +1,10 @@
 {
- "gerado": "2026-11-25T01:21:26.447Z",
+ "gerado": "2026-11-25T01:37:45.266Z",
  "inicio": "2023-02-01",
  "totais": {
   "proposicoes": 29319,
   "direita": 2711,
-  "extrema": 1818,
+  "extrema": 1821,
   "votacoes": 2473,
   "disputadas": 1195,
   "vitorias": 510,
@@ -40,7 +40,7 @@
   },
   "punitivismo": {
    "prop": 1305,
-   "extrema": 877,
+   "extrema": 879,
    "prop30": 17,
    "vot": 66,
    "vitorias": 51,
@@ -80,7 +80,7 @@
   },
   "ambiente": {
    "prop": 179,
-   "extrema": 116,
+   "extrema": 117,
    "prop30": 2,
    "vot": 48,
    "vitorias": 34,
@@ -111,8 +111,8 @@
    "derrotas": 4
   },
   "estado": {
-   "prop": 126,
-   "extrema": 60,
+   "prop": 127,
+   "extrema": 61,
    "prop30": 2,
    "vot": 35,
    "vitorias": 10,
@@ -574,7 +574,7 @@
   "T": {
    "prop": 26973,
    "pauta": 2711,
-   "pautaExtrema": 1818,
+   "pautaExtrema": 1821,
    "vot": 1619,
    "comSit": 26949,
    "aprovada": 1204,
@@ -2581,7 +2581,7 @@
   "C": {
    "prop": 23750,
    "pauta": 2321,
-   "pautaExtrema": 1547,
+   "pautaExtrema": 1550,
    "vot": 1421,
    "comSit": 23748,
    "aprovada": 850,
