@@ -51,7 +51,7 @@ const MODELO_REGRAS = 'claude-opus-5-5'; // deduz as regras a partir das correç
 const MODELO_GRAU = 'claude-opus-5-5';   // segunda leitura do grau; o item só sai da revisão humana quando as duas leituras concordam
 const PASSO_REGRAS = 100;                // a cada tantas correções novas, as regras são deduzidas de novo e o grau é refeito
 const VERSAO_CLASSIFICACAO = 'd3';   // mude para refazer todas as classificações
-const VERSAO_GRAU = 'g8';          // mude para refazer só o grau (direita ou extrema-direita)
+const VERSAO_GRAU = 'g9';          // mude para refazer só o grau (direita ou extrema-direita)
 
 const API_CAMARA = 'https://dadosabertos.camara.leg.br/api/v2';
 const ARQ_CAMARA = 'https://dadosabertos.camara.leg.br/arquivos';
