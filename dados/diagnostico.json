@@ -1,5 +1,5 @@
 {
- "inicio": "2026-11-25T01:37:45.266Z",
+ "inicio": "2026-11-25T19:24:51.917Z",
  "modo": "diario",
  "amostras": {
   "camara_deputado": {
@@ -39,12 +39,12 @@
    "deputado_": "{\"id\":\"204501\",\"uri\":\"https://dadosabertos.camara.leg.br/api/v2/deputados/204501\",\"nome\":\"Alencar Santana\",\"siglaPartido\":\"PT\",\"uriPartido\":\"https://dadosabertos.camara.leg.br/api/v2/partidos/36844\",\"siglaUf\":\"SP\",\"idLegislatura\":\"57\",\"urlFoto\":\"https://www.camara.leg.br/internet/deputado/bandep/204"
   },
   "camara_arq_orientacao": {
-   "idVotacao": "2655570-60",
-   "uriVotacao": "https://dadosabertos.camara.leg.br/api/v2/votacoes/2655570-60",
+   "idVotacao": "2332174-59",
+   "uriVotacao": "https://dadosabertos.camara.leg.br/api/v2/votacoes/2332174-59",
    "siglaOrgao": "PLEN",
-   "descricao": "Mantido o texto. Sim: 319; Não: 127; Abstenção: 1; Total: 447.",
-   "siglaBancada": "PRD",
-   "uriBancada": "https://dadosabertos.camara.leg.br/api/v2/partidos/38010",
+   "descricao": "Aprovado o Substitutivo ao Projeto de Lei nº 1.969, de 2022, da Comissão de Direitos Humanos, Minorias e Igualdade Racial. Sim: 292; Não: 147; Abstenção: 2; Total: 441.",
+   "siglaBancada": "Avante",
+   "uriBancada": "https://dadosabertos.camara.leg.br/api/v2/partidos/36898",
    "orientacao": ""
   },
   "camara_arq_objeto": {
@@ -53,24 +53,6 @@
    "data": "2026-02-02",
    "descricao": "Aprovada a Medida Provisória nº 1.312, de 2025.",
    "proposicao_": "{\"id\":2592069,\"uri\":\"https://dadosabertos.camara.leg.br/api/v2/proposicoes/2592069\",\"ementa\":\"Recebido PARECER (CN) Nº 25, DE 2025, da COMISSÃO MISTA DE PLANOS, ORÇAMENTOS PÚBLICOS E FISCALIZAÇÃO, sobre a Medida Provisória n° 1312, de 2025, que Abre crédito extraordinário, em favor do Ministério da "
-  },
-  "camara_api_votacao": {
-   "id": "2655529-2",
-   "uri": "https://dadosabertos.camara.leg.br/api/v2/votacoes/2655529-2",
-   "data": "2026-11-24",
-   "dataHoraRegistro": "2026-11-24T14:38:31",
-   "siglaOrgao": "CPOVOS",
-   "uriOrgao": "https://dadosabertos.camara.leg.br/api/v2/orgaos/539384",
-   "uriEvento": "https://dadosabertos.camara.leg.br/api/v2/eventos/83416",
-   "proposicaoObjeto": "REQ 109/2026 CPOVOS",
-   "uriProposicaoObjeto": "https://dadosabertos.camara.leg.br/api/v2/proposicoes/2655529",
-   "descricao": "Aprovado o Requerimento.",
-   "aprovacao": 1
-  },
-  "camara_api_voto": {
-   "tipoVoto": "Não",
-   "dataRegistroVoto": "2026-11-24T16:48:59",
-   "deputado_": "{\"id\":62881,\"uri\":\"https://dadosabertos.camara.leg.br/api/v2/deputados/62881\",\"nome\":\"Danilo Forte\",\"siglaPartido\":\"PP\",\"uriPartido\":\"https://dadosabertos.camara.leg.br/api/v2/partidos/37903\",\"siglaUf\":\"CE\",\"idLegislatura\":57,\"urlFoto\":\"https://www.camara.leg.br/internet/deputado/bandep/62881.jpg\",\""
   },
   "senado_votacao": {
    "ano": 2019,
@@ -109,29 +91,29 @@
    "siglaVotoParlamentar": "Sim"
   },
   "senado_comissao_votacao": {
-   "CodigoVotacao": "42268",
+   "CodigoVotacao": "42027",
    "SiglaCasaColegiado": "SF",
-   "CodigoReuniao": "15038",
-   "DataHoraInicioReuniao": "2026-11-18T09:30:00",
-   "NumeroReuniaoColegiado": "17",
+   "CodigoReuniao": "14969",
+   "DataHoraInicioReuniao": "2026-11-11T09:26:00",
+   "NumeroReuniaoColegiado": "52",
    "TipoReuniao": "Extraordinária",
-   "CodigoColegiado": "34",
-   "SiglaColegiado": "CCJ",
-   "NomeColegiado": "Comissão de Constituição, Justiça e Cidadania",
-   "CodigoParlamentarPresidente": "5523",
-   "NomeParlamentarPresidente": "Otto Alencar",
-   "IdentificacaoMateria": "PL 2091/2023",
-   "DescricaoIdentificacaoMateria": "Projeto de Lei n° 2091, de 2023",
-   "DescricaoVotacao": "Substitutivo ao PL 2091/2023 (nos termos do Parecer)",
-   "Votos": "{\"Voto\":[{\"CodigoParlamentar\":\"5924\",\"NomeParlamentar\":\"Oriovisto Guimarães\",\"SiglaPartidoParlamentar\":\"PSDB\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"5982\",\"NomeParlamentar\":\"Alessandro Vieira\",\"SiglaPartidoParlamentar\":\"MDB\",\"SiglaCasaParlamen",
-   "TotalVotosSim": "15",
+   "CodigoColegiado": "40",
+   "SiglaColegiado": "CAS",
+   "NomeColegiado": "Comissão de Assuntos Sociais",
+   "CodigoParlamentarPresidente": "742",
+   "NomeParlamentarPresidente": "Marcelo Castro",
+   "IdentificacaoMateria": "PL 4366/2024",
+   "DescricaoIdentificacaoMateria": "Projeto de Lei n° 4366, de 2024",
+   "DescricaoVotacao": "PL 4366/2024 e emenda, nos termos do relatório apresentado",
+   "Votos": "{\"Voto\":[{\"CodigoParlamentar\":\"4531\",\"NomeParlamentar\":\"Jayme Campos\",\"SiglaPartidoParlamentar\":\"UNIÃO\",\"SiglaCasaParlamentar\":\"SF\",\"QualidadeVoto\":\"S\",\"VotoPresidente\":\"false\"},{\"CodigoParlamentar\":\"5386\",\"NomeParlamentar\":\"Professora Dorinha Seabra\",\"SiglaPartidoParlamentar\":\"UNIÃO\",\"SiglaCasaParl",
+   "TotalVotosSim": "13",
    "TotalVotosNao": "0",
    "TotalVotosAbstencao": "0"
   },
   "senado_comissao_voto": {
-   "CodigoParlamentar": "5924",
-   "NomeParlamentar": "Oriovisto Guimarães",
-   "SiglaPartidoParlamentar": "PSDB",
+   "CodigoParlamentar": "4531",
+   "NomeParlamentar": "Jayme Campos",
+   "SiglaPartidoParlamentar": "UNIÃO",
    "SiglaCasaParlamentar": "SF",
    "QualidadeVoto": "S",
    "VotoPresidente": "false"
@@ -166,72 +148,72 @@
    "urlDocumento": "https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/3dc7461f-fa42-46e9-aa85-0ff9dd90f0a9"
   },
   "camara_arq_autor": {
-   "idProposicao": 2659062,
-   "uriProposicao": "https://dadosabertos.camara.leg.br/api/v2/proposicoes/2659062",
-   "idDeputadoAutor": 178927,
-   "uriAutor": "https://dadosabertos.camara.leg.br/api/v2/deputados/178927",
+   "idProposicao": 2659428,
+   "uriProposicao": "https://dadosabertos.camara.leg.br/api/v2/proposicoes/2659428",
+   "idDeputadoAutor": 220703,
+   "uriAutor": "https://dadosabertos.camara.leg.br/api/v2/deputados/220703",
    "codTipoAutor": 10000,
    "tipoAutor": "Deputado(a)",
-   "nomeAutor": "Aliel Machado",
-   "siglaPartidoAutor": "PV",
-   "uriPartidoAutor": "https://dadosabertos.camara.leg.br/api/v2/partidos/36851",
-   "siglaUFAutor": "PR",
+   "nomeAutor": "Neto Carletto",
+   "siglaPartidoAutor": "AVANTE",
+   "uriPartidoAutor": "https://dadosabertos.camara.leg.br/api/v2/partidos/36898",
+   "siglaUFAutor": "BA",
    "ordemAssinatura": "1",
    "proponente": "1"
   },
   "senado_relatoria": {
-   "autoriaProcesso": "Câmara dos Deputados",
+   "autoriaProcesso": "Presidência da República",
    "casaRelator": "SF",
-   "codigoColegiado": 34,
-   "codigoMateria": 156475,
-   "codigoParlamentar": 5748,
-   "codigoTipoColegiado": 21,
-   "dataApresentacaoProcesso": "2023-03-23 16:47:01",
-   "dataDesignacao": "2023-04-04 12:13:42",
-   "dataDestituicao": "2023-04-26 15:33:01",
+   "codigoColegiado": 1998,
+   "codigoMateria": 154768,
+   "codigoParlamentar": 5998,
+   "codigoTipoColegiado": 128,
+   "dataApresentacaoProcesso": "2022-09-22 09:28:28",
+   "dataDesignacao": "2023-02-23 15:48:00",
+   "dataDestituicao": "2023-02-28 18:37:30",
    "dataFimColegiado": null,
    "descricaoTipoEncerramento": "Deliberação da matéria",
    "descricaoTipoRelator": "Relator",
-   "emailParlamentar": "sen.venezianovitaldorego@senado.leg.br",
-   "ementaProcesso": "Dispõe sobre a transformação de cargos de Analista do Ministério Público da União em cargos de Procurador da Justiça Militar, em cargos de Promotor da Justiça Militar e em cargos em comissão que especifica, no âmbito do Ministério Público Militar; e altera a Lei nº 13.316, de 20 de julho de 2016.",
-   "formaTratamentoParlamentar": "Senador",
-   "id": 9309396,
-   "idProcesso": 8396007,
+   "emailParlamentar": "sen.daniellaribeiro@senado.leg.br",
+   "ementaProcesso": "Altera a Lei nº 12.249, de 11 de junho de 2010, para dispor sobre a alíquota do imposto sobre a renda retido na fonte incidente sobre as operações a que se refere.",
+   "formaTratamentoParlamentar": "Senadora",
+   "id": 9261491,
+   "idProcesso": 8306238,
    "idTipoRelator": 1,
-   "identificacaoProcesso": "PL 2969/2022",
-   "nomeColegiado": "Comissão de Constituição, Justiça e Cidadania",
-   "nomeCompleto": "Veneziano Vital do Rêgo Segundo Neto",
-   "nomeParlamentar": "Veneziano Vital do Rêgo",
+   "identificacaoProcesso": "MPV 1138/2022",
+   "nomeColegiado": "Plenário do Senado Federal",
+   "nomeCompleto": "Daniella Velloso Borges Ribeiro",
+   "nomeParlamentar": "Daniella Ribeiro",
    "numeroAutuacao": "1",
-   "sexoParlamentar": "M",
+   "sexoParlamentar": "F",
    "siglaCasa": "SF",
-   "siglaColegiado": "CCJ",
-   "siglaPartidoParlamentar": "MDB",
+   "siglaColegiado": "PLEN",
+   "siglaPartidoParlamentar": "PSD",
    "tramitando": "N",
    "ufParlamentar": "PB",
-   "urlFotoParlamentar": "http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5748.jpg",
-   "urlPaginaParlamentar": "http://www25.senado.leg.br/web/senadores/senador/-/perfil/5748"
+   "urlFotoParlamentar": "http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5998.jpg",
+   "urlPaginaParlamentar": "http://www25.senado.leg.br/web/senadores/senador/-/perfil/5998"
   }
  },
  "contagens": {
-  "deputados": 877,
+  "deputados": 878,
   "deputados_em_exercicio": 513,
   "senadores_em_exercicio": 81,
-  "votacoes_simbolicas_plenario": 1380,
+  "votacoes_simbolicas_plenario": 1384,
   "votacoes_C_plenario": 136,
   "votacoes_C_comissao": 35,
   "votacoes_sem_sim_nao": 1,
-  "camara_dias_completados_pela_api": 2,
-  "camara_api_votacao_sem_votos": 87,
+  "camara_dias_completados_pela_api": 1,
   "senado_plenario_votacoes_achadas": 15,
   "votacoes_S_plenario": 15,
-  "senado_comissao_votacoes_achadas": 19,
-  "votacoes_S_comissao": 19,
-  "proposicoes_camara_registros": 9350,
+  "senado_comissao_votacoes_achadas": 27,
+  "votacoes_S_comissao": 27,
+  "proposicoes_camara_registros": 9379,
   "proposicoes_data_corrigida": 4,
-  "senado_processo_registros": 261,
+  "senado_processo_registros": 262,
   "proposicoes_senado": 59,
-  "relatorias_senado": 2580,
+  "proposicoes_senado_sem_autor_parlamentar": 1,
+  "relatorias_senado": 2590,
   "numeracao_lacunas_PL": 5,
   "numeracao_lacunas_PLP": 0,
   "numeracao_lacunas_PEC": 0,
@@ -239,20 +221,23 @@
   "rotina_outorga": 2313,
   "rotina_administrativa": 33,
   "votacoes_com_materia_recuperada": 57,
-  "votacoes_ligadas_a_materia_principal": 1340,
+  "votacoes_ligadas_a_materia_principal": 1346,
+  "classificados": 21,
+  "grau_segunda_leitura": 2,
+  "grau_para_revisao": 2,
+  "grau_certeza_alta": 2,
+  "graduados": 4,
   "confirmacoes_em_bloco": 2702,
   "correcoes_aplicadas": 4339,
-  "grupo_pelos_votos_diferente": 316,
+  "grupo_pelos_votos_diferente": 317,
   "votacoes_chave": 5
  },
- "erros": [
-  "proposições C204364 2026: falhou https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor=204364&siglaTipo=PL%2CPLP%2CPEC%2CPDL&ano=2026&itens=100&pagina=1&ordem=ASC&ordenarPor=id"
- ],
+ "erros": [],
  "brutos": {
   "senado_atual": {
    "url": "https://legis.senado.leg.br/dadosabertos/senador/lista/atual.json",
    "tamanho": 129042,
-   "inicio": "{\"ListaParlamentarEmExercicio\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/ListaParlamentarEmExerciciov4.xsd\",\"Metadados\":{\"Versao\":\"24/11/2026 22:33:25\",\"VersaoServico\":\"4\",\"DataVersaoServico\":\"2020-07-15\",\"DescricaoDataSet\":\"Lista dos Parlamentares que estão atualmente em Exercício. Informações atuais sobre o Parlamentar.\"},\"Parlamentares\":{\"Parlamentar\":[{\"IdentificacaoParlamentar\":{\"CodigoParlamentar\":\"5672\",\"CodigoPublicoNaLegAtual\":\"800\",\"NomeParlamentar\":\"Alan Rick\",\"NomeCompletoParlamentar\":\"Alan Rick Miranda\",\"SexoParlamentar\":\"Masculino\",\"FormaTratamento\":\"Senador \",\"UrlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg\",\"UrlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5672\",\"EmailParlamentar\":\"sen.alanrick@senado.leg.br\",\"Telefones\":{\"Telefone\":[{\"NumeroTelefone\":\"33036333\",\"OrdemPublicacao\":\"1\",\"IndicadorFax\":\"Não\"}]},\"SiglaPartidoParlamentar\":\"REPUBLICANOS\",\"UfParlamentar\":\"AC\",\"Bloco\":{\"CodigoBloco\":\"346\",\"NomeBloco\":\"Bloco Parlamentar Aliança\",\"NomeApelido\":\"BLALIANÇA\",\"DataCriacao\":\"2023-03-20\"},\"MembroMesa\":\"Não\",\"MembroLideranca\":\"Sim\"},\"Mandato\":{\"CodigoMandato\":\"596\",\"UfParlamentar\":\"AC\",\"PrimeiraLegislaturaDoMandato\":{\"NumeroLegislatura\":\"57\",\"DataInicio\":\"2023-02-01\",\"DataFim\":\"2027-01-31\"},\"SegundaLegislaturaDoMandato\":{\"NumeroLegislatura\":\"58\",\"DataInicio\":\"2027-02-01\",\"DataFim\":\"2031-01-31\"},\"DescricaoParticipacao\":\"Titular\",\"Suplentes\":{\"Suplente\":["
+   "inicio": "{\"ListaParlamentarEmExercicio\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/ListaParlamentarEmExerciciov4.xsd\",\"Metadados\":{\"Versao\":\"25/11/2026 16:19:54\",\"VersaoServico\":\"4\",\"DataVersaoServico\":\"2020-07-15\",\"DescricaoDataSet\":\"Lista dos Parlamentares que estão atualmente em Exercício. Informações atuais sobre o Parlamentar.\"},\"Parlamentares\":{\"Parlamentar\":[{\"IdentificacaoParlamentar\":{\"CodigoParlamentar\":\"5672\",\"CodigoPublicoNaLegAtual\":\"800\",\"NomeParlamentar\":\"Alan Rick\",\"NomeCompletoParlamentar\":\"Alan Rick Miranda\",\"SexoParlamentar\":\"Masculino\",\"FormaTratamento\":\"Senador \",\"UrlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg\",\"UrlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5672\",\"EmailParlamentar\":\"sen.alanrick@senado.leg.br\",\"Telefones\":{\"Telefone\":[{\"NumeroTelefone\":\"33036333\",\"OrdemPublicacao\":\"1\",\"IndicadorFax\":\"Não\"}]},\"SiglaPartidoParlamentar\":\"REPUBLICANOS\",\"UfParlamentar\":\"AC\",\"Bloco\":{\"CodigoBloco\":\"346\",\"NomeBloco\":\"Bloco Parlamentar Aliança\",\"NomeApelido\":\"BLALIANÇA\",\"DataCriacao\":\"2023-03-20\"},\"MembroMesa\":\"Não\",\"MembroLideranca\":\"Sim\"},\"Mandato\":{\"CodigoMandato\":\"596\",\"UfParlamentar\":\"AC\",\"PrimeiraLegislaturaDoMandato\":{\"NumeroLegislatura\":\"57\",\"DataInicio\":\"2023-02-01\",\"DataFim\":\"2027-01-31\"},\"SegundaLegislaturaDoMandato\":{\"NumeroLegislatura\":\"58\",\"DataInicio\":\"2027-02-01\",\"DataFim\":\"2031-01-31\"},\"DescricaoParticipacao\":\"Titular\",\"Suplentes\":{\"Suplente\":["
   },
   "senado_votacao_iso": {
    "url": "https://legis.senado.leg.br/dadosabertos/votacao?dataInicio=2026-10-11&dataFim=2026-10-31",
@@ -262,23 +247,23 @@
   "senado_comissao": {
    "url": "https://legis.senado.leg.br/dadosabertos/votacaoComissao/comissao/CAE?dataInicio=20261011&dataFim=20261125",
    "tamanho": 220,
-   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"24/11/2026 22:22:10\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
+   "inicio": "{\"VotacoesComissao\":{\"noNamespaceSchemaLocation\":\"https://legis.senado.leg.br/dadosabertos/dados/VotacoesComissaov1.xsd\",\"Metadados\":{\"Versao\":\"25/11/2026 16:25:03\",\"VersaoServico\":\"1\",\"DataVersaoServico\":\"2019-04-17\"}}}"
   },
   "senado_processo": {
    "url": "https://legis.senado.leg.br/dadosabertos/processo?sigla=PL&dataInicioApresentacao=2026-10-16&dataFimApresentacao=2026-10-31",
-   "tamanho": 32916,
+   "tamanho": 32915,
    "inicio": "[{\"autoria\":\"Senador Dr. Hiran (PP/RR)\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175985,\"dataApresentacao\":\"2026-10-19\",\"dataSituacaoAtual\":\"2026-11-24\",\"dataUltimaAtualizacao\":\"2026-11-24T17:06:46.765\",\"ementa\":\"Altera o art. 9º da Lei nº 15.211, de 17 de setembro de 2025 (Estatuto Digital da Criança e do Adolescente), para admitir a estimativa de idade por biometria facial como mecanismo de verificação de idade e para ampliar, de forma graduada, as categorias de serviços digitais de acesso restrito a maiores de 18 (dezoito) anos.\",\"enteIdentificador\":\"SF\",\"id\":9115144,\"identificacao\":\"PL 5593/2026\",\"objetivo\":\"Iniciadora\",\"situacaoAtual\":\"AGUARDANDO RECEBIMENTO DE EMENDAS\",\"tipoConteudo\":\"Norma Geral\",\"tipoDocumento\":\"Projeto de Lei Ordinária\",\"tramitando\":\"Sim\",\"ultimaInformacaoAtualizada\":\"EVENTO_LEGISLATIVO\",\"urlDocumento\":\"https://legis.senado.gov.br/sdleg-getter/dadosabertos/documento/3dc7461f-fa42-46e9-aa85-0ff9dd90f0a9\"},{\"autoria\":\"Câmara dos Deputados\",\"casaIdentificadora\":\"SF\",\"codigoMateria\":175994,\"dataApresentacao\":\"2026-10-19\",\"dataSituacaoAtual\":\"2026-10-20\",\"dataUltimaAtualizacao\":\"2026-10-23T18:30:01.076\",\"ementa\":\"Altera a Lei nº 8.080, de 19 de setembro de 1990 (Lei Orgânica da Saúde), para determinar a aceitação, pelas unidades do Sistema Único de Saúde (SUS), de exames realizados em serviços privados.\",\"enteIdentificador\":\"SF\",\"id\":9115232,\"identificacao\":\"PL 1123/2025\",\"objetivo\":\"Revisora\",\"situacaoAtual\":\"AGUARDANDO DESPACHO\",\"tipoConteudo\":\"Norma G"
   },
   "senado_relatoria": {
-   "url": "https://legis.senado.leg.br/dadosabertos/processo/relatoria?dataInicio=2023-04-01&dataFim=2023-04-30",
-   "tamanho": 69614,
-   "inicio": "[{\"autoriaProcesso\":\"Câmara dos Deputados\",\"casaRelator\":\"SF\",\"codigoColegiado\":34,\"codigoMateria\":156475,\"codigoParlamentar\":5748,\"codigoTipoColegiado\":21,\"dataApresentacaoProcesso\":\"2023-03-23 16:47:01\",\"dataDesignacao\":\"2023-04-04 12:13:42\",\"dataDestituicao\":\"2023-04-26 15:33:01\",\"dataFimColegiado\":null,\"descricaoTipoEncerramento\":\"Deliberação da matéria\",\"descricaoTipoRelator\":\"Relator\",\"emailParlamentar\":\"sen.venezianovitaldorego@senado.leg.br\",\"ementaProcesso\":\"Dispõe sobre a transformação de cargos de Analista do Ministério Público da União em cargos de Procurador da Justiça Militar, em cargos de Promotor da Justiça Militar e em cargos em comissão que especifica, no âmbito do Ministério Público Militar; e altera a Lei nº 13.316, de 20 de julho de 2016.\",\"formaTratamentoParlamentar\":\"Senador\",\"id\":9309396,\"idProcesso\":8396007,\"idTipoRelator\":1,\"identificacaoProcesso\":\"PL 2969/2022\",\"nomeColegiado\":\"Comissão de Constituição, Justiça e Cidadania\",\"nomeCompleto\":\"Veneziano Vital do Rêgo Segundo Neto\",\"nomeParlamentar\":\"Veneziano Vital do Rêgo\",\"numeroAutuacao\":\"1\",\"sexoParlamentar\":\"M\",\"siglaCasa\":\"SF\",\"siglaColegiado\":\"CCJ\",\"siglaPartidoParlamentar\":\"MDB\",\"tramitando\":\"N\",\"ufParlamentar\":\"PB\",\"urlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5748.jpg\",\"urlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5748\"},{\"autoriaProcesso\":\"Senador Rodrigo Cunha (PSDB/AL)\",\"casaRelator\":\"SF\",\"codigoColegiado\":40,\"codigoMa"
+   "url": "https://legis.senado.leg.br/dadosabertos/processo/relatoria?dataInicio=2023-02-01&dataFim=2023-02-28",
+   "tamanho": 1238,
+   "inicio": "[{\"autoriaProcesso\":\"Presidência da República\",\"casaRelator\":\"SF\",\"codigoColegiado\":1998,\"codigoMateria\":154768,\"codigoParlamentar\":5998,\"codigoTipoColegiado\":128,\"dataApresentacaoProcesso\":\"2022-09-22 09:28:28\",\"dataDesignacao\":\"2023-02-23 15:48:00\",\"dataDestituicao\":\"2023-02-28 18:37:30\",\"dataFimColegiado\":null,\"descricaoTipoEncerramento\":\"Deliberação da matéria\",\"descricaoTipoRelator\":\"Relator\",\"emailParlamentar\":\"sen.daniellaribeiro@senado.leg.br\",\"ementaProcesso\":\"Altera a Lei nº 12.249, de 11 de junho de 2010, para dispor sobre a alíquota do imposto sobre a renda retido na fonte incidente sobre as operações a que se refere.\",\"formaTratamentoParlamentar\":\"Senadora\",\"id\":9261491,\"idProcesso\":8306238,\"idTipoRelator\":1,\"identificacaoProcesso\":\"MPV 1138/2022\",\"nomeColegiado\":\"Plenário do Senado Federal\",\"nomeCompleto\":\"Daniella Velloso Borges Ribeiro\",\"nomeParlamentar\":\"Daniella Ribeiro\",\"numeroAutuacao\":\"1\",\"sexoParlamentar\":\"F\",\"siglaCasa\":\"SF\",\"siglaColegiado\":\"PLEN\",\"siglaPartidoParlamentar\":\"PSD\",\"tramitando\":\"N\",\"ufParlamentar\":\"PB\",\"urlFotoParlamentar\":\"http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5998.jpg\",\"urlPaginaParlamentar\":\"http://www25.senado.leg.br/web/senadores/senador/-/perfil/5998\"}]"
   }
  },
  "numeracao": {
   "PL": {
    "de": 5819,
-   "ate": 5960,
+   "ate": 5974,
    "faltam": 5,
    "numeros": [
     5833,
@@ -290,7 +275,7 @@
   },
   "PLP": {
    "de": 297,
-   "ate": 318,
+   "ate": 320,
    "faltam": 0,
    "numeros": []
   },
@@ -302,10 +287,10 @@
   },
   "PDL": {
    "de": 1036,
-   "ate": 1250,
+   "ate": 1253,
    "faltam": 0,
    "numeros": []
   }
  },
- "fim": "2026-11-25T01:44:08.586Z"
+ "fim": "2026-11-25T19:26:53.652Z"
 }
