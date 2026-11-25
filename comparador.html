@@ -327,6 +327,7 @@ document.querySelector('.modos').addEventListener('click', e => {
 
 // ---------------- busca
 const TIPOS_CAM = new Set(['PRLP', 'PRL', 'PAR', 'PPP', 'SBT', 'SBT-A', 'SBE', 'SBR', 'EMC', 'EMC-A', 'EMP', 'EMR', 'EMS', 'ESB', 'EMA', 'RDF', 'PEP', 'PES', 'EMD']);
+const PRINCIPAIS = new Set(['PL', 'PLP', 'PEC', 'PDL', 'MPV', 'PLV', 'PRC', 'PLN', 'PDC', 'PLS']);
 const GRUPO = s => /^EM|^ESB/.test(s) ? 'Emendas' : 'Projeto, pareceres, substitutivos e redação final';
 const TIPOS_SEN = /^(PROJETO|PARECER|RELATORIO|EMENDA|TEXTO|SUBSTITUTIVO|AUTOGRAFO|REDACAO)/;
 function partes(q) {
@@ -344,13 +345,21 @@ $('f-busca').addEventListener('submit', async e => {
     if (casa === 'senado') {
       if (!p || !p.sigla) throw new Error('No Senado, informe a sigla, o número e o ano (ex.: PL 2338/2023).');
       const lista = await getj(`${SEN}/processo?sigla=${encodeURIComponent(p.sigla)}&numero=${p.numero}&ano=${p.ano}`);
-      if (!lista.length) throw new Error('Nenhuma proposição encontrada no Senado.');
-      await mostrarSenado(lista[0].id);
+      if (lista.length) { await mostrarSenado(lista[0].id); return; }
+      // sigla sem resultado: sugere as proposições com o mesmo número e ano
+      const todos = (await getj(`${SEN}/processo?numero=${p.numero}&ano=${p.ano}`)).filter(x => !/^(RQS|REQ|OFS|OF|MSF|AVS)\b/.test(x.identificacao || ''));
+      if (!todos.length) throw new Error(`Não há ${p.sigla} ${p.numero}/${p.ano} no Senado, nem outra proposição com esse número e ano.`);
+      $('r-busca').innerHTML = `<div class="prop"><h4>Não há ${esc(p.sigla)} ${esc(p.numero)}/${esc(p.ano)} no Senado. Você quis dizer:</h4><ul>` + todos.map(x =>
+        `<li><button class="ref" data-sen="${esc(x.id)}">${esc(x.identificacao)}</button> ${esc((x.ementa || '').slice(0, 160))}</li>`).join('') + '</ul></div>';
     } else if (p) {
       const url = `${CAM}/proposicoes?numero=${p.numero}&ano=${p.ano}${p.sigla ? '&siglaTipo=' + encodeURIComponent(p.sigla) : ''}&itens=10`;
       const r = await getj(url);
-      if (!r.dados.length) throw new Error('Nenhuma proposição encontrada na Câmara.');
-      if (r.dados.length === 1) await mostrarCamara(r.dados[0].id); else escolher(r.dados);
+      if (r.dados.length === 1) { await mostrarCamara(r.dados[0].id); return; }
+      if (r.dados.length) { escolher(r.dados); return; }
+      // sigla sem resultado (ex.: PLC, que na Câmara é PLP): sugere os projetos com o mesmo número e ano
+      const todos = (await getj(`${CAM}/proposicoes?numero=${p.numero}&ano=${p.ano}&itens=100`)).dados.filter(x => PRINCIPAIS.has(x.siglaTipo));
+      if (!todos.length) throw new Error(`Não há ${p.sigla} ${p.numero}/${p.ano} na Câmara, nem projeto com esse número e ano.`);
+      escolher(todos, `Não há ${p.sigla} ${p.numero}/${p.ano} na Câmara${p.sigla === 'PLC' ? ' (lá, projeto de lei complementar é PLP)' : ''}. Você quis dizer:`);
     } else {
       const r = await getj(`${CAM}/proposicoes?keywords=${encodeURIComponent(q)}&ordem=DESC&ordenarPor=id&itens=15`);
       if (!r.dados.length) throw new Error('Nada encontrado. Tente o número da proposição.');
@@ -358,11 +367,11 @@ $('f-busca').addEventListener('submit', async e => {
     }
   } catch (err) { out.innerHTML = ''; msg(err.message || 'A busca falhou.', true); }
 });
-function escolher(dados) {
-  $('r-busca').innerHTML = '<div class="prop"><h4>Escolha a proposição</h4><ul>' + dados.map(d =>
+function escolher(dados, titulo) {
+  $('r-busca').innerHTML = `<div class="prop"><h4>${esc(titulo || 'Escolha a proposição')}</h4><ul>` + dados.map(d =>
     `<li><button class="ref" data-cam="${esc(d.id)}">${esc(d.siglaTipo)} ${esc(d.numero)}/${esc(d.ano)}</button> ${esc((d.ementa || '').slice(0, 160))}</li>`).join('') + '</ul></div>';
 }
-$('r-busca').addEventListener('click', e => { const b = e.target.closest('[data-cam]'); if (b) { $('r-busca').innerHTML = '<p class="mini">Carregando as versões…</p>'; mostrarCamara(b.dataset.cam).catch(err => msg(err.message, true)); } });
+$('r-busca').addEventListener('click', e => { const s = e.target.closest('[data-sen]'); if (s) { $('r-busca').innerHTML = '<p class="mini">Carregando as versões…</p>'; mostrarSenado(s.dataset.sen).catch(err => msg(err.message, true)); return; } const b = e.target.closest('[data-cam]'); if (b) { $('r-busca').innerHTML = '<p class="mini">Carregando as versões…</p>'; mostrarCamara(b.dataset.cam).catch(err => msg(err.message, true)); } });
 
 async function mostrarCamara(id) {
   const d = (await getj(`${CAM}/proposicoes/${id}`)).dados;
@@ -390,7 +399,7 @@ async function mostrarSenado(pid) {
 }
 function desenharVersoes() {
   const v = atual.versoes.sort((a, b) => ordemData(a.data).localeCompare(ordemData(b.data)));
-  if (v.length < 2) { $('r-busca').innerHTML = `<div class="prop"><h4>${esc(atual.proposicao)}</h4><p>Esta proposição ainda tem menos de duas versões com texto publicado. Se tiver o PDF de outra versão, use "Enviar PDFs".</p></div>`; return; }
+  if (v.length < 2) { $('r-busca').innerHTML = `<div class="prop"><h4>${esc(atual.proposicao)}</h4><p>${v.length ? `Só há uma versão com texto publicado (${esc(v[0].nome)}, ${esc(v[0].data)}): ainda não saiu parecer, substitutivo nem emenda com texto.` : 'Não há versões com texto publicado.'} Se tiver o PDF de outra versão, use "Enviar PDFs".</p></div>`; return; }
   const principais = v.filter(x => x.grupo !== 'Emendas'), emendas = v.filter(x => x.grupo === 'Emendas');
   const ia = 0, ib = principais.length > 1 ? principais.length - 1 : 1;
   const linha = (x, i) => `<tr><td class="r"><input type="radio" name="va" value="${i}" aria-label="Versão A: ${esc(x.nome)}" ${i === ia ? 'checked' : ''}></td><td class="r"><input type="radio" name="vb" value="${i}" aria-label="Versão B: ${esc(x.nome)}" ${i === ib ? 'checked' : ''}></td>
