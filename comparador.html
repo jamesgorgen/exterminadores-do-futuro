@@ -272,7 +272,7 @@ h3{font-family:var(--display);font-weight:800;font-size:24px;line-height:1.05;ma
   <p class="alerta" role="note"><b>O resultado não substitui a revisão humana.</b> A extração de PDFs pode falhar em documentos mal formatados ou escaneados, o emparelhamento pode errar quando o texto é muito reescrito e a análise de IA pode simplificar ou interpretar mal uma mudança. Use o comparador como ponto de partida e confira o texto oficial, cujo link aparece em cada comparação, antes de publicar ou citar.</p>
   <h3 style="margin-top:28px">Limites</h3>
   <ul>
-    <li>Cada conexão pode pedir uma comparação nova por mês, de graça. Abrir comparações prontas e pedir uma que já existe não contam. Há também um teto geral mensal.</li>
+    <li>Cada conexão pode pedir uma comparação nova por semana (de segunda a domingo), de graça. Abrir comparações prontas e pedir uma que já existe não contam. Há também um teto geral mensal.</li>
     <li>Só funciona com textos articulados (com "Art. 1º"). Atas, notas técnicas e ofícios não são aceitos.</li>
     <li>PDFs de até 15 MB. Os PDFs enviados e as comparações ficam públicos na lista.</li>
     <li>Para controlar o limite, a plataforma guarda só um código derivado do endereço IP, nunca o endereço em si.</li>
@@ -315,8 +315,8 @@ let cotaLivre = true;
 async function verCota() {
   try {
     const c = await api('/api/cota'); cotaLivre = c.disponivel;
-    $('cota').textContent = c.disponivel ? 'Você pode pedir uma comparação nova gratuita neste mês. Comparações que já existem não contam.'
-      : `Você já usou a comparação gratuita deste mês (renova em ${dt(c.renova)}). Ainda é possível abrir qualquer comparação pronta e pedir as que já existem.`;
+    $('cota').textContent = c.disponivel ? 'Você pode pedir uma comparação nova gratuita nesta semana. Comparações que já existem não contam.'
+      : `Você já usou a comparação gratuita desta semana (renova na segunda-feira, ${dt(c.renova)}). Ainda é possível abrir qualquer comparação pronta e pedir as que já existem.`;
   } catch (e) { $('cota').textContent = 'Não foi possível verificar o limite agora.'; }
 }
 

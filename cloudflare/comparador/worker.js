@@ -5,12 +5,13 @@
 // GET  /api/lista                 comparações prontas (comparador/indice.json)
 // GET  /api/comparacao?id=…       uma comparação pronta
 // GET  /api/pedido?id=…           situação de um pedido (fila, processando, pronta, erro)
-// GET  /api/cota                  se esta conexão ainda pode pedir uma comparação nova neste mês
+// GET  /api/cota                  se esta conexão ainda pode pedir uma comparação nova nesta semana
 // PUT  /api/envio?sha=…           envio de um PDF (corpo = o arquivo); devolve a referência arquivo:<sha256>
 // POST /api/comparar              cria o pedido {a:{ref,…}, b:{ref,…}, titulo, proposicao}
 //
-// Limite: uma comparação nova por mês por IP (o IP é guardado só como hash com sal). Abrir comparações prontas
-// e pedir uma comparação que já existe não contam. Há também um teto mensal geral (LIMITE_GLOBAL_MES).
+// Limite: uma comparação nova por semana (segunda a domingo, horário de Brasília) por IP; o IP é guardado só como
+// hash com sal. Abrir comparações prontas e pedir uma comparação que já existe não contam. Há também um teto
+// mensal geral (LIMITE_GLOBAL_MES), contado pelas marcas em comparador/global/AAAA-MM/.
 
 const P = 'comparador/';
 const ORIGENS = ['https://exterminadores.com.br', 'https://www.exterminadores.com.br', 'https://jamesgorgen.github.io'];
@@ -34,9 +35,12 @@ const hex = buf => [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, 
 const sha256 = async s => hex(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s)));
 const limpa = (s, n) => String(s == null ? '' : s).replace(/[\u0000-\u001f<>]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, n);
 
-// mês no horário de Brasília (UTC-3)
-function mes() { const d = new Date(Date.now() - 3 * 3600e3); return d.toISOString().slice(0, 7); }
-function proximoMes() { const [a, m] = mes().split('-').map(Number); return m === 12 ? `${a + 1}-01-01` : `${a}-${String(m + 1).padStart(2, '0')}-01`; }
+// mês e semana (de segunda a domingo) no horário de Brasília (UTC-3)
+const brasilia = () => new Date(Date.now() - 3 * 3600e3);
+function mes() { return brasilia().toISOString().slice(0, 7); }
+function segunda() { const d = brasilia(); d.setUTCDate(d.getUTCDate() - (d.getUTCDay() + 6) % 7); return d; }
+function semana() { return 'semana-' + segunda().toISOString().slice(0, 10); }
+function proximaSemana() { const d = segunda(); d.setUTCDate(d.getUTCDate() + 7); return d.toISOString().slice(0, 10); }
 
 async function sal(env) {
   const o = await env.R2.get(P + 'config/sal');
@@ -47,7 +51,7 @@ async function sal(env) {
 }
 async function chaveCota(req, env) {
   const ip = req.headers.get('cf-connecting-ip') || 'sem-ip';
-  return `cota/${mes()}/${(await sha256((await sal(env)) + '|' + ip)).slice(0, 32)}`;
+  return `cota/${semana()}/${(await sha256((await sal(env)) + '|' + ip)).slice(0, 32)}`;
 }
 async function cotaLivre(req, env) {
   const k = await chaveCota(req, env);
@@ -57,7 +61,7 @@ async function cotaLivre(req, env) {
 async function totalMes(env) {
   let n = 0, cursor;
   do {
-    const r = await env.R2.list({ prefix: `${P}cota/${mes()}/`, cursor, limit: 1000 });
+    const r = await env.R2.list({ prefix: `${P}global/${mes()}/`, cursor, limit: 1000 });
     n += r.objects.length; cursor = r.truncated ? r.cursor : undefined;
   } while (cursor);
   return n;
@@ -90,10 +94,11 @@ async function comparar(req, env) {
     if (p.estado === 'removida') return erro(req, 'Esta comparação foi retirada da plataforma pela equipe.', 410);
   }
   const { k, livre } = await cotaLivre(req, env);
-  if (!livre) return erro(req, 'Você já usou a sua comparação gratuita deste mês. As comparações prontas continuam abertas.', 429, { renova: proximoMes() });
-  if ((await totalMes(env)) >= Number(env.LIMITE_GLOBAL_MES || 300)) return erro(req, 'O limite de comparações novas deste mês foi atingido. Tente no mês que vem.', 429, { renova: proximoMes() });
+  if (!livre) return erro(req, 'Você já usou a sua comparação gratuita desta semana. As comparações prontas continuam abertas.', 429, { renova: proximaSemana() });
+  if ((await totalMes(env)) >= Number(env.LIMITE_GLOBAL_MES || 300)) return erro(req, 'O limite geral de comparações novas deste mês foi atingido. Tente no mês que vem.', 429);
   const agora = new Date().toISOString().slice(0, 19) + '+00:00';
   await env.R2.put(P + k, JSON.stringify({ id, criado: agora }));
+  await env.R2.put(`${P}global/${mes()}/${id}`, agora);
   const pedido = { id, estado: 'fila', criado: agora, atualizado: agora, origem: 'site', a, b, titulo: limpa(corpo.titulo, 140), proposicao: limpa(corpo.proposicao, 60), tentativas: 0, cota: k };
   await env.R2.put(`${P}pedidos/${id}.json`, JSON.stringify(pedido), { httpMetadata: { contentType: 'application/json' } });
   return json(req, { id, estado: 'fila' }, 201);
@@ -108,7 +113,7 @@ async function envio(req, env, url) {
   const chave = `${P}envios/${sha}.pdf`;
   if (await env.R2.head(chave)) return json(req, { ref: 'arquivo:' + sha });
   const { livre } = await cotaLivre(req, env);
-  if (!livre) return erro(req, 'Você já usou a sua comparação gratuita deste mês.', 429, { renova: proximoMes() });
+  if (!livre) return erro(req, 'Você já usou a sua comparação gratuita desta semana.', 429, { renova: proximaSemana() });
   await env.R2.put(chave, req.body, { httpMetadata: { contentType: 'application/pdf' } });
   return json(req, { ref: 'arquivo:' + sha }, 201);
 }
@@ -141,7 +146,7 @@ export default {
       }
       if (req.method === 'GET' && url.pathname === '/api/cota') {
         const { livre } = await cotaLivre(req, env);
-        return json(req, { disponivel: livre, renova: proximoMes() });
+        return json(req, { disponivel: livre, renova: proximaSemana() });
       }
       if (req.method === 'PUT' && url.pathname === '/api/envio') return envio(req, env, url);
       if (req.method === 'POST' && url.pathname === '/api/comparar') return comparar(req, env);

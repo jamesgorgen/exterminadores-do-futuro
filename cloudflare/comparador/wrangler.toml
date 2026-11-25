@@ -10,5 +10,5 @@ binding = "R2"
 bucket_name = "exterminadores-dados"
 
 [vars]
-# Teto geral de comparações novas por mês (além do limite de uma por IP), para conter o custo da IA.
+# Teto geral de comparações novas por mês (além do limite de uma por semana por IP), para conter o custo da IA.
 LIMITE_GLOBAL_MES = "300"
