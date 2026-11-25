@@ -122,14 +122,14 @@ p.sub{color:var(--ink-2);max-width:70ch;margin:0 0 18px}
 .bal-graficos{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:30px 44px}
 .bal-g h3{font-size:18px;margin:0 0 4px}
 .bal-g .sub{margin:0 0 12px;font-size:14.5px}
-.bal-linha{display:grid;grid-template-columns:128px minmax(0,1fr) 128px;align-items:center;gap:10px;padding:5px 0}
+.bal-linha{display:grid;grid-template-columns:128px minmax(0,1fr) 150px;align-items:center;gap:10px;padding:5px 0}
 .bal-linha .nome{font-size:14.5px;color:var(--ink)}
 .bal-linha .trilho{height:14px}
 .bal-linha .barra{display:block;height:14px;border-radius:0 4px 4px 0;min-width:2px}
 .bal-linha .val{font-size:14.5px;font-variant-numeric:tabular-nums;color:var(--ink);text-align:right}
-.bal-linha .val small{display:block;white-space:nowrap;color:var(--ink-3);font-size:12.5px}
+.bal-linha .val small{display:block;color:var(--ink-3);font-size:12.5px;line-height:1.35;margin-top:2px}
 .bal-nota{font-size:13.5px;color:var(--ink-3);margin:10px 0 0;line-height:1.5}
-@media (max-width:600px){.bal-linha{grid-template-columns:96px minmax(0,1fr) 112px}.bal-linha .nome{font-size:13.5px}.bal-lede b{font-size:36px}}
+@media (max-width:600px){.bal-linha{grid-template-columns:96px minmax(0,1fr) 128px}.bal-linha .nome{font-size:13.5px}.bal-lede b{font-size:36px}}
 .bal-temas-ctrl{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 14px}
 .bal-temas-ctrl select,.bal-filtro select{max-width:100%}
 .bal-legenda{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--ink-2);margin:0 0 12px}
@@ -333,6 +333,7 @@ footer .wrap{padding-top:22px;padding-bottom:30px}
 footer p{max-width:90ch;margin:0 0 6px}
 footer a{color:#fff}
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+.bal-linha.bal-fora{border-top:1px dashed var(--line);margin-top:6px;padding-top:10px}
 </style>
 </head>
 <body>
@@ -1177,7 +1178,7 @@ const pct = (a, b) => b ? (100 * a / b) : 0;
 const fmtPct = x => x.toLocaleString('pt-BR', { maximumFractionDigits: 1, minimumFractionDigits: x < 10 && x % 1 ? 1 : 0 }) + '%';
 function graficoBlocos(titulo, sub, linhas, maximo, nota){
   return `<div class="bal-g"><h3>${esc(titulo)}</h3><p class="sub">${esc(sub)}</p>
-    ${linhas.map(l => `<div class="bal-linha" title="${esc(l.dica)}"><span class="nome">${NOME_GRUPO[l.g]}</span>
+    ${linhas.map(l => `<div class="bal-linha${l.g === 'fora' ? ' bal-fora' : ''}" title="${esc(l.dica)}"><span class="nome">${NOME_GRUPO[l.g]}</span>
       <span class="trilho"><span class="barra" style="width:${Math.max(0, Math.min(100, 100 * l.v / (maximo || 1))).toFixed(1)}%;background:${COR_GRUPO[l.g]}"></span></span>
       <span class="val">${l.txt}${l.det ? `<small>${l.det}</small>` : ''}</span></div>`).join('')}
     ${nota ? `<p class="bal-nota">${nota}</p>` : ''}</div>`;
@@ -1214,10 +1215,9 @@ function desenharBalanco(){
           [...G.map(x => ({ g: x, v: pct(g[x].pauta, g[x].prop), txt: fmtPct(pct(g[x].pauta, g[x].prop)), det: `${fmt(g[x].pauta)} projetos`, dica: `${NOME_GRUPO[x]}: ${fmt(g[x].pauta)} de ${fmt(g[x].prop)} projetos com pauta da direita` })), ...(b.fora ? [{ g: 'fora', v: pct(b.fora.pauta, b.fora.prop), txt: fmtPct(pct(b.fora.pauta, b.fora.prop)), det: `${fmt(b.fora.pauta)} projetos`, dica: `Executivo e outros órgãos: ${fmt(b.fora.pauta)} de ${fmt(b.fora.prop)} projetos com pauta da direita` }] : [])], 100,
           `A classificação das pautas é feita por IA e conferida pela equipe. Veja a aba Como funciona.`)}
         ${b.comSit ? graficoBlocos('Projetos aprovados', 'Parte dos projetos de cada grupo aprovada em ao menos uma Casa ou transformada em lei.',
-          [...G.map(x => ({ g: x, v: pct(g[x].aprovada, g[x].comSit), txt: fmtPct(pct(g[x].aprovada, g[x].comSit)), det: `${fmt(g[x].aprovada)}, ${fmt(g[x].lei)} viraram lei`, dica: `${NOME_GRUPO[x]}: ${fmt(g[x].aprovada)} aprovados e ${fmt(g[x].lei)} transformados em lei, de ${fmt(g[x].comSit)} projetos com situação conhecida` })),
-            ...(b.fora && b.fora.comSit ? [{ g: 'fora', v: pct(b.fora.aprovada, b.fora.comSit), txt: fmtPct(pct(b.fora.aprovada, b.fora.comSit)), det: `${fmt(b.fora.aprovada)}, ${fmt(b.fora.lei)} viraram lei`, dica: `Executivo e outros órgãos: ${fmt(b.fora.aprovada)} aprovados de ${fmt(b.fora.comSit)} com situação conhecida` }] : [])],
-          Math.max(...G.map(x => pct(g[x].aprovada, g[x].comSit)), b.fora && b.fora.comSit ? pct(b.fora.aprovada, b.fora.comSit) : 0) * 1.15,
-          `Situação atual de ${fmt(b.comSit)} projetos, lida todos os dias nas APIs da Câmara e do Senado. Muitos projetos ainda estão em tramitação, então a taxa tende a crescer com o tempo, sobretudo para os mais recentes.`) : ''}
+          G.map(x => ({ g: x, v: pct(g[x].aprovada, g[x].comSit), txt: fmtPct(pct(g[x].aprovada, g[x].comSit)), det: `${fmt(g[x].aprovada)} de ${fmt(g[x].comSit)} aprovados<br>${fmt(g[x].lei)} viraram lei`, dica: `${NOME_GRUPO[x]}: ${fmt(g[x].aprovada)} aprovados e ${fmt(g[x].lei)} transformados em lei, de ${fmt(g[x].comSit)} projetos com situação conhecida` })),
+          Math.max(...G.map(x => pct(g[x].aprovada, g[x].comSit))) * 1.15,
+          `${b.fora && b.fora.comSit ? `<b>Fora do gráfico, para comparação:</b> os projetos do Executivo e de outros órgãos tiveram ${fmtPct(pct(b.fora.aprovada, b.fora.comSit))} dos projetos aprovados (${fmt(b.fora.aprovada)} de ${fmt(b.fora.comSit)}; ${fmt(b.fora.lei)} viraram lei). A taxa é muito maior porque esses órgãos apresentam poucos projetos, quase todos com prioridade na pauta, como orçamento, créditos e acordos internacionais, enquanto cada grupo de parlamentares apresenta milhares. A conta reúne ${foraTxt(b.fora)}. ` : ''}Situação atual de ${fmt(b.comSit)} projetos, lida todos os dias nas APIs da Câmara e do Senado. Muitos ainda estão em tramitação, então a taxa tende a crescer com o tempo.`) : ''}
         ${b.comSit ? graficoBlocos('Peso nas aprovações', 'Parte de cada grupo no total de projetos aprovados.',
           [...G.map(x => ({ g: x, v: pct(g[x].aprovada, b.aprovada), txt: fmtPct(pct(g[x].aprovada, b.aprovada)), det: `${fmt(g[x].aprovada)} de ${fmt(b.aprovada)}`, dica: `${NOME_GRUPO[x]}: ${fmt(g[x].aprovada)} dos ${fmt(b.aprovada)} projetos aprovados` })), ...linhaFora(f => f.aprovada, b.aprovada, 'aprovados')], 50,
           `Compare com o gráfico de projetos apresentados. Quando a parte nas aprovações é maior que a parte nos projetos apresentados, o grupo aprova proporcionalmente mais do que propõe.`) : ''}
