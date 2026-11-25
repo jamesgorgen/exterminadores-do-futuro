@@ -59,9 +59,14 @@ export function criarAcomp(h) {
     const corpo = b64u(new TextEncoder().encode(JSON.stringify({ aud, exp: Math.floor(Date.now() / 1000) + 12 * 3600, sub: 'mailto:contato@exterminadores.com.br' })));
     const chave = await crypto.subtle.importKey('jwk', v.privada, { name: 'ECDSA', namedCurve: 'P-256' }, false, ['sign']);
     const ass = await crypto.subtle.sign({ name: 'ECDSA', hash: 'SHA-256' }, chave, new TextEncoder().encode(cab + '.' + corpo));
-    const r = await fetch(endpoint, { method: 'POST', headers: { authorization: `vapid t=${cab}.${corpo}.${b64u(ass)}, k=${v.publica}`, ttl: '86400', urgency: 'normal', 'content-length': '0' } });
+    let r;
+    try { r = await fetch(endpoint, { method: 'POST', headers: { authorization: `vapid t=${cab}.${corpo}.${b64u(ass)}, k=${v.publica}`, ttl: '86400', urgency: 'high' }, body: '' }); }
+    catch (e) { ultimoPush = { em: new Date().toISOString(), servico: aud, status: 0, resposta: String(e).slice(0, 300) }; return 0; }
+    ultimoPush = { em: new Date().toISOString(), servico: aud, status: r.status, resposta: r.status < 300 ? '' : (await r.text().catch(() => '')).slice(0, 300) };
+    console.log('push', JSON.stringify(ultimoPush));
     return r.status;
   }
+  let ultimoPush = null;
   const idAparelho = async endpoint => (await sha256('disp|' + endpoint)).slice(0, 32);
   const endpointOk = e => typeof e === 'string' && /^https:\/\/[a-z0-9.-]+\//i.test(e) && e.length < 1000;
 
@@ -208,7 +213,8 @@ export function criarAcomp(h) {
     await gravarJ(env, ka, [...((await lerJ(env, ka)) || []), { k: 'teste', nome: 'Os exterminadores do futuro', titulo: 'Teste', tipo: 'teste', texto: 'Os avisos estão funcionando neste aparelho.', url: '/conta.html#acompanhamento' }].slice(-30));
     const st = await enviarPush(env, d.endpoint);
     if (st === 404 || st === 410) { await env.R2.delete(kd); await env.R2.delete(ka); return erro(req, 'O navegador desativou esta inscrição. Ative os avisos de novo.', 410); }
-    return st < 300 ? json(req, { ok: true }) : erro(req, `O serviço de push do navegador recusou o aviso (código ${st}).`, 502);
+    if (st < 300) return json(req, { ok: true, servico: ultimoPush && ultimoPush.servico, status: st });
+    return json(req, { erro: `O serviço de push do navegador recusou o aviso (código ${st}).`, detalhe: ultimoPush }, 502);
   }
 
   // ---------------------------------------------------------------- tarefa agendada

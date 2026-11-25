@@ -39,7 +39,13 @@
       if (perm !== 'granted') throw new Error('Os avisos foram bloqueados neste navegador. Libere as notificações do site nas configurações do navegador.');
       const reg = await registro(); await navigator.serviceWorker.ready;
       let sub = await reg.pushManager.getSubscription();
-      if (!sub) { const { chave } = await api('/api/push/chave'); sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64(chave) }); }
+      const { chave } = await api('/api/push/chave');
+      // Uma inscrição antiga feita com outra chave do servidor é recusada pelo serviço de push: refaz.
+      if (sub && sub.options && sub.options.applicationServerKey) {
+        const atual = new Uint8Array(sub.options.applicationServerKey), nova = b64(chave);
+        if (atual.length !== nova.length || atual.some((x, i) => x !== nova[i])) { await sub.unsubscribe(); sub = null; }
+      }
+      if (!sub) sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64(chave) });
       await api('/api/push/inscrever', { sub: sub.toJSON(), consentimento: consentimento === true });
       return sub;
     },

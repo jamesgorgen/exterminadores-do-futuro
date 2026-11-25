@@ -144,7 +144,7 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
   <p>Dúvidas e pedidos sobre os seus dados: contato@exterminadores.com.br</p>
 </div></footer>
 
-<script src="avisos.js?v=2"></script>
+<script src="avisos.js?v=3"></script>
 <script>
 {
 const API = 'https://comparador-exterminadores.gorgen-james.workers.dev';
@@ -238,7 +238,7 @@ $('ac-push-btn').addEventListener('click', async e => {
   } catch (err) { msg('ac-msg', err.message, 'erro'); }
   b.disabled = false; desenharAcomp();
 });
-$('ac-teste').addEventListener('click', async () => { msg('ac-msg', 'Enviando…'); try { await AV.testar(); msg('ac-msg', 'Aviso de teste enviado. Ele deve aparecer em alguns segundos.', 'ok'); } catch (err) { msg('ac-msg', err.message, 'erro'); } });
+$('ac-teste').addEventListener('click', async () => { msg('ac-msg', 'Enviando…'); try { const r = await AV.testar(); msg('ac-msg', `Aviso de teste aceito pelo serviço de push do navegador (${(r.servico || '').replace('https://', '')}). Ele deve aparecer em alguns segundos. Se não aparecer, confira se o sistema do aparelho permite notificações do navegador e se o modo Não perturbe está desligado.`, 'ok'); } catch (err) { msg('ac-msg', err.message + (err.dados && err.dados.detalhe ? ` Resposta: ${err.dados.detalhe.resposta || 'sem texto'}` : ''), 'erro'); } });
 $('ac-email').addEventListener('change', async e => { try { await AV.email(e.target.checked); msg('ac-msg', e.target.checked ? 'Resumo por e-mail ativado.' : 'Resumo por e-mail desligado.', 'ok'); } catch (err) { msg('ac-msg', err.message, 'erro'); } });
 $('ac-form').addEventListener('submit', async e => {
   e.preventDefault(); msg('ac-msg', 'Procurando…');
