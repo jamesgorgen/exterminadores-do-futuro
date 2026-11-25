@@ -20,3 +20,5 @@ bucket_name = "exterminadores-dados"
 [vars]
 # Teto geral de comparações novas por mês (além do limite de uma por semana por conta), para conter o custo da IA.
 LIMITE_GLOBAL_MES = "300"
+# teto mensal da conta do responsável, à parte do teto dos demais usuários
+LIMITE_DONO_MES = "300"
