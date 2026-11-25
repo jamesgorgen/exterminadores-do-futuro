@@ -1,0 +1,30 @@
+# Publica o Worker público do comparador de textos na Cloudflare (cloudflare/comparador).
+# Roda quando o código do Worker muda e à mão em Actions > Publicar o comparador > Run workflow.
+# Precisa do segredo CLOUDFLARE_API_TOKEN (permissão de editar Workers) e usa R2_ACCOUNT_ID como conta.
+name: Publicar o comparador
+
+on:
+  push:
+    branches: [main]
+    paths: ['cloudflare/comparador/**']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: comparador-worker
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publicar o Worker
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.R2_ACCOUNT_ID }}
+          workingDirectory: cloudflare/comparador

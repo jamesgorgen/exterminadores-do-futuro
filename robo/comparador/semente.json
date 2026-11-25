@@ -1,0 +1,20 @@
+[
+  {
+    "titulo": "Mercados digitais: texto original × substitutivo de julho",
+    "proposicao": "PL 4675/2025",
+    "a": {"ref": "camara:2562481"},
+    "b": {"ref": "camara:2638403"}
+  },
+  {
+    "titulo": "Mercados digitais: substitutivo de julho × substitutivo de novembro",
+    "proposicao": "PL 4675/2025",
+    "a": {"ref": "camara:2638403"},
+    "b": {"ref": "camara:2659062"}
+  },
+  {
+    "titulo": "Mercados digitais: texto original × substitutivo de novembro",
+    "proposicao": "PL 4675/2025",
+    "a": {"ref": "camara:2562481"},
+    "b": {"ref": "camara:2659062"}
+  }
+]

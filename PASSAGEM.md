@@ -63,6 +63,11 @@ Esta seção resume a sessão de 30/10 a 17/11. O histórico anterior está no a
 - Corrigido `robo/situacoes.mjs`: o arquivo anual da Câmara traz a data do último status em `ultimoStatus.data`, e o robô lia `dataHora`, por isso 27.297 projetos da Câmara estavam sem data. As datas foram preenchidas em `dados/situacoes.json` a partir dos arquivos anuais em 24/11; ainda faltam 1.196.
 - O robô não manda para a IA os itens já classificados pela equipe.
 
+## Comparador de textos (25/11)
+- Página `comparador.html` com busca de proposições e versões (Câmara e Senado, no navegador) e envio de PDFs; Worker público `cloudflare/comparador`; robô `robo/comparador/fila.py` (workflow "Comparador", a cada 5 min). Detalhes no LEIA-ME.
+- Decisões do James: qualquer visitante pode gerar comparações; uma nova por mês por IP, de graça; resultados entram direto na lista pública com alerta de revisão humana. Teto geral de 300 por mês, a confirmar com o James.
+- Piloto que originou a ferramenta: PL 4675/2025, original × PRLP 1 (julho). O PRLP 2 (substitutivo de novembro) foi protocolado em 23/11, id 2659062; as três comparações estão em `semente.json`.
+
 ## Pendências do James
 - 2FA no GitHub, Cloudflare e Registro.br e revisão dos tokens dos revisores encaminhadas pelo James em 17/11. Ramo `diag-dns` apagado em 17/11 (esta sessão não consegue apagar ramos; o James apaga pelo site).
 

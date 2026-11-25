@@ -1,0 +1,14 @@
+# Worker público do comparador de textos (cloudflare/comparador). Sem Cloudflare Access: a página comparador.html do site usa esta API.
+# Publicado pelo workflow "Publicar o comparador" (.github/workflows/comparador-worker.yml).
+name = "comparador-exterminadores"
+main = "worker.js"
+compatibility_date = "2026-11-01"
+workers_dev = true
+
+[[r2_buckets]]
+binding = "R2"
+bucket_name = "exterminadores-dados"
+
+[vars]
+# Teto geral de comparações novas por mês (além do limite de uma por IP), para conter o custo da IA.
+LIMITE_GLOBAL_MES = "300"

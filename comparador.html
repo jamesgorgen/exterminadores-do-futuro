@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>Comparador de textos · Os exterminadores do futuro</title>
+<meta name="description" content="Compare versões de projetos de lei, substitutivos, pareceres e emendas da Câmara e do Senado, artigo por artigo.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Os exterminadores do futuro">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://exterminadores.com.br/comparador.html">
+<meta property="og:title" content="Comparador de textos legislativos">
+<meta property="og:description" content="O que mudou entre o projeto original e o substitutivo? Compare versões da Câmara e do Senado, artigo por artigo.">
+<meta property="og:image" content="https://exterminadores.com.br/compartilhar.jpg?v=3">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#123B40; --night-2:#1E4B51; --red:#0B6E73; --paper:#F2F4F1; --sheet:#ffffff; --ink:#1B2523; --ink-2:#4C5A57; --ink-3:#5F6B68;
+  --line:#D5DCD9; --mark:#E3B75B; --warn:#7a4f00; --warn-soft:#fbf1dc;
+  --mer:#9A3424; --nov:#C9822B; --red-c:#8F8C80; --sup:#B4442F; --reo:#2F7F84; --igu:#C9D1CE;
+  --insbg:#F6DC9A; --insink:#2a2000; --del:#B4442F; --delbg:#F8E1DC; --mov:#2F7F84;
+  --display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --text:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --lei:"Source Serif 4",Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --night:#0E2C30; --night-2:#1A3E43; --red:#6FB3B8; --paper:#141B1A; --sheet:#1C2523; --ink:#EEF2F0; --ink-2:#B6C2BF; --ink-3:#97A3A0; --line:#2C3836;
+    --warn:#f0c46a; --warn-soft:#3a3120; --mer:#F08A74; --nov:#E3B75B; --red-c:#B8B2A3; --sup:#F08A74; --reo:#6FB3B8; --igu:#3A4846;
+    --insbg:#6b5310; --insink:#fff3cc; --del:#F5A08E; --delbg:#3d1d16; --mov:#6FB3B8; color-scheme:dark; }
+}
+:root[data-theme="dark"]{ --night:#0E2C30; --night-2:#1A3E43; --red:#6FB3B8; --paper:#141B1A; --sheet:#1C2523; --ink:#EEF2F0; --ink-2:#B6C2BF; --ink-3:#97A3A0; --line:#2C3836;
+  --warn:#f0c46a; --warn-soft:#3a3120; --mer:#F08A74; --nov:#E3B75B; --red-c:#B8B2A3; --sup:#F08A74; --reo:#6FB3B8; --igu:#3A4846;
+  --insbg:#6b5310; --insink:#fff3cc; --del:#F5A08E; --delbg:#3d1d16; --mov:#6FB3B8; color-scheme:dark; }
+*{box-sizing:border-box;min-width:0}
+[hidden]{display:none!important}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 var(--text);-webkit-font-smoothing:antialiased;overflow-x:clip}
+a{color:var(--red)}
+button,input,select{font:inherit;color:inherit}
+select,select option,input{background-color:var(--sheet);color:var(--ink)}
+:focus-visible{outline:3px solid var(--mark);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(20px, env(safe-area-inset-left, 0px));padding-right:max(20px, env(safe-area-inset-right, 0px))}
+@media (max-width:560px){.wrap{padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}}
+
+.topo{background:var(--night);color:#fff}
+.topo .wrap{padding-block:20px 30px}
+.vendo .topo h1,.vendo .topo .lede{display:none}.vendo .topo .wrap{padding-block:14px 16px}
+.topo .voltar{display:inline-flex;align-items:center;gap:6px;color:#fff;font-weight:700;font-size:14px;text-decoration:none;border:1px solid rgba(255,255,255,.45);border-radius:4px;padding:6px 12px;margin-bottom:14px}
+.topo .voltar:hover{background:#fff;color:var(--night)}
+.marca{display:block;font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:20px;letter-spacing:.02em;color:#fff;text-decoration:none}
+.topo h1{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(40px,7vw,88px);line-height:.9;margin:14px 0 0;text-wrap:balance}
+.topo .lede{font-size:clamp(16px,1.8vw,20px);line-height:1.45;max-width:62ch;margin:16px 0 0;color:#C5D3D0}
+.secoes{background:var(--night-2);color:#fff;position:sticky;top:0;z-index:10}
+.secoes .wrap{display:flex;gap:6px 22px;flex-wrap:wrap;padding-block:11px;align-items:center}
+.secoes a{color:#fff;font-weight:700;font-size:15px;text-decoration:none;border-bottom:2px solid transparent}
+.secoes a:hover{border-color:#fff}
+.secoes a.inicio{background:#fff;color:var(--night);border-radius:4px;padding:3px 10px;border-bottom:0}
+@media (max-width:700px){.secoes .wrap{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}.secoes .wrap::-webkit-scrollbar{display:none}.secoes a{white-space:nowrap;flex:none}}
+
+.alerta{background:var(--warn-soft);color:var(--ink);border-left:5px solid var(--mark);padding:14px 18px;border-radius:4px;margin:24px 0 0;max-width:90ch}
+.alerta b{color:var(--warn)}
+section{padding-block:40px 10px;scroll-margin-top:60px}
+h2{font-family:var(--display);font-weight:800;font-size:clamp(32px,4vw,44px);line-height:1;margin:0 0 8px;text-wrap:balance}
+h3{font-family:var(--display);font-weight:800;font-size:24px;line-height:1.05;margin:0 0 8px}
+.intro{max-width:72ch;color:var(--ink-2);margin:0 0 18px}
+.mini{font-size:13.5px;color:var(--ink-3)}
+.painel{background:var(--sheet);border:1px solid var(--line);border-radius:8px;padding:18px 20px}
+.modos{display:flex;gap:6px;margin:0 0 14px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--sheet);border-radius:999px;padding:0 15px;min-height:40px;font-size:15px;font-weight:600;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--sheet);border-color:var(--ink)}
+.chip i{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:7px}
+.linha{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+.campo{display:flex;flex-direction:column;gap:4px;font-size:14px;font-weight:600}
+.campo input,.campo select{border:1.5px solid var(--line);border-radius:4px;padding:9px 11px;min-height:44px;font-size:16px;font-weight:400}
+.campo.grande{flex:1 1 280px}
+.btn{background:var(--night);color:#fff;border:0;border-radius:4px;padding:0 18px;min-height:44px;font-weight:700;cursor:pointer}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.sec{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+.msg{margin:12px 0 0;font-size:15px}
+.msg.erro{color:var(--sup);font-weight:600}
+.cota{margin:0 0 14px;font-size:14px;color:var(--ink-2)}
+.prop{border-top:1px solid var(--line);margin-top:16px;padding-top:14px}
+.prop h4{margin:0;font-size:18px}
+.prop p{margin:4px 0 10px;color:var(--ink-2);font-size:15px;max-width:90ch}
+.versoes{border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.versoes table{width:100%;border-collapse:collapse;font-size:14.5px}
+.versoes th{font-size:12px;text-align:left;color:var(--ink-3);font-weight:700;padding:8px 10px;background:var(--paper);border-bottom:1px solid var(--line)}
+.versoes td{padding:8px 10px;border-top:1px solid var(--line);vertical-align:top}
+.versoes td.r{width:44px;text-align:center}
+.versoes input[type=radio]{width:20px;height:20px;accent-color:var(--night)}
+.versoes tr.grupo td{background:var(--paper);font-weight:700;font-size:13px;color:var(--ink-2)}
+.versoes .data{white-space:nowrap;color:var(--ink-3)}
+.envios{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:760px){.envios{grid-template-columns:minmax(0,1fr)}}
+.envio{border:1px dashed var(--line);border-radius:6px;padding:12px 14px;display:flex;flex-direction:column;gap:10px}
+.envio input[type=file]{font-size:15px}
+.acomp{margin-top:18px}
+.acomp li{margin:6px 0}
+.estado{display:inline-block;font-size:12.5px;font-weight:700;border-radius:4px;padding:1px 8px;background:var(--paper);border:1px solid var(--line)}
+.estado.pronta{background:#2F6B3A;color:#fff;border-color:#2F6B3A}.estado.erro{background:var(--sup);color:#fff;border-color:var(--sup)}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
+.card{background:var(--sheet);border:1px solid var(--line);border-radius:8px;padding:14px 16px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:6px}
+.card:hover{border-color:var(--ink-3)}
+.card .rot{font-size:12px;font-weight:700;color:var(--ink-3)}
+.card b{font-size:17px;line-height:1.3}
+.card p{margin:0;color:var(--ink-2);font-size:14.5px}
+.card .vs{font-size:13.5px;color:var(--ink-2)}
+.conts{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:13px;color:var(--ink-2)}
+.conts i{width:9px;height:9px;border-radius:2px;display:inline-block;margin-right:5px}
+.vazio{color:var(--ink-3);padding:20px 0}
+
+/* visualizador */
+.vtopo{background:var(--sheet);border-bottom:1px solid var(--line)}
+.vtopo .wrap{padding-block:24px 22px}
+.vtopo .kick{font-size:14px;color:var(--ink-3);margin:0 0 6px}
+.vtopo h2{font-size:clamp(30px,4.4vw,52px);max-width:24ch}
+.vers{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:12px;margin:16px 0;max-width:900px}
+.ver{border:1px solid var(--line);border-radius:8px;padding:10px 14px;background:var(--paper)}
+.ver span{display:block;font-size:13px;color:var(--ink-3)}.ver b{display:block;font-size:16px}
+.seta{align-self:center;font-size:22px;color:var(--ink-3)}
+@media (max-width:600px){.vers{grid-template-columns:minmax(0,1fr)}.seta{transform:rotate(90deg);justify-self:center}}
+.figs{display:flex;flex-wrap:wrap;gap:8px 26px;margin:6px 0 14px}
+.fig1{display:flex;align-items:baseline;gap:7px;font-size:14px;color:var(--ink-2)}
+.fig1 b{font-family:var(--display);font-size:34px;line-height:1;color:var(--ink)}
+.fig1 i{width:11px;height:11px;border-radius:3px;display:inline-block}
+.ribbon{display:flex;gap:2px;height:34px}
+.seg{flex:var(--w) 1 0;border:0;padding:0;border-radius:3px;background:var(--c);cursor:pointer}
+.seg:hover,.seg:focus-visible{outline:2px solid var(--ink);outline-offset:1px}
+.acoes{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.resumo{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;list-style:none;margin:0;padding:0}
+.resumo li{border-top:3px solid var(--mer);padding-top:10px}
+.resumo h4{margin:0 0 4px;font-size:17px;line-height:1.3}.resumo p{margin:0 0 4px;color:var(--ink-2);font-size:15px}
+.ref{background:none;border:0;padding:4px 0;font-weight:700;font-size:13px;text-decoration:underline;cursor:pointer;color:var(--ink)}
+.bal{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:24px;margin-top:22px}
+@media (max-width:860px){.bal{grid-template-columns:minmax(0,1fr)}}
+.bal p{margin:0;font-size:17px}
+.caixa{background:var(--sheet);border:1px solid var(--line);border-radius:8px;padding:12px 14px;font-size:14px}
+.caixa ul{margin:6px 0 0;padding-left:18px}
+.ferr{position:sticky;top:50px;z-index:5;background:var(--paper);border-bottom:1px solid var(--line);padding-block:10px}
+.ferr .wrap{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ferr input[type=search]{border:1.5px solid var(--line);border-radius:4px;padding:0 12px;min-height:40px;font-size:16px;flex:1 1 200px;max-width:320px;margin-left:auto}
+.ferr label{display:flex;gap:8px;align-items:center;font-size:14.5px;min-height:40px;cursor:pointer}
+.ferr label input{width:20px;height:20px}
+@media (max-width:700px){.ferr{position:static}.ferr input[type=search]{max-width:none;margin-left:0}}
+.legenda{font-size:13.5px;color:var(--ink-2);margin:14px 0 0}
+.art{border-bottom:1px solid var(--line);padding:20px 0}
+.ah{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.ah h4{margin:0;font-size:20px}.ah h4 small{font-weight:500;color:var(--ink-3);font-size:15px}
+.badge{font-size:12.5px;font-weight:700;border-radius:4px;padding:2px 8px;color:#fff;background:var(--c)}
+.tag{font-size:12.5px;color:var(--ink-2);border:1px solid var(--line);border-radius:4px;padding:1px 8px}
+.nota{margin:8px 0 0;max-width:85ch}
+.nota::before{content:"Análise automática";display:block;font-size:11.5px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.05em}
+.stat{font-size:13px;color:var(--ink-3);margin:4px 0 0}
+.tog{background:none;border:0;padding:8px 0;min-height:40px;font-weight:700;font-size:14px;text-decoration:underline;cursor:pointer;color:var(--ink)}
+.cols{border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--sheet)}
+.rh,.row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.rh div{font-size:12.5px;font-weight:700;color:var(--ink-3);padding:8px 14px;background:var(--paper);border-bottom:1px solid var(--line)}
+.row{border-top:1px solid var(--line);border-left:4px solid transparent}
+.rh+.row{border-top:0}
+.cell{padding:9px 14px;font:16px/1.6 var(--lei)}
+.cell+.cell{border-left:1px solid var(--line)}
+.k-alterado{border-left-color:var(--mer)}.k-novo{border-left-color:var(--nov)}.k-suprimido{border-left-color:var(--sup)}.k-movido{border-left-color:var(--mov)}.k-renum{border-left-color:var(--red-c)}
+.k-igual .cell{color:var(--ink-3)}
+.esconde .k-igual{display:none}
+.ut{display:inline-block;font:700 11.5px/1.6 var(--text);border-radius:4px;padding:0 7px;margin:0 6px 4px 0;background:var(--paper);border:1px solid var(--line)}
+.k-movido .ut:first-child{background:var(--mov);color:#fff;border-color:var(--mov)}
+.lb{font-weight:600}
+.del{color:var(--del);background:var(--delbg);text-decoration:line-through}
+.ins{background:var(--insbg);color:var(--insink);border-radius:2px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.ren{border-bottom:1.5px dotted var(--ink-3)}
+.empty{color:var(--ink-3);font-family:var(--text)}
+@media (max-width:700px){.rh{display:none}.row{grid-template-columns:minmax(0,1fr)}.cell+.cell{border-left:0;border-top:1px dashed var(--line)}
+  .cell::before{display:block;font:700 11.5px var(--text);color:var(--ink-3);content:attr(data-n)}}
+.como ol{max-width:80ch;padding-left:22px}.como li{margin:8px 0}
+.como ul{max-width:80ch;padding-left:22px;color:var(--ink-2)}
+.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:6px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:20}
+.toast.on{opacity:1}
+.rodape{background:var(--night);color:#C5D3D0;font-size:13.5px;margin-top:50px}
+.rodape .wrap{padding-top:22px;padding-bottom:30px}
+.rodape p{max-width:90ch;margin:0 0 6px}.rodape a{color:#fff}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="topo"><div class="wrap">
+  <a class="voltar" href="./"><span aria-hidden="true">←</span> Voltar à página inicial</a>
+  <a class="marca" href="./"><img src="imagens/simbolo.svg" alt="" width="28" height="28" style="vertical-align:-7px;margin-right:8px;border-radius:6px">Os exterminadores do futuro</a>
+  <h1>Comparador de textos</h1>
+  <p class="lede">O que mudou entre o projeto original e o substitutivo do relator? Escolha duas versões de uma proposição da Câmara ou do Senado, ou envie dois PDFs, e veja as diferenças artigo por artigo.</p>
+</div></header>
+<nav class="secoes" aria-label="Seções"><div class="wrap">
+  <a class="inicio" href="./"><span aria-hidden="true">←</span> Início</a><a href="#nova">Nova comparação</a><a href="#prontas">Comparações prontas</a><a href="#como">Como funciona</a>
+</div></nav>
+
+<main>
+<div id="visor" hidden></div>
+
+<div id="paginas">
+<div class="wrap">
+  <p class="alerta" role="note"><b>Atenção.</b> O quadro comparativo e o resumo são produzidos automaticamente, por um programa e por inteligência artificial. Eles ajudam a encontrar as mudanças, mas <b>não substituem a revisão humana</b>: confira sempre o texto oficial antes de publicar, citar ou tomar qualquer decisão.</p>
+</div>
+
+<section id="nova"><div class="wrap">
+  <h2>Nova comparação</h2>
+  <p class="intro">Busque a proposição e escolha as duas versões, ou envie os PDFs. Se a comparação já existir, ela abre na hora e não conta para o seu limite.</p>
+  <div class="painel">
+    <p class="cota" id="cota">Verificando o limite de comparações…</p>
+    <div class="modos" role="group" aria-label="Como escolher os textos">
+      <button class="chip" data-modo="busca" aria-pressed="true">Buscar proposição</button>
+      <button class="chip" data-modo="envio" aria-pressed="false">Enviar PDFs</button>
+    </div>
+
+    <div id="m-busca">
+      <form class="linha" id="f-busca">
+        <label class="campo grande">Proposição ou palavras da ementa<input id="q" type="search" placeholder="Ex.: PL 4675/2025, PLP 299/2026 ou mercados digitais" autocomplete="off" required></label>
+        <label class="campo">Casa<select id="casa"><option value="camara">Câmara</option><option value="senado">Senado</option></select></label>
+        <button class="btn" type="submit">Buscar</button>
+      </form>
+      <p class="mini">Na busca por palavras, só a Câmara é consultada. No Senado, informe a sigla, o número e o ano (ex.: PL 2338/2023).</p>
+      <div id="r-busca" aria-live="polite"></div>
+    </div>
+
+    <div id="m-envio" hidden>
+      <form id="f-envio">
+        <div class="envios">
+          <div class="envio"><b>Versão A (a mais antiga)</b>
+            <input type="file" id="pa" accept="application/pdf,.pdf" required aria-label="PDF da versão A">
+            <label class="campo">Nome da versão<input id="na" maxlength="120" required placeholder="Ex.: Texto original"></label>
+            <label class="campo">Data (opcional)<input id="da" maxlength="10" placeholder="dd/mm/aaaa"></label></div>
+          <div class="envio"><b>Versão B (a mais recente)</b>
+            <input type="file" id="pb" accept="application/pdf,.pdf" required aria-label="PDF da versão B">
+            <label class="campo">Nome da versão<input id="nb" maxlength="120" required placeholder="Ex.: Substitutivo do relator"></label>
+            <label class="campo">Data (opcional)<input id="db" maxlength="10" placeholder="dd/mm/aaaa"></label></div>
+        </div>
+        <div class="linha" style="margin-top:12px">
+          <label class="campo grande">Título da comparação (opcional)<input id="te" maxlength="140" placeholder="Ex.: PL 4675/2025: original × substitutivo de novembro"></label>
+          <button class="btn" type="submit">Enviar e comparar</button>
+        </div>
+        <p class="mini">PDFs de até 15 MB, com texto articulado ("Art. 1º"). Os textos enviados passam a aparecer na comparação pública.</p>
+      </form>
+    </div>
+    <p class="msg" id="msg" aria-live="polite"></p>
+    <div class="acomp" id="acomp" hidden><h3>Suas comparações</h3><ul id="minhas"></ul>
+      <p class="mini">O robô confere a fila a cada cinco minutos. Uma comparação costuma ficar pronta entre 5 e 20 minutos; esta página se atualiza sozinha.</p></div>
+  </div>
+</div></section>
+
+<section id="prontas"><div class="wrap">
+  <h2>Comparações prontas</h2>
+  <p class="intro">Todas as comparações já feitas ficam aqui, abertas a qualquer pessoa. Antes de pedir uma nova, veja se ela já existe.</p>
+  <div class="linha" style="margin-bottom:14px"><label class="campo grande">Filtrar<input id="filtro" type="search" placeholder="Número, título ou palavra" autocomplete="off"></label></div>
+  <div class="cards" id="lista"><p class="vazio">Carregando…</p></div>
+</div></section>
+
+<section id="como" class="como"><div class="wrap">
+  <h2>Como funciona</h2>
+  <ol>
+    <li><b>Escolha dos textos.</b> A busca consulta, no seu navegador, os dados abertos da Câmara e do Senado e lista as versões da proposição que têm texto publicado: o projeto, os pareceres e substitutivos, as emendas e a redação final. Também é possível enviar dois PDFs.</li>
+    <li><b>Extração.</b> Um robô da plataforma baixa os PDFs, extrai o texto (com leitura óptica, quando o PDF é uma imagem), retira cabeçalhos, rodapés e assinaturas e localiza o trecho com os artigos. Num parecer, por exemplo, ele separa o substitutivo do relatório.</li>
+    <li><b>Emparelhamento, sem IA.</b> Cada artigo é emparelhado com o correspondente da outra versão, mesmo que tenha mudado de número. Dentro do artigo, cada parágrafo, inciso e alínea é emparelhado do mesmo jeito. Trechos que só mudaram de lugar aparecem como deslocados; dispositivos divididos aparecem numa linha só; trocas de nome repetidas no texto todo são identificadas e marcadas à parte, para não esconder as mudanças de conteúdo.</li>
+    <li><b>Diferenças, sem IA.</b> As palavras que saíram aparecem riscadas e as que entraram, marcadas.</li>
+    <li><b>Análise, com IA.</b> Só as diferenças, nunca os textos inteiros, vão para um modelo de inteligência artificial, que separa mudanças de mérito de mudanças de redação e escreve o resumo e uma nota por artigo.</li>
+    <li><b>Lista pública.</b> A comparação pronta entra na lista desta página e fica guardada. Quem pedir a mesma comparação depois recebe o resultado na hora.</li>
+  </ol>
+  <p class="alerta" role="note"><b>O resultado não substitui a revisão humana.</b> A extração de PDFs pode falhar em documentos mal formatados ou escaneados, o emparelhamento pode errar quando o texto é muito reescrito e a análise de IA pode simplificar ou interpretar mal uma mudança. Use o comparador como ponto de partida e confira o texto oficial, cujo link aparece em cada comparação, antes de publicar ou citar.</p>
+  <h3 style="margin-top:28px">Limites</h3>
+  <ul>
+    <li>Cada conexão pode pedir uma comparação nova por mês, de graça. Abrir comparações prontas e pedir uma que já existe não contam. Há também um teto geral mensal.</li>
+    <li>Só funciona com textos articulados (com "Art. 1º"). Atas, notas técnicas e ofícios não são aceitos.</li>
+    <li>PDFs de até 15 MB. Os PDFs enviados e as comparações ficam públicos na lista.</li>
+    <li>Para controlar o limite, a plataforma guarda só um código derivado do endereço IP, nunca o endereço em si.</li>
+    <li>Mudanças em títulos de capítulos e seções não aparecem no quadro, só nos artigos.</li>
+  </ul>
+</div></section>
+</div>
+</main>
+
+<footer class="rodape"><div class="wrap">
+  <p>Textos oficiais da Câmara dos Deputados e do Senado Federal, pelos dados abertos das duas Casas. O código do comparador está no <a href="https://github.com/jamesgorgen/exterminadores-do-futuro">repositório do projeto no GitHub</a>.</p>
+  <p><b>Contato.</b> Erros, sugestões e pedidos de retirada podem ser enviados para contato@exterminadores.com.br.</p>
+  <p><a href="./">← Voltar à página inicial</a></p>
+</div></footer>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+{
+const API = 'https://comparador-exterminadores.gorgen-james.workers.dev';
+const CAM = 'https://dadosabertos.camara.leg.br/api/v2';
+const SEN = 'https://legis.senado.leg.br/dadosabertos';
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const dt = s => { const m = String(s || '').match(/(\d{4})-(\d{2})-(\d{2})/); return m ? `${m[3]}/${m[2]}/${m[1]}` : ''; };
+const ordemData = s => { const m = String(s || '').match(/(\d{2})\/(\d{2})\/(\d{4})/); return m ? m[3] + m[2] + m[1] : '99999999'; };
+const CLS = { merito: ['Mérito', 'var(--mer)'], novo: ['Novo', 'var(--nov)'], suprimido: ['Suprimido', 'var(--sup)'], redacao: ['Só redação', 'var(--red-c)'], reorganizado: ['Reorganizado', 'var(--reo)'], igual: ['Sem alteração', 'var(--igu)'] };
+const loja = { get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch (_) { return d; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (_) {} } };
+const toast = t => { const e = $('toast'); e.textContent = t; e.classList.add('on'); setTimeout(() => e.classList.remove('on'), 2400); };
+const msg = (t, erro) => { $('msg').textContent = t || ''; $('msg').className = 'msg' + (erro ? ' erro' : ''); };
+async function api(path, opt) {
+  const r = await fetch(API + path, opt);
+  let j = {}; try { j = await r.json(); } catch (_) {}
+  if (!r.ok) { const e = new Error(j.erro || 'O serviço do comparador não respondeu. Tente de novo em instantes.'); e.status = r.status; e.dados = j; throw e; }
+  return j;
+}
+async function getj(url) { const r = await fetch(url, { headers: { Accept: 'application/json' } }); if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }
+
+// ---------------- cota
+let cotaLivre = true;
+async function verCota() {
+  try {
+    const c = await api('/api/cota'); cotaLivre = c.disponivel;
+    $('cota').textContent = c.disponivel ? 'Você pode pedir uma comparação nova gratuita neste mês. Comparações que já existem não contam.'
+      : `Você já usou a comparação gratuita deste mês (renova em ${dt(c.renova)}). Ainda é possível abrir qualquer comparação pronta e pedir as que já existem.`;
+  } catch (e) { $('cota').textContent = 'Não foi possível verificar o limite agora.'; }
+}
+
+// ---------------- modos
+document.querySelector('.modos').addEventListener('click', e => {
+  const b = e.target.closest('[data-modo]'); if (!b) return;
+  document.querySelectorAll('[data-modo]').forEach(x => x.setAttribute('aria-pressed', x === b));
+  $('m-busca').hidden = b.dataset.modo !== 'busca'; $('m-envio').hidden = b.dataset.modo !== 'envio'; msg('');
+});
+
+// ---------------- busca
+const TIPOS_CAM = new Set(['PRLP', 'PRL', 'PAR', 'PPP', 'SBT', 'SBT-A', 'SBE', 'SBR', 'EMC', 'EMC-A', 'EMP', 'EMR', 'EMS', 'ESB', 'EMA', 'RDF', 'PEP', 'PES', 'EMD']);
+const GRUPO = s => /^EM|^ESB/.test(s) ? 'Emendas' : 'Projeto, pareceres, substitutivos e redação final';
+const TIPOS_SEN = /^(PROJETO|PARECER|RELATORIO|EMENDA|TEXTO|SUBSTITUTIVO|AUTOGRAFO|REDACAO)/;
+function partes(q) {
+  const m = q.replace(/\./g, '').match(/^\s*([A-Za-z]{2,5})?\s*n?[º°]?\s*(\d{1,5})\s*\/\s*(\d{2,4})\s*$/);
+  if (!m) return null;
+  let ano = m[3]; if (ano.length === 2) ano = (+ano > 50 ? '19' : '20') + ano;
+  return { sigla: (m[1] || '').toUpperCase(), numero: m[2], ano };
+}
+let atual = null;
+$('f-busca').addEventListener('submit', async e => {
+  e.preventDefault(); msg(''); const q = $('q').value.trim(); const casa = $('casa').value; const out = $('r-busca');
+  out.innerHTML = '<p class="mini">Buscando…</p>';
+  try {
+    const p = partes(q);
+    if (casa === 'senado') {
+      if (!p || !p.sigla) throw new Error('No Senado, informe a sigla, o número e o ano (ex.: PL 2338/2023).');
+      const lista = await getj(`${SEN}/processo?sigla=${encodeURIComponent(p.sigla)}&numero=${p.numero}&ano=${p.ano}`);
+      if (!lista.length) throw new Error('Nenhuma proposição encontrada no Senado.');
+      await mostrarSenado(lista[0].id);
+    } else if (p) {
+      const url = `${CAM}/proposicoes?numero=${p.numero}&ano=${p.ano}${p.sigla ? '&siglaTipo=' + encodeURIComponent(p.sigla) : ''}&itens=10`;
+      const r = await getj(url);
+      if (!r.dados.length) throw new Error('Nenhuma proposição encontrada na Câmara.');
+      if (r.dados.length === 1) await mostrarCamara(r.dados[0].id); else escolher(r.dados);
+    } else {
+      const r = await getj(`${CAM}/proposicoes?keywords=${encodeURIComponent(q)}&ordem=DESC&ordenarPor=id&itens=15`);
+      if (!r.dados.length) throw new Error('Nada encontrado. Tente o número da proposição.');
+      escolher(r.dados);
+    }
+  } catch (err) { out.innerHTML = ''; msg(err.message || 'A busca falhou.', true); }
+});
+function escolher(dados) {
+  $('r-busca').innerHTML = '<div class="prop"><h4>Escolha a proposição</h4><ul>' + dados.map(d =>
+    `<li><button class="ref" data-cam="${esc(d.id)}">${esc(d.siglaTipo)} ${esc(d.numero)}/${esc(d.ano)}</button> ${esc((d.ementa || '').slice(0, 160))}</li>`).join('') + '</ul></div>';
+}
+$('r-busca').addEventListener('click', e => { const b = e.target.closest('[data-cam]'); if (b) { $('r-busca').innerHTML = '<p class="mini">Carregando as versões…</p>'; mostrarCamara(b.dataset.cam).catch(err => msg(err.message, true)); } });
+
+async function mostrarCamara(id) {
+  const d = (await getj(`${CAM}/proposicoes/${id}`)).dados;
+  const rel = (await getj(`${CAM}/proposicoes/${id}/relacionadas`)).dados.filter(x => TIPOS_CAM.has(x.siglaTipo));
+  const det = await Promise.all(rel.slice(0, 80).map(x => getj(`${CAM}/proposicoes/${x.id}`).then(r => r.dados).catch(() => null)));
+  const versoes = [d, ...det.filter(Boolean)].filter(x => x.urlInteiroTeor).map(x => ({
+    ref: 'camara:' + x.id, nome: +x.ano ? `${x.siglaTipo} ${x.numero}/${x.ano}` : `${x.siglaTipo} ${x.numero}`, tipo: x.descricaoTipo || '', data: dt(x.dataApresentacao),
+    url: String(x.urlInteiroTeor).replace('http://', 'https://'), grupo: x.id === d.id ? 'Projeto, pareceres, substitutivos e redação final' : GRUPO(x.siglaTipo), desc: (x.ementa || '').slice(0, 140) }));
+  atual = { proposicao: `${d.siglaTipo} ${d.numero}/${d.ano}`, ementa: d.ementa, casa: 'Câmara', versoes };
+  desenharVersoes();
+}
+async function mostrarSenado(pid) {
+  const d = await getj(`${SEN}/processo/${pid}`);
+  const vistos = new Set(), versoes = [];
+  for (const au of d.autuacoes || []) for (const inf of au.informesLegislativos || []) for (const x of inf.documentosAssociados || []) {
+    if (!x.url || vistos.has(x.url) || !TIPOS_SEN.test(x.siglaTipo || '')) continue;
+    vistos.add(x.url);
+    const uuid = x.url.split('/').pop();
+    if (!/^[0-9a-f-]{36}$/.test(uuid)) continue;
+    versoes.push({ ref: `senado:${pid}:${uuid}`, nome: x.identificacao || x.tipo, tipo: x.tipo || '', data: dt(x.data), url: x.url,
+      grupo: /^EMENDA/.test(x.siglaTipo) && !/substitutivo/i.test(x.descricao || '') ? 'Emendas' : 'Projeto, pareceres, substitutivos e redação final', desc: (x.descricao || '').slice(0, 140) });
+  }
+  atual = { proposicao: d.identificacao || `${d.sigla} ${d.numero}/${d.ano}`, ementa: (d.conteudo && d.conteudo.ementa) || d.objetivo || '', casa: 'Senado', versoes };
+  desenharVersoes();
+}
+function desenharVersoes() {
+  const v = atual.versoes.sort((a, b) => ordemData(a.data).localeCompare(ordemData(b.data)));
+  if (v.length < 2) { $('r-busca').innerHTML = `<div class="prop"><h4>${esc(atual.proposicao)}</h4><p>Esta proposição ainda tem menos de duas versões com texto publicado. Se tiver o PDF de outra versão, use "Enviar PDFs".</p></div>`; return; }
+  const principais = v.filter(x => x.grupo !== 'Emendas'), emendas = v.filter(x => x.grupo === 'Emendas');
+  const ia = 0, ib = principais.length > 1 ? principais.length - 1 : 1;
+  const linha = (x, i) => `<tr><td class="r"><input type="radio" name="va" value="${i}" aria-label="Versão A: ${esc(x.nome)}" ${i === ia ? 'checked' : ''}></td><td class="r"><input type="radio" name="vb" value="${i}" aria-label="Versão B: ${esc(x.nome)}" ${i === ib ? 'checked' : ''}></td>
+    <td><b>${esc(x.nome)}</b> <span class="mini">${esc(x.tipo)}</span>${x.desc && !String(atual.ementa || '').startsWith(x.desc.slice(0, 60)) ? `<br><span class="mini">${esc(x.desc)}</span>` : ''}</td><td class="data">${esc(x.data)}</td><td><a href="${esc(x.url)}" target="_blank" rel="noopener">PDF ↗</a></td></tr>`;
+  const todas = [...principais, ...emendas];
+  atual.lista = todas;
+  $('r-busca').innerHTML = `<div class="prop"><h4>${esc(atual.proposicao)} · ${esc(atual.casa)}</h4><p>${esc(atual.ementa)}</p>
+    <div class="versoes"><table><thead><tr><th>A</th><th>B</th><th>Versão</th><th>Data</th><th>Texto</th></tr></thead><tbody>
+    ${principais.map((x, i) => linha(x, i)).join('')}
+    ${emendas.length ? `<tr class="grupo"><td colspan="5">Emendas (${emendas.length})</td></tr>` + emendas.map((x, k) => linha(x, principais.length + k)).join('') : ''}
+    </tbody></table></div>
+    <div class="linha" style="margin-top:12px"><label class="campo grande">Título da comparação (opcional)<input id="tb" maxlength="140" placeholder="${esc(atual.proposicao)}: ${esc(principais[ia] ? principais[ia].nome : '')} × ${esc(principais[ib] ? principais[ib].nome : '')}"></label>
+    <button class="btn" id="ir">Comparar as versões A e B</button></div></div>`;
+}
+$('r-busca').addEventListener('click', async e => {
+  if (e.target.id !== 'ir') return;
+  const a = document.querySelector('input[name=va]:checked'), b = document.querySelector('input[name=vb]:checked');
+  if (!a || !b || a.value === b.value) { msg('Escolha duas versões diferentes, uma como A e outra como B.', true); return; }
+  const A = atual.lista[+a.value], B = atual.lista[+b.value];
+  await pedir({ a: { ref: A.ref, nome: A.nome, data: A.data }, b: { ref: B.ref, nome: B.nome, data: B.data }, proposicao: atual.proposicao,
+    titulo: $('tb').value.trim() || `${atual.proposicao}: ${A.nome} × ${B.nome}` }, e.target);
+});
+
+// ---------------- envio de PDFs
+async function hashArquivo(f) { return [...new Uint8Array(await crypto.subtle.digest('SHA-256', await f.arrayBuffer()))].map(b => b.toString(16).padStart(2, '0')).join(''); }
+$('f-envio').addEventListener('submit', async e => {
+  e.preventDefault(); msg('');
+  const fa = $('pa').files[0], fb = $('pb').files[0];
+  for (const f of [fa, fb]) {
+    if (!f) { msg('Escolha os dois PDFs.', true); return; }
+    if (f.size > 15 * 1024 * 1024) { msg(`${f.name} passa de 15 MB.`, true); return; }
+    const ini = new Uint8Array(await f.slice(0, 4).arrayBuffer());
+    if (String.fromCharCode(...ini) !== '%PDF') { msg(`${f.name} não é um PDF.`, true); return; }
+  }
+  const btn = e.submitter || e.target.querySelector('button'); btn.disabled = true;
+  try {
+    msg('Enviando os PDFs…');
+    const refs = [];
+    for (const f of [fa, fb]) {
+      const sha = await hashArquivo(f);
+      const r = await api('/api/envio?sha=' + sha, { method: 'PUT', body: f, headers: { 'content-type': 'application/pdf' } });
+      refs.push(r.ref);
+    }
+    if (refs[0] === refs[1]) throw new Error('Os dois PDFs são o mesmo arquivo.');
+    await pedir({ a: { ref: refs[0], nome: $('na').value.trim(), data: $('da').value.trim() }, b: { ref: refs[1], nome: $('nb').value.trim(), data: $('db').value.trim() },
+      titulo: $('te').value.trim() || `${$('na').value.trim()} × ${$('nb').value.trim()}` }, null);
+  } catch (err) { msg(err.message, true); }
+  btn.disabled = false;
+});
+
+// ---------------- pedidos e acompanhamento
+async function pedir(corpo, btn) {
+  if (btn) btn.disabled = true;
+  try {
+    msg('Enviando o pedido…');
+    const r = await api('/api/comparar', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(corpo) });
+    if (r.estado === 'pronta') { msg('Esta comparação já existe. Abrindo…'); abrir(r.id); return; }
+    const minhas = loja.get('cmp-minhas', []);
+    if (!minhas.some(m => m.id === r.id)) minhas.unshift({ id: r.id, titulo: corpo.titulo, criado: Date.now() });
+    loja.set('cmp-minhas', minhas.slice(0, 10));
+    msg(r.existente ? 'Esta comparação já está na fila. Acompanhe abaixo.' : 'Pedido recebido. Acompanhe abaixo; a comparação entra na lista quando ficar pronta.');
+    verCota(); acompanhar();
+  } catch (err) { msg(err.message, true); }
+  if (btn) btn.disabled = false;
+}
+let relogio = null;
+async function acompanhar() {
+  const minhas = loja.get('cmp-minhas', []).filter(m => Date.now() - m.criado < 7 * 864e5);
+  $('acomp').hidden = !minhas.length; if (!minhas.length) return;
+  let pendente = false;
+  const linhas = await Promise.all(minhas.map(async m => {
+    let est = { estado: 'desconhecido' };
+    try { est = await api('/api/pedido?id=' + m.id); } catch (_) {}
+    if (est.estado === 'fila' || est.estado === 'processando') pendente = true;
+    const rot = { fila: 'na fila', processando: 'processando', pronta: 'pronta', erro: 'não foi possível', removida: 'retirada' }[est.estado] || '…';
+    return `<li><span class="estado ${esc(est.estado)}">${esc(rot)}</span> ${est.estado === 'pronta' ? `<a href="?c=${esc(m.id)}">${esc(m.titulo)}</a>` : esc(m.titulo)}${est.erro ? ` <span class="mini">— ${esc(est.erro)}</span>` : ''}</li>`;
+  }));
+  $('minhas').innerHTML = linhas.join('');
+  clearTimeout(relogio);
+  if (pendente) relogio = setTimeout(() => { acompanhar(); carregarLista(); }, 30000);
+}
+
+// ---------------- lista pronta
+let indice = [];
+async function carregarLista() {
+  try { indice = (await api('/api/lista')).itens || []; } catch (e) { $('lista').innerHTML = `<p class="vazio">${esc(e.message)}</p>`; return; }
+  desenharLista();
+}
+function contagens(c) { return Object.keys(CLS).filter(k => c && c[k]).map(k => `<span><i style="background:${CLS[k][1]}"></i>${c[k]} ${CLS[k][0].toLowerCase()}</span>`).join(''); }
+function desenharLista() {
+  const q = $('filtro').value.trim().toLowerCase().replace(/\./g, '');
+  const it = indice.filter(x => !q || [x.titulo, x.proposicao, x.conclusao, x.a.nome, x.b.nome].join(' ').toLowerCase().replace(/\./g, '').includes(q));
+  $('lista').innerHTML = it.length ? it.map(x => `<a class="card" href="?c=${esc(x.id)}">
+    <span class="rot">${esc(x.proposicao || 'PDFs enviados')} · ${esc(dt(x.gerado))}</span><b>${esc(x.titulo)}</b>
+    ${x.conclusao ? `<p>${esc(x.conclusao)}</p>` : ''}<span class="vs">${esc(x.a.nome)}${x.a.data ? ' (' + esc(x.a.data) + ')' : ''} → ${esc(x.b.nome)}${x.b.data ? ' (' + esc(x.b.data) + ')' : ''}</span>
+    <span class="conts">${contagens(x.contagem)}</span></a>`).join('') : `<p class="vazio">${indice.length ? 'Nenhuma comparação corresponde ao filtro.' : 'Ainda não há comparações prontas.'}</p>`;
+}
+$('filtro').addEventListener('input', desenharLista);
+
+// ---------------- visualizador
+function abrir(id) { location.search = '?c=' + id; }
+async function visor(id) {
+  const v = $('visor'); v.hidden = false; $('paginas').hidden = true; document.body.classList.add('vendo');
+  v.innerHTML = '<div class="wrap"><p class="vazio">Carregando a comparação…</p></div>';
+  let D;
+  try { D = await api('/api/comparacao?id=' + encodeURIComponent(id)); }
+  catch (e) { v.innerHTML = `<div class="wrap"><p class="msg erro">${esc(e.message)}</p><p><a href="comparador.html">← Voltar ao comparador</a></p></div>`; return; }
+  document.title = D.titulo + ' · Comparador de textos';
+  const cnt = {}; D.itens.forEach(i => cnt[i.cls] = (cnt[i.cls] || 0) + 1);
+  const ver = (x, l) => `<div class="ver"><span>${l}</span><b>${esc(x.nome)}</b><span>${esc([x.tipo, x.autor, x.data].filter(Boolean).join(' · '))}</span>${x.url ? `<a href="${esc(x.url)}" target="_blank" rel="noopener">Texto oficial ↗</a>` : ''}</div>`;
+  const idOf = i => 'a-' + String(i.b || i.a).replace(/[^0-9A-Za-z]+/g, '-');
+  const SN = { alterado: ['alterado', 'alterados'], movido: ['mudou de posição', 'mudaram de posição'], novo: ['novo', 'novos'], suprimido: ['suprimido', 'suprimidos'], renum: ['só renumerado', 'só renumerados'], igual: ['igual', 'iguais'] };
+  const stat = st => { const t = Object.values(st || {}).reduce((a, b) => a + b, 0); return `${t} dispositivo${t > 1 ? 's' : ''}: ` + Object.keys(SN).filter(k => st[k]).map(k => `${st[k]} ${SN[k][st[k] > 1 ? 1 : 0]}`).join(' · '); };
+  const aberto = i => i.cls === 'merito' || i.cls === 'novo' || i.cls === 'suprimido';
+  const lab = i => i.a && i.b && i.a !== i.b ? `${esc(i.b)} <small>(era ${esc(i.a)})</small>` : esc(i.b || i.a);
+  const refBtn = r => { const m = String(r || '').match(/Art\.?\s*\d+(?:-[A-Z])?/i); return m ? `<button class="ref" data-go="a-${esc(m[0].replace(/^art\.?\s*/i, 'Art. ').replace(/[^0-9A-Za-z]+/g, '-'))}">${esc(r)}</button>` : `<span class="mini">${esc(r)}</span>`; };
+  v.innerHTML = `
+  <div class="vtopo"><div class="wrap">
+    <p class="kick"><a href="comparador.html">← Comparador</a> · ${esc(D.proposicao || 'PDFs enviados')} · gerada em ${esc(dt(D.gerado))}</p>
+    <h2>${esc(D.conclusao || D.titulo)}</h2>${D.conclusao ? `<p class="intro" style="margin:0">${esc(D.titulo)}</p>` : ''}
+    <div class="vers">${ver(D.versaoA, 'Versão A')}<div class="seta" aria-hidden="true">→</div>${ver(D.versaoB, 'Versão B')}</div>
+    <div class="figs">${Object.keys(CLS).filter(k => cnt[k]).map(k => `<div class="fig1"><b>${cnt[k]}</b><span><i style="background:${CLS[k][1]}"></i> ${CLS[k][0].toLowerCase()}</span></div>`).join('')}</div>
+    <div class="ribbon" role="list" aria-label="Artigos por tipo de mudança">${D.itens.map(i => `<button class="seg" role="listitem" style="--w:${Math.max(1, Math.round(Math.sqrt(i.tam || 100)))};--c:${CLS[i.cls][1]}" data-go="${idOf(i)}" title="${esc((i.b || i.a) + ' · ' + CLS[i.cls][0])}" aria-label="${esc((i.b || i.a) + ': ' + CLS[i.cls][0])}"></button>`).join('')}</div>
+    <div class="acoes"><button class="btn sec" id="copiar-link">Copiar o link</button>${D.resumo.length ? '<button class="btn sec" id="copiar-resumo">Copiar o resumo</button>' : ''}</div>
+    <p class="alerta" role="note"><b>Resultado automático.</b> O quadro e as análises foram gerados por um programa e por inteligência artificial e <b>não substituem a revisão humana</b>. Confira o texto oficial antes de publicar ou citar.</p>
+    ${(D.avisos || []).map(a => `<p class="alerta" role="note">${esc(a)}</p>`).join('')}
+  </div></div>
+  ${D.resumo.length || D.balanco ? `<section><div class="wrap"><h2>O que mudou de mais importante</h2>
+    <ol class="resumo">${D.resumo.map(r => `<li><h4>${esc(r.t)}</h4><p>${esc(r.d)}</p>${refBtn(r.ref)}</li>`).join('')}</ol>
+    <div class="bal"><p>${esc(D.balanco)}</p>${D.renomeacoes.length ? `<div class="caixa"><b>Trocas de nome repetidas</b><ul>${D.renomeacoes.map(r => `<li>“${esc(r.de)}” → “${esc(r.para)}” (${r.vezes} vezes)</li>`).join('')}</ul><p class="mini">No quadro, aparecem com sublinhado pontilhado, sem destaque.</p></div>` : ''}</div>
+  </div></section>` : ''}
+  <div class="ferr"><div class="wrap" id="filtros">
+    ${[['todos', 'Todos', null, D.itens.length], ...Object.keys(CLS).filter(k => cnt[k]).map(k => [k, CLS[k][0], CLS[k][1], cnt[k]])].map(([k, l, c, n]) => `<button class="chip" data-f="${k}" aria-pressed="${k === 'todos'}">${c ? `<i style="background:${c}"></i>` : ''}${l} (${n})</button>`).join('')}
+    <label><input type="checkbox" id="eq" checked> Esconder dispositivos iguais</label>
+    <input type="search" id="qv" placeholder="Buscar no texto" aria-label="Buscar no texto">
+  </div></div>
+  <section style="padding-top:10px"><div class="wrap">
+    <p class="legenda"><span class="del">riscado</span> = saiu · <span class="ins">marcado</span> = entrou · <span class="ut" style="background:var(--mov);color:#fff;border-color:var(--mov)">↕ mudou de posição</span> = trecho deslocado · <span class="ren">pontilhado</span> = troca de nome repetida</p>
+    <div id="quadro">${D.itens.map((i, n) => `<article class="art" id="${idOf(i)}" data-cls="${esc(i.cls)}" data-n="${n}">
+      <div class="ah"><h4>${lab(i)}</h4><span class="badge" style="--c:${CLS[i.cls][1]}">${CLS[i.cls][0]}</span>${(i.efeito || []).map(e => `<span class="tag">${esc(e)}</span>`).join('')}</div>
+      ${i.nota ? `<p class="nota">${esc(i.nota)}</p>` : ''}<p class="stat">${stat(i.st)}</p>
+      <button class="tog" aria-expanded="${aberto(i)}" aria-controls="c${n}">${aberto(i) ? 'Ocultar texto' : 'Ver texto'}</button>
+      <div class="cols" id="c${n}" ${aberto(i) ? '' : 'hidden'}><div class="rh"><div>${esc(D.versaoA.nome)}${i.a ? ' · ' + esc(i.a) : ''}</div><div>${esc(D.versaoB.nome)}${i.b ? ' · ' + esc(i.b) : ''}</div></div>${i.rows}</div>
+    </article>`).join('')}<p class="vazio" id="nada" hidden>Nenhum artigo corresponde ao filtro.</p></div>
+  </div></section>`;
+  // rótulos das versões nas células (celular)
+  v.querySelectorAll('.cell[data-v="A"]').forEach(c => c.dataset.n = D.versaoA.nome);
+  v.querySelectorAll('.cell[data-v="B"]').forEach(c => c.dataset.n = D.versaoB.nome);
+  const texto = D.itens.map(i => [(i.a || ''), (i.b || ''), i.nota, i.rows.replace(/<[^>]+>/g, ' ')].join(' ').toLowerCase());
+  let f = 'todos';
+  const aplicar = () => { const q = $('qv').value.trim().toLowerCase(); let n = 0;
+    v.querySelectorAll('.art').forEach(a => { const ok = (f === 'todos' || a.dataset.cls === f) && (!q || texto[a.dataset.n].includes(q)); a.hidden = !ok; if (ok) n++; });
+    $('nada').hidden = n > 0; };
+  const eq = () => $('quadro').classList.toggle('esconde', $('eq').checked);
+  $('eq').addEventListener('change', eq); eq();
+  $('qv').addEventListener('input', aplicar);
+  $('filtros').addEventListener('click', e => { const b = e.target.closest('.chip'); if (!b) return; f = b.dataset.f; v.querySelectorAll('#filtros .chip').forEach(c => c.setAttribute('aria-pressed', c === b)); aplicar(); });
+  v.addEventListener('click', async e => {
+    const t = e.target.closest('.tog');
+    if (t) { const c = $(t.getAttribute('aria-controls')); const o = c.hidden; c.hidden = !o; t.setAttribute('aria-expanded', o); t.textContent = o ? 'Ocultar texto' : 'Ver texto'; return; }
+    const g = e.target.closest('[data-go]');
+    if (g) { const el = document.getElementById(g.dataset.go); if (!el) return;
+      if (el.hidden) { f = 'todos'; $('qv').value = ''; v.querySelectorAll('#filtros .chip').forEach(c => c.setAttribute('aria-pressed', c.dataset.f === 'todos')); aplicar(); }
+      const c = el.querySelector('.cols'); if (c && c.hidden) el.querySelector('.tog').click();
+      el.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); return; }
+    if (e.target.id === 'copiar-link') { try { await navigator.clipboard.writeText(location.href); toast('Link copiado.'); } catch (_) { toast('Não foi possível copiar.'); } }
+    if (e.target.id === 'copiar-resumo') {
+      const txt = `${D.titulo}\n${D.conclusao}\n\n` + D.resumo.map(r => `• ${r.t} (${r.ref}). ${r.d}`).join('\n\n') + `\n\n${D.balanco}\n\nAnálise automática, sujeita a revisão. ${location.href}`;
+      try { await navigator.clipboard.writeText(txt); toast('Resumo copiado.'); } catch (_) { toast('Não foi possível copiar.'); } }
+  });
+}
+
+// ---------------- início
+const c = new URLSearchParams(location.search).get('c');
+if (c && /^[0-9a-f]{16}$/.test(c)) visor(c);
+else { verCota(); carregarLista(); acompanhar(); }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,2 @@
+# Comparações a retirar da lista pública: uma por linha, o identificador de 16 caracteres (aparece no endereço da comparação, ?c=...).
+# O robô apaga o resultado e tira da lista na execução seguinte. Comentários depois de #.
