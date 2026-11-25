@@ -1269,25 +1269,45 @@ export function calcularGoverno(props, sit, votos, fontes = {}) {
     const g = /cr[eé]dito extraordin[aá]rio/i.test(m.e) ? mpv.credito : mpv.outras;
     g.n = (g.n || 0) + 1; g[m.s] = (g[m.s] || 0) + 1;
   }
-  const oriGov = vt => {
-    if (vt.k === 'S') return (fontes.orientacaoSenado || {})[vt.id] || '';
-    return orientacaoDe(vt.ori, /^gov|governo/);
+  const oriGov = vt => vt.k === 'S' ? (fontes.orientacaoSenado || {})[vt.id] || '' : orientacaoDe(vt.ori, /^gov|governo/);
+  // Voto do líder do governo na Casa, na data da votação (o que começou por último, se houver dois no mesmo dia).
+  const lideres = fontes.lideres || { C: [], S: [] };
+  const votoLider = vt => {
+    const l = (lideres[vt.k] || []).filter(x => x.ini <= vt.d && (!x.fim || vt.d <= x.fim)).sort((a, b) => b.ini.localeCompare(a.ini))[0];
+    if (!l) return '';
+    const num = +l.c.slice(1);
+    for (const [op, ids] of Object.entries(vt.v || {})) if ((ids || []).includes(num)) return op === 'S' || op === 'N' ? op : '';
+    return '';
   };
   const vazio = () => ({ n: 0, venceu: 0, anos: {} });
   const geral = { C: vazio(), S: vazio() }, contraE = { C: vazio(), S: vazio() };
+  const liderGeral = { C: vazio(), S: vazio() }, liderContraE = { C: vazio(), S: vazio() };
+  const lacunas = { C: {}, S: {} };
   const derrotas = [];
   for (const vt of votos) {
     if (!['A', 'R'].includes(vt.res) || !['C', 'S'].includes(vt.k)) continue;
-    const g = oriGov(vt); if (g !== 'S' && g !== 'N') continue;
-    const venceu = (g === 'S') === (vt.res === 'A'), ano = String(vt.d).slice(0, 4);
+    const ano = String(vt.d).slice(0, 4);
+    const lc = lacunas[vt.k][ano] || (lacunas[vt.k][ano] = { total: 0, formal: 0, liberou: 0, lider: 0, sem: 0, comissoes: 0 });
+    lc.total++;
+    const formal = oriGov(vt);
+    let g = '', alvo = null;
+    if (formal === 'S' || formal === 'N') { g = formal; lc.formal++; alvo = [geral, contraE]; }
+    else if (formal === 'L' || formal === 'O') { lc.liberou++; continue; }
+    else if (!vt.pl) { lc.comissoes++; continue; } // comissões: sem orientação formal, sem substituto
+    else { const lv = votoLider(vt); if (!lv) { lc.sem++; continue; } g = lv; lc.lider++; alvo = [liderGeral, liderContraE]; }
+    const venceu = (g === 'S') === (vt.res === 'A');
     const soma = o => { o.n++; if (venceu) o.venceu++; const a = o.anos[ano] || (o.anos[ano] = [0, 0]); a[0]++; if (venceu) a[1]++; };
-    soma(geral[vt.k]);
+    soma(alvo[0][vt.k]);
     const contra = (vt.be === 'S' || vt.be === 'N') && vt.be !== g;
-    if (contra) soma(contraE[vt.k]);
-    if (!venceu) derrotas.push({ id: vt.id, k: vt.k, d: vt.d, mat: vt.mat || '', desc: String(vt.desc || '').slice(0, 220), me: String(vt.me || '').slice(0, 220), pl: !!vt.pl, o: vt.o || '', gv: g, res: vt.res, e: contra, t: vt.t || {} });
+    if (contra) soma(alvo[1][vt.k]);
+    if (!venceu && alvo[0] === geral) {
+      const t = vt.t || Object.fromEntries(Object.entries(vt.v || {}).map(([x, l]) => [x, (l || []).length]));
+      derrotas.push({ id: vt.id, k: vt.k, d: vt.d, mat: vt.mat || '', desc: String(vt.desc || '').slice(0, 220), me: String(vt.me || '').slice(0, 220), pl: !!vt.pl, o: vt.o || '', gv: g, res: vt.res, e: contra, t });
+    }
   }
   derrotas.sort((a, b) => (b.d || '').localeCompare(a.d || ''));
-  return { projetos: { tipos, medianaDiasLei: mediana(diasLei), nLei: diasLei.length }, mpv, votos: geral, contraE, derrotas: derrotas.slice(0, 12), nDerrotas: derrotas.length };
+  return { projetos: { tipos, medianaDiasLei: mediana(diasLei), nLei: diasLei.length }, mpv, votos: geral, contraE, lider: { votos: liderGeral, contraE: liderContraE, lideres }, lacunas,
+    derrotas: derrotas.slice(0, 12), nDerrotas: derrotas.length, fontes: { mpv: (fontes.mpv || []).length, orientacaoSenado: Object.keys(fontes.orientacaoSenado || {}).length, gerado: fontes.gerado || '' } };
 }
 
 // Proposições-chave, escolhidas pela equipe (correcoes.json, campo proposicoesChave, antes votacoesChave, ou o botão na página de revisão).
@@ -1599,7 +1619,7 @@ export async function executar() {
     porPauta,
     temas: { cadernos: TAX.cadernos.map(c => ({ id: c.id, nome: c.nome, sub: c.subtitulo })), lista: TAX.temas.map(t => ({ id: t.id, c: t.caderno, n: t.tema })) },
     blocos: calcularBlocos(todasPropFinal, todasVot, indice, cl, lerJson('situacoes.json', { itens: {} }).itens || {}),
-    governo: calcularGoverno(todasPropFinal, lerJson('situacoes.json', { itens: {} }).itens || {}, resumoVot, lerJson('governo-fontes.json', {})),
+    governo: calcularGoverno(todasPropFinal, lerJson('situacoes.json', { itens: {} }).itens || {}, todasVot, lerJson('governo-fontes.json', {})),
     recentes: { proposicoes: direita.filter(it => it.x.s === 'avanca' && it.d >= desde(7)).length, votacoes: resumoVot.filter(v => v.d >= desde(7)).length }
   });
 

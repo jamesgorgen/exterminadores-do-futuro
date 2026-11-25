@@ -6,6 +6,12 @@
 //    votações). O Senado publica as orientações por sequencial da votação; a lista de votações traz o sequencial e
 //    o código usado na base do observatório (S:<código>).
 //
+// 3. Líderes do governo na Câmara e no Senado em cada período, para usar o voto do líder nas votações em que o
+//    governo não registrou orientação. Câmara: /legislaturas/57/lideres (bancada "Governo na CD"). Câmara e Senado:
+//    composição atual das lideranças no serviço do Senado (/composicao/lideranca, tipo de unidade "G"). O serviço só
+//    traz quem está no cargo hoje; o líder anterior no Senado (Jaques Wagner, de fevereiro de 2023 a 24/6/2026, quando
+//    deixou o cargo) fica registrado abaixo, a partir do noticiário da troca (Agência Senado, Congresso em Foco).
+//
 // Grava dados/governo-fontes.json. Não usa IA.
 import fs from 'node:fs';
 import path from 'node:path';
@@ -84,7 +90,7 @@ async function orientacaoSenado() {
       for (const v of (o && o.votacoes) || []) {
         const g = (v.orientacoesLideranca || []).find(x => /^governo$/i.test(String(x.partido || '').trim()));
         const t = norm(g && g.voto);
-        const pos = t.startsWith('sim') ? 'S' : t.startsWith('nao') ? 'N' : t.startsWith('libera') ? 'L' : t.startsWith('obstru') ? 'O' : '';
+        const pos = t.startsWith('sim') ? 'S' : t.startsWith('nao') ? 'N' : t.startsWith('libera') || t.startsWith('livre') ? 'L' : t.startsWith('obstru') ? 'O' : '';
         if (pos) porSeq.set(String(v.sequencialVotacao), pos);
       }
       const vs = await pegar(`${SEN}/votacao?dataInicio=${a}&dataFim=${b}`);
@@ -97,16 +103,40 @@ async function orientacaoSenado() {
   return out;
 }
 
+const LIDERES_ANTERIORES = {
+  S: [{ c: 'S581', n: 'Jaques Wagner', ini: '2023-02-01', fim: '2026-06-24', fonte: 'Noticiário da troca na liderança (25/6/2026): Wagner deixou o cargo em 24/6/2026' }]
+};
+async function lideres() {
+  const out = { C: [], S: [] };
+  const l = ((await pegar(`${CAM}/legislaturas/57/lideres`)) || {}).dados || [];
+  for (const x of l) if (x.titulo === 'Líder' && /governo/i.test((x.bancada && (x.bancada.tipo || x.bancada.nome)) || ''))
+    out.C.push({ c: 'C' + x.parlamentar.id, n: x.parlamentar.nome, ini: String(x.dataInicio || '').slice(0, 10), fim: String(x.dataFim || '').slice(0, 10), fonte: 'API da Câmara, líderes da 57ª legislatura' });
+  const comp = (await pegar(`${SEN}/composicao/lideranca`)) || [];
+  for (const x of Array.isArray(comp) ? comp : []) {
+    if (x.siglaTipoUnidadeLideranca !== 'G' || x.siglaTipoLideranca !== 'L') continue;
+    const ini = String(x.dataDesignacao || '').slice(0, 10);
+    if (x.casa === 'CD' && x.codigoDeputado && !out.C.some(y => y.c === 'C' + x.codigoDeputado && y.ini === ini)) out.C.push({ c: 'C' + x.codigoDeputado, n: x.nomeParlamentar, ini, fim: '', fonte: 'Serviço de lideranças do Senado (composição atual)' });
+    if (x.casa === 'SF') out.S.push({ c: 'S' + x.codigoParlamentar, n: x.nomeParlamentar, ini, fim: '', fonte: 'Serviço de lideranças do Senado (composição atual)' });
+  }
+  out.S.push(...LIDERES_ANTERIORES.S);
+  for (const k of ['C', 'S']) out[k].sort((a, b) => a.ini.localeCompare(b.ini));
+  // Um líder sem data de fim termina na véspera do início do seguinte.
+  for (const k of ['C', 'S']) out[k].forEach((x, i, a) => { if (!x.fim && a[i + 1]) x.fim = new Date(Date.parse(a[i + 1].ini) - 864e5).toISOString().slice(0, 10); });
+  log(`  líderes do governo: Câmara ${out.C.map(x => `${x.n} (${x.ini} a ${x.fim || 'hoje'})`).join(', ')}; Senado ${out.S.map(x => `${x.n} (${x.ini} a ${x.fim || 'hoje'})`).join(', ')}`);
+  return out;
+}
+
 async function principal() {
   log('Governo: medidas provisórias e orientação no Senado');
   const anterior = (() => { try { return JSON.parse(fs.readFileSync(path.join(DADOS, 'governo-fontes.json'), 'utf8')); } catch (e) { return {}; } })();
-  let mpv = [], oriS = {};
+  let mpv = [], oriS = {}, lid = anterior.lideres || { C: [], S: [] };
+  try { const l = await lideres(); if (l.C.length && l.S.length) lid = l; } catch (e) { log('  líderes indisponíveis:', e.message); }
   try { mpv = await medidasProvisorias(); } catch (e) { log('  MPs indisponíveis:', e.message); }
   try { oriS = await orientacaoSenado(); } catch (e) { log('  orientações do Senado indisponíveis:', e.message); }
   // Leitura falha ou muito menor que a anterior: mantém a parte anterior.
   if (anterior.mpv && mpv.length < anterior.mpv.length * 0.9) { log('  MPs: leitura incompleta, mantida a anterior'); mpv = anterior.mpv; }
   if (anterior.orientacaoSenado && Object.keys(oriS).length < Object.keys(anterior.orientacaoSenado).length * 0.9) { log('  Senado: leitura incompleta, mantida a anterior'); oriS = anterior.orientacaoSenado; }
-  fs.writeFileSync(path.join(DADOS, 'governo-fontes.json'), JSON.stringify({ gerado: new Date().toISOString(), mpv, orientacaoSenado: oriS }));
+  fs.writeFileSync(path.join(DADOS, 'governo-fontes.json'), JSON.stringify({ gerado: new Date().toISOString(), mpv, orientacaoSenado: oriS, lideres: lid }));
   log('Concluído');
 }
 
