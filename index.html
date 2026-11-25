@@ -138,6 +138,14 @@ p.sub{color:var(--ink-2);max-width:70ch;margin:0 0 18px}
 .kpi b{display:block;font-family:var(--display);font-weight:900;font-size:40px;line-height:1}
 .kpi span{font-size:14px;color:var(--ink-2)}
 .kpi.ext b{color:var(--ext)}
+.kpi b small{font-size:.45em;font-weight:700;color:var(--ink-2);margin-left:4px}
+.kpi .barra{display:block;height:6px;margin:8px 0 6px;background:var(--paper);border-radius:2px;overflow:hidden;max-width:160px;background:var(--line)}
+.kpi .barra i{display:block;height:100%;background:var(--ext)}
+.kpi.dir .barra i{background:var(--night)}
+.kpi-grupos{display:grid;grid-template-columns:2fr 3fr;gap:20px 36px;margin:0 0 30px}
+.kpi-grupos h3{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);margin:0 0 10px;padding-bottom:6px;border-bottom:2px solid var(--line)}
+.kpi-grupos .kpis{margin:0;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr))}
+@media (max-width:760px){.kpi-grupos{grid-template-columns:1fr}}
 
 /* selos */
 .selo{display:inline-block;font-size:12px;font-weight:700;border-radius:3px;padding:1px 7px;white-space:nowrap}
@@ -649,6 +657,27 @@ function cartaoVot(v){
 }
 
 // ---------------------------------------------------------------- movimentos
+// Números da semana em dois blocos: projetos (o total e a parte de extrema-direita dentro dele) e votações
+// (as disputadas e, para cada bloco, quantas venceu entre as que disputou contra a esquerda).
+function kpisMovimentos(propRec, votRec){
+  const nP = propRec.length, nPE = propRec.filter(it => it.x.g === 'extrema').length;
+  const nV = votRec.filter(v => v.disp).length;
+  const dE = votRec.filter(v => v.dispE), dD = votRec.filter(v => v.dispD);
+  const gE = dE.filter(v => v.vE === true).length, gD = dD.filter(v => v.vD === true).length;
+  const barra = (a, b) => b ? `<span class="barra" aria-hidden="true"><i style="width:${100 * a / b}%"></i></span>` : '';
+  const parte = (a, b, cls, rot, dica) => `<div class="kpi ${cls}" title="${esc(dica)}"><b>${fmt(a)}<small>de ${fmt(b)}</small></b>${barra(a, b)}<span>${rot}</span></div>`;
+  return `<div class="kpi-grupos">
+    <div><h3>Projetos apresentados</h3><div class="kpis">
+      <div class="kpi dir" title="Projetos apresentados no período com pauta da direita, de qualquer grupo"><b>${fmt(nP)}</b><span>com pauta da direita</span></div>
+      ${parte(nPE, nP, 'ext', 'de extrema-direita', `${fmt(nPE)} dos ${fmt(nP)} projetos com pauta da direita são de extrema-direita`)}
+    </div></div>
+    <div><h3>Votações contra a esquerda</h3><div class="kpis">
+      <div class="kpi dir" title="Votações nominais em que a direita ou a extrema-direita votou contra a esquerda"><b>${fmt(nV)}</b><span>disputadas</span></div>
+      ${parte(gE, dE.length, 'ext', 'vencidas pela extrema-direita', `A extrema-direita enfrentou a esquerda em ${fmt(dE.length)} votações e venceu ${fmt(gE)}`)}
+      ${parte(gD, dD.length, 'dir', 'vencidas pela direita', `A direita enfrentou a esquerda em ${fmt(dD.length)} votações e venceu ${fmt(gD)}`)}
+    </div></div>
+  </div>`;
+}
 function desenharMovimentos(){
   const el = $('#aba-movimentos');
   const r = D.resumo;
@@ -665,13 +694,7 @@ function desenharMovimentos(){
     <div class="secao">
       <h2 class="titulo">Movimentos dos últimos ${janela} dias</h2>
       <p class="sub">O que deputados e senadores da direita apresentaram e como votaram nas votações nominais da Câmara e do Senado, em plenário e nas comissões.</p>
-      <div class="kpis">
-        <div class="kpi"><b>${fmt(propRec.length)}</b><span>projetos novos com pauta da direita</span></div>
-        <div class="kpi ext"><b>${fmt(propRec.filter(it => it.x.g === 'extrema').length)}</b><span>de extrema-direita</span></div>
-        <div class="kpi"><b>${fmt(votRec.filter(v => v.disp).length)}</b><span>votações disputadas com a esquerda</span></div>
-        <div class="kpi ext"><b>${fmt(votRec.filter(v => v.dispE && v.vE === true).length)}</b><span>vencidas pela extrema-direita</span></div>
-        <div class="kpi"><b>${fmt(votRec.filter(v => v.dispD && v.vD === true).length)}</b><span>vencidas pela direita</span></div>
-      </div>
+      ${kpisMovimentos(propRec, votRec)}
     </div>
     ${casos.length ? `<div class="secao"><h2 class="titulo">Casos verificados</h2><p class="sub">Os projetos mais recentes cuja classificação foi conferida pela equipe do observatório, entre ${fmt(casos.length)} já conferidos.</p><div class="grade">${casos.slice(0, 6).map(cartaoProp).join('')}</div></div>` : ''}
     <div class="secao">
