@@ -81,6 +81,9 @@ const gravarJ = (env, k, v) => env.R2.put(k, JSON.stringify(v), { httpMetadata: 
 const agoraIso = () => new Date().toISOString().slice(0, 19) + '+00:00';
 const EMAIL_OK = /^[^\s@<>()",;:]{1,64}@[a-z0-9.-]{1,190}\.[a-z]{2,24}$/;
 async function idDoEmail(email) { return (await sha256('conta|' + email)).slice(0, 32); }
+// Contas sem nenhum limite de uso (a do responsável pelo observatório), pelo id da conta, que é um hash do e-mail.
+const ISENTOS = new Set(['c296536fce9b354fca37feacb296beea']);
+const isento = u => !!u && ISENTOS.has(u.id);
 
 async function sessao(req, env) {
   const m = (req.headers.get('authorization') || '').match(/^Bearer ([0-9a-f]{64})$/);
@@ -111,7 +114,7 @@ async function pedirLink(req, env) {
   const id = await idDoEmail(email);
   const existe = await env.R2.head(`${C}usuarios/${id}.json`);
   if (!existe && corpo.consentimento !== true) return erro(req, 'Para criar a conta, é preciso concordar com a política de privacidade.');
-  if (await excedeu(env, 'ip-' + await hashIp(req, env), 10) || await excedeu(env, 'em-' + id, 4))
+  if (!ISENTOS.has(id) && (await excedeu(env, 'ip-' + await hashIp(req, env), 10) || await excedeu(env, 'em-' + id, 4)))
     return erro(req, 'Muitos pedidos de link em pouco tempo. Tente de novo em uma hora.', 429);
   const token = novoToken();
   await gravarJ(env, `${C}links/${await sha256(token)}.json`, { email, id, consentimento: existe ? null : CONSENTIMENTO, criado: agoraIso(), expira: new Date(Date.now() + 20 * 60e3).toISOString() });
@@ -157,8 +160,8 @@ async function entrar(req, env) {
 }
 
 async function minhaConta(req, env, u) {
-  const { livre } = await cotaLivre(u, env);
-  return json(req, { email: u.email, sessaoExpira: u.sessaoExpira, criado: u.criado, consentimento: u.consentimento, cota: { disponivel: livre, renova: proximaSemana(), porSemana: 1 }, pedidos: (u.pedidos || []).slice(-30).reverse() });
+  const { livre } = isento(u) ? { livre: true } : await cotaLivre(u, env);
+  return json(req, { email: u.email, isento: isento(u), sessaoExpira: u.sessaoExpira, criado: u.criado, consentimento: u.consentimento, cota: { disponivel: livre, renova: proximaSemana(), porSemana: isento(u) ? null : 1 }, pedidos: (u.pedidos || []).slice(-30).reverse() });
 }
 
 async function sair(req, env, u) {
@@ -217,12 +220,12 @@ async function comparar(req, env) {
   }
   const u = await sessao(req, env);
   if (!u) return erro(req, 'Para pedir uma comparação nova, entre com o seu e-mail na Minha área. As comparações prontas continuam abertas a todos.', 401);
-  const { k, livre } = await cotaLivre(u, env);
-  if (!livre) return erro(req, 'Você já usou a sua comparação desta semana. As comparações prontas continuam abertas.', 429, { renova: proximaSemana() });
-  if ((await totalMes(env)) >= Number(env.LIMITE_GLOBAL_MES || 300)) return erro(req, 'O limite geral de comparações novas deste mês foi atingido. Tente no mês que vem.', 429);
+  const livre_ = isento(u) ? { k: null, livre: true } : await cotaLivre(u, env);
+  const k = livre_.k;
+  if (!livre_.livre) return erro(req, 'Você já usou a sua comparação desta semana. As comparações prontas continuam abertas.', 429, { renova: proximaSemana() });
+  if (!isento(u) && (await totalMes(env)) >= Number(env.LIMITE_GLOBAL_MES || 300)) return erro(req, 'O limite geral de comparações novas deste mês foi atingido. Tente no mês que vem.', 429);
   const agora = new Date().toISOString().slice(0, 19) + '+00:00';
-  await env.R2.put(P + k, JSON.stringify({ id, criado: agora }));
-  await env.R2.put(`${P}global/${mes()}/${id}`, agora);
+  if (k) { await env.R2.put(P + k, JSON.stringify({ id, criado: agora })); await env.R2.put(`${P}global/${mes()}/${id}`, agora); }
   const pedido = { id, estado: 'fila', criado: agora, atualizado: agora, origem: 'site', a, b, titulo: limpa(corpo.titulo, 140), proposicao: limpa(corpo.proposicao, 60), tentativas: 0, cota: k, usuario: u.id };
   await env.R2.put(`${P}pedidos/${id}.json`, JSON.stringify(pedido), { httpMetadata: { contentType: 'application/json' } });
   const { sessaoHash, sessaoExpira, ...semSessao } = u;
@@ -246,7 +249,7 @@ async function envio(req, env, url) {
   return json(req, { ref: 'arquivo:' + sha }, 201);
 }
 
-const acomp = criarAcomp({ json, erro, sha256, lerJ, gravarJ, agoraIso, limpa, sessao });
+const acomp = criarAcomp({ json, erro, sha256, lerJ, gravarJ, agoraIso, limpa, sessao, isento });
 
 export default {
   async scheduled(event, env, ctx) { ctx.waitUntil(acomp.rodar(env, event.scheduledTime)); },
@@ -278,8 +281,8 @@ export default {
       if (req.method === 'GET' && url.pathname === '/api/cota') {
         const u = await sessao(req, env);
         if (!u) return json(req, { logado: false, disponivel: false, renova: proximaSemana() });
-        const { livre } = await cotaLivre(u, env);
-        return json(req, { logado: true, email: u.email, sessaoExpira: u.sessaoExpira, disponivel: livre, renova: proximaSemana() });
+        const { livre } = isento(u) ? { livre: true } : await cotaLivre(u, env);
+        return json(req, { logado: true, email: u.email, isento: isento(u), sessaoExpira: u.sessaoExpira, disponivel: livre, renova: proximaSemana() });
       }
       if (req.method === 'GET' && url.pathname === '/api/push/chave') return acomp.chavePublica(req, env);
       if (req.method === 'POST' && url.pathname === '/api/push/inscrever') return acomp.inscrever(req, env);

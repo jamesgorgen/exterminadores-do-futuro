@@ -307,7 +307,7 @@ async function atividadeRecente(k, p) {
 
 // Vários parlamentares num só documento: o dossiê padrão de cada um, em sequência.
 async function dossieParlamentares(lista) {
-  const max = (window.Avisos && window.Avisos.sessao()) ? 10 : 3;
+  const s_ = window.Avisos && window.Avisos.sessao(), max = s_ ? (s_.isento ? 1e5 : 10) : 3;
   const ks = String(lista || '').split(',').map(x => x.trim()).filter(x => /^[CS]\d+$/.test(x));
   if (!ks.length) return escolher();
   const usar = ks.slice(0, max);
@@ -529,7 +529,7 @@ const COMP = 'https://comparador-exterminadores.gorgen-james.workers.dev';
 const TIPOS_TXT_C = new Set(['PRLP', 'PRL', 'PAR', 'PPP', 'SBT', 'SBT-A', 'SBE', 'SBR', 'EMC', 'EMC-A', 'EMP', 'EMR', 'EMS', 'ESB', 'EMA', 'RDF', 'PEP', 'PES', 'EMD']);
 const getA = u => fetch(u, { headers: { accept: 'application/json' } }).then(r => { if (!r.ok) throw new Error(u); return r.json(); });
 const dataHora = d => { const m = String(d || '').match(/(\d{4})-(\d{2})-(\d{2})/); return m ? `${m[3]}/${m[2]}/${m[1]}` : ''; };
-const limiteProj = () => (window.Avisos && window.Avisos.sessao()) ? 30 : 3;
+const limiteProj = () => { const s = window.Avisos && window.Avisos.sessao(); return s ? (s.isento ? 1e5 : 30) : 3; };
 async function projCamara(id) {
   const d = (await getA(`${CAMAPI}/proposicoes/${id}`)).dados;
   const [aut, tram, rel, vot] = await Promise.all([
@@ -598,7 +598,7 @@ async function dossieProjetos(lista) {
 function escolherProjetos() {
   const max = limiteProj();
   $('#folha').innerHTML = `<header class="cab"><img class="marca" src="imagens/simbolo-dossie.svg" alt=""><div class="tipo">Dossiês</div><h1>Dossiê de projetos</h1>
-    <p class="sub">Escolha até ${max} projetos${max < 30 ? ' (com cadastro na Minha área, até 30)' : ''}, um por linha, com sigla, número e ano.</p></header>
+    <p class="sub">Escolha ${max > 1000 ? 'os projetos' : `até ${max} projetos`}${max < 30 ? ' (com cadastro na Minha área, até 30)' : ''}, um por linha, com sigla, número e ano.</p></header>
     <form class="cartao" id="fProj"><label for="txProj" class="peq">Projetos</label><textarea id="txProj" rows="6" style="width:100%;border:1px solid var(--line);border-radius:5px;padding:8px 10px;margin:6px 0 10px;font:inherit" placeholder="PL 4675/2025&#10;PL 2338/2023"></textarea>
       <label for="selCasaP" class="peq">Onde procurar</label><select id="selCasaP"><option value="ambas">Câmara e Senado</option><option value="camara">Câmara</option><option value="senado">Senado</option></select>
       <button type="submit">Gerar dossiê</button><p class="peq" id="avisoProj"></p></form>`;

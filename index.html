@@ -563,10 +563,11 @@ function dossieSel(){
   const m = selDaAba(); if (!m) return;
   const lista = [...m.values()], logado = !!window.Avisos.sessao();
   if (m === SELP) {
-    const ids = lista.slice(0, logado ? 10 : 3).map(p => p.c);
+    const ise = logado && window.Avisos.sessao().isento;
+    const ids = lista.slice(0, ise ? 1e5 : logado ? 10 : 3).map(p => p.c);
     window.open('dossie.html?tipo=parlamentares&ids=' + encodeURIComponent(ids.join(',')), '_blank'); return;
   }
-  const max = logado ? 30 : 3;
+  const max = logado && window.Avisos.sessao().isento ? 1e5 : logado ? 30 : 3;
   const b = $('#sel-dossie'), rot = b.textContent; b.disabled = true; b.textContent = 'Preparando…';
   const janela = window.open('', '_blank');
   chaves(lista.slice(0, max)).then(({ ok }) => {

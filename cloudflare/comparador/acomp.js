@@ -33,7 +33,8 @@ const b64u = buf => btoa(String.fromCharCode(...new Uint8Array(buf))).replace(/\
 const seguro = k => k.replace(':', '_');
 
 export function criarAcomp(h) {
-  const { json, erro, sha256, lerJ, gravarJ, agoraIso, limpa, sessao } = h;
+  const { json, erro, sha256, lerJ, gravarJ, agoraIso, limpa, sessao, isento } = h;
+  const SEM_LIMITE = 100000;
 
   // ---------------------------------------------------------------- índice com gravação condicional
   async function mudarIndice(env, fn) {
@@ -127,7 +128,7 @@ export function criarAcomp(h) {
   async function lista(req, env) {
     const c = req.method === 'POST' ? await corpoDe(req) : {};
     const q = await quem(req, env, c);
-    if (q.u) return json(req, { conta: true, projetos: q.u.acomp || [], limite: LIM_CONTA, limites: LIMITES(true), email: q.u.avisosEmail !== false, consentimento: consentAtual(q.u.consentimentoAcomp), aparelhos: (q.u.dispositivos || []).length });
+    if (q.u) return json(req, { conta: true, isento: isento(q.u), projetos: q.u.acomp || [], limite: isento(q.u) ? SEM_LIMITE : LIM_CONTA, limites: isento(q.u) ? { projetos: SEM_LIMITE, parlamentares: SEM_LIMITE } : LIMITES(true), email: q.u.avisosEmail !== false, consentimento: consentAtual(q.u.consentimentoAcomp), aparelhos: (q.u.dispositivos || []).length });
     if (q.d) return json(req, { conta: false, projetos: q.d.projetos || [], limite: LIM_ANON, limites: LIMITES(false), email: false, consentimento: consentAtual(q.d.consentimento) });
     return json(req, { conta: false, projetos: [], limite: LIM_ANON, limites: LIMITES(false), email: false, consentimento: false });
   }
@@ -144,7 +145,7 @@ export function criarAcomp(h) {
       if (!consentAtual(u.consentimentoAcomp)) { if (c.consentimento !== true) return erro(req, 'É preciso concordar com o uso da lista do que você acompanha.', 400, { precisaConsentimento: true }); u.consentimentoAcomp = { versao: CONSENT_ACOMP, data: agoraIso() }; }
       u.acomp = u.acomp || [];
       if (!u.acomp.some(p => p.k === k)) {
-        if (doTipo(u.acomp) >= limite(k, true)) return erro(req, `O limite é de ${limite(k, true)} ${nomeTipo} acompanhados por conta.`, 429);
+        if (!isento(q.u) && doTipo(u.acomp) >= limite(k, true)) return erro(req, `O limite é de ${limite(k, true)} ${nomeTipo} acompanhados por conta.`, 429);
         u.acomp.push({ k, t, desde: agoraIso() });
       }
       if (u.avisosEmail === undefined) u.avisosEmail = true;

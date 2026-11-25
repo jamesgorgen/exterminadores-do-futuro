@@ -180,8 +180,8 @@ async function mostrarDentro() {
   let c;
   try { c = await api('/api/conta'); } catch (e) { mostrarFora(); if (e.status !== 401) msg('msg-link', e.message, 'erro'); return; }
   $('carregando').hidden = true; $('fora').hidden = true; $('dentro').hidden = false;
-  renovarLocal(c.sessaoExpira); $('quem').textContent = c.email; $('criado').textContent = dt(c.criado); $('versao').textContent = dt(c.consentimento && c.consentimento.versao);
-  $('cota').textContent = c.cota.disponivel ? 'Você pode pedir uma comparação nova nesta semana.' : `Você já usou a comparação desta semana. A próxima libera na segunda-feira, ${dt(c.cota.renova)}.`;
+  renovarLocal(c.sessaoExpira); try { const s = ler(); if (s) { s.isento = !!c.isento; guardar(s); } } catch (_) {} $('quem').textContent = c.email; $('criado').textContent = dt(c.criado); $('versao').textContent = dt(c.consentimento && c.consentimento.versao);
+  $('cota').textContent = c.isento ? 'Sua conta não tem limite de comparações nem de acompanhamento.' : c.cota.disponivel ? 'Você pode pedir uma comparação nova nesta semana.' : `Você já usou a comparação desta semana. A próxima libera na segunda-feira, ${dt(c.cota.renova)}.`;
   if (!c.pedidos.length) { $('pedidos').innerHTML = '<li class="mini">Nenhuma comparação pedida ainda.</li>'; return; }
   const linhas = await Promise.all(c.pedidos.map(async p => {
     let e = {}; try { e = await api('/api/pedido?id=' + p.id); } catch (_) {}
@@ -250,8 +250,8 @@ async function desenharAcomp() {
     : '<li class="mini">Nenhum parlamentar acompanhado ainda.</li>';
   $('ac-lista').innerHTML = projs.length ? projs.map(p => `<li class="proj"><span>${casaDe(p.k)} <b>${esc(p.t || p.k)}</b>${linkDe(p.k) ? ` <a class="mini" href="${linkDe(p.k)}" target="_blank" rel="noopener">tramitação ↗</a>` : ''}</span><button class="x" data-deixar="${esc(p.k)}">Deixar de acompanhar</button></li>`).join('')
     : '<li class="mini">Nenhum projeto acompanhado ainda.</li>';
-  const max = AV.sessao() ? 30 : 3, maxP = AV.sessao() ? 10 : 3;
-  $('do-limite').textContent = AV.sessao() ? 'Com cadastro: até 30 projetos ou 10 parlamentares por dossiê.' : 'Sem cadastro: até 3 projetos ou 3 parlamentares por dossiê.';
+  const ise = !!(AV.sessao() && AV.sessao().isento), max = ise ? 1e5 : AV.sessao() ? 30 : 3, maxP = ise ? 1e5 : AV.sessao() ? 10 : 3;
+  $('do-limite').textContent = ise ? 'Sua conta não tem limite de itens por dossiê.' : AV.sessao() ? 'Com cadastro: até 30 projetos ou 10 parlamentares por dossiê.' : 'Sem cadastro: até 3 projetos ou 3 parlamentares por dossiê.';
   const ids = projs.slice(0, max).map(p => p.k);
   $('do-meus').hidden = !ids.length; $('do-meus').href = 'dossie.html?tipo=projetos&ids=' + encodeURIComponent(ids.join(','));
   const idsP = parls.slice(0, maxP).map(p => paraIndice(p.k));

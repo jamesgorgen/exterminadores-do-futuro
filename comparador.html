@@ -332,12 +332,12 @@ let cotaLivre = true, logado = false;
 const irParaConta = () => { try { localStorage.setItem('ext-volta', 'comparador.html#nova'); } catch (_) {} location.href = 'conta.html'; };
 async function verCota() {
   try {
-    const c = await api('/api/cota'); cotaLivre = c.disponivel; logado = c.logado; renovarLocal(c.sessaoExpira);
+    const c = await api('/api/cota'); cotaLivre = c.disponivel; logado = c.logado; renovarLocal(c.sessaoExpira); try { const s_ = JSON.parse(localStorage.getItem('ext-sessao')); if (s_) { s_.isento = !!c.isento; localStorage.setItem('ext-sessao', JSON.stringify(s_)); } } catch (_) {}
     if (!c.logado) {
       $('cota').innerHTML = 'Qualquer pessoa pode abrir as comparações prontas e pedir as que já existem. Para pedir uma comparação nova ou enviar PDFs, <a href="conta.html" id="entrar-link">entre com o seu e-mail na Minha área</a>: o cadastro é gratuito e dá direito a uma comparação nova por semana.';
       $('entrar-link').addEventListener('click', e => { e.preventDefault(); irParaConta(); });
     } else {
-      $('cota').textContent = c.disponivel ? `Você entrou como ${c.email} e pode pedir uma comparação nova nesta semana. Comparações que já existem não contam.`
+      $('cota').textContent = c.isento ? `Você entrou como ${c.email}, uma conta sem limite de comparações.` : c.disponivel ? `Você entrou como ${c.email} e pode pedir uma comparação nova nesta semana. Comparações que já existem não contam.`
         : `Você entrou como ${c.email} e já usou a comparação desta semana (libera na segunda-feira, ${dt(c.renova)}). Ainda é possível abrir qualquer comparação pronta e pedir as que já existem.`;
     }
   } catch (e) { $('cota').textContent = 'Não foi possível verificar o limite agora.'; }
