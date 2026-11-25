@@ -327,6 +327,13 @@
       ],
       "lote": 1
     },
+    "PDL 142/2025": {
+      "s": "avanca",
+      "p": [
+        "ambiente"
+      ],
+      "g": "direita"
+    },
     "PDL 160/2023": {
       "s": "barra",
       "p": [
@@ -706,6 +713,14 @@
     },
     "PDL 48/2026": {
       "s": "",
+      "m": ""
+    },
+    "PDL 49/2023": {
+      "s": "avanca",
+      "p": [
+        "estado"
+      ],
+      "g": "extrema",
       "m": ""
     },
     "PDL 491/2026": {
@@ -1132,6 +1147,14 @@
         "estado"
       ],
       "g": "extrema"
+    },
+    "PL 1008/2023": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "extrema",
+      "m": ""
     },
     "PL 1009/2026": {
       "s": "avanca",
@@ -2032,6 +2055,13 @@
         "trabalho"
       ],
       "lote": 1
+    },
+    "PL 1478/2023": {
+      "s": "avanca",
+      "p": [
+        "privilegios"
+      ],
+      "g": "direita"
     },
     "PL 1482/2024": {
       "s": "avanca",
@@ -3146,6 +3176,14 @@
       ],
       "lote": 1
     },
+    "PL 2053/2025": {
+      "s": "avanca",
+      "p": [
+        "estado",
+        "privilegios"
+      ],
+      "g": "direita"
+    },
     "PL 2074/2024": {
       "s": "barra",
       "p": [
@@ -4219,6 +4257,13 @@
         "armas"
       ],
       "lote": 1
+    },
+    "PL 2690/2025": {
+      "s": "avanca",
+      "p": [
+        "trabalho"
+      ],
+      "g": "direita"
     },
     "PL 2694/2023": {
       "s": "avanca",
@@ -5585,6 +5630,13 @@
       ],
       "g": "extrema",
       "m": ""
+    },
+    "PL 3577/2024": {
+      "s": "avanca",
+      "p": [
+        "punitivismo"
+      ],
+      "g": "direita"
     },
     "PL 3579/2024": {
       "s": "avanca",
@@ -7294,6 +7346,15 @@
       "p": [
         "costumes"
       ],
+      "m": ""
+    },
+    "PL 4844/2024": {
+      "s": "avanca",
+      "p": [
+        "punitivismo",
+        "ambiente"
+      ],
+      "g": "extrema",
       "m": ""
     },
     "PL 4844/2025": {
@@ -9760,6 +9821,14 @@
       ],
       "g": "direita"
     },
+    "PL 6048/2023": {
+      "s": "avanca",
+      "p": [
+        "ambiente",
+        "estado"
+      ],
+      "g": "direita"
+    },
     "PL 606/2024": {
       "s": "barra",
       "p": [
@@ -9800,6 +9869,13 @@
       "s": "avanca",
       "p": [
         "punitivismo"
+      ],
+      "g": "direita"
+    },
+    "PL 613/2023": {
+      "s": "avanca",
+      "p": [
+        "privilegios"
       ],
       "g": "direita"
     },
