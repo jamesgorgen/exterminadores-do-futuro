@@ -9,6 +9,10 @@ workers_dev = true
 [[send_email]]
 name = "EMAIL"
 
+# Acompanhamento de projetos: confere os projetos seguidos a cada hora e manda o resumo por e-mail às 19h de Brasília.
+[triggers]
+crons = ["17 * * * *"]
+
 [[r2_buckets]]
 binding = "R2"
 bucket_name = "exterminadores-dados"

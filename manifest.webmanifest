@@ -1,0 +1,16 @@
+{
+  "id": "/",
+  "name": "Os exterminadores do futuro",
+  "short_name": "Exterminadores",
+  "description": "Observatório da direita e da extrema-direita no Congresso Nacional.",
+  "lang": "pt-BR",
+  "start_url": "/conta.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F2F4F1",
+  "theme_color": "#123B40",
+  "icons": [
+    { "src": "/imagens/icone-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}

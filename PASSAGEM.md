@@ -71,7 +71,7 @@ Esta seção resume a sessão de 30/10 a 17/11. O histórico anterior está no a
 ## Minha área (25/11)
 - Etapa 1 no ar: `conta.html`, `privacidade.html`, rotas `/api/conta/*` no Worker do comparador; comparação nova só com cadastro (uma por semana por conta). Decisões do James: login só por link no e-mail; IA só para cadastrados; push e e-mail desde o início; cadastro aberto.
 - Pendente do James: habilitar o envio de e-mail do domínio no painel da Cloudflare (Email Service > Email Sending > exterminadores.com.br) e conferir o texto da política de privacidade (encarregado, operadores, transferência internacional).
-- Próximas: etapa 2 (acompanhamento de projetos, push e e-mail) e etapa 3 (dossiês sob medida). Cotas sem IA: pequena para quem não tem cadastro, maior para cadastrados.
+- Etapas 2 e 3 no ar em 25/11: acompanhamento de projetos (push e resumo por e-mail, tarefa agendada horária no Worker) e dossiê sob medida de projetos. Sessão renovada a cada uso. Detalhes no LEIA-ME.
 
 ## Pendências do James
 - 2FA no GitHub, Cloudflare e Registro.br e revisão dos tokens dos revisores encaminhadas pelo James em 17/11. Ramo `diag-dns` apagado em 17/11 (esta sessão não consegue apagar ramos; o James apaga pelo site).

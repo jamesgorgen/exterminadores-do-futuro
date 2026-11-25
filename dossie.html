@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="robots" content="noindex">
 <title>Dossiê</title>
@@ -138,6 +139,7 @@ td .pilha{margin:0;height:10px;min-width:90px}
 </div></div>
 <main class="folha" id="folha"><p class="carregando">Carregando os dados…</p></main>
 
+<script src="avisos.js?v=1"></script>
 <script src="pautas.js?v=20261031"></script>
 <script src="lib/d3.min.js?v=7.9.0"></script>
 <script src="lib/topojson.min.js?v=3.0.2"></script>
@@ -453,6 +455,8 @@ async function escolher() {
         <label for="selUf" class="peq">Estado</label><select id="selUf">${Object.entries(UFNOME).sort((a, b) => a[1].localeCompare(b[1])).map(([u, n]) => `<option value="${u}">${n}</option>`).join('')}</select>
         <button type="submit">Gerar dossiê</button>
         <p class="peq">Ou baixe o <a id="pdfUf" href="#" target="_blank" rel="noopener">PDF do mês</a>, gerado automaticamente no dia 1º.</p></form>
+      <div class="cartao"><h2>Dossiê de projetos</h2><p class="leve">Situação, últimas movimentações, versões do texto, votações e comparações prontas dos projetos que você escolher, na Câmara e no Senado. Sem cadastro, até 3 projetos; com cadastro na Minha área, até 30.</p>
+        <p><a class="btn-esp" href="?tipo=projetos">Escolher os projetos</a></p></div>
       <form class="cartao" id="fBal"><h2>Dossiê do Congresso</h2><p class="leve">O peso de cada bloco no Congresso, com projetos apresentados e aprovados, votações e a divisão de cada tema entre os grupos.</p>
         <label for="selCasa" class="peq">Casa</label><select id="selCasa"><option value="T">Câmara e Senado</option><option value="C">Câmara dos Deputados</option><option value="S">Senado Federal</option></select>
         <button type="submit">Gerar dossiê</button>
@@ -470,9 +474,103 @@ async function escolher() {
   $('#fBal').addEventListener('submit', e => { e.preventDefault(); location.search = '?tipo=balanco&casa=' + $('#selCasa').value; });
 }
 
+
+// --------------------------------------------------------------- dossiê sob medida de projetos (Câmara e Senado)
+const CAMAPI = 'https://dadosabertos.camara.leg.br/api/v2', SENAPI = 'https://legis.senado.leg.br/dadosabertos';
+const COMP = 'https://comparador-exterminadores.gorgen-james.workers.dev';
+const TIPOS_TXT_C = new Set(['PRLP', 'PRL', 'PAR', 'PPP', 'SBT', 'SBT-A', 'SBE', 'SBR', 'EMC', 'EMC-A', 'EMP', 'EMR', 'EMS', 'ESB', 'EMA', 'RDF', 'PEP', 'PES', 'EMD']);
+const getA = u => fetch(u, { headers: { accept: 'application/json' } }).then(r => { if (!r.ok) throw new Error(u); return r.json(); });
+const dataHora = d => { const m = String(d || '').match(/(\d{4})-(\d{2})-(\d{2})/); return m ? `${m[3]}/${m[2]}/${m[1]}` : ''; };
+const limiteProj = () => (window.Avisos && window.Avisos.sessao()) ? 30 : 3;
+async function projCamara(id) {
+  const d = (await getA(`${CAMAPI}/proposicoes/${id}`)).dados;
+  const [aut, tram, rel, vot] = await Promise.all([
+    getA(`${CAMAPI}/proposicoes/${id}/autores`).then(r => r.dados).catch(() => []),
+    getA(`${CAMAPI}/proposicoes/${id}/tramitacoes`).then(r => r.dados).catch(() => []),
+    getA(`${CAMAPI}/proposicoes/${id}/relacionadas`).then(r => r.dados).catch(() => []),
+    getA(`${CAMAPI}/proposicoes/${id}/votacoes`).then(r => r.dados).catch(() => [])]);
+  const versoes = await Promise.all(rel.filter(x => TIPOS_TXT_C.has(x.siglaTipo) && !/^EM/.test(x.siglaTipo)).slice(0, 20).map(x => getA(`${CAMAPI}/proposicoes/${x.id}`).then(r => r.dados).catch(() => null)));
+  const s = d.statusProposicao || {};
+  return { casa: 'Câmara', titulo: `${d.siglaTipo} ${d.numero}/${d.ano}`, ementa: d.ementa, autores: aut.map(a => a.nome).slice(0, 6), nAutores: aut.length,
+    apresentacao: dataHora(d.dataApresentacao), situacao: s.descricaoSituacao || '', orgao: s.siglaOrgao || '', regime: s.regime || '',
+    url: `https://www.camara.leg.br/propostas-legislativas/${id}`, inteiro: d.urlInteiroTeor,
+    movs: tram.slice().sort((a, b) => (b.dataHora || '').localeCompare(a.dataHora || '')).slice(0, 8).map(t => ({ data: dataHora(t.dataHora), orgao: t.siglaOrgao, texto: [t.descricaoTramitacao, t.despacho].filter(Boolean).join(': ') })),
+    versoes: [d, ...versoes.filter(Boolean)].filter(v => v.urlInteiroTeor).map(v => ({ nome: +v.ano ? `${v.siglaTipo} ${v.numero}/${v.ano}` : `${v.siglaTipo} ${v.numero}`, tipo: v.descricaoTipo, data: dataHora(v.dataApresentacao), url: v.urlInteiroTeor.replace('http://', 'https://') })),
+    votacoes: vot.slice().sort((a, b) => (b.dataHoraRegistro || b.data || '').localeCompare(a.dataHoraRegistro || a.data || '')).slice(0, 6).map(v => ({ data: dataHora(v.dataHoraRegistro || v.data), orgao: v.siglaOrgao, texto: v.descricao, res: v.aprovacao === 1 ? 'Aprovada' : v.aprovacao === 0 ? 'Rejeitada' : '' })) };
+}
+async function projSenado(id) {
+  const d = await getA(`${SENAPI}/processo/${id}`);
+  const infs = [], docs = [], vistos = new Set();
+  for (const au of d.autuacoes || []) for (const inf of au.informesLegislativos || []) {
+    infs.push(inf);
+    for (const x of inf.documentosAssociados || []) if (x.url && !vistos.has(x.url) && /^(PROJETO|PARECER|RELATORIO|TEXTO|SUBSTITUTIVO|AUTOGRAFO|REDACAO)/.test(x.siglaTipo || '')) { vistos.add(x.url); docs.push(x); }
+  }
+  return { casa: 'Senado', titulo: d.identificacao || `${d.sigla} ${d.numero}/${d.ano}`, ementa: (d.conteudo && d.conteudo.ementa) || d.objetivo || '',
+    autores: (Array.isArray(d.autoriaIniciativa) ? d.autoriaIniciativa : []).map(a => a.autor ? `${a.autor}${a.siglaPartido ? ` (${a.siglaPartido}${a.uf ? '-' + a.uf : ''})` : ''}` : a.ente || '').filter(Boolean).slice(0, 6),
+    nAutores: Array.isArray(d.autoriaIniciativa) ? d.autoriaIniciativa.length : 0,
+    apresentacao: dataHora(d.documento && d.documento.dataApresentacao), situacao: d.situacaoAtual || '', orgao: '', regime: '',
+    url: d.codigoMateria ? `https://www25.senado.leg.br/web/atividade/materias/-/materia/${d.codigoMateria}` : '', inteiro: d.documento && d.documento.url,
+    movs: infs.sort((a, b) => String(b.data || '').localeCompare(String(a.data || ''))).slice(0, 8).map(i => ({ data: dataHora(i.data), orgao: i.colegiado && i.colegiado.sigla, texto: i.descricao })),
+    versoes: docs.slice(0, 20).map(x => ({ nome: x.identificacao || x.tipo, tipo: x.tipo, data: dataHora(x.data), url: x.url })), votacoes: [] };
+}
+async function dossieProjetos(lista) {
+  const max = limiteProj();
+  const ks = String(lista || '').split(',').map(x => x.trim()).filter(x => /^(camara|senado):\d+$/.test(x));
+  if (!ks.length) return escolherProjetos();
+  const usar = ks.slice(0, max);
+  $('#folha').innerHTML = '<p class="carregando">Consultando a Câmara e o Senado…</p>';
+  const [projs, comp] = await Promise.all([
+    Promise.all(usar.map(k => (k.startsWith('camara:') ? projCamara(k.slice(7)) : projSenado(k.slice(7))).then(p => ({ ...p, k })).catch(() => ({ k, erro: true, titulo: k })))),
+    fetch(COMP + '/api/lista').then(r => r.json()).then(j => j.itens || []).catch(() => [])]);
+  document.title = 'Dossiê de projetos';
+  const comps = t => comp.filter(c => c.proposicao === t);
+  let h = `<header class="cab"><img class="marca" src="imagens/simbolo-dossie.svg" alt=""><div class="tipo">Dossiê de projetos</div><h1>${usar.length === 1 ? esc(projs[0].titulo) : `${usar.length} projetos acompanhados`}</h1>
+    <p class="sub">Situação, movimentações, versões do texto e votações na Câmara dos Deputados e no Senado Federal</p>
+    <div class="meta">Gerado em ${hoje}, com os dados abertos das duas Casas consultados no momento da geração.${ks.length > usar.length ? ` Limite de ${max} projetos por dossiê${max < 30 ? ' sem cadastro; com cadastro na Minha área, até 30' : ''}: ${ks.length - usar.length} ficaram de fora.` : ''}</div></header>`;
+  if (usar.length > 1) h += `<section><h2>Resumo</h2><table><thead><tr><th>Projeto</th><th>Casa</th><th>Situação atual</th><th>Última movimentação</th></tr></thead><tbody>
+    ${projs.map(p => p.erro ? `<tr><td>${esc(p.k)}</td><td colspan="3">Não foi possível consultar.</td></tr>` : `<tr><td><b>${esc(p.titulo)}</b><br><span class="peq">${esc(corta(p.ementa, 110))}</span></td><td>${esc(p.casa)}</td><td>${esc(p.situacao)}</td><td class="num">${esc(p.movs[0] ? p.movs[0].data : '')}</td></tr>`).join('')}</tbody></table></section>`;
+  for (const p of projs) {
+    if (p.erro) continue;
+    const cs = comps(p.titulo);
+    h += `<section style="break-before:${usar.length > 1 ? 'page' : 'auto'}"><h2>${esc(p.titulo)} · ${esc(p.casa)}</h2>
+      <p>${esc(p.ementa)}</p>
+      <p class="leve">${p.autores.length ? `Autoria: ${esc(p.autores.join(', '))}${p.nAutores > p.autores.length ? ` e mais ${p.nAutores - p.autores.length}` : ''}. ` : ''}${p.apresentacao ? `Apresentado em ${esc(p.apresentacao)}. ` : ''}Situação: <b>${esc(p.situacao || '—')}</b>${p.orgao ? ` (${esc(p.orgao)})` : ''}.${p.regime ? ` Regime: ${esc(p.regime)}.` : ''}</p>
+      <p class="peq">${p.url ? `Tramitação: ${esc(p.url)}` : ''}</p>
+      <h3>Últimas movimentações</h3>
+      ${p.movs.length ? `<table><thead><tr><th>Data</th><th>Órgão</th><th>Movimentação</th></tr></thead><tbody>${p.movs.map(m => `<tr><td class="num">${esc(m.data)}</td><td>${esc(m.orgao || '')}</td><td>${esc(corta(m.texto, 260))}</td></tr>`).join('')}</tbody></table>` : '<p class="peq">Sem movimentações registradas.</p>'}
+      <h3>Versões do texto</h3>
+      ${p.versoes.length ? `<table><thead><tr><th>Versão</th><th>Tipo</th><th>Data</th></tr></thead><tbody>${p.versoes.map(v => `<tr><td><a href="${esc(v.url)}">${esc(v.nome)}</a></td><td>${esc(v.tipo || '')}</td><td class="num">${esc(v.data)}</td></tr>`).join('')}</tbody></table>` : '<p class="peq">Nenhuma versão com texto publicado.</p>'}
+      ${cs.length ? `<h3>Comparações prontas no observatório</h3><ul>${cs.map(c => `<li><a href="comparador.html?c=${esc(c.id)}">${esc(c.titulo)}</a>${c.conclusao ? ` — ${esc(c.conclusao)}` : ''} <span class="peq">(análise automática, sujeita a revisão)</span></li>`).join('')}</ul>` : ''}
+      ${p.votacoes.length ? `<h3>Votações</h3><table><thead><tr><th>Data</th><th>Órgão</th><th>Votação</th><th>Resultado</th></tr></thead><tbody>${p.votacoes.map(v => `<tr><td class="num">${esc(v.data)}</td><td>${esc(v.orgao || '')}</td><td>${esc(corta(v.texto, 200))}</td><td>${esc(v.res)}</td></tr>`).join('')}</tbody></table>` : ''}
+    </section>`;
+  }
+  h += `<section><h2>Notas de método</h2><p class="peq">Dados abertos da Câmara dos Deputados (API de proposições, tramitações, proposições relacionadas e votações) e do Senado Federal (API de processos), consultados no momento da geração. As comparações prontas vêm do comparador de textos do observatório, com análise automática que não substitui a revisão humana.</p></section>`;
+  $('#folha').innerHTML = h;
+}
+function escolherProjetos() {
+  const max = limiteProj();
+  $('#folha').innerHTML = `<header class="cab"><img class="marca" src="imagens/simbolo-dossie.svg" alt=""><div class="tipo">Dossiês</div><h1>Dossiê de projetos</h1>
+    <p class="sub">Escolha até ${max} projetos${max < 30 ? ' (com cadastro na Minha área, até 30)' : ''}, um por linha, com sigla, número e ano.</p></header>
+    <form class="cartao" id="fProj"><label for="txProj" class="peq">Projetos</label><textarea id="txProj" rows="6" style="width:100%;border:1px solid var(--line);border-radius:5px;padding:8px 10px;margin:6px 0 10px;font:inherit" placeholder="PL 4675/2025&#10;PL 2338/2023"></textarea>
+      <label for="selCasaP" class="peq">Onde procurar</label><select id="selCasaP"><option value="ambas">Câmara e Senado</option><option value="camara">Câmara</option><option value="senado">Senado</option></select>
+      <button type="submit">Gerar dossiê</button><p class="peq" id="avisoProj"></p></form>`;
+  $('#fProj').addEventListener('submit', async e => {
+    e.preventDefault();
+    const linhas = $('#txProj').value.split(/\n|;/).map(x => x.trim()).filter(Boolean).slice(0, max);
+    if (!linhas.length) { $('#avisoProj').textContent = 'Informe ao menos um projeto.'; return; }
+    $('#avisoProj').textContent = 'Procurando…';
+    const ks = [], faltou = [];
+    for (const l of linhas) { try { ks.push((await window.Avisos.resolver(l, $('#selCasaP').value)).k); } catch (err) { faltou.push(l); } }
+    if (!ks.length) { $('#avisoProj').textContent = 'Nenhum projeto encontrado. Confira a sigla, o número e o ano.'; return; }
+    if (faltou.length) alertaFaltou(faltou);
+    location.search = '?tipo=projetos&ids=' + encodeURIComponent(ks.join(','));
+  });
+}
+function alertaFaltou(f) { try { sessionStorage.setItem('faltou', f.join(', ')); } catch (_) {} }
+
 $('#imprimir').addEventListener('click', () => window.print());
 const q = new URLSearchParams(location.search);
-(q.get('tipo') === 'parlamentar' ? dossieParlamentar(q.get('id')) : q.get('tipo') === 'balanco' ? dossieBalanco((q.get('casa') || 'T').toUpperCase()) : q.get('tipo') === 'estado' ? dossieEstado((q.get('uf') || '').toUpperCase()) : escolher())
+(q.get('tipo') === 'projetos' ? dossieProjetos(q.get('ids')) : q.get('tipo') === 'parlamentar' ? dossieParlamentar(q.get('id')) : q.get('tipo') === 'balanco' ? dossieBalanco((q.get('casa') || 'T').toUpperCase()) : q.get('tipo') === 'estado' ? dossieEstado((q.get('uf') || '').toUpperCase()) : escolher())
   .catch(e => { $('#folha').innerHTML = `<p class="carregando">Não foi possível gerar o dossiê (${esc(e.message)}). <a href="dossie.html">Escolher outro</a>.</p>`; });
 </script>
 <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0442ff160c604457a59372125331648a"}'></script>

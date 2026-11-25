@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
 <title>Comparador de textos · Os exterminadores do futuro</title>
 <meta name="description" content="Compare versões de projetos de lei, substitutivos, pareceres e emendas da Câmara e do Senado, artigo por artigo.">
 <meta property="og:type" content="website">
@@ -298,6 +299,7 @@ h3{font-family:var(--display);font-weight:800;font-size:24px;line-height:1.05;ma
 </div></footer>
 <div class="toast" id="toast" role="status"></div>
 
+<script src="avisos.js?v=1"></script>
 <script>
 {
 const API = 'https://comparador-exterminadores.gorgen-james.workers.dev';
@@ -459,7 +461,7 @@ async function versoesCamara(id) {
     ref: 'camara:' + x.id, casa: 'Câmara', nome: +x.ano ? `${x.siglaTipo} ${x.numero}/${x.ano}` : `${x.siglaTipo} ${x.numero}`, tipo: x.descricaoTipo || '', data: dt(x.dataApresentacao),
     url: String(x.urlInteiroTeor).replace('http://', 'https://'), grupo: x.id === d.id ? 'principal' : GRUPO(x.siglaTipo), desc: (x.ementa || '').slice(0, 140),
     aviso: x.id === d.id && doSenado ? 'texto recebido do Senado: pode ser igual ao aprovado lá' : '' }));
-  return { proposicao: `${d.siglaTipo} ${d.numero}/${d.ano}`, p: { sigla: d.siglaTipo, numero: String(d.numero), ano: String(d.ano) }, ementa: d.ementa, versoes };
+  return { k: 'camara:' + d.id, proposicao: `${d.siglaTipo} ${d.numero}/${d.ano}`, p: { sigla: d.siglaTipo, numero: String(d.numero), ano: String(d.ano) }, ementa: d.ementa, versoes };
 }
 async function versoesSenado(pid) {
   const d = await getj(`${SEN}/processo/${pid}`);
@@ -474,7 +476,7 @@ async function versoesSenado(pid) {
       grupo: /^EMENDA/.test(x.siglaTipo) && !/^\s*(emenda\s+)?substitutiv/i.test(x.descricao || '') ? 'Emendas' : 'principal', desc: (x.descricao || '').slice(0, 140),
       aviso: daCamara ? 'texto recebido da Câmara: pode ser igual ao aprovado lá' : '' });
   }
-  return { proposicao: d.identificacao || `${d.sigla} ${d.numero}/${d.ano}`, p: { sigla: d.sigla, numero: String(d.numero), ano: String(d.ano) },
+  return { k: 'senado:' + pid, proposicao: d.identificacao || `${d.sigla} ${d.numero}/${d.ano}`, p: { sigla: d.sigla, numero: String(d.numero), ano: String(d.ano) },
     ementa: (d.conteudo && d.conteudo.ementa) || d.objetivo || '', versoes };
 }
 async function mostrarProposicao({ cam, sen, procurarOutra }) {
@@ -486,7 +488,7 @@ async function mostrarProposicao({ cam, sen, procurarOutra }) {
   }
   const base = c || s;
   const casas = [c && 'Câmara', s && 'Senado'].filter(Boolean);
-  atual = { proposicao: base.proposicao, ementa: (c && c.ementa) || (s && s.ementa), casa: casas.join(' e '), duas: casas.length > 1,
+  atual = { k: base.k, proposicao: base.proposicao, ementa: (c && c.ementa) || (s && s.ementa), casa: casas.join(' e '), duas: casas.length > 1,
     versoes: [...(c ? c.versoes : []), ...(s ? s.versoes : [])], soUma: procurarOutra && casas.length === 1 ? casas[0] : '' };
   desenharVersoes();
 }
@@ -501,6 +503,7 @@ function desenharVersoes() {
   const todas = [...principais, ...emendas];
   atual.lista = todas;
   $('r-busca').innerHTML = `<div class="prop"><h4>${esc(atual.proposicao)} · ${esc(atual.casa)}</h4><p>${esc(atual.ementa)}</p>
+    <p><button class="btn sec" id="seguir" type="button">Acompanhar este projeto</button> <span class="mini" id="seguir-msg"></span></p>
     ${atual.soUma ? `<p class="mini">Este projeto só tem tramitação ${atual.soUma === 'Câmara' ? 'na Câmara' : 'no Senado'} até agora.</p>` : ''}
     ${atual.duas ? '<p class="leg-casas"><span><span class="casa c-cam">Câmara</span> versões da Câmara dos Deputados</span><span><span class="casa c-sen">Senado</span> versões do Senado Federal</span></p>' : ''}
     <div class="versoes"><table><thead><tr><th>A</th><th>B</th><th>Versão</th><th>Data</th><th>Texto</th></tr></thead><tbody>
@@ -511,6 +514,12 @@ function desenharVersoes() {
     <button class="btn" id="ir">Comparar as versões A e B</button></div></div>`;
 }
 $('r-busca').addEventListener('click', async e => {
+  if (e.target.id === 'seguir') {
+    const m = $('seguir-msg'); m.textContent = 'Salvando…';
+    try { await window.Avisos.seguir(atual.k, atual.proposicao, false); m.innerHTML = `Pronto: você passou a acompanhar ${esc(atual.proposicao)}. <a href="conta.html#acompanhamento">Ver os meus projetos</a>`; }
+    catch (err) { m.innerHTML = `${esc(err.message)} <a href="conta.html#acompanhamento">Configurar o acompanhamento na Minha área</a>`; }
+    return;
+  }
   if (e.target.id !== 'ir') return;
   const a = document.querySelector('input[name=va]:checked'), b = document.querySelector('input[name=vb]:checked');
   if (!a || !b || a.value === b.value) { msg('Escolha duas versões diferentes, uma como A e outra como B.', true); return; }

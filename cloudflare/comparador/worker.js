@@ -16,12 +16,15 @@
 // POST   /api/conta/sair          encerra a sessão
 // GET    /api/conta/dados         tudo o que a plataforma guarda sobre a conta (LGPD)
 // DELETE /api/conta               apaga a conta e as sessões
+// Acompanhamento de projetos (acomp.js): /api/acomp/*, /api/push/*, /api/avisos e a tarefa agendada (a cada hora).
 // R2 (privado), prefixo contas/: usuarios/<id>.json, links/<hash>.json, sessoes/<hash>.json, limite/…
 //
 // Limites: comparação nova só com cadastro, uma por semana (segunda a domingo, horário de Brasília) por conta.
 // Abrir comparações prontas e pedir uma comparação que já existe não exigem cadastro. Teto mensal geral
 // (LIMITE_GLOBAL_MES), contado em comparador/global/AAAA-MM/. O e-mail é guardado para o login; o IP só como hash
 // com sal, para limitar pedidos de link.
+
+import { criarAcomp } from './acomp.js';
 
 const P = 'comparador/';
 const ORIGENS = ['https://exterminadores.com.br', 'https://www.exterminadores.com.br', 'https://jamesgorgen.github.io'];
@@ -172,6 +175,7 @@ async function exportar(req, env, u) {
 }
 
 async function excluir(req, env, u) {
+  await acomp.apagarConta(env, u);
   for (const sh of u.sessoes || []) await env.R2.delete(`${C}sessoes/${sh}.json`);
   await env.R2.delete(`${C}usuarios/${u.id}.json`);
   return json(req, { ok: true });
@@ -242,7 +246,10 @@ async function envio(req, env, url) {
   return json(req, { ref: 'arquivo:' + sha }, 201);
 }
 
+const acomp = criarAcomp({ json, erro, sha256, lerJ, gravarJ, agoraIso, limpa, sessao });
+
 export default {
+  async scheduled(event, env, ctx) { ctx.waitUntil(acomp.rodar(env, event.scheduledTime)); },
   async fetch(req, env) {
     const url = new URL(req.url);
     if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors(req) });
@@ -274,6 +281,16 @@ export default {
         const { livre } = await cotaLivre(u, env);
         return json(req, { logado: true, email: u.email, sessaoExpira: u.sessaoExpira, disponivel: livre, renova: proximaSemana() });
       }
+      if (req.method === 'GET' && url.pathname === '/api/push/chave') return acomp.chavePublica(req, env);
+      if (req.method === 'POST' && url.pathname === '/api/push/inscrever') return acomp.inscrever(req, env);
+      if (req.method === 'POST' && url.pathname === '/api/push/cancelar') return acomp.cancelar(req, env);
+      if (req.method === 'POST' && url.pathname === '/api/avisos') return acomp.avisos(req, env);
+      if ((req.method === 'GET' || req.method === 'POST') && url.pathname === '/api/acomp/lista') return acomp.lista(req, env);
+      if (req.method === 'POST' && url.pathname === '/api/acomp/seguir') return acomp.seguir(req, env);
+      if (req.method === 'POST' && url.pathname === '/api/acomp/deixar') return acomp.deixar(req, env);
+      if (req.method === 'POST' && url.pathname === '/api/acomp/email') return acomp.preferenciaEmail(req, env);
+      if (req.method === 'GET' && url.pathname === '/api/acomp/sair-email') return acomp.sairEmail(req, env, url);
+      if (req.method === 'GET' && url.pathname === '/api/acomp/status') { const o = await env.R2.get('acomp/ultima-execucao.json'); return json(req, o ? await o.json() : { em: null }); }
       if (req.method === 'POST' && url.pathname === '/api/conta/link') return pedirLink(req, env);
       if (req.method === 'POST' && url.pathname === '/api/conta/entrar') return entrar(req, env);
       if (url.pathname === '/api/conta' || url.pathname.startsWith('/api/conta/')) {
