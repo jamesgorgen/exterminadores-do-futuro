@@ -120,8 +120,10 @@ async function pedirLink(req, env) {
 <p style="font-size:13px;color:#5F6B68">Se você não pediu este acesso, ignore esta mensagem.</p></div>`,
     });
   } catch (e) {
-    console.log('falha no envio do e-mail:', String(e && e.message || e).slice(0, 300));
-    return erro(req, 'Não foi possível enviar o e-mail agora. Tente de novo em alguns minutos.', 503);
+    // a mensagem da Cloudflare (sem dados pessoais) ajuda a diagnosticar problemas de configuração do envio
+    const motivo = String(e && (e.code || e.message) || e).replace(/[^\w .:,;()\/-]/g, ' ').replace(/\S+@\S+/g, '[e-mail]').slice(0, 200);
+    console.log('falha no envio do e-mail:', motivo);
+    return erro(req, 'Não foi possível enviar o e-mail agora. Tente de novo em alguns minutos.', 503, { motivo });
   }
   return json(req, { ok: true });
 }
