@@ -11,7 +11,7 @@
 //
 // Área do usuário (login por link no e-mail, sem senha; sessão no cabeçalho Authorization: Bearer <token>):
 // POST   /api/conta/link          {email, consentimento:true} envia o link de acesso (vale 20 minutos, uma vez)
-// POST   /api/conta/entrar        {token} troca o link por uma sessão (90 dias)
+// POST   /api/conta/entrar        {token} troca o link por uma sessão (90 dias, renovados a cada uso)
 // GET    /api/conta               dados da conta, cota e comparações pedidas
 // POST   /api/conta/sair          encerra a sessão
 // GET    /api/conta/dados         tudo o que a plataforma guarda sobre a conta (LGPD)
@@ -82,10 +82,14 @@ async function idDoEmail(email) { return (await sha256('conta|' + email)).slice(
 async function sessao(req, env) {
   const m = (req.headers.get('authorization') || '').match(/^Bearer ([0-9a-f]{64})$/);
   if (!m) return null;
-  const s = await lerJ(env, `${C}sessoes/${await sha256(m[1])}.json`);
+  const sh = await sha256(m[1]), ks = `${C}sessoes/${sh}.json`;
+  const s = await lerJ(env, ks);
   if (!s || Date.parse(s.expira) < Date.now()) return null;
   const u = await lerJ(env, `${C}usuarios/${s.usuario}.json`);
-  return u ? { ...u, sessaoHash: await sha256(m[1]) } : null;
+  if (!u) return null;
+  // sessão deslizante: cada uso devolve a validade a 90 dias (no máximo uma gravação por dia)
+  if (Date.parse(s.expira) - Date.now() < 89 * 864e5) { s.expira = new Date(Date.now() + 90 * 864e5).toISOString(); await gravarJ(env, ks, s); }
+  return { ...u, sessaoHash: sh, sessaoExpira: s.expira };
 }
 
 // conta pedidos numa janela (ex.: por hora) e diz se passou do limite
@@ -151,17 +155,18 @@ async function entrar(req, env) {
 
 async function minhaConta(req, env, u) {
   const { livre } = await cotaLivre(u, env);
-  return json(req, { email: u.email, criado: u.criado, consentimento: u.consentimento, cota: { disponivel: livre, renova: proximaSemana(), porSemana: 1 }, pedidos: (u.pedidos || []).slice(-30).reverse() });
+  return json(req, { email: u.email, sessaoExpira: u.sessaoExpira, criado: u.criado, consentimento: u.consentimento, cota: { disponivel: livre, renova: proximaSemana(), porSemana: 1 }, pedidos: (u.pedidos || []).slice(-30).reverse() });
 }
 
 async function sair(req, env, u) {
   await env.R2.delete(`${C}sessoes/${u.sessaoHash}.json`);
-  await gravarJ(env, `${C}usuarios/${u.id}.json`, { ...u, sessaoHash: undefined, sessoes: (u.sessoes || []).filter(x => x !== u.sessaoHash) });
+  const { sessaoHash, sessaoExpira, ...resto } = u;
+  await gravarJ(env, `${C}usuarios/${u.id}.json`, { ...resto, sessoes: (u.sessoes || []).filter(x => x !== sessaoHash) });
   return json(req, { ok: true });
 }
 
 async function exportar(req, env, u) {
-  const { sessaoHash, ...dados } = u;
+  const { sessaoHash, sessaoExpira, ...dados } = u;
   return json(req, { geradoEm: agoraIso(), conta: { ...dados, sessoes: `${(u.sessoes || []).length} sessão(ões) ativa(s)` },
     observacao: 'Além disso, as comparações pedidas ficam públicas na lista do comparador, sem o seu e-mail. Para limitar abusos, a plataforma guarda por uma hora um código derivado do seu IP, nunca o endereço em si.' });
 }
@@ -216,7 +221,7 @@ async function comparar(req, env) {
   await env.R2.put(`${P}global/${mes()}/${id}`, agora);
   const pedido = { id, estado: 'fila', criado: agora, atualizado: agora, origem: 'site', a, b, titulo: limpa(corpo.titulo, 140), proposicao: limpa(corpo.proposicao, 60), tentativas: 0, cota: k, usuario: u.id };
   await env.R2.put(`${P}pedidos/${id}.json`, JSON.stringify(pedido), { httpMetadata: { contentType: 'application/json' } });
-  const { sessaoHash, ...semSessao } = u;
+  const { sessaoHash, sessaoExpira, ...semSessao } = u;
   await gravarJ(env, `${C}usuarios/${u.id}.json`, { ...semSessao, pedidos: [...(u.pedidos || []), { id, titulo: pedido.titulo || pedido.proposicao, criado: agora }].slice(-100) });
   return json(req, { id, estado: 'fila' }, 201);
 }
@@ -267,7 +272,7 @@ export default {
         const u = await sessao(req, env);
         if (!u) return json(req, { logado: false, disponivel: false, renova: proximaSemana() });
         const { livre } = await cotaLivre(u, env);
-        return json(req, { logado: true, email: u.email, disponivel: livre, renova: proximaSemana() });
+        return json(req, { logado: true, email: u.email, sessaoExpira: u.sessaoExpira, disponivel: livre, renova: proximaSemana() });
       }
       if (req.method === 'POST' && url.pathname === '/api/conta/link') return pedirLink(req, env);
       if (req.method === 'POST' && url.pathname === '/api/conta/entrar') return entrar(req, env);

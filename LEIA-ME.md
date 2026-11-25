@@ -193,7 +193,7 @@ Página `comparador.html` (aba "Comparador"), aberta ao público desde 25/11/202
 
 ## Minha área (contas de usuário)
 
-Página `conta.html` (aba "Minha área") e `privacidade.html`, desde 25/11/2026. Cadastro aberto a qualquer pessoa, só com o e-mail e sem senha (decisões do James): o link de acesso chega por e-mail, vale 20 minutos e uma vez; a sessão dura 90 dias e fica no navegador (`localStorage`, chave `ext-sessao`), enviada no cabeçalho `Authorization`, porque o site e o Worker ficam em domínios diferentes.
+Página `conta.html` (aba "Minha área") e `privacidade.html`, desde 25/11/2026. Cadastro aberto a qualquer pessoa, só com o e-mail e sem senha (decisões do James): o link de acesso chega por e-mail, vale 20 minutos e uma vez; a sessão vale 90 dias e se renova a cada uso (no máximo uma gravação por dia; decisão do James, 25/11/2026), e fica no navegador (`localStorage`, chave `ext-sessao`), enviada no cabeçalho `Authorization`, porque o site e o Worker ficam em domínios diferentes.
 
 - **Worker** `cloudflare/comparador` (o mesmo do comparador): rotas `/api/conta/*`. Dados no R2, prefixo `contas/`: `usuarios/<id>.json` (e-mail, consentimento com versão e data, hashes das sessões, comparações pedidas), `links/<hash>.json`, `sessoes/<hash>.json` e `limite/<hora>/…` (até 10 pedidos de link por hora por IP, guardado como hash com sal, e 4 por e-mail). O robô do comparador apaga contadores com mais de 2 horas, links com mais de 1 dia e sessões vencidas.
 - **E-mail** pelo Cloudflare Email Service (binding `EMAIL`, remetente acesso@exterminadores.com.br), incluído no Workers Paid: 3.000 por mês, depois US$ 0,35 por mil. Exige o domínio habilitado para envio no painel da Cloudflare (Email Service > Email Sending).

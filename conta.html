@@ -65,7 +65,7 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
   <section id="fora" hidden>
     <div class="painel">
       <h2>Entrar ou criar a conta</h2>
-      <p>Informe o seu e-mail. Enviamos um link de acesso, que vale por 20 minutos e só uma vez. Não há senha.</p>
+      <p>Informe o seu e-mail. Enviamos um link de acesso, que vale por 20 minutos e só uma vez. Não há senha: depois de entrar, você continua conectado neste aparelho, e a conexão se renova a cada visita. Só será preciso um link novo depois de 90 dias sem usar a plataforma, ao trocar de aparelho ou depois de sair.</p>
       <form id="f-link">
         <label class="campo">E-mail<input id="email" type="email" autocomplete="email" required maxlength="254"></label>
         <label class="ck"><input type="checkbox" id="consente"><span>Li e concordo com a <a href="privacidade.html" target="_blank" rel="noopener">política de privacidade</a>. Entendo que a plataforma guarda o meu e-mail para o acesso e os serviços que eu usar, e que posso baixar os meus dados ou apagar a conta a qualquer momento. <span class="mini">(Obrigatório só para criar a conta.)</span></span></label>
@@ -131,12 +131,13 @@ async function api(path, opt = {}) {
 }
 const msg = (id, t, tipo) => { $(id).textContent = t || ''; $(id).className = 'msg' + (tipo ? ' ' + tipo : ''); };
 
+const renovarLocal = exp => { try { const s = JSON.parse(localStorage.getItem('ext-sessao')); if (s && exp) { s.expira = exp; localStorage.setItem('ext-sessao', JSON.stringify(s)); } } catch (_) {} };
 function mostrarFora() { $('carregando').hidden = true; $('dentro').hidden = true; $('fora').hidden = false; }
 async function mostrarDentro() {
   let c;
   try { c = await api('/api/conta'); } catch (e) { mostrarFora(); if (e.status !== 401) msg('msg-link', e.message, 'erro'); return; }
   $('carregando').hidden = true; $('fora').hidden = true; $('dentro').hidden = false;
-  $('quem').textContent = c.email; $('criado').textContent = dt(c.criado); $('versao').textContent = dt(c.consentimento && c.consentimento.versao);
+  renovarLocal(c.sessaoExpira); $('quem').textContent = c.email; $('criado').textContent = dt(c.criado); $('versao').textContent = dt(c.consentimento && c.consentimento.versao);
   $('cota').textContent = c.cota.disponivel ? 'Você pode pedir uma comparação nova nesta semana.' : `Você já usou a comparação desta semana. A próxima libera na segunda-feira, ${dt(c.cota.renova)}.`;
   if (!c.pedidos.length) { $('pedidos').innerHTML = '<li class="mini">Nenhuma comparação pedida ainda.</li>'; return; }
   const linhas = await Promise.all(c.pedidos.map(async p => {

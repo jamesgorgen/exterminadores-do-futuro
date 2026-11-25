@@ -325,11 +325,12 @@ async function api(path, opt = {}) {
 async function getj(url) { const r = await fetch(url, { headers: { Accept: 'application/json' } }); if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }
 
 // ---------------- cota
+const renovarLocal = exp => { try { const s = JSON.parse(localStorage.getItem('ext-sessao')); if (s && exp) { s.expira = exp; localStorage.setItem('ext-sessao', JSON.stringify(s)); } } catch (_) {} };
 let cotaLivre = true, logado = false;
 const irParaConta = () => { try { localStorage.setItem('ext-volta', 'comparador.html#nova'); } catch (_) {} location.href = 'conta.html'; };
 async function verCota() {
   try {
-    const c = await api('/api/cota'); cotaLivre = c.disponivel; logado = c.logado;
+    const c = await api('/api/cota'); cotaLivre = c.disponivel; logado = c.logado; renovarLocal(c.sessaoExpira);
     if (!c.logado) {
       $('cota').innerHTML = 'Qualquer pessoa pode abrir as comparações prontas e pedir as que já existem. Para pedir uma comparação nova ou enviar PDFs, <a href="conta.html" id="entrar-link">entre com o seu e-mail na Minha área</a>: o cadastro é gratuito e dá direito a uma comparação nova por semana.';
       $('entrar-link').addEventListener('click', e => { e.preventDefault(); irParaConta(); });
