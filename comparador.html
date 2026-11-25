@@ -221,7 +221,7 @@ h3{font-family:var(--display);font-weight:800;font-size:24px;line-height:1.05;ma
         <label class="campo">Casa<select id="casa"><option value="camara">Câmara</option><option value="senado">Senado</option></select></label>
         <button class="btn" type="submit">Buscar</button>
       </form>
-      <p class="mini">Na busca por palavras, só a Câmara é consultada. No Senado, informe a sigla, o número e o ano (ex.: PL 2338/2023).</p>
+      <p class="mini">A busca por palavras procura nas ementas dos projetos apresentados na Casa escolhida desde 2023, sem diferenciar acentos e em qualquer ordem. Não procura dentro dos textos. Para projetos mais antigos, busque pelo número.</p>
       <div id="r-busca" aria-live="polite"></div>
     </div>
 
@@ -260,7 +260,7 @@ h3{font-family:var(--display);font-weight:800;font-size:24px;line-height:1.05;ma
 <section id="como" class="como"><div class="wrap">
   <h2>Como funciona</h2>
   <ol>
-    <li><b>Escolha dos textos.</b> A busca consulta, no seu navegador, os dados abertos da Câmara e do Senado e lista as versões da proposição que têm texto publicado: o projeto, os pareceres e substitutivos, as emendas e a redação final. Também é possível enviar dois PDFs.</li>
+    <li><b>Escolha dos textos.</b> A busca pelo número consulta, no seu navegador, os dados abertos da Câmara e do Senado. A busca por palavras procura nas ementas dos projetos apresentados desde 2023, na base da plataforma, e não dentro dos textos. Escolhido o projeto, a página lista as versões que têm texto publicado: o projeto, os pareceres e substitutivos, as emendas e a redação final. Também é possível enviar dois PDFs.</li>
     <li><b>Extração.</b> Um robô da plataforma baixa os PDFs, extrai o texto (com leitura óptica, quando o PDF é uma imagem), retira cabeçalhos, rodapés e assinaturas e localiza o trecho com os artigos. Num parecer, por exemplo, ele separa o substitutivo do relatório.</li>
     <li><b>Emparelhamento, sem IA.</b> Cada artigo é emparelhado com o correspondente da outra versão, mesmo que tenha mudado de número. Dentro do artigo, cada parágrafo, inciso e alínea é emparelhado do mesmo jeito. Trechos que só mudaram de lugar aparecem como deslocados; dispositivos divididos aparecem numa linha só; trocas de nome repetidas no texto todo são identificadas e marcadas à parte, para não esconder as mudanças de conteúdo.</li>
     <li><b>Diferenças, sem IA.</b> As palavras que saíram aparecem riscadas e as que entraram, marcadas.</li>
@@ -342,8 +342,9 @@ $('f-busca').addEventListener('submit', async e => {
   out.innerHTML = '<p class="mini">Buscando…</p>';
   try {
     const p = partes(q);
+    if (!p) { await porPalavras(q, casa); return; }
     if (casa === 'senado') {
-      if (!p || !p.sigla) throw new Error('No Senado, informe a sigla, o número e o ano (ex.: PL 2338/2023).');
+      if (!p.sigla) throw new Error('No Senado, informe também a sigla (ex.: PL 2338/2023).');
       const lista = await getj(`${SEN}/processo?sigla=${encodeURIComponent(p.sigla)}&numero=${p.numero}&ano=${p.ano}`);
       if (lista.length) { await mostrarSenado(lista[0].id); return; }
       // sigla sem resultado: sugere as proposições com o mesmo número e ano
@@ -360,18 +361,56 @@ $('f-busca').addEventListener('submit', async e => {
       const todos = (await getj(`${CAM}/proposicoes?numero=${p.numero}&ano=${p.ano}&itens=100`)).dados.filter(x => PRINCIPAIS.has(x.siglaTipo));
       if (!todos.length) throw new Error(`Não há ${p.sigla} ${p.numero}/${p.ano} na Câmara, nem projeto com esse número e ano.`);
       escolher(todos, `Não há ${p.sigla} ${p.numero}/${p.ano} na Câmara${p.sigla === 'PLC' ? ' (lá, projeto de lei complementar é PLP)' : ''}. Você quis dizer:`);
-    } else {
-      const r = await getj(`${CAM}/proposicoes?keywords=${encodeURIComponent(q)}&ordem=DESC&ordenarPor=id&itens=15`);
-      if (!r.dados.length) throw new Error('Nada encontrado. Tente o número da proposição.');
-      escolher(r.dados);
     }
   } catch (err) { out.innerHTML = ''; msg(err.message || 'A busca falhou.', true); }
 });
+// busca por palavras nas ementas (dados/proposicoes-todas.json: projetos da Câmara e do Senado desde 2023)
+let base = null;
+const semAcento = t => String(t || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+function baseLocal() {
+  if (!base) base = fetch('dados/proposicoes-todas.json').then(r => { if (!r.ok) throw new Error('Não foi possível carregar a lista de projetos.'); return r.json(); })
+    .then(j => j.itens.map(x => ({ c: x.c, k: x.k || [], d: x.d, e: x.e, i: x.i, n: semAcento(x.c + ' ' + x.e) })))
+    .catch(e => { base = null; throw e; });
+  return base;
+}
+let achados = [], mostrados = 0;
+async function porPalavras(q, casa) {
+  $('r-busca').innerHTML = '<p class="mini">Carregando a lista de projetos…</p>';
+  const itens = await baseLocal();
+  const nq = semAcento(q).trim(), ws = nq.split(/\s+/).filter(w => w.length > 1 && !['de', 'da', 'do', 'das', 'dos', 'e', 'a', 'o', 'em', 'para', 'com'].includes(w));
+  if (!ws.length) throw new Error('Digite ao menos uma palavra com mais de uma letra.');
+  const k = casa === 'senado' ? 'S' : 'C';
+  achados = itens.filter(x => x.k.includes(k) && ws.every(w => x.n.includes(w)))
+    .sort((a, b) => (b.n.includes(nq) - a.n.includes(nq)) || b.d.localeCompare(a.d));
+  mostrados = 0;
+  if (!achados.length && casa === 'camara') {
+    // projetos anteriores a 2023: a API da Câmara procura na ementa e na indexação
+    const r = await getj(`${CAM}/proposicoes?keywords=${encodeURIComponent(q)}&ordem=DESC&ordenarPor=id&itens=20`).catch(() => ({ dados: [] }));
+    if (r.dados.length) { escolher(r.dados, 'Nada nos projetos desde 2023. Pela busca da Câmara (ementa e indexação):'); return; }
+  }
+  if (!achados.length) throw new Error(`Nenhum projeto da ${casa === 'senado' ? 'Senado' : 'Câmara'} desde 2023 tem essas palavras na ementa. Tente outras palavras, a outra Casa ou o número.`);
+  maisAchados();
+}
+function maisAchados() {
+  mostrados = Math.min(achados.length, mostrados + 30);
+  $('r-busca').innerHTML = `<div class="prop"><h4>${achados.length} projeto${achados.length > 1 ? 's' : ''} com essas palavras na ementa</h4><ul>` + achados.slice(0, mostrados).map(x =>
+    `<li><button class="ref" ${x.k.includes('S') ? `data-senc="${esc(x.c)}"` : `data-cam="${esc(x.i)}"`}>${esc(x.c)}</button> <span class="mini">${esc(dt(x.d))}</span> ${esc(x.e.slice(0, 180))}</li>`).join('') + '</ul>' +
+    (mostrados < achados.length ? `<button class="btn sec" id="mais">Mostrar mais (${achados.length - mostrados})</button>` : '') + '</div>';
+}
+async function senadoPorCodigo(c) {
+  const p = partes(c);
+  const lista = await getj(`${SEN}/processo?sigla=${encodeURIComponent(p.sigla)}&numero=${p.numero}&ano=${p.ano}`);
+  if (!lista.length) throw new Error('Projeto não encontrado no Senado.');
+  await mostrarSenado(lista[0].id);
+}
 function escolher(dados, titulo) {
   $('r-busca').innerHTML = `<div class="prop"><h4>${esc(titulo || 'Escolha a proposição')}</h4><ul>` + dados.map(d =>
     `<li><button class="ref" data-cam="${esc(d.id)}">${esc(d.siglaTipo)} ${esc(d.numero)}/${esc(d.ano)}</button> ${esc((d.ementa || '').slice(0, 160))}</li>`).join('') + '</ul></div>';
 }
-$('r-busca').addEventListener('click', e => { const s = e.target.closest('[data-sen]'); if (s) { $('r-busca').innerHTML = '<p class="mini">Carregando as versões…</p>'; mostrarSenado(s.dataset.sen).catch(err => msg(err.message, true)); return; } const b = e.target.closest('[data-cam]'); if (b) { $('r-busca').innerHTML = '<p class="mini">Carregando as versões…</p>'; mostrarCamara(b.dataset.cam).catch(err => msg(err.message, true)); } });
+$('r-busca').addEventListener('click', e => {
+  if (e.target.id === 'mais') { maisAchados(); return; }
+  const sc = e.target.closest('[data-senc]'); if (sc) { $('r-busca').innerHTML = '<p class="mini">Carregando as versões…</p>'; senadoPorCodigo(sc.dataset.senc).catch(err => msg(err.message, true)); return; }
+  const s = e.target.closest('[data-sen]'); if (s) { $('r-busca').innerHTML = '<p class="mini">Carregando as versões…</p>'; mostrarSenado(s.dataset.sen).catch(err => msg(err.message, true)); return; } const b = e.target.closest('[data-cam]'); if (b) { $('r-busca').innerHTML = '<p class="mini">Carregando as versões…</p>'; mostrarCamara(b.dataset.cam).catch(err => msg(err.message, true)); } });
 
 async function mostrarCamara(id) {
   const d = (await getj(`${CAM}/proposicoes/${id}`)).dados;
