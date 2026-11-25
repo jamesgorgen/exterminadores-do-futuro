@@ -5,10 +5,14 @@ main = "worker.js"
 compatibility_date = "2026-11-01"
 workers_dev = true
 
+# Envio de e-mail (link de acesso), pelo Cloudflare Email Service. Exige o domínio habilitado para envio no painel.
+[[send_email]]
+name = "EMAIL"
+
 [[r2_buckets]]
 binding = "R2"
 bucket_name = "exterminadores-dados"
 
 [vars]
-# Teto geral de comparações novas por mês (além do limite de uma por semana por IP), para conter o custo da IA.
+# Teto geral de comparações novas por mês (além do limite de uma por semana por conta), para conter o custo da IA.
 LIMITE_GLOBAL_MES = "300"

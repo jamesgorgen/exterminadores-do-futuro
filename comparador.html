@@ -205,7 +205,7 @@ h3{font-family:var(--display);font-weight:800;font-size:24px;line-height:1.05;ma
   <p class="lede">O que mudou entre o projeto original e o substitutivo do relator? Escolha duas versões de uma proposição da Câmara ou do Senado, ou envie dois PDFs, e veja as diferenças artigo por artigo.</p>
 </div></header>
 <nav class="secoes" aria-label="Seções"><div class="wrap">
-  <a class="inicio" href="./"><span aria-hidden="true">←</span> Início</a><a href="#nova">Nova comparação</a><a href="#prontas">Comparações prontas</a><a href="#como">Como funciona</a>
+  <a class="inicio" href="./"><span aria-hidden="true">←</span> Início</a><a href="#nova">Nova comparação</a><a href="#prontas">Comparações prontas</a><a href="#como">Como funciona</a><a href="conta.html">Minha área</a>
 </div></nav>
 
 <main>
@@ -218,7 +218,7 @@ h3{font-family:var(--display);font-weight:800;font-size:24px;line-height:1.05;ma
 
 <section id="nova"><div class="wrap">
   <h2>Nova comparação</h2>
-  <p class="intro">Busque a proposição e escolha as duas versões, ou envie os PDFs. Se a comparação já existir, ela abre na hora e não conta para o seu limite.</p>
+  <p class="intro">Busque a proposição e escolha as duas versões, ou envie os PDFs. Se a comparação já existir, ela abre na hora, sem cadastro e sem contar para o seu limite.</p>
   <div class="painel">
     <p class="cota" id="cota">Verificando o limite de comparações…</p>
     <div class="modos" role="group" aria-label="Como escolher os textos">
@@ -281,10 +281,10 @@ h3{font-family:var(--display);font-weight:800;font-size:24px;line-height:1.05;ma
   <p class="alerta" role="note"><b>O resultado não substitui a revisão humana.</b> A extração de PDFs pode falhar em documentos mal formatados ou escaneados, o emparelhamento pode errar quando o texto é muito reescrito e a análise de IA pode simplificar ou interpretar mal uma mudança. Use o comparador como ponto de partida e confira o texto oficial, cujo link aparece em cada comparação, antes de publicar ou citar.</p>
   <h3 style="margin-top:28px">Limites</h3>
   <ul>
-    <li>Cada conexão pode pedir uma comparação nova por semana (de segunda a domingo), de graça. Abrir comparações prontas e pedir uma que já existe não contam. Há também um teto geral mensal.</li>
+    <li>Abrir as comparações prontas e pedir uma que já existe é livre para todos. Comparações novas e envio de PDFs exigem o cadastro gratuito na <a href="conta.html">Minha área</a>, só com o e-mail: uma comparação nova por semana (de segunda a domingo) por conta. Há também um teto geral mensal.</li>
     <li>Só funciona com textos articulados (com "Art. 1º"). Atas, notas técnicas e ofícios não são aceitos.</li>
     <li>PDFs de até 15 MB. Os PDFs enviados e as comparações ficam públicos na lista.</li>
-    <li>Para controlar o limite, a plataforma guarda só um código derivado do endereço IP, nunca o endereço em si.</li>
+    <li>O cadastro guarda só o e-mail. Veja a <a href="privacidade.html">política de privacidade</a>.</li>
     <li>Mudanças em títulos de capítulos e seções não aparecem no quadro, só nos artigos.</li>
   </ul>
 </div></section>
@@ -313,8 +313,11 @@ const CLS = { merito: ['Mérito', 'var(--mer)'], novo: ['Novo', 'var(--nov)'], s
 const loja = { get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch (_) { return d; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (_) {} } };
 const toast = t => { const e = $('toast'); e.textContent = t; e.classList.add('on'); setTimeout(() => e.classList.remove('on'), 2400); };
 const msg = (t, erro) => { $('msg').textContent = t || ''; $('msg').className = 'msg' + (erro ? ' erro' : ''); };
-async function api(path, opt) {
-  const r = await fetch(API + path, opt);
+const sessaoAtual = () => { try { const s = JSON.parse(localStorage.getItem('ext-sessao')); return s && Date.parse(s.expira) > Date.now() ? s : null; } catch (_) { return null; } };
+async function api(path, opt = {}) {
+  const s = sessaoAtual();
+  const r = await fetch(API + path, s ? { ...opt, headers: { ...(opt.headers || {}), authorization: 'Bearer ' + s.token } } : opt);
+  if (r.status === 401 && s) { try { localStorage.removeItem('ext-sessao'); } catch (_) {} }
   let j = {}; try { j = await r.json(); } catch (_) {}
   if (!r.ok) { const e = new Error(j.erro || 'O serviço do comparador não respondeu. Tente de novo em instantes.'); e.status = r.status; e.dados = j; throw e; }
   return j;
@@ -322,12 +325,18 @@ async function api(path, opt) {
 async function getj(url) { const r = await fetch(url, { headers: { Accept: 'application/json' } }); if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }
 
 // ---------------- cota
-let cotaLivre = true;
+let cotaLivre = true, logado = false;
+const irParaConta = () => { try { localStorage.setItem('ext-volta', 'comparador.html#nova'); } catch (_) {} location.href = 'conta.html'; };
 async function verCota() {
   try {
-    const c = await api('/api/cota'); cotaLivre = c.disponivel;
-    $('cota').textContent = c.disponivel ? 'Você pode pedir uma comparação nova gratuita nesta semana. Comparações que já existem não contam.'
-      : `Você já usou a comparação gratuita desta semana (renova na segunda-feira, ${dt(c.renova)}). Ainda é possível abrir qualquer comparação pronta e pedir as que já existem.`;
+    const c = await api('/api/cota'); cotaLivre = c.disponivel; logado = c.logado;
+    if (!c.logado) {
+      $('cota').innerHTML = 'Qualquer pessoa pode abrir as comparações prontas e pedir as que já existem. Para pedir uma comparação nova ou enviar PDFs, <a href="conta.html" id="entrar-link">entre com o seu e-mail na Minha área</a>: o cadastro é gratuito e dá direito a uma comparação nova por semana.';
+      $('entrar-link').addEventListener('click', e => { e.preventDefault(); irParaConta(); });
+    } else {
+      $('cota').textContent = c.disponivel ? `Você entrou como ${c.email} e pode pedir uma comparação nova nesta semana. Comparações que já existem não contam.`
+        : `Você entrou como ${c.email} e já usou a comparação desta semana (libera na segunda-feira, ${dt(c.renova)}). Ainda é possível abrir qualquer comparação pronta e pedir as que já existem.`;
+    }
   } catch (e) { $('cota').textContent = 'Não foi possível verificar o limite agora.'; }
 }
 
@@ -520,6 +529,7 @@ $('f-envio').addEventListener('submit', async e => {
     const ini = new Uint8Array(await f.slice(0, 4).arrayBuffer());
     if (String.fromCharCode(...ini) !== '%PDF') { msg(`${f.name} não é um PDF.`, true); return; }
   }
+  if (!sessaoAtual()) { msg('Para enviar PDFs, entre com o seu e-mail na Minha área.', true); linkEntrar(); return; }
   const btn = e.submitter || e.target.querySelector('button'); btn.disabled = true;
   try {
     msg('Enviando os PDFs…');
@@ -532,7 +542,7 @@ $('f-envio').addEventListener('submit', async e => {
     if (refs[0] === refs[1]) throw new Error('Os dois PDFs são o mesmo arquivo.');
     await pedir({ a: { ref: refs[0], nome: $('na').value.trim(), data: $('da').value.trim() }, b: { ref: refs[1], nome: $('nb').value.trim(), data: $('db').value.trim() },
       titulo: $('te').value.trim() || `${$('na').value.trim()} × ${$('nb').value.trim()}` }, null);
-  } catch (err) { msg(err.message, true); }
+  } catch (err) { msg(err.message, true); if (err.status === 401) linkEntrar(); }
   btn.disabled = false;
 });
 
@@ -548,8 +558,12 @@ async function pedir(corpo, btn) {
     loja.set('cmp-minhas', minhas.slice(0, 10));
     msg(r.existente ? 'Esta comparação já está na fila. Acompanhe abaixo.' : 'Pedido recebido. Acompanhe abaixo; a comparação entra na lista quando ficar pronta.');
     verCota(); acompanhar();
-  } catch (err) { msg(err.message, true); }
+  } catch (err) { msg(err.message, true); if (err.status === 401) linkEntrar(); }
   if (btn) btn.disabled = false;
+}
+function linkEntrar() {
+  const a = document.createElement('a'); a.href = 'conta.html'; a.textContent = ' Entrar ou criar a conta →';
+  a.addEventListener('click', e => { e.preventDefault(); irParaConta(); }); $('msg').appendChild(a);
 }
 let relogio = null;
 async function acompanhar() {

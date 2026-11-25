@@ -68,6 +68,11 @@ Esta seção resume a sessão de 30/10 a 17/11. O histórico anterior está no a
 - Decisões do James: qualquer visitante pode gerar comparações; uma nova por semana por IP, de graça (era uma por mês até a tarde de 25/11); resultados entram direto na lista pública com alerta de revisão humana. Teto geral de 300 por mês, a confirmar com o James.
 - Piloto que originou a ferramenta: PL 4675/2025, original × PRLP 1 (julho). O PRLP 2 (substitutivo de novembro) foi protocolado em 23/11, id 2659062; as três comparações estão em `semente.json`.
 
+## Minha área (25/11)
+- Etapa 1 no ar: `conta.html`, `privacidade.html`, rotas `/api/conta/*` no Worker do comparador; comparação nova só com cadastro (uma por semana por conta). Decisões do James: login só por link no e-mail; IA só para cadastrados; push e e-mail desde o início; cadastro aberto.
+- Pendente do James: habilitar o envio de e-mail do domínio no painel da Cloudflare (Email Service > Email Sending > exterminadores.com.br) e conferir o texto da política de privacidade (encarregado, operadores, transferência internacional).
+- Próximas: etapa 2 (acompanhamento de projetos, push e e-mail) e etapa 3 (dossiês sob medida). Cotas sem IA: pequena para quem não tem cadastro, maior para cadastrados.
+
 ## Pendências do James
 - 2FA no GitHub, Cloudflare e Registro.br e revisão dos tokens dos revisores encaminhadas pelo James em 17/11. Ramo `diag-dns` apagado em 17/11 (esta sessão não consegue apagar ramos; o James apaga pelo site).
 

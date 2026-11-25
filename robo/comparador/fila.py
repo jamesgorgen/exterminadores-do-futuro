@@ -232,6 +232,32 @@ def remocoes():
         atualizar_indice(remover=feitos)
         print('removidas:', feitos)
 
+# ---------------------------------------------------------------- limpeza das contas (minimização de dados)
+def limpar_contas():
+    """Apaga contadores de limite com mais de 2 horas (guardam o código derivado do IP), links com mais de
+    1 dia e sessões vencidas. As chaves ficam no prefixo contas/ do bucket (Worker cloudflare/comparador)."""
+    agora = time.time(); n = 0
+    def chaves(prefixo):
+        out, tok = [], None
+        while True:
+            kw = {'Bucket': B, 'Prefix': prefixo}
+            if tok: kw['ContinuationToken'] = tok
+            r = S3.list_objects_v2(**kw)
+            out += r.get('Contents', [])
+            if not r.get('IsTruncated'): return out
+            tok = r['NextContinuationToken']
+    for o in chaves('contas/limite/'):
+        if agora - o['LastModified'].timestamp() > 2 * 3600:
+            S3.delete_object(Bucket=B, Key=o['Key']); n += 1
+    for o in chaves('contas/links/'):
+        if agora - o['LastModified'].timestamp() > 86400:
+            S3.delete_object(Bucket=B, Key=o['Key']); n += 1
+    for o in chaves('contas/sessoes/'):
+        if agora - o['LastModified'].timestamp() > 91 * 86400:
+            S3.delete_object(Bucket=B, Key=o['Key']); n += 1
+    if n:
+        print('limpeza das contas:', n, 'registro(s) apagado(s)')
+
 # ---------------------------------------------------------------- principal
 def main():
     global S3
@@ -239,6 +265,10 @@ def main():
     inicio = time.time()
     semente()
     remocoes()
+    try:
+        limpar_contas()
+    except Exception as e:
+        print('limpeza das contas falhou:', e)
     pend = []
     for k in listar('pedidos/'):
         ped = ler(k)
