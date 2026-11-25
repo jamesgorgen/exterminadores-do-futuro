@@ -1,5 +1,5 @@
 {
- "gerado": "2026-11-25T23:18:09.816Z",
+ "gerado": "2026-11-25T23:37:14.894Z",
  "inicio": "2023-02-01",
  "totais": {
   "proposicoes": 29351,
@@ -6655,6 +6655,204 @@
     }
    }
   },
+  "lider": {
+   "votos": {
+    "C": {
+     "n": 148,
+     "venceu": 114,
+     "anos": {
+      "2023": [
+       32,
+       23
+      ],
+      "2024": [
+       29,
+       25
+      ],
+      "2025": [
+       69,
+       50
+      ],
+      "2026": [
+       18,
+       16
+      ]
+     }
+    },
+    "S": {
+     "n": 46,
+     "venceu": 41,
+     "anos": {
+      "2023": [
+       11,
+       11
+      ],
+      "2024": [
+       10,
+       8
+      ],
+      "2025": [
+       13,
+       11
+      ],
+      "2026": [
+       12,
+       11
+      ]
+     }
+    }
+   },
+   "contraE": {
+    "C": {
+     "n": 79,
+     "venceu": 46,
+     "anos": {
+      "2023": [
+       9,
+       1
+      ],
+      "2024": [
+       11,
+       7
+      ],
+      "2025": [
+       48,
+       29
+      ],
+      "2026": [
+       11,
+       9
+      ]
+     }
+    },
+    "S": {
+     "n": 12,
+     "venceu": 8,
+     "anos": {
+      "2023": [
+       3,
+       3
+      ],
+      "2024": [
+       4,
+       2
+      ],
+      "2025": [
+       2,
+       1
+      ],
+      "2026": [
+       3,
+       2
+      ]
+     }
+    }
+   },
+   "lideres": {
+    "C": [
+     {
+      "c": "C141470",
+      "n": "José Guimarães",
+      "ini": "2023-02-01",
+      "fim": "2026-04-14",
+      "fonte": "API da Câmara, líderes da 57ª legislatura"
+     },
+     {
+      "c": "C74400",
+      "n": "Paulo Pimenta",
+      "ini": "2026-04-14",
+      "fim": "",
+      "fonte": "Serviço de lideranças do Senado (composição atual)"
+     }
+    ],
+    "S": [
+     {
+      "c": "S581",
+      "n": "Jaques Wagner",
+      "ini": "2023-02-01",
+      "fim": "2026-06-24",
+      "fonte": "Noticiário da troca na liderança (25/6/2026): Wagner deixou o cargo em 24/6/2026"
+     },
+     {
+      "c": "S6338",
+      "n": "Teresa Leitão",
+      "ini": "2026-06-26",
+      "fim": "",
+      "fonte": "Serviço de lideranças do Senado (composição atual)"
+     }
+    ]
+   }
+  },
+  "lacunas": {
+   "C": {
+    "2023": {
+     "total": 393,
+     "formal": 290,
+     "liberou": 12,
+     "lider": 32,
+     "sem": 14,
+     "comissoes": 45
+    },
+    "2024": {
+     "total": 409,
+     "formal": 281,
+     "liberou": 34,
+     "lider": 29,
+     "sem": 5,
+     "comissoes": 60
+    },
+    "2025": {
+     "total": 467,
+     "formal": 308,
+     "liberou": 11,
+     "lider": 69,
+     "sem": 16,
+     "comissoes": 63
+    },
+    "2026": {
+     "total": 152,
+     "formal": 112,
+     "liberou": 1,
+     "lider": 18,
+     "sem": 6,
+     "comissoes": 15
+    }
+   },
+   "S": {
+    "2023": {
+     "total": 50,
+     "formal": 36,
+     "liberou": 1,
+     "lider": 11,
+     "sem": 2,
+     "comissoes": 0
+    },
+    "2024": {
+     "total": 58,
+     "formal": 44,
+     "liberou": 2,
+     "lider": 10,
+     "sem": 2,
+     "comissoes": 0
+    },
+    "2025": {
+     "total": 56,
+     "formal": 37,
+     "liberou": 1,
+     "lider": 13,
+     "sem": 5,
+     "comissoes": 0
+    },
+    "2026": {
+     "total": 34,
+     "formal": 19,
+     "liberou": 3,
+     "lider": 12,
+     "sem": 0,
+     "comissoes": 0
+    }
+   }
+  },
   "derrotas": [
    {
     "id": "C:2580259-24",
@@ -6768,23 +6966,6 @@
     }
    },
    {
-    "id": "C:1228863-96",
-    "k": "C",
-    "d": "2026-06-10",
-    "mat": "PEC 32/2015",
-    "desc": "Aprovado o Requerimento de Encerramento de Discussão. Encerrada a discussão. . Resultado:  42 votos \"Sim\", 17 votos \"Não\". Quórum de votação: 59 votos.",
-    "me": "Parecer do Relator, Dep. Pastor Eurico (PHS-PE), pela admissibilidade.",
-    "pl": false,
-    "o": "CCJC",
-    "gv": "N",
-    "res": "A",
-    "e": true,
-    "t": {
-     "N": 17,
-     "S": 42
-    }
-   },
-   {
     "id": "C:1228863-89",
     "k": "C",
     "d": "2026-06-10",
@@ -6799,6 +6980,23 @@
     "t": {
      "S": 15,
      "N": 39
+    }
+   },
+   {
+    "id": "C:1228863-96",
+    "k": "C",
+    "d": "2026-06-10",
+    "mat": "PEC 32/2015",
+    "desc": "Aprovado o Requerimento de Encerramento de Discussão. Encerrada a discussão. . Resultado:  42 votos \"Sim\", 17 votos \"Não\". Quórum de votação: 59 votos.",
+    "me": "Parecer do Relator, Dep. Pastor Eurico (PHS-PE), pela admissibilidade.",
+    "pl": false,
+    "o": "CCJC",
+    "gv": "N",
+    "res": "A",
+    "e": true,
+    "t": {
+     "N": 17,
+     "S": 42
     }
    },
    {
@@ -6873,7 +7071,12 @@
     }
    }
   ],
-  "nDerrotas": 236
+  "nDerrotas": 236,
+  "fontes": {
+   "mpv": 247,
+   "orientacaoSenado": 143,
+   "gerado": "2026-11-25T23:35:55.231Z"
+  }
  },
  "recentes": {
   "proposicoes": 19,
