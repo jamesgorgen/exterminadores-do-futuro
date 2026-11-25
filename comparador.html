@@ -94,6 +94,8 @@ h3{font-family:var(--display);font-weight:800;font-size:24px;line-height:1.05;ma
 .versoes input[type=radio]{width:20px;height:20px;accent-color:var(--night)}
 .versoes tr.grupo td{background:var(--paper);font-weight:700;font-size:13px;color:var(--ink-2)}
 .versoes .data{white-space:nowrap;color:var(--ink-3)}
+.casa{display:inline-block;font-size:11.5px;font-weight:700;border-radius:3px;padding:0 6px;background:var(--paper);border:1px solid var(--line);color:var(--ink-2);vertical-align:1px}
+.aviso-v{display:inline-block;font-size:12px;color:var(--warn);background:var(--warn-soft);border-radius:3px;padding:0 6px}
 .envios{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 @media (max-width:760px){.envios{grid-template-columns:minmax(0,1fr)}}
 .envio{border:1px dashed var(--line);border-radius:6px;padding:12px 14px;display:flex;flex-direction:column;gap:10px}
@@ -218,10 +220,10 @@ h3{font-family:var(--display);font-weight:800;font-size:24px;line-height:1.05;ma
     <div id="m-busca">
       <form class="linha" id="f-busca">
         <label class="campo grande">Proposição ou palavras da ementa<input id="q" type="search" placeholder="Ex.: PL 4675/2025, PLP 299/2026 ou mercados digitais" autocomplete="off" required></label>
-        <label class="campo">Casa<select id="casa"><option value="camara">Câmara</option><option value="senado">Senado</option></select></label>
+        <label class="campo">Onde buscar<select id="casa"><option value="ambas">Câmara e Senado</option><option value="camara">Só Câmara</option><option value="senado">Só Senado</option></select></label>
         <button class="btn" type="submit">Buscar</button>
       </form>
-      <p class="mini">A busca por palavras procura nas ementas dos projetos apresentados na Casa escolhida desde 2023, sem diferenciar acentos e em qualquer ordem. Não procura dentro dos textos. Para projetos mais antigos, busque pelo número.</p>
+      <p class="mini">Em "Câmara e Senado", a página junta as versões das duas Casas, para comparar, por exemplo, o texto aprovado numa com o substitutivo do relator na outra. A busca por palavras procura nas ementas dos projetos apresentados desde 2023, sem diferenciar acentos e em qualquer ordem. Não procura dentro dos textos. Para projetos mais antigos, busque pelo número.</p>
       <div id="r-busca" aria-live="polite"></div>
     </div>
 
@@ -260,7 +262,7 @@ h3{font-family:var(--display);font-weight:800;font-size:24px;line-height:1.05;ma
 <section id="como" class="como"><div class="wrap">
   <h2>Como funciona</h2>
   <ol>
-    <li><b>Escolha dos textos.</b> A busca pelo número consulta, no seu navegador, os dados abertos da Câmara e do Senado. A busca por palavras procura nas ementas dos projetos apresentados desde 2023, na base da plataforma, e não dentro dos textos. Escolhido o projeto, a página lista as versões que têm texto publicado: o projeto, os pareceres e substitutivos, as emendas e a redação final. Também é possível enviar dois PDFs.</li>
+    <li><b>Escolha dos textos.</b> A busca pelo número consulta, no seu navegador, os dados abertos da Câmara e do Senado. Como o projeto mantém o mesmo número nas duas Casas, a opção "Câmara e Senado" junta numa só lista as versões das duas, em ordem de data, e permite comparar, por exemplo, o texto aprovado numa Casa com o substitutivo do relator na outra. Cada versão traz a Casa de origem, e os textos que uma Casa recebeu da outra vêm marcados, porque costumam ser iguais ao aprovado lá. A busca por palavras procura nas ementas dos projetos apresentados desde 2023, na base da plataforma, e não dentro dos textos. Escolhido o projeto, a página lista as versões que têm texto publicado: o projeto, os pareceres e substitutivos, as emendas e a redação final. Também é possível enviar dois PDFs.</li>
     <li><b>Extração.</b> Um robô da plataforma baixa os PDFs, extrai o texto (com leitura óptica, quando o PDF é uma imagem), retira cabeçalhos, rodapés e assinaturas e localiza o trecho com os artigos. Num parecer, por exemplo, ele separa o substitutivo do relatório.</li>
     <li><b>Emparelhamento, sem IA.</b> Cada artigo é emparelhado com o correspondente da outra versão, mesmo que tenha mudado de número. Dentro do artigo, cada parágrafo, inciso e alínea é emparelhado do mesmo jeito. Trechos que só mudaram de lugar aparecem como deslocados; dispositivos divididos aparecem numa linha só; trocas de nome repetidas no texto todo são identificadas e marcadas à parte, para não esconder as mudanças de conteúdo.</li>
     <li><b>Diferenças, sem IA.</b> As palavras que saíram aparecem riscadas e as que entraram, marcadas.</li>
@@ -337,31 +339,40 @@ function partes(q) {
   return { sigla: (m[1] || '').toUpperCase(), numero: m[2], ano };
 }
 let atual = null;
+let casaBusca = 'ambas';
+const SIGLA_OUTRA = { PLC: 'PLP' };
+async function camaraPorNumero(p) {
+  const r = await getj(`${CAM}/proposicoes?numero=${p.numero}&ano=${p.ano}${p.sigla ? '&siglaTipo=' + encodeURIComponent(p.sigla) : ''}&itens=20`);
+  return r.dados.filter(x => !p.sigla || PRINCIPAIS.has(x.siglaTipo) || x.siglaTipo === p.sigla);
+}
+async function senadoPorNumero(p) {
+  if (!p.sigla) return [];
+  return (await getj(`${SEN}/processo?sigla=${encodeURIComponent(p.sigla)}&numero=${p.numero}&ano=${p.ano}`).catch(() => []));
+}
 $('f-busca').addEventListener('submit', async e => {
-  e.preventDefault(); msg(''); const q = $('q').value.trim(); const casa = $('casa').value; const out = $('r-busca');
+  e.preventDefault(); msg(''); const q = $('q').value.trim(); casaBusca = $('casa').value; const out = $('r-busca');
   out.innerHTML = '<p class="mini">Buscando…</p>';
   try {
     const p = partes(q);
-    if (!p) { await porPalavras(q, casa); return; }
-    if (casa === 'senado') {
-      if (!p.sigla) throw new Error('No Senado, informe também a sigla (ex.: PL 2338/2023).');
-      const lista = await getj(`${SEN}/processo?sigla=${encodeURIComponent(p.sigla)}&numero=${p.numero}&ano=${p.ano}`);
-      if (lista.length) { await mostrarSenado(lista[0].id); return; }
-      // sigla sem resultado: sugere as proposições com o mesmo número e ano
-      const todos = (await getj(`${SEN}/processo?numero=${p.numero}&ano=${p.ano}`)).filter(x => !/^(RQS|REQ|OFS|OF|MSF|AVS)\b/.test(x.identificacao || ''));
-      if (!todos.length) throw new Error(`Não há ${p.sigla} ${p.numero}/${p.ano} no Senado, nem outra proposição com esse número e ano.`);
-      $('r-busca').innerHTML = `<div class="prop"><h4>Não há ${esc(p.sigla)} ${esc(p.numero)}/${esc(p.ano)} no Senado. Você quis dizer:</h4><ul>` + todos.map(x =>
-        `<li><button class="ref" data-sen="${esc(x.id)}">${esc(x.identificacao)}</button> ${esc((x.ementa || '').slice(0, 160))}</li>`).join('') + '</ul></div>';
-    } else if (p) {
-      const url = `${CAM}/proposicoes?numero=${p.numero}&ano=${p.ano}${p.sigla ? '&siglaTipo=' + encodeURIComponent(p.sigla) : ''}&itens=10`;
-      const r = await getj(url);
-      if (r.dados.length === 1) { await mostrarCamara(r.dados[0].id); return; }
-      if (r.dados.length) { escolher(r.dados); return; }
-      // sigla sem resultado (ex.: PLC, que na Câmara é PLP): sugere os projetos com o mesmo número e ano
-      const todos = (await getj(`${CAM}/proposicoes?numero=${p.numero}&ano=${p.ano}&itens=100`)).dados.filter(x => PRINCIPAIS.has(x.siglaTipo));
-      if (!todos.length) throw new Error(`Não há ${p.sigla} ${p.numero}/${p.ano} na Câmara, nem projeto com esse número e ano.`);
-      escolher(todos, `Não há ${p.sigla} ${p.numero}/${p.ano} na Câmara${p.sigla === 'PLC' ? ' (lá, projeto de lei complementar é PLP)' : ''}. Você quis dizer:`);
+    if (!p) { await porPalavras(q, casaBusca); return; }
+    const naCam = casaBusca !== 'senado', noSen = casaBusca !== 'camara';
+    if (noSen && !p.sigla && !naCam) throw new Error('No Senado, informe também a sigla (ex.: PL 2338/2023).');
+    const [cam, sen] = await Promise.all([naCam ? camaraPorNumero(p) : [], noSen ? senadoPorNumero(p) : []]);
+    const camP = p.sigla ? cam : cam.filter(x => PRINCIPAIS.has(x.siglaTipo));
+    if (camP.length === 1 || (!camP.length && sen.length)) {
+      await mostrarProposicao({ cam: camP[0] && camP[0].id, sen: sen[0] && sen[0].id, procurarOutra: casaBusca === 'ambas' }); return;
     }
+    if (camP.length > 1) { escolher(camP, 'Escolha a proposição'); return; }
+    // nada com essa sigla: sugere o que existe com o mesmo número e ano
+    const [camT, senT] = await Promise.all([
+      naCam ? getj(`${CAM}/proposicoes?numero=${p.numero}&ano=${p.ano}&itens=100`).then(r => r.dados.filter(x => PRINCIPAIS.has(x.siglaTipo))).catch(() => []) : [],
+      noSen ? getj(`${SEN}/processo?numero=${p.numero}&ano=${p.ano}`).then(l => l.filter(x => !/^(RQS|REQ|OFS|OF|MSF|AVS)\b/.test(x.identificacao || ''))).catch(() => []) : []]);
+    const onde = { ambas: 'na Câmara nem no Senado', camara: 'na Câmara', senado: 'no Senado' }[casaBusca];
+    if (!camT.length && !senT.length) throw new Error(`Não há ${p.sigla || 'proposição'} ${p.numero}/${p.ano} ${onde}, nem outro projeto com esse número e ano.`);
+    const dica = p.sigla === 'PLC' && naCam ? ' (na Câmara, projeto de lei complementar é PLP)' : '';
+    $('r-busca').innerHTML = `<div class="prop"><h4>Não há ${esc(p.sigla)} ${esc(p.numero)}/${esc(p.ano)} ${esc(onde)}${esc(dica)}. Você quis dizer:</h4><ul>` +
+      camT.map(x => `<li><span class="casa">Câmara</span> <button class="ref" data-cam="${esc(x.id)}">${esc(x.siglaTipo)} ${esc(x.numero)}/${esc(x.ano)}</button> ${esc((x.ementa || '').slice(0, 160))}</li>`).join('') +
+      senT.map(x => `<li><span class="casa">Senado</span> <button class="ref" data-sen="${esc(x.id)}">${esc(x.identificacao)}</button> ${esc((x.ementa || '').slice(0, 160))}</li>`).join('') + '</ul></div>';
   } catch (err) { out.innerHTML = ''; msg(err.message || 'A busca falhou.', true); }
 });
 // busca por palavras nas ementas (dados/proposicoes-todas.json: projetos da Câmara e do Senado desde 2023)
@@ -379,50 +390,57 @@ async function porPalavras(q, casa) {
   const itens = await baseLocal();
   const nq = semAcento(q).trim(), ws = nq.split(/\s+/).filter(w => w.length > 1 && !['de', 'da', 'do', 'das', 'dos', 'e', 'a', 'o', 'em', 'para', 'com'].includes(w));
   if (!ws.length) throw new Error('Digite ao menos uma palavra com mais de uma letra.');
-  const k = casa === 'senado' ? 'S' : 'C';
-  achados = itens.filter(x => x.k.includes(k) && ws.every(w => x.n.includes(w)))
-    .sort((a, b) => (b.n.includes(nq) - a.n.includes(nq)) || b.d.localeCompare(a.d));
+  const ks = casa === 'senado' ? ['S'] : casa === 'camara' ? ['C'] : ['C', 'S'];
+  const porCodigo = new Map();
+  for (const x of itens) {
+    if (!x.k.some(k => ks.includes(k)) || !ws.every(w => x.n.includes(w))) continue;
+    const y = porCodigo.get(x.c);
+    if (y) { y.k = [...new Set([...y.k, ...x.k])]; if (x.k.includes('C')) y.i = x.i; if (x.d < y.d) y.d = x.d; }
+    else porCodigo.set(x.c, { ...x, k: [...x.k] });
+  }
+  achados = [...porCodigo.values()].sort((a, b) => (b.n.includes(nq) - a.n.includes(nq)) || b.d.localeCompare(a.d));
   mostrados = 0;
-  if (!achados.length && casa === 'camara') {
+  if (!achados.length && casa !== 'senado') {
     // projetos anteriores a 2023: a API da Câmara procura na ementa e na indexação
     const r = await getj(`${CAM}/proposicoes?keywords=${encodeURIComponent(q)}&ordem=DESC&ordenarPor=id&itens=20`).catch(() => ({ dados: [] }));
     if (r.dados.length) { escolher(r.dados, 'Nada nos projetos desde 2023. Pela busca da Câmara (ementa e indexação):'); return; }
   }
-  if (!achados.length) throw new Error(`Nenhum projeto da ${casa === 'senado' ? 'Senado' : 'Câmara'} desde 2023 tem essas palavras na ementa. Tente outras palavras, a outra Casa ou o número.`);
+  if (!achados.length) throw new Error(`Nenhum projeto ${{ ambas: 'da Câmara ou do Senado', camara: 'da Câmara', senado: 'do Senado' }[casa]} desde 2023 tem essas palavras na ementa. Tente outras palavras ou o número.`);
   maisAchados();
 }
 function maisAchados() {
   mostrados = Math.min(achados.length, mostrados + 30);
   $('r-busca').innerHTML = `<div class="prop"><h4>${achados.length} projeto${achados.length > 1 ? 's' : ''} com essas palavras na ementa</h4><ul>` + achados.slice(0, mostrados).map(x =>
-    `<li><button class="ref" ${x.k.includes('S') ? `data-senc="${esc(x.c)}"` : `data-cam="${esc(x.i)}"`}>${esc(x.c)}</button> <span class="mini">${esc(dt(x.d))}</span> ${esc(x.e.slice(0, 180))}</li>`).join('') + '</ul>' +
+    `<li>${x.k.map(k => `<span class="casa">${k === 'S' ? 'Senado' : 'Câmara'}</span>`).join(' ')} <button class="ref" ${x.k.includes('C') ? `data-cam="${esc(x.i)}"` : `data-senc="${esc(x.c)}"`}>${esc(x.c)}</button> <span class="mini">${esc(dt(x.d))}</span> ${esc(x.e.slice(0, 180))}</li>`).join('') + '</ul>' +
     (mostrados < achados.length ? `<button class="btn sec" id="mais">Mostrar mais (${achados.length - mostrados})</button>` : '') + '</div>';
 }
 async function senadoPorCodigo(c) {
-  const p = partes(c);
-  const lista = await getj(`${SEN}/processo?sigla=${encodeURIComponent(p.sigla)}&numero=${p.numero}&ano=${p.ano}`);
+  const lista = await senadoPorNumero(partes(c));
   if (!lista.length) throw new Error('Projeto não encontrado no Senado.');
-  await mostrarSenado(lista[0].id);
+  await mostrarProposicao({ sen: lista[0].id, procurarOutra: casaBusca === 'ambas' });
 }
 function escolher(dados, titulo) {
   $('r-busca').innerHTML = `<div class="prop"><h4>${esc(titulo || 'Escolha a proposição')}</h4><ul>` + dados.map(d =>
-    `<li><button class="ref" data-cam="${esc(d.id)}">${esc(d.siglaTipo)} ${esc(d.numero)}/${esc(d.ano)}</button> ${esc((d.ementa || '').slice(0, 160))}</li>`).join('') + '</ul></div>';
+    `<li><span class="casa">Câmara</span> <button class="ref" data-cam="${esc(d.id)}">${esc(d.siglaTipo)} ${esc(d.numero)}/${esc(d.ano)}</button> ${esc((d.ementa || '').slice(0, 160))}</li>`).join('') + '</ul></div>';
 }
 $('r-busca').addEventListener('click', e => {
   if (e.target.id === 'mais') { maisAchados(); return; }
   const sc = e.target.closest('[data-senc]'); if (sc) { $('r-busca').innerHTML = '<p class="mini">Carregando as versões…</p>'; senadoPorCodigo(sc.dataset.senc).catch(err => msg(err.message, true)); return; }
-  const s = e.target.closest('[data-sen]'); if (s) { $('r-busca').innerHTML = '<p class="mini">Carregando as versões…</p>'; mostrarSenado(s.dataset.sen).catch(err => msg(err.message, true)); return; } const b = e.target.closest('[data-cam]'); if (b) { $('r-busca').innerHTML = '<p class="mini">Carregando as versões…</p>'; mostrarCamara(b.dataset.cam).catch(err => msg(err.message, true)); } });
+  const s = e.target.closest('[data-sen]'); if (s) { $('r-busca').innerHTML = '<p class="mini">Carregando as versões…</p>'; mostrarProposicao({ sen: s.dataset.sen, procurarOutra: casaBusca === 'ambas' }).catch(err => msg(err.message, true)); return; }
+  const b = e.target.closest('[data-cam]'); if (b) { $('r-busca').innerHTML = '<p class="mini">Carregando as versões…</p>'; mostrarProposicao({ cam: b.dataset.cam, procurarOutra: casaBusca === 'ambas' }).catch(err => msg(err.message, true)); } });
 
-async function mostrarCamara(id) {
+async function versoesCamara(id) {
   const d = (await getj(`${CAM}/proposicoes/${id}`)).dados;
-  const rel = (await getj(`${CAM}/proposicoes/${id}/relacionadas`)).dados.filter(x => TIPOS_CAM.has(x.siglaTipo));
-  const det = await Promise.all(rel.slice(0, 80).map(x => getj(`${CAM}/proposicoes/${x.id}`).then(r => r.dados).catch(() => null)));
+  const [rel, aut] = await Promise.all([getj(`${CAM}/proposicoes/${id}/relacionadas`).then(r => r.dados).catch(() => []), getj(`${CAM}/proposicoes/${id}/autores`).then(r => r.dados).catch(() => [])]);
+  const det = await Promise.all(rel.filter(x => TIPOS_CAM.has(x.siglaTipo)).slice(0, 80).map(x => getj(`${CAM}/proposicoes/${x.id}`).then(r => r.dados).catch(() => null)));
+  const doSenado = aut.some(a => /senado/i.test(a.nome || ''));
   const versoes = [d, ...det.filter(Boolean)].filter(x => x.urlInteiroTeor).map(x => ({
-    ref: 'camara:' + x.id, nome: +x.ano ? `${x.siglaTipo} ${x.numero}/${x.ano}` : `${x.siglaTipo} ${x.numero}`, tipo: x.descricaoTipo || '', data: dt(x.dataApresentacao),
-    url: String(x.urlInteiroTeor).replace('http://', 'https://'), grupo: x.id === d.id ? 'Projeto, pareceres, substitutivos e redação final' : GRUPO(x.siglaTipo), desc: (x.ementa || '').slice(0, 140) }));
-  atual = { proposicao: `${d.siglaTipo} ${d.numero}/${d.ano}`, ementa: d.ementa, casa: 'Câmara', versoes };
-  desenharVersoes();
+    ref: 'camara:' + x.id, casa: 'Câmara', nome: +x.ano ? `${x.siglaTipo} ${x.numero}/${x.ano}` : `${x.siglaTipo} ${x.numero}`, tipo: x.descricaoTipo || '', data: dt(x.dataApresentacao),
+    url: String(x.urlInteiroTeor).replace('http://', 'https://'), grupo: x.id === d.id ? 'principal' : GRUPO(x.siglaTipo), desc: (x.ementa || '').slice(0, 140),
+    aviso: x.id === d.id && doSenado ? 'texto recebido do Senado: pode ser igual ao aprovado lá' : '' }));
+  return { proposicao: `${d.siglaTipo} ${d.numero}/${d.ano}`, p: { sigla: d.siglaTipo, numero: String(d.numero), ano: String(d.ano) }, ementa: d.ementa, versoes };
 }
-async function mostrarSenado(pid) {
+async function versoesSenado(pid) {
   const d = await getj(`${SEN}/processo/${pid}`);
   const vistos = new Set(), versoes = [];
   for (const au of d.autuacoes || []) for (const inf of au.informesLegislativos || []) for (const x of inf.documentosAssociados || []) {
@@ -430,27 +448,44 @@ async function mostrarSenado(pid) {
     vistos.add(x.url);
     const uuid = x.url.split('/').pop();
     if (!/^[0-9a-f-]{36}$/.test(uuid)) continue;
-    versoes.push({ ref: `senado:${pid}:${uuid}`, nome: x.identificacao || x.tipo, tipo: x.tipo || '', data: dt(x.data), url: x.url,
-      grupo: /^EMENDA/.test(x.siglaTipo) && !/substitutivo/i.test(x.descricao || '') ? 'Emendas' : 'Projeto, pareceres, substitutivos e redação final', desc: (x.descricao || '').slice(0, 140) });
+    const daCamara = /^PROJETO/.test(x.siglaTipo || '') && /c[âa]mara dos deputados/i.test(x.autoria || '');
+    versoes.push({ ref: `senado:${pid}:${uuid}`, casa: 'Senado', nome: x.identificacao || x.tipo, tipo: x.tipo || '', data: dt(x.data), url: x.url,
+      grupo: /^EMENDA/.test(x.siglaTipo) && !/^\s*(emenda\s+)?substitutiv/i.test(x.descricao || '') ? 'Emendas' : 'principal', desc: (x.descricao || '').slice(0, 140),
+      aviso: daCamara ? 'texto recebido da Câmara: pode ser igual ao aprovado lá' : '' });
   }
-  atual = { proposicao: d.identificacao || `${d.sigla} ${d.numero}/${d.ano}`, ementa: (d.conteudo && d.conteudo.ementa) || d.objetivo || '', casa: 'Senado', versoes };
+  return { proposicao: d.identificacao || `${d.sigla} ${d.numero}/${d.ano}`, p: { sigla: d.sigla, numero: String(d.numero), ano: String(d.ano) },
+    ementa: (d.conteudo && d.conteudo.ementa) || d.objetivo || '', versoes };
+}
+async function mostrarProposicao({ cam, sen, procurarOutra }) {
+  let c = cam ? await versoesCamara(cam) : null, s = sen ? await versoesSenado(sen) : null;
+  if (procurarOutra && c && !s) { const l = await senadoPorNumero(c.p); if (l.length) s = await versoesSenado(l[0].id); }
+  if (procurarOutra && s && !c) {
+    const l = await getj(`${CAM}/proposicoes?siglaTipo=${encodeURIComponent(s.p.sigla)}&numero=${s.p.numero}&ano=${s.p.ano}`).then(r => r.dados).catch(() => []);
+    if (l.length) c = await versoesCamara(l[0].id);
+  }
+  const base = c || s;
+  const casas = [c && 'Câmara', s && 'Senado'].filter(Boolean);
+  atual = { proposicao: base.proposicao, ementa: (c && c.ementa) || (s && s.ementa), casa: casas.join(' e '), duas: casas.length > 1,
+    versoes: [...(c ? c.versoes : []), ...(s ? s.versoes : [])], soUma: procurarOutra && casas.length === 1 ? casas[0] : '' };
   desenharVersoes();
 }
 function desenharVersoes() {
   const v = atual.versoes.sort((a, b) => ordemData(a.data).localeCompare(ordemData(b.data)));
   if (v.length < 2) { $('r-busca').innerHTML = `<div class="prop"><h4>${esc(atual.proposicao)}</h4><p>${v.length ? `Só há uma versão com texto publicado (${esc(v[0].nome)}, ${esc(v[0].data)}): ainda não saiu parecer, substitutivo nem emenda com texto.` : 'Não há versões com texto publicado.'} Se tiver o PDF de outra versão, use "Enviar PDFs".</p></div>`; return; }
   const principais = v.filter(x => x.grupo !== 'Emendas'), emendas = v.filter(x => x.grupo === 'Emendas');
+  const rotulo = x => atual.duas ? `${x.nome} (${x.casa})` : x.nome;
   const ia = 0, ib = principais.length > 1 ? principais.length - 1 : 1;
   const linha = (x, i) => `<tr><td class="r"><input type="radio" name="va" value="${i}" aria-label="Versão A: ${esc(x.nome)}" ${i === ia ? 'checked' : ''}></td><td class="r"><input type="radio" name="vb" value="${i}" aria-label="Versão B: ${esc(x.nome)}" ${i === ib ? 'checked' : ''}></td>
-    <td><b>${esc(x.nome)}</b> <span class="mini">${esc(x.tipo)}</span>${x.desc && !String(atual.ementa || '').startsWith(x.desc.slice(0, 60)) ? `<br><span class="mini">${esc(x.desc)}</span>` : ''}</td><td class="data">${esc(x.data)}</td><td><a href="${esc(x.url)}" target="_blank" rel="noopener">PDF ↗</a></td></tr>`;
+    <td><span class="casa">${esc(x.casa)}</span> <b>${esc(x.nome)}</b> <span class="mini">${esc(x.tipo)}</span>${x.aviso ? ` <span class="aviso-v">${esc(x.aviso)}</span>` : ''}${x.desc && !String(atual.ementa || '').startsWith(x.desc.slice(0, 60)) ? `<br><span class="mini">${esc(x.desc)}</span>` : ''}</td><td class="data">${esc(x.data)}</td><td><a href="${esc(x.url)}" target="_blank" rel="noopener">PDF ↗</a></td></tr>`;
   const todas = [...principais, ...emendas];
   atual.lista = todas;
   $('r-busca').innerHTML = `<div class="prop"><h4>${esc(atual.proposicao)} · ${esc(atual.casa)}</h4><p>${esc(atual.ementa)}</p>
+    ${atual.soUma ? `<p class="mini">Este projeto só tem tramitação ${atual.soUma === 'Câmara' ? 'na Câmara' : 'no Senado'} até agora.</p>` : ''}
     <div class="versoes"><table><thead><tr><th>A</th><th>B</th><th>Versão</th><th>Data</th><th>Texto</th></tr></thead><tbody>
     ${principais.map((x, i) => linha(x, i)).join('')}
     ${emendas.length ? `<tr class="grupo"><td colspan="5">Emendas (${emendas.length})</td></tr>` + emendas.map((x, k) => linha(x, principais.length + k)).join('') : ''}
     </tbody></table></div>
-    <div class="linha" style="margin-top:12px"><label class="campo grande">Título da comparação (opcional)<input id="tb" maxlength="140" placeholder="${esc(atual.proposicao)}: ${esc(principais[ia] ? principais[ia].nome : '')} × ${esc(principais[ib] ? principais[ib].nome : '')}"></label>
+    <div class="linha" style="margin-top:12px"><label class="campo grande">Título da comparação (opcional)<input id="tb" maxlength="140" placeholder="${esc(atual.proposicao)}: ${esc(principais[ia] ? rotulo(principais[ia]) : '')} × ${esc(principais[ib] ? rotulo(principais[ib]) : '')}"></label>
     <button class="btn" id="ir">Comparar as versões A e B</button></div></div>`;
 }
 $('r-busca').addEventListener('click', async e => {
@@ -459,7 +494,7 @@ $('r-busca').addEventListener('click', async e => {
   if (!a || !b || a.value === b.value) { msg('Escolha duas versões diferentes, uma como A e outra como B.', true); return; }
   const A = atual.lista[+a.value], B = atual.lista[+b.value];
   await pedir({ a: { ref: A.ref, nome: A.nome, data: A.data }, b: { ref: B.ref, nome: B.nome, data: B.data }, proposicao: atual.proposicao,
-    titulo: $('tb').value.trim() || `${atual.proposicao}: ${A.nome} × ${B.nome}` }, e.target);
+    titulo: $('tb').value.trim() || `${atual.proposicao}: ${A.nome}${A.casa !== B.casa ? ' (' + A.casa + ')' : ''} × ${B.nome}${A.casa !== B.casa ? ' (' + B.casa + ')' : ''}` }, e.target);
 });
 
 // ---------------- envio de PDFs
@@ -533,7 +568,7 @@ function desenharLista() {
   const it = indice.filter(x => !q || [x.titulo, x.proposicao, x.conclusao, x.a.nome, x.b.nome].join(' ').toLowerCase().replace(/\./g, '').includes(q));
   $('lista').innerHTML = it.length ? it.map(x => `<a class="card" href="?c=${esc(x.id)}">
     <span class="rot">${esc(x.proposicao || 'PDFs enviados')} · ${esc(dt(x.gerado))}</span><b>${esc(x.titulo)}</b>
-    ${x.conclusao ? `<p>${esc(x.conclusao)}</p>` : ''}<span class="vs">${esc(x.a.nome)}${x.a.data ? ' (' + esc(x.a.data) + ')' : ''} → ${esc(x.b.nome)}${x.b.data ? ' (' + esc(x.b.data) + ')' : ''}</span>
+    ${x.conclusao ? `<p>${esc(x.conclusao)}</p>` : ''}<span class="vs">${esc(x.a.nome)} (${esc([x.a.casa === 'Envio' ? 'PDF enviado' : x.a.casa, x.a.data].filter(Boolean).join(', '))}) → ${esc(x.b.nome)} (${esc([x.b.casa === 'Envio' ? 'PDF enviado' : x.b.casa, x.b.data].filter(Boolean).join(', '))})</span>
     <span class="conts">${contagens(x.contagem)}</span></a>`).join('') : `<p class="vazio">${indice.length ? 'Nenhuma comparação corresponde ao filtro.' : 'Ainda não há comparações prontas.'}</p>`;
 }
 $('filtro').addEventListener('input', desenharLista);
@@ -548,7 +583,7 @@ async function visor(id) {
   catch (e) { v.innerHTML = `<div class="wrap"><p class="msg erro">${esc(e.message)}</p><p><a href="comparador.html">← Voltar ao comparador</a></p></div>`; return; }
   document.title = D.titulo + ' · Comparador de textos';
   const cnt = {}; D.itens.forEach(i => cnt[i.cls] = (cnt[i.cls] || 0) + 1);
-  const ver = (x, l) => `<div class="ver"><span>${l}</span><b>${esc(x.nome)}</b><span>${esc([x.tipo, x.autor, x.data].filter(Boolean).join(' · '))}</span>${x.url ? `<a href="${esc(x.url)}" target="_blank" rel="noopener">Texto oficial ↗</a>` : ''}</div>`;
+  const ver = (x, l) => `<div class="ver"><span>${l}${x.casa && x.casa !== 'Envio' ? ' · ' + esc(x.casa) : ''}</span><b>${esc(x.nome)}</b><span>${esc([x.tipo, x.autor, x.data].filter(Boolean).join(' · '))}</span>${x.url ? `<a href="${esc(x.url)}" target="_blank" rel="noopener">Texto oficial ↗</a>` : ''}</div>`;
   const idOf = i => 'a-' + String(i.b || i.a).replace(/[^0-9A-Za-z]+/g, '-');
   const SN = { alterado: ['alterado', 'alterados'], movido: ['mudou de posição', 'mudaram de posição'], novo: ['novo', 'novos'], suprimido: ['suprimido', 'suprimidos'], renum: ['só renumerado', 'só renumerados'], igual: ['igual', 'iguais'] };
   const stat = st => { const t = Object.values(st || {}).reduce((a, b) => a + b, 0); return `${t} dispositivo${t > 1 ? 's' : ''}: ` + Object.keys(SN).filter(k => st[k]).map(k => `${st[k]} ${SN[k][st[k] > 1 ? 1 : 0]}`).join(' · '); };
