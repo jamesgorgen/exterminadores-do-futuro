@@ -284,6 +284,7 @@ export default {
       if (req.method === 'GET' && url.pathname === '/api/push/chave') return acomp.chavePublica(req, env);
       if (req.method === 'POST' && url.pathname === '/api/push/inscrever') return acomp.inscrever(req, env);
       if (req.method === 'POST' && url.pathname === '/api/push/cancelar') return acomp.cancelar(req, env);
+      if (req.method === 'POST' && url.pathname === '/api/push/teste') return acomp.teste(req, env);
       if (req.method === 'POST' && url.pathname === '/api/avisos') return acomp.avisos(req, env);
       if ((req.method === 'GET' || req.method === 'POST') && url.pathname === '/api/acomp/lista') return acomp.lista(req, env);
       if (req.method === 'POST' && url.pathname === '/api/acomp/seguir') return acomp.seguir(req, env);

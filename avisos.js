@@ -62,6 +62,7 @@
       return api('/api/acomp/deixar', { k, endpoint: sub ? sub.endpoint : undefined });
     },
     email(ativo) { return api('/api/acomp/email', { ativo }); },
+    async testar() { const sub = await inscricao(); if (!sub) throw new Error('Ative os avisos neste aparelho primeiro.'); return api('/api/push/teste', { endpoint: sub.endpoint }); },
     // "PL 4675/2025" na Câmara ou no Senado → {k, t, ementa}
     async resolver(q, casa) {
       const m = String(q || '').replace(/\./g, '').match(/^\s*([A-Za-z]{2,5})\s*n?[º°]?\s*(\d{1,5})\s*\/\s*(\d{2,4})\s*$/);

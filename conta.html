@@ -115,7 +115,7 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
     <label class="ck" id="ac-consente-box" hidden><input type="checkbox" id="ac-consente"><span>Concordo que a plataforma guarde a lista dos projetos que eu acompanhar. Sei que essa lista pode indicar os meus interesses políticos e que ela será usada só para me enviar os avisos, nunca compartilhada. Posso apagá-la a qualquer momento.</span></label>
     <h3 style="margin-top:14px">Avisos neste aparelho</h3>
     <p id="ac-push" class="mini"></p>
-    <div class="acoes"><button class="btn sec" id="ac-push-btn" hidden></button></div>
+    <div class="acoes"><button class="btn sec" id="ac-push-btn" hidden></button><button class="btn sec" id="ac-teste" hidden>Enviar um aviso de teste</button></div>
     <p class="passo" id="ac-ios" hidden>No iPhone e no iPad, os avisos só funcionam com o site instalado: toque em <b>Compartilhar</b> e em <b>Adicionar à Tela de Início</b>, abra o ícone dos Exterminadores e ative os avisos por ali.</p>
     <label class="ck" id="ac-email-box" hidden><input type="checkbox" id="ac-email"><span>Receber por e-mail um resumo das novidades do dia, às 19h (só nos dias em que houver novidade).</span></label>
     <h3 style="margin-top:18px">Acompanhar um projeto</h3>
@@ -144,7 +144,7 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
   <p>Dúvidas e pedidos sobre os seus dados: contato@exterminadores.com.br</p>
 </div></footer>
 
-<script src="avisos.js?v=1"></script>
+<script src="avisos.js?v=2"></script>
 <script>
 {
 const API = 'https://comparador-exterminadores.gorgen-james.workers.dev';
@@ -221,7 +221,7 @@ async function desenharAcomp() {
   $('ac-ios').hidden = est !== 'ios-instalar';
   const b = $('ac-push-btn');
   $('ac-push').textContent = { ativo: 'Os avisos estão ativos neste aparelho.', inativo: 'Os avisos estão desligados neste aparelho.', negado: 'As notificações deste site estão bloqueadas no navegador. Para receber avisos, libere-as nas configurações do navegador.', 'sem-suporte': 'Este navegador não recebe avisos por push.', 'ios-instalar': 'Os avisos ainda não estão disponíveis neste aparelho.' }[est];
-  b.hidden = !['ativo', 'inativo'].includes(est); b.textContent = est === 'ativo' ? 'Desligar os avisos neste aparelho' : 'Ativar os avisos neste aparelho'; b.dataset.est = est;
+  b.hidden = !['ativo', 'inativo'].includes(est); $('ac-teste').hidden = est !== 'ativo'; b.textContent = est === 'ativo' ? 'Desligar os avisos neste aparelho' : 'Ativar os avisos neste aparelho'; b.dataset.est = est;
   $('ac-lista').innerHTML = acInfo.projetos.length ? acInfo.projetos.map(p => `<li class="proj"><span>${casaDe(p.k)} <b>${esc(p.t || p.k)}</b>${linkDe(p.k) ? ` <a class="mini" href="${linkDe(p.k)}" target="_blank" rel="noopener">tramitação ↗</a>` : ''}</span><button class="x" data-deixar="${esc(p.k)}">Deixar de acompanhar</button></li>`).join('')
     : '<li class="mini">Nenhum projeto acompanhado ainda.</li>';
   const max = AV.sessao() ? 30 : 3;
@@ -238,6 +238,7 @@ $('ac-push-btn').addEventListener('click', async e => {
   } catch (err) { msg('ac-msg', err.message, 'erro'); }
   b.disabled = false; desenharAcomp();
 });
+$('ac-teste').addEventListener('click', async () => { msg('ac-msg', 'Enviando…'); try { await AV.testar(); msg('ac-msg', 'Aviso de teste enviado. Ele deve aparecer em alguns segundos.', 'ok'); } catch (err) { msg('ac-msg', err.message, 'erro'); } });
 $('ac-email').addEventListener('change', async e => { try { await AV.email(e.target.checked); msg('ac-msg', e.target.checked ? 'Resumo por e-mail ativado.' : 'Resumo por e-mail desligado.', 'ok'); } catch (err) { msg('ac-msg', err.message, 'erro'); } });
 $('ac-form').addEventListener('submit', async e => {
   e.preventDefault(); msg('ac-msg', 'Procurando…');

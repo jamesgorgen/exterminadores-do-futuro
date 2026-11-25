@@ -197,6 +197,20 @@ export function criarAcomp(h) {
     return json(req, { avisos: lista });
   }
 
+  async function teste(req, env) {
+    const c = await corpoDe(req);
+    if (!endpointOk(c.endpoint)) return erro(req, 'Pedido inválido.');
+    const id = await idAparelho(c.endpoint), kd = `${A}disp/${id}.json`, d = await lerJ(env, kd);
+    if (!d) return erro(req, 'Ative os avisos neste aparelho primeiro.', 404);
+    if (d.ultimoTeste && Date.now() - Date.parse(d.ultimoTeste) < 10 * 60e3) return erro(req, 'Já enviamos um aviso de teste há pouco. Tente de novo em alguns minutos.', 429);
+    d.ultimoTeste = new Date().toISOString(); await gravarJ(env, kd, d);
+    const ka = `${A}avisos/${id}.json`;
+    await gravarJ(env, ka, [...((await lerJ(env, ka)) || []), { k: 'teste', nome: 'Os exterminadores do futuro', titulo: 'Teste', tipo: 'teste', texto: 'Os avisos estão funcionando neste aparelho.', url: '/conta.html#acompanhamento' }].slice(-30));
+    const st = await enviarPush(env, d.endpoint);
+    if (st === 404 || st === 410) { await env.R2.delete(kd); await env.R2.delete(ka); return erro(req, 'O navegador desativou esta inscrição. Ative os avisos de novo.', 410); }
+    return st < 300 ? json(req, { ok: true }) : erro(req, `O serviço de push do navegador recusou o aviso (código ${st}).`, 502);
+  }
+
   // ---------------------------------------------------------------- tarefa agendada
   async function situacao(k) {
     const [casa, id] = k.split(':');
@@ -301,5 +315,5 @@ export function criarAcomp(h) {
     await env.R2.delete(`${A}email/${u.id}.json`);
   }
 
-  return { chavePublica, inscrever, cancelar, lista, seguir, deixar, preferenciaEmail, sairEmail, avisos, rodar, apagarConta, LIM_ANON, LIM_CONTA };
+  return { teste, chavePublica, inscrever, cancelar, lista, seguir, deixar, preferenciaEmail, sairEmail, avisos, rodar, apagarConta, LIM_ANON, LIM_CONTA };
 }
