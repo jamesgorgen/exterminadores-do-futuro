@@ -1249,7 +1249,7 @@ export function calcularBlocos(props, votos, indice, cl, sit = {}) {
 // indicado pelo líder do governo nas votações nominais. Câmara: orientação "Governo" que vem com cada votação.
 // Senado: orientação lida por robo/governo.mjs (dados/governo-fontes.json). Só votações com resultado de
 // aprovação ou rejeição e orientação Sim ou Não; liberação e obstrução ficam fora.
-export function calcularGoverno(props, sit, votos, fontes = {}) {
+export function calcularGoverno(props, sit, votos, fontes = {}, indice = {}) {
   const tipos = {};
   const diasLei = [];
   for (const it of props) {
@@ -1284,6 +1284,11 @@ export function calcularGoverno(props, sit, votos, fontes = {}) {
   const liderGeral = { C: vazio(), S: vazio() }, liderContraE = { C: vazio(), S: vazio() };
   const lacunas = { C: {}, S: {} };
   const derrotas = [];
+  // Cruzamento dos dois blocos nas votações com orientação formal: só a extrema-direita contra o governo
+  // (a direita com o governo), os dois blocos contra, a extrema-direita contra com a direita dividida,
+  // e a extrema-direita sem votar contra. Posição de cada bloco pelos partidos da época, com a coesão mínima.
+  const nb = () => ({ n: 0, venceu: 0 });
+  const blocosGov = { C: { soE: nb(), juntos: nb(), dividida: nb(), semE: nb() }, S: { soE: nb(), juntos: nb(), dividida: nb(), semE: nb() } };
   for (const vt of votos) {
     if (!['A', 'R'].includes(vt.res) || !['C', 'S'].includes(vt.k)) continue;
     const ano = String(vt.d).slice(0, 4);
@@ -1300,13 +1305,25 @@ export function calcularGoverno(props, sit, votos, fontes = {}) {
     soma(alvo[0][vt.k]);
     const contra = (vt.be === 'S' || vt.be === 'N') && vt.be !== g;
     if (contra) soma(alvo[1][vt.k]);
+    const contraD = (vt.bd === 'S' || vt.bd === 'N') && vt.bd !== g;
+    if (alvo[0] === geral) {
+      const cx = !contra ? 'semE' : contraD ? 'juntos' : vt.bd === g ? 'soE' : 'dividida';
+      blocosGov[vt.k][cx].n++; if (venceu) blocosGov[vt.k][cx].venceu++;
+    }
     if (!venceu && alvo[0] === geral) {
       const t = vt.t || Object.fromEntries(Object.entries(vt.v || {}).map(([x, l]) => [x, (l || []).length]));
-      derrotas.push({ id: vt.id, k: vt.k, d: vt.d, mat: vt.mat || '', desc: String(vt.desc || '').slice(0, 220), me: String(vt.me || '').slice(0, 220), pl: !!vt.pl, o: vt.o || '', gv: g, res: vt.res, e: contra, t });
+      derrotas.push({ id: vt.id, k: vt.k, d: vt.d, mat: vt.mat || '', desc: String(vt.desc || '').slice(0, 220), me: String(vt.me || '').slice(0, 220), pl: !!vt.pl, o: vt.o || '', gv: g, res: vt.res, e: contra, dr: contraD, t });
     }
   }
   derrotas.sort((a, b) => (b.d || '').localeCompare(a.d || ''));
-  return { projetos: { tipos, medianaDiasLei: mediana(diasLei), nLei: diasLei.length }, mpv, votos: geral, contraE, lider: { votos: liderGeral, contraE: liderContraE, lideres }, lacunas,
+  // Tamanho atual de cada bloco, pelos parlamentares em exercício.
+  const tamanho = {};
+  for (const c of ['C', 'S']) {
+    const ex = Object.values(indice).filter(p => p.ex && p.c === c);
+    tamanho[c] = { total: ex.length, extrema: ex.filter(p => EXTREMA.has(p.p)).length, direita: ex.filter(p => DIREITA.has(p.p)).length };
+  }
+  const nDerrotasJuntos = derrotas.filter(d => d.e && d.dr).length;
+  return { projetos: { tipos, medianaDiasLei: mediana(diasLei), nLei: diasLei.length }, mpv, votos: geral, contraE, blocos: blocosGov, tamanho, nDerrotasJuntos, lider: { votos: liderGeral, contraE: liderContraE, lideres }, lacunas,
     derrotas: derrotas.slice(0, 12), nDerrotas: derrotas.length, fontes: { mpv: (fontes.mpv || []).length, orientacaoSenado: Object.keys(fontes.orientacaoSenado || {}).length, gerado: fontes.gerado || '' } };
 }
 
@@ -1619,7 +1636,7 @@ export async function executar() {
     porPauta,
     temas: { cadernos: TAX.cadernos.map(c => ({ id: c.id, nome: c.nome, sub: c.subtitulo })), lista: TAX.temas.map(t => ({ id: t.id, c: t.caderno, n: t.tema })) },
     blocos: calcularBlocos(todasPropFinal, todasVot, indice, cl, lerJson('situacoes.json', { itens: {} }).itens || {}),
-    governo: calcularGoverno(todasPropFinal, lerJson('situacoes.json', { itens: {} }).itens || {}, todasVot, lerJson('governo-fontes.json', {})),
+    governo: calcularGoverno(todasPropFinal, lerJson('situacoes.json', { itens: {} }).itens || {}, todasVot, lerJson('governo-fontes.json', {}), indice),
     recentes: { proposicoes: direita.filter(it => it.x.s === 'avanca' && it.d >= desde(7)).length, votacoes: resumoVot.filter(v => v.d >= desde(7)).length }
   });
 

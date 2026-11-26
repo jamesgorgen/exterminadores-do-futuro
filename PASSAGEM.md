@@ -18,6 +18,8 @@ Esta seção resume a sessão de 30/10 a 17/11. O histórico anterior está no a
 - **Posts para o Instagram** (apresentação, posições, proposições, emendas). O card de emendas do primeiro post tem números antigos (R$ 52,5 bi, 62%, R$ 84,7 bi; atuais R$ 50,5 bi, 59%, R$ 85,4 bi).
 - **Cloudflare** Web Analytics ativo. Proteção conferida em 17/11: proxy ligado, SSL Full, Always Use HTTPS e Bot Fight Mode. Com o proxy, o "DNS check" do GitHub Pages falha sempre, o que é esperado. Não usar Full (strict), porque o GitHub não emite certificado próprio com o proxy ligado.
 
+- **Governo federal × blocos** (25/11): a parte 3 da seção Governo federal do Balanço ganhou a tabela "Sozinha ou com a direita" (vitórias do governo quando só a extrema-direita vota contra, quando a direita se divide e quando os dois blocos votam contra; blocos pelo partido na data, coesão de 60%) e o tamanho atual de cada bloco. Campos novos em `resumo.json` → `governo.blocos`, `governo.tamanho`, `governo.nDerrotasJuntos` e `dr` nas derrotas, calculados em `calcularGoverno`. Base do carrossel "Governo federal no Congresso" (card 3: 99% × 6% na Câmara; 100% × 6% no Senado).
+
 ## PLP 299/2026 (ajuste fiscal), análise em andamento
 - Dois documentos para a equipe (Claude Docs):
   - "PLP 299/2026 no Congresso: votos, empresas dos parlamentares e benefícios fiscais" — https://claude.ai/artifact/KQxug2ZJvGstyRTMLiNdzi

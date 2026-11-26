@@ -6866,6 +6866,7 @@
     "gv": "N",
     "res": "A",
     "e": true,
+    "dr": true,
     "t": {
      "S": 333,
      "N": 91,
@@ -6884,6 +6885,7 @@
     "gv": "S",
     "res": "R",
     "e": true,
+    "dr": true,
     "t": {
      "N": 37,
      "S": 14,
@@ -6902,6 +6904,7 @@
     "gv": "N",
     "res": "A",
     "e": true,
+    "dr": true,
     "t": {
      "S": 276,
      "N": 139,
@@ -6921,6 +6924,7 @@
     "gv": "N",
     "res": "A",
     "e": true,
+    "dr": true,
     "t": {
      "S": 305,
      "N": 112,
@@ -6939,6 +6943,7 @@
     "gv": "N",
     "res": "A",
     "e": true,
+    "dr": true,
     "t": {
      "S": 279,
      "N": 162,
@@ -6958,6 +6963,7 @@
     "gv": "N",
     "res": "A",
     "e": true,
+    "dr": true,
     "t": {
      "S": 273,
      "N": 160,
@@ -6977,6 +6983,7 @@
     "gv": "S",
     "res": "R",
     "e": true,
+    "dr": true,
     "t": {
      "S": 15,
      "N": 39
@@ -6994,6 +7001,7 @@
     "gv": "N",
     "res": "A",
     "e": true,
+    "dr": true,
     "t": {
      "N": 17,
      "S": 42
@@ -7011,6 +7019,7 @@
     "gv": "S",
     "res": "R",
     "e": true,
+    "dr": true,
     "t": {
      "S": 19,
      "N": 39
@@ -7028,6 +7037,7 @@
     "gv": "N",
     "res": "A",
     "e": true,
+    "dr": true,
     "t": {
      "S": 311,
      "N": 135,
@@ -7047,6 +7057,7 @@
     "gv": "S",
     "res": "R",
     "e": true,
+    "dr": true,
     "t": {
      "N": 277,
      "S": 99,
@@ -7065,6 +7076,7 @@
     "gv": "S",
     "res": "R",
     "e": true,
+    "dr": true,
     "t": {
      "N": 228,
      "S": 94
@@ -7076,7 +7088,58 @@
    "mpv": 247,
    "orientacaoSenado": 143,
    "gerado": "2026-11-25T23:35:55.231Z"
-  }
+  },
+  "blocos": {
+   "C": {
+    "soE": {
+     "n": 389,
+     "venceu": 386
+    },
+    "juntos": {
+     "n": 215,
+     "venceu": 12
+    },
+    "dividida": {
+     "n": 58,
+     "venceu": 51
+    },
+    "semE": {
+     "n": 329,
+     "venceu": 323
+    }
+   },
+   "S": {
+    "soE": {
+     "n": 27,
+     "venceu": 27
+    },
+    "juntos": {
+     "n": 17,
+     "venceu": 1
+    },
+    "dividida": {
+     "n": 18,
+     "venceu": 17
+    },
+    "semE": {
+     "n": 74,
+     "venceu": 74
+    }
+   }
+  },
+  "tamanho": {
+   "C": {
+    "total": 513,
+    "extrema": 104,
+    "direita": 216
+   },
+   "S": {
+    "total": 82,
+    "extrema": 15,
+    "direita": 34
+   }
+  },
+  "nDerrotasJuntos": 219
  },
  "recentes": {
   "proposicoes": 19,

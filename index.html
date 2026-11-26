@@ -138,6 +138,7 @@ p.sub{color:var(--ink-2);max-width:70ch;margin:0 0 18px}
 .gov-pilha i[style*="#C9D3D0"],.gov-pilha i[style*="#D9A441"]{color:#1B2523}
 .gov-leg{display:flex;flex-wrap:wrap;gap:6px 16px;margin:8px 0 0;font-size:13px;color:var(--ink-2)}
 .gov-leg i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.gov-cruz{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:6px}.gov-cruz th,.gov-cruz td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}.gov-cruz thead th{font-size:12.5px;color:var(--ink-2);font-weight:600}.gov-cruz tbody th small{display:block;font-weight:400;color:var(--ink-3);font-size:12px;margin-top:2px}.gov-cruz td b{display:block;font-family:var(--display);font-size:28px;font-weight:900;line-height:1}.gov-cruz td small{color:var(--ink-3);font-size:12px}
 .gov-casas{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:18px 34px;margin-top:10px}
 .gov-casa h4{margin:0 0 4px;font-size:14px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-2)}
 .gov-num{margin:0 0 8px;font-size:14px;color:var(--ink-2)}.gov-num b{display:block;font-family:var(--display);font-size:38px;font-weight:900;line-height:1;color:var(--ink)}.gov-num span{display:block;font-size:12.5px;color:var(--ink-3)}
@@ -1282,8 +1283,18 @@ function secaoGoverno(gv){
   const lidTxt = c => ((L.lideres || {})[c] || []).map(x => `${esc(x.n)} (${dataBR(x.ini)} a ${x.fim ? dataBR(x.fim) : 'hoje'})`).join('; ');
   const placar = t => [['S', 'sim'], ['N', 'não']].filter(([k]) => t[k]).map(([k, r]) => `${fmt(t[k])} ${r}`).join(' × ');
   const derrotas = (gv.derrotas || []).slice(0, 8).map(d => `<li><span class="gov-data">${dataBR(d.d)} · ${casaNome[d.k]}${d.pl ? '' : ` (${esc(d.o)})`}</span>
-    <b>${esc(d.mat || 'Votação')}</b> ${esc(corta(String(d.desc || d.me || '').replace(/\s*\.?\s*(Sim: \d|Resultado: |Quórum de votação).*$/s, '').replace(/\s*\.\s*\.\s*$/, '.'), 170))}<br><span class="meta">O governo orientou ${d.gv === 'S' ? 'sim' : 'não'}; ${d.res === 'A' ? 'aprovada' : 'rejeitada'}${placar(d.t) ? ` por ${placar(d.t)}` : ''}.${d.e ? ' <span class="selo s-ext">Extrema-direita do lado vencedor</span>' : ''}</span></li>`).join('');
+    <b>${esc(d.mat || 'Votação')}</b> ${esc(corta(String(d.desc || d.me || '').replace(/\s*\.?\s*(Sim: \d|Resultado: |Quórum de votação).*$/s, '').replace(/\s*\.\s*\.\s*$/, '.'), 170))}<br><span class="meta">O governo orientou ${d.gv === 'S' ? 'sim' : 'não'}; ${d.res === 'A' ? 'aprovada' : 'rejeitada'}${placar(d.t) ? ` por ${placar(d.t)}` : ''}.${d.e ? ` <span class="selo s-ext">Extrema-direita do lado vencedor${d.dr ? ', com a direita' : ''}</span>` : ''}</span></li>`).join('');
   const gC = taxa(gv.votos.C), eC = taxa(gv.contraE.C);
+  // Extrema-direita sozinha contra o governo ou acompanhada da direita.
+  const BTXT = g => listaE(((P.blocos || {})[g] || []).map(x => nomePartido(x)));
+  const BX = gv.blocos, TM = gv.tamanho || {};
+  const celula = o => o && o.n ? `<td><b>${fmtPct(taxa(o))}</b><small>${fmt(o.venceu)} de ${fmt(o.n)}</small></td>` : '<td>—</td>';
+  const tamTxt = c => TM[c] ? ` <small>${fmt(TM[c].extrema)} de ${fmt(TM[c].total)} na extrema-direita, ${fmt(TM[c].direita)} na direita</small>` : '';
+  const cruz = BX ? `<h4 style="margin-top:18px">Sozinha ou com a direita</h4>
+    <p class="sub">Vitórias do governo conforme o voto dos dois blocos. Tamanho de cada bloco pelos parlamentares em exercício hoje.</p>
+    <div class="tabela-wrap"><table class="gov-cruz"><thead><tr><th></th><th>Extrema-direita sem votar contra</th><th>Só a extrema-direita contra, direita com o governo</th><th>Extrema-direita contra, direita dividida</th><th>Extrema-direita e direita contra</th></tr></thead><tbody>
+    ${['C', 'S'].filter(c => BX[c]).map(c => `<tr><th>${casaNome[c]}${tamTxt(c)}</th>${celula(BX[c].semE)}${celula(BX[c].soE)}${celula(BX[c].dividida)}${celula(BX[c].juntos)}</tr>`).join('')}</tbody></table></div>
+    ${gv.nDerrotasJuntos != null && gv.nDerrotas ? `<p class="bal-nota">Das ${fmt(gv.nDerrotas)} derrotas do governo desde 2023, ${fmt(gv.nDerrotasJuntos)} tiveram a extrema-direita e a direita do outro lado. Sem a direita, a extrema-direita quase nunca derrota o governo.</p>` : ''}` : '';
   return `<div class="secao gov" id="bal-governo">
     <h2 class="titulo">Governo federal</h2>
     <p class="sub">O que o Executivo envia ao Congresso, como termina, e quanto o lado indicado pelo governo vence nas votações nominais, desde 2023. Vale para as duas Casas, independentemente da escolha acima.</p>
@@ -1307,8 +1318,9 @@ function secaoGoverno(gv){
         <p class="sub">Votações nominais em que a maioria da extrema-direita votou contra a orientação do governo.</p>
         <div class="gov-casas">${bloco(gv.contraE, 'de vitórias do governo', L.contraE)}</div>
         ${gC != null && eC != null ? `<p class="bal-nota">Na Câmara, a taxa de vitórias do governo cai de ${fmtPct(gC)}, no total, para ${fmtPct(eC)} quando a extrema-direita está do outro lado.</p>` : ''}
+        ${cruz}
         ${derrotas ? `<h4 style="margin-top:16px">Derrotas mais recentes do governo</h4><ul class="gov-derrotas">${derrotas}</ul><p class="bal-nota">${fmt(gv.nDerrotas)} derrotas desde 2023, contando só as votações com orientação formal do governo.</p>` : ''}
-        <p class="bal-nota gov-fonte"><b>Fontes.</b> A posição da extrema-direita é a da maioria dos seus parlamentares que votaram Sim ou Não, com o grupo de cada um definido pelo observatório (veja a aba Como funciona). Orientação do governo, voto do líder e resultado: as mesmas fontes da parte 2.</p>
+        <p class="bal-nota gov-fonte"><b>Fontes.</b> Nesta parte, a extrema-direita reúne os parlamentares de ${esc(BTXT('extrema'))} e a direita, os de ${esc(BTXT('direita'))}, pelo partido de cada um na data da votação. A posição de cada bloco é a de ao menos ${fmtPct(Math.round(((P.indice || {}).coesaoMinima || .6) * 100))} dos seus parlamentares que votaram Sim ou Não; abaixo disso, o bloco conta como dividido. Essa divisão por partido é diferente dos grupos pelas votações usados nas fichas dos deputados (veja a aba Como funciona). Orientação do governo, voto do líder e resultado: as mesmas fontes da parte 2.</p>
       </div>
     </div>
   </div>`;
