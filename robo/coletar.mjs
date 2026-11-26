@@ -242,6 +242,16 @@ async function coletarEmExercicio() {
   try {
     const j = await baixarSenado(`${API_SENADO}/senador/lista/atual.json`, 'senado_atual');
     senado.push(...procuraParlamentares(j));
+    // A lista "atual" do Senado às vezes mantém o titular licenciado junto com o suplente que ocupa a vaga
+    // (ex.: Wellington Dias e Jussara Lima, PI, em nov/2026). Quem está na lista de afastados sai da conta,
+    // para o total ficar em 81.
+    try {
+      const af = new Set(procuraParlamentares(await baixarSenado(`${API_SENADO}/senador/afastados.json`, 'senado_afastados'))
+        .map(d => String(pega(d, 'CodigoParlamentar', 'codigoParlamentar'))));
+      const antes = senado.length;
+      if (af.size) senado.splice(0, senado.length, ...senado.filter(d => !af.has(String(pega(d, 'CodigoParlamentar', 'codigoParlamentar')))));
+      contar('senadores_afastados_retirados', antes - senado.length);
+    } catch (e) { erro('senadores afastados', e); }
   } catch (e) { erro('senadores em exercício', e); }
   contar('deputados_em_exercicio', camara.length); contar('senadores_em_exercicio', senado.length);
   // Só troca a marca quando a lista veio completa; senão mantém a da execução anterior.

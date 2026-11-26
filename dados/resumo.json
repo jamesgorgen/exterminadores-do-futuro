@@ -19,14 +19,14 @@
    "extrema": 83,
    "direita": 124,
    "centro": 178,
-   "esquerda": 209,
+   "esquerda": 208,
    "sp": 1
   },
   "nucleo": 207,
   "alinhados": 181,
   "emExercicio": {
    "C": 513,
-   "S": 82
+   "S": 81
   }
  },
  "porPauta": {
@@ -642,7 +642,7 @@
      "prop": 7659,
      "pauta": 318,
      "membros": 261,
-     "emExercicio": 209,
+     "emExercicio": 208,
      "vot": 1592,
      "venceu": 1234,
      "comSit": 7644,
@@ -4652,7 +4652,7 @@
      "prop": 716,
      "pauta": 51,
      "membros": 25,
-     "emExercicio": 18,
+     "emExercicio": 17,
      "vot": 196,
      "venceu": 168,
      "comSit": 705,
@@ -7134,7 +7134,7 @@
     "direita": 216
    },
    "S": {
-    "total": 82,
+    "total": 81,
     "extrema": 15,
     "direita": 34
    }
