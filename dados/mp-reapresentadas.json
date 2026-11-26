@@ -1,0 +1,17 @@
+{
+ "nota": "MPs cujo conteúdo o governo reapresentou em projeto de lei (do Executivo ou do líder do governo na Câmara ou no Senado). Pares com ementas praticamente iguais entram sozinhos; os demais só contam quando estão em 'confirmados'. Para tirar um par que o robô achou, ponha-o em 'descartados'. Os candidatos que esperam revisão aparecem em resumo.json, governo.reapresentadas.aConfirmar.",
+ "confirmados": [
+  {"mp": "MPV 1160/2023", "pl": "PL 2384/2023", "obs": "voto de qualidade no Carf"},
+  {"mp": "MPV 1166/2023", "pl": "PL 2920/2023", "obs": "Programa de Aquisição de Alimentos"},
+  {"mp": "MPV 1171/2023", "pl": "PL 4173/2023", "obs": "offshores"},
+  {"mp": "MPV 1184/2023", "pl": "PL 4173/2023", "obs": "fundos exclusivos, reunidos no mesmo PL das offshores"},
+  {"mp": "MPV 1174/2023", "pl": "PL 4172/2023", "obs": "Pacto pela retomada de obras da educação"},
+  {"mp": "MPV 1179/2023", "pl": "PL 5086/2023", "obs": "prazo dos planos de mobilidade urbana"},
+  {"mp": "MPV 1181/2023", "pl": "PL 4426/2023", "obs": "remuneração das forças de segurança do DF"},
+  {"mp": "MPV 1203/2023", "pl": "PL 1213/2024", "obs": "carreiras de indigenismo"},
+  {"mp": "MPV 1205/2023", "pl": "PL 914/2024", "obs": "Programa Mover"},
+  {"mp": "MPV 1286/2024", "pl": "PL 1466/2025", "obs": "carreiras federais"},
+  {"mp": "MPV 1185/2023", "pl": "PL 5129/2023", "obs": "subvenções do ICMS; a MP virou lei e o PL de reserva foi arquivado"}
+ ],
+ "descartados": []
+}

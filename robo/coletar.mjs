@@ -1259,11 +1259,52 @@ export function calcularBlocos(props, votos, indice, cl, sit = {}) {
 // indicado pelo líder do governo nas votações nominais. Câmara: orientação "Governo" que vem com cada votação.
 // Senado: orientação lida por robo/governo.mjs (dados/governo-fontes.json). Só votações com resultado de
 // aprovação ou rejeição e orientação Sim ou Não; liberação e obstrução ficam fora.
-export function calcularGoverno(props, sit, votos, fontes = {}, indice = {}) {
+// MPs reapresentadas como projeto de lei: quando a MP ia perder a validade (ou já tinha perdido), o governo
+// mandava o mesmo conteúdo num projeto de lei, do Executivo ou apresentado pelo líder do governo na Câmara ou no
+// Senado. Pares automáticos quando as ementas são praticamente iguais; os demais precisam da confirmação da
+// equipe em dados/mp-reapresentadas.json (confirmados/descartados). Saem também os candidatos a confirmar.
+const REAP_STOP = new Set('lei altera dispoe institui providencias outras art leis federal nacional dezembro janeiro fevereiro marco abril maio junho julho agosto setembro outubro novembro trata dispor ambito estabelece para pelo pela sobre com das dos nos nas que'.split(' '));
+const reapTokens = s => new Set((String(s || '').split(/NOVA EMENTA/i)[0].normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().match(/[a-z]+/g) || [])
+  .filter(w => w.length > 2 && !REAP_STOP.has(w)).map(w => w.slice(0, 7)));
+const ORDEM_SIT = { l: 4, p: 3, t: 2, a: 1 };
+export function calcularReapresentadas(props, sit, fontes = {}, regras = {}) {
+  const lid = [...(fontes.lideres || {}).C || [], ...(fontes.lideres || {}).S || []];
+  const autorGov = p => {
+    if (p.ta === 'executivo') return 'Poder Executivo';
+    const l = lid.find(x => (p.a || []).includes(x.c) && x.ini <= p.d && (!x.fim || p.d <= x.fim));
+    return l ? l.n : '';
+  };
+  const projs = props.filter(p => /^(PL|PLP) /.test(p.c) && p.d && autorGov(p)).map(p => ({ p, t: reapTokens(p.e), autor: autorGov(p) }));
+  const chave = (m, pl) => m + '|' + pl;
+  const conf = new Set((regras.confirmados || []).map(x => chave(x.mp, x.pl)));
+  const desc = new Set((regras.descartados || []).map(x => chave(x.mp, x.pl)));
+  const pares = [], aConfirmar = [];
+  const mps = (fontes.mpv || []).filter(m => !/cr[eé]dito extraordin[aá]rio/i.test(m.e));
+  for (const m of mps) {
+    const tm = reapTokens(m.e);
+    for (const { p, t, autor } of projs) {
+      const dd = (Date.parse(p.d) - Date.parse(m.d)) / 864e5;
+      const k = chave(m.c, p.c);
+      if (desc.has(k)) continue;
+      let inter = 0; for (const w of tm) if (t.has(w)) inter++;
+      const j = inter / Math.max(1, new Set([...tm, ...t]).size);
+      const perto = dd >= -30 && dd <= 400;
+      const par = { mp: m.c, mpS: m.s, pl: p.c, plS: (sit[p.c] || [])[0] || 't', autor, sim: Math.round(j * 100) / 100 };
+      if (conf.has(k) || (perto && j >= 0.85)) pares.push({ ...par, auto: !conf.has(k) });
+      else if (perto && j >= 0.25) aConfirmar.push(par);
+    }
+  }
+  return { pares, aConfirmar: aConfirmar.sort((a, b) => b.sim - a.sim) };
+}
+
+export function calcularGoverno(props, sit, votos, fontes = {}, indice = {}, regrasReap = {}) {
+  const reap = calcularReapresentadas(props, sit, fontes, regrasReap);
+  // Projeto do Executivo que só repete uma MP conta uma vez, junto com a MP.
+  const plDeMp = new Set(reap.pares.filter(x => x.autor === 'Poder Executivo').map(x => x.pl));
   const tipos = {};
   const diasLei = [];
   for (const it of props) {
-    if (it.ta !== 'executivo') continue;
+    if (it.ta !== 'executivo' || plDeMp.has(it.c)) continue;
     const tp = String(it.c).split(' ')[0];
     const t = tipos[tp] || (tipos[tp] = { n: 0, aprovada: 0, lei: 0, arquivada: 0, tramitando: 0 });
     const [st, , dt] = sit[it.c] || [];
@@ -1275,10 +1316,18 @@ export function calcularGoverno(props, sit, votos, fontes = {}, indice = {}) {
   }
   const mediana = l => { if (!l.length) return null; const o = [...l].sort((a, b) => a - b); return Math.round(o[Math.floor(o.length / 2)]); };
   const mpv = { credito: {}, outras: {} };
+  const melhorPl = {};
+  for (const x of reap.pares) if (!melhorPl[x.mp] || ORDEM_SIT[x.plS] > ORDEM_SIT[melhorPl[x.mp]]) melhorPl[x.mp] = x.plS;
   for (const m of fontes.mpv || []) {
     const g = /cr[eé]dito extraordin[aá]rio/i.test(m.e) ? mpv.credito : mpv.outras;
-    g.n = (g.n || 0) + 1; g[m.s] = (g[m.s] || 0) + 1;
+    // MP que caducou mas teve o conteúdo reapresentado em projeto: conta pelo destino do projeto.
+    let st = m.s;
+    if (st === 'caducou' && melhorPl[m.c]) st = melhorPl[m.c] === 'l' ? 'reapLei' : melhorPl[m.c] === 'a' ? 'caducou' : 'reapTram';
+    g.n = (g.n || 0) + 1; g[st] = (g[st] || 0) + 1;
   }
+  const mpsReap = new Set(reap.pares.filter(x => x.mpS === 'caducou').map(x => x.mp));
+  const reapresentadas = { pares: reap.pares, aConfirmar: reap.aConfirmar, nMp: mpsReap.size,
+    nLei: [...mpsReap].filter(c => melhorPl[c] === 'l').length, nPlExecutivo: plDeMp.size };
   const oriGov = vt => vt.k === 'S' ? (fontes.orientacaoSenado || {})[vt.id] || '' : orientacaoDe(vt.ori, /^gov|governo/);
   // Voto do líder do governo na Casa, na data da votação (o que começou por último, se houver dois no mesmo dia).
   const lideres = fontes.lideres || { C: [], S: [] };
@@ -1333,7 +1382,7 @@ export function calcularGoverno(props, sit, votos, fontes = {}, indice = {}) {
     tamanho[c] = { total: ex.length, extrema: ex.filter(p => EXTREMA.has(p.p)).length, direita: ex.filter(p => DIREITA.has(p.p)).length };
   }
   const nDerrotasJuntos = derrotas.filter(d => d.e && d.dr).length;
-  return { projetos: { tipos, medianaDiasLei: mediana(diasLei), nLei: diasLei.length }, mpv, votos: geral, contraE, blocos: blocosGov, tamanho, nDerrotasJuntos, lider: { votos: liderGeral, contraE: liderContraE, lideres }, lacunas,
+  return { projetos: { tipos, medianaDiasLei: mediana(diasLei), nLei: diasLei.length }, mpv, reapresentadas, votos: geral, contraE, blocos: blocosGov, tamanho, nDerrotasJuntos, lider: { votos: liderGeral, contraE: liderContraE, lideres }, lacunas,
     derrotas: derrotas.slice(0, 12), nDerrotas: derrotas.length, fontes: { mpv: (fontes.mpv || []).length, orientacaoSenado: Object.keys(fontes.orientacaoSenado || {}).length, gerado: fontes.gerado || '' } };
 }
 
@@ -1646,7 +1695,7 @@ export async function executar() {
     porPauta,
     temas: { cadernos: TAX.cadernos.map(c => ({ id: c.id, nome: c.nome, sub: c.subtitulo })), lista: TAX.temas.map(t => ({ id: t.id, c: t.caderno, n: t.tema })) },
     blocos: calcularBlocos(todasPropFinal, todasVot, indice, cl, lerJson('situacoes.json', { itens: {} }).itens || {}),
-    governo: calcularGoverno(todasPropFinal, lerJson('situacoes.json', { itens: {} }).itens || {}, todasVot, lerJson('governo-fontes.json', {}), indice),
+    governo: calcularGoverno(todasPropFinal, lerJson('situacoes.json', { itens: {} }).itens || {}, todasVot, lerJson('governo-fontes.json', {}), indice, lerJson('mp-reapresentadas.json', {})),
     recentes: { proposicoes: direita.filter(it => it.x.s === 'avanca' && it.d >= desde(7)).length, votacoes: resumoVot.filter(v => v.d >= desde(7)).length }
   });
 

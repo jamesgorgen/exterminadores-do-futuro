@@ -6522,11 +6522,18 @@
  "governo": {
   "projetos": {
    "tipos": {
+    "PEC": {
+     "n": 4,
+     "aprovada": 1,
+     "lei": 0,
+     "arquivada": 1,
+     "tramitando": 2
+    },
     "PL": {
-     "n": 91,
-     "aprovada": 47,
-     "lei": 35,
-     "arquivada": 16,
+     "n": 81,
+     "aprovada": 38,
+     "lei": 26,
+     "arquivada": 15,
      "tramitando": 28
     },
     "PLP": {
@@ -6535,17 +6542,10 @@
      "lei": 9,
      "arquivada": 2,
      "tramitando": 2
-    },
-    "PEC": {
-     "n": 4,
-     "aprovada": 1,
-     "lei": 0,
-     "arquivada": 1,
-     "tramitando": 2
     }
    },
-   "medianaDiasLei": 218,
-   "nLei": 44
+   "medianaDiasLei": 181,
+   "nLei": 35
   },
   "mpv": {
    "credito": {
@@ -6558,7 +6558,9 @@
    "outras": {
     "n": 148,
     "lei": 30,
-    "caducou": 105,
+    "caducou": 79,
+    "reapLei": 19,
+    "reapTram": 7,
     "vigor": 9,
     "aprovada": 4
    }
@@ -7139,7 +7141,495 @@
     "direita": 34
    }
   },
-  "nDerrotasJuntos": 219
+  "nDerrotasJuntos": 219,
+  "reapresentadas": {
+   "pares": [
+    {
+     "mp": "MPV 1160/2023",
+     "mpS": "caducou",
+     "pl": "PL 2384/2023",
+     "plS": "l",
+     "autor": "Poder Executivo",
+     "sim": 0.86,
+     "auto": false
+    },
+    {
+     "mp": "MPV 1166/2023",
+     "mpS": "caducou",
+     "pl": "PL 2920/2023",
+     "plS": "l",
+     "autor": "Poder Executivo",
+     "sim": 1,
+     "auto": false
+    },
+    {
+     "mp": "MPV 1171/2023",
+     "mpS": "caducou",
+     "pl": "PL 4173/2023",
+     "plS": "l",
+     "autor": "Poder Executivo",
+     "sim": 0.67,
+     "auto": false
+    },
+    {
+     "mp": "MPV 1174/2023",
+     "mpS": "caducou",
+     "pl": "PL 4172/2023",
+     "plS": "l",
+     "autor": "Poder Executivo",
+     "sim": 0.8,
+     "auto": false
+    },
+    {
+     "mp": "MPV 1179/2023",
+     "mpS": "caducou",
+     "pl": "PL 5086/2023",
+     "plS": "l",
+     "autor": "Poder Executivo",
+     "sim": 0.3,
+     "auto": false
+    },
+    {
+     "mp": "MPV 1181/2023",
+     "mpS": "caducou",
+     "pl": "PL 4426/2023",
+     "plS": "l",
+     "autor": "Poder Executivo",
+     "sim": 0.5,
+     "auto": false
+    },
+    {
+     "mp": "MPV 1184/2023",
+     "mpS": "caducou",
+     "pl": "PL 4173/2023",
+     "plS": "l",
+     "autor": "Poder Executivo",
+     "sim": 0.19,
+     "auto": false
+    },
+    {
+     "mp": "MPV 1185/2023",
+     "mpS": "lei",
+     "pl": "PL 5129/2023",
+     "plS": "a",
+     "autor": "Poder Executivo",
+     "sim": 1,
+     "auto": false
+    },
+    {
+     "mp": "MPV 1203/2023",
+     "mpS": "caducou",
+     "pl": "PL 1213/2024",
+     "plS": "l",
+     "autor": "Poder Executivo",
+     "sim": 0.48,
+     "auto": false
+    },
+    {
+     "mp": "MPV 1205/2023",
+     "mpS": "caducou",
+     "pl": "PL 914/2024",
+     "plS": "l",
+     "autor": "Poder Executivo",
+     "sim": 1,
+     "auto": false
+    },
+    {
+     "mp": "MPV 1207/2024",
+     "mpS": "caducou",
+     "pl": "PL 545/2024",
+     "plS": "l",
+     "autor": "José Guimarães",
+     "sim": 1,
+     "auto": true
+    },
+    {
+     "mp": "MPV 1221/2024",
+     "mpS": "caducou",
+     "pl": "PL 3117/2024",
+     "plS": "l",
+     "autor": "José Guimarães",
+     "sim": 1,
+     "auto": true
+    },
+    {
+     "mp": "MPV 1236/2024",
+     "mpS": "caducou",
+     "pl": "PL 3449/2024",
+     "plS": "l",
+     "autor": "José Guimarães",
+     "sim": 1,
+     "auto": true
+    },
+    {
+     "mp": "MPV 1242/2024",
+     "mpS": "caducou",
+     "pl": "PL 3595/2024",
+     "plS": "p",
+     "autor": "José Guimarães",
+     "sim": 1,
+     "auto": true
+    },
+    {
+     "mp": "MPV 1247/2024",
+     "mpS": "caducou",
+     "pl": "PL 4448/2024",
+     "plS": "l",
+     "autor": "José Guimarães",
+     "sim": 0.9,
+     "auto": true
+    },
+    {
+     "mp": "MPV 1251/2024",
+     "mpS": "caducou",
+     "pl": "PL 3464/2024",
+     "plS": "a",
+     "autor": "José Guimarães",
+     "sim": 0.86,
+     "auto": true
+    },
+    {
+     "mp": "MPV 1259/2024",
+     "mpS": "caducou",
+     "pl": "PL 3662/2024",
+     "plS": "a",
+     "autor": "José Guimarães",
+     "sim": 1,
+     "auto": true
+    },
+    {
+     "mp": "MPV 1261/2024",
+     "mpS": "caducou",
+     "pl": "PL 3802/2024",
+     "plS": "l",
+     "autor": "José Guimarães",
+     "sim": 1,
+     "auto": true
+    },
+    {
+     "mp": "MPV 1262/2024",
+     "mpS": "caducou",
+     "pl": "PL 3817/2024",
+     "plS": "l",
+     "autor": "José Guimarães",
+     "sim": 1,
+     "auto": true
+    },
+    {
+     "mp": "MPV 1266/2024",
+     "mpS": "caducou",
+     "pl": "PL 3954/2024",
+     "plS": "t",
+     "autor": "José Guimarães",
+     "sim": 1,
+     "auto": true
+    },
+    {
+     "mp": "MPV 1274/2024",
+     "mpS": "caducou",
+     "pl": "PL 363/2025",
+     "plS": "l",
+     "autor": "José Guimarães",
+     "sim": 1,
+     "auto": true
+    },
+    {
+     "mp": "MPV 1276/2024",
+     "mpS": "caducou",
+     "pl": "PL 366/2025",
+     "plS": "t",
+     "autor": "José Guimarães",
+     "sim": 1,
+     "auto": true
+    },
+    {
+     "mp": "MPV 1278/2024",
+     "mpS": "caducou",
+     "pl": "PL 367/2025",
+     "plS": "t",
+     "autor": "José Guimarães",
+     "sim": 1,
+     "auto": true
+    },
+    {
+     "mp": "MPV 1280/2024",
+     "mpS": "caducou",
+     "pl": "PL 378/2025",
+     "plS": "a",
+     "autor": "José Guimarães",
+     "sim": 1,
+     "auto": true
+    },
+    {
+     "mp": "MPV 1286/2024",
+     "mpS": "caducou",
+     "pl": "PL 1466/2025",
+     "plS": "l",
+     "autor": "Poder Executivo",
+     "sim": 0.95,
+     "auto": false
+    },
+    {
+     "mp": "MPV 1287/2025",
+     "mpS": "caducou",
+     "pl": "PL 364/2025",
+     "plS": "t",
+     "autor": "José Guimarães",
+     "sim": 1,
+     "auto": true
+    },
+    {
+     "mp": "MPV 1288/2025",
+     "mpS": "caducou",
+     "pl": "PL 365/2025",
+     "plS": "t",
+     "autor": "José Guimarães",
+     "sim": 1,
+     "auto": true
+    },
+    {
+     "mp": "MPV 1291/2025",
+     "mpS": "lei",
+     "pl": "PL 811/2025",
+     "plS": "t",
+     "autor": "José Guimarães",
+     "sim": 1,
+     "auto": true
+    },
+    {
+     "mp": "MPV 1294/2025",
+     "mpS": "caducou",
+     "pl": "PL 2692/2025",
+     "plS": "l",
+     "autor": "José Guimarães",
+     "sim": 1,
+     "auto": true
+    },
+    {
+     "mp": "MPV 1318/2025",
+     "mpS": "caducou",
+     "pl": "PL 278/2026",
+     "plS": "t",
+     "autor": "José Guimarães",
+     "sim": 1,
+     "auto": true
+    },
+    {
+     "mp": "MPV 1336/2026",
+     "mpS": "caducou",
+     "pl": "PL 2465/2026",
+     "plS": "l",
+     "autor": "Paulo Pimenta",
+     "sim": 1,
+     "auto": true
+    }
+   ],
+   "aConfirmar": [
+    {
+     "mp": "MPV 1202/2023",
+     "mpS": "lei",
+     "pl": "PL 493/2024",
+     "plS": "t",
+     "autor": "Poder Executivo",
+     "sim": 0.69
+    },
+    {
+     "mp": "MPV 1358/2026",
+     "mpS": "caducou",
+     "pl": "PLP 114/2026",
+     "plS": "l",
+     "autor": "Paulo Pimenta",
+     "sim": 0.46
+    },
+    {
+     "mp": "MPV 1205/2023",
+     "mpS": "caducou",
+     "pl": "PL 3449/2024",
+     "plS": "l",
+     "autor": "José Guimarães",
+     "sim": 0.45
+    },
+    {
+     "mp": "MPV 1249/2024",
+     "mpS": "caducou",
+     "pl": "PL 3449/2024",
+     "plS": "l",
+     "autor": "José Guimarães",
+     "sim": 0.45
+    },
+    {
+     "mp": "MPV 1292/2025",
+     "mpS": "lei",
+     "pl": "PL 1838/2026",
+     "plS": "t",
+     "autor": "Poder Executivo",
+     "sim": 0.44
+    },
+    {
+     "mp": "MPV 1272/2024",
+     "mpS": "caducou",
+     "pl": "PL 4448/2024",
+     "plS": "l",
+     "autor": "José Guimarães",
+     "sim": 0.41
+    },
+    {
+     "mp": "MPV 1331/2025",
+     "mpS": "caducou",
+     "pl": "PL 2465/2026",
+     "plS": "l",
+     "autor": "Paulo Pimenta",
+     "sim": 0.4
+    },
+    {
+     "mp": "MPV 1221/2024",
+     "mpS": "caducou",
+     "pl": "PL 1707/2025",
+     "plS": "l",
+     "autor": "Poder Executivo",
+     "sim": 0.39
+    },
+    {
+     "mp": "MPV 1160/2023",
+     "mpS": "caducou",
+     "pl": "PL 15/2024",
+     "plS": "t",
+     "autor": "Poder Executivo",
+     "sim": 0.36
+    },
+    {
+     "mp": "MPV 1216/2024",
+     "mpS": "caducou",
+     "pl": "PL 4448/2024",
+     "plS": "l",
+     "autor": "José Guimarães",
+     "sim": 0.35
+    },
+    {
+     "mp": "MPV 1186/2023",
+     "mpS": "caducou",
+     "pl": "PL 2052/2024",
+     "plS": "l",
+     "autor": "Poder Executivo",
+     "sim": 0.31
+    },
+    {
+     "mp": "MPV 1189/2023",
+     "mpS": "caducou",
+     "pl": "PL 3595/2024",
+     "plS": "p",
+     "autor": "José Guimarães",
+     "sim": 0.31
+    },
+    {
+     "mp": "MPV 1219/2024",
+     "mpS": "caducou",
+     "pl": "PL 3595/2024",
+     "plS": "p",
+     "autor": "José Guimarães",
+     "sim": 0.3
+    },
+    {
+     "mp": "MPV 1228/2024",
+     "mpS": "caducou",
+     "pl": "PL 3595/2024",
+     "plS": "p",
+     "autor": "José Guimarães",
+     "sim": 0.3
+    },
+    {
+     "mp": "MPV 1250/2024",
+     "mpS": "caducou",
+     "pl": "PL 3595/2024",
+     "plS": "p",
+     "autor": "José Guimarães",
+     "sim": 0.3
+    },
+    {
+     "mp": "MPV 1172/2023",
+     "mpS": "lei",
+     "pl": "PL 2385/2023",
+     "plS": "a",
+     "autor": "Poder Executivo",
+     "sim": 0.29
+    },
+    {
+     "mp": "MPV 1222/2024",
+     "mpS": "caducou",
+     "pl": "PL 3595/2024",
+     "plS": "p",
+     "autor": "José Guimarães",
+     "sim": 0.29
+    },
+    {
+     "mp": "MPV 1230/2024",
+     "mpS": "caducou",
+     "pl": "PL 3595/2024",
+     "plS": "p",
+     "autor": "José Guimarães",
+     "sim": 0.29
+    },
+    {
+     "mp": "MPV 1350/2026",
+     "mpS": "vigor",
+     "pl": "PL 2465/2026",
+     "plS": "l",
+     "autor": "Paulo Pimenta",
+     "sim": 0.29
+    },
+    {
+     "mp": "MPV 1335/2026",
+     "mpS": "caducou",
+     "pl": "PL 5742/2026",
+     "plS": "t",
+     "autor": "Poder Executivo",
+     "sim": 0.28
+    },
+    {
+     "mp": "MPV 1239/2024",
+     "mpS": "caducou",
+     "pl": "PL 366/2025",
+     "plS": "t",
+     "autor": "José Guimarães",
+     "sim": 0.27
+    },
+    {
+     "mp": "MPV 1335/2026",
+     "mpS": "caducou",
+     "pl": "PL 1315/2026",
+     "plS": "l",
+     "autor": "Poder Executivo",
+     "sim": 0.27
+    },
+    {
+     "mp": "MPV 1202/2023",
+     "mpS": "lei",
+     "pl": "PL 1027/2024",
+     "plS": "t",
+     "autor": "José Guimarães",
+     "sim": 0.25
+    },
+    {
+     "mp": "MPV 1217/2024",
+     "mpS": "caducou",
+     "pl": "PL 3595/2024",
+     "plS": "p",
+     "autor": "José Guimarães",
+     "sim": 0.25
+    },
+    {
+     "mp": "MPV 1259/2024",
+     "mpS": "caducou",
+     "pl": "PL 366/2025",
+     "plS": "t",
+     "autor": "José Guimarães",
+     "sim": 0.25
+    }
+   ],
+   "nMp": 29,
+   "nLei": 19,
+   "nPlExecutivo": 10
+  }
  },
  "recentes": {
   "proposicoes": 19,
