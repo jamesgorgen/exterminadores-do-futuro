@@ -1,10 +1,10 @@
 {
- "gerado": "2026-11-27T19:03:27.430Z",
+ "gerado": "2026-11-28T17:38:29.035Z",
  "inicio": "2023-02-01",
  "totais": {
-  "proposicoes": 29399,
-  "direita": 2715,
-  "extrema": 1823,
+  "proposicoes": 29409,
+  "direita": 2717,
+  "extrema": 1825,
   "votacoes": 2482,
   "disputadas": 1197,
   "vitorias": 511,
@@ -47,9 +47,9 @@
    "derrotas": 4
   },
   "instituicoes": {
-   "prop": 244,
-   "extrema": 214,
-   "prop30": 16,
+   "prop": 246,
+   "extrema": 216,
+   "prop30": 18,
    "vot": 45,
    "vitorias": 38,
    "derrotas": 4
@@ -73,7 +73,7 @@
   "educacao": {
    "prop": 153,
    "extrema": 138,
-   "prop30": 1,
+   "prop30": 0,
    "vot": 6,
    "vitorias": 5,
    "derrotas": 1
@@ -572,24 +572,24 @@
  },
  "blocos": {
   "T": {
-   "prop": 27016,
-   "pauta": 2715,
-   "pautaExtrema": 1823,
+   "prop": 27026,
+   "pauta": 2717,
+   "pautaExtrema": 1825,
    "vot": 1620,
-   "comSit": 26986,
-   "aprovada": 1219,
+   "comSit": 26995,
+   "aprovada": 1224,
    "lei": 373,
    "arquivada": 1817,
    "fora": {
-    "prop": 364,
+    "prop": 365,
     "pauta": 21,
     "comSit": 363,
-    "aprovada": 144,
+    "aprovada": 146,
     "lei": 113,
     "arquivada": 24,
     "tipos": {
      "executivo": 108,
-     "comissao": 249,
+     "comissao": 250,
      "judiciario": 5,
      "mp": 2
     }
@@ -603,14 +603,14 @@
    },
    "grupos": {
     "extrema": {
-     "prop": 4875,
-     "pauta": 1215,
+     "prop": 4877,
+     "pauta": 1217,
      "membros": 104,
      "emExercicio": 83,
      "vot": 1577,
      "venceu": 804,
-     "comSit": 4868,
-     "aprovada": 147,
+     "comSit": 4871,
+     "aprovada": 146,
      "lei": 23,
      "arquivada": 388
     },
@@ -622,31 +622,31 @@
      "vot": 1565,
      "venceu": 1100,
      "comSit": 6488,
-     "aprovada": 250,
+     "aprovada": 251,
      "lei": 58,
      "arquivada": 405
     },
     "centro": {
-     "prop": 7537,
+     "prop": 7538,
      "pauta": 442,
      "membros": 216,
      "emExercicio": 178,
      "vot": 1562,
      "venceu": 1512,
      "comSit": 7537,
-     "aprovada": 280,
+     "aprovada": 281,
      "lei": 69,
      "arquivada": 476
     },
     "esquerda": {
-     "prop": 7666,
+     "prop": 7672,
      "pauta": 318,
      "membros": 260,
      "emExercicio": 208,
      "vot": 1593,
      "venceu": 1235,
-     "comSit": 7651,
-     "aprovada": 372,
+     "comSit": 7656,
+     "aprovada": 374,
      "lei": 102,
      "arquivada": 523
     }
@@ -706,11 +706,11 @@
     },
     "cuidado-envelhecimento": {
      "n": 780,
-     "ap": 24,
+     "ap": 23,
      "g": {
       "esquerda": [
        246,
-       7,
+       6,
        3
       ],
       "centro": [
@@ -784,11 +784,11 @@
     },
     "penal-prisional": {
      "n": 2046,
-     "ap": 67,
+     "ap": 66,
      "g": {
       "extrema": [
        634,
-       12,
+       11,
        323
       ],
       "centro": [
@@ -861,7 +861,7 @@
      }
     },
     "cultura": {
-     "n": 842,
+     "n": 844,
      "ap": 103,
      "g": {
       "centro": [
@@ -870,7 +870,7 @@
        6
       ],
       "esquerda": [
-       283,
+       285,
        54,
        4
       ],
@@ -888,7 +888,7 @@
     },
     "violencia-mulher": {
      "n": 1149,
-     "ap": 61,
+     "ap": 62,
      "g": {
       "centro": [
        331,
@@ -902,7 +902,7 @@
       ],
       "esquerda": [
        425,
-       23,
+       24,
        10
       ],
       "direita": [
@@ -965,7 +965,7 @@
      }
     },
     "jornada-emprego": {
-     "n": 998,
+     "n": 999,
      "ap": 28,
      "g": {
       "esquerda": [
@@ -974,7 +974,7 @@
        11
       ],
       "centro": [
-       241,
+       242,
        10,
        10
       ],
@@ -1069,13 +1069,13 @@
      }
     },
     "sistema-justica": {
-     "n": 290,
+     "n": 292,
      "ap": 14,
      "g": {
       "extrema": [
-       104,
+       106,
        0,
-       47
+       49
       ],
       "esquerda": [
        63,
@@ -1199,7 +1199,7 @@
      }
     },
     "sus-acesso": {
-     "n": 1156,
+     "n": 1157,
      "ap": 37,
      "g": {
       "direita": [
@@ -1213,7 +1213,7 @@
        2
       ],
       "esquerda": [
-       326,
+       327,
        7,
        3
       ],
@@ -1225,7 +1225,7 @@
      }
     },
     "educacao-basica": {
-     "n": 858,
+     "n": 859,
      "ap": 31,
      "g": {
       "direita": [
@@ -1244,7 +1244,7 @@
        39
       ],
       "esquerda": [
-       287,
+       288,
        10,
        5
       ]
@@ -1512,11 +1512,11 @@
     },
     "pcd": {
      "n": 1624,
-     "ap": 54,
+     "ap": 55,
      "g": {
       "esquerda": [
        428,
-       12,
+       13,
        2
       ],
       "direita": [
@@ -1537,7 +1537,7 @@
      }
     },
     "educacao-inclusiva": {
-     "n": 122,
+     "n": 123,
      "ap": 5,
      "g": {
       "direita": [
@@ -1546,7 +1546,7 @@
        4
       ],
       "esquerda": [
-       31,
+       32,
        3,
        1
       ],
@@ -1668,7 +1668,7 @@
     },
     "crime-organizado": {
      "n": 999,
-     "ap": 32,
+     "ap": 31,
      "g": {
       "esquerda": [
        172,
@@ -1677,7 +1677,7 @@
       ],
       "extrema": [
        367,
-       6,
+       5,
        178
       ],
       "centro": [
@@ -1694,11 +1694,11 @@
     },
     "reforma-politica": {
      "n": 324,
-     "ap": 8,
+     "ap": 7,
      "g": {
       "extrema": [
        84,
-       2,
+       1,
        23
       ],
       "esquerda": [
@@ -1745,7 +1745,7 @@
      }
     },
     "juventude": {
-     "n": 198,
+     "n": 199,
      "ap": 9,
      "g": {
       "centro": [
@@ -1764,7 +1764,7 @@
        3
       ],
       "esquerda": [
-       68,
+       69,
        2,
        1
       ]
@@ -1901,7 +1901,7 @@
      }
     },
     "povos-indigenas": {
-     "n": 330,
+     "n": 334,
      "ap": 14,
      "g": {
       "direita": [
@@ -1910,7 +1910,7 @@
        18
       ],
       "esquerda": [
-       87,
+       91,
        5,
        5
       ],
@@ -1927,13 +1927,13 @@
      }
     },
     "defesa-nacional": {
-     "n": 225,
+     "n": 227,
      "ap": 13,
      "g": {
       "extrema": [
-       76,
+       78,
        3,
-       25
+       27
       ],
       "centro": [
        33,
@@ -2083,7 +2083,7 @@
      }
     },
     "assistencia-renda": {
-     "n": 540,
+     "n": 541,
      "ap": 10,
      "g": {
       "centro": [
@@ -2102,7 +2102,7 @@
        5
       ],
       "esquerda": [
-       181,
+       182,
        3,
        4
       ]
@@ -2188,7 +2188,7 @@
     },
     "compras-publicas": {
      "n": 169,
-     "ap": 4,
+     "ap": 5,
      "g": {
       "direita": [
        37,
@@ -2207,7 +2207,7 @@
       ],
       "esquerda": [
        53,
-       0,
+       1,
        1
       ]
      }
@@ -2265,8 +2265,8 @@
      }
     },
     "igualdade-racial": {
-     "n": 232,
-     "ap": 8,
+     "n": 235,
+     "ap": 9,
      "g": {
       "centro": [
        39,
@@ -2274,8 +2274,8 @@
        2
       ],
       "esquerda": [
-       101,
-       4,
+       104,
+       5,
        0
       ],
       "direita": [
@@ -2292,7 +2292,7 @@
     },
     "economia-solidaria": {
      "n": 112,
-     "ap": 7,
+     "ap": 9,
      "g": {
       "direita": [
        24,
@@ -2370,7 +2370,7 @@
     },
     "cidades-habitacao": {
      "n": 342,
-     "ap": 10,
+     "ap": 11,
      "g": {
       "esquerda": [
        115,
@@ -2379,7 +2379,7 @@
       ],
       "centro": [
        128,
-       4,
+       5,
        1
       ],
       "direita": [
@@ -2579,24 +2579,24 @@
    }
   },
   "C": {
-   "prop": 23791,
-   "pauta": 2325,
-   "pautaExtrema": 1552,
+   "prop": 23800,
+   "pauta": 2327,
+   "pautaExtrema": 1554,
    "vot": 1422,
-   "comSit": 23783,
-   "aprovada": 866,
+   "comSit": 23791,
+   "aprovada": 868,
    "lei": 296,
    "arquivada": 1666,
    "fora": {
-    "prop": 290,
+    "prop": 291,
     "pauta": 9,
     "comSit": 290,
-    "aprovada": 138,
+    "aprovada": 140,
     "lei": 113,
     "arquivada": 24,
     "tipos": {
      "executivo": 108,
-     "comissao": 175,
+     "comissao": 176,
      "judiciario": 5,
      "mp": 2
     }
@@ -2610,14 +2610,14 @@
    },
    "grupos": {
     "extrema": {
-     "prop": 4196,
-     "pauta": 1064,
+     "prop": 4198,
+     "pauta": 1066,
      "membros": 83,
      "emExercicio": 68,
      "vot": 1379,
      "venceu": 666,
-     "comSit": 4193,
-     "aprovada": 83,
+     "comSit": 4196,
+     "aprovada": 82,
      "lei": 12,
      "arquivada": 352
     },
@@ -2646,14 +2646,14 @@
      "arquivada": 466
     },
     "esquerda": {
-     "prop": 6950,
+     "prop": 6956,
      "pauta": 267,
      "membros": 236,
      "emExercicio": 191,
      "vot": 1397,
      "venceu": 1067,
-     "comSit": 6945,
-     "aprovada": 278,
+     "comSit": 6950,
+     "aprovada": 279,
      "lei": 79,
      "arquivada": 487
     }
@@ -2713,11 +2713,11 @@
     },
     "cuidado-envelhecimento": {
      "n": 703,
-     "ap": 13,
+     "ap": 12,
      "g": {
       "esquerda": [
        230,
-       5,
+       4,
        3
       ],
       "centro": [
@@ -2791,11 +2791,11 @@
     },
     "penal-prisional": {
      "n": 1740,
-     "ap": 49,
+     "ap": 48,
      "g": {
       "extrema": [
        561,
-       9,
+       8,
        286
       ],
       "centro": [
@@ -2868,7 +2868,7 @@
      }
     },
     "cultura": {
-     "n": 751,
+     "n": 753,
      "ap": 76,
      "g": {
       "centro": [
@@ -2877,7 +2877,7 @@
        6
       ],
       "esquerda": [
-       253,
+       255,
        39,
        4
       ],
@@ -2895,7 +2895,7 @@
     },
     "violencia-mulher": {
      "n": 1006,
-     "ap": 47,
+     "ap": 48,
      "g": {
       "centro": [
        317,
@@ -2909,7 +2909,7 @@
       ],
       "esquerda": [
        370,
-       19,
+       20,
        9
       ],
       "direita": [
@@ -3050,13 +3050,13 @@
      }
     },
     "sistema-justica": {
-     "n": 236,
+     "n": 238,
      "ap": 11,
      "g": {
       "extrema": [
-       89,
+       91,
        0,
-       43
+       45
       ],
       "esquerda": [
        55,
@@ -3180,7 +3180,7 @@
      }
     },
     "sus-acesso": {
-     "n": 1048,
+     "n": 1049,
      "ap": 23,
      "g": {
       "direita": [
@@ -3194,7 +3194,7 @@
        2
       ],
       "esquerda": [
-       311,
+       312,
        6,
        3
       ],
@@ -3206,7 +3206,7 @@
      }
     },
     "educacao-basica": {
-     "n": 773,
+     "n": 774,
      "ap": 18,
      "g": {
       "direita": [
@@ -3225,7 +3225,7 @@
        35
       ],
       "esquerda": [
-       262,
+       263,
        7,
        5
       ]
@@ -3518,7 +3518,7 @@
      }
     },
     "educacao-inclusiva": {
-     "n": 110,
+     "n": 111,
      "ap": 3,
      "g": {
       "direita": [
@@ -3527,7 +3527,7 @@
        4
       ],
       "esquerda": [
-       25,
+       26,
        2,
        1
       ],
@@ -3649,7 +3649,7 @@
     },
     "crime-organizado": {
      "n": 900,
-     "ap": 24,
+     "ap": 23,
      "g": {
       "esquerda": [
        156,
@@ -3658,7 +3658,7 @@
       ],
       "extrema": [
        342,
-       5,
+       4,
        162
       ],
       "centro": [
@@ -3701,11 +3701,11 @@
     },
     "reforma-politica": {
      "n": 256,
-     "ap": 7,
+     "ap": 6,
      "g": {
       "extrema": [
        71,
-       2,
+       1,
        16
       ],
       "esquerda": [
@@ -3752,7 +3752,7 @@
      }
     },
     "juventude": {
-     "n": 183,
+     "n": 184,
      "ap": 5,
      "g": {
       "centro": [
@@ -3771,14 +3771,14 @@
        3
       ],
       "esquerda": [
-       67,
+       68,
        1,
        1
       ]
      }
     },
     "povos-indigenas": {
-     "n": 289,
+     "n": 293,
      "ap": 7,
      "g": {
       "direita": [
@@ -3787,7 +3787,7 @@
        11
       ],
       "esquerda": [
-       82,
+       86,
        4,
        5
       ],
@@ -3804,13 +3804,13 @@
      }
     },
     "defesa-nacional": {
-     "n": 198,
+     "n": 200,
      "ap": 10,
      "g": {
       "extrema": [
-       64,
+       66,
        1,
-       21
+       23
       ],
       "centro": [
        33,
@@ -3934,7 +3934,7 @@
      }
     },
     "assistencia-renda": {
-     "n": 490,
+     "n": 491,
      "ap": 7,
      "g": {
       "centro": [
@@ -3953,7 +3953,7 @@
        5
       ],
       "esquerda": [
-       166,
+       167,
        2,
        4
       ]
@@ -4168,8 +4168,8 @@
      }
     },
     "igualdade-racial": {
-     "n": 204,
-     "ap": 4,
+     "n": 207,
+     "ap": 5,
      "g": {
       "centro": [
        32,
@@ -4177,8 +4177,8 @@
        0
       ],
       "esquerda": [
-       90,
-       3,
+       93,
+       4,
        0
       ],
       "direita": [
@@ -4533,7 +4533,7 @@
     },
     "economia-solidaria": {
      "n": 95,
-     "ap": 4,
+     "ap": 6,
      "g": {
       "extrema": [
        6,
@@ -4586,12 +4586,12 @@
    }
   },
   "S": {
-   "prop": 3225,
+   "prop": 3226,
    "pauta": 390,
    "pautaExtrema": 271,
    "vot": 198,
-   "comSit": 3203,
-   "aprovada": 353,
+   "comSit": 3204,
+   "aprovada": 356,
    "lei": 77,
    "arquivada": 151,
    "fora": {
@@ -4632,19 +4632,19 @@
      "vot": 198,
      "venceu": 187,
      "comSit": 1244,
-     "aprovada": 130,
+     "aprovada": 131,
      "lei": 30,
      "arquivada": 68
     },
     "centro": {
-     "prop": 440,
+     "prop": 441,
      "pauta": 30,
      "membros": 16,
      "emExercicio": 14,
      "vot": 196,
      "venceu": 189,
      "comSit": 440,
-     "aprovada": 44,
+     "aprovada": 45,
      "lei": 9,
      "arquivada": 10
     },
@@ -4656,7 +4656,7 @@
      "vot": 196,
      "venceu": 168,
      "comSit": 706,
-     "aprovada": 94,
+     "aprovada": 95,
      "lei": 23,
      "arquivada": 36
     }
@@ -4793,7 +4793,7 @@
      }
     },
     "jornada-emprego": {
-     "n": 160,
+     "n": 161,
      "ap": 11,
      "g": {
       "direita": [
@@ -4812,7 +4812,7 @@
        8
       ],
       "centro": [
-       15,
+       16,
        2,
        2
       ]
@@ -5491,7 +5491,7 @@
     },
     "compras-publicas": {
      "n": 25,
-     "ap": 2,
+     "ap": 3,
      "g": {
       "extrema": [
        4,
@@ -5500,7 +5500,7 @@
       ],
       "esquerda": [
        13,
-       0,
+       1,
        1
       ],
       "centro": [
@@ -5616,7 +5616,7 @@
     },
     "pcd": {
      "n": 115,
-     "ap": 12,
+     "ap": 13,
      "g": {
       "direita": [
        45,
@@ -5630,7 +5630,7 @@
       ],
       "esquerda": [
        27,
-       1,
+       2,
        2
       ],
       "centro": [
@@ -6105,7 +6105,7 @@
     },
     "cidades-habitacao": {
      "n": 29,
-     "ap": 1,
+     "ap": 2,
      "g": {
       "direita": [
        12,
@@ -6124,7 +6124,7 @@
       ],
       "centro": [
        7,
-       1,
+       2,
        0
       ]
      }
@@ -7626,11 +7626,11 @@
   "fontes": {
    "mpv": 247,
    "orientacaoSenado": 143,
-   "gerado": "2026-11-26T20:37:28.684Z"
+   "gerado": "2026-11-27T20:23:19.416Z"
   }
  },
  "recentes": {
-  "proposicoes": 13,
+  "proposicoes": 15,
   "votacoes": 23
  }
 }
